@@ -60,12 +60,6 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 	@FeatureFlags("LPD-30204")
 	@Test
 	public void testUpgrade() throws Exception {
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, null, _serviceContext);
-
 		long groupId = RandomTestUtil.randomLong();
 
 		StyleBookEntry orphanedStyleBookEntry =
@@ -74,9 +68,16 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 				groupId, false, null, RandomTestUtil.randomString(), null, null,
 				_serviceContext);
 
-		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
 		Assert.assertTrue(
 			Validator.isNull(orphanedStyleBookEntry.getThemeId()));
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
+				null, null, _serviceContext);
+
+		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.style.book.internal.upgrade.v1_7_0." +

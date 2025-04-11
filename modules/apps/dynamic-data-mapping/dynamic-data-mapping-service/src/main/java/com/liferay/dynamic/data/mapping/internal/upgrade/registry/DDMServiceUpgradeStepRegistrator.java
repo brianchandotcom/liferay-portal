@@ -688,15 +688,17 @@ public class DDMServiceUpgradeStepRegistrator
 					"' where emailAddress like '",
 					"ddm_form_default_user_screen_name@%'")));
 
+		registry.register("7.0.2", "7.0.3", new DummyUpgradeStep());
+
 		registry.register(
-			"7.0.2", "7.0.3",
+			"7.0.3", "7.0.4",
 			UpgradeProcessFactory.dropColumns(
 				"DDMFormInstance", "expirationDate"));
 
-		registry.register("7.0.3", "7.0.4", new PollsToDDMUpgradeProcess());
+		registry.register("7.0.4", "7.0.5", new PollsToDDMUpgradeProcess());
 
 		registry.register(
-			"7.0.4", "7.0.5",
+			"7.0.5", "7.0.6",
 			UpgradeProcessFactory.alterColumnType(
 				"DDMField", "fieldName", "VARCHAR(500) null"));
 	}

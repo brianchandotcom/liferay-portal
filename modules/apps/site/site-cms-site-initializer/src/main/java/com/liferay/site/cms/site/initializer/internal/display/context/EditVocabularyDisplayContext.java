@@ -106,8 +106,6 @@ public class EditVocabularyDisplayContext {
 					);
 				})
 		).put(
-			"siteId", _themeDisplay.getScopeGroupId()
-		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
 			"vocabularyId",

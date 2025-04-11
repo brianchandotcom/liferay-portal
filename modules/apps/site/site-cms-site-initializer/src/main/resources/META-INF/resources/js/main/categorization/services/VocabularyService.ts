@@ -48,7 +48,7 @@ async function fetchVocabulary(vocabularyId: number) {
 	throw new Error(title);
 }
 
-async function updateVocabulary(siteId: number, vocabulary: IVocabulary) {
+async function updateVocabulary(vocabulary: IVocabulary) {
 	const url: string = `/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabulary.id}`;
 
 	const response = await fetch(url, {

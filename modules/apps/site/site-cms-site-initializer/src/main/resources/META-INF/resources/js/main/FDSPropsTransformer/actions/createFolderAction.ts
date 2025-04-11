@@ -18,7 +18,8 @@ export type FolderData = {
 
 export default function createFolderAction(
 	data: FolderData,
-	additionalProps: {parentObjectEntryFolderExternalReferenceCode: string}
+	additionalProps: {parentObjectEntryFolderExternalReferenceCode: string},
+	loadData?: () => {}
 ) {
 	openModal({
 		center: true,
@@ -26,7 +27,7 @@ export default function createFolderAction(
 			CreationModalContent({
 				...data,
 				closeModal,
-				onSubmit: async ({groupId, name}) => {
+				onSubmit: async ({name, groupId}) => {
 					const response = await postScopeScopeKeyObjectEntryFolder(
 						groupId,
 						name,
@@ -34,6 +35,8 @@ export default function createFolderAction(
 					);
 
 					if (response.ok) {
+						loadData?.();
+						
 						closeModal();
 
 						openToast({
@@ -43,9 +46,6 @@ export default function createFolderAction(
 								),
 								`<strong>${name}</strong>`
 							),
-							onClose: () => {
-								window.location.reload();
-							},
 							type: 'success',
 						});
 					}

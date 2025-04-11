@@ -413,15 +413,6 @@ export class PageEditorPage {
 		});
 	}
 
-	async chooseCollectionFilterOption(fieldName: string, option: string) {
-		await this.page.getByLabel('View Collection Options').click();
-		await this.page
-			.getByRole('menuitem', {name: 'Filter Collection'})
-			.click();
-		await this.page.getByLabel(fieldName).selectOption(option);
-		await this.page.getByRole('button', {name: 'Save'}).click();
-	}
-
 	async clickPageContentAction(
 		action: string,
 		name: string,

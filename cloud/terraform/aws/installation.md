@@ -3,19 +3,22 @@
 ## Prerequisites
 
 1. Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and configure with [IAM credentials](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
-2. Install [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
-3. Install [Helm CLI](https://helm.sh/docs/intro/install/).
-4. Install [kubectl CLI](https://kubernetes.io/docs/tasks/tools/).
+
+1. Install [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
+
+1. Install [Helm CLI](https://helm.sh/docs/intro/install/).
+
+1. Install [kubectl CLI](https://kubernetes.io/docs/tasks/tools/).
 
 ## AWS
 
-1. Export your profile for AWS SDK and its tools. 
+1. Export your profile for AWS SDK and its tools.
 
    ```bash
    export AWS_PROFILE=[profile]
    ```
 
-2. Log into AWS CLI.
+1. Log into AWS CLI.
 
    ```bash
    aws sso login
@@ -29,27 +32,27 @@ Once the repository has been cloned, you have two choices:
 
 1. Bring your own AWS account. If you have an AWS account and wish to create a new EKS cluster complete with VPC and networking, follow [EKS Cluster Bootstrap](#eks-cluster-bootstrap).
 
-2. Bring your own EKS cluster. If you have an existing EKS cluster, follow [Liferay Infrastructure Bootstrap](#liferay-infrastructure-bootstrap).
+1. Bring your own EKS cluster. If you have an existing EKS cluster, follow [Liferay Infrastructure Bootstrap](#liferay-infrastructure-bootstrap).
 
 ## EKS Cluster Bootstrap
 
-1. Navigate to the `eks` directory. 
+1. Navigate to the `eks` directory.
 
-2. Edit `terraform.tfvars` to configure your infrastructure. Variables are defined in the `variables.tf` file. By default, the system deploys an EKS cluster in the US West (Oregon) region (us-west-2) spanning two availability zones.
+1. Edit `terraform.tfvars` to configure your infrastructure. Variables are defined in the `variables.tf` file. By default, the system deploys an EKS cluster in the US West (Oregon) region (us-west-2) spanning two availability zones.
 
-3. Run the following commands:
+1. Run the following commands:
 
    ```bash
    terraform init
    ```
- 
+
    ```bash
    terraform apply
    ```
 
-   You are prompted to apply the changes. 
+   You are prompted to apply the changes.
 
-4. Append the result of `terraform output` to the `../dependencies/terraform.tfvars` file in the `dependencies` directory: 
+1. Append the result of `terraform output` to the `../dependencies/terraform.tfvars` file in the `dependencies` directory:
 
    ```bash
    terraform output >> ../dependencies/terraform.tfvars
@@ -59,9 +62,9 @@ Once the repository has been cloned, you have two choices:
 
 1. Navigate to the `dependencies` directory.
 
-2. Update the `terraform.tfvars` file to configure your infrastructure. Variables are defined in `variables.tf` file. If you followed [EKS Cluster Bootstrap](#eks-cluster-bootstrap), this file is already populated.
+1. Update the `terraform.tfvars` file to configure your infrastructure. Variables are defined in `variables.tf` file. If you followed [EKS Cluster Bootstrap](#eks-cluster-bootstrap), this file is already populated.
 
-3. Run the following commands:
+1. Run the following commands:
 
    ```bash
    terraform init
@@ -71,21 +74,21 @@ Once the repository has been cloned, you have two choices:
    terraform apply
    ```
 
-   You are prompted to apply the changes. 
+   You are prompted to apply the changes.
 
 ## Helm Setup
 
-To use Helm you must use the `aws` CLI to set up `kubectl`. 
+To use Helm you must use the `aws` CLI to set up `kubectl`.
 
 1. Navigate to the `dependencies` directory.
 
-2. Run the command below: 
+1. Run the command below:
 
    ```bash
    aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
    ```
 
-3. Test that `kubectl cluster-info` works.
+1. Test that `kubectl cluster-info` works.
 
 ## Helm Chart Deployment
 
@@ -112,7 +115,7 @@ This secret is created automatically when you run the Terraform auto-configurati
 
 1. Navigate to the `dependencies` directory.
 
-2. Run the following command:
+1. Run the following command:
 
    ```bash
    helm upgrade -i \

@@ -33,14 +33,14 @@ public class BatchEngineExportTaskServiceWrapper
 			addBatchEngineExportTask(
 				String externalReferenceCode, long companyId, long userId,
 				String callbackURL, String className, String contentType,
-				String executeStatus, java.util.List<String> fieldNamesList,
+				String executeStatus, java.util.List<String> fieldNames,
 				java.util.Map<String, java.io.Serializable> parameters,
 				String taskItemDelegateName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchEngineExportTaskService.addBatchEngineExportTask(
 			externalReferenceCode, companyId, userId, callbackURL, className,
-			contentType, executeStatus, fieldNamesList, parameters,
+			contentType, executeStatus, fieldNames, parameters,
 			taskItemDelegateName);
 	}
 

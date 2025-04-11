@@ -46,7 +46,7 @@ public class BatchEngineExportTaskServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long companyId, long userId, String callbackURL,
 				String className, String contentType, String executeStatus,
-				java.util.List<String> fieldNamesList,
+				java.util.List<String> fieldNames,
 				java.util.Map<String, java.io.Serializable> parameters,
 				String taskItemDelegateName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,8 +59,8 @@ public class BatchEngineExportTaskServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId, userId,
-				callbackURL, className, contentType, executeStatus,
-				fieldNamesList, parameters, taskItemDelegateName);
+				callbackURL, className, contentType, executeStatus, fieldNames,
+				parameters, taskItemDelegateName);
 
 			Object returnObj = null;
 

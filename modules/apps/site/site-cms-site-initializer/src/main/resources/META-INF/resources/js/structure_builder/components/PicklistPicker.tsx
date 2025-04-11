@@ -31,7 +31,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 	const publishedFields = useSelector(selectPublishedFields);
 	const validationErrors = useSelector(selectValidationErrors(field.uuid));
 
-	const {data: picklists} = useCache('picklists');
+	const {data: picklists, load: loadPicklist, status} = useCache('picklists');
 
 	const feedbackId = useId();
 	const pickerId = useId();
@@ -54,9 +54,17 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 					<Picker
 						aria-describedby={feedbackId}
-						disabled={isPublished || !picklists.length}
+						disabled={
+							(isPublished || !picklists.length) &&
+							status !== 'stale'
+						}
 						id={pickerId}
 						items={picklists}
+						onActiveChange={(active: boolean) => {
+							if (active && status === 'stale') {
+								loadPicklist();
+							}
+						}}
 						onBlur={(
 							event: React.FocusEvent<HTMLButtonElement>
 						) => {

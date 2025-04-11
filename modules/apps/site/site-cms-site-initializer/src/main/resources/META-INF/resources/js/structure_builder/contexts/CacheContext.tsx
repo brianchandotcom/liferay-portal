@@ -17,7 +17,7 @@ import {Picklist} from '../types/Picklist';
 import {Space} from '../types/Space';
 
 type CacheKey = 'picklists' | 'spaces';
-type Status = 'idle' | 'saving' | 'saved';
+type Status = 'idle' | 'saving' | 'saved' | 'stale';
 
 export type Cache = {
 	picklists: {
@@ -94,33 +94,31 @@ function useCache<T extends CacheKey>(key: T): Cache[T] {
 	}, [item, key, update]);
 
 	useEffect(() => {
-		const updateCache = ({data}: MessageEvent) => {
-			if (data.type !== 'updateCache' || data.key !== key) {
+		const staleCache = ({data}: MessageEvent) => {
+			if (data.type !== 'staleCache' || data.key !== key) {
 				return;
 			}
 
-			item.fetcher().then((response) => {
-				update(key, {data: response} as Partial<Cache[T]>);
-			});
+			update(key, {status: 'stale'} as Partial<Cache[T]>);
 		};
 
-		broadcast.addEventListener('message', updateCache);
+		broadcast.addEventListener('message', staleCache);
 
 		return () => {
-			broadcast.removeEventListener('message', updateCache);
+			broadcast.removeEventListener('message', staleCache);
 		};
 	}, [broadcast, item, update, key]);
 
 	return item;
 }
 
-function useUpdateCache() {
+function useStaleCache() {
 	const {broadcast} = useContext(CacheContext);
 
 	return (key: CacheKey) => {
-		broadcast.postMessage({key, type: 'updateCache'});
+		broadcast.postMessage({key, type: 'staleCache'});
 	};
 }
 export default CacheContextProvider;
 
-export {CacheContext, useCache, useUpdateCache};
+export {CacheContext, useCache, useStaleCache};

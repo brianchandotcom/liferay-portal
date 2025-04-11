@@ -1059,57 +1059,54 @@ testWithAddressSubtypeEnabled(
 
 		apiHelpers.data.push({id: account.id, type: 'account'});
 
-		const listTypeDefinitionBilling =
+		const billingListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		apiHelpers.data.push({
-			id: listTypeDefinitionBilling.id,
+			id: billingListTypeDefinition.id,
 			type: 'listTypeDefinition',
 		});
 
-		const listTypeDefinitionBillingAndShipping =
+		const billingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				billingListTypeDefinition.externalReferenceCode,
+				'Billing1'
+			);
+
+		const billingAndShippingListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		apiHelpers.data.push({
-			id: listTypeDefinitionBillingAndShipping.id,
+			id: billingAndShippingListTypeDefinition.id,
 			type: 'listTypeDefinition',
 		});
 
-		const listTypeDefinitionShipping =
+		const billingAndShippingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				billingAndShippingListTypeDefinition.externalReferenceCode,
+				'BillingAndShipping1'
+			);
+
+		const shippingListTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		apiHelpers.data.push({
-			id: listTypeDefinitionShipping.id,
+			id: shippingListTypeDefinition.id,
 			type: 'listTypeDefinition',
 		});
+
+		const shippingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				shippingListTypeDefinition.externalReferenceCode,
+				'Shipping1'
+			);
 
 		await listTypeDefinitionPage.goto();
 
-		const picklistItemBilling1 = 'Billing1';
-
-		await apiHelpers.listTypeAdmin.postListTypeEntry(
-			listTypeDefinitionBilling.externalReferenceCode,
-			picklistItemBilling1
-		);
-
-		const picklistItemBillingAndShipping1 = 'BillingAndShipping1';
-
-		await apiHelpers.listTypeAdmin.postListTypeEntry(
-			listTypeDefinitionBillingAndShipping.externalReferenceCode,
-			picklistItemBillingAndShipping1
-		);
-
-		const picklistItemShipping1 = 'Shipping1';
-
-		await apiHelpers.listTypeAdmin.postListTypeEntry(
-			listTypeDefinitionShipping.externalReferenceCode,
-			picklistItemShipping1
-		);
-
 		await accountInstanceSettingsAccountAddressSubtypePage.setAddressSubtypeExternalReferenceCodes(
-			listTypeDefinitionBilling.name,
-			listTypeDefinitionBillingAndShipping.name,
-			listTypeDefinitionShipping.name
+			billingListTypeDefinition.name,
+			billingAndShippingListTypeDefinition.name,
+			shippingListTypeDefinition.name
 		);
 
 		const billingAddress = {
@@ -1121,7 +1118,7 @@ testWithAddressSubtypeEnabled(
 			region: 'Alabama',
 			regionId: '0',
 			street1: getRandomString(),
-			subtype: picklistItemBilling1,
+			subtype: billingListTypeEntry.key,
 			type: 'Billing',
 		};
 		const billingAndShippingAddress = {
@@ -1133,7 +1130,7 @@ testWithAddressSubtypeEnabled(
 			region: 'Alabama',
 			regionId: '0',
 			street1: getRandomString(),
-			subtype: picklistItemBillingAndShipping1,
+			subtype: billingAndShippingListTypeEntry.key,
 			type: 'Billing and Shipping',
 		};
 		const shippingAddress = {
@@ -1145,7 +1142,7 @@ testWithAddressSubtypeEnabled(
 			region: 'Alabama',
 			regionId: '0',
 			street1: getRandomString(),
-			subtype: picklistItemShipping1,
+			subtype: shippingListTypeEntry.key,
 			type: 'Shipping',
 		};
 
@@ -1164,7 +1161,7 @@ testWithAddressSubtypeEnabled(
 			await expect(
 				await accountAddressesPage.rowSubtypeCell(
 					billingAddress.name,
-					picklistItemBilling1
+					billingListTypeEntry.key
 				)
 			).toHaveCount(1);
 
@@ -1173,7 +1170,7 @@ testWithAddressSubtypeEnabled(
 				.click();
 
 			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
-				billingAddress.subtype
+				new RegExp(billingAddress.subtype, 'i')
 			);
 
 			await editAccountAddressPage.backButton.click();
@@ -1188,7 +1185,7 @@ testWithAddressSubtypeEnabled(
 			await expect(
 				await accountAddressesPage.rowSubtypeCell(
 					billingAndShippingAddress.name,
-					picklistItemBillingAndShipping1
+					billingAndShippingListTypeEntry.key
 				)
 			).toHaveCount(1);
 
@@ -1197,7 +1194,7 @@ testWithAddressSubtypeEnabled(
 				.click();
 
 			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
-				billingAndShippingAddress.subtype
+				new RegExp(billingAndShippingAddress.subtype, 'i')
 			);
 
 			await editAccountAddressPage.backButton.click();
@@ -1212,7 +1209,7 @@ testWithAddressSubtypeEnabled(
 			await expect(
 				await accountAddressesPage.rowSubtypeCell(
 					shippingAddress.name,
-					picklistItemShipping1
+					shippingListTypeEntry.key
 				)
 			).toHaveCount(1);
 
@@ -1221,19 +1218,22 @@ testWithAddressSubtypeEnabled(
 				.click();
 
 			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
-				shippingAddress.subtype
+				new RegExp(shippingAddress.subtype, 'i')
 			);
 
 			await editAccountAddressPage.backButton.click();
 			await accountAddressesPage.addressesTable
 				.valueLink(shippingAddress.name)
 				.click();
+
+			await expect(editAccountAddressPage.subtypeInput).toBeEnabled();
+
 			await editAccountAddressPage.typeInput.selectOption('Billing');
 			await editAccountAddressPage.subtypeInput.fill(
-				picklistItemBilling1
+				billingListTypeEntry.key
 			);
 			await editAccountAddressPage
-				.subtypeMenuItem(picklistItemBilling1)
+				.subtypeMenuItem(billingListTypeEntry.key)
 				.click();
 			await editAccountAddressPage.saveButton.click();
 
@@ -1242,12 +1242,13 @@ testWithAddressSubtypeEnabled(
 			await expect(
 				await accountAddressesPage.rowSubtypeCell(
 					shippingAddress.name,
-					picklistItemBilling1
+					billingListTypeEntry.key
 				)
 			).toHaveCount(1);
 		}
 		finally {
 			await accountInstanceSettingsAccountAddressSubtypePage.setAddressSubtypeExternalReferenceCodes();
+
 			await accountsPage.goto();
 			await accountsPage.accountsTable.valueLink(account.name).click();
 			await editAccountPage.addressesTab.click();
@@ -1255,7 +1256,7 @@ testWithAddressSubtypeEnabled(
 				.valueLink(shippingAddress.name)
 				.click();
 
-			await expect(editAccountAddressPage.subtypeInput).toBeDisabled();
+			await expect(editAccountAddressPage.subtypeInput).toHaveCount(0);
 		}
 	}
 );

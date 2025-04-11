@@ -86,12 +86,11 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 
 		</aui:select>
 
-		<div class="form-group input-select-wrapper">
-			<label class="control-label">
-				<liferay-ui:message key="subtype" />
-			</label>
-
-			<div id="autocomplete-root"></div>
+		<div>
+			<react:component
+				module="{AddressSubtypeAutocomplete} from account-admin-web"
+				props="<%= accountEntryAddressDisplayContext.getContext() %>"
+			/>
 		</div>
 
 		<aui:select label="country" name="addressCountryId" required="<%= true %>">
@@ -168,9 +167,4 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 		).build()
 		%>'
 	module="{CountryRegionDynamicSelect} from account-admin-web"
-/>
-
-<liferay-frontend:component
-	context="<%= accountEntryAddressDisplayContext.getContext() %>"
-	module="{AddressSubtypeListAutocomplete} from account-admin-web"
 />

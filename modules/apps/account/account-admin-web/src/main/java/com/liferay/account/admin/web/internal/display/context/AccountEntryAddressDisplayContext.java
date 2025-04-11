@@ -67,8 +67,6 @@ public class AccountEntryAddressDisplayContext {
 		).put(
 			"initialAddressType", _addressDisplay.getListTypeName()
 		).put(
-			"initialLabel", _addressDisplay.getSubtype()
-		).put(
 			"initialValue", _addressDisplay.getSubtype()
 		).put(
 			"namespace", _liferayPortletResponse.getNamespace()

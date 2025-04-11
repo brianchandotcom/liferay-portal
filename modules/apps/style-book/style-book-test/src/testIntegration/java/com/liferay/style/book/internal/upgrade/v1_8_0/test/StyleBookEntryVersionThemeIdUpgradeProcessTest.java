@@ -94,7 +94,7 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 				StringBundler.concat(
 					"Deleting style book entry version for style book entry ",
 					orphanedStyleBookEntry.getStyleBookEntryId(),
-					" because group ", groupId, "does not exist"),
+					" because group ", groupId, " does not exist"),
 				logEntry.getMessage());
 		}
 

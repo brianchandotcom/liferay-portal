@@ -44,8 +44,8 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(service = UpgradeRecorder.class)
 public class UpgradeRecorder {
 
-	public Map<String, Map<String, Integer>> getCleanUpMessages() {
-		return _cleanUpMessages;
+	public Map<String, Map<String, Integer>> getDataCleanUpMessages() {
+		return _dataCleanUpMessages;
 	}
 
 	public Map<String, Map<String, Integer>> getErrorMessages() {
@@ -132,7 +132,7 @@ public class UpgradeRecorder {
 		_type = "pending";
 		_upgradeProcessMessages.clear();
 		_warningMessages.clear();
-		_cleanUpMessages.clear();
+		_dataCleanUpMessages.clear();
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
@@ -266,9 +266,9 @@ public class UpgradeRecorder {
 			messages.remove(filteredClassName);
 		}
 
-		for (String cleanUpClassName : _CLEAN_UP_CLASS_NAMES) {
+		for (String cleanUpClassName : _DATA_CLEAN_UP_CLASS_NAMES) {
 			if (messages.containsKey(cleanUpClassName)) {
-				_cleanUpMessages.putIfAbsent(
+				_dataCleanUpMessages.putIfAbsent(
 					cleanUpClassName, messages.get(cleanUpClassName));
 
 				messages.remove(cleanUpClassName);
@@ -319,7 +319,7 @@ public class UpgradeRecorder {
 		}
 	}
 
-	private static final String[] _CLEAN_UP_CLASS_NAMES = {
+	private static final String[] _DATA_CLEAN_UP_CLASS_NAMES = {
 		"com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess"
 	};
 
@@ -331,8 +331,8 @@ public class UpgradeRecorder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeRecorder.class);
 
-	private static final Map<String, Map<String, Integer>> _cleanUpMessages =
-		new ConcurrentHashMap<>();
+	private static final Map<String, Map<String, Integer>>
+		_dataCleanUpMessages = new ConcurrentHashMap<>();
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private static String _result;

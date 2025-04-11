@@ -67,10 +67,15 @@ export default function EditVocabulary({
 			},
 		],
 		description: '',
+		description_i18n: {
+			[defaultLanguageId]: '',
+		},
+		multiValued: true,
 		name: '',
 		name_i18n: {
 			[defaultLanguageId.replace('_', '-')]: '',
 		},
+		visibilityType: 'PUBLIC',
 	});
 	const [vocabularyPermissions, setVocabularyPermissions] =
 		useState<IPermissionItem[]>(DEFAULT_PERMISSIONS);
@@ -271,6 +276,7 @@ export default function EditVocabulary({
 							{activeVerticalNavKey === 'general' && (
 								<EditGeneralInfo
 									defaultLanguageId={defaultLanguageId}
+									isNew={isNew}
 									locales={locales}
 									nameInputError={nameInputError}
 									onChangeVocabulary={setVocabulary}

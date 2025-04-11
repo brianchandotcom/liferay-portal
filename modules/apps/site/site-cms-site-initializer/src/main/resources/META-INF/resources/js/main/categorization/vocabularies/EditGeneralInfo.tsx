@@ -23,16 +23,17 @@ import {IVocabulary} from '../types/IVocabulary';
 const VISIBILITY_OPTIONS = [
 	{
 		label: Liferay.Language.get('public'),
-		value: 0,
+		value: 'PUBLIC',
 	},
 	{
 		label: Liferay.Language.get('private'),
-		value: 1,
+		value: 'INTERNAL',
 	},
 ];
 
 export default function EditGeneralInfo({
 	defaultLanguageId,
+	isNew,
 	locales,
 	nameInputError,
 	onChangeVocabulary,
@@ -44,6 +45,7 @@ export default function EditGeneralInfo({
 	vocabulary,
 }: {
 	defaultLanguageId: string;
+	isNew: boolean;
 	locales: any[];
 	nameInputError: string;
 	onChangeVocabulary: Function;
@@ -55,7 +57,6 @@ export default function EditGeneralInfo({
 	vocabulary: IVocabulary;
 }) {
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
-	const [toggled, setToggle] = useState<boolean>(true);
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 
 	const assetLibraries = selectedSpaces.map((number) => ({
@@ -184,8 +185,13 @@ export default function EditGeneralInfo({
 				<label className="toggle-switch">
 					<ClayToggle
 						aria-label="Multi Value"
-						onToggle={setToggle}
-						toggled={toggled}
+						onToggle={(checked) => {
+							onChangeVocabulary(() => ({
+								...vocabulary,
+								multiValued: checked,
+							}));
+						}}
+						toggled={vocabulary.multiValued}
 					/>
 
 					{Liferay.Language.get('allow-multiple-categories')}
@@ -216,7 +222,15 @@ export default function EditGeneralInfo({
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('visibility')}
+						disabled={!isNew}
+						onChange={(event) =>
+							onChangeVocabulary(() => ({
+								...vocabulary,
+								visibilityType: event.target.value,
+							}))
+						}
 						options={VISIBILITY_OPTIONS}
+						value={vocabulary.visibilityType}
 					/>
 				</div>
 			</ClayForm.Group>

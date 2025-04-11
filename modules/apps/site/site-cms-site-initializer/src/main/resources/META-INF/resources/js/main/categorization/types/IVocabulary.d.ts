@@ -12,11 +12,12 @@ export interface IVocabulary {
 		[key: string]: string;
 	};
 	id?: number;
+	multiValued: boolean;
 	name: string;
 	name_i18n: {
 		[key: string]: string;
 	};
 	numberOfCategories?: number;
 	siteId?: number;
-	visibilityType?: number;
+	visibilityType: 'PUBLIC' | 'INTERNAL';
 }

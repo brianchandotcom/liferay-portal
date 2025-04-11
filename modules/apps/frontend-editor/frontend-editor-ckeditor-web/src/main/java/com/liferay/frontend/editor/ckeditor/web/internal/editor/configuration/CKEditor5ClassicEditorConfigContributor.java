@@ -5,6 +5,8 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.ckeditor.web.internal.configuration.CKEditor5Configuration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,12 +16,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Marko Cikos
  */
 @Component(
+	configurationPid = "com.liferay.frontend.editor.ckeditor.web.internal.configuration.CKEditor5Configuration",
 	property = "editor.name=ckeditor5_classic",
 	service = EditorConfigContributor.class
 )
@@ -41,8 +46,19 @@ public class CKEditor5ClassicEditorConfigContributor
 		jsonObject.put(
 			"itemSelectorEventName", namespace + name + "selectItem"
 		).put(
+			"licenseKey", _ckEditor5Configuration.licenseKey()
+		).put(
 			"preset", "advanced"
 		);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ckEditor5Configuration = ConfigurableUtil.createConfigurable(
+			CKEditor5Configuration.class, properties);
+	}
+
+	private volatile CKEditor5Configuration _ckEditor5Configuration;
 
 }

@@ -66,7 +66,7 @@ export default function PicklistOptions() {
 					title: Liferay.Language.get('there-are-no-options-yet'),
 				}}
 				id="optionList"
-				items={normalizeOptionsToItems(options)}
+				items={toItems(options)}
 				itemsActions={[
 					{
 						icon: 'pencil',
@@ -121,7 +121,7 @@ export default function PicklistOptions() {
 	);
 }
 
-function normalizeOptionsToItems(options: Options) {
+function toItems(options: Options) {
 	return [...options].map(([erc, value]) => ({
 		erc,
 		id: erc,

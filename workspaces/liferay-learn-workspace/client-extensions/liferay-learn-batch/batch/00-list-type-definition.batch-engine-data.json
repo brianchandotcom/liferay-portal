@@ -53,6 +53,27 @@
 			"name": "P2S3 Expertise Levels"
 		},
 		{
+			"externalReferenceCode": "P2S3_KNOWLEDGE_ARTICLE_TYPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "HOW_TO",
+					"key": "howTo",
+					"name": "How To"
+				},
+				{
+					"externalReferenceCode": "REFERENCE",
+					"key": "reference",
+					"name": "Reference"
+				},
+				{
+					"externalReferenceCode": "TROUBLESHOOTING",
+					"key": "troubleshooting",
+					"name": "Troubleshooting"
+				}
+			],
+			"name": "P2S3 Knowledge Article Types"
+		},
+		{
 			"externalReferenceCode": "P2S3_PERSONAS",
 			"listTypeEntries": [
 				{

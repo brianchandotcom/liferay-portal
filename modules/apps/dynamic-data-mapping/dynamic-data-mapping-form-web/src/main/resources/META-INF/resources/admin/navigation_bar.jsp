@@ -8,7 +8,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <clay:navigation-bar
-	cssClass="lfr-forms__navigation-bar"
+	cssClass="container-fluid-max-xxxl"
 	inverted="<%= true %>"
 	navigationItems="<%= ddmFormAdminDisplayContext.getNavigationItems() %>"
 />

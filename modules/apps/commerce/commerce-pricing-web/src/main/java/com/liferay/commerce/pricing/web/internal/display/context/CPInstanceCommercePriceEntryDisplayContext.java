@@ -277,6 +277,14 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			TransformUtil.transform(
 				commercePriceListBaseModelSearchResult.getBaseModels(),
 				commercePriceList -> HashMapBuilder.<String, Object>put(
+					"currency",
+					() -> {
+						CommerceCurrency commerceCurrency =
+							commercePriceList.getCommerceCurrency();
+
+						return commerceCurrency.getCode();
+					}
+				).put(
 					"label", commercePriceList.getName()
 				).put(
 					"value", commercePriceList.getCommercePriceListId()

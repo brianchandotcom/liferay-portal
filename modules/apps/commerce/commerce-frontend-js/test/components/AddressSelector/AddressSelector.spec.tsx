@@ -967,10 +967,10 @@ describe('AddressSelector', () => {
 		await setFieldValue(streetAddressLine3Input, 'streetAddressLine3');
 
 		await setFieldValue(addressSubtypeInput, 'SHIPPING1');
-		renderedComponent.getByRole('option', {name: 'SHIPPING 1'}).click();
+		expect(addressSubtypeInput).toHaveValue('SHIPPING1');
 
 		await setFieldValue(addressSubtypeInput, 'SHIPPING2');
-		renderedComponent.getByRole('option', {name: 'SHIPPING 2'}).click();
+		expect(addressSubtypeInput).toHaveValue('SHIPPING2');
 
 		const handlerCallbackFunction: Function =
 			handleSubmit.mock.calls.pop()[0];

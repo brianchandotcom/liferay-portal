@@ -26,13 +26,13 @@ public class LiferayOAuth2Util {
 		String lxcServerProtocol) {
 
 		try {
-			String baseURL = 
-				lxcServerProtocol+ "://"+ lxcMainDomain+
-				"/o/oauth2/application";
+			String baseURL =
+				lxcServerProtocol + "://" + lxcMainDomain +
+					"/o/oauth2/application";
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-						"Get client ID from "+ baseURL+ " using "+
+					"Get client ID from " + baseURL + " using " +
 						externalReferenceCode);
 			}
 

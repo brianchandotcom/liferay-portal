@@ -944,7 +944,7 @@ public class TaxonomyVocabularyResourceImpl
 			ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
 
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-				taxonomyVocabulary.getId(),
+				assetVocabulary.getVocabularyId(),
 				transformToLongArray(
 					Arrays.asList(taxonomyVocabulary.getAssetLibraries()),
 					AssetLibrary::getId));

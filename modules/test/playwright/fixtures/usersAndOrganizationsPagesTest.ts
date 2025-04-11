@@ -31,7 +31,6 @@ import {NotificationsPage} from '../tests/notifications-web/pages/NotificationsP
 
 const usersAndOrganizationsPagesTest = test.extend<{
 	assignUsersPage: AssignUsersPage;
-	documentLibraryPage: DocumentLibraryPage;
 	editOrganizationPage: EditOrganizationPage;
 	editUserPage: EditUserPage;
 	exportUserDataPage: ExportUserDataPage;
@@ -50,15 +49,13 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userAssociatedDataJournalPage: UserAssociatedDataJournalPage;
 	userAssociatedDataMessageBoardPage: UserAssociatedDataMessageBoardPage;
 	userAssociatedDataSiteStagingPage: UserAssociatedDataSiteStagingPage;
+	userDocumentLibraryPage: DocumentLibraryPage;
 	userLocaleOptionsPage: UserLocaleOptionsPage;
 	userPersonalSitePage: UserPersonalSitePage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
 }>({
 	assignUsersPage: async ({page}, use) => {
 		await use(new AssignUsersPage(page));
-	},
-	documentLibraryPage: async ({page}, use) => {
-		await use(new DocumentLibraryPage(page));
 	},
 	editOrganizationPage: async ({page}, use) => {
 		await use(new EditOrganizationPage(page));
@@ -113,6 +110,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	userAssociatedDataSiteStagingPage: async ({page}, use) => {
 		await use(new UserAssociatedDataSiteStagingPage(page));
+	},
+	userDocumentLibraryPage: async ({page}, use) => {
+		await use(new DocumentLibraryPage(page));
 	},
 	userLocaleOptionsPage: async ({page}, use) => {
 		await use(new UserLocaleOptionsPage(page));

@@ -789,10 +789,10 @@ test(
 	{tag: '@LPD-48841'},
 	async ({
 		apiHelpers,
-		documentLibraryPage,
 		notificationsPage,
 		page,
 		siteMembershipsPage,
+		userDocumentLibraryPage,
 	}) => {
 		const userAccount1 =
 			await apiHelpers.headlessAdminUser.postUserAccount();
@@ -870,24 +870,26 @@ test(
 			{title: 'Attachment'}
 		);
 
-		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await userDocumentLibraryPage.goto(site.friendlyUrlPath);
 
-		await documentLibraryPage.documentsTable.changeView('Table');
+		await userDocumentLibraryPage.documentsTable.changeView('Table');
 
 		await expect(
-			documentLibraryPage.documentsTable.cell('Attachment')
+			userDocumentLibraryPage.documentsTable.cell('Attachment')
 		).toBeVisible();
 
 		await (
-			await documentLibraryPage.documentsTable.rowActions(document.title)
+			await userDocumentLibraryPage.documentsTable.rowActions(
+				document.title
+			)
 		).click();
-		await documentLibraryPage.shareDocumentLink.click();
+		await userDocumentLibraryPage.shareDocumentLink.click();
 
-		await documentLibraryPage.sharingDialogueInput.fill(
+		await userDocumentLibraryPage.sharingDialogueInput.fill(
 			userAccount2.emailAddress
 		);
 		await page.keyboard.press('Enter');
-		await documentLibraryPage.sharingDialogueShareButton.click();
+		await userDocumentLibraryPage.sharingDialogueShareButton.click();
 
 		await waitForAlert(page, 'Success:The item was shared successfully.');
 

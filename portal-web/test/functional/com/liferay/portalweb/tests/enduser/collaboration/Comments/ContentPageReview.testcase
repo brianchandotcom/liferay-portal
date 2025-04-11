@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Content Page Review";
+	property testray.main.component.name = "Pages > Page Reviews";
 
 	setUp {
 		task ("Set up instance and sign in") {

@@ -5,7 +5,7 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Web Content Administration";
+	property testray.main.component.name = "Web Content";
 
 	static var randomSiteName = StringUtil.randomString(8);
 	static var randomUserEmailAddress = StringUtil.randomString(8);

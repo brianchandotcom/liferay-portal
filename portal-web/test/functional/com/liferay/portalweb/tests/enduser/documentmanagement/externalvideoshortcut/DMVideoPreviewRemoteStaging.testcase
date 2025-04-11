@@ -7,7 +7,7 @@ definition {
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Document Management";
+	property testray.main.component.name = "Documents and Media";
 
 	setUp {
 		TestCase.setUpPortalInstance();

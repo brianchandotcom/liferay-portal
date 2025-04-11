@@ -93,7 +93,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Override
-	public ImportTask deleteImportTask(
+	public ImportTask deleteImportTaskObject(
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName, Object object)
 		throws Exception {
@@ -182,7 +182,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Override
-	public ImportTask postImportTask(
+	public ImportTask postImportTaskObject(
 			String className, String batchExternalReferenceCode,
 			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
@@ -216,7 +216,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Override
-	public ImportTask putImportTask(
+	public ImportTask putImportTaskObject(
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
 			String updateStrategy, Object object)

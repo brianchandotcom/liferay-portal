@@ -5,7 +5,7 @@ definition {
 	property portal.acceptance = "quarantine";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Headless API Builder";
+	property testray.main.component.name = "API Builder";
 
 	setUp {
 		TestCase.setUpPortalInstance();

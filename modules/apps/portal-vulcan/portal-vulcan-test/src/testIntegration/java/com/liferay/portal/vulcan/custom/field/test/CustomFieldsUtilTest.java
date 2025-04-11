@@ -78,9 +78,10 @@ public class CustomFieldsUtilTest {
 		_frLocale = LocaleUtil.fromLanguageId("fr_FR");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
-		_initialCount = _expandoColumnLocalService.getColumnsCount(
-			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(_clazz), "CUSTOM_FIELDS");
+		_initialExpandoColumnsCount =
+			_expandoColumnLocalService.getColumnsCount(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(_clazz), "CUSTOM_FIELDS");
 
 		_expandoTable = ExpandoTestUtil.addTable(
 			_classNameLocalService.getClassNameId(_clazz), "CUSTOM_FIELDS");
@@ -1210,7 +1211,7 @@ public class CustomFieldsUtilTest {
 				TestPropsValues.getCompanyId(), LocaleUtil.getDefault()),
 			LocaleUtil.getDefault());
 
-		Assert.assertEquals(map.toString(), _initialCount + 27, map.size());
+		Assert.assertEquals(map.toString(), _initialExpandoColumnsCount + 27, map.size());
 
 		Assert.assertTrue((boolean)map.get(_expandoColumn1.getName()));
 		Assert.assertArrayEquals(
@@ -1300,7 +1301,7 @@ public class CustomFieldsUtilTest {
 				TestPropsValues.getCompanyId(), LocaleUtil.getDefault()),
 			LocaleUtil.getDefault());
 
-		Assert.assertEquals(map.toString(), _initialCount + 27, map.size());
+		Assert.assertEquals(map.toString(), _initialExpandoColumnsCount + 27, map.size());
 
 		Assert.assertFalse((boolean)map.get(_expandoColumn1.getName()));
 		Assert.assertArrayEquals(
@@ -1490,7 +1491,7 @@ public class CustomFieldsUtilTest {
 	private ExpandoTable _expandoTable;
 
 	private Locale _frLocale;
-	private int _initialCount;
+	private int _initialExpandoColumnsCount;
 	private Locale _ptLocale;
 
 	@DeleteAfterTestRun

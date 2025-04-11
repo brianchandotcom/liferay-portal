@@ -45,13 +45,13 @@ public interface ImportTaskResource {
 
 	public ImportTask deleteImportTask(
 			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName, Object object)
-		throws Exception;
-
-	public ImportTask deleteImportTask(
-			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
 			MultipartBody multipartBody)
+		throws Exception;
+
+	public ImportTask deleteImportTaskObject(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask getImportTask(Long importTaskId) throws Exception;
@@ -78,27 +78,27 @@ public interface ImportTaskResource {
 			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
-			String taskItemDelegateName, Object object)
+			String taskItemDelegateName, MultipartBody multipartBody)
 		throws Exception;
 
-	public ImportTask postImportTask(
+	public ImportTask postImportTaskObject(
 			String className, String batchExternalReferenceCode,
 			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
-			String taskItemDelegateName, MultipartBody multipartBody)
-		throws Exception;
-
-	public ImportTask putImportTask(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName,
-			String updateStrategy, Object object)
+			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask putImportTask(
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
 			String updateStrategy, MultipartBody multipartBody)
+		throws Exception;
+
+	public ImportTask putImportTaskObject(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			String updateStrategy, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

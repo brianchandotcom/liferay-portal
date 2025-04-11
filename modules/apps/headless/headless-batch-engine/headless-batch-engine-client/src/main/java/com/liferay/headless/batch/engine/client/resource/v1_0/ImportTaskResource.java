@@ -34,16 +34,6 @@ public interface ImportTaskResource {
 		return new Builder();
 	}
 
-	public ImportTask deleteImportTask(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName, Object object)
-		throws Exception;
-
 	public ImportTask deleteFormDataImportTask(
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
@@ -54,6 +44,16 @@ public interface ImportTaskResource {
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
 			ImportTask importTask, Map<String, File> multipartFiles)
+		throws Exception;
+
+	public ImportTask deleteImportTask(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask getImportTask(Long importTaskId) throws Exception;
@@ -101,22 +101,6 @@ public interface ImportTaskResource {
 			Long importTaskId)
 		throws Exception;
 
-	public ImportTask postImportTask(
-			String className, String batchExternalReferenceCode,
-			String batchRestrictFields, String callbackURL,
-			String createStrategy, String externalReferenceCode,
-			String fieldNameMapping, String importStrategy,
-			String taskItemDelegateName, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postImportTaskHttpResponse(
-			String className, String batchExternalReferenceCode,
-			String batchRestrictFields, String callbackURL,
-			String createStrategy, String externalReferenceCode,
-			String fieldNameMapping, String importStrategy,
-			String taskItemDelegateName, Object object)
-		throws Exception;
-
 	public ImportTask postFormDataImportTask(
 			String className, String batchExternalReferenceCode,
 			String batchRestrictFields, String callbackURL,
@@ -135,16 +119,20 @@ public interface ImportTaskResource {
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public ImportTask putImportTask(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName,
-			String updateStrategy, Object object)
+	public ImportTask postImportTask(
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
+			String createStrategy, String externalReferenceCode,
+			String fieldNameMapping, String importStrategy,
+			String taskItemDelegateName, Object object)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putImportTaskHttpResponse(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName,
-			String updateStrategy, Object object)
+	public HttpInvoker.HttpResponse postImportTaskHttpResponse(
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
+			String createStrategy, String externalReferenceCode,
+			String fieldNameMapping, String importStrategy,
+			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask putFormDataImportTask(
@@ -159,6 +147,18 @@ public interface ImportTaskResource {
 			String importStrategy, String taskItemDelegateName,
 			String updateStrategy, ImportTask importTask,
 			Map<String, File> multipartFiles)
+		throws Exception;
+
+	public ImportTask putImportTask(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			String updateStrategy, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putImportTaskHttpResponse(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			String updateStrategy, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -269,142 +269,6 @@ public interface ImportTaskResource {
 
 	public static class ImportTaskResourceImpl implements ImportTaskResource {
 
-		public ImportTask deleteImportTask(
-				String className, String callbackURL,
-				String externalReferenceCode, String importStrategy,
-				String taskItemDelegateName, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteImportTaskHttpResponse(
-					className, callbackURL, externalReferenceCode,
-					importStrategy, taskItemDelegateName, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ImportTaskSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
-				String className, String callbackURL,
-				String externalReferenceCode, String importStrategy,
-				String taskItemDelegateName, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (externalReferenceCode != null) {
-				httpInvoker.parameter(
-					"externalReferenceCode",
-					String.valueOf(externalReferenceCode));
-			}
-
-			if (importStrategy != null) {
-				httpInvoker.parameter(
-					"importStrategy", String.valueOf(importStrategy));
-			}
-
-			if (taskItemDelegateName != null) {
-				httpInvoker.parameter(
-					"taskItemDelegateName",
-					String.valueOf(taskItemDelegateName));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-batch-engine/v1.0/import-task/{className}");
-
-			httpInvoker.path("className", className);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public ImportTask deleteFormDataImportTask(
 				String className, String callbackURL,
 				String externalReferenceCode, String importStrategy,
@@ -493,6 +357,142 @@ public interface ImportTaskResource {
 			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
 				httpInvoker.part(entry.getKey(), entry.getValue());
 			}
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (externalReferenceCode != null) {
+				httpInvoker.parameter(
+					"externalReferenceCode",
+					String.valueOf(externalReferenceCode));
+			}
+
+			if (importStrategy != null) {
+				httpInvoker.parameter(
+					"importStrategy", String.valueOf(importStrategy));
+			}
+
+			if (taskItemDelegateName != null) {
+				httpInvoker.parameter(
+					"taskItemDelegateName",
+					String.valueOf(taskItemDelegateName));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-batch-engine/v1.0/import-task/{className}");
+
+			httpInvoker.path("className", className);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public ImportTask deleteImportTask(
+				String className, String callbackURL,
+				String externalReferenceCode, String importStrategy,
+				String taskItemDelegateName, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteImportTaskHttpResponse(
+					className, callbackURL, externalReferenceCode,
+					importStrategy, taskItemDelegateName, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ImportTaskSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteImportTaskHttpResponse(
+				String className, String callbackURL,
+				String externalReferenceCode, String importStrategy,
+				String taskItemDelegateName, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1141,167 +1141,6 @@ public interface ImportTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public ImportTask postImportTask(
-				String className, String batchExternalReferenceCode,
-				String batchRestrictFields, String callbackURL,
-				String createStrategy, String externalReferenceCode,
-				String fieldNameMapping, String importStrategy,
-				String taskItemDelegateName, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse = postImportTaskHttpResponse(
-				className, batchExternalReferenceCode, batchRestrictFields,
-				callbackURL, createStrategy, externalReferenceCode,
-				fieldNameMapping, importStrategy, taskItemDelegateName, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ImportTaskSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse postImportTaskHttpResponse(
-				String className, String batchExternalReferenceCode,
-				String batchRestrictFields, String callbackURL,
-				String createStrategy, String externalReferenceCode,
-				String fieldNameMapping, String importStrategy,
-				String taskItemDelegateName, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (batchExternalReferenceCode != null) {
-				httpInvoker.parameter(
-					"batchExternalReferenceCode",
-					String.valueOf(batchExternalReferenceCode));
-			}
-
-			if (batchRestrictFields != null) {
-				httpInvoker.parameter(
-					"batchRestrictFields", String.valueOf(batchRestrictFields));
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (createStrategy != null) {
-				httpInvoker.parameter(
-					"createStrategy", String.valueOf(createStrategy));
-			}
-
-			if (externalReferenceCode != null) {
-				httpInvoker.parameter(
-					"externalReferenceCode",
-					String.valueOf(externalReferenceCode));
-			}
-
-			if (fieldNameMapping != null) {
-				httpInvoker.parameter(
-					"fieldNameMapping", String.valueOf(fieldNameMapping));
-			}
-
-			if (importStrategy != null) {
-				httpInvoker.parameter(
-					"importStrategy", String.valueOf(importStrategy));
-			}
-
-			if (taskItemDelegateName != null) {
-				httpInvoker.parameter(
-					"taskItemDelegateName",
-					String.valueOf(taskItemDelegateName));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-batch-engine/v1.0/import-task/{className}");
-
-			httpInvoker.path("className", className);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public ImportTask postFormDataImportTask(
 				String className, String batchExternalReferenceCode,
 				String batchRestrictFields, String callbackURL,
@@ -1473,16 +1312,18 @@ public interface ImportTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public ImportTask putImportTask(
-				String className, String callbackURL,
-				String externalReferenceCode, String importStrategy,
-				String taskItemDelegateName, String updateStrategy,
-				Object object)
+		public ImportTask postImportTask(
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, Object object)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = putImportTaskHttpResponse(
-				className, callbackURL, externalReferenceCode, importStrategy,
-				taskItemDelegateName, updateStrategy, object);
+			HttpInvoker.HttpResponse httpResponse = postImportTaskHttpResponse(
+				className, batchExternalReferenceCode, batchRestrictFields,
+				callbackURL, createStrategy, externalReferenceCode,
+				fieldNameMapping, importStrategy, taskItemDelegateName, object);
 
 			String content = httpResponse.getContent();
 
@@ -1543,11 +1384,12 @@ public interface ImportTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putImportTaskHttpResponse(
-				String className, String callbackURL,
-				String externalReferenceCode, String importStrategy,
-				String taskItemDelegateName, String updateStrategy,
-				Object object)
+		public HttpInvoker.HttpResponse postImportTaskHttpResponse(
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1571,17 +1413,38 @@ public interface ImportTaskResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (batchExternalReferenceCode != null) {
+				httpInvoker.parameter(
+					"batchExternalReferenceCode",
+					String.valueOf(batchExternalReferenceCode));
+			}
+
+			if (batchRestrictFields != null) {
+				httpInvoker.parameter(
+					"batchRestrictFields", String.valueOf(batchRestrictFields));
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
 					"callbackURL", String.valueOf(callbackURL));
 			}
 
+			if (createStrategy != null) {
+				httpInvoker.parameter(
+					"createStrategy", String.valueOf(createStrategy));
+			}
+
 			if (externalReferenceCode != null) {
 				httpInvoker.parameter(
 					"externalReferenceCode",
 					String.valueOf(externalReferenceCode));
+			}
+
+			if (fieldNameMapping != null) {
+				httpInvoker.parameter(
+					"fieldNameMapping", String.valueOf(fieldNameMapping));
 			}
 
 			if (importStrategy != null) {
@@ -1593,11 +1456,6 @@ public interface ImportTaskResource {
 				httpInvoker.parameter(
 					"taskItemDelegateName",
 					String.valueOf(taskItemDelegateName));
-			}
-
-			if (updateStrategy != null) {
-				httpInvoker.parameter(
-					"updateStrategy", String.valueOf(updateStrategy));
 			}
 
 			httpInvoker.path(
@@ -1703,6 +1561,148 @@ public interface ImportTaskResource {
 			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
 				httpInvoker.part(entry.getKey(), entry.getValue());
 			}
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (externalReferenceCode != null) {
+				httpInvoker.parameter(
+					"externalReferenceCode",
+					String.valueOf(externalReferenceCode));
+			}
+
+			if (importStrategy != null) {
+				httpInvoker.parameter(
+					"importStrategy", String.valueOf(importStrategy));
+			}
+
+			if (taskItemDelegateName != null) {
+				httpInvoker.parameter(
+					"taskItemDelegateName",
+					String.valueOf(taskItemDelegateName));
+			}
+
+			if (updateStrategy != null) {
+				httpInvoker.parameter(
+					"updateStrategy", String.valueOf(updateStrategy));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-batch-engine/v1.0/import-task/{className}");
+
+			httpInvoker.path("className", className);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public ImportTask putImportTask(
+				String className, String callbackURL,
+				String externalReferenceCode, String importStrategy,
+				String taskItemDelegateName, String updateStrategy,
+				Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putImportTaskHttpResponse(
+				className, callbackURL, externalReferenceCode, importStrategy,
+				taskItemDelegateName, updateStrategy, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ImportTaskSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse putImportTaskHttpResponse(
+				String className, String callbackURL,
+				String externalReferenceCode, String importStrategy,
+				String taskItemDelegateName, String updateStrategy,
+				Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

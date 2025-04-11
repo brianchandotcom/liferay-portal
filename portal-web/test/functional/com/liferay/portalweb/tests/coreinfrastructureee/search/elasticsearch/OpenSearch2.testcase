@@ -4,7 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.suite.search.engine = "opensearch2";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Elasticsearch Impl";
+	property testray.main.component.name = "Search Infrastructure > Elasticsearch Connector";
 
 	setUp {
 		TestCase.setUpPortalInstance();

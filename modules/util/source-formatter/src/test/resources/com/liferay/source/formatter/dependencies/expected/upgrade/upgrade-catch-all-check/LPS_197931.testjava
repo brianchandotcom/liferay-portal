@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import java.math.BigDecimal;
+
 /**
  * @author Kyle Miho
  */
@@ -12,7 +14,7 @@ public class LPS_197931 {
 
 	public void method() {
 		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
-			commerceOrderItem.getQuantity();
+			BigDecimal.valueOf(commerceOrderItem.getQuantity());
 		}
 	}
 

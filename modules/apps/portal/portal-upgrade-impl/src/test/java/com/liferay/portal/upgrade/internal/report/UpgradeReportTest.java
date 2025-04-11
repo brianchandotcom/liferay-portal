@@ -59,17 +59,18 @@ public class UpgradeReportTest {
 				new ArrayList<String>() {
 					{
 						add(
-							"Completed upgrade process " +
-								"fr.test.TestUpgradeProcess in 30000000 ms");
+							"Completed upgrade process a.test.UpgradeTest in " +
+								"10000 ms");
 						add(
-							"Completed com.test.TestUpgradeProcess in " +
-								"20000000 ms");
+							"Completed upgrade process com.test.UpgradeTest " +
+								"in 20000 ms");
 						add(
 							StringBundler.concat(
 								"Completed upgrade process ",
-								"com.test.UpgradeAssetCategory - Modifying ",
-								"table AssetCategory to alter the type of the ",
-								"column title to TEXT null in 10000000 ms"));
+								"com.test.UpgradeTestTable - Modifying table ",
+								"TestTable to alter the type of the ",
+								"TestColumn testColumnName to testTypeName ",
+								"null in 30000 ms"));
 					}
 				}
 			).build()
@@ -82,20 +83,22 @@ public class UpgradeReportTest {
 		List<?> runningUpgradeProcesses = (List<?>)reportDataDiagnostics.get(
 			"longest.upgrade.processes");
 
-		Assert.assertTrue(runningUpgradeProcesses.size() == 3);
+		Assert.assertEquals(
+			runningUpgradeProcesses.toString(), 3,
+			runningUpgradeProcesses.size());
 
 		Assert.assertEquals(
-			"fr.test.TestUpgradeProcess took 30000000 ms to complete\n",
+			"com.test.UpgradeTestTable took 30000 ms to complete\n",
 			runningUpgradeProcesses.get(
 				0
 			).toString());
 		Assert.assertEquals(
-			"com.test.TestUpgradeProcess took 20000000 ms to complete\n",
+			"com.test.UpgradeTest took 20000 ms to complete\n",
 			runningUpgradeProcesses.get(
 				1
 			).toString());
 		Assert.assertEquals(
-			"com.test.UpgradeAssetCategory took 10000000 ms to complete\n",
+			"a.test.UpgradeTest took 10000 ms to complete\n",
 			runningUpgradeProcesses.get(
 				2
 			).toString());

@@ -74,8 +74,6 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.lang.model.SourceVersion;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.logging.log4j.ThreadContext;
@@ -572,17 +570,13 @@ public class UpgradeReport {
 					String[] parts = StringUtil.split(
 						message, StringPool.SPACE);
 
-					if (ArrayUtil.contains(
-							parts, PortalUpgradeProcess.class.getName())) {
+					String upgradeProcessClassName = parts[3];
+
+					if (upgradeProcessClassName.equals(
+							PortalUpgradeProcess.class.getName())) {
 
 						continue;
 					}
-
-					String className = ArrayUtil.filter(
-						parts,
-						part ->
-							SourceVersion.isName(part) &&
-							!SourceVersion.isIdentifier(part))[0];
 
 					long duration = GetterUtil.getLong(parts[parts.length - 2]);
 
@@ -590,7 +584,8 @@ public class UpgradeReport {
 							PropsValues.
 								UPGRADE_REPORT_UPGRADE_PROCESS_THRESHOLD) {
 
-						upgradeProcessDurations.put(className, duration);
+						upgradeProcessDurations.put(
+							upgradeProcessClassName, duration);
 					}
 				}
 

@@ -366,7 +366,12 @@ public class JournalArticleUtil {
 					Calendar calendar = CalendarFactoryUtil.getCalendar(
 						user.getTimeZone());
 
-					calendar.setTime(article.getDisplayDate());
+					if (article.getDisplayDate() != null) {
+						calendar.setTime(article.getDisplayDate());
+					}
+					else {
+						calendar.setTime(new Date());
+					}
 
 					displayDateMonth = calendar.get(Calendar.MONTH);
 					displayDateDay = calendar.get(Calendar.DATE);

@@ -1377,9 +1377,9 @@ public class CustomFieldsUtilTest {
 		_assertEquals(
 			customField1.getCustomValue(), customField2.getCustomValue());
 
-		Assert.assertEquals(customField1.getName(), customField2.getName());
 		Assert.assertEquals(
 			customField1.getDataType(), customField2.getDataType());
+		Assert.assertEquals(customField1.getName(), customField2.getName());
 	}
 
 	private void _assertEquals(

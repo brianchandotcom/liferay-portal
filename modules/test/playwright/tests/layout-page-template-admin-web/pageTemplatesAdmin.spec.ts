@@ -73,7 +73,7 @@ test.describe('Convert content pages', () => {
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			await pageEditorPage.clickOnAction('Convert to Page Template');
+			await pageEditorPage.clickPageAction('Convert to Page Template');
 
 			// Save in a new page template set
 
@@ -159,7 +159,7 @@ test.describe('Convert content pages', () => {
 
 			// Convert to page template
 
-			await pageEditorPage.clickOnAction('Convert to Page Template');
+			await pageEditorPage.clickPageAction('Convert to Page Template');
 
 			// Save page template
 

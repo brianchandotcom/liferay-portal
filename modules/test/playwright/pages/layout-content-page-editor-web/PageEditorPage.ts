@@ -410,6 +410,43 @@ export class PageEditorPage {
 		});
 	}
 
+	async clickFragmentOption(
+		fragmentId: string,
+		name: string,
+		isDesktop = true
+	) {
+		await this.selectFragment(fragmentId, isDesktop);
+
+		await this.page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
+		await this.page
+			.locator('.dropdown-menu.show')
+			.getByText(name, {exact: true})
+			.click();
+	}
+
+	async clickPageAction(action: string) {
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				target: this.page.getByRole('menuitem', {
+					name: action,
+				}),
+				trigger: this.page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			await this.page
+				.getByRole('menuitem', {
+					name: action,
+				})
+				.click({timeout: 1000});
+		}).toPass();
+	}
+
 	async clickPageContentAction(
 		action: string,
 		name: string,
@@ -445,25 +482,6 @@ export class PageEditorPage {
 		await this.page
 			.getByText('Select Experience')
 			.waitFor({state: 'hidden'});
-	}
-
-	async clickOnAction(action: string) {
-		await expect(async () => {
-			await clickAndExpectToBeVisible({
-				target: this.page.getByRole('menuitem', {
-					name: action,
-				}),
-				trigger: this.page
-					.locator('.control-menu-nav-item')
-					.getByLabel('Options', {exact: true}),
-			});
-
-			await this.page
-				.getByRole('menuitem', {
-					name: action,
-				})
-				.click({timeout: 1000});
-		}).toPass();
 	}
 
 	async copyFragment(fragmentId: string) {
@@ -944,24 +962,6 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async clickFragmentOption(
-		fragmentId: string,
-		name: string,
-		isDesktop = true
-	) {
-		await this.selectFragment(fragmentId, isDesktop);
-
-		await this.page
-			.locator('.page-editor__topper__item')
-			.getByRole('button', {name: 'Options'})
-			.click();
-
-		await this.page
-			.locator('.dropdown-menu.show')
-			.getByText(name, {exact: true})
-			.click();
-	}
-
 	async isActive(fragmentId: string, isDesktop = true) {
 		const editMode = await this.editModeButton.evaluate(
 			(element) => element.textContent
@@ -986,7 +986,13 @@ export class PageEditorPage {
 		);
 	}
 
-	async mapAction({entry, fragmentId}: {entry: string; fragmentId: string}) {
+	async mapObjectAction({
+		entry,
+		fragmentId,
+	}: {
+		entry: string;
+		fragmentId: string;
+	}) {
 		await this.selectFragment(fragmentId);
 
 		await this.changeConfiguration({

@@ -733,12 +733,12 @@ test(
 
 		// Map standalone action to buttons
 
-		await pageEditorPage.mapAction({
+		await pageEditorPage.mapObjectAction({
 			entry: String(firstObjectEntry.id),
 			fragmentId: firstButtonId,
 		});
 
-		await pageEditorPage.mapAction({
+		await pageEditorPage.mapObjectAction({
 			entry: String(secondObjectEntry.id),
 			fragmentId: secondButtonId,
 		});

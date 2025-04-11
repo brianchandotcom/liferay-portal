@@ -379,8 +379,8 @@ public class CommerceServiceUpgradeStepRegistrator
 			new com.liferay.commerce.internal.upgrade.v7_0_0.
 				CommerceAddressUpgradeProcess(
 					_addressLocalService, _accountEntryLocalService,
-					_listTypeLocalService, _phoneLocalService,
-					_userLocalService));
+					_companyLocalService, _listTypeLocalService,
+					_phoneLocalService, _userLocalService));
 
 		registry.register(
 			"7.0.0", "7.1.0",

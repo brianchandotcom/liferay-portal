@@ -94,10 +94,6 @@ const BusinessEventsItemDetails = () => {
 		});
 	}, [fetchBusinessEvent]);
 
-	const openTicket = useCallback((ticket: ITicket) => {
-		window.open(ticket.link, '_blank', 'noreferrer');
-	}, []);
-
 	useEffect(() => {
 		if (businessEvent && tickets) {
 			const associatedTickets = JSON.parse(

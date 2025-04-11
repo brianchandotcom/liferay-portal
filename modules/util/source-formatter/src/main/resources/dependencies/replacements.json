@@ -4754,8 +4754,12 @@
 		"classNames": [
 			"CommerceOrderItem"
 		],
-		"from": "getQuantity()",
-		"issueKey": "LPS-197931"
+		"from": "regex:(?<!\\.valueOf\\()\\b(?<variableName>_?\\w+)\\.(?<methodName>getQuantity\\(\\))",
+		"issueKey": "LPS-197931",
+		"newImports": [
+			"java.math.BigDecimal"
+		],
+		"to": "BigDecimal.valueOf(${variableName}.${methodName})"
 	},
 	{
 		"classNames": [

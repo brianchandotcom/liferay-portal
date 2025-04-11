@@ -14,7 +14,7 @@ import classnames from 'classnames';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const InfoBoxModalAddressInput = ({
 	additionalProps,
@@ -313,6 +313,17 @@ const InfoBoxModalAddressInput = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const filteredSubtypeItems = useMemo(
+		() =>
+			subtypes.filter(
+				(item) =>
+					item.name.match(
+						new RegExp(currentAddress?.addressSubtype || '', 'i')
+					) !== null
+			),
+		[currentAddress?.addressSubtype, subtypes]
+	);
+
 	return (
 		<>
 			<label htmlFor="infoBoxModalAddressInput">
@@ -422,8 +433,9 @@ const InfoBoxModalAddressInput = ({
 													.addressSubtypeConfiguration
 													.billingAndShipping)
 								}
+								filterKey="name"
 								id="infoBoxModalAddressSubtypeInput"
-								items={subtypes}
+								items={filteredSubtypeItems}
 								menuTrigger="focus"
 								name="infoBoxModalAddressSubtypeInput"
 								onChange={(value) => {
@@ -439,15 +451,15 @@ const InfoBoxModalAddressInput = ({
 										(item) =>
 											item.key ===
 											currentAddress?.addressSubtype
-									)?.name || ''
+									)?.name || currentAddress?.addressSubtype
 								}
 							>
 								{(item) => (
 									<Autocomplete.Item
 										key={item.key}
-										value={item.key}
+										textValue={item.key}
 									>
-										{item.name}
+										<div>{item.name}</div>
 									</Autocomplete.Item>
 								)}
 							</Autocomplete>

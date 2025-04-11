@@ -16,6 +16,7 @@ import React, {
 	SetStateAction,
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -339,6 +340,17 @@ function AddressSelector({
 		setIsFormValid(!Object.keys(errors).length);
 	}, [errors, setIsFormValid]);
 
+	const filteredSubtypeItems = useMemo(
+		() =>
+			subtypes.filter(
+				(item) =>
+					item.name.match(
+						new RegExp(currentAddress?.addressSubtype || '', 'i')
+					) !== null
+			),
+		[currentAddress?.addressSubtype, subtypes]
+	);
+
 	return (
 		<>
 			<label htmlFor={`${namespace}addressId`}>
@@ -426,8 +438,9 @@ function AddressSelector({
 										? addressSubtypeConfiguration.shipping
 										: addressSubtypeConfiguration.billingAndShipping)
 								}
+								filterKey="name"
 								id={`${namespace}addressSubtype`}
-								items={subtypes}
+								items={filteredSubtypeItems}
 								menuTrigger="focus"
 								name="addressSubtype"
 								onChange={(value: string) => {
@@ -442,15 +455,15 @@ function AddressSelector({
 										(item) =>
 											item.key ===
 											currentAddress?.addressSubtype
-									)?.name || ''
+									)?.name || currentAddress?.addressSubtype
 								}
 							>
 								{(item: IListTypeEntry) => (
 									<Autocomplete.Item
 										key={item.key}
-										value={item.key}
+										textValue={item.key}
 									>
-										{item.name}
+										<div>{item.name}</div>
 									</Autocomplete.Item>
 								)}
 							</Autocomplete>

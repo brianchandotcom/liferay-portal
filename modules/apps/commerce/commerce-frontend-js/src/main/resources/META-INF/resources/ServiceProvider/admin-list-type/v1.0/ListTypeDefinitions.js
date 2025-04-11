@@ -21,6 +21,7 @@ export default function Account(basePath) {
 			AJAX.GET(
 				resolvePath(basePath, externalReferenceCode) +
 					'/list-type-entries',
+				{},
 				...params
 			),
 	};

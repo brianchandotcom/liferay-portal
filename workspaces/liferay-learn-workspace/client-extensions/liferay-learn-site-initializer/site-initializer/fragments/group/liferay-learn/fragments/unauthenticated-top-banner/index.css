@@ -67,9 +67,14 @@
 	margin-top: 100px;
 }
 
-.navigation-container {
-	margin-top: -100px;
-	position: fixed;
+.navigation-margin-true {
+	margin-top: 50px !important;
+	top: 50px !important;
+}
+
+.public-site-navigation-container {
+	margin-top: 0;
+	top: 0;
 }
 
 @media(max-width: 581px) {

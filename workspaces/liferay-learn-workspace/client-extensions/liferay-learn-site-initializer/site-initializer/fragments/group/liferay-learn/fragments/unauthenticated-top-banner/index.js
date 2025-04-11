@@ -7,21 +7,15 @@ if (!themeDisplay.isSignedIn()) {
 	const publicSiteNavigationContainer = document.querySelector(
 		'.public-site-navigation-container'
 	);
-	publicSiteNavigationContainer.style.marginTop = '50px';
-	publicSiteNavigationContainer.style.top = '50px';
+
+	publicSiteNavigationContainer.classList.add('navigation-margin-true');
 
 	document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('.icon-x').addEventListener('click', () => {
 			document.querySelector('.banner-sign-in').style.display = 'none';
-			publicSiteNavigationContainer.style.marginTop = '0';
-			publicSiteNavigationContainer.style.top = '0';
-
-			const navigationContainer = document.querySelector(
-				'.navigation-container'
+			publicSiteNavigationContainer.classList.remove(
+				'navigation-margin-true'
 			);
-
-			navigationContainer.style.marginTop = '0';
-			navigationContainer.style.position = 'inherit';
 		});
 	});
 }

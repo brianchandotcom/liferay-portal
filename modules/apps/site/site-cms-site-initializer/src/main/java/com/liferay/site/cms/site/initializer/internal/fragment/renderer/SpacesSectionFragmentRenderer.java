@@ -133,6 +133,10 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 						"id", assetLibrary.getId()
 					).put(
 						"name", assetLibrary.getName()
+					).put(
+						"url",
+						themeDisplay.getPathFriendlyURLPublic() +
+							"/cms/asset-library/" + assetLibrary.getId()
 					)),
 				assetLibrariesPage.getTotalCount());
 		}

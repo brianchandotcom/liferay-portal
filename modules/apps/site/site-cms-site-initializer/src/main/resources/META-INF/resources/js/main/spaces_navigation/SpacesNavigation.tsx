@@ -16,6 +16,7 @@ import SpaceSticker from '../components/SpaceSticker';
 interface AssetLibrary {
 	id: number;
 	name: string;
+	url: string;
 }
 
 interface SpacesNavigationProps {
@@ -63,7 +64,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 				<ul className="menubar-primary nav nav-stacked" role="menu">
 					{assetLibraries.map((assetLibrary) => (
 						<li className="nav-item" key={assetLibrary.id}>
-							<ClayLink className="nav-link" href="#">
+							<ClayLink className="nav-link" href={assetLibrary.url}>
 								<SpaceSticker name={assetLibrary.name} />
 							</ClayLink>
 						</li>

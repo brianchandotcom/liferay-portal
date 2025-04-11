@@ -8,6 +8,7 @@ import {
 	Marketplace,
 	MarketplaceRest,
 	MarketplaceView,
+	PlacedOrder,
 	Product,
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
@@ -29,18 +30,22 @@ async function fetchFragmentBlob(
 	return response.blob();
 }
 
-function getProductAttachmentBlob(
+function getProductVirtualEntryBlob(
 	marketplaceRest: MarketplaceRest,
-	product: Product
+	placedOrder: PlacedOrder
 ): Promise<Blob> {
-	if (!product.attachments || !product.attachments.length) {
-		throw new Error('Product has no attachments.');
+	const hasPlacedOrderItems = placedOrder.placedOrderItems.some(
+		(placedOrderItem) => placedOrderItem?.virtualItems?.length
+	);
+
+	if (!hasPlacedOrderItems) {
+		throw new Error('Product has no virtual entries.');
 	}
 
-	return fetchFragmentBlob(
-		marketplaceRest,
-		new URL(product.attachments[0].src).pathname
-	);
+	const [virtualItemURL] =
+		placedOrder.placedOrderItems[0].virtualItemURLs ?? [];
+
+	return fetchFragmentBlob(marketplaceRest, virtualItemURL);
 }
 
 interface MarketplaceViewsProps {
@@ -113,9 +118,14 @@ export default function MarketplaceViews({
 
 				await marketplaceRest.checkoutCart(cart);
 
-				const blob = await getProductAttachmentBlob(
+				const placedOrder = await marketplaceRest.getPlacedOrder(
+					cart.id,
+					new URLSearchParams({nestedFields: 'placedOrderItems'})
+				);
+
+				const blob = await getProductVirtualEntryBlob(
 					marketplaceRest,
-					product
+					placedOrder
 				);
 
 				if (blob) {

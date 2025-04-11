@@ -11,27 +11,6 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "P2S3_ACCESS_TYPE",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "ANYONE_SIGNED_IN",
-					"key": "anyoneSignedIn",
-					"name": "Anyone Signed In"
-				},
-				{
-					"externalReferenceCode": "ENROLLED_ONLY",
-					"key": "enrolledOnly",
-					"name": "Enrolled Only"
-				},
-				{
-					"externalReferenceCode": "GUEST",
-					"key": "guest",
-					"name": "Guest"
-				}
-			],
-			"name": "P2S3 Access Type"
-		},
-		{
 			"externalReferenceCode": "P2S3_EXPERTISE_LEVELS",
 			"listTypeEntries": [
 				{

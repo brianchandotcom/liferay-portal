@@ -38,6 +38,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -113,6 +114,9 @@ public class ResourceOpenAPIParser {
 						});
 				});
 		}
+
+		javaMethodSignatures.sort(
+			Comparator.comparing(JavaMethodSignature::getMethodName));
 
 		return javaMethodSignatures;
 	}

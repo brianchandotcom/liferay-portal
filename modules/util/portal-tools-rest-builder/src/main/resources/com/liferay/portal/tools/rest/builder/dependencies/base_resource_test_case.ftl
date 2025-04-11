@@ -4111,7 +4111,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			/>
 		</#if>
 
-		<#if addGetterMethod>
+		<#if addGetterMethod!false>
 			<#if defaultImplementationGetterMethod>
 				test${testJavaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${varName})
 			<#else>

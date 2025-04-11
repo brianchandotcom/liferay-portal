@@ -5,17 +5,20 @@
 
 export default function addOnClickToCreationMenuItems(
 	items: {data: {action: string}}[],
-	actions: Record<string, (data: any, additionalProps?: any) => void>,
+	actions: Record<
+		string,
+		(data: any, additionalProps?: any, loadData?: () => {}) => void
+	>,
 	additionalProps?: any
 ) {
 	return items.map((item: {data?: {action?: string}}) => {
 		return {
 			...item,
-			onClick() {
+			onClick({loadData}: {loadData?: () => {}}) {
 				const action = item?.data?.action;
 
 				if (action) {
-					actions[action](item.data, additionalProps);
+					actions[action](item.data, additionalProps, loadData);
 				}
 			},
 		};

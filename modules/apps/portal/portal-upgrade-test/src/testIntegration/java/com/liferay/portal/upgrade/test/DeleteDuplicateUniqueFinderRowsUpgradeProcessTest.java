@@ -61,7 +61,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortalPreferences()
+	public void testDuplicateRemovalProcessOnPortalPreferencesTable()
 		throws Exception {
 
 		_dropIndexes("PortalPreferences", "ownerType");
@@ -99,7 +99,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortletItem() throws Exception {
+	public void testDuplicateRemovalProcessOnPortletItemTable() throws Exception {
 		_dropIndexes("PortletItem", "groupId");
 
 		PortletItem portletItem = PortletItemLocalServiceUtil.createPortletItem(
@@ -138,7 +138,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnSocialActivitySetting()
+	public void testDuplicateRemovalProcessOnSocialActivitySettingTable()
 		throws Exception {
 
 		_dropIndexes("SocialActivitySetting", "groupId");
@@ -188,7 +188,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnTicket() throws Exception {
+	public void testDuplicateRemovalProcessOnTicketTable() throws Exception {
 		_dropIndexes("Ticket", "key_");
 
 		Ticket ticket = TicketLocalServiceUtil.createTicket(1);

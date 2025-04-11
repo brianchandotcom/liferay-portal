@@ -255,11 +255,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					break;
 				}
 
-				if (_blogsEntryModelResourcePermission.contains(
+				if (!_blogsEntryModelResourcePermission.contains(
 						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					blogsEntries1.add(blogsEntry);
+					continue;
 				}
+
+				blogsEntries1.add(blogsEntry);
 			}
 		}
 
@@ -481,11 +483,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					break;
 				}
 
-				if (_blogsEntryModelResourcePermission.contains(
+				if (!_blogsEntryModelResourcePermission.contains(
 						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					blogsEntries1.add(blogsEntry);
+					continue;
 				}
+
+				blogsEntries1.add(blogsEntry);
 			}
 		}
 
@@ -567,11 +571,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					break;
 				}
 
-				if (_blogsEntryModelResourcePermission.contains(
+				if (!_blogsEntryModelResourcePermission.contains(
 						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					blogsEntries1.add(blogsEntry);
+					continue;
 				}
+
+				blogsEntries1.add(blogsEntry);
 			}
 		}
 

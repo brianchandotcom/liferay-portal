@@ -14,6 +14,7 @@ import StateContextProvider, {
 import {Picklist} from '../../types/Picklist';
 import PicklistBuilderManagementBar from './PicklistBuilderManagementBar';
 import PicklistFields from './PicklistFields';
+import PicklistOptions from './PicklistOptions';
 
 export default function PicklistBuilder({
 	state,
@@ -33,6 +34,8 @@ export default function PicklistBuilder({
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
 					<PicklistFields />
+
+					<PicklistOptions />
 				</ClayLayout.ContainerFluid>
 			</div>
 		</StateContextProvider>

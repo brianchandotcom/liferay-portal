@@ -5280,6 +5280,10 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.0" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-mysql84">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-oracle">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
 	</target>
@@ -6254,6 +6258,10 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-upgrade-tomcat90-mysql80">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.0" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-mysql84">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-oracle">
@@ -7519,6 +7527,14 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="modules-integration-db-partition-mysql84">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="mysql"
+			database.version="8.4"
+		/>
+	</target>
+
 	<target name="modules-integration-db-partition-postgresql">
 		<run-modules-integration-test
 			database.partition.enabled="true"
@@ -7639,6 +7655,10 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="modules-integration-mysql80_stable">
 		<run-modules-integration-test database.type="mysql" database.version="8.0" />
+	</target>
+
+	<target name="modules-integration-mysql84">
+		<run-modules-integration-test database.type="mysql" database.version="8.4" />
 	</target>
 
 	<target name="modules-integration-opensearch2-mysql57">

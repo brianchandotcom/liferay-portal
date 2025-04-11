@@ -1414,6 +1414,7 @@ public class FreeMarkerTool {
 		return new JavaMethodSignature(
 			javaMethodSignature.getPath(), javaMethodSignature.getPathItem(),
 			javaMethodSignature.getOperation(),
+			javaMethodSignature.getOperationId(),
 			javaMethodSignature.getRequestBodyMediaTypes(),
 			javaMethodSignature.getSchemaName(),
 			javaMethodSignature.getJavaMethodParameters(),

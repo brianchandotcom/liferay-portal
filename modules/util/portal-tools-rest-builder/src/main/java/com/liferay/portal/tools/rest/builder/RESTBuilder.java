@@ -1290,7 +1290,7 @@ public class RESTBuilder {
 		MapUtil.merge(allExternalSchemas, schemas);
 
 		for (String schemaName : schemas.keySet()) {
-			Set<String> methodNames = new HashSet<>();
+			Set<String> operationIds = new HashSet<>();
 
 			List<JavaMethodSignature> javaMethodSignatures =
 				freeMarkerTool.getResourceJavaMethodSignatures(
@@ -1299,15 +1299,15 @@ public class RESTBuilder {
 			for (JavaMethodSignature javaMethodSignature :
 					javaMethodSignatures) {
 
-				String methodName = javaMethodSignature.getMethodName();
+				String operationId = javaMethodSignature.getOperationId();
 
-				if (methodNames.contains(methodName) ||
-					methodName.endsWith("Batch")) {
+				if (operationIds.contains(operationId) ||
+					operationId.endsWith("Batch")) {
 
 					continue;
 				}
 
-				methodNames.add(methodName);
+				operationIds.add(operationId);
 
 				int x = yamlString.indexOf(
 					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
@@ -1360,7 +1360,7 @@ public class RESTBuilder {
 
 				yamlString = StringBundler.concat(
 					yamlString.substring(0, z + 1), leadingWhiteSpace,
-					"operationId: ", methodName, "\n",
+					"operationId: ", operationId, "\n",
 					yamlString.substring(z + 1));
 			}
 		}

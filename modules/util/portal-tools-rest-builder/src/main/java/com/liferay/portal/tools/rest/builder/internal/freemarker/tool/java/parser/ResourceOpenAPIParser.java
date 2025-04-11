@@ -97,7 +97,7 @@ public class ResourceOpenAPIParser {
 
 							JavaMethodSignature javaMethodSignature =
 								new JavaMethodSignature(
-									path, pathItem, operation,
+									path, pathItem, operation, methodName,
 									requestBodyMediaTypes, schemaName,
 									javaMethodParameters, methodName,
 									returnType,
@@ -543,12 +543,15 @@ public class ResourceOpenAPIParser {
 				new JavaMethodParameter("object", "Object"));
 		}
 
+		String batchMethodName = _getBatchMethodName(
+			batchOperationType, methodName);
+
 		javaMethodSignatures.add(
 			new JavaMethodSignature(
 				batchPath, javaMethodSignature.getPathItem(), batchOperation,
+				batchMethodName,
 				Collections.singleton(ContentTypes.APPLICATION_JSON),
-				schemaName, javaMethodParameters,
-				_getBatchMethodName(batchOperationType, methodName),
+				schemaName, javaMethodParameters, batchMethodName,
 				"javax.ws.rs.core.Response", parentSchemaName));
 	}
 

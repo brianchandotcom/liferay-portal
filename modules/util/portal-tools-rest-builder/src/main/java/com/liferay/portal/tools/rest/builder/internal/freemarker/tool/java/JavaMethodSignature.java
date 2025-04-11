@@ -19,7 +19,7 @@ import java.util.Set;
 public class JavaMethodSignature {
 
 	public JavaMethodSignature(
-		String path, PathItem pathItem, Operation operation,
+		String path, PathItem pathItem, Operation operation, String operationId,
 		Set<String> requestBodyMediaTypes, String schemaName,
 		List<JavaMethodParameter> javaMethodParameters, String methodName,
 		String returnType, String parentSchemaName) {
@@ -27,6 +27,7 @@ public class JavaMethodSignature {
 		_path = path;
 		_pathItem = pathItem;
 		_operation = operation;
+		_operationId = operationId;
 		_requestBodyMediaTypes = requestBodyMediaTypes;
 		_schemaName = schemaName;
 		_javaMethodParameters = javaMethodParameters;
@@ -56,6 +57,10 @@ public class JavaMethodSignature {
 
 	public Operation getOperation() {
 		return _operation;
+	}
+
+	public String getOperationId() {
+		return _operationId;
 	}
 
 	public String getParentSchemaName() {
@@ -89,6 +94,7 @@ public class JavaMethodSignature {
 	private final List<JavaMethodParameter> _javaMethodParameters;
 	private final String _methodName;
 	private final Operation _operation;
+	private final String _operationId;
 	private final String _parentSchemaName;
 	private final String _path;
 	private final PathItem _pathItem;

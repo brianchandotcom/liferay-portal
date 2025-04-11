@@ -5,7 +5,6 @@ $toolbarHeight: 6.875rem;
 $toolbarZIndex: 971;
 
 $productMenuTransitionDuration: 0.5s;
-$productMenuWidth: 320px;
 
 .translation {
 	$component: &;
@@ -55,16 +54,6 @@ $productMenuWidth: 320px;
 				width ease $productMenuTransitionDuration;
 			width: 100%;
 			z-index: $toolbarZIndex;
-
-			body.open & {
-				left: $productMenuWidth;
-				width: calc(100% - #{$productMenuWidth});
-
-				@media (max-width: 768px) {
-					left: 0;
-					width: 100%;
-				}
-			}
 
 			> .container-fluid {
 				padding: 0;

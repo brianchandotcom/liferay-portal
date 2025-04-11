@@ -8,17 +8,21 @@ import fs from 'fs/promises';
 import path from 'path';
 
 export default async function runEsbuild(esbuildConfig, configName) {
-	await Promise.all([
+	const [result] = await Promise.all([
 		doRunEsbuild(esbuildConfig, configName),
 		writeDebugEsbuildConfig(esbuildConfig, configName),
 	]);
+
+	return result;
 }
 
 async function doRunEsbuild(esbuildesbuildConfig, configName) {
+	let result;
+
 	const start = performance.now();
 
 	try {
-		await esbuild.build({
+		result = await esbuild.build({
 			define: {
 
 				// Flag to use React 16 instead of React 18. See render.tsx in frontend-js-react-web.
@@ -40,6 +44,8 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 	console.log(
 		`⌛ Esbuild for ${configName} took: ${(lapse / 1000).toFixed(3)} s`
 	);
+
+	return result;
 }
 
 async function writeDebugEsbuildConfig(esbuildConfig, configName) {

@@ -968,9 +968,9 @@ public class WorkflowLog implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		NODE_ENTRY("NodeEntry"), TASK_ASSIGN("TaskAssign"),
-		TASK_COMPLETION("TaskCompletion"), TASK_UPDATE("TaskUpdate"),
-		TRANSITION("Transition");
+		INSTANCE_FAIL("InstanceFail"), NODE_ENTRY("NodeEntry"),
+		TASK_ASSIGN("TaskAssign"), TASK_COMPLETION("TaskCompletion"),
+		TASK_UPDATE("TaskUpdate"), TRANSITION("Transition");
 
 		@JsonCreator
 		public static Type create(String value) {

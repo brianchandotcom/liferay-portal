@@ -21,9 +21,7 @@
  *
  * Will return '/o/data-sample/123
  *
- * It also admits encoded URL
- * url = '/o/data-sample/%7Bid%7D'
- *
+ * See test/utils/actionItems/formatActionURL.ts for more examples
  */
 
 import getValueFromItem from '../getValueFromItem';
@@ -41,10 +39,9 @@ const formatActionURL = function (
 		/(?:%7B|{)(.*?)(?:%7D|})/g,
 		(match, key) => {
 			const value = getValueFromItem(item, key.split('.'));
-			const isFullyWrapped = match.length === url.length;
 
-			return isFullyWrapped
-				? encodeURI(value)
+			return match.length === url.length
+				? value
 				: encodeURIComponent(value);
 		}
 	);

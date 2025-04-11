@@ -1408,6 +1408,178 @@
 			"enableComments": true,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
+			"externalReferenceCode": "P2S3_KNOWLEDGE_ARTICLE",
+			"label": {
+				"en_US": "P2S3 Knowledge Article"
+			},
+			"modifiable": true,
+			"name": "P2S3KnowledgeArticle",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "CONTENT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Content"
+					},
+					"localized": true,
+					"name": "content",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "KNOWLEDGE_ARTICLE_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Knowledge Article Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_KNOWLEDGE_ARTICLE_TYPES",
+					"localized": false,
+					"name": "knowledgeArticleType",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "LEGACY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Legacy"
+					},
+					"localized": false,
+					"name": "legacy",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Boolean",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "SHOW_DISCLAIMER_MESSAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Show Disclaimer Message"
+					},
+					"localized": false,
+					"name": "showDisclaimerMessage",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Boolean",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TICKET_NUMBER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Ticket Number"
+					},
+					"localized": false,
+					"name": "ticketNumber",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "URL"
+					},
+					"localized": false,
+					"name": "url",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Knowledge Articles"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3knowledgearticles",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "name"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": true,
 			"externalReferenceCode": "P2S3_LEARNING_PATH",
 			"label": {
 				"en_US": "P2S3 Learning Path"

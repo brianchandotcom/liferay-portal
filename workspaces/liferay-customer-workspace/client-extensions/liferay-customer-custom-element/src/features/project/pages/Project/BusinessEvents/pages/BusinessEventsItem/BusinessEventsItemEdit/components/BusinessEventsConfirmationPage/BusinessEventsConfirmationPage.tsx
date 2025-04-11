@@ -12,8 +12,8 @@ import BusinessEventsModal from '../../../../../components/BusinessEventsModal/B
 import './BusinessEventsConfirmationPage.css';
 
 interface IBusinessEventsConfirmationPageProps {
-	eventName: string | undefined;
 	handleSubmit: () => void;
+	headerTitle: string;
 	message: string;
 	observer: Observer;
 	onClose: () => void;
@@ -22,8 +22,8 @@ interface IBusinessEventsConfirmationPageProps {
 }
 
 const BusinessEventsConfirmationPage = ({
-	eventName,
 	handleSubmit,
+	headerTitle,
 	message,
 	observer,
 	onClose,
@@ -37,7 +37,7 @@ const BusinessEventsConfirmationPage = ({
 	return (
 		<BusinessEventsModal
 			handleSubmit={handleSubmit}
-			headerTitle={(eventName ?? '').toUpperCase()}
+			headerTitle={headerTitle}
 			modalType="editEvent"
 			observer={observer}
 			onClose={onClose}

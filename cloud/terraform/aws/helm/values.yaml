@@ -44,12 +44,12 @@ dependencies:
             dl.store.impl=com.liferay.portal.store.s3.S3Store
         source: external
 portalBundleDenyList:
-    - com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
-    - com.liferay.portal.search.elasticsearch.monitoring.web
-    - com.liferay.portal.search.elasticsearch7.api
-    - com.liferay.portal.search.elasticsearch7.impl
-    - com.liferay.portal.search.learning.to.rank.api
-    - com.liferay.portal.search.learning.to.rank.impl
+    -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
+    -   com.liferay.portal.search.elasticsearch.monitoring.web
+    -   com.liferay.portal.search.elasticsearch7.api
+    -   com.liferay.portal.search.elasticsearch7.impl
+    -   com.liferay.portal.search.learning.to.rank.api
+    -   com.liferay.portal.search.learning.to.rank.impl
 resources:
     limits:
         cpu: "4000m"
@@ -69,7 +69,7 @@ volumeClaimTemplates:
             name: liferay-persistent-volume
             spec:
                 accessModes:
-                    - ReadWriteOnce
+                    -   ReadWriteOnce
                 resources:
                     requests:
                         storage: 10Gi

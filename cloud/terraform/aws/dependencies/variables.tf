@@ -4,6 +4,24 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
 	name=var.cluster_name
 }
+resource "random_password" "opensearch_password" {
+	length=16
+	override_special="!#$%&*()-_=+[]{}<>:?"
+	special=true
+}
+resource "random_password" "opensearch_username" {
+	length=16
+	special=false
+}
+resource "random_password" "postgres_password" {
+	length=16
+	override_special="!#$%&*()-_=+[]{}<>:?"
+	special=true
+}
+resource "random_password" "postgres_username" {
+	length=16
+	special=false
+}
 variable "cluster_endpoint" {
 	default="CLUSTER_ENDPOINT"
 }
@@ -39,24 +57,6 @@ variable "private_subnet_ids" {
 }
 variable "public_subnet_ids" {
 	default=["PUBLIC_SUBNET_ID_ONE"]
-}
-resource "random_password" "opensearch_password" {
-	length=16
-	override_special="!#$%&*()-_=+[]{}<>:?"
-	special=true
-}
-resource "random_password" "opensearch_username" {
-	length=16
-	special=false
-}
-resource "random_password" "postgres_password" {
-	length=16
-	override_special="!#$%&*()-_=+[]{}<>:?"
-	special=true
-}
-resource "random_password" "postgres_username" {
-	length=16
-	special=false
 }
 variable "region" {
 	default="REGION"

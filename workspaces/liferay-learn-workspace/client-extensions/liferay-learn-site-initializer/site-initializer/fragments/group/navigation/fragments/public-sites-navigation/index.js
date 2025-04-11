@@ -8,8 +8,7 @@
 	window.addEventListener(event, checkScreenSize)
 );
 
-adjustNavigation();
-
+const controlMenu = document.getElementById('ControlMenu');
 const documentationEducationDropdown = document.querySelector(
 	'.documentation-education-dropdown'
 );
@@ -42,6 +41,16 @@ const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 
 let debounceTimer;
 
+if (controlMenu) {
+	const publicSiteNavigationContainer = document.querySelector(
+		'.public-site-navigation-container'
+	);
+
+	if (publicSiteNavigationContainer) {
+		publicSiteNavigationContainer.style.top = '3.5rem';
+	}
+}
+
 async function postData(data = {}, url = '') {
 	const response = await Liferay.Util.fetch(url, {
 		body: JSON.stringify(data),
@@ -56,20 +65,6 @@ async function postData(data = {}, url = '') {
 	});
 
 	return response.json();
-}
-
-function adjustNavigation() {
-	const controlMenu = document.getElementById('ControlMenu');
-
-	if (controlMenu) {
-		const navegacaoContainer = document.querySelector(
-			'.public-site-navigation-container'
-		);
-
-		if (navegacaoContainer) {
-			navegacaoContainer.style.top = '3.5rem';
-		}
-	}
 }
 
 function changeFocus() {

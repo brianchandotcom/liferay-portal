@@ -8,13 +8,15 @@ if (!themeDisplay.isSignedIn()) {
 		'.public-site-navigation-container'
 	);
 
-	publicSiteNavigationContainer.classList.add('navigation-margin-true');
+	publicSiteNavigationContainer.classList.add(
+		'public-site-navigation-margin-top'
+	);
 
 	document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('.icon-x').addEventListener('click', () => {
 			document.querySelector('.banner-sign-in').style.display = 'none';
 			publicSiteNavigationContainer.classList.remove(
-				'navigation-margin-true'
+				'public-site-navigation-margin-top'
 			);
 		});
 	});

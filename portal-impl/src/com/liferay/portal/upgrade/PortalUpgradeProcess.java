@@ -323,6 +323,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			}
 
 			doUpgrade();
+
+			closeConnections(false);
 		}
 		catch (Exception exception) {
 			message = "Failed upgrade process ";
@@ -331,6 +333,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		}
 		finally {
 			this.connection = null;
+
+			closeConnections(false);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

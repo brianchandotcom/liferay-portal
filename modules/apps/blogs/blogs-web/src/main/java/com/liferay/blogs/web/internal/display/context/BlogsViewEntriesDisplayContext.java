@@ -235,17 +235,17 @@ public class BlogsViewEntriesDisplayContext {
 
 			List<AssetEntry> assetEntries = searchContainerResults.getResults();
 
-			List<BlogsEntry> entriesResults = new ArrayList<>(
+			List<BlogsEntry> blogsEntries = new ArrayList<>(
 				assetEntries.size());
 
 			for (AssetEntry assetEntry : assetEntries) {
-				entriesResults.add(
+				blogsEntries.add(
 					BlogsEntryLocalServiceUtil.getEntry(
 						assetEntry.getClassPK()));
 			}
 
 			searchContainer.setResultsAndTotal(
-				() -> entriesResults, searchContainerResults.getTotal());
+				() -> blogsEntries, searchContainerResults.getTotal());
 		}
 		else if (Validator.isNull(keywords)) {
 			String entriesNavigation = ParamUtil.getString(

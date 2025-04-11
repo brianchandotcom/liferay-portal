@@ -38,23 +38,23 @@ public abstract class BaseBlogsEntryBasicInfoListRenderer
 
 	@Override
 	public void render(
-		List<BlogsEntry> blogEntries, HttpServletRequest httpServletRequest,
+		List<BlogsEntry> blogsEntries, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
 		render(
-			blogEntries,
+			blogsEntries,
 			new DefaultInfoListRendererContext(
 				httpServletRequest, httpServletResponse));
 	}
 
 	@Override
 	public void render(
-		List<BlogsEntry> blogEntries,
+		List<BlogsEntry> blogsEntries,
 		InfoListRendererContext infoListRendererContext) {
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
-		infoListBasicListTag.setInfoListObjects(blogEntries);
+		infoListBasicListTag.setInfoListObjects(blogsEntries);
 
 		String listItemRendererKey =
 			infoListRendererContext.getListItemRendererKey();

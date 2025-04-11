@@ -88,28 +88,29 @@ public class BlogsEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getBlogsEntryInfoFieldValues(
 		BlogsEntry blogsEntry) {
 
-		List<InfoFieldValue<Object>> blogsEntryFieldValues = new ArrayList<>();
+		List<InfoFieldValue<Object>> blogsEntryInfoFieldValues =
+			new ArrayList<>();
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		try {
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.titleInfoField,
 					blogsEntry.getTitle()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.subtitleInfoField,
 					blogsEntry.getSubtitle()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.descriptionInfoField,
 					blogsEntry.getDescription()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.createDateInfoField,
 					blogsEntry.getCreateDate()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.modifiedDateInfoField,
 					blogsEntry.getModifiedDate()));
@@ -124,7 +125,7 @@ public class BlogsEntryInfoItemFieldValuesProvider
 
 				smallWebImage.setAlt(blogsEntry.getSmallImageAlt());
 
-				blogsEntryFieldValues.add(
+				blogsEntryInfoFieldValues.add(
 					new InfoFieldValue<>(
 						BlogsEntryInfoItemFields.smallImageInfoField,
 						smallWebImage));
@@ -141,26 +142,26 @@ public class BlogsEntryInfoItemFieldValuesProvider
 
 				coverWebImage.setAlt(blogsEntry.getCoverImageAlt());
 
-				blogsEntryFieldValues.add(
+				blogsEntryInfoFieldValues.add(
 					new InfoFieldValue<>(
 						BlogsEntryInfoItemFields.coverImageInfoField,
 						coverWebImage));
 
 				if (Validator.isNotNull(coverImageURL)) {
-					blogsEntryFieldValues.add(
+					blogsEntryInfoFieldValues.add(
 						new InfoFieldValue<>(
 							BlogsEntryInfoItemFields.previewImageInfoField,
 							coverWebImage));
 				}
 				else {
-					blogsEntryFieldValues.add(
+					blogsEntryInfoFieldValues.add(
 						new InfoFieldValue<>(
 							BlogsEntryInfoItemFields.previewImageInfoField,
 							smallWebImage));
 				}
 			}
 
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.coverImageCaptionInfoField,
 					blogsEntry.getCoverImageCaption()));
@@ -168,7 +169,7 @@ public class BlogsEntryInfoItemFieldValuesProvider
 			User user = _userLocalService.fetchUser(blogsEntry.getUserId());
 
 			if (user != null) {
-				blogsEntryFieldValues.add(
+				blogsEntryInfoFieldValues.add(
 					new InfoFieldValue<>(
 						BlogsEntryInfoItemFields.authorNameInfoField,
 						user.getFullName()));
@@ -179,7 +180,7 @@ public class BlogsEntryInfoItemFieldValuesProvider
 
 					webImage.setAlt(user.getFullName());
 
-					blogsEntryFieldValues.add(
+					blogsEntryInfoFieldValues.add(
 						new InfoFieldValue<>(
 							BlogsEntryInfoItemFields.
 								authorProfileImageInfoField,
@@ -187,20 +188,20 @@ public class BlogsEntryInfoItemFieldValuesProvider
 				}
 			}
 
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.displayDateInfoField,
 					blogsEntry.getDisplayDate()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.publishDateInfoField,
 					blogsEntry.getDisplayDate()));
-			blogsEntryFieldValues.add(
+			blogsEntryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.contentInfoField,
 					blogsEntry.getContent()));
 
-			return blogsEntryFieldValues;
+			return blogsEntryInfoFieldValues;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

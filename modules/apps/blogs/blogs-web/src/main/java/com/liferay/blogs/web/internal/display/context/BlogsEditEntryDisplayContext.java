@@ -571,13 +571,13 @@ public class BlogsEditEntryDisplayContext {
 			_assetCategoryIds = new long[0];
 		}
 		else {
-			List<Long> assetCategoryIdsList = ListUtil.fromArray(
+			List<Long> assetCategoryIds = ListUtil.fromArray(
 				assetEntry.getCategoryIds());
 
-			assetCategoryIdsList.removeAll(
+			assetCategoryIds.removeAll(
 				ListUtil.fromArray(_getCurrentFriendlyURLAssetCategoryIds()));
 
-			_assetCategoryIds = ArrayUtil.toLongArray(assetCategoryIdsList);
+			_assetCategoryIds = ArrayUtil.toLongArray(assetCategoryIds);
 		}
 
 		return _assetCategoryIds;

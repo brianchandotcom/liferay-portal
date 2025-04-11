@@ -93,9 +93,9 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to find group with id ", groupId,
-					". Removing orphaned style book entry with id ",
-					orphanedStyleBookEntry.getStyleBookEntryId(), "."),
+					"Deleting style book entry ",
+					orphanedStyleBookEntry.getStyleBookEntryId(),
+					" because group ", groupId, "does not exist"),
 				logEntry.getMessage());
 		}
 

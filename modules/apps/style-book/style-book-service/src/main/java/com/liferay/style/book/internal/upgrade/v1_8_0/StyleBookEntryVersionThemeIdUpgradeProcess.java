@@ -62,9 +62,9 @@ public class StyleBookEntryVersionThemeIdUpgradeProcess extends UpgradeProcess {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Unable to find group with id ", groupId,
-								". Removing orphaned style book entry version ",
-								"with id ", styleBookEntryId, "."));
+								"Deleting style book entry version for style ",
+								"book entry", styleBookEntryId,
+								" because group ", groupId, "does not exist"));
 					}
 
 					preparedStatement3.setLong(1, styleBookEntryId);

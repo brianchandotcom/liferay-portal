@@ -21,7 +21,7 @@ definition {
 
 		Click(locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
 
-		var customFieldKey = StringUtil.lowerCase(${customFieldName});
+		var customFieldKey = ${customFieldName};
 
 		PortletEntry.inputName(name = ${customFieldKey});
 

@@ -9,7 +9,10 @@ import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
-import {ProductType} from '../../../../../../enums/Product';
+import {
+	ProductSpecificationKey,
+	ProductType,
+} from '../../../../../../enums/Product';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createAppSKU,
@@ -25,7 +28,6 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {ActionTypes} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
-import {ProductSpecificationKey} from '../../../../../../enums/Product';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;

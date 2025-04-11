@@ -136,7 +136,7 @@ export function DefineAppProfilePage({
 					productSpecifications: [
 						{
 							specificationKey:
-							ProductSpecificationKey.APP_DEVELOPER_NAME,
+								ProductSpecificationKey.APP_DEVELOPER_NAME,
 							value: {en_US: catalog?.name},
 						},
 					],

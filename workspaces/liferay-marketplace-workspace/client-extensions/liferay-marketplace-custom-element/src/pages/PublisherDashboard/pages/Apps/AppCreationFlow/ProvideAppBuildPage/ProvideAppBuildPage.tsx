@@ -15,7 +15,17 @@ import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFo
 import {PackageVersionModal} from '../../../../../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
+import {
+	ProductEditionOption,
+	ProductSpecificationKey,
+	ProductType,
+	ProductUploadType,
+	ProductVersionOption,
+	ProductVocabulary,
+	ProductWorkflowStatusCode,
+} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createProductSpecification,
 	createProductVirtualEntry,
@@ -29,17 +39,6 @@ import {
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
 import {ActionTypes} from '../AppContext/actionTypes';
-import './ProvideAppBuildPage.scss';
-import {
-	ProductEditionOption,
-	ProductSpecificationKey,
-	ProductType,
-	ProductUploadType,
-	ProductVersionOption,
-	ProductVocabulary,
-	ProductWorkflowStatusCode,
-} from '../../../../../../enums/Product';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
 import {getOfferingTypes} from './constants/offeringTypes';

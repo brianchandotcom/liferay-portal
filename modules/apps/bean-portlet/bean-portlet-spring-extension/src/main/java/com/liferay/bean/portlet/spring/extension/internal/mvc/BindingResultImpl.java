@@ -43,12 +43,12 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 	public Set<ParamError> getAllErrors() {
 		_consulted = true;
 
-		Set<ParamError> allErrors = new LinkedHashSet<>();
+		Set<ParamError> allParamError = new LinkedHashSet<>();
 
-		allErrors.addAll(_bindingErrors);
-		allErrors.addAll(_validationErrors);
+		allParamError.addAll(_bindingErrors);
+		allParamError.addAll(_validationErrors);
 
-		return allErrors;
+		return allParamError;
 	}
 
 	@Override
@@ -72,21 +72,21 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 	public Set<ParamError> getErrors(String paramName) {
 		_consulted = true;
 
-		Set<ParamError> errors = new LinkedHashSet<>();
+		Set<ParamError> paramError = new LinkedHashSet<>();
 
 		for (BindingError bindingError : _bindingErrors) {
 			if (Objects.equals(bindingError.getParamName(), paramName)) {
-				errors.add(bindingError);
+				paramError.add(bindingError);
 			}
 		}
 
 		for (ValidationError validationError : _validationErrors) {
 			if (Objects.equals(validationError.getParamName(), paramName)) {
-				errors.add(validationError);
+				paramError.add(validationError);
 			}
 		}
 
-		return errors;
+		return paramError;
 	}
 
 	@Override

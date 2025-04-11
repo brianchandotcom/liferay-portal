@@ -223,7 +223,7 @@ public class SpringBeanPortletExtension {
 
 				@Override
 				public void invokeWithActiveScopes(
-						List<BeanPortletMethod> beanMethods,
+						List<BeanPortletMethod> beanPortletMethods,
 						PortletConfig portletConfig,
 						PortletRequest portletRequest,
 						PortletResponse portletResponse)
@@ -234,8 +234,8 @@ public class SpringBeanPortletExtension {
 							() -> new SpringScopedBeanManager(
 								portletConfig, portletRequest, portletResponse),
 							() -> _invokePortletBeanMethods(
-								beanMethods, portletRequest, portletResponse,
-								portletConfig));
+								beanPortletMethods, portletRequest,
+								portletResponse, portletConfig));
 				}
 
 				private void _invokePortletBeanMethods(

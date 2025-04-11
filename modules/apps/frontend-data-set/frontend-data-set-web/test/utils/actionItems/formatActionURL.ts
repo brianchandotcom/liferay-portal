@@ -5,156 +5,298 @@
 
 import formatActionURL from '../../../src/main/resources/META-INF/resources/utils/actionItems/formatActionURL';
 
-const testItem = {
+const specialChars = 'http://foo.bar?param=%áàäâ^/#{2}/ç';
+
+const item = {
 	id: 1235,
-	name: 'test_item_name',
-	url: 'https://www.liferay.com',
+	name: '#test_item_name',
+	urls: {
+		path: '/documents/34879/34881/%23small_pexels-photo-1000498.jpeg/2d193f5d-5b3f-1f7a-c221-8392333f56ba?version=1.0&t=1744616121055&download=true&objectDefinitionExternalReferenceCode=L_BASIC_DOCUMENT&objectEntryExternalReferenceCode=07dd3433-04b4-eec7-2d21-be307eb0a06c',
+		simple: 'https://www.liferay.com',
+		specialChars,
+		specialCharsEncoded: encodeURI(specialChars),
+		withBackURL: '/web/page?backURL=http://foo.bar',
+		withPPId: '/web/page?p_p_id=foo',
+		withRedirect: '/web/page?redirect=foo',
+	},
 };
 
-describe('formatActionURL helper', () => {
-	it('returns an empty string if no URL is provided', () => {
-		const givenURL = undefined;
-		const target = 'link';
-		const formattedURL = formatActionURL(givenURL, testItem, target);
+const encodedItem = {
+	id: encodeURIComponent(item.id),
+	name: encodeURIComponent(item.name),
+	urls: {
+		path: encodeURIComponent(item.urls.path),
+		simple: encodeURIComponent(item.urls.simple),
+		specialChars: encodeURIComponent(item.urls.specialChars),
+		specialCharsEncoded: encodeURIComponent(item.urls.specialCharsEncoded),
+		withBackURL: encodeURIComponent(item.urls.withBackURL),
+		withPPId: encodeURIComponent(item.urls.withPPId),
+		withRedirect: encodeURIComponent(item.urls.withRedirect),
+	},
+};
 
-		expect(formattedURL).toEqual('');
+const assertActionURL = (
+	url: string | undefined,
+	target: string,
+	expected = url
+) => {
+	expect(formatActionURL(url, item, target)).toEqual(expected);
+};
+
+const assertActionLinkURL = (url: string | undefined, expected?: string) => {
+	assertActionURL(url, 'link', expected);
+};
+
+const assertActionNonLinkURL = (url: string | undefined, expected?: string) => {
+	assertActionURL(url, 'modal', expected);
+};
+
+describe('formatActionURL helper. No interpolation', () => {
+	it('No URL is provided: returns an empty string', () => {
+		assertActionLinkURL(undefined, '');
 	});
 
-	it('returns the raw URL if there is no interpolation argument', () => {
-		const givenURL = 'https://www.liferay.com';
-		const target = 'link';
-		const formattedURL = formatActionURL(givenURL, testItem, target);
-
-		expect(formattedURL).toEqual(givenURL);
+	it('URL is returned as provided', () => {
+		assertActionLinkURL(item.urls.simple);
 	});
 
-	it('returns the URL with interpolate values', () => {
-		const URLWithParam = '/o/data-test/{id}';
-		const target = 'link';
-		const formattedURLWithParam = formatActionURL(
-			URLWithParam,
-			testItem,
-			target
-		);
-
-		expect(formattedURLWithParam).toEqual(`/o/data-test/${testItem.id}`);
-
-		const URLWithParams = '/o/data-test/{id}/{name}';
-		const formattedURLWithParams = formatActionURL(
-			URLWithParams,
-			testItem,
-			target
-		);
-
-		expect(formattedURLWithParams).toEqual(
-			`/o/data-test/${testItem.id}/${testItem.name}`
-		);
-	});
-
-	it('returns the URL, changing the _redirect parameter to use the actual URL', () => {
-		const URLWithRedirect =
-			'/test/page?p_p_id=random&_random_redirect=http://www.somewhere.com';
-		const target = 'link';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
-
-		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&_random_redirect=http://localhost/'
+	it('Modifies preexisting redirect parameter to use the actual URL', () => {
+		assertActionLinkURL(
+			'/test?p_p_id=random&_random_redirect=http://www.somewhere.com',
+			`/test?p_p_id=random&_random_redirect=${encodeURIComponent(
+				'http://localhost/'
+			)}`
 		);
 	});
 
-	it('returns the URL, changing the portlet_ns_backURL parameter to use the actual URL', () => {
-		const URLWithRedirect =
-			'/test/page?p_p_id=random&_random_backURL=http://www.somewhere.com';
-		const target = 'link';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
-
-		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&_random_backURL=http://localhost/'
+	it('Modifies preexisting portlet_ns_backURL parameter to use the actual URL', () => {
+		assertActionLinkURL(
+			'/test?p_p_id=random&_random_backURL=http://www.somewhere.com',
+			`/test?p_p_id=random&_random_backURL=${encodeURIComponent(
+				'http://localhost/'
+			)}`
 		);
 	});
 
-	it('returns the URL, changing any _backURL parameter to use the actual URL', () => {
-		const URLWithRedirect = '/test/page?backURL=http://www.somewhere.com';
-		const target = 'link';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
-
-		expect(formattedURL).toEqual('/test/page?backURL=http://localhost/');
-	});
-
-	it('returns the URL, adding the _redirect and _backURL parameters to use the actual URL if the url includes a p_p_id parameter', () => {
-		const URLWithoutRedirect = '/test/page?p_p_id=random';
-		const target = 'link';
-		const formattedURL = formatActionURL(
-			URLWithoutRedirect,
-			testItem,
-			target
-		);
-
-		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&_random_redirect=http://localhost/&_random_backURL=http://localhost/'
+	it('Modifies any _backURL parameter to use the actual URL', () => {
+		assertActionLinkURL(
+			'/test?backURL=http://www.somewhere.com',
+			`/test?backURL=${encodeURIComponent('http://localhost/')}`
 		);
 	});
 
-	it('returns the URL, without changing the _redirect and _backURL parameters if the target is different from "link"', () => {
-		const URLWithBackURL =
-			'/test/page?p_p_id=random&_random_backURL=http://www.somewhere.com';
-		const modalTarget = 'modal';
-		const formattedURL = formatActionURL(
-			URLWithBackURL,
-			testItem,
-			modalTarget
+	it('Adds the _redirect and _backURL parameters to use the actual URL if the url includes a p_p_id parameter', () => {
+		assertActionLinkURL(
+			'/test?p_p_id=random',
+			`/test?p_p_id=random&_random_redirect=${encodeURIComponent(
+				'http://localhost/'
+			)}&_random_backURL=${encodeURIComponent('http://localhost/')}`
 		);
-
-		expect(formattedURL).toEqual(URLWithBackURL);
-
-		const URLWithRedirect =
-			'/test/page?p_p_id=random&_random_redirect=http://www.somewhere.com';
-		const panelTarget = 'sidePanel';
-		const anotherFormattedURL = formatActionURL(
-			URLWithRedirect,
-			testItem,
-			panelTarget
-		);
-
-		expect(anotherFormattedURL).toEqual(URLWithRedirect);
 	});
 
-	it('returns the URL, without adding the _redirect and _backURL parameters if the target is different from "link"', () => {
-		const URLWithoutRedirect = '/test/page?p_p_id=random';
-		const modalTarget = 'modal';
-		const formattedURL = formatActionURL(
-			URLWithoutRedirect,
-			testItem,
-			modalTarget
+	it('Does not change the _redirect and _backURL parameters when target is not "link"', () => {
+		assertActionNonLinkURL(
+			'/test?p_p_id=random&_random_backURL=http://www.somewhere.com'
 		);
-
-		expect(formattedURL).toEqual('/test/page?p_p_id=random');
-
-		const panelTarget = 'sidePanel';
-		const anotherFormattedURL = formatActionURL(
-			URLWithoutRedirect,
-			testItem,
-			panelTarget
-		);
-
-		expect(anotherFormattedURL).toEqual('/test/page?p_p_id=random');
 	});
 
-	it('does not encode the value when the URL is fully wrapped with braces', () => {
-		const URLFullyWrapped = '{url}';
-		const target = 'link';
-		const formattedURL = formatActionURL(URLFullyWrapped, testItem, target);
+	it('Does not add the _redirect and _backURL parameters when target is not "link"', () => {
+		assertActionNonLinkURL('/test?p_p_id=random');
+	});
+});
 
-		expect(formattedURL).toEqual(testItem.url);
+describe('formatActionURL helper. Full interpolation', () => {
+	it('Target is not "link", returns item data as it comes', () => {
+		assertActionNonLinkURL('{urls.path}', item.urls.path);
+
+		assertActionNonLinkURL('{urls.simple}', item.urls.simple);
+
+		assertActionNonLinkURL('{urls.specialChars}', item.urls.specialChars);
+
+		assertActionNonLinkURL(
+			'{urls.specialCharsEncoded}',
+			item.urls.specialCharsEncoded
+		);
+
+		assertActionNonLinkURL('{urls.withBackURL}', item.urls.withBackURL);
+
+		assertActionNonLinkURL('{urls.withPPId}', item.urls.withPPId);
 	});
 
-	it('encodes only the value inside braces when part of the URL is wrapped with braces', () => {
-		const partialURL = '{id}/test/{url}';
-		const target = 'link';
-		const formattedURL = formatActionURL(partialURL, testItem, target);
+	it('Target is "link", returns item data as it comes', () => {
+		assertActionLinkURL('{urls.path}', item.urls.path);
 
-		expect(formattedURL).toEqual(
-			`${testItem.id}/test/${encodeURIComponent(testItem.url)}`
+		assertActionLinkURL('{urls.simple}', item.urls.simple);
+
+		assertActionLinkURL('{urls.specialChars}', item.urls.specialChars);
+
+		assertActionLinkURL(
+			'{urls.specialCharsEncoded}',
+			item.urls.specialCharsEncoded
+		);
+
+		assertActionLinkURL('{urls.withBackURL}', item.urls.withBackURL);
+
+		assertActionLinkURL('{urls.withPPId}', item.urls.withPPId);
+	});
+});
+
+describe('formatActionURL helper. Partial interpolation. Target is "link". Returns the URL with encoded interpolated values', () => {
+	it('path interpolation', () => {
+		assertActionLinkURL('/o/{id}', `/o/${encodedItem.id}`);
+
+		assertActionLinkURL(
+			'/o/{name}?p=á#ha$h',
+			`/o/${encodedItem.name}?p=á#ha$h`
+		);
+
+		// no backURL replacement is expected in path interpolation
+
+		assertActionLinkURL(
+			'/o/{urls.withBackURL}?p=á#ha$h',
+			`/o/${encodedItem.urls.withBackURL}?p=á#ha$h`
+		);
+	});
+
+	it('query interpolation', () => {
+		assertActionLinkURL('/o?p={id}', `/o?p=${encodedItem.id}`);
+
+		assertActionLinkURL(
+			'/o?p={urls.specialChars}#ha$h',
+			`/o?p=${encodedItem.urls.specialChars}#ha$h`
+		);
+
+		assertActionLinkURL(
+			'/o?p={urls.specialCharsEncoded}#ha$h',
+			`/o?p=${encodedItem.urls.specialCharsEncoded}#ha$h`
+		);
+
+		// no p_p_ID replacement is expected target is not link
+
+		assertActionLinkURL(
+			'/o/?p={urls.withPPId}#ha$h',
+			`/o/?p=${encodedItem.urls.withPPId}#ha$h`
+		);
+	});
+
+	it('hash interpolation', () => {
+		assertActionLinkURL('/o#{id}', `/o#${encodedItem.id}`);
+
+		assertActionLinkURL('/o#{name}', `/o#${encodedItem.name}`);
+
+		assertActionLinkURL(
+			'/o#{urls.specialChars}',
+			`/o#${encodedItem.urls.specialChars}`
+		);
+
+		// no redirect replacement is expected in hash interpolation
+
+		assertActionLinkURL(
+			'/o#{urls.withRedirect}#ha$h',
+			`/o#${encodedItem.urls.withRedirect}#ha$h`
+		);
+	});
+
+	it('multiple interpolation', () => {
+		assertActionLinkURL(
+			'/{id}/{urls.specialCharsEncoded}?p={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.specialCharsEncoded}?p=${encodedItem.urls.specialChars}#${encodedItem.name}`
+		);
+
+		// backURL replacement is expected (param value is not interpolated)
+
+		assertActionLinkURL(
+			'/{id}/{urls.withRedirect}?backURL=foo&p={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.withRedirect}?backURL=${encodeURIComponent(
+				'http://localhost/'
+			)}&p=${encodedItem.urls.specialChars}#${encodedItem.name}`
+		);
+
+		// backURL replacement is expected (param value is interpolated)
+
+		assertActionLinkURL(
+			'/{id}/{urls.withRedirect}?backURL={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.withRedirect}?backURL=${encodeURIComponent(
+				'http://localhost/'
+			)}#${encodedItem.name}`
+		);
+	});
+});
+
+describe('formatActionURL helper. Partial interpolation. Target is not "link". Returns the URL with encoded interpolated values', () => {
+	it('path interpolation', () => {
+		assertActionNonLinkURL('/o/{id}', `/o/${encodedItem.id}`);
+
+		assertActionNonLinkURL(
+			'/o/{name}?p=á#ha$h',
+			`/o/${encodedItem.name}?p=á#ha$h`
+		);
+
+		// no backURL replacement is expected when target is not link
+
+		assertActionNonLinkURL(
+			'/o/{urls.withBackURL}?p=á#ha$h',
+			`/o/${encodedItem.urls.withBackURL}?p=á#ha$h`
+		);
+	});
+
+	it('query interpolation', () => {
+		assertActionNonLinkURL('/o?p={id}', `/o?p=${encodedItem.id}`);
+
+		assertActionNonLinkURL(
+			'/o?p={urls.specialChars}#ha$h',
+			`/o?p=${encodedItem.urls.specialChars}#ha$h`
+		);
+
+		assertActionNonLinkURL(
+			'/o?p={urls.specialCharsEncoded}#ha$h',
+			`/o?p=${encodedItem.urls.specialCharsEncoded}#ha$h`
+		);
+
+		// no p_p_ID replacement is expected target is not link
+
+		assertActionNonLinkURL(
+			'/o/?p={urls.withPPId}#ha$h',
+			`/o/?p=${encodedItem.urls.withPPId}#ha$h`
+		);
+	});
+
+	it('hash interpolation', () => {
+		assertActionNonLinkURL('/o#{id}', `/o#${encodedItem.id}`);
+
+		assertActionNonLinkURL('/o#{name}', `/o#${encodedItem.name}`);
+
+		assertActionNonLinkURL(
+			'/o#{urls.specialChars}',
+			`/o#${encodedItem.urls.specialChars}`
+		);
+
+		// no redirect replacement is expected when target is not link
+
+		assertActionNonLinkURL(
+			'/o#{urls.withRedirect}#ha$h',
+			`/o#${encodedItem.urls.withRedirect}#ha$h`
+		);
+	});
+
+	it('multiple interpolation', () => {
+		assertActionNonLinkURL(
+			'/{id}/{urls.specialCharsEncoded}?p={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.specialCharsEncoded}?p=${encodedItem.urls.specialChars}#${encodedItem.name}`
+		);
+
+		// no backURL replacement is expected when target is not link (param value is not interpolated)
+
+		assertActionNonLinkURL(
+			'/{id}/{urls.withRedirect}?backURL=foo&p={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.withRedirect}?backURL=foo&p=${encodedItem.urls.specialChars}#${encodedItem.name}`
+		);
+
+		// no backURL replacement is expected when target is not link (param value is interpolated)
+
+		assertActionNonLinkURL(
+			'/{id}/{urls.withRedirect}?backURL={urls.specialChars}#{name}',
+			`/${encodedItem.id}/${encodedItem.urls.withRedirect}?backURL=${encodedItem.urls.specialChars}#${encodedItem.name}`
 		);
 	});
 });

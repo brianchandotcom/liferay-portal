@@ -13,7 +13,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
@@ -121,9 +120,8 @@ public class SampleCommandLineRunner
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				StringBundler.concat(
-					"There are ", messageBoardThreads.size(),
-					" message board threads in the Guest site at ", url));
+				"There are " + messageBoardThreads.size() +
+					" message board threads in the Guest site at " + url);
 		}
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {

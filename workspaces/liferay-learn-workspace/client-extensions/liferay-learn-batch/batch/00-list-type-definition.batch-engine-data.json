@@ -104,7 +104,7 @@
 			"name": "P2S3 Personas"
 		},
 		{
-			"externalReferenceCode": "P2S3_QUIZ_QUESTION_TYPE",
+			"externalReferenceCode": "P2S3_QUIZ_QUESTION_TYPES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "FREE_TEXT",
@@ -125,7 +125,7 @@
 			"name": "P2S3 Quiz Question Type"
 		},
 		{
-			"externalReferenceCode": "P2S3_RESULT",
+			"externalReferenceCode": "P2S3_RESULTS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "FAIL",
@@ -146,7 +146,7 @@
 			"name": "P2S3 Result"
 		},
 		{
-			"externalReferenceCode": "P2S3_STEP_TYPE",
+			"externalReferenceCode": "P2S3_STEP_TYPES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "CONTENT",

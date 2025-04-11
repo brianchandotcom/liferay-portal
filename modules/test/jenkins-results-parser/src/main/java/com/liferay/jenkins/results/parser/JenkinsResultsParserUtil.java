@@ -5324,7 +5324,8 @@ public class JenkinsResultsParserUtil {
 			@Override
 			public JSONObject execute() {
 				try {
-					String response = JenkinsResultsParserUtil.toString(url, checkCache, 0, httpRequestMethod, postContent,
+					String response = JenkinsResultsParserUtil.toString(
+						url, checkCache, 0, httpRequestMethod, postContent,
 						retryPeriod, timeout, httpAuthorization, true);
 
 					if ((response == null) ||
@@ -5334,7 +5335,8 @@ public class JenkinsResultsParserUtil {
 					}
 
 					return JenkinsResultsParserUtil.createJSONObject(response);
-				} catch (IOException ioException) {
+				}
+				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
 				}
 			}

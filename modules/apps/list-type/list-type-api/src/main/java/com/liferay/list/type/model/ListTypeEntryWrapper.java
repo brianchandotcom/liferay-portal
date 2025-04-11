@@ -46,6 +46,7 @@ public class ListTypeEntryWrapper
 		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
 		attributes.put("key", getKey());
 		attributes.put("name", getName());
+		attributes.put("system", isSystem());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -125,6 +126,12 @@ public class ListTypeEntryWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		String type = (String)attributes.get("type");
@@ -316,6 +323,16 @@ public class ListTypeEntryWrapper
 	}
 
 	/**
+	 * Returns the system of this list type entry.
+	 *
+	 * @return the system of this list type entry
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the type of this list type entry.
 	 *
 	 * @return the type of this list type entry
@@ -363,6 +380,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this list type entry is system.
+	 *
+	 * @return <code>true</code> if this list type entry is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -536,6 +563,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this list type entry is system.
+	 *
+	 * @param system the system of this list type entry
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

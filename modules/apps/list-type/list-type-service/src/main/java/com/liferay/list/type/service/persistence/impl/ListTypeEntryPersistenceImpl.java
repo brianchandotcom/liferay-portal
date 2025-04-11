@@ -3617,6 +3617,7 @@ public class ListTypeEntryPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("key", "key_");
+		dbColumnNames.put("system", "system_");
 		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
@@ -4439,7 +4440,7 @@ public class ListTypeEntryPersistenceImpl
 		ListTypeEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "key", "type"});
+		new String[] {"uuid", "key", "system", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

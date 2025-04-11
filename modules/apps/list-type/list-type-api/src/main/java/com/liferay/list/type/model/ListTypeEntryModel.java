@@ -346,6 +346,27 @@ public interface ListTypeEntryModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
+	 * Returns the system of this list type entry.
+	 *
+	 * @return the system of this list type entry
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this list type entry is system.
+	 *
+	 * @return <code>true</code> if this list type entry is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this list type entry is system.
+	 *
+	 * @param system the system of this list type entry
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the type of this list type entry.
 	 *
 	 * @return the type of this list type entry

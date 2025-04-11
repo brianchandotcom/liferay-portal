@@ -373,7 +373,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									link="https://help.liferay.com/hc"
 									linkText="here"
 									name="businessEvent.eventType.key"
-									options={businessEventTypesList}
+									options={[
+										emptyOption,
+										...businessEventTypesList,
+									]}
 									required
 									showPopover
 									text="to-learn-more-about-types-of-business-events-please-click-x"
@@ -450,7 +453,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											id="select-businessEvent.timeZone"
 											label={i18n.translate('time-zone')}
 											name="businessEvent.timeZone.key"
-											options={gmtTimeZonesList}
+											options={[
+												emptyOption,
+												...gmtTimeZonesList,
+											]}
 										/>
 									</ClayInput.GroupItem>
 

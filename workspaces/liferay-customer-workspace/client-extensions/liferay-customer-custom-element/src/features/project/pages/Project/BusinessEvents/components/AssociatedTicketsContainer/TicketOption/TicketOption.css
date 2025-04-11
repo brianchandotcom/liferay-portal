@@ -1,22 +1,14 @@
 .ticket-container{
 	background: var(--color-brand-primary-lighten-6, #FBFCFE);
-	border: solid;
 	border-color: var(--color-brand-primary-lighten-5, #E7EFFF);
 	border-radius: var(--border-radius-lg, 10px);
+	border-style: solid;
 	border-width: 1px;
 	font-family: var(--font-family-sans-serif, "Source Sans 3");
 	height: 40px;
 
 	&:hover {
 		cursor: pointer;
-
-		&.ticket-container-option {
-			background: var(--color-brand-primary-lighten-6, #FBFCFE);
-			border: solid;
-			border-color: var(--color-brand-primary-lighten-5, #E7EFFF);
-			border-radius: var(--border-radius-lg, 10px);
-			border-width: 1px;
-		}
 
 		.ticket-button-option, .ticket-button-selected {
 			display: flex!important;
@@ -27,22 +19,20 @@
 		}
 	}
 
-	&.ticket-container-option {
-		background: transparent;
-		border-color: transparent;
-	}
-
 	.ticket-label {
-		&:hover {
-			background: var(--color-action-primary-hover-lighten, #EDF3FE);
-			border: solid;
-			border-color: var(--color-action-primary-hover, #0053F0);
-			border-radius: 10px 0px 0px 10px;
-			border-width: 1px;
+		border-color: transparent;
+		border-radius: var(--border-radius-lg, 10px) 0px 0px var(--border-radius-lg, 10px);
+		border-style: solid;
+		border-width: 1px;
 
-			&.ticket-label-exhibit {
-				border-radius: var(--border-radius-lg, 10px)!important;
-			}
+		&.ticket-label-exhibit {
+			border-radius: var(--border-radius-lg, 10px)!important;
+		}
+
+		&:hover {
+			background-color: var(--color-action-primary-hover-lighten, #EDF3FE);
+			border-color: var(--color-action-primary-hover, #0053F0);
+
 	
 			.ticket-text-container {
 				color: var(--color-action-primary-hover, #0053F0);
@@ -54,7 +44,7 @@
 		}
 
 		.ticket-status {
-			background: var(--color-state-info-lighten-2, #E6EBF5);
+			background-color: var(--color-state-info-lighten-2, #E6EBF5);
 			border-radius: var(--border-radius-sm, 4px);
 			color: var(--color-state-info-darken-2, #1C3667);
 			font-size: var(--text-paragraph-xs-font-size, 11px);
@@ -79,12 +69,14 @@
 	}
 
 	.ticket-button {
+		border-style: solid;
+		border-color: transparent;
+		border-radius: 0px var(--border-radius-lg, 10px) var(--border-radius-lg, 10px) 0px;
+		border-width: 1px;
+		
 		&:hover {
-			background: var(--color-action-primary-hover-lighten, #EDF3FE);
-			border: solid;
+			background-color: var(--color-action-primary-hover-lighten, #EDF3FE);
 			border-color: var(--color-action-primary-hover, #0053F0);
-			border-radius: 0px 10px 10px 0px;
-			border-width: 1px;
 			color: var(--color-action-primary-hover, #0053F0);
 
 			.ticket-button-icon {

@@ -3,5 +3,6 @@
 <Configuration strict="true">
     <Loggers>
         <Logger level="ERROR" name="com.amazonaws.util.Base64" />
+        <Logger level="ERROR" name="com.ibm.cloud.objectstorage.util.Base64" />
     </Loggers>
 </Configuration>

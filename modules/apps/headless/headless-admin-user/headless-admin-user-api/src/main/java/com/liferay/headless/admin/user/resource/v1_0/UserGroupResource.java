@@ -46,7 +46,26 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UserGroupResource {
 
-	public Page<UserGroup> getUserUserGroups(Long userAccountId)
+	public void deleteUserGroup(Long userGroupId) throws Exception;
+
+	public Response deleteUserGroupBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteUserGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteUserGroupByExternalReferenceCodeUsers(
+			String externalReferenceCode, Long[] longs)
+		throws Exception;
+
+	public void deleteUserGroupUsers(Long userGroupId, Long[] longs)
+		throws Exception;
+
+	public UserGroup getUserGroup(Long userGroupId) throws Exception;
+
+	public UserGroup getUserGroupByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<UserGroup> getUserGroupsPage(
@@ -56,11 +75,14 @@ public interface UserGroupResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postUserGroupsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Page<UserGroup> getUserUserGroups(Long userAccountId)
+		throws Exception;
+
+	public UserGroup patchUserGroup(Long userGroupId, UserGroup userGroup)
+		throws Exception;
+
+	public UserGroup patchUserGroupByExternalReferenceCode(
+			String externalReferenceCode, UserGroup userGroup)
 		throws Exception;
 
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception;
@@ -68,38 +90,18 @@ public interface UserGroupResource {
 	public Response postUserGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteUserGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public UserGroup getUserGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public UserGroup patchUserGroupByExternalReferenceCode(
-			String externalReferenceCode, UserGroup userGroup)
-		throws Exception;
-
-	public UserGroup putUserGroupByExternalReferenceCode(
-			String externalReferenceCode, UserGroup userGroup)
-		throws Exception;
-
-	public void deleteUserGroupByExternalReferenceCodeUsers(
-			String externalReferenceCode, Long[] longs)
-		throws Exception;
-
 	public void postUserGroupByExternalReferenceCodeUsers(
 			String externalReferenceCode, Long[] longs)
 		throws Exception;
 
-	public void deleteUserGroup(Long userGroupId) throws Exception;
-
-	public Response deleteUserGroupBatch(String callbackURL, Object object)
+	public void postUserGroupUsers(Long userGroupId, Long[] longs)
 		throws Exception;
 
-	public UserGroup getUserGroup(Long userGroupId) throws Exception;
-
-	public UserGroup patchUserGroup(Long userGroupId, UserGroup userGroup)
+	public Response postUserGroupsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public UserGroup putUserGroup(Long userGroupId, UserGroup userGroup)
@@ -108,10 +110,8 @@ public interface UserGroupResource {
 	public Response putUserGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteUserGroupUsers(Long userGroupId, Long[] longs)
-		throws Exception;
-
-	public void postUserGroupUsers(Long userGroupId, Long[] longs)
+	public UserGroup putUserGroupByExternalReferenceCode(
+			String externalReferenceCode, UserGroup userGroup)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

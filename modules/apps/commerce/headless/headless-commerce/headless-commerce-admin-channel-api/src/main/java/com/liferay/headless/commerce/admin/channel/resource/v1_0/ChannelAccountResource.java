@@ -56,15 +56,15 @@ public interface ChannelAccountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public ChannelAccount postChannelByExternalReferenceCodeChannelAccount(
-			String externalReferenceCode, ChannelAccount channelAccount)
-		throws Exception;
-
 	public Page<ChannelAccount> getChannelIdChannelAccountsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ChannelAccount postChannelByExternalReferenceCodeChannelAccount(
+			String externalReferenceCode, ChannelAccount channelAccount)
 		throws Exception;
 
 	public ChannelAccount postChannelIdChannelAccount(

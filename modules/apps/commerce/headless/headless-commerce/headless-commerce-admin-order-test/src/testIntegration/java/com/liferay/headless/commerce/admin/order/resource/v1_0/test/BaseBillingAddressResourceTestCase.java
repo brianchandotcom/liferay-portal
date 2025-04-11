@@ -354,13 +354,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchOrderByExternalReferenceCodeBillingAddress()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetOrderIdBillingAddress() throws Exception {
 		BillingAddress postBillingAddress =
 			testGetOrderIdBillingAddress_addBillingAddress();
@@ -492,6 +485,13 @@ public abstract class BaseBillingAddressResourceTestCase {
 		throws Exception {
 
 		return testGraphQLBillingAddress_addBillingAddress();
+	}
+
+	@Test
+	public void testPatchOrderByExternalReferenceCodeBillingAddress()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

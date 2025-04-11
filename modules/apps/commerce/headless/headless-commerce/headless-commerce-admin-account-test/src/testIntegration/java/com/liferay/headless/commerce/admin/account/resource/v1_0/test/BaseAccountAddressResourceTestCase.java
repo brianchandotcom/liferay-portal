@@ -238,183 +238,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountAddressByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountAddress accountAddress =
-			testDeleteAccountAddressByExternalReferenceCode_addAccountAddress();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountAddressResource.
-				deleteAccountAddressByExternalReferenceCodeHttpResponse(
-					accountAddress.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					accountAddress.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected AccountAddress
-			testDeleteAccountAddressByExternalReferenceCode_addAccountAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountAddressByExternalReferenceCode()
-		throws Exception {
-
-		AccountAddress postAccountAddress =
-			testGetAccountAddressByExternalReferenceCode_addAccountAddress();
-
-		AccountAddress getAccountAddress =
-			accountAddressResource.getAccountAddressByExternalReferenceCode(
-				postAccountAddress.getExternalReferenceCode());
-
-		assertEquals(postAccountAddress, getAccountAddress);
-		assertValid(getAccountAddress);
-	}
-
-	protected AccountAddress
-			testGetAccountAddressByExternalReferenceCode_addAccountAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountAddressByExternalReferenceCode()
-		throws Exception {
-
-		AccountAddress accountAddress =
-			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				accountAddress,
-				AccountAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountAddressByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												accountAddress.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountAddressByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertTrue(
-			equals(
-				accountAddress,
-				AccountAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminAccount_v1_0",
-								new GraphQLField(
-									"accountAddressByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													accountAddress.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminAccount_v1_0",
-						"Object/accountAddressByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountAddressByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountAddressByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminAccount_v1_0",
-						new GraphQLField(
-							"accountAddressByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountAddress
-			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress()
-		throws Exception {
-
-		return testGraphQLAccountAddress_addAccountAddress();
-	}
-
-	@Test
-	public void testPatchAccountAddressByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteAccountAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountAddress accountAddress =
@@ -593,6 +416,39 @@ public abstract class BaseAccountAddressResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteAccountAddressByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountAddress accountAddress =
+			testDeleteAccountAddressByExternalReferenceCode_addAccountAddress();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountAddressResource.
+				deleteAccountAddressByExternalReferenceCodeHttpResponse(
+					accountAddress.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountAddressResource.
+				getAccountAddressByExternalReferenceCodeHttpResponse(
+					accountAddress.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			accountAddressResource.
+				getAccountAddressByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected AccountAddress
+			testDeleteAccountAddressByExternalReferenceCode_addAccountAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -901,31 +757,22 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchAccountAddress() throws Exception {
+	public void testGetAccountAddressByExternalReferenceCode()
+		throws Exception {
+
 		AccountAddress postAccountAddress =
-			testPatchAccountAddress_addAccountAddress();
-
-		AccountAddress randomPatchAccountAddress = randomPatchAccountAddress();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountAddress patchAccountAddress =
-			accountAddressResource.patchAccountAddress(
-				postAccountAddress.getId(), randomPatchAccountAddress);
-
-		AccountAddress expectedPatchAccountAddress = postAccountAddress.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchAccountAddress, expectedPatchAccountAddress);
+			testGetAccountAddressByExternalReferenceCode_addAccountAddress();
 
 		AccountAddress getAccountAddress =
-			accountAddressResource.getAccountAddress(
-				patchAccountAddress.getId());
+			accountAddressResource.getAccountAddressByExternalReferenceCode(
+				postAccountAddress.getExternalReferenceCode());
 
-		assertEquals(expectedPatchAccountAddress, getAccountAddress);
+		assertEquals(postAccountAddress, getAccountAddress);
 		assertValid(getAccountAddress);
 	}
 
-	protected AccountAddress testPatchAccountAddress_addAccountAddress()
+	protected AccountAddress
+			testGetAccountAddressByExternalReferenceCode_addAccountAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -933,31 +780,117 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPutAccountAddress() throws Exception {
-		AccountAddress postAccountAddress =
-			testPutAccountAddress_addAccountAddress();
-
-		AccountAddress randomAccountAddress = randomAccountAddress();
-
-		AccountAddress putAccountAddress =
-			accountAddressResource.putAccountAddress(
-				postAccountAddress.getId(), randomAccountAddress);
-
-		assertEquals(randomAccountAddress, putAccountAddress);
-		assertValid(putAccountAddress);
-
-		AccountAddress getAccountAddress =
-			accountAddressResource.getAccountAddress(putAccountAddress.getId());
-
-		assertEquals(randomAccountAddress, getAccountAddress);
-		assertValid(getAccountAddress);
-	}
-
-	protected AccountAddress testPutAccountAddress_addAccountAddress()
+	public void testGraphQLGetAccountAddressByExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		AccountAddress accountAddress =
+			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountAddress,
+				AccountAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountAddressByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												accountAddress.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountAddressByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertTrue(
+			equals(
+				accountAddress,
+				AccountAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminAccount_v1_0",
+								new GraphQLField(
+									"accountAddressByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													accountAddress.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminAccount_v1_0",
+						"Object/accountAddressByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountAddressByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountAddressByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"accountAddressByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountAddress
+			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress()
+		throws Exception {
+
+		return testGraphQLAccountAddress_addAccountAddress();
 	}
 
 	@Test
@@ -1171,29 +1104,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountByExternalReferenceCodeAccountAddress()
-		throws Exception {
-
-		AccountAddress randomAccountAddress = randomAccountAddress();
-
-		AccountAddress postAccountAddress =
-			testPostAccountByExternalReferenceCodeAccountAddress_addAccountAddress(
-				randomAccountAddress);
-
-		assertEquals(randomAccountAddress, postAccountAddress);
-		assertValid(postAccountAddress);
-	}
-
-	protected AccountAddress
-			testPostAccountByExternalReferenceCodeAccountAddress_addAccountAddress(
-				AccountAddress accountAddress)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountIdAccountAddressesPage() throws Exception {
 		Long id = testGetAccountIdAccountAddressesPage_getId();
 		Long irrelevantId =
@@ -1377,6 +1287,68 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccountAddress() throws Exception {
+		AccountAddress postAccountAddress =
+			testPatchAccountAddress_addAccountAddress();
+
+		AccountAddress randomPatchAccountAddress = randomPatchAccountAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountAddress patchAccountAddress =
+			accountAddressResource.patchAccountAddress(
+				postAccountAddress.getId(), randomPatchAccountAddress);
+
+		AccountAddress expectedPatchAccountAddress = postAccountAddress.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountAddress, expectedPatchAccountAddress);
+
+		AccountAddress getAccountAddress =
+			accountAddressResource.getAccountAddress(
+				patchAccountAddress.getId());
+
+		assertEquals(expectedPatchAccountAddress, getAccountAddress);
+		assertValid(getAccountAddress);
+	}
+
+	protected AccountAddress testPatchAccountAddress_addAccountAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchAccountAddressByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeAccountAddress()
+		throws Exception {
+
+		AccountAddress randomAccountAddress = randomAccountAddress();
+
+		AccountAddress postAccountAddress =
+			testPostAccountByExternalReferenceCodeAccountAddress_addAccountAddress(
+				randomAccountAddress);
+
+		assertEquals(randomAccountAddress, postAccountAddress);
+		assertValid(postAccountAddress);
+	}
+
+	protected AccountAddress
+			testPostAccountByExternalReferenceCodeAccountAddress_addAccountAddress(
+				AccountAddress accountAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostAccountIdAccountAddress() throws Exception {
 		AccountAddress randomAccountAddress = randomAccountAddress();
 
@@ -1390,6 +1362,34 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 	protected AccountAddress testPostAccountIdAccountAddress_addAccountAddress(
 			AccountAddress accountAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAccountAddress() throws Exception {
+		AccountAddress postAccountAddress =
+			testPutAccountAddress_addAccountAddress();
+
+		AccountAddress randomAccountAddress = randomAccountAddress();
+
+		AccountAddress putAccountAddress =
+			accountAddressResource.putAccountAddress(
+				postAccountAddress.getId(), randomAccountAddress);
+
+		assertEquals(randomAccountAddress, putAccountAddress);
+		assertValid(putAccountAddress);
+
+		AccountAddress getAccountAddress =
+			accountAddressResource.getAccountAddress(putAccountAddress.getId());
+
+		assertEquals(randomAccountAddress, getAccountAddress);
+		assertValid(getAccountAddress);
+	}
+
+	protected AccountAddress testPutAccountAddress_addAccountAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

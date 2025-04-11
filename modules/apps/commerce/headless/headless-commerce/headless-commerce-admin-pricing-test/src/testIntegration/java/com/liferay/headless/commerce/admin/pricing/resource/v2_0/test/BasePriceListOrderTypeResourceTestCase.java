@@ -461,30 +461,6 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceListOrderType()
-		throws Exception {
-
-		PriceListOrderType randomPriceListOrderType =
-			randomPriceListOrderType();
-
-		PriceListOrderType postPriceListOrderType =
-			testPostPriceListByExternalReferenceCodePriceListOrderType_addPriceListOrderType(
-				randomPriceListOrderType);
-
-		assertEquals(randomPriceListOrderType, postPriceListOrderType);
-		assertValid(postPriceListOrderType);
-	}
-
-	protected PriceListOrderType
-			testPostPriceListByExternalReferenceCodePriceListOrderType_addPriceListOrderType(
-				PriceListOrderType priceListOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceListOrderTypesPage() throws Exception {
 		Long id = testGetPriceListIdPriceListOrderTypesPage_getId();
 		Long irrelevantId =
@@ -682,6 +658,30 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListOrderType()
+		throws Exception {
+
+		PriceListOrderType randomPriceListOrderType =
+			randomPriceListOrderType();
+
+		PriceListOrderType postPriceListOrderType =
+			testPostPriceListByExternalReferenceCodePriceListOrderType_addPriceListOrderType(
+				randomPriceListOrderType);
+
+		assertEquals(randomPriceListOrderType, postPriceListOrderType);
+		assertValid(postPriceListOrderType);
+	}
+
+	protected PriceListOrderType
+			testPostPriceListByExternalReferenceCodePriceListOrderType_addPriceListOrderType(
+				PriceListOrderType priceListOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

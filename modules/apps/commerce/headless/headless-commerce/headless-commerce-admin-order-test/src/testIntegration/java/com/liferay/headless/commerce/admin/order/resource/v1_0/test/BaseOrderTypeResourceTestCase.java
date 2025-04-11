@@ -220,6 +220,201 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOrderType() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType orderType = testDeleteOrderType_addOrderType();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderTypeResource.deleteOrderTypeHttpResponse(orderType.getId()));
+
+		assertHttpResponseStatusCode(
+			404, orderTypeResource.getOrderTypeHttpResponse(orderType.getId()));
+		assertHttpResponseStatusCode(
+			404, orderTypeResource.getOrderTypeHttpResponse(0L));
+	}
+
+	protected OrderType testDeleteOrderType_addOrderType() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderType() throws Exception {
+
+		// No namespace
+
+		OrderType orderType1 = testGraphQLDeleteOrderType_addOrderType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderType",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderType1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderType"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderType",
+					new HashMap<String, Object>() {
+						{
+							put("id", orderType1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderType orderType2 = testGraphQLDeleteOrderType_addOrderType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderType",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderType2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderType"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderType",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderType2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OrderType testGraphQLDeleteOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
+	public void testDeleteOrderTypeBatch() throws Exception {
+		OrderType orderType1 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", null, orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
+
+		OrderType orderType2 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+
+		orderType1 = testDeleteOrderTypeBatch_addOrderType();
+		orderType2 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(),
+			orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(),
+			orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+	}
+
+	protected OrderType testDeleteOrderTypeBatch_addOrderType()
+		throws Exception {
+
+		return testDeleteOrderType_addOrderType();
+	}
+
+	protected void testDeleteOrderTypeBatch_deleteOrderType(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			orderTypeResource.deleteOrderTypeBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteOrderTypeByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType orderType =
+			testDeleteOrderTypeByExternalReferenceCode_addOrderType();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderTypeResource.
+				deleteOrderTypeByExternalReferenceCodeHttpResponse(
+					orderType.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
+				orderType.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected OrderType
+			testDeleteOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOrderRuleOrderTypeOrderType() throws Exception {
 		OrderType postOrderType =
 			testGetOrderRuleOrderTypeOrderType_addOrderType();
@@ -353,6 +548,436 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	protected OrderType testGraphQLGetOrderRuleOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
+	public void testGetOrderType() throws Exception {
+		OrderType postOrderType = testGetOrderType_addOrderType();
+
+		OrderType getOrderType = orderTypeResource.getOrderType(
+			postOrderType.getId());
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		OrderType postOrderType = testGetOrderType_addOrderType();
+
+		OrderType getOrderType = orderTypeResource.getOrderType(
+			postOrderType.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postOrderType.getId());
+
+		assertEquals(getOrderType, OrderTypeSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected OrderType testGetOrderType_addOrderType() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderType() throws Exception {
+		OrderType orderType = testGraphQLGetOrderType_addOrderType();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderType",
+								new HashMap<String, Object>() {
+									{
+										put("id", orderType.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderType"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderType",
+									new HashMap<String, Object>() {
+										{
+											put("id", orderType.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderType"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderType",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderType",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderType testGraphQLGetOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
+	public void testGetOrderTypeByExternalReferenceCode() throws Exception {
+		OrderType postOrderType =
+			testGetOrderTypeByExternalReferenceCode_addOrderType();
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode());
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testGetOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeByExternalReferenceCode()
+		throws Exception {
+
+		OrderType orderType =
+			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderTypeByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												orderType.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderTypeByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderTypeByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													orderType.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderTypeByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderTypeByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderTypeByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderType
+			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType()
 		throws Exception {
 
 		return testGraphQLOrderType_addOrderType();
@@ -756,762 +1381,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderType() throws Exception {
-		OrderType randomOrderType = randomOrderType();
-
-		OrderType postOrderType = testPostOrderType_addOrderType(
-			randomOrderType);
-
-		assertEquals(randomOrderType, postOrderType);
-		assertValid(postOrderType);
-	}
-
-	protected OrderType testPostOrderType_addOrderType(OrderType orderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrderTypeByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderType orderType =
-			testDeleteOrderTypeByExternalReferenceCode_addOrderType();
-
-		assertHttpResponseStatusCode(
-			204,
-			orderTypeResource.
-				deleteOrderTypeByExternalReferenceCodeHttpResponse(
-					orderType.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
-				orderType.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
-
-	protected OrderType
-			testDeleteOrderTypeByExternalReferenceCode_addOrderType()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOrderTypeByExternalReferenceCode() throws Exception {
-		OrderType postOrderType =
-			testGetOrderTypeByExternalReferenceCode_addOrderType();
-
-		OrderType getOrderType =
-			orderTypeResource.getOrderTypeByExternalReferenceCode(
-				postOrderType.getExternalReferenceCode());
-
-		assertEquals(postOrderType, getOrderType);
-		assertValid(getOrderType);
-	}
-
-	protected OrderType testGetOrderTypeByExternalReferenceCode_addOrderType()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderTypeByExternalReferenceCode()
-		throws Exception {
-
-		OrderType orderType =
-			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderTypeByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												orderType.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderTypeByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderTypeByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													orderType.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderTypeByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderTypeByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderTypeByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderTypeByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderType
-			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType()
-		throws Exception {
-
-		return testGraphQLOrderType_addOrderType();
-	}
-
-	@Test
-	public void testPatchOrderTypeByExternalReferenceCode() throws Exception {
-		OrderType postOrderType =
-			testPatchOrderTypeByExternalReferenceCode_addOrderType();
-
-		OrderType randomPatchOrderType = randomPatchOrderType();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderType patchOrderType =
-			orderTypeResource.patchOrderTypeByExternalReferenceCode(
-				postOrderType.getExternalReferenceCode(), randomPatchOrderType);
-
-		OrderType expectedPatchOrderType = postOrderType.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOrderType, expectedPatchOrderType);
-
-		OrderType getOrderType =
-			orderTypeResource.getOrderTypeByExternalReferenceCode(
-				patchOrderType.getExternalReferenceCode());
-
-		assertEquals(expectedPatchOrderType, getOrderType);
-		assertValid(getOrderType);
-	}
-
-	protected OrderType testPatchOrderTypeByExternalReferenceCode_addOrderType()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutOrderTypeByExternalReferenceCode() throws Exception {
-		OrderType postOrderType =
-			testPutOrderTypeByExternalReferenceCode_addOrderType();
-
-		OrderType randomOrderType = randomOrderType();
-
-		OrderType putOrderType =
-			orderTypeResource.putOrderTypeByExternalReferenceCode(
-				postOrderType.getExternalReferenceCode(), randomOrderType);
-
-		assertEquals(randomOrderType, putOrderType);
-		assertValid(putOrderType);
-
-		OrderType getOrderType =
-			orderTypeResource.getOrderTypeByExternalReferenceCode(
-				putOrderType.getExternalReferenceCode());
-
-		assertEquals(randomOrderType, getOrderType);
-		assertValid(getOrderType);
-
-		OrderType newOrderType =
-			testPutOrderTypeByExternalReferenceCode_createOrderType();
-
-		putOrderType = orderTypeResource.putOrderTypeByExternalReferenceCode(
-			newOrderType.getExternalReferenceCode(), newOrderType);
-
-		assertEquals(newOrderType, putOrderType);
-		assertValid(putOrderType);
-
-		getOrderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
-			putOrderType.getExternalReferenceCode());
-
-		assertEquals(newOrderType, getOrderType);
-
-		Assert.assertEquals(
-			newOrderType.getExternalReferenceCode(),
-			putOrderType.getExternalReferenceCode());
-	}
-
-	protected OrderType
-			testPutOrderTypeByExternalReferenceCode_createOrderType()
-		throws Exception {
-
-		return randomOrderType();
-	}
-
-	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrderType() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderType orderType = testDeleteOrderType_addOrderType();
-
-		assertHttpResponseStatusCode(
-			204,
-			orderTypeResource.deleteOrderTypeHttpResponse(orderType.getId()));
-
-		assertHttpResponseStatusCode(
-			404, orderTypeResource.getOrderTypeHttpResponse(orderType.getId()));
-		assertHttpResponseStatusCode(
-			404, orderTypeResource.getOrderTypeHttpResponse(0L));
-	}
-
-	protected OrderType testDeleteOrderType_addOrderType() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOrderType() throws Exception {
-
-		// No namespace
-
-		OrderType orderType1 = testGraphQLDeleteOrderType_addOrderType();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderType",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderType1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderType"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"orderType",
-					new HashMap<String, Object>() {
-						{
-							put("id", orderType1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		OrderType orderType2 = testGraphQLDeleteOrderType_addOrderType();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderType",
-							new HashMap<String, Object>() {
-								{
-									put("id", orderType2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderType"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminOrder_v1_0",
-					new GraphQLField(
-						"orderType",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderType2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected OrderType testGraphQLDeleteOrderType_addOrderType()
-		throws Exception {
-
-		return testGraphQLOrderType_addOrderType();
-	}
-
-	@Test
-	public void testDeleteOrderTypeBatch() throws Exception {
-		OrderType orderType1 = testDeleteOrderTypeBatch_addOrderType();
-
-		testDeleteOrderTypeBatch_deleteOrderType(
-			"COMPLETED", null, orderType1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
-
-		OrderType orderType2 = testDeleteOrderTypeBatch_addOrderType();
-
-		testDeleteOrderTypeBatch_deleteOrderType(
-			"COMPLETED", orderType2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
-
-		orderType1 = testDeleteOrderTypeBatch_addOrderType();
-		orderType2 = testDeleteOrderTypeBatch_addOrderType();
-
-		testDeleteOrderTypeBatch_deleteOrderType(
-			"COMPLETED", orderType2.getExternalReferenceCode(),
-			orderType1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
-
-		testDeleteOrderTypeBatch_deleteOrderType(
-			"COMPLETED", orderType2.getExternalReferenceCode(),
-			orderType1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
-	}
-
-	protected OrderType testDeleteOrderTypeBatch_addOrderType()
-		throws Exception {
-
-		return testDeleteOrderType_addOrderType();
-	}
-
-	protected void testDeleteOrderTypeBatch_deleteOrderType(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			orderTypeResource.deleteOrderTypeBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetOrderType() throws Exception {
-		OrderType postOrderType = testGetOrderType_addOrderType();
-
-		OrderType getOrderType = orderTypeResource.getOrderType(
-			postOrderType.getId());
-
-		assertEquals(postOrderType, getOrderType);
-		assertValid(getOrderType);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		OrderType postOrderType = testGetOrderType_addOrderType();
-
-		OrderType getOrderType = orderTypeResource.getOrderType(
-			postOrderType.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postOrderType.getId());
-
-		assertEquals(getOrderType, OrderTypeSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected OrderType testGetOrderType_addOrderType() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderType() throws Exception {
-		OrderType orderType = testGraphQLGetOrderType_addOrderType();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderType",
-								new HashMap<String, Object>() {
-									{
-										put("id", orderType.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/orderType"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderType",
-									new HashMap<String, Object>() {
-										{
-											put("id", orderType.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderType"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderTypeNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderType",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderType",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderType testGraphQLGetOrderType_addOrderType()
-		throws Exception {
-
-		return testGraphQLOrderType_addOrderType();
-	}
-
-	@Test
-	public void testPatchOrderType() throws Exception {
-		OrderType postOrderType = testPatchOrderType_addOrderType();
-
-		OrderType randomPatchOrderType = randomPatchOrderType();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderType patchOrderType = orderTypeResource.patchOrderType(
-			postOrderType.getId(), randomPatchOrderType);
-
-		OrderType expectedPatchOrderType = postOrderType.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOrderType, expectedPatchOrderType);
-
-		OrderType getOrderType = orderTypeResource.getOrderType(
-			patchOrderType.getId());
-
-		assertEquals(expectedPatchOrderType, getOrderType);
-		assertValid(getOrderType);
-	}
-
-	protected OrderType testPatchOrderType_addOrderType() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetTermOrderTypeOrderType() throws Exception {
 		OrderType postOrderType = testGetTermOrderTypeOrderType_addOrderType();
 
@@ -1644,6 +1513,137 @@ public abstract class BaseOrderTypeResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
+	public void testPatchOrderType() throws Exception {
+		OrderType postOrderType = testPatchOrderType_addOrderType();
+
+		OrderType randomPatchOrderType = randomPatchOrderType();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType patchOrderType = orderTypeResource.patchOrderType(
+			postOrderType.getId(), randomPatchOrderType);
+
+		OrderType expectedPatchOrderType = postOrderType.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrderType, expectedPatchOrderType);
+
+		OrderType getOrderType = orderTypeResource.getOrderType(
+			patchOrderType.getId());
+
+		assertEquals(expectedPatchOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testPatchOrderType_addOrderType() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchOrderTypeByExternalReferenceCode() throws Exception {
+		OrderType postOrderType =
+			testPatchOrderTypeByExternalReferenceCode_addOrderType();
+
+		OrderType randomPatchOrderType = randomPatchOrderType();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType patchOrderType =
+			orderTypeResource.patchOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode(), randomPatchOrderType);
+
+		OrderType expectedPatchOrderType = postOrderType.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrderType, expectedPatchOrderType);
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderTypeByExternalReferenceCode(
+				patchOrderType.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testPatchOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostOrderType() throws Exception {
+		OrderType randomOrderType = randomOrderType();
+
+		OrderType postOrderType = testPostOrderType_addOrderType(
+			randomOrderType);
+
+		assertEquals(randomOrderType, postOrderType);
+		assertValid(postOrderType);
+	}
+
+	protected OrderType testPostOrderType_addOrderType(OrderType orderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutOrderTypeByExternalReferenceCode() throws Exception {
+		OrderType postOrderType =
+			testPutOrderTypeByExternalReferenceCode_addOrderType();
+
+		OrderType randomOrderType = randomOrderType();
+
+		OrderType putOrderType =
+			orderTypeResource.putOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode(), randomOrderType);
+
+		assertEquals(randomOrderType, putOrderType);
+		assertValid(putOrderType);
+
+		OrderType getOrderType =
+			orderTypeResource.getOrderTypeByExternalReferenceCode(
+				putOrderType.getExternalReferenceCode());
+
+		assertEquals(randomOrderType, getOrderType);
+		assertValid(getOrderType);
+
+		OrderType newOrderType =
+			testPutOrderTypeByExternalReferenceCode_createOrderType();
+
+		putOrderType = orderTypeResource.putOrderTypeByExternalReferenceCode(
+			newOrderType.getExternalReferenceCode(), newOrderType);
+
+		assertEquals(newOrderType, putOrderType);
+		assertValid(putOrderType);
+
+		getOrderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
+			putOrderType.getExternalReferenceCode());
+
+		assertEquals(newOrderType, getOrderType);
+
+		Assert.assertEquals(
+			newOrderType.getExternalReferenceCode(),
+			putOrderType.getExternalReferenceCode());
+	}
+
+	protected OrderType
+			testPutOrderTypeByExternalReferenceCode_createOrderType()
+		throws Exception {
+
+		return randomOrderType();
+	}
+
+	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

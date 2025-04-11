@@ -45,19 +45,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductResource {
 
-	public Page<Product> getChannelProductsPage(
-			Long channelId, Long accountId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public Product getChannelProduct(
+			Long channelId, Long productId, Long accountId)
 		throws Exception;
 
 	public Product getChannelProductByFriendlyUrlPath(
 			Long channelId, String friendlyUrlPath, Long accountId)
 		throws Exception;
 
-	public Product getChannelProduct(
-			Long channelId, Long productId, Long accountId)
+	public Page<Product> getChannelProductsPage(
+			Long channelId, Long accountId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

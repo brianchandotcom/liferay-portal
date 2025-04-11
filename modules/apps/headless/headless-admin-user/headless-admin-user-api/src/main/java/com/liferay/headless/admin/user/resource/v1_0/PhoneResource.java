@@ -45,16 +45,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PhoneResource {
 
+	public void deletePhone(Long phoneId) throws Exception;
+
+	public Response deletePhoneBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deletePhoneByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
 	public Page<Phone> getAccountByExternalReferenceCodePhonesPage(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Page<Phone> getAccountPhonesPage(Long accountId) throws Exception;
-
-	public Response postAccountPhonesPageExportBatch(
-			Long accountId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
 
 	public Page<Phone> getOrganizationByExternalReferenceCodePhonesPage(
 			String externalReferenceCode)
@@ -63,35 +66,32 @@ public interface PhoneResource {
 	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception;
 
-	public Response postOrganizationPhonesPageExportBatch(
-			String organizationId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public void deletePhoneByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
+	public Phone getPhone(Long phoneId) throws Exception;
 
 	public Phone getPhoneByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
-
-	public Phone patchPhoneByExternalReferenceCode(
-			String externalReferenceCode, Phone phone)
-		throws Exception;
-
-	public void deletePhone(Long phoneId) throws Exception;
-
-	public Response deletePhoneBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Phone getPhone(Long phoneId) throws Exception;
-
-	public Phone patchPhone(Long phoneId, Phone phone) throws Exception;
 
 	public Page<Phone> getUserAccountByExternalReferenceCodePhonesPage(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
+		throws Exception;
+
+	public Phone patchPhone(Long phoneId, Phone phone) throws Exception;
+
+	public Phone patchPhoneByExternalReferenceCode(
+			String externalReferenceCode, Phone phone)
+		throws Exception;
+
+	public Response postAccountPhonesPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public Response postOrganizationPhonesPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public Response postUserAccountPhonesPageExportBatch(

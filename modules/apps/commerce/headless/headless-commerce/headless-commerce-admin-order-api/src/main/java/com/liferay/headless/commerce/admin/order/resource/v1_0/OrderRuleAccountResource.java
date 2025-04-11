@@ -58,16 +58,16 @@ public interface OrderRuleAccountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderRuleAccount
-			postOrderRuleByExternalReferenceCodeOrderRuleAccount(
-				String externalReferenceCode, OrderRuleAccount orderRuleAccount)
-		throws Exception;
-
 	public Page<OrderRuleAccount> getOrderRuleIdOrderRuleAccountsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OrderRuleAccount
+			postOrderRuleByExternalReferenceCodeOrderRuleAccount(
+				String externalReferenceCode, OrderRuleAccount orderRuleAccount)
 		throws Exception;
 
 	public OrderRuleAccount postOrderRuleIdOrderRuleAccount(

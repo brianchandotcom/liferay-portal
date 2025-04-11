@@ -58,14 +58,14 @@ public interface PriceListOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<PriceListOrderType> getPriceListIdPriceListOrderTypesPage(
+			Long id, String search, Pagination pagination)
+		throws Exception;
+
 	public PriceListOrderType
 			postPriceListByExternalReferenceCodePriceListOrderType(
 				String externalReferenceCode,
 				PriceListOrderType priceListOrderType)
-		throws Exception;
-
-	public Page<PriceListOrderType> getPriceListIdPriceListOrderTypesPage(
-			Long id, String search, Pagination pagination)
 		throws Exception;
 
 	public PriceListOrderType postPriceListIdPriceListOrderType(

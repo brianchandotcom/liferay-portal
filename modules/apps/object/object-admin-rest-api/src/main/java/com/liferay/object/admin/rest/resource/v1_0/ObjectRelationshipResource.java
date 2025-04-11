@@ -46,18 +46,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectRelationshipResource {
 
+	public void deleteObjectRelationship(Long objectRelationshipId)
+		throws Exception;
+
+	public Response deleteObjectRelationshipBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectRelationship>
 			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 				String externalReferenceCode, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ObjectRelationship
-			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				String externalReferenceCode,
-				ObjectRelationship objectRelationship)
 		throws Exception;
 
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
@@ -67,11 +68,13 @@ public interface ObjectRelationshipResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectRelationshipsPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectRelationship getObjectRelationship(Long objectRelationshipId)
+		throws Exception;
+
+	public ObjectRelationship
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				String externalReferenceCode,
+				ObjectRelationship objectRelationship)
 		throws Exception;
 
 	public ObjectRelationship postObjectDefinitionObjectRelationship(
@@ -82,18 +85,11 @@ public interface ObjectRelationshipResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public ObjectRelationship putObjectRelationshipByExternalReferenceCode(
-			String externalReferenceCode, ObjectRelationship objectRelationship)
-		throws Exception;
-
-	public void deleteObjectRelationship(Long objectRelationshipId)
-		throws Exception;
-
-	public Response deleteObjectRelationshipBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectRelationship getObjectRelationship(Long objectRelationshipId)
+	public Response postObjectDefinitionObjectRelationshipsPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectRelationship putObjectRelationship(
@@ -102,6 +98,10 @@ public interface ObjectRelationshipResource {
 
 	public Response putObjectRelationshipBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectRelationship putObjectRelationshipByExternalReferenceCode(
+			String externalReferenceCode, ObjectRelationship objectRelationship)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

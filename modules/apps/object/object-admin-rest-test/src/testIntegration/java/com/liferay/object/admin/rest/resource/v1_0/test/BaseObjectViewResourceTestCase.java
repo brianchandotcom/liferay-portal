@@ -220,6 +220,142 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteObjectView() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectView objectView = testDeleteObjectView_addObjectView();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectViewResource.deleteObjectViewHttpResponse(
+				objectView.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectViewResource.getObjectViewHttpResponse(objectView.getId()));
+		assertHttpResponseStatusCode(
+			404, objectViewResource.getObjectViewHttpResponse(0L));
+	}
+
+	protected ObjectView testDeleteObjectView_addObjectView() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectView() throws Exception {
+
+		// No namespace
+
+		ObjectView objectView1 = testGraphQLDeleteObjectView_addObjectView();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectView",
+						new HashMap<String, Object>() {
+							{
+								put("objectViewId", objectView1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectView"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectView",
+					new HashMap<String, Object>() {
+						{
+							put("objectViewId", objectView1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectView objectView2 = testGraphQLDeleteObjectView_addObjectView();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectView",
+							new HashMap<String, Object>() {
+								{
+									put("objectViewId", objectView2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectView"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectView",
+						new HashMap<String, Object>() {
+							{
+								put("objectViewId", objectView2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ObjectView testGraphQLDeleteObjectView_addObjectView()
+		throws Exception {
+
+		return testGraphQLObjectView_addObjectView();
+	}
+
+	@Test
+	public void testDeleteObjectViewBatch() throws Exception {
+		ObjectView objectView1 = testDeleteObjectViewBatch_addObjectView();
+
+		testDeleteObjectViewBatch_deleteObjectView(
+			"COMPLETED", null, objectView1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			objectViewResource.getObjectViewHttpResponse(objectView1.getId()));
+	}
+
+	protected ObjectView testDeleteObjectViewBatch_addObjectView()
+		throws Exception {
+
+		return testDeleteObjectView_addObjectView();
+	}
+
+	protected void testDeleteObjectViewBatch_deleteObjectView(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectViewResource.deleteObjectViewBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage()
 		throws Exception {
 
@@ -574,29 +710,6 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionByExternalReferenceCodeObjectView()
-		throws Exception {
-
-		ObjectView randomObjectView = randomObjectView();
-
-		ObjectView postObjectView =
-			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
-				randomObjectView);
-
-		assertEquals(randomObjectView, postObjectView);
-		assertValid(postObjectView);
-	}
-
-	protected ObjectView
-			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
-				ObjectView objectView)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetObjectDefinitionObjectViewsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId();
@@ -939,162 +1052,6 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionObjectView() throws Exception {
-		ObjectView randomObjectView = randomObjectView();
-
-		ObjectView postObjectView =
-			testPostObjectDefinitionObjectView_addObjectView(randomObjectView);
-
-		assertEquals(randomObjectView, postObjectView);
-		assertValid(postObjectView);
-	}
-
-	protected ObjectView testPostObjectDefinitionObjectView_addObjectView(
-			ObjectView objectView)
-		throws Exception {
-
-		return objectViewResource.postObjectDefinitionObjectView(
-			testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId(),
-			objectView);
-	}
-
-	@Test
-	public void testDeleteObjectView() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectView objectView = testDeleteObjectView_addObjectView();
-
-		assertHttpResponseStatusCode(
-			204,
-			objectViewResource.deleteObjectViewHttpResponse(
-				objectView.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			objectViewResource.getObjectViewHttpResponse(objectView.getId()));
-		assertHttpResponseStatusCode(
-			404, objectViewResource.getObjectViewHttpResponse(0L));
-	}
-
-	protected ObjectView testDeleteObjectView_addObjectView() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteObjectView() throws Exception {
-
-		// No namespace
-
-		ObjectView objectView1 = testGraphQLDeleteObjectView_addObjectView();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectView",
-						new HashMap<String, Object>() {
-							{
-								put("objectViewId", objectView1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectView"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectView",
-					new HashMap<String, Object>() {
-						{
-							put("objectViewId", objectView1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace objectAdmin_v1_0
-
-		ObjectView objectView2 = testGraphQLDeleteObjectView_addObjectView();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"deleteObjectView",
-							new HashMap<String, Object>() {
-								{
-									put("objectViewId", objectView2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-				"Object/deleteObjectView"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectAdmin_v1_0",
-					new GraphQLField(
-						"objectView",
-						new HashMap<String, Object>() {
-							{
-								put("objectViewId", objectView2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ObjectView testGraphQLDeleteObjectView_addObjectView()
-		throws Exception {
-
-		return testGraphQLObjectView_addObjectView();
-	}
-
-	@Test
-	public void testDeleteObjectViewBatch() throws Exception {
-		ObjectView objectView1 = testDeleteObjectViewBatch_addObjectView();
-
-		testDeleteObjectViewBatch_deleteObjectView(
-			"COMPLETED", null, objectView1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			objectViewResource.getObjectViewHttpResponse(objectView1.getId()));
-	}
-
-	protected ObjectView testDeleteObjectViewBatch_addObjectView()
-		throws Exception {
-
-		return testDeleteObjectView_addObjectView();
-	}
-
-	protected void testDeleteObjectViewBatch_deleteObjectView(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			objectViewResource.deleteObjectViewBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetObjectView() throws Exception {
 		ObjectView postObjectView = testGetObjectView_addObjectView();
 
@@ -1391,6 +1348,68 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectView()
+		throws Exception {
+
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView postObjectView =
+			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
+				randomObjectView);
+
+		assertEquals(randomObjectView, postObjectView);
+		assertValid(postObjectView);
+	}
+
+	protected ObjectView
+			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
+				ObjectView objectView)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionObjectView() throws Exception {
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView postObjectView =
+			testPostObjectDefinitionObjectView_addObjectView(randomObjectView);
+
+		assertEquals(randomObjectView, postObjectView);
+		assertValid(postObjectView);
+	}
+
+	protected ObjectView testPostObjectDefinitionObjectView_addObjectView(
+			ObjectView objectView)
+		throws Exception {
+
+		return objectViewResource.postObjectDefinitionObjectView(
+			testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId(),
+			objectView);
+	}
+
+	@Test
+	public void testPostObjectViewCopy() throws Exception {
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView postObjectView = testPostObjectViewCopy_addObjectView(
+			randomObjectView);
+
+		assertEquals(randomObjectView, postObjectView);
+		assertValid(postObjectView);
+	}
+
+	protected ObjectView testPostObjectViewCopy_addObjectView(
+			ObjectView objectView)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutObjectView() throws Exception {
 		ObjectView postObjectView = testPutObjectView_addObjectView();
 
@@ -1410,25 +1429,6 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	protected ObjectView testPutObjectView_addObjectView() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostObjectViewCopy() throws Exception {
-		ObjectView randomObjectView = randomObjectView();
-
-		ObjectView postObjectView = testPostObjectViewCopy_addObjectView(
-			randomObjectView);
-
-		assertEquals(randomObjectView, postObjectView);
-		assertValid(postObjectView);
-	}
-
-	protected ObjectView testPostObjectViewCopy_addObjectView(
-			ObjectView objectView)
-		throws Exception {
-
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

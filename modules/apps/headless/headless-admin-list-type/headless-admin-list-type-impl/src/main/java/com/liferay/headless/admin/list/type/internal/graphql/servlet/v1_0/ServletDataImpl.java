@@ -82,26 +82,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createListTypeDefinitionsPageExportBatch",
-						new ObjectValuePair<>(
-							ListTypeDefinitionResourceImpl.class,
-							"postListTypeDefinitionsPageExportBatch"));
-					put(
-						"mutation#createListTypeDefinition",
-						new ObjectValuePair<>(
-							ListTypeDefinitionResourceImpl.class,
-							"postListTypeDefinition"));
-					put(
-						"mutation#createListTypeDefinitionBatch",
-						new ObjectValuePair<>(
-							ListTypeDefinitionResourceImpl.class,
-							"postListTypeDefinitionBatch"));
-					put(
-						"mutation#updateListTypeDefinitionByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ListTypeDefinitionResourceImpl.class,
-							"putListTypeDefinitionByExternalReferenceCode"));
-					put(
 						"mutation#deleteListTypeDefinition",
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
@@ -117,6 +97,21 @@ public class ServletDataImpl implements ServletData {
 							ListTypeDefinitionResourceImpl.class,
 							"patchListTypeDefinition"));
 					put(
+						"mutation#createListTypeDefinition",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postListTypeDefinition"));
+					put(
+						"mutation#createListTypeDefinitionBatch",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postListTypeDefinitionBatch"));
+					put(
+						"mutation#createListTypeDefinitionsPageExportBatch",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postListTypeDefinitionsPageExportBatch"));
+					put(
 						"mutation#updateListTypeDefinition",
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
@@ -126,6 +121,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
 							"putListTypeDefinitionBatch"));
+					put(
+						"mutation#updateListTypeDefinitionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"putListTypeDefinitionByExternalReferenceCode"));
+					put(
+						"mutation#deleteListTypeEntry",
+						new ObjectValuePair<>(
+							ListTypeEntryResourceImpl.class,
+							"deleteListTypeEntry"));
+					put(
+						"mutation#deleteListTypeEntryBatch",
+						new ObjectValuePair<>(
+							ListTypeEntryResourceImpl.class,
+							"deleteListTypeEntryBatch"));
 					put(
 						"mutation#createListTypeDefinitionByExternalReferenceCodeListTypeEntry",
 						new ObjectValuePair<>(
@@ -147,16 +157,6 @@ public class ServletDataImpl implements ServletData {
 							ListTypeEntryResourceImpl.class,
 							"postListTypeDefinitionListTypeEntryBatch"));
 					put(
-						"mutation#deleteListTypeEntry",
-						new ObjectValuePair<>(
-							ListTypeEntryResourceImpl.class,
-							"deleteListTypeEntry"));
-					put(
-						"mutation#deleteListTypeEntryBatch",
-						new ObjectValuePair<>(
-							ListTypeEntryResourceImpl.class,
-							"deleteListTypeEntryBatch"));
-					put(
 						"mutation#updateListTypeEntry",
 						new ObjectValuePair<>(
 							ListTypeEntryResourceImpl.class,
@@ -168,20 +168,20 @@ public class ServletDataImpl implements ServletData {
 							"putListTypeEntryBatch"));
 
 					put(
-						"query#listTypeDefinitions",
+						"query#listTypeDefinition",
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
-							"getListTypeDefinitionsPage"));
+							"getListTypeDefinition"));
 					put(
 						"query#listTypeDefinitionByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
 							"getListTypeDefinitionByExternalReferenceCode"));
 					put(
-						"query#listTypeDefinition",
+						"query#listTypeDefinitions",
 						new ObjectValuePair<>(
 							ListTypeDefinitionResourceImpl.class,
-							"getListTypeDefinition"));
+							"getListTypeDefinitionsPage"));
 					put(
 						"query#listTypeDefinitionByExternalReferenceCodeListTypeEntries",
 						new ObjectValuePair<>(

@@ -47,13 +47,13 @@ public interface IndexResource {
 
 	public Page<Index> getIndexesPage() throws Exception;
 
-	public Response postIndexesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
 	public void patchIndexRefresh(Index index) throws Exception;
 
 	public void patchIndexReindex(Index index) throws Exception;
+
+	public Response postIndexesPageExportBatch(
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

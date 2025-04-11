@@ -494,32 +494,6 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount()
-		throws Exception {
-
-		ProductConfigurationListAccount randomProductConfigurationListAccount =
-			randomProductConfigurationListAccount();
-
-		ProductConfigurationListAccount postProductConfigurationListAccount =
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount_addProductConfigurationListAccount(
-				randomProductConfigurationListAccount);
-
-		assertEquals(
-			randomProductConfigurationListAccount,
-			postProductConfigurationListAccount);
-		assertValid(postProductConfigurationListAccount);
-	}
-
-	protected ProductConfigurationListAccount
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount_addProductConfigurationListAccount(
-				ProductConfigurationListAccount productConfigurationListAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductConfigurationListIdProductConfigurationListAccountsPage()
 		throws Exception {
 
@@ -1025,6 +999,32 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount()
+		throws Exception {
+
+		ProductConfigurationListAccount randomProductConfigurationListAccount =
+			randomProductConfigurationListAccount();
+
+		ProductConfigurationListAccount postProductConfigurationListAccount =
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount_addProductConfigurationListAccount(
+				randomProductConfigurationListAccount);
+
+		assertEquals(
+			randomProductConfigurationListAccount,
+			postProductConfigurationListAccount);
+		assertValid(postProductConfigurationListAccount);
+	}
+
+	protected ProductConfigurationListAccount
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount_addProductConfigurationListAccount(
+				ProductConfigurationListAccount productConfigurationListAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

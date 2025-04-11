@@ -53,16 +53,16 @@ public interface SkuVirtualSettingsFileEntryResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<SkuVirtualSettingsFileEntry>
+			getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+				Long id, Pagination pagination)
+		throws Exception;
+
 	public SkuVirtualSettingsFileEntry getSkuVirtualSettingsFileEntry(Long id)
 		throws Exception;
 
 	public SkuVirtualSettingsFileEntry patchSkuVirtualSettingsFileEntry(
 			Long id, MultipartBody multipartBody)
-		throws Exception;
-
-	public Page<SkuVirtualSettingsFileEntry>
-			getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-				Long id, Pagination pagination)
 		throws Exception;
 
 	public SkuVirtualSettingsFileEntry

@@ -475,30 +475,6 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountAddressByExternalReferenceCodeAccountAddressChannel()
-		throws Exception {
-
-		AccountAddressChannel randomAccountAddressChannel =
-			randomAccountAddressChannel();
-
-		AccountAddressChannel postAccountAddressChannel =
-			testPostAccountAddressByExternalReferenceCodeAccountAddressChannel_addAccountAddressChannel(
-				randomAccountAddressChannel);
-
-		assertEquals(randomAccountAddressChannel, postAccountAddressChannel);
-		assertValid(postAccountAddressChannel);
-	}
-
-	protected AccountAddressChannel
-			testPostAccountAddressByExternalReferenceCodeAccountAddressChannel_addAccountAddressChannel(
-				AccountAddressChannel accountAddressChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountAddressIdAccountAddressChannelsPage()
 		throws Exception {
 
@@ -985,6 +961,30 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostAccountAddressByExternalReferenceCodeAccountAddressChannel()
+		throws Exception {
+
+		AccountAddressChannel randomAccountAddressChannel =
+			randomAccountAddressChannel();
+
+		AccountAddressChannel postAccountAddressChannel =
+			testPostAccountAddressByExternalReferenceCodeAccountAddressChannel_addAccountAddressChannel(
+				randomAccountAddressChannel);
+
+		assertEquals(randomAccountAddressChannel, postAccountAddressChannel);
+		assertValid(postAccountAddressChannel);
+	}
+
+	protected AccountAddressChannel
+			testPostAccountAddressByExternalReferenceCodeAccountAddressChannel_addAccountAddressChannel(
+				AccountAddressChannel accountAddressChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -208,23 +208,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleAccountAccount(orderRuleAccountId: ___){customFields, emailAddress, externalReferenceCode, id, logoId, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Account orderRuleAccountAccount(
-			@GraphQLName("orderRuleAccountId") Long orderRuleAccountId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountResource -> accountResource.getOrderRuleAccountAccount(
-				orderRuleAccountId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeAccount(externalReferenceCode: ___){customFields, emailAddress, externalReferenceCode, id, logoId, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -251,6 +234,23 @@ public class Query {
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountResource -> accountResource.getOrderIdAccount(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleAccountAccount(orderRuleAccountId: ___){customFields, emailAddress, externalReferenceCode, id, logoId, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Account orderRuleAccountAccount(
+			@GraphQLName("orderRuleAccountId") Long orderRuleAccountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.getOrderRuleAccountAccount(
+				orderRuleAccountId));
 	}
 
 	/**
@@ -291,6 +291,37 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeChannel(externalReferenceCode: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Channel orderByExternalReferenceCodeChannel(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource ->
+				channelResource.getOrderByExternalReferenceCodeChannel(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderIdChannel(id: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Channel orderIdChannel(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.getOrderIdChannel(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleChannelChannel(orderRuleChannelId: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -325,32 +356,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeChannel(externalReferenceCode: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {order(id: ___){account, accountExternalReferenceCode, accountId, actions, advanceStatus, billingAddress, billingAddressExternalReferenceCode, billingAddressId, channel, channelExternalReferenceCode, channelId, couponCode, createDate, creatorEmailAddress, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermDescription, deliveryTermExternalReferenceCode, deliveryTermId, deliveryTermName, externalReferenceCode, id, lastPriceUpdateDate, modifiedDate, name, orderDate, orderItems, orderStatus, orderStatusInfo, orderTypeExternalReferenceCode, orderTypeId, paymentMethod, paymentStatus, paymentStatusInfo, paymentTermDescription, paymentTermExternalReferenceCode, paymentTermId, paymentTermName, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippable, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingAmount, shippingAmountFormatted, shippingAmountValue, shippingDiscountAmount, shippingDiscountAmountFormatted, shippingDiscountAmountValue, shippingDiscountPercentageLevel1, shippingDiscountPercentageLevel1WithTaxAmount, shippingDiscountPercentageLevel2, shippingDiscountPercentageLevel2WithTaxAmount, shippingDiscountPercentageLevel3, shippingDiscountPercentageLevel3WithTaxAmount, shippingDiscountPercentageLevel4, shippingDiscountPercentageLevel4WithTaxAmount, shippingDiscountWithTaxAmount, shippingDiscountWithTaxAmountFormatted, shippingMethod, shippingOption, shippingWithTaxAmount, shippingWithTaxAmountFormatted, shippingWithTaxAmountValue, subtotal, subtotalAmount, subtotalDiscountAmount, subtotalDiscountAmountFormatted, subtotalDiscountPercentageLevel1, subtotalDiscountPercentageLevel1WithTaxAmount, subtotalDiscountPercentageLevel2, subtotalDiscountPercentageLevel2WithTaxAmount, subtotalDiscountPercentageLevel3, subtotalDiscountPercentageLevel3WithTaxAmount, subtotalDiscountPercentageLevel4, subtotalDiscountPercentageLevel4WithTaxAmount, subtotalDiscountWithTaxAmount, subtotalDiscountWithTaxAmountFormatted, subtotalFormatted, subtotalWithTaxAmount, subtotalWithTaxAmountFormatted, subtotalWithTaxAmountValue, taxAmount, taxAmountFormatted, taxAmountValue, total, totalAmount, totalDiscountAmount, totalDiscountAmountFormatted, totalDiscountAmountValue, totalDiscountPercentageLevel1, totalDiscountPercentageLevel1WithTaxAmount, totalDiscountPercentageLevel2, totalDiscountPercentageLevel2WithTaxAmount, totalDiscountPercentageLevel3, totalDiscountPercentageLevel3WithTaxAmount, totalDiscountPercentageLevel4, totalDiscountPercentageLevel4WithTaxAmount, totalDiscountWithTaxAmount, totalDiscountWithTaxAmountFormatted, totalDiscountWithTaxAmountValue, totalFormatted, totalWithTaxAmount, totalWithTaxAmountFormatted, totalWithTaxAmountValue, transactionId, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Channel orderByExternalReferenceCodeChannel(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
+	public Order order(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
-			_channelResourceComponentServiceObjects,
+			_orderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			channelResource ->
-				channelResource.getOrderByExternalReferenceCodeChannel(
-					externalReferenceCode));
+			orderResource -> orderResource.getOrder(id));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderIdChannel(id: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCode(externalReferenceCode: ___){account, accountExternalReferenceCode, accountId, actions, advanceStatus, billingAddress, billingAddressExternalReferenceCode, billingAddressId, channel, channelExternalReferenceCode, channelId, couponCode, createDate, creatorEmailAddress, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermDescription, deliveryTermExternalReferenceCode, deliveryTermId, deliveryTermName, externalReferenceCode, id, lastPriceUpdateDate, modifiedDate, name, orderDate, orderItems, orderStatus, orderStatusInfo, orderTypeExternalReferenceCode, orderTypeId, paymentMethod, paymentStatus, paymentStatusInfo, paymentTermDescription, paymentTermExternalReferenceCode, paymentTermId, paymentTermName, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippable, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingAmount, shippingAmountFormatted, shippingAmountValue, shippingDiscountAmount, shippingDiscountAmountFormatted, shippingDiscountAmountValue, shippingDiscountPercentageLevel1, shippingDiscountPercentageLevel1WithTaxAmount, shippingDiscountPercentageLevel2, shippingDiscountPercentageLevel2WithTaxAmount, shippingDiscountPercentageLevel3, shippingDiscountPercentageLevel3WithTaxAmount, shippingDiscountPercentageLevel4, shippingDiscountPercentageLevel4WithTaxAmount, shippingDiscountWithTaxAmount, shippingDiscountWithTaxAmountFormatted, shippingMethod, shippingOption, shippingWithTaxAmount, shippingWithTaxAmountFormatted, shippingWithTaxAmountValue, subtotal, subtotalAmount, subtotalDiscountAmount, subtotalDiscountAmountFormatted, subtotalDiscountPercentageLevel1, subtotalDiscountPercentageLevel1WithTaxAmount, subtotalDiscountPercentageLevel2, subtotalDiscountPercentageLevel2WithTaxAmount, subtotalDiscountPercentageLevel3, subtotalDiscountPercentageLevel3WithTaxAmount, subtotalDiscountPercentageLevel4, subtotalDiscountPercentageLevel4WithTaxAmount, subtotalDiscountWithTaxAmount, subtotalDiscountWithTaxAmountFormatted, subtotalFormatted, subtotalWithTaxAmount, subtotalWithTaxAmountFormatted, subtotalWithTaxAmountValue, taxAmount, taxAmountFormatted, taxAmountValue, total, totalAmount, totalDiscountAmount, totalDiscountAmountFormatted, totalDiscountAmountValue, totalDiscountPercentageLevel1, totalDiscountPercentageLevel1WithTaxAmount, totalDiscountPercentageLevel2, totalDiscountPercentageLevel2WithTaxAmount, totalDiscountPercentageLevel3, totalDiscountPercentageLevel3WithTaxAmount, totalDiscountPercentageLevel4, totalDiscountPercentageLevel4WithTaxAmount, totalDiscountWithTaxAmount, totalDiscountWithTaxAmountFormatted, totalDiscountWithTaxAmountValue, totalFormatted, totalWithTaxAmount, totalWithTaxAmountFormatted, totalWithTaxAmountValue, transactionId, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Channel orderIdChannel(@GraphQLName("id") Long id) throws Exception {
+	public Order orderByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
-			_channelResourceComponentServiceObjects,
+			_orderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			channelResource -> channelResource.getOrderIdChannel(id));
+			orderResource -> orderResource.getOrderByExternalReferenceCode(
+				externalReferenceCode));
 	}
 
 	/**
@@ -381,36 +411,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCode(externalReferenceCode: ___){account, accountExternalReferenceCode, accountId, actions, advanceStatus, billingAddress, billingAddressExternalReferenceCode, billingAddressId, channel, channelExternalReferenceCode, channelId, couponCode, createDate, creatorEmailAddress, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermDescription, deliveryTermExternalReferenceCode, deliveryTermId, deliveryTermName, externalReferenceCode, id, lastPriceUpdateDate, modifiedDate, name, orderDate, orderItems, orderStatus, orderStatusInfo, orderTypeExternalReferenceCode, orderTypeId, paymentMethod, paymentStatus, paymentStatusInfo, paymentTermDescription, paymentTermExternalReferenceCode, paymentTermId, paymentTermName, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippable, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingAmount, shippingAmountFormatted, shippingAmountValue, shippingDiscountAmount, shippingDiscountAmountFormatted, shippingDiscountAmountValue, shippingDiscountPercentageLevel1, shippingDiscountPercentageLevel1WithTaxAmount, shippingDiscountPercentageLevel2, shippingDiscountPercentageLevel2WithTaxAmount, shippingDiscountPercentageLevel3, shippingDiscountPercentageLevel3WithTaxAmount, shippingDiscountPercentageLevel4, shippingDiscountPercentageLevel4WithTaxAmount, shippingDiscountWithTaxAmount, shippingDiscountWithTaxAmountFormatted, shippingMethod, shippingOption, shippingWithTaxAmount, shippingWithTaxAmountFormatted, shippingWithTaxAmountValue, subtotal, subtotalAmount, subtotalDiscountAmount, subtotalDiscountAmountFormatted, subtotalDiscountPercentageLevel1, subtotalDiscountPercentageLevel1WithTaxAmount, subtotalDiscountPercentageLevel2, subtotalDiscountPercentageLevel2WithTaxAmount, subtotalDiscountPercentageLevel3, subtotalDiscountPercentageLevel3WithTaxAmount, subtotalDiscountPercentageLevel4, subtotalDiscountPercentageLevel4WithTaxAmount, subtotalDiscountWithTaxAmount, subtotalDiscountWithTaxAmountFormatted, subtotalFormatted, subtotalWithTaxAmount, subtotalWithTaxAmountFormatted, subtotalWithTaxAmountValue, taxAmount, taxAmountFormatted, taxAmountValue, total, totalAmount, totalDiscountAmount, totalDiscountAmountFormatted, totalDiscountAmountValue, totalDiscountPercentageLevel1, totalDiscountPercentageLevel1WithTaxAmount, totalDiscountPercentageLevel2, totalDiscountPercentageLevel2WithTaxAmount, totalDiscountPercentageLevel3, totalDiscountPercentageLevel3WithTaxAmount, totalDiscountPercentageLevel4, totalDiscountPercentageLevel4WithTaxAmount, totalDiscountWithTaxAmount, totalDiscountWithTaxAmountFormatted, totalDiscountWithTaxAmountValue, totalFormatted, totalWithTaxAmount, totalWithTaxAmountFormatted, totalWithTaxAmountValue, transactionId, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Order orderByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.getOrderByExternalReferenceCode(
-				externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {order(id: ___){account, accountExternalReferenceCode, accountId, actions, advanceStatus, billingAddress, billingAddressExternalReferenceCode, billingAddressId, channel, channelExternalReferenceCode, channelId, couponCode, createDate, creatorEmailAddress, currencyCode, currencyExternalReferenceCode, currencyId, customFields, deliveryTermDescription, deliveryTermExternalReferenceCode, deliveryTermId, deliveryTermName, externalReferenceCode, id, lastPriceUpdateDate, modifiedDate, name, orderDate, orderItems, orderStatus, orderStatusInfo, orderTypeExternalReferenceCode, orderTypeId, paymentMethod, paymentStatus, paymentStatusInfo, paymentTermDescription, paymentTermExternalReferenceCode, paymentTermId, paymentTermName, printedNote, purchaseOrderNumber, requestedDeliveryDate, shippable, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, shippingAmount, shippingAmountFormatted, shippingAmountValue, shippingDiscountAmount, shippingDiscountAmountFormatted, shippingDiscountAmountValue, shippingDiscountPercentageLevel1, shippingDiscountPercentageLevel1WithTaxAmount, shippingDiscountPercentageLevel2, shippingDiscountPercentageLevel2WithTaxAmount, shippingDiscountPercentageLevel3, shippingDiscountPercentageLevel3WithTaxAmount, shippingDiscountPercentageLevel4, shippingDiscountPercentageLevel4WithTaxAmount, shippingDiscountWithTaxAmount, shippingDiscountWithTaxAmountFormatted, shippingMethod, shippingOption, shippingWithTaxAmount, shippingWithTaxAmountFormatted, shippingWithTaxAmountValue, subtotal, subtotalAmount, subtotalDiscountAmount, subtotalDiscountAmountFormatted, subtotalDiscountPercentageLevel1, subtotalDiscountPercentageLevel1WithTaxAmount, subtotalDiscountPercentageLevel2, subtotalDiscountPercentageLevel2WithTaxAmount, subtotalDiscountPercentageLevel3, subtotalDiscountPercentageLevel3WithTaxAmount, subtotalDiscountPercentageLevel4, subtotalDiscountPercentageLevel4WithTaxAmount, subtotalDiscountWithTaxAmount, subtotalDiscountWithTaxAmountFormatted, subtotalFormatted, subtotalWithTaxAmount, subtotalWithTaxAmountFormatted, subtotalWithTaxAmountValue, taxAmount, taxAmountFormatted, taxAmountValue, total, totalAmount, totalDiscountAmount, totalDiscountAmountFormatted, totalDiscountAmountValue, totalDiscountPercentageLevel1, totalDiscountPercentageLevel1WithTaxAmount, totalDiscountPercentageLevel2, totalDiscountPercentageLevel2WithTaxAmount, totalDiscountPercentageLevel3, totalDiscountPercentageLevel3WithTaxAmount, totalDiscountPercentageLevel4, totalDiscountPercentageLevel4WithTaxAmount, totalDiscountWithTaxAmount, totalDiscountWithTaxAmountFormatted, totalDiscountWithTaxAmountValue, totalFormatted, totalWithTaxAmount, totalWithTaxAmountFormatted, totalWithTaxAmountValue, transactionId, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Order order(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.getOrder(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleAccountGroupAccountGroup(orderRuleAccountGroupId: ___){id, name}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -425,62 +425,6 @@ public class Query {
 			orderAccountGroupResource ->
 				orderAccountGroupResource.getOrderRuleAccountGroupAccountGroup(
 					orderRuleAccountGroupId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItems(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public OrderItemPage orderItems(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource -> new OrderItemPage(
-				orderItemResource.getOrderItemsPage(
-					search,
-					_filterBiFunction.apply(orderItemResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(orderItemResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItemByExternalReferenceCode(externalReferenceCode: ___){bookedQuantityId, customFields, decimalQuantity, deliveryGroup, deliveryGroupName, discountAmount, discountManuallyAdjusted, discountPercentageLevel1, discountPercentageLevel1WithTaxAmount, discountPercentageLevel2, discountPercentageLevel2WithTaxAmount, discountPercentageLevel3, discountPercentageLevel3WithTaxAmount, discountPercentageLevel4, discountPercentageLevel4WithTaxAmount, discountWithTaxAmount, externalReferenceCode, finalPrice, finalPriceWithTaxAmount, formattedQuantity, id, name, options, orderExternalReferenceCode, orderId, priceManuallyAdjusted, printedNote, promoPrice, promoPriceWithTaxAmount, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, shippable, shippedQuantity, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuExternalReferenceCode, skuId, subscription, unitOfMeasure, unitOfMeasureKey, unitPrice, unitPriceWithTaxAmount, virtualItemURLs, virtualItems}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public OrderItem orderItemByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource ->
-				orderItemResource.getOrderItemByExternalReferenceCode(
-					externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItem(id: ___){bookedQuantityId, customFields, decimalQuantity, deliveryGroup, deliveryGroupName, discountAmount, discountManuallyAdjusted, discountPercentageLevel1, discountPercentageLevel1WithTaxAmount, discountPercentageLevel2, discountPercentageLevel2WithTaxAmount, discountPercentageLevel3, discountPercentageLevel3WithTaxAmount, discountPercentageLevel4, discountPercentageLevel4WithTaxAmount, discountWithTaxAmount, externalReferenceCode, finalPrice, finalPriceWithTaxAmount, formattedQuantity, id, name, options, orderExternalReferenceCode, orderId, priceManuallyAdjusted, printedNote, promoPrice, promoPriceWithTaxAmount, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, shippable, shippedQuantity, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuExternalReferenceCode, skuId, subscription, unitOfMeasure, unitOfMeasureKey, unitPrice, unitPriceWithTaxAmount, virtualItemURLs, virtualItems}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public OrderItem orderItem(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource -> orderItemResource.getOrderItem(id));
 	}
 
 	/**
@@ -525,32 +469,57 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderNoteByExternalReferenceCode(externalReferenceCode: ___){author, content, externalReferenceCode, id, orderExternalReferenceCode, orderId, restricted}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItem(id: ___){bookedQuantityId, customFields, decimalQuantity, deliveryGroup, deliveryGroupName, discountAmount, discountManuallyAdjusted, discountPercentageLevel1, discountPercentageLevel1WithTaxAmount, discountPercentageLevel2, discountPercentageLevel2WithTaxAmount, discountPercentageLevel3, discountPercentageLevel3WithTaxAmount, discountPercentageLevel4, discountPercentageLevel4WithTaxAmount, discountWithTaxAmount, externalReferenceCode, finalPrice, finalPriceWithTaxAmount, formattedQuantity, id, name, options, orderExternalReferenceCode, orderId, priceManuallyAdjusted, printedNote, promoPrice, promoPriceWithTaxAmount, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, shippable, shippedQuantity, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuExternalReferenceCode, skuId, subscription, unitOfMeasure, unitOfMeasureKey, unitPrice, unitPriceWithTaxAmount, virtualItemURLs, virtualItems}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderNote orderNoteByExternalReferenceCode(
+	public OrderItem orderItem(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_orderItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderItemResource -> orderItemResource.getOrderItem(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItemByExternalReferenceCode(externalReferenceCode: ___){bookedQuantityId, customFields, decimalQuantity, deliveryGroup, deliveryGroupName, discountAmount, discountManuallyAdjusted, discountPercentageLevel1, discountPercentageLevel1WithTaxAmount, discountPercentageLevel2, discountPercentageLevel2WithTaxAmount, discountPercentageLevel3, discountPercentageLevel3WithTaxAmount, discountPercentageLevel4, discountPercentageLevel4WithTaxAmount, discountWithTaxAmount, externalReferenceCode, finalPrice, finalPriceWithTaxAmount, formattedQuantity, id, name, options, orderExternalReferenceCode, orderId, priceManuallyAdjusted, printedNote, promoPrice, promoPriceWithTaxAmount, quantity, replacedSku, replacedSkuExternalReferenceCode, replacedSkuId, requestedDeliveryDate, shippable, shippedQuantity, shippingAddress, shippingAddressExternalReferenceCode, shippingAddressId, sku, skuExternalReferenceCode, skuId, subscription, unitOfMeasure, unitOfMeasureKey, unitPrice, unitPriceWithTaxAmount, virtualItemURLs, virtualItems}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderItem orderItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_orderNoteResourceComponentServiceObjects,
+			_orderItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderNoteResource ->
-				orderNoteResource.getOrderNoteByExternalReferenceCode(
+			orderItemResource ->
+				orderItemResource.getOrderItemByExternalReferenceCode(
 					externalReferenceCode));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderNote(id: ___){author, content, externalReferenceCode, id, orderExternalReferenceCode, orderId, restricted}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItems(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderNote orderNote(@GraphQLName("id") Long id) throws Exception {
+	public OrderItemPage orderItems(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
-			_orderNoteResourceComponentServiceObjects,
+			_orderItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderNoteResource -> orderNoteResource.getOrderNote(id));
+			orderItemResource -> new OrderItemPage(
+				orderItemResource.getOrderItemsPage(
+					search,
+					_filterBiFunction.apply(orderItemResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(orderItemResource, sortsString))));
 	}
 
 	/**
@@ -595,26 +564,45 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRules(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderNote(id: ___){author, content, externalReferenceCode, id, orderExternalReferenceCode, orderId, restricted}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderRulePage orderRules(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+	public OrderNote orderNote(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_orderNoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderNoteResource -> orderNoteResource.getOrderNote(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderNoteByExternalReferenceCode(externalReferenceCode: ___){author, content, externalReferenceCode, id, orderExternalReferenceCode, orderId, restricted}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderNote orderNoteByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
+			_orderNoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderNoteResource ->
+				orderNoteResource.getOrderNoteByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRule(id: ___){actions, active, author, createDate, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderRule orderRule(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
 			_orderRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderRuleResource -> new OrderRulePage(
-				orderRuleResource.getOrderRulesPage(
-					search,
-					_filterBiFunction.apply(orderRuleResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(orderRuleResource, sortsString))));
+			orderRuleResource -> orderRuleResource.getOrderRule(id));
 	}
 
 	/**
@@ -638,14 +626,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRule(id: ___){actions, active, author, createDate, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRules(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderRule orderRule(@GraphQLName("id") Long id) throws Exception {
+	public OrderRulePage orderRules(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_orderRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderRuleResource -> orderRuleResource.getOrderRule(id));
+			orderRuleResource -> new OrderRulePage(
+				orderRuleResource.getOrderRulesPage(
+					search,
+					_filterBiFunction.apply(orderRuleResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(orderRuleResource, sortsString))));
 	}
 
 	/**
@@ -864,26 +864,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypes(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderType(id: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderTypePage orderTypes(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
+	public OrderType orderType(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_orderTypeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderTypeResource -> new OrderTypePage(
-				orderTypeResource.getOrderTypesPage(
-					search,
-					_filterBiFunction.apply(orderTypeResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(orderTypeResource, sortsString))));
+			orderTypeResource -> orderTypeResource.getOrderType(id));
 	}
 
 	/**
@@ -907,14 +895,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderType(id: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypes(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OrderType orderType(@GraphQLName("id") Long id) throws Exception {
+	public OrderTypePage orderTypes(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_orderTypeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderTypeResource -> orderTypeResource.getOrderType(id));
+			orderTypeResource -> new OrderTypePage(
+				orderTypeResource.getOrderTypesPage(
+					search,
+					_filterBiFunction.apply(orderTypeResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(orderTypeResource, sortsString))));
 	}
 
 	/**
@@ -983,22 +983,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItemShippingAddress(id: ___){city, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, subtype, zip}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ShippingAddress orderItemShippingAddress(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_shippingAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			shippingAddressResource ->
-				shippingAddressResource.getOrderItemShippingAddress(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeShippingAddress(externalReferenceCode: ___){city, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, subtype, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -1034,25 +1018,30 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {terms(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItemShippingAddress(id: ___){city, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, subtype, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public TermPage terms(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+	public ShippingAddress orderItemShippingAddress(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
+			_shippingAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingAddressResource ->
+				shippingAddressResource.getOrderItemShippingAddress(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {term(id: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Term term(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
 			_termResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			termResource -> new TermPage(
-				termResource.getTermsPage(
-					search, _filterBiFunction.apply(termResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(termResource, sortsString))));
+			termResource -> termResource.getTerm(id));
 	}
 
 	/**
@@ -1075,14 +1064,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {term(id: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {terms(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Term term(@GraphQLName("id") Long id) throws Exception {
+	public TermPage terms(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_termResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			termResource -> termResource.getTerm(id));
+			termResource -> new TermPage(
+				termResource.getTermsPage(
+					search, _filterBiFunction.apply(termResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(termResource, sortsString))));
 	}
 
 	/**

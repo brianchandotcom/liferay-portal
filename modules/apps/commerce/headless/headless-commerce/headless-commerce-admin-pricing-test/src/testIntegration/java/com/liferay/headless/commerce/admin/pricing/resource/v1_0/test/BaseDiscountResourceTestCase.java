@@ -226,418 +226,6 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountsPage() throws Exception {
-		Page<Discount> page = discountResource.getDiscountsPage(
-			Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
-
-		Discount discount2 = testGetDiscountsPage_addDiscount(randomDiscount());
-
-		page = discountResource.getDiscountsPage(Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(discount1, (List<Discount>)page.getItems());
-		assertContains(discount2, (List<Discount>)page.getItems());
-		assertValid(page, testGetDiscountsPage_getExpectedActions());
-
-		discountResource.deleteDiscount(discount1.getId());
-
-		discountResource.deleteDiscount(discount2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetDiscountsPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetDiscountsPageWithPagination() throws Exception {
-		Page<Discount> discountPage = discountResource.getDiscountsPage(null);
-
-		int totalCount = GetterUtil.getInteger(discountPage.getTotalCount());
-
-		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
-
-		Discount discount2 = testGetDiscountsPage_addDiscount(randomDiscount());
-
-		Discount discount3 = testGetDiscountsPage_addDiscount(randomDiscount());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Discount> page1 = discountResource.getDiscountsPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(discount1, (List<Discount>)page1.getItems());
-
-			Page<Discount> page2 = discountResource.getDiscountsPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(discount2, (List<Discount>)page2.getItems());
-
-			Page<Discount> page3 = discountResource.getDiscountsPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(discount3, (List<Discount>)page3.getItems());
-		}
-		else {
-			Page<Discount> page1 = discountResource.getDiscountsPage(
-				Pagination.of(1, totalCount + 2));
-
-			List<Discount> discounts1 = (List<Discount>)page1.getItems();
-
-			Assert.assertEquals(
-				discounts1.toString(), totalCount + 2, discounts1.size());
-
-			Page<Discount> page2 = discountResource.getDiscountsPage(
-				Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Discount> discounts2 = (List<Discount>)page2.getItems();
-
-			Assert.assertEquals(discounts2.toString(), 1, discounts2.size());
-
-			Page<Discount> page3 = discountResource.getDiscountsPage(
-				Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(discount1, (List<Discount>)page3.getItems());
-			assertContains(discount2, (List<Discount>)page3.getItems());
-			assertContains(discount3, (List<Discount>)page3.getItems());
-		}
-	}
-
-	protected Discount testGetDiscountsPage_addDiscount(Discount discount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDiscountsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"discounts",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject discountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/discounts");
-
-		long totalCount = discountsJSONObject.getLong("totalCount");
-
-		Discount discount1 = testGraphQLGetDiscountsPage_addDiscount();
-		Discount discount2 = testGraphQLGetDiscountsPage_addDiscount();
-
-		discountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/discounts");
-
-		Assert.assertEquals(
-			totalCount + 2, discountsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			discount1,
-			Arrays.asList(
-				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
-		assertContains(
-			discount2,
-			Arrays.asList(
-				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
-
-		// Using the namespace headlessCommerceAdminPricing_v1_0
-
-		discountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminPricing_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessCommerceAdminPricing_v1_0",
-			"JSONObject/discounts");
-
-		Assert.assertEquals(
-			totalCount + 2, discountsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			discount1,
-			Arrays.asList(
-				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
-		assertContains(
-			discount2,
-			Arrays.asList(
-				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
-	}
-
-	protected Discount testGraphQLGetDiscountsPage_addDiscount()
-		throws Exception {
-
-		return testGraphQLDiscount_addDiscount();
-	}
-
-	@Test
-	public void testPostDiscount() throws Exception {
-		Discount randomDiscount = randomDiscount();
-
-		Discount postDiscount = testPostDiscount_addDiscount(randomDiscount);
-
-		assertEquals(randomDiscount, postDiscount);
-		assertValid(postDiscount);
-	}
-
-	protected Discount testPostDiscount_addDiscount(Discount discount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteDiscountByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Discount discount =
-			testDeleteDiscountByExternalReferenceCode_addDiscount();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountResource.deleteDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
-
-	protected Discount testDeleteDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetDiscountByExternalReferenceCode() throws Exception {
-		Discount postDiscount =
-			testGetDiscountByExternalReferenceCode_addDiscount();
-
-		Discount getDiscount =
-			discountResource.getDiscountByExternalReferenceCode(
-				postDiscount.getExternalReferenceCode());
-
-		assertEquals(postDiscount, getDiscount);
-		assertValid(getDiscount);
-	}
-
-	protected Discount testGetDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDiscountByExternalReferenceCode()
-		throws Exception {
-
-		Discount discount =
-			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				discount,
-				DiscountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"discountByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												discount.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/discountByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminPricing_v1_0
-
-		Assert.assertTrue(
-			equals(
-				discount,
-				DiscountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminPricing_v1_0",
-								new GraphQLField(
-									"discountByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													discount.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminPricing_v1_0",
-						"Object/discountByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetDiscountByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"discountByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminPricing_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v1_0",
-						new GraphQLField(
-							"discountByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Discount
-			testGraphQLGetDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
-		return testGraphQLDiscount_addDiscount();
-	}
-
-	@Test
-	public void testPatchDiscountByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutDiscountByExternalReferenceCode() throws Exception {
-		Discount postDiscount =
-			testPutDiscountByExternalReferenceCode_addDiscount();
-
-		Discount randomDiscount = randomDiscount();
-
-		Discount putDiscount =
-			discountResource.putDiscountByExternalReferenceCode(
-				postDiscount.getExternalReferenceCode(), randomDiscount);
-
-		assertEquals(randomDiscount, putDiscount);
-		assertValid(putDiscount);
-
-		Discount getDiscount =
-			discountResource.getDiscountByExternalReferenceCode(
-				putDiscount.getExternalReferenceCode());
-
-		assertEquals(randomDiscount, getDiscount);
-		assertValid(getDiscount);
-
-		Discount newDiscount =
-			testPutDiscountByExternalReferenceCode_createDiscount();
-
-		putDiscount = discountResource.putDiscountByExternalReferenceCode(
-			newDiscount.getExternalReferenceCode(), newDiscount);
-
-		assertEquals(newDiscount, putDiscount);
-		assertValid(putDiscount);
-
-		getDiscount = discountResource.getDiscountByExternalReferenceCode(
-			putDiscount.getExternalReferenceCode());
-
-		assertEquals(newDiscount, getDiscount);
-
-		Assert.assertEquals(
-			newDiscount.getExternalReferenceCode(),
-			putDiscount.getExternalReferenceCode());
-	}
-
-	protected Discount testPutDiscountByExternalReferenceCode_createDiscount()
-		throws Exception {
-
-		return randomDiscount();
-	}
-
-	protected Discount testPutDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteDiscount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Discount discount = testDeleteDiscount_addDiscount();
@@ -793,6 +381,34 @@ public abstract class BaseDiscountResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteDiscountByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Discount discount =
+			testDeleteDiscountByExternalReferenceCode_addDiscount();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountResource.deleteDiscountByExternalReferenceCodeHttpResponse(
+				discount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
+				discount.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected Discount testDeleteDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1090,8 +706,392 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountByExternalReferenceCode() throws Exception {
+		Discount postDiscount =
+			testGetDiscountByExternalReferenceCode_addDiscount();
+
+		Discount getDiscount =
+			discountResource.getDiscountByExternalReferenceCode(
+				postDiscount.getExternalReferenceCode());
+
+		assertEquals(postDiscount, getDiscount);
+		assertValid(getDiscount);
+	}
+
+	protected Discount testGetDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountByExternalReferenceCode()
+		throws Exception {
+
+		Discount discount =
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				discount,
+				DiscountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												discount.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/discountByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		Assert.assertTrue(
+			equals(
+				discount,
+				DiscountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v1_0",
+								new GraphQLField(
+									"discountByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													discount.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v1_0",
+						"Object/discountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v1_0",
+						new GraphQLField(
+							"discountByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Discount
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
+	}
+
+	@Test
+	public void testGetDiscountsPage() throws Exception {
+		Page<Discount> page = discountResource.getDiscountsPage(
+			Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		Discount discount2 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		page = discountResource.getDiscountsPage(Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(discount1, (List<Discount>)page.getItems());
+		assertContains(discount2, (List<Discount>)page.getItems());
+		assertValid(page, testGetDiscountsPage_getExpectedActions());
+
+		discountResource.deleteDiscount(discount1.getId());
+
+		discountResource.deleteDiscount(discount2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetDiscountsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetDiscountsPageWithPagination() throws Exception {
+		Page<Discount> discountPage = discountResource.getDiscountsPage(null);
+
+		int totalCount = GetterUtil.getInteger(discountPage.getTotalCount());
+
+		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		Discount discount2 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		Discount discount3 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Discount> page1 = discountResource.getDiscountsPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(discount1, (List<Discount>)page1.getItems());
+
+			Page<Discount> page2 = discountResource.getDiscountsPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(discount2, (List<Discount>)page2.getItems());
+
+			Page<Discount> page3 = discountResource.getDiscountsPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(discount3, (List<Discount>)page3.getItems());
+		}
+		else {
+			Page<Discount> page1 = discountResource.getDiscountsPage(
+				Pagination.of(1, totalCount + 2));
+
+			List<Discount> discounts1 = (List<Discount>)page1.getItems();
+
+			Assert.assertEquals(
+				discounts1.toString(), totalCount + 2, discounts1.size());
+
+			Page<Discount> page2 = discountResource.getDiscountsPage(
+				Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Discount> discounts2 = (List<Discount>)page2.getItems();
+
+			Assert.assertEquals(discounts2.toString(), 1, discounts2.size());
+
+			Page<Discount> page3 = discountResource.getDiscountsPage(
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(discount1, (List<Discount>)page3.getItems());
+			assertContains(discount2, (List<Discount>)page3.getItems());
+			assertContains(discount3, (List<Discount>)page3.getItems());
+		}
+	}
+
+	protected Discount testGetDiscountsPage_addDiscount(Discount discount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"discounts",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject discountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/discounts");
+
+		long totalCount = discountsJSONObject.getLong("totalCount");
+
+		Discount discount1 = testGraphQLGetDiscountsPage_addDiscount();
+		Discount discount2 = testGraphQLGetDiscountsPage_addDiscount();
+
+		discountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/discounts");
+
+		Assert.assertEquals(
+			totalCount + 2, discountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			discount1,
+			Arrays.asList(
+				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
+		assertContains(
+			discount2,
+			Arrays.asList(
+				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		discountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminPricing_v1_0",
+			"JSONObject/discounts");
+
+		Assert.assertEquals(
+			totalCount + 2, discountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			discount1,
+			Arrays.asList(
+				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
+		assertContains(
+			discount2,
+			Arrays.asList(
+				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
+	}
+
+	protected Discount testGraphQLGetDiscountsPage_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
+	}
+
+	@Test
 	public void testPatchDiscount() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchDiscountByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostDiscount() throws Exception {
+		Discount randomDiscount = randomDiscount();
+
+		Discount postDiscount = testPostDiscount_addDiscount(randomDiscount);
+
+		assertEquals(randomDiscount, postDiscount);
+		assertValid(postDiscount);
+	}
+
+	protected Discount testPostDiscount_addDiscount(Discount discount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutDiscountByExternalReferenceCode() throws Exception {
+		Discount postDiscount =
+			testPutDiscountByExternalReferenceCode_addDiscount();
+
+		Discount randomDiscount = randomDiscount();
+
+		Discount putDiscount =
+			discountResource.putDiscountByExternalReferenceCode(
+				postDiscount.getExternalReferenceCode(), randomDiscount);
+
+		assertEquals(randomDiscount, putDiscount);
+		assertValid(putDiscount);
+
+		Discount getDiscount =
+			discountResource.getDiscountByExternalReferenceCode(
+				putDiscount.getExternalReferenceCode());
+
+		assertEquals(randomDiscount, getDiscount);
+		assertValid(getDiscount);
+
+		Discount newDiscount =
+			testPutDiscountByExternalReferenceCode_createDiscount();
+
+		putDiscount = discountResource.putDiscountByExternalReferenceCode(
+			newDiscount.getExternalReferenceCode(), newDiscount);
+
+		assertEquals(newDiscount, putDiscount);
+		assertValid(putDiscount);
+
+		getDiscount = discountResource.getDiscountByExternalReferenceCode(
+			putDiscount.getExternalReferenceCode());
+
+		assertEquals(newDiscount, getDiscount);
+
+		Assert.assertEquals(
+			newDiscount.getExternalReferenceCode(),
+			putDiscount.getExternalReferenceCode());
+	}
+
+	protected Discount testPutDiscountByExternalReferenceCode_createDiscount()
+		throws Exception {
+
+		return randomDiscount();
+	}
+
+	protected Discount testPutDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Discount testGraphQLDiscount_addDiscount() throws Exception {

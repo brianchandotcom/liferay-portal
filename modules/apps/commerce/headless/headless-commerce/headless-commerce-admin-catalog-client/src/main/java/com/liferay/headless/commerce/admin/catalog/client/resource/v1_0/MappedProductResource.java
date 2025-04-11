@@ -47,12 +47,14 @@ public interface MappedProductResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public MappedProduct patchMappedProduct(
-			Long mappedProductId, MappedProduct mappedProduct)
+	public MappedProduct
+			getProductByExternalReferenceCodeMappedProductBySequence(
+				String externalReferenceCode, String sequence)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchMappedProductHttpResponse(
-			Long mappedProductId, MappedProduct mappedProduct)
+	public HttpInvoker.HttpResponse
+			getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
+				String externalReferenceCode, String sequence)
 		throws Exception;
 
 	public Page<MappedProduct>
@@ -67,23 +69,13 @@ public interface MappedProductResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
-			String externalReferenceCode, MappedProduct mappedProduct)
+	public MappedProduct getProductIdMappedProductBySequence(
+			Long id, String sequence)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postProductByExternalReferenceCodeMappedProductHttpResponse(
-				String externalReferenceCode, MappedProduct mappedProduct)
-		throws Exception;
-
-	public MappedProduct
-			getProductByExternalReferenceCodeMappedProductBySequence(
-				String externalReferenceCode, String sequence)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
-				String externalReferenceCode, String sequence)
+			getProductIdMappedProductBySequenceHttpResponse(
+				Long id, String sequence)
 		throws Exception;
 
 	public Page<MappedProduct> getProductIdMappedProductsPage(
@@ -92,6 +84,23 @@ public interface MappedProductResource {
 
 	public HttpInvoker.HttpResponse getProductIdMappedProductsPageHttpResponse(
 			Long id, String search, Pagination pagination, String sortString)
+		throws Exception;
+
+	public MappedProduct patchMappedProduct(
+			Long mappedProductId, MappedProduct mappedProduct)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchMappedProductHttpResponse(
+			Long mappedProductId, MappedProduct mappedProduct)
+		throws Exception;
+
+	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
+			String externalReferenceCode, MappedProduct mappedProduct)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postProductByExternalReferenceCodeMappedProductHttpResponse(
+				String externalReferenceCode, MappedProduct mappedProduct)
 		throws Exception;
 
 	public MappedProduct postProductIdMappedProduct(
@@ -108,15 +117,6 @@ public interface MappedProductResource {
 
 	public HttpInvoker.HttpResponse postProductIdMappedProductBatchHttpResponse(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public MappedProduct getProductIdMappedProductBySequence(
-			Long id, String sequence)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getProductIdMappedProductBySequenceHttpResponse(
-				Long id, String sequence)
 		throws Exception;
 
 	public static class Builder {
@@ -430,12 +430,14 @@ public interface MappedProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public MappedProduct patchMappedProduct(
-				Long mappedProductId, MappedProduct mappedProduct)
+		public MappedProduct
+				getProductByExternalReferenceCodeMappedProductBySequence(
+					String externalReferenceCode, String sequence)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchMappedProductHttpResponse(mappedProductId, mappedProduct);
+				getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
+					externalReferenceCode, sequence);
 
 			String content = httpResponse.getContent();
 
@@ -496,13 +498,12 @@ public interface MappedProductResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchMappedProductHttpResponse(
-				Long mappedProductId, MappedProduct mappedProduct)
+		public HttpInvoker.HttpResponse
+				getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
+					String externalReferenceCode, String sequence)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(mappedProduct.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -521,14 +522,15 @@ public interface MappedProductResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}");
+						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products/by-sequence/{sequence}");
 
-			httpInvoker.path("mappedProductId", mappedProductId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("sequence", sequence);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -664,13 +666,12 @@ public interface MappedProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public MappedProduct postProductByExternalReferenceCodeMappedProduct(
-				String externalReferenceCode, MappedProduct mappedProduct)
+		public MappedProduct getProductIdMappedProductBySequence(
+				Long id, String sequence)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProductByExternalReferenceCodeMappedProductHttpResponse(
-					externalReferenceCode, mappedProduct);
+				getProductIdMappedProductBySequenceHttpResponse(id, sequence);
 
 			String content = httpResponse.getContent();
 
@@ -732,119 +733,8 @@ public interface MappedProductResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postProductByExternalReferenceCodeMappedProductHttpResponse(
-					String externalReferenceCode, MappedProduct mappedProduct)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(mappedProduct.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public MappedProduct
-				getProductByExternalReferenceCodeMappedProductBySequence(
-					String externalReferenceCode, String sequence)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
-					externalReferenceCode, sequence);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return MappedProductSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getProductByExternalReferenceCodeMappedProductBySequenceHttpResponse(
-					String externalReferenceCode, String sequence)
+				getProductIdMappedProductBySequenceHttpResponse(
+					Long id, String sequence)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -871,9 +761,9 @@ public interface MappedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products/by-sequence/{sequence}");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products/by-sequence/{sequence}");
 
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("id", id);
 			httpInvoker.path("sequence", sequence);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
@@ -1000,6 +890,224 @@ public interface MappedProductResource {
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products");
 
 			httpInvoker.path("id", id);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public MappedProduct patchMappedProduct(
+				Long mappedProductId, MappedProduct mappedProduct)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchMappedProductHttpResponse(mappedProductId, mappedProduct);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MappedProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchMappedProductHttpResponse(
+				Long mappedProductId, MappedProduct mappedProduct)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(mappedProduct.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}");
+
+			httpInvoker.path("mappedProductId", mappedProductId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public MappedProduct postProductByExternalReferenceCodeMappedProduct(
+				String externalReferenceCode, MappedProduct mappedProduct)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProductByExternalReferenceCodeMappedProductHttpResponse(
+					externalReferenceCode, mappedProduct);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MappedProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postProductByExternalReferenceCodeMappedProductHttpResponse(
+					String externalReferenceCode, MappedProduct mappedProduct)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(mappedProduct.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1210,114 +1318,6 @@ public interface MappedProductResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/products/mapped-products/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public MappedProduct getProductIdMappedProductBySequence(
-				Long id, String sequence)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getProductIdMappedProductBySequenceHttpResponse(id, sequence);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return MappedProductSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getProductIdMappedProductBySequenceHttpResponse(
-					Long id, String sequence)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products/by-sequence/{sequence}");
-
-			httpInvoker.path("id", id);
-			httpInvoker.path("sequence", sequence);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

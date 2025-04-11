@@ -65,23 +65,73 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createCTCollectionsPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("status") Integer[] status,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteCTCollection(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource -> ctCollectionResource.deleteCTCollection(
+				ctCollectionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteCTCollectionBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource ->
-				ctCollectionResource.postCTCollectionsPageExportBatch(
-					search, status,
-					_sortsBiFunction.apply(ctCollectionResource, sortsString),
-					callbackURL, contentType, fieldNames));
+				ctCollectionResource.deleteCTCollectionBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteCTCollectionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.deleteCTCollectionByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public CTCollection patchCTCollection(
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
+			@GraphQLName("ctCollection") CTCollection ctCollection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource -> ctCollectionResource.patchCTCollection(
+				ctCollectionId, ctCollection));
+	}
+
+	@GraphQLField
+	public CTCollection patchCTCollectionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("ctCollection") CTCollection ctCollection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.patchCTCollectionByExternalReferenceCode(
+					externalReferenceCode, ctCollection));
 	}
 
 	@GraphQLField
@@ -107,35 +157,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			ctCollectionResource -> ctCollectionResource.postCTCollectionBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public boolean deleteCTCollectionByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource ->
-				ctCollectionResource.deleteCTCollectionByExternalReferenceCode(
-					externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
-	public CTCollection patchCTCollectionByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("ctCollection") CTCollection ctCollection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource ->
-				ctCollectionResource.patchCTCollectionByExternalReferenceCode(
-					externalReferenceCode, ctCollection));
 	}
 
 	@GraphQLField
@@ -169,73 +190,6 @@ public class Mutation {
 						externalReferenceCode, publishDate));
 
 		return true;
-	}
-
-	@GraphQLField
-	public boolean deleteCTCollection(
-			@GraphQLName("ctCollectionId") Long ctCollectionId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource -> ctCollectionResource.deleteCTCollection(
-				ctCollectionId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteCTCollectionBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource ->
-				ctCollectionResource.deleteCTCollectionBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
-	public CTCollection patchCTCollection(
-			@GraphQLName("ctCollectionId") Long ctCollectionId,
-			@GraphQLName("ctCollection") CTCollection ctCollection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource -> ctCollectionResource.patchCTCollection(
-				ctCollectionId, ctCollection));
-	}
-
-	@GraphQLField
-	public CTCollection updateCTCollection(
-			@GraphQLName("ctCollectionId") Long ctCollectionId,
-			@GraphQLName("ctCollection") CTCollection ctCollection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource -> ctCollectionResource.putCTCollection(
-				ctCollectionId, ctCollection));
-	}
-
-	@GraphQLField
-	public Response updateCTCollectionBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource -> ctCollectionResource.putCTCollectionBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -283,10 +237,9 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createCTProcessesPageExportBatch(
+	public Response createCTCollectionsPageExportBatch(
 			@GraphQLName("search") String search,
 			@GraphQLName("status") Integer[] status,
-			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
@@ -294,14 +247,39 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_ctProcessResourceComponentServiceObjects,
+			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctProcessResource ->
-				ctProcessResource.postCTProcessesPageExportBatch(
+			ctCollectionResource ->
+				ctCollectionResource.postCTCollectionsPageExportBatch(
 					search, status,
-					_filterBiFunction.apply(ctProcessResource, filterString),
-					_sortsBiFunction.apply(ctProcessResource, sortsString),
+					_sortsBiFunction.apply(ctCollectionResource, sortsString),
 					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public CTCollection updateCTCollection(
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
+			@GraphQLName("ctCollection") CTCollection ctCollection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource -> ctCollectionResource.putCTCollection(
+				ctCollectionId, ctCollection));
+	}
+
+	@GraphQLField
+	public Response updateCTCollectionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource -> ctCollectionResource.putCTCollectionBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -347,8 +325,10 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createCTRemotesPageExportBatch(
+	public Response createCTProcessesPageExportBatch(
 			@GraphQLName("search") String search,
+			@GraphQLName("status") Integer[] status,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
@@ -356,34 +336,14 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_ctRemoteResourceComponentServiceObjects,
+			_ctProcessResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctRemoteResource -> ctRemoteResource.postCTRemotesPageExportBatch(
-				search, _sortsBiFunction.apply(ctRemoteResource, sortsString),
-				callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public CTRemote createCTRemote(@GraphQLName("ctRemote") CTRemote ctRemote)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctRemoteResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctRemoteResource -> ctRemoteResource.postCTRemote(ctRemote));
-	}
-
-	@GraphQLField
-	public Response createCTRemoteBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctRemoteResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctRemoteResource -> ctRemoteResource.postCTRemoteBatch(
-				callbackURL, object));
+			ctProcessResource ->
+				ctProcessResource.postCTProcessesPageExportBatch(
+					search, status,
+					_filterBiFunction.apply(ctProcessResource, filterString),
+					_sortsBiFunction.apply(ctProcessResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -419,6 +379,46 @@ public class Mutation {
 			_ctRemoteResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctRemoteResource -> ctRemoteResource.patchCTRemote(id, ctRemote));
+	}
+
+	@GraphQLField
+	public CTRemote createCTRemote(@GraphQLName("ctRemote") CTRemote ctRemote)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemote(ctRemote));
+	}
+
+	@GraphQLField
+	public Response createCTRemoteBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemoteBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createCTRemotesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemotesPageExportBatch(
+				search, _sortsBiFunction.apply(ctRemoteResource, sortsString),
+				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField

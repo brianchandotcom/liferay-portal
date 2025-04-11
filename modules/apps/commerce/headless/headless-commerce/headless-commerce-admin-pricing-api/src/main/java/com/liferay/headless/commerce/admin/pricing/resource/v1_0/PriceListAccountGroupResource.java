@@ -57,14 +57,14 @@ public interface PriceListAccountGroupResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<PriceListAccountGroup> getPriceListIdPriceListAccountGroupsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public PriceListAccountGroup
 			postPriceListByExternalReferenceCodePriceListAccountGroup(
 				String externalReferenceCode,
 				PriceListAccountGroup priceListAccountGroup)
-		throws Exception;
-
-	public Page<PriceListAccountGroup> getPriceListIdPriceListAccountGroupsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public PriceListAccountGroup postPriceListIdPriceListAccountGroup(

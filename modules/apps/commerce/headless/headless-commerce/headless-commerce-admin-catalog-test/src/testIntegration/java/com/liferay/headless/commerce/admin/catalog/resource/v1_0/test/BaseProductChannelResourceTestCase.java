@@ -368,6 +368,216 @@ public abstract class BaseProductChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductByExternalReferenceCodeProductChannelsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetProductByExternalReferenceCodeProductChannelsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ProductChannel> page =
+			productChannelResource.
+				getProductByExternalReferenceCodeProductChannelsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			ProductChannel irrelevantProductChannel =
+				testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantProductChannel());
+
+			page =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantProductChannel,
+				(List<ProductChannel>)page.getItems());
+			assertValid(
+				page,
+				testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		ProductChannel productChannel1 =
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				externalReferenceCode, randomProductChannel());
+
+		ProductChannel productChannel2 =
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				externalReferenceCode, randomProductChannel());
+
+		page =
+			productChannelResource.
+				getProductByExternalReferenceCodeProductChannelsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(productChannel1, (List<ProductChannel>)page.getItems());
+		assertContains(productChannel2, (List<ProductChannel>)page.getItems());
+		assertValid(
+			page,
+			testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
+				externalReferenceCode));
+
+		productChannelResource.deleteProductChannel(productChannel1.getId());
+
+		productChannelResource.deleteProductChannel(productChannel2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductChannelsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode();
+
+		Page<ProductChannel> productChannelPage =
+			productChannelResource.
+				getProductByExternalReferenceCodeProductChannelsPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			productChannelPage.getTotalCount());
+
+		ProductChannel productChannel1 =
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				externalReferenceCode, randomProductChannel());
+
+		ProductChannel productChannel2 =
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				externalReferenceCode, randomProductChannel());
+
+		ProductChannel productChannel3 =
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				externalReferenceCode, randomProductChannel());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ProductChannel> page1 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				productChannel1, (List<ProductChannel>)page1.getItems());
+
+			Page<ProductChannel> page2 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productChannel2, (List<ProductChannel>)page2.getItems());
+
+			Page<ProductChannel> page3 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
+		else {
+			Page<ProductChannel> page1 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ProductChannel> productChannels1 =
+				(List<ProductChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				productChannels1.toString(), totalCount + 2,
+				productChannels1.size());
+
+			Page<ProductChannel> page2 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductChannel> productChannels2 =
+				(List<ProductChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				productChannels2.toString(), 1, productChannels2.size());
+
+			Page<ProductChannel> page3 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productChannel1, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel2, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
+	}
+
+	protected ProductChannel
+			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
+				String externalReferenceCode, ProductChannel productChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeProductChannelsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetProductChannel() throws Exception {
 		ProductChannel postProductChannel =
 			testGetProductChannel_addProductChannel();
@@ -670,216 +880,6 @@ public abstract class BaseProductChannelResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProductChannel_addProductChannel();
-	}
-
-	@Test
-	public void testGetProductByExternalReferenceCodeProductChannelsPage()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetProductByExternalReferenceCodeProductChannelsPage_getIrrelevantExternalReferenceCode();
-
-		Page<ProductChannel> page =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantExternalReferenceCode != null) {
-			ProductChannel irrelevantProductChannel =
-				testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantProductChannel());
-
-			page =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						irrelevantExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantProductChannel,
-				(List<ProductChannel>)page.getItems());
-			assertValid(
-				page,
-				testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
-					irrelevantExternalReferenceCode));
-		}
-
-		ProductChannel productChannel1 =
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				externalReferenceCode, randomProductChannel());
-
-		ProductChannel productChannel2 =
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				externalReferenceCode, randomProductChannel());
-
-		page =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(productChannel1, (List<ProductChannel>)page.getItems());
-		assertContains(productChannel2, (List<ProductChannel>)page.getItems());
-		assertValid(
-			page,
-			testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
-				externalReferenceCode));
-
-		productChannelResource.deleteProductChannel(productChannel1.getId());
-
-		productChannelResource.deleteProductChannel(productChannel2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetProductByExternalReferenceCodeProductChannelsPage_getExpectedActions(
-				String externalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetProductByExternalReferenceCodeProductChannelsPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode();
-
-		Page<ProductChannel> productChannelPage =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode, null);
-
-		int totalCount = GetterUtil.getInteger(
-			productChannelPage.getTotalCount());
-
-		ProductChannel productChannel1 =
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				externalReferenceCode, randomProductChannel());
-
-		ProductChannel productChannel2 =
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				externalReferenceCode, randomProductChannel());
-
-		ProductChannel productChannel3 =
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				externalReferenceCode, randomProductChannel());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ProductChannel> page1 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				productChannel1, (List<ProductChannel>)page1.getItems());
-
-			Page<ProductChannel> page2 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productChannel2, (List<ProductChannel>)page2.getItems());
-
-			Page<ProductChannel> page3 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productChannel3, (List<ProductChannel>)page3.getItems());
-		}
-		else {
-			Page<ProductChannel> page1 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(1, totalCount + 2));
-
-			List<ProductChannel> productChannels1 =
-				(List<ProductChannel>)page1.getItems();
-
-			Assert.assertEquals(
-				productChannels1.toString(), totalCount + 2,
-				productChannels1.size());
-
-			Page<ProductChannel> page2 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<ProductChannel> productChannels2 =
-				(List<ProductChannel>)page2.getItems();
-
-			Assert.assertEquals(
-				productChannels2.toString(), 1, productChannels2.size());
-
-			Page<ProductChannel> page3 =
-				productChannelResource.
-					getProductByExternalReferenceCodeProductChannelsPage(
-						externalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(
-				productChannel1, (List<ProductChannel>)page3.getItems());
-			assertContains(
-				productChannel2, (List<ProductChannel>)page3.getItems());
-			assertContains(
-				productChannel3, (List<ProductChannel>)page3.getItems());
-		}
-	}
-
-	protected ProductChannel
-			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
-				String externalReferenceCode, ProductChannel productChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetProductByExternalReferenceCodeProductChannelsPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetProductByExternalReferenceCodeProductChannelsPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
 	}
 
 	@Test

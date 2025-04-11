@@ -220,6 +220,151 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteObjectLayout() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectLayout objectLayout = testDeleteObjectLayout_addObjectLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectLayoutResource.deleteObjectLayoutHttpResponse(
+				objectLayout.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectLayoutResource.getObjectLayoutHttpResponse(
+				objectLayout.getId()));
+		assertHttpResponseStatusCode(
+			404, objectLayoutResource.getObjectLayoutHttpResponse(0L));
+	}
+
+	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectLayout() throws Exception {
+
+		// No namespace
+
+		ObjectLayout objectLayout1 =
+			testGraphQLDeleteObjectLayout_addObjectLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectLayout",
+						new HashMap<String, Object>() {
+							{
+								put("objectLayoutId", objectLayout1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectLayout"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectLayout",
+					new HashMap<String, Object>() {
+						{
+							put("objectLayoutId", objectLayout1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectLayout objectLayout2 =
+			testGraphQLDeleteObjectLayout_addObjectLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectLayout",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectLayoutId",
+										objectLayout2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectLayout"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectLayout",
+						new HashMap<String, Object>() {
+							{
+								put("objectLayoutId", objectLayout2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ObjectLayout testGraphQLDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return testGraphQLObjectLayout_addObjectLayout();
+	}
+
+	@Test
+	public void testDeleteObjectLayoutBatch() throws Exception {
+		ObjectLayout objectLayout1 =
+			testDeleteObjectLayoutBatch_addObjectLayout();
+
+		testDeleteObjectLayoutBatch_deleteObjectLayout(
+			"COMPLETED", null, objectLayout1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			objectLayoutResource.getObjectLayoutHttpResponse(
+				objectLayout1.getId()));
+	}
+
+	protected ObjectLayout testDeleteObjectLayoutBatch_addObjectLayout()
+		throws Exception {
+
+		return testDeleteObjectLayout_addObjectLayout();
+	}
+
+	protected void testDeleteObjectLayoutBatch_deleteObjectLayout(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectLayoutResource.deleteObjectLayoutBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage()
 		throws Exception {
 
@@ -584,29 +729,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionByExternalReferenceCodeObjectLayout()
-		throws Exception {
-
-		ObjectLayout randomObjectLayout = randomObjectLayout();
-
-		ObjectLayout postObjectLayout =
-			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
-				randomObjectLayout);
-
-		assertEquals(randomObjectLayout, postObjectLayout);
-		assertValid(postObjectLayout);
-	}
-
-	protected ObjectLayout
-			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
-				ObjectLayout objectLayout)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetObjectDefinitionObjectLayoutsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId();
@@ -964,172 +1086,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionObjectLayout() throws Exception {
-		ObjectLayout randomObjectLayout = randomObjectLayout();
-
-		ObjectLayout postObjectLayout =
-			testPostObjectDefinitionObjectLayout_addObjectLayout(
-				randomObjectLayout);
-
-		assertEquals(randomObjectLayout, postObjectLayout);
-		assertValid(postObjectLayout);
-	}
-
-	protected ObjectLayout testPostObjectDefinitionObjectLayout_addObjectLayout(
-			ObjectLayout objectLayout)
-		throws Exception {
-
-		return objectLayoutResource.postObjectDefinitionObjectLayout(
-			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId(),
-			objectLayout);
-	}
-
-	@Test
-	public void testDeleteObjectLayout() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectLayout objectLayout = testDeleteObjectLayout_addObjectLayout();
-
-		assertHttpResponseStatusCode(
-			204,
-			objectLayoutResource.deleteObjectLayoutHttpResponse(
-				objectLayout.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			objectLayoutResource.getObjectLayoutHttpResponse(
-				objectLayout.getId()));
-		assertHttpResponseStatusCode(
-			404, objectLayoutResource.getObjectLayoutHttpResponse(0L));
-	}
-
-	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteObjectLayout() throws Exception {
-
-		// No namespace
-
-		ObjectLayout objectLayout1 =
-			testGraphQLDeleteObjectLayout_addObjectLayout();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectLayout",
-						new HashMap<String, Object>() {
-							{
-								put("objectLayoutId", objectLayout1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectLayout"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectLayout",
-					new HashMap<String, Object>() {
-						{
-							put("objectLayoutId", objectLayout1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace objectAdmin_v1_0
-
-		ObjectLayout objectLayout2 =
-			testGraphQLDeleteObjectLayout_addObjectLayout();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"deleteObjectLayout",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"objectLayoutId",
-										objectLayout2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-				"Object/deleteObjectLayout"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectAdmin_v1_0",
-					new GraphQLField(
-						"objectLayout",
-						new HashMap<String, Object>() {
-							{
-								put("objectLayoutId", objectLayout2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ObjectLayout testGraphQLDeleteObjectLayout_addObjectLayout()
-		throws Exception {
-
-		return testGraphQLObjectLayout_addObjectLayout();
-	}
-
-	@Test
-	public void testDeleteObjectLayoutBatch() throws Exception {
-		ObjectLayout objectLayout1 =
-			testDeleteObjectLayoutBatch_addObjectLayout();
-
-		testDeleteObjectLayoutBatch_deleteObjectLayout(
-			"COMPLETED", null, objectLayout1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			objectLayoutResource.getObjectLayoutHttpResponse(
-				objectLayout1.getId()));
-	}
-
-	protected ObjectLayout testDeleteObjectLayoutBatch_addObjectLayout()
-		throws Exception {
-
-		return testDeleteObjectLayout_addObjectLayout();
-	}
-
-	protected void testDeleteObjectLayoutBatch_deleteObjectLayout(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			objectLayoutResource.deleteObjectLayoutBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetObjectLayout() throws Exception {
 		ObjectLayout postObjectLayout = testGetObjectLayout_addObjectLayout();
 
@@ -1432,6 +1388,50 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		throws Exception {
 
 		return testGraphQLObjectLayout_addObjectLayout();
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectLayout()
+		throws Exception {
+
+		ObjectLayout randomObjectLayout = randomObjectLayout();
+
+		ObjectLayout postObjectLayout =
+			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
+				randomObjectLayout);
+
+		assertEquals(randomObjectLayout, postObjectLayout);
+		assertValid(postObjectLayout);
+	}
+
+	protected ObjectLayout
+			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionObjectLayout() throws Exception {
+		ObjectLayout randomObjectLayout = randomObjectLayout();
+
+		ObjectLayout postObjectLayout =
+			testPostObjectDefinitionObjectLayout_addObjectLayout(
+				randomObjectLayout);
+
+		assertEquals(randomObjectLayout, postObjectLayout);
+		assertValid(postObjectLayout);
+	}
+
+	protected ObjectLayout testPostObjectDefinitionObjectLayout_addObjectLayout(
+			ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId(),
+			objectLayout);
 	}
 
 	@Test

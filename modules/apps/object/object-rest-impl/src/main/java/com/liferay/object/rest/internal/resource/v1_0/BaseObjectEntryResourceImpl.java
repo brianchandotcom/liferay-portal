@@ -89,6 +89,232 @@ public abstract class BaseObjectEntryResourceImpl
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/{objectEntryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteObjectEntry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId)
+		throws Exception {
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteObjectEntryBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ObjectEntry.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteScopeScopeKeyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry getByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "version"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry getByExternalReferenceCodeByVersion(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("version")
+			Integer version)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/by-external-reference-code/{externalReferenceCode}/versions"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "aggregationTerms"
 			),
@@ -154,6 +380,585 @@ public abstract class BaseObjectEntryResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/{objectEntryId}/versions")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ObjectEntry> getObjectEntriesVersionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/{objectEntryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry getObjectEntry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "version"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/{objectEntryId}/by-version/{version}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry getObjectEntryByVersion(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("version")
+			Integer version)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "roleNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/{objectEntryId}/permissions")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Permission> getObjectEntryPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("roleNames")
+			String roleNames)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(objectEntryId);
+		Long resourceId = getPermissionCheckerResourceId(objectEntryId);
+
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(objectEntryId), resourceName,
+			resourceId);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS, "getObjectEntryPermissionsPage",
+					resourceName, resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putObjectEntryPermissionsPage",
+					resourceName, resourceId)
+			).build(),
+			resourceId, resourceName, roleNames);
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "aggregationTerms"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "flatten"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/scopes/{scopeKey}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("flatten")
+			Boolean flatten,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			@javax.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+				sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry patchByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getFriendlyUrlPath() != null) {
+			existingObjectEntry.setFriendlyUrlPath(
+				objectEntry.getFriendlyUrlPath());
+		}
+
+		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
+			existingObjectEntry.setFriendlyUrlPath_i18n(
+				objectEntry.getFriendlyUrlPath_i18n());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
+		}
+
+		if (objectEntry.getPermissions() != null) {
+			existingObjectEntry.setPermissions(objectEntry.getPermissions());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			Map<String, Object> properties =
+				existingObjectEntry.getProperties();
+
+			properties.putAll(objectEntry.getProperties());
+
+			existingObjectEntry.setProperties(properties);
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putByExternalReferenceCode(
+			externalReferenceCode, existingObjectEntry);
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/{objectEntryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry patchObjectEntry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryId")
+			Long objectEntryId,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(objectEntryId);
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getFriendlyUrlPath() != null) {
+			existingObjectEntry.setFriendlyUrlPath(
+				objectEntry.getFriendlyUrlPath());
+		}
+
+		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
+			existingObjectEntry.setFriendlyUrlPath_i18n(
+				objectEntry.getFriendlyUrlPath_i18n());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
+		}
+
+		if (objectEntry.getPermissions() != null) {
+			existingObjectEntry.setPermissions(objectEntry.getPermissions());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			Map<String, Object> properties =
+				existingObjectEntry.getProperties();
+
+			properties.putAll(objectEntry.getProperties());
+
+			existingObjectEntry.setProperties(properties);
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putObjectEntry(objectEntryId, existingObjectEntry);
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry =
+			getScopeScopeKeyByExternalReferenceCode(
+				scopeKey, externalReferenceCode);
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getFriendlyUrlPath() != null) {
+			existingObjectEntry.setFriendlyUrlPath(
+				objectEntry.getFriendlyUrlPath());
+		}
+
+		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
+			existingObjectEntry.setFriendlyUrlPath_i18n(
+				objectEntry.getFriendlyUrlPath_i18n());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
+		}
+
+		if (objectEntry.getPermissions() != null) {
+			existingObjectEntry.setPermissions(objectEntry.getPermissions());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			Map<String, Object> properties =
+				existingObjectEntry.getProperties();
+
+			properties.putAll(objectEntry.getProperties());
+
+			existingObjectEntry.setProperties(properties);
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode, existingObjectEntry);
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -288,111 +1093,7 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "currentExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectRelationshipName"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "relatedExternalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Path(
-		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public ObjectEntry
-			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("currentExternalReferenceCode")
-				String currentExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectRelationshipName")
-				String objectRelationshipName,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("relatedExternalReferenceCode")
-				String relatedExternalReferenceCode)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "scopeKey"
 			)
 		}
 	)
@@ -400,514 +1101,18 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
+	@javax.ws.rs.Path("/scopes/{scopeKey}")
+	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectEntry patchByExternalReferenceCode(
+	public ObjectEntry postScopeScopeKey(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		ObjectEntry existingObjectEntry = getByExternalReferenceCode(
-			externalReferenceCode);
-
-		if (objectEntry.getDateCreated() != null) {
-			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
-		}
-
-		if (objectEntry.getDateModified() != null) {
-			existingObjectEntry.setDateModified(objectEntry.getDateModified());
-		}
-
-		if (objectEntry.getDefaultLanguageId() != null) {
-			existingObjectEntry.setDefaultLanguageId(
-				objectEntry.getDefaultLanguageId());
-		}
-
-		if (objectEntry.getExternalReferenceCode() != null) {
-			existingObjectEntry.setExternalReferenceCode(
-				objectEntry.getExternalReferenceCode());
-		}
-
-		if (objectEntry.getFriendlyUrlPath() != null) {
-			existingObjectEntry.setFriendlyUrlPath(
-				objectEntry.getFriendlyUrlPath());
-		}
-
-		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
-			existingObjectEntry.setFriendlyUrlPath_i18n(
-				objectEntry.getFriendlyUrlPath_i18n());
-		}
-
-		if (objectEntry.getKeywords() != null) {
-			existingObjectEntry.setKeywords(objectEntry.getKeywords());
-		}
-
-		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
-			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
-				objectEntry.getObjectEntryFolderExternalReferenceCode());
-		}
-
-		if (objectEntry.getObjectEntryFolderId() != null) {
-			existingObjectEntry.setObjectEntryFolderId(
-				objectEntry.getObjectEntryFolderId());
-		}
-
-		if (objectEntry.getPermissions() != null) {
-			existingObjectEntry.setPermissions(objectEntry.getPermissions());
-		}
-
-		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties =
-				existingObjectEntry.getProperties();
-
-			properties.putAll(objectEntry.getProperties());
-
-			existingObjectEntry.setProperties(properties);
-		}
-
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			existingObjectEntry.setTaxonomyCategoryIds(
-				objectEntry.getTaxonomyCategoryIds());
-		}
-
-		preparePatch(objectEntry, existingObjectEntry);
-
-		return putByExternalReferenceCode(
-			externalReferenceCode, existingObjectEntry);
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public ObjectEntry putByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
 			ObjectEntry objectEntry)
 		throws Exception {
 
 		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getByExternalReferenceCodeByVersion(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Path(
-		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}/restore"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public ObjectEntry putByExternalReferenceCodeByVersionRestore(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/by-external-reference-code/{externalReferenceCode}/versions"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectActionName"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Path(
-		"/by-external-reference-code/{objectEntryExternalReferenceCode}/object-actions/{objectActionName}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public void
-			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectEntryExternalReferenceCode")
-				String objectEntryExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectActionName")
-				String objectActionName)
-		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteScopeScopeKeyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("scopeKey")
-			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("scopeKey")
-			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("scopeKey")
-			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		ObjectEntry existingObjectEntry =
-			getScopeScopeKeyByExternalReferenceCode(
-				scopeKey, externalReferenceCode);
-
-		if (objectEntry.getDateCreated() != null) {
-			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
-		}
-
-		if (objectEntry.getDateModified() != null) {
-			existingObjectEntry.setDateModified(objectEntry.getDateModified());
-		}
-
-		if (objectEntry.getDefaultLanguageId() != null) {
-			existingObjectEntry.setDefaultLanguageId(
-				objectEntry.getDefaultLanguageId());
-		}
-
-		if (objectEntry.getExternalReferenceCode() != null) {
-			existingObjectEntry.setExternalReferenceCode(
-				objectEntry.getExternalReferenceCode());
-		}
-
-		if (objectEntry.getFriendlyUrlPath() != null) {
-			existingObjectEntry.setFriendlyUrlPath(
-				objectEntry.getFriendlyUrlPath());
-		}
-
-		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
-			existingObjectEntry.setFriendlyUrlPath_i18n(
-				objectEntry.getFriendlyUrlPath_i18n());
-		}
-
-		if (objectEntry.getKeywords() != null) {
-			existingObjectEntry.setKeywords(objectEntry.getKeywords());
-		}
-
-		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
-			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
-				objectEntry.getObjectEntryFolderExternalReferenceCode());
-		}
-
-		if (objectEntry.getObjectEntryFolderId() != null) {
-			existingObjectEntry.setObjectEntryFolderId(
-				objectEntry.getObjectEntryFolderId());
-		}
-
-		if (objectEntry.getPermissions() != null) {
-			existingObjectEntry.setPermissions(objectEntry.getPermissions());
-		}
-
-		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties =
-				existingObjectEntry.getProperties();
-
-			properties.putAll(objectEntry.getProperties());
-
-			existingObjectEntry.setProperties(properties);
-		}
-
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			existingObjectEntry.setTaxonomyCategoryIds(
-				objectEntry.getTaxonomyCategoryIds());
-		}
-
-		preparePatch(objectEntry, existingObjectEntry);
-
-		return putScopeScopeKeyByExternalReferenceCode(
-			scopeKey, externalReferenceCode, existingObjectEntry);
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("scopeKey")
-			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectActionName"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Path(
-		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public void
-			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.PathParam("scopeKey")
-				String scopeKey,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectActionName")
-				String objectActionName)
-		throws Exception {
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -955,96 +1160,24 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/{objectEntryId}")
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/by-external-reference-code/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
 	@Override
-	public void deleteObjectEntry(
+	public ObjectEntry putByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId)
-		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/batch")
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteObjectEntryBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				ObjectEntry.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/{objectEntryId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getObjectEntry(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId)
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		return new ObjectEntry();
@@ -1054,91 +1187,113 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "version"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/{objectEntryId}")
+	@javax.ws.rs.Path(
+		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}/restore"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
 	@Override
-	public ObjectEntry patchObjectEntry(
+	public ObjectEntry putByExternalReferenceCodeByVersionRestore(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			ObjectEntry objectEntry)
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("version")
+			Integer version)
 		throws Exception {
 
-		ObjectEntry existingObjectEntry = getObjectEntry(objectEntryId);
+		return new ObjectEntry();
+	}
 
-		if (objectEntry.getDateCreated() != null) {
-			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "currentExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectRelationshipName"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "relatedExternalReferenceCode"
+			)
 		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Path(
+		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public ObjectEntry
+			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("currentExternalReferenceCode")
+				String currentExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectRelationshipName")
+				String objectRelationshipName,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("relatedExternalReferenceCode")
+				String relatedExternalReferenceCode)
+		throws Exception {
 
-		if (objectEntry.getDateModified() != null) {
-			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectActionName"
+			)
 		}
-
-		if (objectEntry.getDefaultLanguageId() != null) {
-			existingObjectEntry.setDefaultLanguageId(
-				objectEntry.getDefaultLanguageId());
-		}
-
-		if (objectEntry.getExternalReferenceCode() != null) {
-			existingObjectEntry.setExternalReferenceCode(
-				objectEntry.getExternalReferenceCode());
-		}
-
-		if (objectEntry.getFriendlyUrlPath() != null) {
-			existingObjectEntry.setFriendlyUrlPath(
-				objectEntry.getFriendlyUrlPath());
-		}
-
-		if (objectEntry.getFriendlyUrlPath_i18n() != null) {
-			existingObjectEntry.setFriendlyUrlPath_i18n(
-				objectEntry.getFriendlyUrlPath_i18n());
-		}
-
-		if (objectEntry.getKeywords() != null) {
-			existingObjectEntry.setKeywords(objectEntry.getKeywords());
-		}
-
-		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
-			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
-				objectEntry.getObjectEntryFolderExternalReferenceCode());
-		}
-
-		if (objectEntry.getObjectEntryFolderId() != null) {
-			existingObjectEntry.setObjectEntryFolderId(
-				objectEntry.getObjectEntryFolderId());
-		}
-
-		if (objectEntry.getPermissions() != null) {
-			existingObjectEntry.setPermissions(objectEntry.getPermissions());
-		}
-
-		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties =
-				existingObjectEntry.getProperties();
-
-			properties.putAll(objectEntry.getProperties());
-
-			existingObjectEntry.setProperties(properties);
-		}
-
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			existingObjectEntry.setTaxonomyCategoryIds(
-				objectEntry.getTaxonomyCategoryIds());
-		}
-
-		preparePatch(objectEntry, existingObjectEntry);
-
-		return putObjectEntry(objectEntryId, existingObjectEntry);
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Path(
+		"/by-external-reference-code/{objectEntryExternalReferenceCode}/object-actions/{objectActionName}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public void
+			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectEntryExternalReferenceCode")
+				String objectEntryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectActionName")
+				String objectActionName)
+		throws Exception {
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -1222,39 +1377,6 @@ public abstract class BaseObjectEntryResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/{objectEntryId}/by-version/{version}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectEntry getObjectEntryByVersion(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("version")
-			Integer version)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "version"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
 	@javax.ws.rs.Path("/{objectEntryId}/by-version/{version}/restore")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1302,69 +1424,6 @@ public abstract class BaseObjectEntryResourceImpl
 			@javax.ws.rs.PathParam("objectActionName")
 			String objectActionName)
 		throws Exception {
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "roleNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/{objectEntryId}/permissions")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Permission> getObjectEntryPermissionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("roleNames")
-			String roleNames)
-		throws Exception {
-
-		String resourceName = getPermissionCheckerResourceName(objectEntryId);
-		Long resourceId = getPermissionCheckerResourceId(objectEntryId);
-
-		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(objectEntryId), resourceName,
-			resourceId);
-
-		return toPermissionPage(
-			HashMapBuilder.put(
-				"get",
-				addAction(
-					ActionKeys.PERMISSIONS, "getObjectEntryPermissionsPage",
-					resourceName, resourceId)
-			).put(
-				"replace",
-				addAction(
-					ActionKeys.PERMISSIONS, "putObjectEntryPermissionsPage",
-					resourceName, resourceId)
-			).build(),
-			resourceId, resourceName, roleNames);
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -1455,118 +1514,11 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectEntryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/{objectEntryId}/versions")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ObjectEntry> getObjectEntriesVersionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectEntryId")
-			Long objectEntryId,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "scopeKey"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "aggregationTerms"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "flatten"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/scopes/{scopeKey}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ObjectEntry> getScopeScopeKeyPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.PathParam("scopeKey")
-			String scopeKey,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("flatten")
-			Boolean flatten,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
-				sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "scopeKey"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -1574,18 +1526,66 @@ public abstract class BaseObjectEntryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/scopes/{scopeKey}")
-	@javax.ws.rs.POST
+	@javax.ws.rs.Path(
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
 	@Override
-	public ObjectEntry postScopeScopeKey(
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("scopeKey")
 			String scopeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
 			ObjectEntry objectEntry)
 		throws Exception {
 
 		return new ObjectEntry();
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectActionName"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Path(
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public void
+			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.PathParam("scopeKey")
+				String scopeKey,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectActionName")
+				String objectActionName)
+		throws Exception {
 	}
 
 	@Override

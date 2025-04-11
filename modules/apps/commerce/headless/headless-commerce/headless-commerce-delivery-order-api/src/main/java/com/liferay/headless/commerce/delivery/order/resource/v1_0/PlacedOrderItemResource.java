@@ -46,18 +46,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlacedOrderItemResource {
 
-	public PlacedOrderItem getPlacedOrderItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PlacedOrderItem getPlacedOrderItem(Long placedOrderItemId)
-		throws Exception;
-
 	public Page<PlacedOrderItem>
 			getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage(
 				String externalReferenceCode, String search, Long skuId,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public PlacedOrderItem getPlacedOrderItem(Long placedOrderItemId)
+		throws Exception;
+
+	public PlacedOrderItem getPlacedOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(

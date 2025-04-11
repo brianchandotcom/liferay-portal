@@ -248,682 +248,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionsPage() throws Exception {
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		ObjectDefinition objectDefinition1 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		ObjectDefinition objectDefinition2 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		page = objectDefinitionResource.getObjectDefinitionsPage(
-			null, null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			objectDefinition1, (List<ObjectDefinition>)page.getItems());
-		assertContains(
-			objectDefinition2, (List<ObjectDefinition>)page.getItems());
-		assertValid(page, testGetObjectDefinitionsPage_getExpectedActions());
-
-		objectDefinitionResource.deleteObjectDefinition(
-			objectDefinition1.getId());
-
-		objectDefinitionResource.deleteObjectDefinition(
-			objectDefinition2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetObjectDefinitionsPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		ObjectDefinition objectDefinition1 = randomObjectDefinition();
-
-		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
-			objectDefinition1);
-
-		for (EntityField entityField : entityFields) {
-			Page<ObjectDefinition> page =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null,
-					getFilterString(entityField, "between", objectDefinition1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(objectDefinition1),
-				(List<ObjectDefinition>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetObjectDefinitionsPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithFilterStringContains()
-		throws Exception {
-
-		testGetObjectDefinitionsPageWithFilter(
-			"contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetObjectDefinitionsPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetObjectDefinitionsPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetObjectDefinitionsPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		ObjectDefinition objectDefinition1 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectDefinition objectDefinition2 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		for (EntityField entityField : entityFields) {
-			Page<ObjectDefinition> page =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null,
-					getFilterString(entityField, operator, objectDefinition1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(objectDefinition1),
-				(List<ObjectDefinition>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithPagination() throws Exception {
-		Page<ObjectDefinition> objectDefinitionPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			objectDefinitionPage.getTotalCount());
-
-		ObjectDefinition objectDefinition1 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		ObjectDefinition objectDefinition2 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		ObjectDefinition objectDefinition3 =
-			testGetObjectDefinitionsPage_addObjectDefinition(
-				randomObjectDefinition());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ObjectDefinition> page1 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				objectDefinition1, (List<ObjectDefinition>)page1.getItems());
-
-			Page<ObjectDefinition> page2 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(
-				objectDefinition2, (List<ObjectDefinition>)page2.getItems());
-
-			Page<ObjectDefinition> page3 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(
-				objectDefinition3, (List<ObjectDefinition>)page3.getItems());
-		}
-		else {
-			Page<ObjectDefinition> page1 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null, Pagination.of(1, totalCount + 2), null);
-
-			List<ObjectDefinition> objectDefinitions1 =
-				(List<ObjectDefinition>)page1.getItems();
-
-			Assert.assertEquals(
-				objectDefinitions1.toString(), totalCount + 2,
-				objectDefinitions1.size());
-
-			Page<ObjectDefinition> page2 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null, Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<ObjectDefinition> objectDefinitions2 =
-				(List<ObjectDefinition>)page2.getItems();
-
-			Assert.assertEquals(
-				objectDefinitions2.toString(), 1, objectDefinitions2.size());
-
-			Page<ObjectDefinition> page3 =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
-
-			assertContains(
-				objectDefinition1, (List<ObjectDefinition>)page3.getItems());
-			assertContains(
-				objectDefinition2, (List<ObjectDefinition>)page3.getItems());
-			assertContains(
-				objectDefinition3, (List<ObjectDefinition>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithSortDateTime()
-		throws Exception {
-
-		testGetObjectDefinitionsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, objectDefinition1, objectDefinition2) -> {
-				BeanTestUtil.setProperty(
-					objectDefinition1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithSortDouble() throws Exception {
-		testGetObjectDefinitionsPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, objectDefinition1, objectDefinition2) -> {
-				BeanTestUtil.setProperty(
-					objectDefinition1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					objectDefinition2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithSortInteger() throws Exception {
-		testGetObjectDefinitionsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, objectDefinition1, objectDefinition2) -> {
-				BeanTestUtil.setProperty(
-					objectDefinition1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(
-					objectDefinition2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetObjectDefinitionsPageWithSortString() throws Exception {
-		testGetObjectDefinitionsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, objectDefinition1, objectDefinition2) -> {
-				Class<?> clazz = objectDefinition1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						objectDefinition1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						objectDefinition2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						objectDefinition1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						objectDefinition2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						objectDefinition1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						objectDefinition2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetObjectDefinitionsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer
-				<EntityField, ObjectDefinition, ObjectDefinition, Exception>
-					unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		ObjectDefinition objectDefinition1 = randomObjectDefinition();
-		ObjectDefinition objectDefinition2 = randomObjectDefinition();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(
-				entityField, objectDefinition1, objectDefinition2);
-		}
-
-		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
-			objectDefinition1);
-
-		objectDefinition2 = testGetObjectDefinitionsPage_addObjectDefinition(
-			objectDefinition2);
-
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<ObjectDefinition> ascPage =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
-
-			assertContains(
-				objectDefinition1, (List<ObjectDefinition>)ascPage.getItems());
-			assertContains(
-				objectDefinition2, (List<ObjectDefinition>)ascPage.getItems());
-
-			Page<ObjectDefinition> descPage =
-				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(
-				objectDefinition2, (List<ObjectDefinition>)descPage.getItems());
-			assertContains(
-				objectDefinition1, (List<ObjectDefinition>)descPage.getItems());
-		}
-	}
-
-	protected ObjectDefinition testGetObjectDefinitionsPage_addObjectDefinition(
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"objectDefinitions",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
-
-		long totalCount = objectDefinitionsJSONObject.getLong("totalCount");
-
-		ObjectDefinition objectDefinition1 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
-		ObjectDefinition objectDefinition2 =
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
-
-		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
-
-		Assert.assertEquals(
-			totalCount + 2, objectDefinitionsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			objectDefinition1,
-			Arrays.asList(
-				ObjectDefinitionSerDes.toDTOs(
-					objectDefinitionsJSONObject.getString("items"))));
-		assertContains(
-			objectDefinition2,
-			Arrays.asList(
-				ObjectDefinitionSerDes.toDTOs(
-					objectDefinitionsJSONObject.getString("items"))));
-
-		// Using the namespace objectAdmin_v1_0
-
-		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("objectAdmin_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-			"JSONObject/objectDefinitions");
-
-		Assert.assertEquals(
-			totalCount + 2, objectDefinitionsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			objectDefinition1,
-			Arrays.asList(
-				ObjectDefinitionSerDes.toDTOs(
-					objectDefinitionsJSONObject.getString("items"))));
-		assertContains(
-			objectDefinition2,
-			Arrays.asList(
-				ObjectDefinitionSerDes.toDTOs(
-					objectDefinitionsJSONObject.getString("items"))));
-	}
-
-	protected ObjectDefinition
-			testGraphQLGetObjectDefinitionsPage_addObjectDefinition()
-		throws Exception {
-
-		return testGraphQLObjectDefinition_addObjectDefinition();
-	}
-
-	@Test
-	public void testPostObjectDefinition() throws Exception {
-		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
-
-		ObjectDefinition postObjectDefinition =
-			testPostObjectDefinition_addObjectDefinition(
-				randomObjectDefinition);
-
-		assertEquals(randomObjectDefinition, postObjectDefinition);
-		assertValid(postObjectDefinition);
-	}
-
-	protected ObjectDefinition testPostObjectDefinition_addObjectDefinition(
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetObjectDefinitionByExternalReferenceCode()
-		throws Exception {
-
-		ObjectDefinition postObjectDefinition =
-			testGetObjectDefinitionByExternalReferenceCode_addObjectDefinition();
-
-		ObjectDefinition getObjectDefinition =
-			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
-				postObjectDefinition.getExternalReferenceCode());
-
-		assertEquals(postObjectDefinition, getObjectDefinition);
-		assertValid(getObjectDefinition);
-	}
-
-	protected ObjectDefinition
-			testGetObjectDefinitionByExternalReferenceCode_addObjectDefinition()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetObjectDefinitionByExternalReferenceCode()
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			testGraphQLGetObjectDefinitionByExternalReferenceCode_addObjectDefinition();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				objectDefinition,
-				ObjectDefinitionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"objectDefinitionByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												objectDefinition.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/objectDefinitionByExternalReferenceCode"))));
-
-		// Using the namespace objectAdmin_v1_0
-
-		Assert.assertTrue(
-			equals(
-				objectDefinition,
-				ObjectDefinitionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"objectAdmin_v1_0",
-								new GraphQLField(
-									"objectDefinitionByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													objectDefinition.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-						"Object/objectDefinitionByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectDefinitionByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace objectAdmin_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"objectDefinitionByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ObjectDefinition
-			testGraphQLGetObjectDefinitionByExternalReferenceCode_addObjectDefinition()
-		throws Exception {
-
-		return testGraphQLObjectDefinition_addObjectDefinition();
-	}
-
-	@Test
-	public void testPutObjectDefinitionByExternalReferenceCode()
-		throws Exception {
-
-		ObjectDefinition postObjectDefinition =
-			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition();
-
-		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
-
-		ObjectDefinition putObjectDefinition =
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				postObjectDefinition.getExternalReferenceCode(),
-				randomObjectDefinition);
-
-		assertEquals(randomObjectDefinition, putObjectDefinition);
-		assertValid(putObjectDefinition);
-
-		ObjectDefinition getObjectDefinition =
-			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
-				putObjectDefinition.getExternalReferenceCode());
-
-		assertEquals(randomObjectDefinition, getObjectDefinition);
-		assertValid(getObjectDefinition);
-
-		ObjectDefinition newObjectDefinition =
-			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition();
-
-		putObjectDefinition =
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				newObjectDefinition.getExternalReferenceCode(),
-				newObjectDefinition);
-
-		assertEquals(newObjectDefinition, putObjectDefinition);
-		assertValid(putObjectDefinition);
-
-		getObjectDefinition =
-			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
-				putObjectDefinition.getExternalReferenceCode());
-
-		assertEquals(newObjectDefinition, getObjectDefinition);
-
-		Assert.assertEquals(
-			newObjectDefinition.getExternalReferenceCode(),
-			putObjectDefinition.getExternalReferenceCode());
-	}
-
-	protected ObjectDefinition
-			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition()
-		throws Exception {
-
-		return randomObjectDefinition();
-	}
-
-	protected ObjectDefinition
-			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteObjectDefinition() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectDefinition objectDefinition =
@@ -1391,6 +715,601 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		ObjectDefinition postObjectDefinition =
+			testGetObjectDefinitionByExternalReferenceCode_addObjectDefinition();
+
+		ObjectDefinition getObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				postObjectDefinition.getExternalReferenceCode());
+
+		assertEquals(postObjectDefinition, getObjectDefinition);
+		assertValid(getObjectDefinition);
+	}
+
+	protected ObjectDefinition
+			testGetObjectDefinitionByExternalReferenceCode_addObjectDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			testGraphQLGetObjectDefinitionByExternalReferenceCode_addObjectDefinition();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				objectDefinition,
+				ObjectDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectDefinitionByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												objectDefinition.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/objectDefinitionByExternalReferenceCode"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectDefinition,
+				ObjectDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectAdmin_v1_0",
+								new GraphQLField(
+									"objectDefinitionByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													objectDefinition.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+						"Object/objectDefinitionByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectDefinitionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"objectDefinitionByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectDefinition
+			testGraphQLGetObjectDefinitionByExternalReferenceCode_addObjectDefinition()
+		throws Exception {
+
+		return testGraphQLObjectDefinition_addObjectDefinition();
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPage() throws Exception {
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		page = objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			objectDefinition1, (List<ObjectDefinition>)page.getItems());
+		assertContains(
+			objectDefinition2, (List<ObjectDefinition>)page.getItems());
+		assertValid(page, testGetObjectDefinitionsPage_getExpectedActions());
+
+		objectDefinitionResource.deleteObjectDefinition(
+			objectDefinition1.getId());
+
+		objectDefinitionResource.deleteObjectDefinition(
+			objectDefinition2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetObjectDefinitionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 = randomObjectDefinition();
+
+		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
+			objectDefinition1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectDefinition> page =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null,
+					getFilterString(entityField, "between", objectDefinition1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectDefinition1),
+				(List<ObjectDefinition>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetObjectDefinitionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetObjectDefinitionsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetObjectDefinitionsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetObjectDefinitionsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetObjectDefinitionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectDefinition> page =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null,
+					getFilterString(entityField, operator, objectDefinition1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectDefinition1),
+				(List<ObjectDefinition>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithPagination() throws Exception {
+		Page<ObjectDefinition> objectDefinitionPage =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			objectDefinitionPage.getTotalCount());
+
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition3 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ObjectDefinition> page1 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)page1.getItems());
+
+			Page<ObjectDefinition> page2 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)page2.getItems());
+
+			Page<ObjectDefinition> page3 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(
+				objectDefinition3, (List<ObjectDefinition>)page3.getItems());
+		}
+		else {
+			Page<ObjectDefinition> page1 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ObjectDefinition> objectDefinitions1 =
+				(List<ObjectDefinition>)page1.getItems();
+
+			Assert.assertEquals(
+				objectDefinitions1.toString(), totalCount + 2,
+				objectDefinitions1.size());
+
+			Page<ObjectDefinition> page2 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ObjectDefinition> objectDefinitions2 =
+				(List<ObjectDefinition>)page2.getItems();
+
+			Assert.assertEquals(
+				objectDefinitions2.toString(), 1, objectDefinitions2.size());
+
+			Page<ObjectDefinition> page3 =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)page3.getItems());
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)page3.getItems());
+			assertContains(
+				objectDefinition3, (List<ObjectDefinition>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectDefinition1, objectDefinition2) -> {
+				BeanTestUtil.setProperty(
+					objectDefinition1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithSortDouble() throws Exception {
+		testGetObjectDefinitionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectDefinition1, objectDefinition2) -> {
+				BeanTestUtil.setProperty(
+					objectDefinition1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectDefinition2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithSortInteger() throws Exception {
+		testGetObjectDefinitionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectDefinition1, objectDefinition2) -> {
+				BeanTestUtil.setProperty(
+					objectDefinition1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					objectDefinition2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithSortString() throws Exception {
+		testGetObjectDefinitionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectDefinition1, objectDefinition2) -> {
+				Class<?> clazz = objectDefinition1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectDefinition1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectDefinition2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectDefinition1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectDefinition2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectDefinition1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectDefinition2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetObjectDefinitionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ObjectDefinition, ObjectDefinition, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 = randomObjectDefinition();
+		ObjectDefinition objectDefinition2 = randomObjectDefinition();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, objectDefinition1, objectDefinition2);
+		}
+
+		objectDefinition1 = testGetObjectDefinitionsPage_addObjectDefinition(
+			objectDefinition1);
+
+		objectDefinition2 = testGetObjectDefinitionsPage_addObjectDefinition(
+			objectDefinition2);
+
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectDefinition> ascPage =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)ascPage.getItems());
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)ascPage.getItems());
+
+			Page<ObjectDefinition> descPage =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)descPage.getItems());
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)descPage.getItems());
+		}
+	}
+
+	protected ObjectDefinition testGetObjectDefinitionsPage_addObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"objectDefinitions",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/objectDefinitions");
+
+		long totalCount = objectDefinitionsJSONObject.getLong("totalCount");
+
+		ObjectDefinition objectDefinition1 =
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+		ObjectDefinition objectDefinition2 =
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
+
+		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/objectDefinitions");
+
+		Assert.assertEquals(
+			totalCount + 2, objectDefinitionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			objectDefinition1,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			objectDefinition2,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("objectAdmin_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+			"JSONObject/objectDefinitions");
+
+		Assert.assertEquals(
+			totalCount + 2, objectDefinitionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			objectDefinition1,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			objectDefinition2,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+	}
+
+	protected ObjectDefinition
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition()
+		throws Exception {
+
+		return testGraphQLObjectDefinition_addObjectDefinition();
+	}
+
+	@Test
 	public void testPatchObjectDefinition() throws Exception {
 		ObjectDefinition postObjectDefinition =
 			testPatchObjectDefinition_addObjectDefinition();
@@ -1418,6 +1337,47 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected ObjectDefinition testPatchObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinition() throws Exception {
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinition_addObjectDefinition(
+				randomObjectDefinition);
+
+		assertEquals(randomObjectDefinition, postObjectDefinition);
+		assertValid(postObjectDefinition);
+	}
+
+	protected ObjectDefinition testPostObjectDefinition_addObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionPublish() throws Exception {
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				randomObjectDefinition);
+
+		assertEquals(randomObjectDefinition, postObjectDefinition);
+		assertValid(postObjectDefinition);
+	}
+
+	protected ObjectDefinition
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1454,20 +1414,60 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionPublish() throws Exception {
-		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+	public void testPutObjectDefinitionByExternalReferenceCode()
+		throws Exception {
 
 		ObjectDefinition postObjectDefinition =
-			testPostObjectDefinitionPublish_addObjectDefinition(
+			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition();
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		ObjectDefinition putObjectDefinition =
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				postObjectDefinition.getExternalReferenceCode(),
 				randomObjectDefinition);
 
-		assertEquals(randomObjectDefinition, postObjectDefinition);
-		assertValid(postObjectDefinition);
+		assertEquals(randomObjectDefinition, putObjectDefinition);
+		assertValid(putObjectDefinition);
+
+		ObjectDefinition getObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				putObjectDefinition.getExternalReferenceCode());
+
+		assertEquals(randomObjectDefinition, getObjectDefinition);
+		assertValid(getObjectDefinition);
+
+		ObjectDefinition newObjectDefinition =
+			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition();
+
+		putObjectDefinition =
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				newObjectDefinition.getExternalReferenceCode(),
+				newObjectDefinition);
+
+		assertEquals(newObjectDefinition, putObjectDefinition);
+		assertValid(putObjectDefinition);
+
+		getObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				putObjectDefinition.getExternalReferenceCode());
+
+		assertEquals(newObjectDefinition, getObjectDefinition);
+
+		Assert.assertEquals(
+			newObjectDefinition.getExternalReferenceCode(),
+			putObjectDefinition.getExternalReferenceCode());
 	}
 
 	protected ObjectDefinition
-			testPostObjectDefinitionPublish_addObjectDefinition(
-				ObjectDefinition objectDefinition)
+			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition()
+		throws Exception {
+
+		return randomObjectDefinition();
+	}
+
+	protected ObjectDefinition
+			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

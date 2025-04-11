@@ -46,12 +46,58 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductResource {
 
+	public void deleteProduct(Long id) throws Exception;
+
+	public Response deleteProductBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProductByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public void deleteProductByVersion(Long id, Integer version)
+		throws Exception;
+
+	public Product getProduct(Long id) throws Exception;
+
+	public Product getProductByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Product getProductByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public Product getProductByVersion(Long id, Integer version)
+		throws Exception;
+
 	public Page<Product> getProductsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public Response patchProduct(Long id, Product product) throws Exception;
+
+	public Response patchProductByExternalReferenceCode(
+			String externalReferenceCode, Product product)
+		throws Exception;
+
+	public Product postProduct(Product product) throws Exception;
+
+	public Response postProductBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Product postProductByExternalReferenceCodeClone(
+			String externalReferenceCode, String catalogExternalReferenceCode)
+		throws Exception;
+
+	public Product postProductClone(Long id, Long catalogId) throws Exception;
 
 	public Response postProductsPageExportBatch(
 			String search,
@@ -60,55 +106,9 @@ public interface ProductResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Product postProduct(Product product) throws Exception;
-
-	public Response postProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteProductByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Product getProductByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchProductByExternalReferenceCode(
-			String externalReferenceCode, Product product)
-		throws Exception;
-
 	public Product putProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception;
-
-	public void deleteProductByExternalReferenceCodeByVersion(
-			String externalReferenceCode, Integer version)
-		throws Exception;
-
-	public Product getProductByExternalReferenceCodeByVersion(
-			String externalReferenceCode, Integer version)
-		throws Exception;
-
-	public Product postProductByExternalReferenceCodeClone(
-			String externalReferenceCode, String catalogExternalReferenceCode)
-		throws Exception;
-
-	public void deleteProduct(Long id) throws Exception;
-
-	public Response deleteProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Product getProduct(Long id) throws Exception;
-
-	public Response patchProduct(Long id, Product product) throws Exception;
-
-	public void deleteProductByVersion(Long id, Integer version)
-		throws Exception;
-
-	public Product getProductByVersion(Long id, Integer version)
-		throws Exception;
-
-	public Product postProductClone(Long id, Long catalogId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

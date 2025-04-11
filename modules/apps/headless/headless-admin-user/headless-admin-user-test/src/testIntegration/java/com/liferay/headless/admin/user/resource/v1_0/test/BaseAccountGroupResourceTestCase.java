@@ -224,6 +224,1070 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup = testDeleteAccountGroup_addAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.deleteAccountGroupHttpResponse(
+				accountGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup.getId()));
+		assertHttpResponseStatusCode(
+			404, accountGroupResource.getAccountGroupHttpResponse(0L));
+	}
+
+	protected AccountGroup testDeleteAccountGroup_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountGroup() throws Exception {
+
+		// No namespace
+
+		AccountGroup accountGroup1 =
+			testGraphQLDeleteAccountGroup_addAccountGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("accountGroupId", accountGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccountGroup"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountGroup",
+					new HashMap<String, Object>() {
+						{
+							put("accountGroupId", accountGroup1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		AccountGroup accountGroup2 =
+			testGraphQLDeleteAccountGroup_addAccountGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountGroupId",
+										accountGroup2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteAccountGroup"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"accountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("accountGroupId", accountGroup2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected AccountGroup testGraphQLDeleteAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
+	public void testDeleteAccountGroupBatch() throws Exception {
+		AccountGroup accountGroup1 =
+			testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", null, accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+
+		AccountGroup accountGroup2 =
+			testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+
+		accountGroup1 = testDeleteAccountGroupBatch_addAccountGroup();
+		accountGroup2 = testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+	}
+
+	protected AccountGroup testDeleteAccountGroupBatch_addAccountGroup()
+		throws Exception {
+
+		return testDeleteAccountGroup_addAccountGroup();
+	}
+
+	protected void testDeleteAccountGroupBatch_deleteAccountGroup(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			accountGroupResource.deleteAccountGroupBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup =
+			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.
+				deleteAccountGroupByExternalReferenceCodeHttpResponse(
+					accountGroup.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.
+				getAccountGroupByExternalReferenceCodeHttpResponse(
+					accountGroup.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.
+				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected AccountGroup
+			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup =
+			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.
+				deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCodeHttpResponse(
+					testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					accountGroup.getExternalReferenceCode()));
+	}
+
+	protected String
+			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountGroup
+			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountAccountGroupsPage() throws Exception {
+		Long accountId = testGetAccountAccountGroupsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountAccountGroupsPage_getIrrelevantAccountId();
+
+		Page<AccountGroup> page =
+			accountGroupResource.getAccountAccountGroupsPage(
+				accountId, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountId != null) {
+			AccountGroup irrelevantAccountGroup =
+				testGetAccountAccountGroupsPage_addAccountGroup(
+					irrelevantAccountId, randomIrrelevantAccountGroup());
+
+			page = accountGroupResource.getAccountAccountGroupsPage(
+				irrelevantAccountId, Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantAccountGroup, (List<AccountGroup>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountAccountGroupsPage_getExpectedActions(
+					irrelevantAccountId));
+		}
+
+		AccountGroup accountGroup1 =
+			testGetAccountAccountGroupsPage_addAccountGroup(
+				accountId, randomAccountGroup());
+
+		AccountGroup accountGroup2 =
+			testGetAccountAccountGroupsPage_addAccountGroup(
+				accountId, randomAccountGroup());
+
+		page = accountGroupResource.getAccountAccountGroupsPage(
+			accountId, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
+		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountAccountGroupsPage_getExpectedActions(accountId));
+
+		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
+
+		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountGroupsPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAccountAccountGroupsPageWithPagination()
+		throws Exception {
+
+		Long accountId = testGetAccountAccountGroupsPage_getAccountId();
+
+		Page<AccountGroup> accountGroupPage =
+			accountGroupResource.getAccountAccountGroupsPage(accountId, null);
+
+		int totalCount = GetterUtil.getInteger(
+			accountGroupPage.getTotalCount());
+
+		AccountGroup accountGroup1 =
+			testGetAccountAccountGroupsPage_addAccountGroup(
+				accountId, randomAccountGroup());
+
+		AccountGroup accountGroup2 =
+			testGetAccountAccountGroupsPage_addAccountGroup(
+				accountId, randomAccountGroup());
+
+		AccountGroup accountGroup3 =
+			testGetAccountAccountGroupsPage_addAccountGroup(
+				accountId, randomAccountGroup());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<AccountGroup> page1 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(accountGroup1, (List<AccountGroup>)page1.getItems());
+
+			Page<AccountGroup> page2 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
+
+			Page<AccountGroup> page3 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
+		}
+		else {
+			Page<AccountGroup> page1 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId, Pagination.of(1, totalCount + 2));
+
+			List<AccountGroup> accountGroups1 =
+				(List<AccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				accountGroups1.toString(), totalCount + 2,
+				accountGroups1.size());
+
+			Page<AccountGroup> page2 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountGroup> accountGroups2 =
+				(List<AccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				accountGroups2.toString(), 1, accountGroups2.size());
+
+			Page<AccountGroup> page3 =
+				accountGroupResource.getAccountAccountGroupsPage(
+					accountId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(accountGroup1, (List<AccountGroup>)page3.getItems());
+			assertContains(accountGroup2, (List<AccountGroup>)page3.getItems());
+			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
+		}
+	}
+
+	protected AccountGroup testGetAccountAccountGroupsPage_addAccountGroup(
+			Long accountId, AccountGroup accountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountAccountGroupsPage_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountAccountGroupsPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage()
+		throws Exception {
+
+		String accountExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode();
+		String irrelevantAccountExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getIrrelevantAccountExternalReferenceCode();
+
+		Page<AccountGroup> page =
+			accountGroupResource.
+				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+					accountExternalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountExternalReferenceCode != null) {
+			AccountGroup irrelevantAccountGroup =
+				testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+					irrelevantAccountExternalReferenceCode,
+					randomIrrelevantAccountGroup());
+
+			page =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						irrelevantAccountExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantAccountGroup, (List<AccountGroup>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+					irrelevantAccountExternalReferenceCode));
+		}
+
+		AccountGroup accountGroup1 =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				accountExternalReferenceCode, randomAccountGroup());
+
+		AccountGroup accountGroup2 =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				accountExternalReferenceCode, randomAccountGroup());
+
+		page =
+			accountGroupResource.
+				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+					accountExternalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
+		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+				accountExternalReferenceCode));
+
+		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
+
+		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+				String accountExternalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPageWithPagination()
+		throws Exception {
+
+		String accountExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode();
+
+		Page<AccountGroup> accountGroupPage =
+			accountGroupResource.
+				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+					accountExternalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			accountGroupPage.getTotalCount());
+
+		AccountGroup accountGroup1 =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				accountExternalReferenceCode, randomAccountGroup());
+
+		AccountGroup accountGroup2 =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				accountExternalReferenceCode, randomAccountGroup());
+
+		AccountGroup accountGroup3 =
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				accountExternalReferenceCode, randomAccountGroup());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<AccountGroup> page1 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(accountGroup1, (List<AccountGroup>)page1.getItems());
+
+			Page<AccountGroup> page2 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
+
+			Page<AccountGroup> page3 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
+		}
+		else {
+			Page<AccountGroup> page1 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountGroup> accountGroups1 =
+				(List<AccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				accountGroups1.toString(), totalCount + 2,
+				accountGroups1.size());
+
+			Page<AccountGroup> page2 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountGroup> accountGroups2 =
+				(List<AccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				accountGroups2.toString(), 1, accountGroups2.size());
+
+			Page<AccountGroup> page3 =
+				accountGroupResource.
+					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+						accountExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(accountGroup1, (List<AccountGroup>)page3.getItems());
+			assertContains(accountGroup2, (List<AccountGroup>)page3.getItems());
+			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
+		}
+	}
+
+	protected AccountGroup
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
+				String accountExternalReferenceCode, AccountGroup accountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getIrrelevantAccountExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountGroup() throws Exception {
+		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			postAccountGroup.getId());
+
+		assertEquals(postAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			postAccountGroup.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postAccountGroup.getId());
+
+		assertEquals(
+			getAccountGroup, AccountGroupSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected AccountGroup testGetAccountGroup_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroup() throws Exception {
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroup_addAccountGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountGroup",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"accountGroupId",
+											accountGroup.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/accountGroup"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"accountGroup",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"accountGroupId",
+												accountGroup.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/accountGroup"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupNotFound() throws Exception {
+		Long irrelevantAccountGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("accountGroupId", irrelevantAccountGroupId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"accountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountGroupId",
+										irrelevantAccountGroupId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountGroup testGraphQLGetAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
+	public void testGetAccountGroupByExternalReferenceCode() throws Exception {
+		AccountGroup postAccountGroup =
+			testGetAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		AccountGroup getAccountGroup =
+			accountGroupResource.getAccountGroupByExternalReferenceCode(
+				postAccountGroup.getExternalReferenceCode());
+
+		assertEquals(postAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	protected AccountGroup
+			testGetAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountGroupByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												accountGroup.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountGroupByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"accountGroupByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													accountGroup.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/accountGroupByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"accountGroupByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
 	public void testGetAccountGroupsPage() throws Exception {
 		Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -648,6 +1712,71 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccountGroup() throws Exception {
+		AccountGroup postAccountGroup = testPatchAccountGroup_addAccountGroup();
+
+		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup patchAccountGroup = accountGroupResource.patchAccountGroup(
+			postAccountGroup.getId(), randomPatchAccountGroup);
+
+		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountGroup, expectedPatchAccountGroup);
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			patchAccountGroup.getId());
+
+		assertEquals(expectedPatchAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	protected AccountGroup testPatchAccountGroup_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		AccountGroup postAccountGroup =
+			testPatchAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup patchAccountGroup =
+			accountGroupResource.patchAccountGroupByExternalReferenceCode(
+				postAccountGroup.getExternalReferenceCode(),
+				randomPatchAccountGroup);
+
+		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountGroup, expectedPatchAccountGroup);
+
+		AccountGroup getAccountGroup =
+			accountGroupResource.getAccountGroupByExternalReferenceCode(
+				patchAccountGroup.getExternalReferenceCode());
+
+		assertEquals(expectedPatchAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	protected AccountGroup
+			testPatchAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostAccountGroup() throws Exception {
 		AccountGroup randomAccountGroup = randomAccountGroup();
 
@@ -660,38 +1789,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 	protected AccountGroup testPostAccountGroup_addAccountGroup(
 			AccountGroup accountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup accountGroup =
-			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountGroupResource.
-				deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCodeHttpResponse(
-					testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
-					accountGroup.getExternalReferenceCode()));
-	}
-
-	protected String
-			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_getAccountExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected AccountGroup
-			testDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -728,202 +1825,25 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountGroupByExternalReferenceCode()
-		throws Exception {
+	public void testPutAccountGroup() throws Exception {
+		AccountGroup postAccountGroup = testPutAccountGroup_addAccountGroup();
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup accountGroup =
-			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
+		AccountGroup randomAccountGroup = randomAccountGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountGroupResource.
-				deleteAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
+		AccountGroup putAccountGroup = accountGroupResource.putAccountGroup(
+			postAccountGroup.getId(), randomAccountGroup);
 
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
-	}
+		assertEquals(randomAccountGroup, putAccountGroup);
+		assertValid(putAccountGroup);
 
-	protected AccountGroup
-			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			putAccountGroup.getId());
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountGroupByExternalReferenceCode() throws Exception {
-		AccountGroup postAccountGroup =
-			testGetAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		AccountGroup getAccountGroup =
-			accountGroupResource.getAccountGroupByExternalReferenceCode(
-				postAccountGroup.getExternalReferenceCode());
-
-		assertEquals(postAccountGroup, getAccountGroup);
+		assertEquals(randomAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
 	}
 
-	protected AccountGroup
-			testGetAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCode()
-		throws Exception {
-
-		AccountGroup accountGroup =
-			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountGroupByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												accountGroup.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountGroupByExternalReferenceCode"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"accountGroupByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													accountGroup.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/accountGroupByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountGroupByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"accountGroupByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountGroup
-			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testPatchAccountGroupByExternalReferenceCode()
-		throws Exception {
-
-		AccountGroup postAccountGroup =
-			testPatchAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup patchAccountGroup =
-			accountGroupResource.patchAccountGroupByExternalReferenceCode(
-				postAccountGroup.getExternalReferenceCode(),
-				randomPatchAccountGroup);
-
-		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchAccountGroup, expectedPatchAccountGroup);
-
-		AccountGroup getAccountGroup =
-			accountGroupResource.getAccountGroupByExternalReferenceCode(
-				patchAccountGroup.getExternalReferenceCode());
-
-		assertEquals(expectedPatchAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected AccountGroup
-			testPatchAccountGroupByExternalReferenceCode_addAccountGroup()
+	protected AccountGroup testPutAccountGroup_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -986,926 +1906,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup accountGroup = testDeleteAccountGroup_addAccountGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountGroupResource.deleteAccountGroupHttpResponse(
-				accountGroup.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup.getId()));
-		assertHttpResponseStatusCode(
-			404, accountGroupResource.getAccountGroupHttpResponse(0L));
-	}
-
-	protected AccountGroup testDeleteAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteAccountGroup() throws Exception {
-
-		// No namespace
-
-		AccountGroup accountGroup1 =
-			testGraphQLDeleteAccountGroup_addAccountGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("accountGroupId", accountGroup1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAccountGroup"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"accountGroup",
-					new HashMap<String, Object>() {
-						{
-							put("accountGroupId", accountGroup1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		AccountGroup accountGroup2 =
-			testGraphQLDeleteAccountGroup_addAccountGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteAccountGroup",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"accountGroupId",
-										accountGroup2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteAccountGroup"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminUser_v1_0",
-					new GraphQLField(
-						"accountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("accountGroupId", accountGroup2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected AccountGroup testGraphQLDeleteAccountGroup_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testDeleteAccountGroupBatch() throws Exception {
-		AccountGroup accountGroup1 =
-			testDeleteAccountGroupBatch_addAccountGroup();
-
-		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", null, accountGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup1.getId()));
-
-		AccountGroup accountGroup2 =
-			testDeleteAccountGroupBatch_addAccountGroup();
-
-		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup2.getId()));
-
-		accountGroup1 = testDeleteAccountGroupBatch_addAccountGroup();
-		accountGroup2 = testDeleteAccountGroupBatch_addAccountGroup();
-
-		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(),
-			accountGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup2.getId()));
-
-		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(),
-			accountGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup2.getId()));
-	}
-
-	protected AccountGroup testDeleteAccountGroupBatch_addAccountGroup()
-		throws Exception {
-
-		return testDeleteAccountGroup_addAccountGroup();
-	}
-
-	protected void testDeleteAccountGroupBatch_deleteAccountGroup(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			accountGroupResource.deleteAccountGroupBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetAccountGroup() throws Exception {
-		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
-
-		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
-			postAccountGroup.getId());
-
-		assertEquals(postAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
-
-		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
-			postAccountGroup.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postAccountGroup.getId());
-
-		assertEquals(
-			getAccountGroup, AccountGroupSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected AccountGroup testGetAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroup() throws Exception {
-		AccountGroup accountGroup =
-			testGraphQLGetAccountGroup_addAccountGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountGroup",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"accountGroupId",
-											accountGroup.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/accountGroup"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"accountGroup",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"accountGroupId",
-												accountGroup.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/accountGroup"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupNotFound() throws Exception {
-		Long irrelevantAccountGroupId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("accountGroupId", irrelevantAccountGroupId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"accountGroup",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"accountGroupId",
-										irrelevantAccountGroupId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountGroup testGraphQLGetAccountGroup_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testPatchAccountGroup() throws Exception {
-		AccountGroup postAccountGroup = testPatchAccountGroup_addAccountGroup();
-
-		AccountGroup randomPatchAccountGroup = randomPatchAccountGroup();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup patchAccountGroup = accountGroupResource.patchAccountGroup(
-			postAccountGroup.getId(), randomPatchAccountGroup);
-
-		AccountGroup expectedPatchAccountGroup = postAccountGroup.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchAccountGroup, expectedPatchAccountGroup);
-
-		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
-			patchAccountGroup.getId());
-
-		assertEquals(expectedPatchAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected AccountGroup testPatchAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAccountGroup() throws Exception {
-		AccountGroup postAccountGroup = testPutAccountGroup_addAccountGroup();
-
-		AccountGroup randomAccountGroup = randomAccountGroup();
-
-		AccountGroup putAccountGroup = accountGroupResource.putAccountGroup(
-			postAccountGroup.getId(), randomAccountGroup);
-
-		assertEquals(randomAccountGroup, putAccountGroup);
-		assertValid(putAccountGroup);
-
-		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
-			putAccountGroup.getId());
-
-		assertEquals(randomAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected AccountGroup testPutAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage()
-		throws Exception {
-
-		String accountExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode();
-		String irrelevantAccountExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getIrrelevantAccountExternalReferenceCode();
-
-		Page<AccountGroup> page =
-			accountGroupResource.
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-					accountExternalReferenceCode, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantAccountExternalReferenceCode != null) {
-			AccountGroup irrelevantAccountGroup =
-				testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-					irrelevantAccountExternalReferenceCode,
-					randomIrrelevantAccountGroup());
-
-			page =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						irrelevantAccountExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantAccountGroup, (List<AccountGroup>)page.getItems());
-			assertValid(
-				page,
-				testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
-					irrelevantAccountExternalReferenceCode));
-		}
-
-		AccountGroup accountGroup1 =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				accountExternalReferenceCode, randomAccountGroup());
-
-		AccountGroup accountGroup2 =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				accountExternalReferenceCode, randomAccountGroup());
-
-		page =
-			accountGroupResource.
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-					accountExternalReferenceCode, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
-		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
-		assertValid(
-			page,
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
-				accountExternalReferenceCode));
-
-		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
-
-		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getExpectedActions(
-				String accountExternalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPageWithPagination()
-		throws Exception {
-
-		String accountExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode();
-
-		Page<AccountGroup> accountGroupPage =
-			accountGroupResource.
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-					accountExternalReferenceCode, null);
-
-		int totalCount = GetterUtil.getInteger(
-			accountGroupPage.getTotalCount());
-
-		AccountGroup accountGroup1 =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				accountExternalReferenceCode, randomAccountGroup());
-
-		AccountGroup accountGroup2 =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				accountExternalReferenceCode, randomAccountGroup());
-
-		AccountGroup accountGroup3 =
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				accountExternalReferenceCode, randomAccountGroup());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<AccountGroup> page1 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(accountGroup1, (List<AccountGroup>)page1.getItems());
-
-			Page<AccountGroup> page2 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
-
-			Page<AccountGroup> page3 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
-		}
-		else {
-			Page<AccountGroup> page1 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(1, totalCount + 2));
-
-			List<AccountGroup> accountGroups1 =
-				(List<AccountGroup>)page1.getItems();
-
-			Assert.assertEquals(
-				accountGroups1.toString(), totalCount + 2,
-				accountGroups1.size());
-
-			Page<AccountGroup> page2 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<AccountGroup> accountGroups2 =
-				(List<AccountGroup>)page2.getItems();
-
-			Assert.assertEquals(
-				accountGroups2.toString(), 1, accountGroups2.size());
-
-			Page<AccountGroup> page3 =
-				accountGroupResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-						accountExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(accountGroup1, (List<AccountGroup>)page3.getItems());
-			assertContains(accountGroup2, (List<AccountGroup>)page3.getItems());
-			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
-		}
-	}
-
-	protected AccountGroup
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
-				String accountExternalReferenceCode, AccountGroup accountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getAccountExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_getIrrelevantAccountExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testGetAccountAccountGroupsPage() throws Exception {
-		Long accountId = testGetAccountAccountGroupsPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountAccountGroupsPage_getIrrelevantAccountId();
-
-		Page<AccountGroup> page =
-			accountGroupResource.getAccountAccountGroupsPage(
-				accountId, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantAccountId != null) {
-			AccountGroup irrelevantAccountGroup =
-				testGetAccountAccountGroupsPage_addAccountGroup(
-					irrelevantAccountId, randomIrrelevantAccountGroup());
-
-			page = accountGroupResource.getAccountAccountGroupsPage(
-				irrelevantAccountId, Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantAccountGroup, (List<AccountGroup>)page.getItems());
-			assertValid(
-				page,
-				testGetAccountAccountGroupsPage_getExpectedActions(
-					irrelevantAccountId));
-		}
-
-		AccountGroup accountGroup1 =
-			testGetAccountAccountGroupsPage_addAccountGroup(
-				accountId, randomAccountGroup());
-
-		AccountGroup accountGroup2 =
-			testGetAccountAccountGroupsPage_addAccountGroup(
-				accountId, randomAccountGroup());
-
-		page = accountGroupResource.getAccountAccountGroupsPage(
-			accountId, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
-		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
-		assertValid(
-			page,
-			testGetAccountAccountGroupsPage_getExpectedActions(accountId));
-
-		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
-
-		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetAccountAccountGroupsPage_getExpectedActions(Long accountId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetAccountAccountGroupsPageWithPagination()
-		throws Exception {
-
-		Long accountId = testGetAccountAccountGroupsPage_getAccountId();
-
-		Page<AccountGroup> accountGroupPage =
-			accountGroupResource.getAccountAccountGroupsPage(accountId, null);
-
-		int totalCount = GetterUtil.getInteger(
-			accountGroupPage.getTotalCount());
-
-		AccountGroup accountGroup1 =
-			testGetAccountAccountGroupsPage_addAccountGroup(
-				accountId, randomAccountGroup());
-
-		AccountGroup accountGroup2 =
-			testGetAccountAccountGroupsPage_addAccountGroup(
-				accountId, randomAccountGroup());
-
-		AccountGroup accountGroup3 =
-			testGetAccountAccountGroupsPage_addAccountGroup(
-				accountId, randomAccountGroup());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<AccountGroup> page1 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(accountGroup1, (List<AccountGroup>)page1.getItems());
-
-			Page<AccountGroup> page2 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
-
-			Page<AccountGroup> page3 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
-		}
-		else {
-			Page<AccountGroup> page1 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(1, totalCount + 2));
-
-			List<AccountGroup> accountGroups1 =
-				(List<AccountGroup>)page1.getItems();
-
-			Assert.assertEquals(
-				accountGroups1.toString(), totalCount + 2,
-				accountGroups1.size());
-
-			Page<AccountGroup> page2 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<AccountGroup> accountGroups2 =
-				(List<AccountGroup>)page2.getItems();
-
-			Assert.assertEquals(
-				accountGroups2.toString(), 1, accountGroups2.size());
-
-			Page<AccountGroup> page3 =
-				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(accountGroup1, (List<AccountGroup>)page3.getItems());
-			assertContains(accountGroup2, (List<AccountGroup>)page3.getItems());
-			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
-		}
-	}
-
-	protected AccountGroup testGetAccountAccountGroupsPage_addAccountGroup(
-			Long accountId, AccountGroup accountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountAccountGroupsPage_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountAccountGroupsPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
 	}
 
 	@Rule

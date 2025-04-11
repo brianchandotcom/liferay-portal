@@ -47,15 +47,15 @@ public interface ProductSubscriptionConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public ProductSubscriptionConfiguration
+			getProductIdSubscriptionConfiguration(Long id)
+		throws Exception;
+
 	public Response
 			patchProductByExternalReferenceCodeSubscriptionConfiguration(
 				String externalReferenceCode,
 				ProductSubscriptionConfiguration
 					productSubscriptionConfiguration)
-		throws Exception;
-
-	public ProductSubscriptionConfiguration
-			getProductIdSubscriptionConfiguration(Long id)
 		throws Exception;
 
 	public Response patchProductIdSubscriptionConfiguration(

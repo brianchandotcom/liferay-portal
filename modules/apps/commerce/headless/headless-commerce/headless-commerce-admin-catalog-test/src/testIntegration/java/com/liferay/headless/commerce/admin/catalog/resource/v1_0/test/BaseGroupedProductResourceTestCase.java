@@ -302,11 +302,6 @@ public abstract class BaseGroupedProductResourceTestCase {
 	}
 
 	@Test
-	public void testPatchGroupedProduct() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeGroupedProductsPage()
 		throws Exception {
 
@@ -517,29 +512,6 @@ public abstract class BaseGroupedProductResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeGroupedProduct()
-		throws Exception {
-
-		GroupedProduct randomGroupedProduct = randomGroupedProduct();
-
-		GroupedProduct postGroupedProduct =
-			testPostProductByExternalReferenceCodeGroupedProduct_addGroupedProduct(
-				randomGroupedProduct);
-
-		assertEquals(randomGroupedProduct, postGroupedProduct);
-		assertValid(postGroupedProduct);
-	}
-
-	protected GroupedProduct
-			testPostProductByExternalReferenceCodeGroupedProduct_addGroupedProduct(
-				GroupedProduct groupedProduct)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdGroupedProductsPage() throws Exception {
 		Long id = testGetProductIdGroupedProductsPage_getId();
 		Long irrelevantId =
@@ -720,6 +692,34 @@ public abstract class BaseGroupedProductResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchGroupedProduct() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeGroupedProduct()
+		throws Exception {
+
+		GroupedProduct randomGroupedProduct = randomGroupedProduct();
+
+		GroupedProduct postGroupedProduct =
+			testPostProductByExternalReferenceCodeGroupedProduct_addGroupedProduct(
+				randomGroupedProduct);
+
+		assertEquals(randomGroupedProduct, postGroupedProduct);
+		assertValid(postGroupedProduct);
+	}
+
+	protected GroupedProduct
+			testPostProductByExternalReferenceCodeGroupedProduct_addGroupedProduct(
+				GroupedProduct groupedProduct)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

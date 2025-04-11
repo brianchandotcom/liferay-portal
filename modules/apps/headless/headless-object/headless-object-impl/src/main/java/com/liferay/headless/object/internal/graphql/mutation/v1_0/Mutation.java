@@ -75,23 +75,6 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public ObjectEntryFolder patchObjectEntryFolder(
-			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
-			@GraphQLName("objectEntryFolder") ObjectEntryFolder
-				objectEntryFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectEntryFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectEntryFolderResource ->
-				objectEntryFolderResource.patchObjectEntryFolder(
-					objectEntryFolderId, objectEntryFolder));
-	}
-
 	@GraphQLField
 	public boolean deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 			@GraphQLName("scopeKey") String scopeKey,
@@ -107,6 +90,23 @@ public class Mutation {
 						scopeKey, externalReferenceCode));
 
 		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public ObjectEntryFolder patchObjectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.patchObjectEntryFolder(
+					objectEntryFolderId, objectEntryFolder));
 	}
 
 	@GraphQLField
@@ -129,6 +129,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ObjectEntryFolder createScopeScopeKeyObjectEntryFolder(
+			@GraphQLName("scopeKey") String scopeKey,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+					scopeKey, objectEntryFolder));
+	}
+
+	@GraphQLField
 	public ObjectEntryFolder
 			updateScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 				@GraphQLName("scopeKey") String scopeKey,
@@ -145,21 +160,6 @@ public class Mutation {
 				objectEntryFolderResource.
 					putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 						scopeKey, externalReferenceCode, objectEntryFolder));
-	}
-
-	@GraphQLField
-	public ObjectEntryFolder createScopeScopeKeyObjectEntryFolder(
-			@GraphQLName("scopeKey") String scopeKey,
-			@GraphQLName("objectEntryFolder") ObjectEntryFolder
-				objectEntryFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectEntryFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectEntryFolderResource ->
-				objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
-					scopeKey, objectEntryFolder));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

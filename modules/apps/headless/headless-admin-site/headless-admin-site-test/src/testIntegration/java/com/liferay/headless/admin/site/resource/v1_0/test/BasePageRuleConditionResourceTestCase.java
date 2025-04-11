@@ -213,20 +213,6 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageRuleCondition()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage()
 		throws Exception {
 
@@ -355,6 +341,13 @@ public abstract class BasePageRuleConditionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageRuleCondition()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageRulePageRuleCondition()
 		throws Exception {
 
@@ -375,6 +368,13 @@ public abstract class BasePageRuleConditionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodePageRuleCondition()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(

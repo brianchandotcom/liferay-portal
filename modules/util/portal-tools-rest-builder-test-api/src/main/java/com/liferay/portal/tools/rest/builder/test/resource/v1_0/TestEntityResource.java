@@ -49,9 +49,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TestEntityResource {
 
-	public Response postReservedWord(Boolean booleanValue) throws Exception;
-
 	public Page<TestEntity> getTestEntitiesPage() throws Exception;
+
+	public TestEntity getTestEntity(Long testEntityId) throws Exception;
+
+	public Integer getTestEntityCount() throws Exception;
+
+	public TestEntity patchTestEntity(
+			Long testEntityId, Long optionalParameter, TestEntity testEntity)
+		throws Exception;
+
+	public Response postReservedWord(Boolean booleanValue) throws Exception;
 
 	public Response postTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
@@ -60,14 +68,6 @@ public interface TestEntityResource {
 	public TestEntity postTestEntity(TestEntity testEntity) throws Exception;
 
 	public Response postTestEntityBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Integer getTestEntityCount() throws Exception;
-
-	public TestEntity getTestEntity(Long testEntityId) throws Exception;
-
-	public TestEntity patchTestEntity(
-			Long testEntityId, Long optionalParameter, TestEntity testEntity)
 		throws Exception;
 
 	public TestEntity putTestEntity(

@@ -51,12 +51,12 @@ public interface ProductChannelResource {
 	public Response deleteProductChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public ProductChannel getProductChannel(Long id) throws Exception;
-
 	public Page<ProductChannel>
 			getProductByExternalReferenceCodeProductChannelsPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
+
+	public ProductChannel getProductChannel(Long id) throws Exception;
 
 	public Page<ProductChannel> getProductIdProductChannelsPage(
 			Long id, Pagination pagination)

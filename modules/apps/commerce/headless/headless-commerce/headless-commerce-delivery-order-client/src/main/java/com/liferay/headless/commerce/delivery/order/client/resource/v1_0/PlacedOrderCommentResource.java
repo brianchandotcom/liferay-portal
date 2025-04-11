@@ -34,13 +34,14 @@ public interface PlacedOrderCommentResource {
 		return new Builder();
 	}
 
-	public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<PlacedOrderComment>
+			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
+			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public PlacedOrderComment getPlacedOrderComment(Long placedOrderCommentId)
@@ -50,14 +51,13 @@ public interface PlacedOrderCommentResource {
 			Long placedOrderCommentId)
 		throws Exception;
 
-	public Page<PlacedOrderComment>
-			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
-				String externalReferenceCode, Pagination pagination)
+	public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
-				String externalReferenceCode, Pagination pagination)
+			getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<PlacedOrderComment> getPlacedOrderPlacedOrderCommentsPage(
@@ -189,13 +189,14 @@ public interface PlacedOrderCommentResource {
 	public static class PlacedOrderCommentResourceImpl
 		implements PlacedOrderCommentResource {
 
-		public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
-				String externalReferenceCode)
+		public Page<PlacedOrderComment>
+				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
+					String externalReferenceCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
+				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
+					externalReferenceCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -245,7 +246,7 @@ public interface PlacedOrderCommentResource {
 			}
 
 			try {
-				return PlacedOrderCommentSerDes.toDTO(content);
+				return Page.of(content, PlacedOrderCommentSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -257,8 +258,8 @@ public interface PlacedOrderCommentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
+				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
+					String externalReferenceCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -282,10 +283,17 @@ public interface PlacedOrderCommentResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-delivery-order/v1.0/placed-order-comments/by-externalReferenceCode/{externalReferenceCode}");
+						"/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-comments");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -403,14 +411,13 @@ public interface PlacedOrderCommentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<PlacedOrderComment>
-				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
-					String externalReferenceCode, Pagination pagination)
+		public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
+				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
-					externalReferenceCode, pagination);
+				getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -460,7 +467,7 @@ public interface PlacedOrderCommentResource {
 			}
 
 			try {
-				return Page.of(content, PlacedOrderCommentSerDes::toDTO);
+				return PlacedOrderCommentSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -472,8 +479,8 @@ public interface PlacedOrderCommentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPageHttpResponse(
-					String externalReferenceCode, Pagination pagination)
+				getPlacedOrderCommentByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -497,17 +504,10 @@ public interface PlacedOrderCommentResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-comments");
+						"/o/headless-commerce-delivery-order/v1.0/placed-order-comments/by-externalReferenceCode/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 

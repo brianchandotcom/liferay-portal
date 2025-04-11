@@ -57,14 +57,14 @@ public interface ProductGroupProductResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<ProductGroupProduct> getProductGroupIdProductGroupProductsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public ProductGroupProduct
 			postProductGroupByExternalReferenceCodeProductGroupProduct(
 				String externalReferenceCode,
 				ProductGroupProduct productGroupProduct)
-		throws Exception;
-
-	public Page<ProductGroupProduct> getProductGroupIdProductGroupProductsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public ProductGroupProduct postProductGroupIdProductGroupProduct(

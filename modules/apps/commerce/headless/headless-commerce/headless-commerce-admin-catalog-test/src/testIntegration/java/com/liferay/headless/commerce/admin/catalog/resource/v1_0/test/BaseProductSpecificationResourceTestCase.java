@@ -234,219 +234,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteProductSpecificationByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductSpecification productSpecification =
-			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification();
-
-		assertHttpResponseStatusCode(
-			204,
-			productSpecificationResource.
-				deleteProductSpecificationByExternalReferenceCodeHttpResponse(
-					productSpecification.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productSpecificationResource.
-				getProductSpecificationByExternalReferenceCodeHttpResponse(
-					productSpecification.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			productSpecificationResource.
-				getProductSpecificationByExternalReferenceCodeHttpResponse(
-					"-"));
-	}
-
-	protected ProductSpecification
-			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProductSpecificationByExternalReferenceCode()
-		throws Exception {
-
-		ProductSpecification postProductSpecification =
-			testGetProductSpecificationByExternalReferenceCode_addProductSpecification();
-
-		ProductSpecification getProductSpecification =
-			productSpecificationResource.
-				getProductSpecificationByExternalReferenceCode(
-					postProductSpecification.getExternalReferenceCode());
-
-		assertEquals(postProductSpecification, getProductSpecification);
-		assertValid(getProductSpecification);
-	}
-
-	protected ProductSpecification
-			testGetProductSpecificationByExternalReferenceCode_addProductSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductSpecificationByExternalReferenceCode()
-		throws Exception {
-
-		ProductSpecification productSpecification =
-			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productSpecification,
-				ProductSpecificationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productSpecificationByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												productSpecification.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/productSpecificationByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				productSpecification,
-				ProductSpecificationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"productSpecificationByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													productSpecification.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/productSpecificationByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductSpecificationByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productSpecificationByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"productSpecificationByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductSpecification
-			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification()
-		throws Exception {
-
-		return testGraphQLProductSpecification_addProductSpecification();
-	}
-
-	@Test
-	public void testPatchProductSpecificationByExternalReferenceCode()
-		throws Exception {
-
-		ProductSpecification postProductSpecification =
-			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification();
-
-		ProductSpecification randomPatchProductSpecification =
-			randomPatchProductSpecification();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductSpecification patchProductSpecification =
-			productSpecificationResource.
-				patchProductSpecificationByExternalReferenceCode(
-					postProductSpecification.getExternalReferenceCode(),
-					randomPatchProductSpecification);
-
-		ProductSpecification expectedPatchProductSpecification =
-			postProductSpecification.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchProductSpecification, expectedPatchProductSpecification);
-
-		ProductSpecification getProductSpecification =
-			productSpecificationResource.
-				getProductSpecificationByExternalReferenceCode(
-					patchProductSpecification.getExternalReferenceCode());
-
-		assertEquals(
-			expectedPatchProductSpecification, getProductSpecification);
-		assertValid(getProductSpecification);
-	}
-
-	protected ProductSpecification
-			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteProductSpecification() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductSpecification productSpecification =
@@ -636,6 +423,468 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification productSpecification =
+			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		assertHttpResponseStatusCode(
+			204,
+			productSpecificationResource.
+				deleteProductSpecificationByExternalReferenceCodeHttpResponse(
+					productSpecification.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCodeHttpResponse(
+					productSpecification.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCodeHttpResponse(
+					"-"));
+	}
+
+	protected ProductSpecification
+			testDeleteProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductSpecificationsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ProductSpecification> page =
+			productSpecificationResource.
+				getProductByExternalReferenceCodeProductSpecificationsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			ProductSpecification irrelevantProductSpecification =
+				testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantProductSpecification());
+
+			page =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantProductSpecification,
+				(List<ProductSpecification>)page.getItems());
+			assertValid(
+				page,
+				testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		ProductSpecification productSpecification1 =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				externalReferenceCode, randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				externalReferenceCode, randomProductSpecification());
+
+		page =
+			productSpecificationResource.
+				getProductByExternalReferenceCodeProductSpecificationsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			productSpecification1, (List<ProductSpecification>)page.getItems());
+		assertContains(
+			productSpecification2, (List<ProductSpecification>)page.getItems());
+		assertValid(
+			page,
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+				externalReferenceCode));
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification1.getId());
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductSpecificationsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode();
+
+		Page<ProductSpecification> productSpecificationPage =
+			productSpecificationResource.
+				getProductByExternalReferenceCodeProductSpecificationsPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			productSpecificationPage.getTotalCount());
+
+		ProductSpecification productSpecification1 =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				externalReferenceCode, randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				externalReferenceCode, randomProductSpecification());
+
+		ProductSpecification productSpecification3 =
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				externalReferenceCode, randomProductSpecification());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page1.getItems());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page2.getItems());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+		else {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ProductSpecification> productSpecifications1 =
+				(List<ProductSpecification>)page1.getItems();
+
+			Assert.assertEquals(
+				productSpecifications1.toString(), totalCount + 2,
+				productSpecifications1.size());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductSpecification> productSpecifications2 =
+				(List<ProductSpecification>)page2.getItems();
+
+			Assert.assertEquals(
+				productSpecifications2.toString(), 1,
+				productSpecifications2.size());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+	}
+
+	protected ProductSpecification
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				String externalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeProductSpecificationsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetProductIdProductSpecificationsPage() throws Exception {
+		Long id = testGetProductIdProductSpecificationsPage_getId();
+		Long irrelevantId =
+			testGetProductIdProductSpecificationsPage_getIrrelevantId();
+
+		Page<ProductSpecification> page =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantId != null) {
+			ProductSpecification irrelevantProductSpecification =
+				testGetProductIdProductSpecificationsPage_addProductSpecification(
+					irrelevantId, randomIrrelevantProductSpecification());
+
+			page =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						irrelevantId, Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantProductSpecification,
+				(List<ProductSpecification>)page.getItems());
+			assertValid(
+				page,
+				testGetProductIdProductSpecificationsPage_getExpectedActions(
+					irrelevantId));
+		}
+
+		ProductSpecification productSpecification1 =
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				id, randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				id, randomProductSpecification());
+
+		page =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			productSpecification1, (List<ProductSpecification>)page.getItems());
+		assertContains(
+			productSpecification2, (List<ProductSpecification>)page.getItems());
+		assertValid(
+			page,
+			testGetProductIdProductSpecificationsPage_getExpectedActions(id));
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification1.getId());
+
+		productSpecificationResource.deleteProductSpecification(
+			productSpecification2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductIdProductSpecificationsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetProductIdProductSpecificationsPageWithPagination()
+		throws Exception {
+
+		Long id = testGetProductIdProductSpecificationsPage_getId();
+
+		Page<ProductSpecification> productSpecificationPage =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			productSpecificationPage.getTotalCount());
+
+		ProductSpecification productSpecification1 =
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				id, randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				id, randomProductSpecification());
+
+		ProductSpecification productSpecification3 =
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				id, randomProductSpecification());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page1.getItems());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page2.getItems());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+		else {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<ProductSpecification> productSpecifications1 =
+				(List<ProductSpecification>)page1.getItems();
+
+			Assert.assertEquals(
+				productSpecifications1.toString(), totalCount + 2,
+				productSpecifications1.size());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductSpecification> productSpecifications2 =
+				(List<ProductSpecification>)page2.getItems();
+
+			Assert.assertEquals(
+				productSpecifications2.toString(), 1,
+				productSpecifications2.size());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+	}
+
+	protected ProductSpecification
+			testGetProductIdProductSpecificationsPage_addProductSpecification(
+				Long id, ProductSpecification productSpecification)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProductIdProductSpecificationsPage_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProductIdProductSpecificationsPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -949,6 +1198,144 @@ public abstract class BaseProductSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		ProductSpecification postProductSpecification =
+			testGetProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		ProductSpecification getProductSpecification =
+			productSpecificationResource.
+				getProductSpecificationByExternalReferenceCode(
+					postProductSpecification.getExternalReferenceCode());
+
+		assertEquals(postProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
+	}
+
+	protected ProductSpecification
+			testGetProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		ProductSpecification productSpecification =
+			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productSpecification,
+				ProductSpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productSpecificationByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												productSpecification.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productSpecificationByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productSpecification,
+				ProductSpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productSpecificationByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													productSpecification.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productSpecificationByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductSpecificationByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productSpecificationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productSpecificationByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductSpecification
+			testGraphQLGetProductSpecificationByExternalReferenceCode_addProductSpecification()
+		throws Exception {
+
+		return testGraphQLProductSpecification_addProductSpecification();
+	}
+
+	@Test
 	public void testPatchProductSpecification() throws Exception {
 		ProductSpecification postProductSpecification =
 			testPatchProductSpecification_addProductSpecification();
@@ -986,225 +1373,44 @@ public abstract class BaseProductSpecificationResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductByExternalReferenceCodeProductSpecificationsPage()
+	public void testPatchProductSpecificationByExternalReferenceCode()
 		throws Exception {
 
-		String externalReferenceCode =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getIrrelevantExternalReferenceCode();
+		ProductSpecification postProductSpecification =
+			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification();
 
-		Page<ProductSpecification> page =
+		ProductSpecification randomPatchProductSpecification =
+			randomPatchProductSpecification();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductSpecification patchProductSpecification =
 			productSpecificationResource.
-				getProductByExternalReferenceCodeProductSpecificationsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+				patchProductSpecificationByExternalReferenceCode(
+					postProductSpecification.getExternalReferenceCode(),
+					randomPatchProductSpecification);
 
-		long totalCount = page.getTotalCount();
+		ProductSpecification expectedPatchProductSpecification =
+			postProductSpecification.clone();
 
-		if (irrelevantExternalReferenceCode != null) {
-			ProductSpecification irrelevantProductSpecification =
-				testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantProductSpecification());
+		BeanTestUtil.copyProperties(
+			randomPatchProductSpecification, expectedPatchProductSpecification);
 
-			page =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						irrelevantExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantProductSpecification,
-				(List<ProductSpecification>)page.getItems());
-			assertValid(
-				page,
-				testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
-					irrelevantExternalReferenceCode));
-		}
-
-		ProductSpecification productSpecification1 =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				externalReferenceCode, randomProductSpecification());
-
-		ProductSpecification productSpecification2 =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				externalReferenceCode, randomProductSpecification());
-
-		page =
+		ProductSpecification getProductSpecification =
 			productSpecificationResource.
-				getProductByExternalReferenceCodeProductSpecificationsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+				getProductSpecificationByExternalReferenceCode(
+					patchProductSpecification.getExternalReferenceCode());
 
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			productSpecification1, (List<ProductSpecification>)page.getItems());
-		assertContains(
-			productSpecification2, (List<ProductSpecification>)page.getItems());
-		assertValid(
-			page,
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
-				externalReferenceCode));
-
-		productSpecificationResource.deleteProductSpecification(
-			productSpecification1.getId());
-
-		productSpecificationResource.deleteProductSpecification(
-			productSpecification2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
-				String externalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetProductByExternalReferenceCodeProductSpecificationsPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode();
-
-		Page<ProductSpecification> productSpecificationPage =
-			productSpecificationResource.
-				getProductByExternalReferenceCodeProductSpecificationsPage(
-					externalReferenceCode, null);
-
-		int totalCount = GetterUtil.getInteger(
-			productSpecificationPage.getTotalCount());
-
-		ProductSpecification productSpecification1 =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				externalReferenceCode, randomProductSpecification());
-
-		ProductSpecification productSpecification2 =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				externalReferenceCode, randomProductSpecification());
-
-		ProductSpecification productSpecification3 =
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				externalReferenceCode, randomProductSpecification());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ProductSpecification> page1 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				productSpecification1,
-				(List<ProductSpecification>)page1.getItems());
-
-			Page<ProductSpecification> page2 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productSpecification2,
-				(List<ProductSpecification>)page2.getItems());
-
-			Page<ProductSpecification> page3 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productSpecification3,
-				(List<ProductSpecification>)page3.getItems());
-		}
-		else {
-			Page<ProductSpecification> page1 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(1, totalCount + 2));
-
-			List<ProductSpecification> productSpecifications1 =
-				(List<ProductSpecification>)page1.getItems();
-
-			Assert.assertEquals(
-				productSpecifications1.toString(), totalCount + 2,
-				productSpecifications1.size());
-
-			Page<ProductSpecification> page2 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<ProductSpecification> productSpecifications2 =
-				(List<ProductSpecification>)page2.getItems();
-
-			Assert.assertEquals(
-				productSpecifications2.toString(), 1,
-				productSpecifications2.size());
-
-			Page<ProductSpecification> page3 =
-				productSpecificationResource.
-					getProductByExternalReferenceCodeProductSpecificationsPage(
-						externalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(
-				productSpecification1,
-				(List<ProductSpecification>)page3.getItems());
-			assertContains(
-				productSpecification2,
-				(List<ProductSpecification>)page3.getItems());
-			assertContains(
-				productSpecification3,
-				(List<ProductSpecification>)page3.getItems());
-		}
+		assertEquals(
+			expectedPatchProductSpecification, getProductSpecification);
+		assertValid(getProductSpecification);
 	}
 
 	protected ProductSpecification
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
-				String externalReferenceCode,
-				ProductSpecification productSpecification)
+			testPatchProductSpecificationByExternalReferenceCode_addProductSpecification()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetProductByExternalReferenceCodeProductSpecificationsPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
 	}
 
 	@Test
@@ -1229,212 +1435,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProductIdProductSpecificationsPage() throws Exception {
-		Long id = testGetProductIdProductSpecificationsPage_getId();
-		Long irrelevantId =
-			testGetProductIdProductSpecificationsPage_getIrrelevantId();
-
-		Page<ProductSpecification> page =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantId != null) {
-			ProductSpecification irrelevantProductSpecification =
-				testGetProductIdProductSpecificationsPage_addProductSpecification(
-					irrelevantId, randomIrrelevantProductSpecification());
-
-			page =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						irrelevantId, Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantProductSpecification,
-				(List<ProductSpecification>)page.getItems());
-			assertValid(
-				page,
-				testGetProductIdProductSpecificationsPage_getExpectedActions(
-					irrelevantId));
-		}
-
-		ProductSpecification productSpecification1 =
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				id, randomProductSpecification());
-
-		ProductSpecification productSpecification2 =
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				id, randomProductSpecification());
-
-		page =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			productSpecification1, (List<ProductSpecification>)page.getItems());
-		assertContains(
-			productSpecification2, (List<ProductSpecification>)page.getItems());
-		assertValid(
-			page,
-			testGetProductIdProductSpecificationsPage_getExpectedActions(id));
-
-		productSpecificationResource.deleteProductSpecification(
-			productSpecification1.getId());
-
-		productSpecificationResource.deleteProductSpecification(
-			productSpecification2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetProductIdProductSpecificationsPage_getExpectedActions(
-				Long id)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetProductIdProductSpecificationsPageWithPagination()
-		throws Exception {
-
-		Long id = testGetProductIdProductSpecificationsPage_getId();
-
-		Page<ProductSpecification> productSpecificationPage =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, null);
-
-		int totalCount = GetterUtil.getInteger(
-			productSpecificationPage.getTotalCount());
-
-		ProductSpecification productSpecification1 =
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				id, randomProductSpecification());
-
-		ProductSpecification productSpecification2 =
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				id, randomProductSpecification());
-
-		ProductSpecification productSpecification3 =
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				id, randomProductSpecification());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ProductSpecification> page1 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				productSpecification1,
-				(List<ProductSpecification>)page1.getItems());
-
-			Page<ProductSpecification> page2 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productSpecification2,
-				(List<ProductSpecification>)page2.getItems());
-
-			Page<ProductSpecification> page3 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				productSpecification3,
-				(List<ProductSpecification>)page3.getItems());
-		}
-		else {
-			Page<ProductSpecification> page1 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id, Pagination.of(1, totalCount + 2));
-
-			List<ProductSpecification> productSpecifications1 =
-				(List<ProductSpecification>)page1.getItems();
-
-			Assert.assertEquals(
-				productSpecifications1.toString(), totalCount + 2,
-				productSpecifications1.size());
-
-			Page<ProductSpecification> page2 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<ProductSpecification> productSpecifications2 =
-				(List<ProductSpecification>)page2.getItems();
-
-			Assert.assertEquals(
-				productSpecifications2.toString(), 1,
-				productSpecifications2.size());
-
-			Page<ProductSpecification> page3 =
-				productSpecificationResource.
-					getProductIdProductSpecificationsPage(
-						id, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(
-				productSpecification1,
-				(List<ProductSpecification>)page3.getItems());
-			assertContains(
-				productSpecification2,
-				(List<ProductSpecification>)page3.getItems());
-			assertContains(
-				productSpecification3,
-				(List<ProductSpecification>)page3.getItems());
-		}
-	}
-
-	protected ProductSpecification
-			testGetProductIdProductSpecificationsPage_addProductSpecification(
-				Long id, ProductSpecification productSpecification)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProductIdProductSpecificationsPage_getId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProductIdProductSpecificationsPage_getIrrelevantId()
-		throws Exception {
-
-		return null;
 	}
 
 	@Test

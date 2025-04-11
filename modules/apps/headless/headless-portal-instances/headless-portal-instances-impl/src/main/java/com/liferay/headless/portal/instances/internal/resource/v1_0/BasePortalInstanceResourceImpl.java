@@ -47,64 +47,6 @@ public abstract class BasePortalInstanceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the portal instances"
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "skipDefault"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PortalInstance")
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/portal-instances")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<PortalInstance> getPortalInstancesPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("skipDefault")
-			Boolean skipDefault)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"admin": ___, "companyId": ___, "domain": ___, "portalInstanceId": ___, "siteInitializerKey": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a new portal instance"
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PortalInstance")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/portal-instances")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
-		throws Exception {
-
-		return new PortalInstance();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -173,6 +115,40 @@ public abstract class BasePortalInstanceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the portal instances"
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "skipDefault"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "PortalInstance")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/portal-instances")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<PortalInstance> getPortalInstancesPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("skipDefault")
+			Boolean skipDefault)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}' -d $'{"admin": ___, "companyId": ___, "domain": ___, "portalInstanceId": ___, "siteInitializerKey": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -202,6 +178,30 @@ public abstract class BasePortalInstanceResourceImpl
 			@javax.ws.rs.PathParam("portalInstanceId")
 			String portalInstanceId,
 			PortalInstance portalInstance)
+		throws Exception {
+
+		return new PortalInstance();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"admin": ___, "companyId": ___, "domain": ___, "portalInstanceId": ___, "siteInitializerKey": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Adds a new portal instance"
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "PortalInstance")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/portal-instances")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception {
 
 		return new PortalInstance();

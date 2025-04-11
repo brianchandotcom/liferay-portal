@@ -107,12 +107,12 @@ public abstract class BaseResourceTypesResourceTestCase {
 	}
 
 	@Test
-	public void testGetV2ResourceTypes() throws Exception {
+	public void testGetV2ResourceTypeById() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetV2ResourceTypeById() throws Exception {
+	public void testGetV2ResourceTypes() throws Exception {
 		Assert.assertTrue(false);
 	}
 

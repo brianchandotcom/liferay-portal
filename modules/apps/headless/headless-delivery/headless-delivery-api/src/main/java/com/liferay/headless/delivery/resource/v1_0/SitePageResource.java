@@ -48,33 +48,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SitePageResource {
 
-	public Page<SitePage> getSiteSitePagesPage(
-			Long siteId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteSitePagesPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public SitePage postSiteSitePage(Long siteId, SitePage sitePage)
-		throws Exception;
-
-	public Response postSiteSitePageBatch(
-			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
 	public SitePage getSiteSitePage(Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public Page<SitePage> getSiteSitePagesExperiencesPage(
-			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
 	public SitePage getSiteSitePageExperienceExperienceKey(
@@ -87,6 +61,32 @@ public interface SitePageResource {
 
 	public String getSiteSitePageRenderedPage(
 			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<SitePage> getSiteSitePagesExperiencesPage(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<SitePage> getSiteSitePagesPage(
+			Long siteId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public SitePage postSiteSitePage(Long siteId, SitePage sitePage)
+		throws Exception;
+
+	public Response postSiteSitePageBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postSiteSitePagesPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -196,6 +196,57 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSetNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage()
+		throws Exception {
+
+		PageTemplateSet postPageTemplateSet =
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet();
+
+		Page<Permission> page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
+					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected PageTemplateSet
+			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage()
 		throws Exception {
 
@@ -674,6 +725,38 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage()
+		throws Exception {
+
+		PageTemplateSet postPageTemplateSet =
+			testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet();
+
+		Page<Permission> page =
+			pageTemplateSetResource.
+				getSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
+					testGroup.getExternalReferenceCode(),
+					postPageTemplateSet.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected PageTemplateSet
+			testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
@@ -697,26 +780,10 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage()
+	public void testPutSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
-		PageTemplateSet postPageTemplateSet =
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet();
-
-		Page<Permission> page =
-			pageTemplateSetResource.
-				getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected PageTemplateSet
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -762,73 +829,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 	protected PageTemplateSet
 			testPutSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodePageTemplateSet()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageTemplateSet()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSet()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSetNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageTemplateSet()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageTemplateSet()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage()
-		throws Exception {
-
-		PageTemplateSet postPageTemplateSet =
-			testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet();
-
-		Page<Permission> page =
-			pageTemplateSetResource.
-				getSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postPageTemplateSet.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected PageTemplateSet
-			testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage_addPageTemplateSet()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -54,17 +54,17 @@ public interface WikiPageAttachmentResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public WikiPageAttachment
-			getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
-				Long siteId, String wikiPageExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
 	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception;
 
 	public Response deleteWikiPageAttachmentBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public WikiPageAttachment
+			getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				Long siteId, String wikiPageExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public WikiPageAttachment getWikiPageAttachment(Long wikiPageAttachmentId)
@@ -74,11 +74,6 @@ public interface WikiPageAttachmentResource {
 			Long wikiPageId)
 		throws Exception;
 
-	public Response postWikiPageWikiPageAttachmentsPageExportBatch(
-			Long wikiPageId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public WikiPageAttachment postWikiPageWikiPageAttachment(
 			Long wikiPageId, MultipartBody multipartBody)
 		throws Exception;
@@ -86,6 +81,11 @@ public interface WikiPageAttachmentResource {
 	public Response postWikiPageWikiPageAttachmentBatch(
 			Long wikiPageId, MultipartBody multipartBody, String callbackURL,
 			Object object)
+		throws Exception;
+
+	public Response postWikiPageWikiPageAttachmentsPageExportBatch(
+			Long wikiPageId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

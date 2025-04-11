@@ -46,20 +46,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaxCategoryResource {
 
-	public Page<TaxCategory> getCommerceAdminSiteSettingGroupTaxCategoryPage(
-			Long groupId, Pagination pagination)
-		throws Exception;
-
-	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
-			Long groupId, TaxCategory taxCategory)
-		throws Exception;
-
 	public Response deleteTaxCategory(Long id) throws Exception;
 
 	public Response deleteTaxCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<TaxCategory> getCommerceAdminSiteSettingGroupTaxCategoryPage(
+			Long groupId, Pagination pagination)
+		throws Exception;
+
 	public TaxCategory getTaxCategory(Long id) throws Exception;
+
+	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
+			Long groupId, TaxCategory taxCategory)
+		throws Exception;
 
 	public Response putTaxCategory(Long id, TaxCategory taxCategory)
 		throws Exception;

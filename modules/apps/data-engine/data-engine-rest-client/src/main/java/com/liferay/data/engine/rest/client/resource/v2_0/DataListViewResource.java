@@ -41,6 +41,19 @@ public interface DataListViewResource {
 			deleteDataDefinitionDataListViewHttpResponse(Long dataDefinitionId)
 		throws Exception;
 
+	public void deleteDataListView(Long dataListViewId) throws Exception;
+
+	public HttpInvoker.HttpResponse deleteDataListViewHttpResponse(
+			Long dataListViewId)
+		throws Exception;
+
+	public void deleteDataListViewBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteDataListViewBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			String sortString)
@@ -52,15 +65,10 @@ public interface DataListViewResource {
 				String sortString)
 		throws Exception;
 
-	public void postDataDefinitionDataListViewsPageExportBatch(
-			Long dataDefinitionId, String keywords, String sortString,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
+	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
-	public HttpInvoker.HttpResponse
-			postDataDefinitionDataListViewsPageExportBatchHttpResponse(
-				Long dataDefinitionId, String keywords, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+	public HttpInvoker.HttpResponse getDataListViewHttpResponse(
+			Long dataListViewId)
 		throws Exception;
 
 	public DataListView postDataDefinitionDataListView(
@@ -80,23 +88,15 @@ public interface DataListViewResource {
 				Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDataListView(Long dataListViewId) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteDataListViewHttpResponse(
-			Long dataListViewId)
+	public void postDataDefinitionDataListViewsPageExportBatch(
+			Long dataDefinitionId, String keywords, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public void deleteDataListViewBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteDataListViewBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public DataListView getDataListView(Long dataListViewId) throws Exception;
-
-	public HttpInvoker.HttpResponse getDataListViewHttpResponse(
-			Long dataListViewId)
+	public HttpInvoker.HttpResponse
+			postDataDefinitionDataListViewsPageExportBatchHttpResponse(
+				Long dataDefinitionId, String keywords, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public DataListView putDataListView(
@@ -329,6 +329,208 @@ public interface DataListViewResource {
 			return httpInvoker.invoke();
 		}
 
+		public void deleteDataListView(Long dataListViewId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				deleteDataListViewHttpResponse(dataListViewId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteDataListViewHttpResponse(
+				Long dataListViewId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
+
+			httpInvoker.path("dataListViewId", dataListViewId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteDataListViewBatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteDataListViewBatchHttpResponse(callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteDataListViewBatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/data-engine/v2.0/data-list-views/batch");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<DataListView> getDataDefinitionDataListViewsPage(
 				Long dataDefinitionId, String keywords, Pagination pagination,
 				String sortString)
@@ -454,15 +656,11 @@ public interface DataListViewResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postDataDefinitionDataListViewsPageExportBatch(
-				Long dataDefinitionId, String keywords, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+		public DataListView getDataListView(Long dataListViewId)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse =
-				postDataDefinitionDataListViewsPageExportBatchHttpResponse(
-					dataDefinitionId, keywords, sortString, callbackURL,
-					contentType, fieldNames);
+			HttpInvoker.HttpResponse httpResponse = getDataListViewHttpResponse(
+				dataListViewId);
 
 			String content = httpResponse.getContent();
 
@@ -510,17 +708,24 @@ public interface DataListViewResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return DataListViewSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
-		public HttpInvoker.HttpResponse
-				postDataDefinitionDataListViewsPageExportBatchHttpResponse(
-					Long dataDefinitionId, String keywords, String sortString,
-					String callbackURL, String contentType, String fieldNames)
+		public HttpInvoker.HttpResponse getDataListViewHttpResponse(
+				Long dataListViewId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -539,36 +744,14 @@ public interface DataListViewResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (keywords != null) {
-				httpInvoker.parameter("keywords", String.valueOf(keywords));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views/export-batch");
+						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
 
-			httpInvoker.path("dataDefinitionId", dataDefinitionId);
+			httpInvoker.path("dataListViewId", dataListViewId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -792,114 +975,15 @@ public interface DataListViewResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteDataListView(Long dataListViewId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse =
-				deleteDataListViewHttpResponse(dataListViewId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteDataListViewHttpResponse(
-				Long dataListViewId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
-
-			httpInvoker.path("dataListViewId", dataListViewId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteDataListViewBatch(String callbackURL, Object object)
+		public void postDataDefinitionDataListViewsPageExportBatch(
+				Long dataDefinitionId, String keywords, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteDataListViewBatchHttpResponse(callbackURL, object);
+				postDataDefinitionDataListViewsPageExportBatchHttpResponse(
+					dataDefinitionId, keywords, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -949,13 +1033,15 @@ public interface DataListViewResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteDataListViewBatchHttpResponse(
-				String callbackURL, Object object)
+		public HttpInvoker.HttpResponse
+				postDataDefinitionDataListViewsPageExportBatchHttpResponse(
+					Long dataDefinitionId, String keywords, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(object.toString(), "application/json");
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -974,122 +1060,36 @@ public interface DataListViewResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
 					"callbackURL", String.valueOf(callbackURL));
 			}
 
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/data-engine/v2.0/data-list-views/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
 			}
 
-			return httpInvoker.invoke();
-		}
-
-		public DataListView getDataListView(Long dataListViewId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse = getDataListViewHttpResponse(
-				dataListViewId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
 			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return DataListViewSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getDataListViewHttpResponse(
-				Long dataListViewId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views/export-batch");
 
-			httpInvoker.path("dataListViewId", dataListViewId);
+			httpInvoker.path("dataDefinitionId", dataDefinitionId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

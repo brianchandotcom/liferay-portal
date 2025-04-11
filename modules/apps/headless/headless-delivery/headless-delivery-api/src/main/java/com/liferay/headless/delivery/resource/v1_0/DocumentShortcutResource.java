@@ -48,13 +48,34 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentShortcutResource {
 
+	public void deleteDocumentShortcut(Long documentShortcutId)
+		throws Exception;
+
+	public Response deleteDocumentShortcutBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
 	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public Response postAssetLibraryDocumentShortcutsPageExportBatch(
-			Long assetLibraryId, String callbackURL, String contentType,
-			String fieldNames)
+	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
+		throws Exception;
+
+	public DocumentShortcut getSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
+	public DocumentShortcut patchDocumentShortcut(
+			Long documentShortcutId, DocumentShortcut documentShortcut)
 		throws Exception;
 
 	public DocumentShortcut postAssetLibraryDocumentShortcut(
@@ -65,33 +86,8 @@ public interface DocumentShortcutResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDocumentShortcut(Long documentShortcutId)
-		throws Exception;
-
-	public Response deleteDocumentShortcutBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
-		throws Exception;
-
-	public DocumentShortcut patchDocumentShortcut(
-			Long documentShortcutId, DocumentShortcut documentShortcut)
-		throws Exception;
-
-	public DocumentShortcut putDocumentShortcut(
-			Long documentShortcutId, DocumentShortcut documentShortcut)
-		throws Exception;
-
-	public Response putDocumentShortcutBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
-			Long siteId, Pagination pagination)
-		throws Exception;
-
-	public Response postSiteDocumentShortcutsPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
+	public Response postAssetLibraryDocumentShortcutsPageExportBatch(
+			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
@@ -103,12 +99,16 @@ public interface DocumentShortcutResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSiteDocumentShortcutByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteDocumentShortcutsPageExportBatch(
+			Long siteId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
-	public DocumentShortcut getSiteDocumentShortcutByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public DocumentShortcut putDocumentShortcut(
+			Long documentShortcutId, DocumentShortcut documentShortcut)
+		throws Exception;
+
+	public Response putDocumentShortcutBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public DocumentShortcut putSiteDocumentShortcutByExternalReferenceCode(

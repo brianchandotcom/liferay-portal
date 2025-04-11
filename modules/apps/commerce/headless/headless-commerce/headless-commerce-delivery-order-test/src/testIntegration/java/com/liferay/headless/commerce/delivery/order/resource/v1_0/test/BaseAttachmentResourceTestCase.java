@@ -183,217 +183,25 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPage()
-		throws Exception {
+	public void testDeletePlacedOrderAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment = testDeletePlacedOrderAttachment_addAttachment();
 
-		String externalReferenceCode =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
-
-		Page<Attachment> page =
-			attachmentResource.
-				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantExternalReferenceCode != null) {
-			Attachment irrelevantAttachment =
-				testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantAttachment());
-
-			page =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						irrelevantExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantAttachment, (List<Attachment>)page.getItems());
-			assertValid(
-				page,
-				testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-					irrelevantExternalReferenceCode));
-		}
-
-		Attachment attachment1 =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment2 =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		page =
-			attachmentResource.
-				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(attachment1, (List<Attachment>)page.getItems());
-		assertContains(attachment2, (List<Attachment>)page.getItems());
-		assertValid(
-			page,
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-				externalReferenceCode));
+		assertHttpResponseStatusCode(
+			204,
+			attachmentResource.deletePlacedOrderAttachmentHttpResponse(
+				attachment.getId(),
+				testDeletePlacedOrderAttachment_getPlacedOrderId()));
 	}
 
-	protected Map<String, Map<String, String>>
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-				String externalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
-
-		Page<Attachment> attachmentPage =
-			attachmentResource.
-				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, null);
-
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
-
-		Attachment attachment1 =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment2 =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment3 =
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Attachment> page1 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(attachment1, (List<Attachment>)page1.getItems());
-
-			Page<Attachment> page2 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(attachment2, (List<Attachment>)page2.getItems());
-
-			Page<Attachment> page3 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(attachment3, (List<Attachment>)page3.getItems());
-		}
-		else {
-			Page<Attachment> page1 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, totalCount + 2));
-
-			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
-
-			Assert.assertEquals(
-				attachments1.toString(), totalCount + 2, attachments1.size());
-
-			Page<Attachment> page2 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
-
-			Assert.assertEquals(
-				attachments2.toString(), 1, attachments2.size());
-
-			Page<Attachment> page3 =
-				attachmentResource.
-					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(attachment1, (List<Attachment>)page3.getItems());
-			assertContains(attachment2, (List<Attachment>)page3.getItems());
-			assertContains(attachment3, (List<Attachment>)page3.getItems());
-		}
-	}
-
-	protected Attachment
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
-				String externalReferenceCode, Attachment attachment)
+	protected Long testDeletePlacedOrderAttachment_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				Attachment attachment)
+	protected Attachment testDeletePlacedOrderAttachment_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -616,6 +424,201 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
+
+		Page<Attachment> page =
+			attachmentResource.
+				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			Attachment irrelevantAttachment =
+				testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantAttachment());
+
+			page =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantAttachment, (List<Attachment>)page.getItems());
+			assertValid(
+				page,
+				testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		Attachment attachment1 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment2 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		page =
+			attachmentResource.
+				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(attachment1, (List<Attachment>)page.getItems());
+		assertContains(attachment2, (List<Attachment>)page.getItems());
+		assertValid(
+			page,
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+
+		Page<Attachment> attachmentPage =
+			attachmentResource.
+				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+
+		Attachment attachment1 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment2 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment3 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Attachment> page1 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
+
+			Page<Attachment> page2 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
+
+			Page<Attachment> page3 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+	}
+
+	protected Attachment
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				String externalReferenceCode, Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostPlacedOrderAttachmentByBase64() throws Exception {
 		Attachment randomAttachment = randomAttachment();
 
@@ -636,25 +639,22 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testDeletePlacedOrderAttachment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Attachment attachment = testDeletePlacedOrderAttachment_addAttachment();
-
-		assertHttpResponseStatusCode(
-			204,
-			attachmentResource.deletePlacedOrderAttachmentHttpResponse(
-				attachment.getId(),
-				testDeletePlacedOrderAttachment_getPlacedOrderId()));
-	}
-
-	protected Long testDeletePlacedOrderAttachment_getPlacedOrderId()
+	public void testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
 	}
 
-	protected Attachment testDeletePlacedOrderAttachment_addAttachment()
+	protected Attachment
+			testPostPlacedOrderByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				Attachment attachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

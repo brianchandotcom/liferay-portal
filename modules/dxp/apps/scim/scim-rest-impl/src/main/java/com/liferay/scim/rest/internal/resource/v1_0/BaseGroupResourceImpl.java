@@ -50,98 +50,6 @@ public abstract class BaseGroupResourceImpl implements GroupResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/Groups'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(description = "Lists groups.")
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "count"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "excludedAttributes"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "startIndex"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/v2/Groups")
-	@javax.ws.rs.Produces("application/scim+json")
-	@Override
-	public Object getV2Groups(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("count")
-			Integer count,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("excludedAttributes")
-			String excludedAttributes,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("startIndex")
-			Integer startIndex,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter)
-		throws Exception {
-
-		return null;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/scim/v1.0/v2/Groups' -d $'{"displayName": ___, "externalId": ___, "members": ___, "meta": ___, "schemas": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(description = "Creates a group.")
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
-	)
-	@javax.ws.rs.Consumes("application/scim+json")
-	@javax.ws.rs.Path("/v2/Groups")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/scim+json")
-	@Override
-	public Response postV2Group(Group group) throws Exception {
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/scim/v1.0/v2/Groups/.search' -d $'{"attributes": ___, "count": ___, "excludedAttributes": ___, "filter": ___, "sortBy": ___, "sortOrder": ___, "startIndex": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(description = "Query groups.")
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
-	)
-	@javax.ws.rs.Consumes("application/scim+json")
-	@javax.ws.rs.Path("/v2/Groups/.search")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/scim+json")
-	@Override
-	public Response postV2GroupSearch(QueryAttributes queryAttributes)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/scim/v1.0/v2/Groups/{id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Deletes a group.")
@@ -210,6 +118,56 @@ public abstract class BaseGroupResourceImpl implements GroupResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/Groups'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(description = "Lists groups.")
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "count"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "excludedAttributes"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "startIndex"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/v2/Groups")
+	@javax.ws.rs.Produces("application/scim+json")
+	@Override
+	public Object getV2Groups(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("count")
+			Integer count,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("excludedAttributes")
+			String excludedAttributes,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("startIndex")
+			Integer startIndex,
+			@javax.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter)
+		throws Exception {
+
+		return null;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/scim/v1.0/v2/Groups/{id}' -d $'{"Operations": ___, "schemas": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Updates a group.")
@@ -233,6 +191,48 @@ public abstract class BaseGroupResourceImpl implements GroupResource {
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			String id,
 			PatchOp patchOp)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/scim/v1.0/v2/Groups' -d $'{"displayName": ___, "externalId": ___, "members": ___, "meta": ___, "schemas": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(description = "Creates a group.")
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
+	)
+	@javax.ws.rs.Consumes("application/scim+json")
+	@javax.ws.rs.Path("/v2/Groups")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/scim+json")
+	@Override
+	public Response postV2Group(Group group) throws Exception {
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/scim/v1.0/v2/Groups/.search' -d $'{"attributes": ___, "count": ___, "excludedAttributes": ___, "filter": ___, "sortBy": ___, "sortOrder": ___, "startIndex": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(description = "Query groups.")
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Group")}
+	)
+	@javax.ws.rs.Consumes("application/scim+json")
+	@javax.ws.rs.Path("/v2/Groups/.search")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/scim+json")
+	@Override
+	public Response postV2GroupSearch(QueryAttributes queryAttributes)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

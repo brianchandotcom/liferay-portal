@@ -46,22 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ReplenishmentItemResource {
 
-	public void deleteReplenishmentItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ReplenishmentItem getReplenishmentItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ReplenishmentItem patchReplenishmentItemByExternalReferenceCode(
-			String externalReferenceCode, ReplenishmentItem replenishmentItem)
-		throws Exception;
-
-	public ReplenishmentItem putReplenishmentItemByExternalReferenceCode(
-			String externalReferenceCode, ReplenishmentItem replenishmentItem)
-		throws Exception;
-
 	public void deleteReplenishmentItem(Long replenishmentItemId)
 		throws Exception;
 
@@ -69,24 +53,31 @@ public interface ReplenishmentItemResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public ReplenishmentItem getReplenishmentItem(Long replenishmentItemId)
 		throws Exception;
 
-	public ReplenishmentItem patchReplenishmentItem(
-			Long replenishmentItemId, ReplenishmentItem replenishmentItem)
+	public ReplenishmentItem getReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<ReplenishmentItem> getReplenishmentItemsPage(
 			String sku, Pagination pagination)
 		throws Exception;
 
-	public Response postReplenishmentItemsPageExportBatch(
-			String sku, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public Page<ReplenishmentItem> getWarehouseIdReplenishmentItemsPage(
 			Long warehouseId, Pagination pagination)
+		throws Exception;
+
+	public ReplenishmentItem patchReplenishmentItem(
+			Long replenishmentItemId, ReplenishmentItem replenishmentItem)
+		throws Exception;
+
+	public ReplenishmentItem patchReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode, ReplenishmentItem replenishmentItem)
 		throws Exception;
 
 	public ReplenishmentItem postReplenishmentItem(
@@ -95,6 +86,15 @@ public interface ReplenishmentItemResource {
 
 	public Response postReplenishmentItemBatch(
 			Long warehouseId, String sku, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postReplenishmentItemsPageExportBatch(
+			String sku, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public ReplenishmentItem putReplenishmentItemByExternalReferenceCode(
+			String externalReferenceCode, ReplenishmentItem replenishmentItem)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

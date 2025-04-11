@@ -45,22 +45,22 @@ public interface DefaultCategoryDisplayPageResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public void deleteChannelIdDefaultCategoryDisplayPage(Long id)
+		throws Exception;
+
 	public DefaultCategoryDisplayPage
 			getChannelByExternalReferenceCodeDefaultCategoryDisplayPage(
 				String externalReferenceCode)
+		throws Exception;
+
+	public DefaultCategoryDisplayPage getChannelIdDefaultCategoryDisplayPage(
+			Long id)
 		throws Exception;
 
 	public DefaultCategoryDisplayPage
 			postChannelByExternalReferenceCodeDefaultCategoryDisplayPage(
 				String externalReferenceCode,
 				DefaultCategoryDisplayPage defaultCategoryDisplayPage)
-		throws Exception;
-
-	public void deleteChannelIdDefaultCategoryDisplayPage(Long id)
-		throws Exception;
-
-	public DefaultCategoryDisplayPage getChannelIdDefaultCategoryDisplayPage(
-			Long id)
 		throws Exception;
 
 	public DefaultCategoryDisplayPage postChannelIdDefaultCategoryDisplayPage(

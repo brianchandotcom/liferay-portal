@@ -229,263 +229,6 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	@Test
-	public void testGetCTRemotesPage() throws Exception {
-		Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
-
-		CTRemote ctRemote2 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
-
-		page = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(ctRemote1, (List<CTRemote>)page.getItems());
-		assertContains(ctRemote2, (List<CTRemote>)page.getItems());
-		assertValid(page, testGetCTRemotesPage_getExpectedActions());
-
-		ctRemoteResource.deleteCTRemote(ctRemote1.getId());
-
-		ctRemoteResource.deleteCTRemote(ctRemote2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetCTRemotesPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetCTRemotesPageWithPagination() throws Exception {
-		Page<CTRemote> ctRemotePage = ctRemoteResource.getCTRemotesPage(
-			null, null, null);
-
-		int totalCount = GetterUtil.getInteger(ctRemotePage.getTotalCount());
-
-		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
-
-		CTRemote ctRemote2 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
-
-		CTRemote ctRemote3 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
-				null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(ctRemote1, (List<CTRemote>)page1.getItems());
-
-			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
-				null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(ctRemote2, (List<CTRemote>)page2.getItems());
-
-			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-				null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
-		}
-		else {
-			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, totalCount + 2), null);
-
-			List<CTRemote> ctRemotes1 = (List<CTRemote>)page1.getItems();
-
-			Assert.assertEquals(
-				ctRemotes1.toString(), totalCount + 2, ctRemotes1.size());
-
-			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<CTRemote> ctRemotes2 = (List<CTRemote>)page2.getItems();
-
-			Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
-
-			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
-			assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
-			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetCTRemotesPageWithSortDateTime() throws Exception {
-		testGetCTRemotesPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, ctRemote1, ctRemote2) -> {
-				BeanTestUtil.setProperty(
-					ctRemote1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetCTRemotesPageWithSortDouble() throws Exception {
-		testGetCTRemotesPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, ctRemote1, ctRemote2) -> {
-				BeanTestUtil.setProperty(ctRemote1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(ctRemote2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetCTRemotesPageWithSortInteger() throws Exception {
-		testGetCTRemotesPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, ctRemote1, ctRemote2) -> {
-				BeanTestUtil.setProperty(ctRemote1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(ctRemote2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetCTRemotesPageWithSortString() throws Exception {
-		testGetCTRemotesPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, ctRemote1, ctRemote2) -> {
-				Class<?> clazz = ctRemote1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						ctRemote1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						ctRemote2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						ctRemote1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						ctRemote2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						ctRemote1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						ctRemote2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetCTRemotesPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, CTRemote, CTRemote, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		CTRemote ctRemote1 = randomCTRemote();
-		CTRemote ctRemote2 = randomCTRemote();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, ctRemote1, ctRemote2);
-		}
-
-		ctRemote1 = testGetCTRemotesPage_addCTRemote(ctRemote1);
-
-		ctRemote2 = testGetCTRemotesPage_addCTRemote(ctRemote2);
-
-		Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
-			null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<CTRemote> ascPage = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, (int)page.getTotalCount() + 1),
-				entityField.getName() + ":asc");
-
-			assertContains(ctRemote1, (List<CTRemote>)ascPage.getItems());
-			assertContains(ctRemote2, (List<CTRemote>)ascPage.getItems());
-
-			Page<CTRemote> descPage = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, (int)page.getTotalCount() + 1),
-				entityField.getName() + ":desc");
-
-			assertContains(ctRemote2, (List<CTRemote>)descPage.getItems());
-			assertContains(ctRemote1, (List<CTRemote>)descPage.getItems());
-		}
-	}
-
-	protected CTRemote testGetCTRemotesPage_addCTRemote(CTRemote ctRemote)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostCTRemote() throws Exception {
-		CTRemote randomCTRemote = randomCTRemote();
-
-		CTRemote postCTRemote = testPostCTRemote_addCTRemote(randomCTRemote);
-
-		assertEquals(randomCTRemote, postCTRemote);
-		assertValid(postCTRemote);
-	}
-
-	protected CTRemote testPostCTRemote_addCTRemote(CTRemote ctRemote)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteCTRemote() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTRemote ctRemote = testDeleteCTRemote_addCTRemote();
@@ -909,6 +652,246 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	@Test
+	public void testGetCTRemotesPage() throws Exception {
+		Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
+			null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
+
+		CTRemote ctRemote2 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
+
+		page = ctRemoteResource.getCTRemotesPage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(ctRemote1, (List<CTRemote>)page.getItems());
+		assertContains(ctRemote2, (List<CTRemote>)page.getItems());
+		assertValid(page, testGetCTRemotesPage_getExpectedActions());
+
+		ctRemoteResource.deleteCTRemote(ctRemote1.getId());
+
+		ctRemoteResource.deleteCTRemote(ctRemote2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCTRemotesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetCTRemotesPageWithPagination() throws Exception {
+		Page<CTRemote> ctRemotePage = ctRemoteResource.getCTRemotesPage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(ctRemotePage.getTotalCount());
+
+		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
+
+		CTRemote ctRemote2 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
+
+		CTRemote ctRemote3 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(ctRemote1, (List<CTRemote>)page1.getItems());
+
+			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctRemote2, (List<CTRemote>)page2.getItems());
+
+			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+		}
+		else {
+			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, totalCount + 2), null);
+
+			List<CTRemote> ctRemotes1 = (List<CTRemote>)page1.getItems();
+
+			Assert.assertEquals(
+				ctRemotes1.toString(), totalCount + 2, ctRemotes1.size());
+
+			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTRemote> ctRemotes2 = (List<CTRemote>)page2.getItems();
+
+			Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
+
+			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
+			assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
+			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCTRemotesPageWithSortDateTime() throws Exception {
+		testGetCTRemotesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, ctRemote1, ctRemote2) -> {
+				BeanTestUtil.setProperty(
+					ctRemote1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetCTRemotesPageWithSortDouble() throws Exception {
+		testGetCTRemotesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, ctRemote1, ctRemote2) -> {
+				BeanTestUtil.setProperty(ctRemote1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(ctRemote2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetCTRemotesPageWithSortInteger() throws Exception {
+		testGetCTRemotesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, ctRemote1, ctRemote2) -> {
+				BeanTestUtil.setProperty(ctRemote1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(ctRemote2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCTRemotesPageWithSortString() throws Exception {
+		testGetCTRemotesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, ctRemote1, ctRemote2) -> {
+				Class<?> clazz = ctRemote1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						ctRemote1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						ctRemote2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						ctRemote1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						ctRemote2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						ctRemote1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						ctRemote2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCTRemotesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, CTRemote, CTRemote, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CTRemote ctRemote1 = randomCTRemote();
+		CTRemote ctRemote2 = randomCTRemote();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, ctRemote1, ctRemote2);
+		}
+
+		ctRemote1 = testGetCTRemotesPage_addCTRemote(ctRemote1);
+
+		ctRemote2 = testGetCTRemotesPage_addCTRemote(ctRemote2);
+
+		Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
+			null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTRemote> ascPage = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
+
+			assertContains(ctRemote1, (List<CTRemote>)ascPage.getItems());
+			assertContains(ctRemote2, (List<CTRemote>)ascPage.getItems());
+
+			Page<CTRemote> descPage = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
+
+			assertContains(ctRemote2, (List<CTRemote>)descPage.getItems());
+			assertContains(ctRemote1, (List<CTRemote>)descPage.getItems());
+		}
+	}
+
+	protected CTRemote testGetCTRemotesPage_addCTRemote(CTRemote ctRemote)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchCTRemote() throws Exception {
 		CTRemote postCTRemote = testPatchCTRemote_addCTRemote();
 
@@ -930,6 +913,23 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	protected CTRemote testPatchCTRemote_addCTRemote() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCTRemote() throws Exception {
+		CTRemote randomCTRemote = randomCTRemote();
+
+		CTRemote postCTRemote = testPostCTRemote_addCTRemote(randomCTRemote);
+
+		assertEquals(randomCTRemote, postCTRemote);
+		assertValid(postCTRemote);
+	}
+
+	protected CTRemote testPostCTRemote_addCTRemote(CTRemote ctRemote)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

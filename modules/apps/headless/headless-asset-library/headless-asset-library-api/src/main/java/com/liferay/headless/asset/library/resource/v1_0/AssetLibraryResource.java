@@ -43,6 +43,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetLibraryResource {
 
+	public void deleteAssetLibrary(Long assetLibraryId) throws Exception;
+
+	public void deleteAssetLibraryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<AssetLibrary> getAssetLibrariesPage(
 			String keywords, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -50,31 +56,25 @@ public interface AssetLibraryResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
-		throws Exception;
-
-	public void deleteAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception;
 
 	public AssetLibrary getAssetLibraryByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public AssetLibrary patchAssetLibrary(
+			Long assetLibraryId, AssetLibrary assetLibrary)
 		throws Exception;
 
 	public AssetLibrary patchAssetLibraryByExternalReferenceCode(
 			String externalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
-	public AssetLibrary putAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
 		throws Exception;
 
-	public void deleteAssetLibrary(Long assetLibraryId) throws Exception;
-
-	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception;
-
-	public AssetLibrary patchAssetLibrary(
-			Long assetLibraryId, AssetLibrary assetLibrary)
+	public AssetLibrary putAssetLibraryByExternalReferenceCode(
+			String externalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

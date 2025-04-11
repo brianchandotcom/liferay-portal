@@ -49,13 +49,13 @@ public interface SegmentResource {
 	public Page<Segment> getSiteSegmentsPage(Long siteId, Pagination pagination)
 		throws Exception;
 
+	public Page<Segment> getSiteUserAccountSegmentsPage(
+			Long siteId, Long userAccountId)
+		throws Exception;
+
 	public Response postSiteSegmentsPageExportBatch(
 			Long siteId, String callbackURL, String contentType,
 			String fieldNames)
-		throws Exception;
-
-	public Page<Segment> getSiteUserAccountSegmentsPage(
-			Long siteId, Long userAccountId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

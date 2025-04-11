@@ -58,16 +58,6 @@ public interface OrderTypeChannelResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderTypeChannel
-			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
-				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
-				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
-		throws Exception;
-
 	public Page<OrderTypeChannel> getOrderTypeIdOrderTypeChannelsPage(
 			Long id, String search, Pagination pagination, String sortString)
 		throws Exception;
@@ -76,6 +66,16 @@ public interface OrderTypeChannelResource {
 			getOrderTypeIdOrderTypeChannelsPageHttpResponse(
 				Long id, String search, Pagination pagination,
 				String sortString)
+		throws Exception;
+
+	public OrderTypeChannel
+			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
+				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
 		throws Exception;
 
 	public OrderTypeChannel postOrderTypeIdOrderTypeChannel(
@@ -525,119 +525,6 @@ public interface OrderTypeChannelResource {
 			return httpInvoker.invoke();
 		}
 
-		public OrderTypeChannel
-				postOrderTypeByExternalReferenceCodeOrderTypeChannel(
-					String externalReferenceCode,
-					OrderTypeChannel orderTypeChannel)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
-					externalReferenceCode, orderTypeChannel);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return OrderTypeChannelSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
-					String externalReferenceCode,
-					OrderTypeChannel orderTypeChannel)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(orderTypeChannel.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<OrderTypeChannel> getOrderTypeIdOrderTypeChannelsPage(
 				Long id, String search, Pagination pagination,
 				String sortString)
@@ -754,6 +641,119 @@ public interface OrderTypeChannelResource {
 						"/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels");
 
 			httpInvoker.path("id", id);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public OrderTypeChannel
+				postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+					String externalReferenceCode,
+					OrderTypeChannel orderTypeChannel)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
+					externalReferenceCode, orderTypeChannel);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return OrderTypeChannelSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postOrderTypeByExternalReferenceCodeOrderTypeChannelHttpResponse(
+					String externalReferenceCode,
+					OrderTypeChannel orderTypeChannel)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(orderTypeChannel.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

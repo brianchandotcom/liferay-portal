@@ -46,14 +46,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SLAResource {
 
+	public void deleteSLA(Long slaId) throws Exception;
+
+	public Response deleteSLABatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<SLA> getProcessSLAsPage(
 			Long processId, Integer status, Pagination pagination)
 		throws Exception;
 
-	public Response postProcessSLAsPageExportBatch(
-			Long processId, Integer status, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
+	public SLA getSLA(Long slaId) throws Exception;
 
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
 
@@ -61,12 +63,10 @@ public interface SLAResource {
 			Long processId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSLA(Long slaId) throws Exception;
-
-	public Response deleteSLABatch(String callbackURL, Object object)
+	public Response postProcessSLAsPageExportBatch(
+			Long processId, Integer status, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
-
-	public SLA getSLA(Long slaId) throws Exception;
 
 	public SLA putSLA(Long slaId, SLA sla) throws Exception;
 

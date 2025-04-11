@@ -242,6 +242,201 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelAccountPlacedOrdersPage() throws Exception {
+		Long accountId = testGetChannelAccountPlacedOrdersPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetChannelAccountPlacedOrdersPage_getIrrelevantAccountId();
+		Long channelId = testGetChannelAccountPlacedOrdersPage_getChannelId();
+		Long irrelevantChannelId =
+			testGetChannelAccountPlacedOrdersPage_getIrrelevantChannelId();
+
+		Page<PlacedOrder> page =
+			placedOrderResource.getChannelAccountPlacedOrdersPage(
+				accountId, channelId, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if ((irrelevantAccountId != null) && (irrelevantChannelId != null)) {
+			PlacedOrder irrelevantPlacedOrder =
+				testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+					irrelevantAccountId, irrelevantChannelId,
+					randomIrrelevantPlacedOrder());
+
+			page = placedOrderResource.getChannelAccountPlacedOrdersPage(
+				irrelevantAccountId, irrelevantChannelId,
+				Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantPlacedOrder, (List<PlacedOrder>)page.getItems());
+			assertValid(
+				page,
+				testGetChannelAccountPlacedOrdersPage_getExpectedActions(
+					irrelevantAccountId, irrelevantChannelId));
+		}
+
+		PlacedOrder placedOrder1 =
+			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+				accountId, channelId, randomPlacedOrder());
+
+		PlacedOrder placedOrder2 =
+			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+				accountId, channelId, randomPlacedOrder());
+
+		page = placedOrderResource.getChannelAccountPlacedOrdersPage(
+			accountId, channelId, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(placedOrder1, (List<PlacedOrder>)page.getItems());
+		assertContains(placedOrder2, (List<PlacedOrder>)page.getItems());
+		assertValid(
+			page,
+			testGetChannelAccountPlacedOrdersPage_getExpectedActions(
+				accountId, channelId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetChannelAccountPlacedOrdersPage_getExpectedActions(
+				Long accountId, Long channelId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetChannelAccountPlacedOrdersPageWithPagination()
+		throws Exception {
+
+		Long accountId = testGetChannelAccountPlacedOrdersPage_getAccountId();
+		Long channelId = testGetChannelAccountPlacedOrdersPage_getChannelId();
+
+		Page<PlacedOrder> placedOrderPage =
+			placedOrderResource.getChannelAccountPlacedOrdersPage(
+				accountId, channelId, null);
+
+		int totalCount = GetterUtil.getInteger(placedOrderPage.getTotalCount());
+
+		PlacedOrder placedOrder1 =
+			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+				accountId, channelId, randomPlacedOrder());
+
+		PlacedOrder placedOrder2 =
+			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+				accountId, channelId, randomPlacedOrder());
+
+		PlacedOrder placedOrder3 =
+			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+				accountId, channelId, randomPlacedOrder());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(placedOrder1, (List<PlacedOrder>)page1.getItems());
+
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(placedOrder2, (List<PlacedOrder>)page2.getItems());
+
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
+		else {
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(1, totalCount + 2));
+
+			List<PlacedOrder> placedOrders1 =
+				(List<PlacedOrder>)page1.getItems();
+
+			Assert.assertEquals(
+				placedOrders1.toString(), totalCount + 2, placedOrders1.size());
+
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PlacedOrder> placedOrders2 =
+				(List<PlacedOrder>)page2.getItems();
+
+			Assert.assertEquals(
+				placedOrders2.toString(), 1, placedOrders2.size());
+
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
+	}
+
+	protected PlacedOrder testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
+			Long accountId, Long channelId, PlacedOrder placedOrder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetChannelAccountPlacedOrdersPage_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetChannelAccountPlacedOrdersPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Long testGetChannelAccountPlacedOrdersPage_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetChannelAccountPlacedOrdersPage_getIrrelevantChannelId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage()
 		throws Exception {
 
@@ -942,201 +1137,6 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
-	public void testGetChannelAccountPlacedOrdersPage() throws Exception {
-		Long accountId = testGetChannelAccountPlacedOrdersPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetChannelAccountPlacedOrdersPage_getIrrelevantAccountId();
-		Long channelId = testGetChannelAccountPlacedOrdersPage_getChannelId();
-		Long irrelevantChannelId =
-			testGetChannelAccountPlacedOrdersPage_getIrrelevantChannelId();
-
-		Page<PlacedOrder> page =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if ((irrelevantAccountId != null) && (irrelevantChannelId != null)) {
-			PlacedOrder irrelevantPlacedOrder =
-				testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-					irrelevantAccountId, irrelevantChannelId,
-					randomIrrelevantPlacedOrder());
-
-			page = placedOrderResource.getChannelAccountPlacedOrdersPage(
-				irrelevantAccountId, irrelevantChannelId,
-				Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantPlacedOrder, (List<PlacedOrder>)page.getItems());
-			assertValid(
-				page,
-				testGetChannelAccountPlacedOrdersPage_getExpectedActions(
-					irrelevantAccountId, irrelevantChannelId));
-		}
-
-		PlacedOrder placedOrder1 =
-			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-				accountId, channelId, randomPlacedOrder());
-
-		PlacedOrder placedOrder2 =
-			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-				accountId, channelId, randomPlacedOrder());
-
-		page = placedOrderResource.getChannelAccountPlacedOrdersPage(
-			accountId, channelId, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(placedOrder1, (List<PlacedOrder>)page.getItems());
-		assertContains(placedOrder2, (List<PlacedOrder>)page.getItems());
-		assertValid(
-			page,
-			testGetChannelAccountPlacedOrdersPage_getExpectedActions(
-				accountId, channelId));
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetChannelAccountPlacedOrdersPage_getExpectedActions(
-				Long accountId, Long channelId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetChannelAccountPlacedOrdersPageWithPagination()
-		throws Exception {
-
-		Long accountId = testGetChannelAccountPlacedOrdersPage_getAccountId();
-		Long channelId = testGetChannelAccountPlacedOrdersPage_getChannelId();
-
-		Page<PlacedOrder> placedOrderPage =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, null);
-
-		int totalCount = GetterUtil.getInteger(placedOrderPage.getTotalCount());
-
-		PlacedOrder placedOrder1 =
-			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-				accountId, channelId, randomPlacedOrder());
-
-		PlacedOrder placedOrder2 =
-			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-				accountId, channelId, randomPlacedOrder());
-
-		PlacedOrder placedOrder3 =
-			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-				accountId, channelId, randomPlacedOrder());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<PlacedOrder> page1 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(placedOrder1, (List<PlacedOrder>)page1.getItems());
-
-			Page<PlacedOrder> page2 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(placedOrder2, (List<PlacedOrder>)page2.getItems());
-
-			Page<PlacedOrder> page3 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
-		}
-		else {
-			Page<PlacedOrder> page1 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId, Pagination.of(1, totalCount + 2));
-
-			List<PlacedOrder> placedOrders1 =
-				(List<PlacedOrder>)page1.getItems();
-
-			Assert.assertEquals(
-				placedOrders1.toString(), totalCount + 2, placedOrders1.size());
-
-			Page<PlacedOrder> page2 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<PlacedOrder> placedOrders2 =
-				(List<PlacedOrder>)page2.getItems();
-
-			Assert.assertEquals(
-				placedOrders2.toString(), 1, placedOrders2.size());
-
-			Page<PlacedOrder> page3 =
-				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId,
-					Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
-			assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
-			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
-		}
-	}
-
-	protected PlacedOrder testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
-			Long accountId, Long channelId, PlacedOrder placedOrder)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetChannelAccountPlacedOrdersPage_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetChannelAccountPlacedOrdersPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Long testGetChannelAccountPlacedOrdersPage_getChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetChannelAccountPlacedOrdersPage_getIrrelevantChannelId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
 	public void testGetChannelPlacedOrdersPage() throws Exception {
 		Long channelId = testGetChannelPlacedOrdersPage_getChannelId();
 		Long irrelevantChannelId =
@@ -1555,182 +1555,6 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderByExternalReferenceCode() throws Exception {
-		PlacedOrder postPlacedOrder =
-			testGetPlacedOrderByExternalReferenceCode_addPlacedOrder();
-
-		PlacedOrder getPlacedOrder =
-			placedOrderResource.getPlacedOrderByExternalReferenceCode(
-				postPlacedOrder.getExternalReferenceCode());
-
-		assertEquals(postPlacedOrder, getPlacedOrder);
-		assertValid(getPlacedOrder);
-	}
-
-	protected PlacedOrder
-			testGetPlacedOrderByExternalReferenceCode_addPlacedOrder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCode()
-		throws Exception {
-
-		PlacedOrder placedOrder =
-			testGraphQLGetPlacedOrderByExternalReferenceCode_addPlacedOrder();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				placedOrder,
-				PlacedOrderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"placedOrderByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												placedOrder.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/placedOrderByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				placedOrder,
-				PlacedOrderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceDeliveryOrder_v1_0",
-								new GraphQLField(
-									"placedOrderByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													placedOrder.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"placedOrderByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceDeliveryOrder_v1_0",
-						new GraphQLField(
-							"placedOrderByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PlacedOrder
-			testGraphQLGetPlacedOrderByExternalReferenceCode_addPlacedOrder()
-		throws Exception {
-
-		return testGraphQLPlacedOrder_addPlacedOrder();
-	}
-
-	@Test
-	public void testPatchPlacedOrderByExternalReferenceCode() throws Exception {
-		PlacedOrder postPlacedOrder =
-			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder();
-
-		PlacedOrder randomPatchPlacedOrder = randomPatchPlacedOrder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PlacedOrder patchPlacedOrder =
-			placedOrderResource.patchPlacedOrderByExternalReferenceCode(
-				postPlacedOrder.getExternalReferenceCode(),
-				randomPatchPlacedOrder);
-
-		PlacedOrder expectedPatchPlacedOrder = postPlacedOrder.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchPlacedOrder, expectedPatchPlacedOrder);
-
-		PlacedOrder getPlacedOrder =
-			placedOrderResource.getPlacedOrderByExternalReferenceCode(
-				patchPlacedOrder.getExternalReferenceCode());
-
-		assertEquals(expectedPatchPlacedOrder, getPlacedOrder);
-		assertValid(getPlacedOrder);
-	}
-
-	protected PlacedOrder
-			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetPlacedOrder() throws Exception {
 		PlacedOrder postPlacedOrder = testGetPlacedOrder_addPlacedOrder();
 
@@ -2033,6 +1857,153 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlacedOrderByExternalReferenceCode() throws Exception {
+		PlacedOrder postPlacedOrder =
+			testGetPlacedOrderByExternalReferenceCode_addPlacedOrder();
+
+		PlacedOrder getPlacedOrder =
+			placedOrderResource.getPlacedOrderByExternalReferenceCode(
+				postPlacedOrder.getExternalReferenceCode());
+
+		assertEquals(postPlacedOrder, getPlacedOrder);
+		assertValid(getPlacedOrder);
+	}
+
+	protected PlacedOrder
+			testGetPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCode()
+		throws Exception {
+
+		PlacedOrder placedOrder =
+			testGraphQLGetPlacedOrderByExternalReferenceCode_addPlacedOrder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				placedOrder,
+				PlacedOrderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												placedOrder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/placedOrderByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				placedOrder,
+				PlacedOrderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													placedOrder.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PlacedOrder
+			testGraphQLGetPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
+		return testGraphQLPlacedOrder_addPlacedOrder();
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetPlacedOrderPaymentURL() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPatchPlacedOrder() throws Exception {
 		PlacedOrder postPlacedOrder = testPatchPlacedOrder_addPlacedOrder();
 
@@ -2062,8 +2033,37 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderPaymentURL() throws Exception {
-		Assert.assertTrue(false);
+	public void testPatchPlacedOrderByExternalReferenceCode() throws Exception {
+		PlacedOrder postPlacedOrder =
+			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder();
+
+		PlacedOrder randomPatchPlacedOrder = randomPatchPlacedOrder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PlacedOrder patchPlacedOrder =
+			placedOrderResource.patchPlacedOrderByExternalReferenceCode(
+				postPlacedOrder.getExternalReferenceCode(),
+				randomPatchPlacedOrder);
+
+		PlacedOrder expectedPatchPlacedOrder = postPlacedOrder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPlacedOrder, expectedPatchPlacedOrder);
+
+		PlacedOrder getPlacedOrder =
+			placedOrderResource.getPlacedOrderByExternalReferenceCode(
+				patchPlacedOrder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPlacedOrder, getPlacedOrder);
+		assertValid(getPlacedOrder);
+	}
+
+	protected PlacedOrder
+			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

@@ -134,6 +134,246 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		return companyTestEntityPage;
 	}
 
+	protected abstract CompanyTestEntity doGetCompanyTestEntity(
+			Long companyTestEntityId)
+		throws Exception;
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyTestEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public final CompanyTestEntity getCompanyTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyTestEntityId")
+			Long companyTestEntityId)
+		throws Exception {
+
+		CompanyTestEntity getCompanyTestEntity = doGetCompanyTestEntity(
+			companyTestEntityId);
+
+		getCompanyTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getCompanyTestEntityPermissionsPage(
+							getCompanyTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getCompanyTestEntity;
+	}
+
+	protected abstract CompanyTestEntity
+			doGetCompanyTestEntityByExternalReferenceCode(
+				String externalReferenceCode)
+		throws Exception;
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public final CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		CompanyTestEntity getCompanyTestEntity =
+			doGetCompanyTestEntityByExternalReferenceCode(
+				externalReferenceCode);
+
+		getCompanyTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getCompanyTestEntityPermissionsPage(
+							getCompanyTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getCompanyTestEntity;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyTestEntityId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "roleNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/company-test-entities/{companyTestEntityId}/permissions"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Permission> getCompanyTestEntityPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyTestEntityId")
+			Long companyTestEntityId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("roleNames")
+			String roleNames)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(
+			companyTestEntityId);
+		Long resourceId = getPermissionCheckerResourceId(companyTestEntityId);
+
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(companyTestEntityId), resourceName,
+			resourceId);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getCompanyTestEntityPermissionsPage", resourceName,
+					resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"putCompanyTestEntityPermissionsPage", resourceName,
+					resourceId)
+			).build(),
+			resourceId, resourceName, roleNames);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyTestEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public CompanyTestEntity patchCompanyTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyTestEntityId")
+			Long companyTestEntityId,
+			CompanyTestEntity companyTestEntity)
+		throws Exception {
+
+		CompanyTestEntity existingCompanyTestEntity = getCompanyTestEntity(
+			companyTestEntityId);
+
+		if (companyTestEntity.getDateCreated() != null) {
+			existingCompanyTestEntity.setDateCreated(
+				companyTestEntity.getDateCreated());
+		}
+
+		if (companyTestEntity.getDateModified() != null) {
+			existingCompanyTestEntity.setDateModified(
+				companyTestEntity.getDateModified());
+		}
+
+		if (companyTestEntity.getDescription() != null) {
+			existingCompanyTestEntity.setDescription(
+				companyTestEntity.getDescription());
+		}
+
+		if (companyTestEntity.getExternalReferenceCode() != null) {
+			existingCompanyTestEntity.setExternalReferenceCode(
+				companyTestEntity.getExternalReferenceCode());
+		}
+
+		if (companyTestEntity.getPermissions() != null) {
+			existingCompanyTestEntity.setPermissions(
+				companyTestEntity.getPermissions());
+		}
+
+		preparePatch(companyTestEntity, existingCompanyTestEntity);
+
+		return putCompanyTestEntity(
+			companyTestEntityId, existingCompanyTestEntity);
+	}
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -291,248 +531,6 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		).build();
 	}
 
-	protected abstract CompanyTestEntity
-			doGetCompanyTestEntityByExternalReferenceCode(
-				String externalReferenceCode)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public final CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		CompanyTestEntity getCompanyTestEntity =
-			doGetCompanyTestEntityByExternalReferenceCode(
-				externalReferenceCode);
-
-		getCompanyTestEntity.setPermissions(
-			() -> NestedFieldsSupplier.supply(
-				"permissions",
-				nestedField -> {
-					Page<Permission> permissionPage =
-						getCompanyTestEntityPermissionsPage(
-							getCompanyTestEntity.getId(), null);
-
-					Collection<Permission> permissions =
-						permissionPage.getItems();
-
-					return permissions.toArray(
-						new Permission[permissions.size()]);
-				}));
-
-		return getCompanyTestEntity;
-	}
-
-	protected abstract CompanyTestEntity
-			doPutCompanyTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				CompanyTestEntity companyTestEntity)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public final CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			CompanyTestEntity companyTestEntity)
-		throws Exception {
-
-		Permission[] permissions = companyTestEntity.getPermissions();
-
-		CompanyTestEntity putCompanyTestEntity =
-			doPutCompanyTestEntityByExternalReferenceCode(
-				externalReferenceCode, companyTestEntity);
-
-		if (permissions != null) {
-			Page<Permission> permissionPage =
-				putCompanyTestEntityPermissionsPage(
-					putCompanyTestEntity.getId(), permissions);
-
-			putCompanyTestEntity.setPermissions(
-				() -> NestedFieldsSupplier.supply(
-					"permissions",
-					nestedField -> {
-						Collection<Permission> collection =
-							permissionPage.getItems();
-
-						return collection.toArray(
-							new Permission[collection.size()]);
-					}));
-		}
-
-		return putCompanyTestEntity;
-	}
-
-	protected abstract CompanyTestEntity doGetCompanyTestEntity(
-			Long companyTestEntityId)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyTestEntityId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public final CompanyTestEntity getCompanyTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
-			Long companyTestEntityId)
-		throws Exception {
-
-		CompanyTestEntity getCompanyTestEntity = doGetCompanyTestEntity(
-			companyTestEntityId);
-
-		getCompanyTestEntity.setPermissions(
-			() -> NestedFieldsSupplier.supply(
-				"permissions",
-				nestedField -> {
-					Page<Permission> permissionPage =
-						getCompanyTestEntityPermissionsPage(
-							getCompanyTestEntity.getId(), null);
-
-					Collection<Permission> permissions =
-						permissionPage.getItems();
-
-					return permissions.toArray(
-						new Permission[permissions.size()]);
-				}));
-
-		return getCompanyTestEntity;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyTestEntityId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public CompanyTestEntity patchCompanyTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
-			Long companyTestEntityId,
-			CompanyTestEntity companyTestEntity)
-		throws Exception {
-
-		CompanyTestEntity existingCompanyTestEntity = getCompanyTestEntity(
-			companyTestEntityId);
-
-		if (companyTestEntity.getDateCreated() != null) {
-			existingCompanyTestEntity.setDateCreated(
-				companyTestEntity.getDateCreated());
-		}
-
-		if (companyTestEntity.getDateModified() != null) {
-			existingCompanyTestEntity.setDateModified(
-				companyTestEntity.getDateModified());
-		}
-
-		if (companyTestEntity.getDescription() != null) {
-			existingCompanyTestEntity.setDescription(
-				companyTestEntity.getDescription());
-		}
-
-		if (companyTestEntity.getExternalReferenceCode() != null) {
-			existingCompanyTestEntity.setExternalReferenceCode(
-				companyTestEntity.getExternalReferenceCode());
-		}
-
-		if (companyTestEntity.getPermissions() != null) {
-			existingCompanyTestEntity.setPermissions(
-				companyTestEntity.getPermissions());
-		}
-
-		preparePatch(companyTestEntity, existingCompanyTestEntity);
-
-		return putCompanyTestEntity(
-			companyTestEntityId, existingCompanyTestEntity);
-	}
-
 	protected abstract CompanyTestEntity doPutCompanyTestEntity(
 			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
 		throws Exception;
@@ -639,20 +637,22 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract CompanyTestEntity
+			doPutCompanyTestEntityByExternalReferenceCode(
+				String externalReferenceCode,
+				CompanyTestEntity companyTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/company-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyTestEntityId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "roleNames"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -661,45 +661,45 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.GET
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/company-test-entities/{companyTestEntityId}/permissions"
+		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
 	@Override
-	public Page<Permission> getCompanyTestEntityPermissionsPage(
+	public final CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
-			Long companyTestEntityId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("roleNames")
-			String roleNames)
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
-		String resourceName = getPermissionCheckerResourceName(
-			companyTestEntityId);
-		Long resourceId = getPermissionCheckerResourceId(companyTestEntityId);
+		Permission[] permissions = companyTestEntity.getPermissions();
 
-		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(companyTestEntityId), resourceName,
-			resourceId);
+		CompanyTestEntity putCompanyTestEntity =
+			doPutCompanyTestEntityByExternalReferenceCode(
+				externalReferenceCode, companyTestEntity);
 
-		return toPermissionPage(
-			HashMapBuilder.put(
-				"get",
-				addAction(
-					ActionKeys.PERMISSIONS,
-					"getCompanyTestEntityPermissionsPage", resourceName,
-					resourceId)
-			).put(
-				"replace",
-				addAction(
-					ActionKeys.PERMISSIONS,
-					"putCompanyTestEntityPermissionsPage", resourceName,
-					resourceId)
-			).build(),
-			resourceId, resourceName, roleNames);
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putCompanyTestEntityPermissionsPage(
+					putCompanyTestEntity.getId(), permissions);
+
+			putCompanyTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putCompanyTestEntity;
 	}
 
 	/**

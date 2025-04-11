@@ -226,6 +226,156 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductDisplayPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductDisplayPage productDisplayPage =
+			testDeleteProductDisplayPage_addProductDisplayPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			productDisplayPageResource.deleteProductDisplayPageHttpResponse(
+				productDisplayPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productDisplayPageResource.getProductDisplayPageHttpResponse(
+				productDisplayPage.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			productDisplayPageResource.getProductDisplayPageHttpResponse(0L));
+	}
+
+	protected ProductDisplayPage
+			testDeleteProductDisplayPage_addProductDisplayPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductDisplayPage() throws Exception {
+
+		// No namespace
+
+		ProductDisplayPage productDisplayPage1 =
+			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductDisplayPage",
+						new HashMap<String, Object>() {
+							{
+								put("id", productDisplayPage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductDisplayPage"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productDisplayPage",
+					new HashMap<String, Object>() {
+						{
+							put("id", productDisplayPage1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminChannel_v1_0
+
+		ProductDisplayPage productDisplayPage2 =
+			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteProductDisplayPage",
+							new HashMap<String, Object>() {
+								{
+									put("id", productDisplayPage2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteProductDisplayPage"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminChannel_v1_0",
+					new GraphQLField(
+						"productDisplayPage",
+						new HashMap<String, Object>() {
+							{
+								put("id", productDisplayPage2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ProductDisplayPage
+			testGraphQLDeleteProductDisplayPage_addProductDisplayPage()
+		throws Exception {
+
+		return testGraphQLProductDisplayPage_addProductDisplayPage();
+	}
+
+	@Test
+	public void testDeleteProductDisplayPageBatch() throws Exception {
+		ProductDisplayPage productDisplayPage1 =
+			testDeleteProductDisplayPageBatch_addProductDisplayPage();
+
+		testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
+			"COMPLETED", null, productDisplayPage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productDisplayPageResource.getProductDisplayPageHttpResponse(
+				productDisplayPage1.getId()));
+	}
+
+	protected ProductDisplayPage
+			testDeleteProductDisplayPageBatch_addProductDisplayPage()
+		throws Exception {
+
+		return testDeleteProductDisplayPage_addProductDisplayPage();
+	}
+
+	protected void testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productDisplayPageResource.
+				deleteProductDisplayPageBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeProductDisplayPagesPage()
 		throws Exception {
 
@@ -721,30 +871,6 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelByExternalReferenceCodeProductDisplayPage()
-		throws Exception {
-
-		ProductDisplayPage randomProductDisplayPage =
-			randomProductDisplayPage();
-
-		ProductDisplayPage postProductDisplayPage =
-			testPostChannelByExternalReferenceCodeProductDisplayPage_addProductDisplayPage(
-				randomProductDisplayPage);
-
-		assertEquals(randomProductDisplayPage, postProductDisplayPage);
-		assertValid(postProductDisplayPage);
-	}
-
-	protected ProductDisplayPage
-			testPostChannelByExternalReferenceCodeProductDisplayPage_addProductDisplayPage(
-				ProductDisplayPage productDisplayPage)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetChannelIdProductDisplayPagesPage() throws Exception {
 		Long id = testGetChannelIdProductDisplayPagesPage_getId();
 		Long irrelevantId =
@@ -1204,178 +1330,6 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelIdProductDisplayPage() throws Exception {
-		ProductDisplayPage randomProductDisplayPage =
-			randomProductDisplayPage();
-
-		ProductDisplayPage postProductDisplayPage =
-			testPostChannelIdProductDisplayPage_addProductDisplayPage(
-				randomProductDisplayPage);
-
-		assertEquals(randomProductDisplayPage, postProductDisplayPage);
-		assertValid(postProductDisplayPage);
-	}
-
-	protected ProductDisplayPage
-			testPostChannelIdProductDisplayPage_addProductDisplayPage(
-				ProductDisplayPage productDisplayPage)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProductDisplayPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductDisplayPage productDisplayPage =
-			testDeleteProductDisplayPage_addProductDisplayPage();
-
-		assertHttpResponseStatusCode(
-			204,
-			productDisplayPageResource.deleteProductDisplayPageHttpResponse(
-				productDisplayPage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productDisplayPageResource.getProductDisplayPageHttpResponse(
-				productDisplayPage.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			productDisplayPageResource.getProductDisplayPageHttpResponse(0L));
-	}
-
-	protected ProductDisplayPage
-			testDeleteProductDisplayPage_addProductDisplayPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteProductDisplayPage() throws Exception {
-
-		// No namespace
-
-		ProductDisplayPage productDisplayPage1 =
-			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductDisplayPage",
-						new HashMap<String, Object>() {
-							{
-								put("id", productDisplayPage1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductDisplayPage"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"productDisplayPage",
-					new HashMap<String, Object>() {
-						{
-							put("id", productDisplayPage1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminChannel_v1_0
-
-		ProductDisplayPage productDisplayPage2 =
-			testGraphQLDeleteProductDisplayPage_addProductDisplayPage();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminChannel_v1_0",
-						new GraphQLField(
-							"deleteProductDisplayPage",
-							new HashMap<String, Object>() {
-								{
-									put("id", productDisplayPage2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminChannel_v1_0",
-				"Object/deleteProductDisplayPage"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminChannel_v1_0",
-					new GraphQLField(
-						"productDisplayPage",
-						new HashMap<String, Object>() {
-							{
-								put("id", productDisplayPage2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ProductDisplayPage
-			testGraphQLDeleteProductDisplayPage_addProductDisplayPage()
-		throws Exception {
-
-		return testGraphQLProductDisplayPage_addProductDisplayPage();
-	}
-
-	@Test
-	public void testDeleteProductDisplayPageBatch() throws Exception {
-		ProductDisplayPage productDisplayPage1 =
-			testDeleteProductDisplayPageBatch_addProductDisplayPage();
-
-		testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
-			"COMPLETED", null, productDisplayPage1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			productDisplayPageResource.getProductDisplayPageHttpResponse(
-				productDisplayPage1.getId()));
-	}
-
-	protected ProductDisplayPage
-			testDeleteProductDisplayPageBatch_addProductDisplayPage()
-		throws Exception {
-
-		return testDeleteProductDisplayPage_addProductDisplayPage();
-	}
-
-	protected void testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			productDisplayPageResource.
-				deleteProductDisplayPageBatchHttpResponse(
-					null,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"externalReferenceCode", () -> externalReferenceCode
-						).put(
-							"id", () -> id
-						)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetProductDisplayPage() throws Exception {
 		ProductDisplayPage postProductDisplayPage =
 			testGetProductDisplayPage_addProductDisplayPage();
@@ -1714,6 +1668,52 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 
 	protected ProductDisplayPage
 			testPatchProductDisplayPage_addProductDisplayPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostChannelByExternalReferenceCodeProductDisplayPage()
+		throws Exception {
+
+		ProductDisplayPage randomProductDisplayPage =
+			randomProductDisplayPage();
+
+		ProductDisplayPage postProductDisplayPage =
+			testPostChannelByExternalReferenceCodeProductDisplayPage_addProductDisplayPage(
+				randomProductDisplayPage);
+
+		assertEquals(randomProductDisplayPage, postProductDisplayPage);
+		assertValid(postProductDisplayPage);
+	}
+
+	protected ProductDisplayPage
+			testPostChannelByExternalReferenceCodeProductDisplayPage_addProductDisplayPage(
+				ProductDisplayPage productDisplayPage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostChannelIdProductDisplayPage() throws Exception {
+		ProductDisplayPage randomProductDisplayPage =
+			randomProductDisplayPage();
+
+		ProductDisplayPage postProductDisplayPage =
+			testPostChannelIdProductDisplayPage_addProductDisplayPage(
+				randomProductDisplayPage);
+
+		assertEquals(randomProductDisplayPage, postProductDisplayPage);
+		assertValid(postProductDisplayPage);
+	}
+
+	protected ProductDisplayPage
+			testPostChannelIdProductDisplayPage_addProductDisplayPage(
+				ProductDisplayPage productDisplayPage)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

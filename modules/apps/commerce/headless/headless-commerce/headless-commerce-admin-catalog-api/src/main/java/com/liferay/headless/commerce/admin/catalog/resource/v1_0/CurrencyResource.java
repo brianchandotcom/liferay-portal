@@ -46,11 +46,32 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CurrencyResource {
 
+	public void deleteCurrency(Long id) throws Exception;
+
+	public Response deleteCurrencyBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteCurrencyByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Currency> getCurrenciesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Currency getCurrency(Long id) throws Exception;
+
+	public Currency getCurrencyByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Currency patchCurrency(Long id, Currency currency) throws Exception;
+
+	public Currency patchCurrencyByExternalReferenceCode(
+			String externalReferenceCode, Currency currency)
 		throws Exception;
 
 	public Response postCurrenciesPageExportBatch(
@@ -64,27 +85,6 @@ public interface CurrencyResource {
 
 	public Response postCurrencyBatch(String callbackURL, Object object)
 		throws Exception;
-
-	public void deleteCurrencyByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Currency getCurrencyByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Currency patchCurrencyByExternalReferenceCode(
-			String externalReferenceCode, Currency currency)
-		throws Exception;
-
-	public void deleteCurrency(Long id) throws Exception;
-
-	public Response deleteCurrencyBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Currency getCurrency(Long id) throws Exception;
-
-	public Currency patchCurrency(Long id, Currency currency) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

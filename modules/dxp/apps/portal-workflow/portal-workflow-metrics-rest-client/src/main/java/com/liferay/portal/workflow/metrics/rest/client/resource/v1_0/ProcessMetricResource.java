@@ -37,6 +37,16 @@ public interface ProcessMetricResource {
 		return new Builder();
 	}
 
+	public ProcessMetric getProcessMetric(
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart)
+		throws Exception;
+
 	public Page<ProcessMetric> getProcessMetricsPage(
 			String title, Pagination pagination, String sortString)
 		throws Exception;
@@ -54,16 +64,6 @@ public interface ProcessMetricResource {
 			postProcessMetricsPageExportBatchHttpResponse(
 				String title, String sortString, String callbackURL,
 				String contentType, String fieldNames)
-		throws Exception;
-
-	public ProcessMetric getProcessMetric(
-			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart)
 		throws Exception;
 
 	public static class Builder {
@@ -174,6 +174,132 @@ public interface ProcessMetricResource {
 
 	public static class ProcessMetricResourceImpl
 		implements ProcessMetricResource {
+
+		public ProcessMetric getProcessMetric(
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProcessMetricHttpResponse(
+					processId, completed, dateEnd, dateStart);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ProcessMetricSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ssXX");
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
+			if (dateEnd != null) {
+				httpInvoker.parameter(
+					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
+			}
+
+			if (dateStart != null) {
+				httpInvoker.parameter(
+					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics");
+
+			httpInvoker.path("processId", processId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
 
 		public Page<ProcessMetric> getProcessMetricsPage(
 				String title, Pagination pagination, String sortString)
@@ -407,132 +533,6 @@ public interface ProcessMetricResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/portal-workflow-metrics/v1.0/processes/metrics/export-batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ProcessMetric getProcessMetric(
-				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getProcessMetricHttpResponse(
-					processId, completed, dateEnd, dateStart);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ProcessMetricSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ssXX");
-
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
-			if (dateEnd != null) {
-				httpInvoker.parameter(
-					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
-			}
-
-			if (dateStart != null) {
-				httpInvoker.parameter(
-					"dateStart", liferayToJSONDateFormat.format(dateStart));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics");
-
-			httpInvoker.path("processId", processId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -47,33 +47,45 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTCollectionResource {
 
-	public Page<CTCollection> getCTCollectionsPage(
-			String search, Integer[] status, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
+	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
-	public Response postCTCollectionsPageExportBatch(
-			String search, Integer[] status,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public CTCollection postCTCollection(CTCollection ctCollection)
-		throws Exception;
-
-	public Response postCTCollectionBatch(String callbackURL, Object object)
+	public Response deleteCTCollectionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteCTCollectionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public CTCollection getCTCollection(Long ctCollectionId) throws Exception;
+
 	public CTCollection getCTCollectionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public String getCTCollectionByExternalReferenceCodeShareLink(
+			String externalReferenceCode)
+		throws Exception;
+
+	public String getCTCollectionShareLink(Long ctCollectionId)
+		throws Exception;
+
+	public Page<CTCollection> getCTCollectionsPage(
+			String search, Integer[] status, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public CTCollection patchCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
+		throws Exception;
+
 	public CTCollection patchCTCollectionByExternalReferenceCode(
 			String externalReferenceCode, CTCollection ctCollection)
+		throws Exception;
+
+	public CTCollection postCTCollection(CTCollection ctCollection)
+		throws Exception;
+
+	public Response postCTCollectionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void postCTCollectionByExternalReferenceCodePublish(
@@ -84,22 +96,18 @@ public interface CTCollectionResource {
 			String externalReferenceCode, Date publishDate)
 		throws Exception;
 
-	public String getCTCollectionByExternalReferenceCodeShareLink(
-			String externalReferenceCode)
+	public void postCTCollectionCheckout(Long ctCollectionId) throws Exception;
+
+	public void postCTCollectionPublish(Long ctCollectionId) throws Exception;
+
+	public void postCTCollectionSchedulePublish(
+			Long ctCollectionId, Date publishDate)
 		throws Exception;
 
-	public String getCTCollectionShareLink(Long ctCollectionId)
-		throws Exception;
-
-	public void deleteCTCollection(Long ctCollectionId) throws Exception;
-
-	public Response deleteCTCollectionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public CTCollection getCTCollection(Long ctCollectionId) throws Exception;
-
-	public CTCollection patchCTCollection(
-			Long ctCollectionId, CTCollection ctCollection)
+	public Response postCTCollectionsPageExportBatch(
+			String search, Integer[] status,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public CTCollection putCTCollection(
@@ -107,14 +115,6 @@ public interface CTCollectionResource {
 		throws Exception;
 
 	public Response putCTCollectionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void postCTCollectionCheckout(Long ctCollectionId) throws Exception;
-
-	public void postCTCollectionPublish(Long ctCollectionId) throws Exception;
-
-	public void postCTCollectionSchedulePublish(
-			Long ctCollectionId, Date publishDate)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

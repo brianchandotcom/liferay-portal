@@ -46,22 +46,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FormRecordResource {
 
-	public FormRecord getFormRecord(Long formRecordId) throws Exception;
-
-	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
-		throws Exception;
-
-	public Response putFormRecordBatch(String callbackURL, Object object)
+	public FormRecord getFormFormRecordByLatestDraft(Long formId)
 		throws Exception;
 
 	public Page<FormRecord> getFormFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception;
 
-	public Response postFormFormRecordsPageExportBatch(
-			Long formId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
+	public FormRecord getFormRecord(Long formRecordId) throws Exception;
 
 	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
 		throws Exception;
@@ -70,7 +62,15 @@ public interface FormRecordResource {
 			Long formId, String callbackURL, Object object)
 		throws Exception;
 
-	public FormRecord getFormFormRecordByLatestDraft(Long formId)
+	public Response postFormFormRecordsPageExportBatch(
+			Long formId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
+		throws Exception;
+
+	public Response putFormRecordBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

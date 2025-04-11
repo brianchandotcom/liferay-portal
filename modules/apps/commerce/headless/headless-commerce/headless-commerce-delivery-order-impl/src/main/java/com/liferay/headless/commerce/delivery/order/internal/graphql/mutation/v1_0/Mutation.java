@@ -103,21 +103,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Attachment
-			createPlacedOrderByExternalReferenceCodeAttachmentByBase64(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("attachmentBase64") AttachmentBase64
-					attachmentBase64)
+	public boolean deletePlacedOrderAttachment(
+			@GraphQLName("attachmentId") Long attachmentId,
+			@GraphQLName("placedOrderId") Long placedOrderId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_attachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			attachmentResource ->
-				attachmentResource.
-					postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
-						externalReferenceCode, attachmentBase64));
+				attachmentResource.deletePlacedOrderAttachment(
+					attachmentId, placedOrderId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -142,6 +140,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Attachment createPlacedOrderAttachmentByBase64(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.postPlacedOrderAttachmentByBase64(
+					placedOrderId, attachmentBase64));
+	}
+
+	@GraphQLField
 	public Response createPlacedOrderAttachmentsPageExportBatch(
 			@GraphQLName("placedOrderId") Long placedOrderId,
 			@GraphQLName("callbackURL") String callbackURL,
@@ -158,50 +170,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Attachment createPlacedOrderAttachmentByBase64(
-			@GraphQLName("placedOrderId") Long placedOrderId,
-			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
+	public Attachment
+			createPlacedOrderByExternalReferenceCodeAttachmentByBase64(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("attachmentBase64") AttachmentBase64
+					attachmentBase64)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_attachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			attachmentResource ->
-				attachmentResource.postPlacedOrderAttachmentByBase64(
-					placedOrderId, attachmentBase64));
-	}
-
-	@GraphQLField
-	public boolean deletePlacedOrderAttachment(
-			@GraphQLName("attachmentId") Long attachmentId,
-			@GraphQLName("placedOrderId") Long placedOrderId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_attachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			attachmentResource ->
-				attachmentResource.deletePlacedOrderAttachment(
-					attachmentId, placedOrderId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response createPlacedOrderOrderTransitionsPageExportBatch(
-			@GraphQLName("placedOrderId") Long placedOrderId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderTransitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderTransitionResource ->
-				orderTransitionResource.
-					postPlacedOrderOrderTransitionsPageExportBatch(
-						placedOrderId, callbackURL, contentType, fieldNames));
+				attachmentResource.
+					postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
+						externalReferenceCode, attachmentBase64));
 	}
 
 	@GraphQLField
@@ -234,17 +217,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("placedOrder") PlacedOrder placedOrder)
+	public Response createPlacedOrderOrderTransitionsPageExportBatch(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_placedOrderResourceComponentServiceObjects,
+			_orderTransitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			placedOrderResource ->
-				placedOrderResource.patchPlacedOrderByExternalReferenceCode(
-					externalReferenceCode, placedOrder));
+			orderTransitionResource ->
+				orderTransitionResource.
+					postPlacedOrderOrderTransitionsPageExportBatch(
+						placedOrderId, callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -258,6 +244,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			placedOrderResource -> placedOrderResource.patchPlacedOrder(
 				placedOrderId, placedOrder));
+	}
+
+	@GraphQLField
+	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("placedOrder") PlacedOrder placedOrder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_placedOrderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			placedOrderResource ->
+				placedOrderResource.patchPlacedOrderByExternalReferenceCode(
+					externalReferenceCode, placedOrder));
 	}
 
 	@GraphQLField

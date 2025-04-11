@@ -46,6 +46,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountRoleResource {
 
+	public void deleteAccountAccountRoleUserAccountAssociation(
+			Long accountId, Long accountRoleId, Long userAccountId)
+		throws Exception;
+
+	public void
+			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				String externalReferenceCode,
+				String accountRoleExternalReferenceCode, String emailAddress)
+		throws Exception;
+
 	public void
 			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
@@ -54,27 +64,14 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public void
-			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
-				String accountExternalReferenceCode,
-				String accountRoleExternalReferenceCode,
-				String externalReferenceCode)
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+				String externalReferenceCode, Long accountRoleId,
+				String emailAddress)
 		throws Exception;
 
 	public void
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String externalReferenceCode)
-		throws Exception;
-
-	public void
-			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String externalReferenceCode)
-		throws Exception;
-
-	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
-				String accountExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
@@ -85,39 +82,6 @@ public interface AccountRoleResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public AccountRole postAccountAccountRoleByExternalReferenceCode(
-			String externalReferenceCode, AccountRole accountRole)
-		throws Exception;
-
-	public void
-			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
-				String externalReferenceCode,
-				String accountRoleExternalReferenceCode, String emailAddress)
-		throws Exception;
-
-	public void
-			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
-				String externalReferenceCode,
-				String accountRoleExternalReferenceCode, String emailAddress)
-		throws Exception;
-
-	public void
-			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-				String externalReferenceCode, Long accountRoleId,
-				String emailAddress)
-		throws Exception;
-
-	public void
-			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-				String externalReferenceCode, Long accountRoleId,
-				String emailAddress)
-		throws Exception;
-
-	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
-				String externalReferenceCode, String emailAddress)
-		throws Exception;
-
 	public Page<AccountRole> getAccountAccountRolesPage(
 			Long accountId, String keywords,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -125,11 +89,15 @@ public interface AccountRoleResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postAccountAccountRolesPageExportBatch(
-			Long accountId, String keywords,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Page<AccountRole>
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
+				String externalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public Page<AccountRole>
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public AccountRole postAccountAccountRole(
@@ -140,12 +108,44 @@ public interface AccountRoleResource {
 			Long accountId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAccountAccountRoleUserAccountAssociation(
-			Long accountId, Long accountRoleId, Long userAccountId)
+	public AccountRole postAccountAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public void postAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
+		throws Exception;
+
+	public Response postAccountAccountRolesPageExportBatch(
+			Long accountId, String keywords,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				String externalReferenceCode,
+				String accountRoleExternalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String accountRoleExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+				String externalReferenceCode, Long accountRoleId,
+				String emailAddress)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String externalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

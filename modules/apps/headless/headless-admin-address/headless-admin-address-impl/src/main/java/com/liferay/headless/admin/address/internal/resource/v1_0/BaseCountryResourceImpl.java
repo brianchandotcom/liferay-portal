@@ -73,6 +73,78 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "countryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/countries/{countryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteCountry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("countryId")
+			Long countryId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/countries/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteCountryBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				Country.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -119,6 +191,242 @@ public abstract class BaseCountryResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "countryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/countries/{countryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("countryId")
+			Long countryId)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-a2/{a2}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "a2"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/countries/by-a2/{a2}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountryByA2(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("a2")
+			String a2)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-a3/{a3}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "a3"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/countries/by-a3/{a3}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountryByA3(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("a3")
+			String a3)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-name/{name}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "name"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/countries/by-name/{name}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountryByName(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("name")
+			String name)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-number/{number}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "number"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/countries/by-number/{number}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountryByNumber(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("number")
+			Integer number)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "countryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/countries/{countryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country patchCountry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("countryId")
+			Long countryId,
+			Country country)
+		throws Exception {
+
+		Country existingCountry = getCountry(countryId);
+
+		if (country.getA2() != null) {
+			existingCountry.setA2(country.getA2());
+		}
+
+		if (country.getA3() != null) {
+			existingCountry.setA3(country.getA3());
+		}
+
+		if (country.getActive() != null) {
+			existingCountry.setActive(country.getActive());
+		}
+
+		if (country.getBillingAllowed() != null) {
+			existingCountry.setBillingAllowed(country.getBillingAllowed());
+		}
+
+		if (country.getGroupFilterEnabled() != null) {
+			existingCountry.setGroupFilterEnabled(
+				country.getGroupFilterEnabled());
+		}
+
+		if (country.getIdd() != null) {
+			existingCountry.setIdd(country.getIdd());
+		}
+
+		if (country.getName() != null) {
+			existingCountry.setName(country.getName());
+		}
+
+		if (country.getNumber() != null) {
+			existingCountry.setNumber(country.getNumber());
+		}
+
+		if (country.getPosition() != null) {
+			existingCountry.setPosition(country.getPosition());
+		}
+
+		if (country.getShippingAllowed() != null) {
+			existingCountry.setShippingAllowed(country.getShippingAllowed());
+		}
+
+		if (country.getSubjectToVAT() != null) {
+			existingCountry.setSubjectToVAT(country.getSubjectToVAT());
+		}
+
+		if (country.getTitle_i18n() != null) {
+			existingCountry.setTitle_i18n(country.getTitle_i18n());
+		}
+
+		if (country.getZipRequired() != null) {
+			existingCountry.setZipRequired(country.getZipRequired());
+		}
+
+		preparePatch(country, existingCountry);
+
+		return putCountry(countryId, existingCountry);
 	}
 
 	/**
@@ -260,314 +568,6 @@ public abstract class BaseCountryResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				Country.class.getName(), callbackURL, null, object)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-a2/{a2}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "a2"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/countries/by-a2/{a2}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country getCountryByA2(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("a2")
-			String a2)
-		throws Exception {
-
-		return new Country();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-a3/{a3}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "a3"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/countries/by-a3/{a3}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country getCountryByA3(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("a3")
-			String a3)
-		throws Exception {
-
-		return new Country();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-name/{name}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "name"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/countries/by-name/{name}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country getCountryByName(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("name")
-			String name)
-		throws Exception {
-
-		return new Country();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-number/{number}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "number"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/countries/by-number/{number}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country getCountryByNumber(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("number")
-			Integer number)
-		throws Exception {
-
-		return new Country();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "countryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/countries/{countryId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteCountry(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("countryId")
-			Long countryId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/countries/batch")
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteCountryBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				Country.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "countryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/countries/{countryId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country getCountry(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("countryId")
-			Long countryId)
-		throws Exception {
-
-		return new Country();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "countryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/countries/{countryId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Country patchCountry(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("countryId")
-			Long countryId,
-			Country country)
-		throws Exception {
-
-		Country existingCountry = getCountry(countryId);
-
-		if (country.getA2() != null) {
-			existingCountry.setA2(country.getA2());
-		}
-
-		if (country.getA3() != null) {
-			existingCountry.setA3(country.getA3());
-		}
-
-		if (country.getActive() != null) {
-			existingCountry.setActive(country.getActive());
-		}
-
-		if (country.getBillingAllowed() != null) {
-			existingCountry.setBillingAllowed(country.getBillingAllowed());
-		}
-
-		if (country.getGroupFilterEnabled() != null) {
-			existingCountry.setGroupFilterEnabled(
-				country.getGroupFilterEnabled());
-		}
-
-		if (country.getIdd() != null) {
-			existingCountry.setIdd(country.getIdd());
-		}
-
-		if (country.getName() != null) {
-			existingCountry.setName(country.getName());
-		}
-
-		if (country.getNumber() != null) {
-			existingCountry.setNumber(country.getNumber());
-		}
-
-		if (country.getPosition() != null) {
-			existingCountry.setPosition(country.getPosition());
-		}
-
-		if (country.getShippingAllowed() != null) {
-			existingCountry.setShippingAllowed(country.getShippingAllowed());
-		}
-
-		if (country.getSubjectToVAT() != null) {
-			existingCountry.setSubjectToVAT(country.getSubjectToVAT());
-		}
-
-		if (country.getTitle_i18n() != null) {
-			existingCountry.setTitle_i18n(country.getTitle_i18n());
-		}
-
-		if (country.getZipRequired() != null) {
-			existingCountry.setZipRequired(country.getZipRequired());
-		}
-
-		preparePatch(country, existingCountry);
-
-		return putCountry(countryId, existingCountry);
 	}
 
 	/**

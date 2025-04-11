@@ -45,6 +45,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTEntryResource {
 
+	public Page<CTEntry> getCTEntriesHistoryPage(
+			Long classNameId, Long classPK, String search, Long siteId,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
+
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
 			Long ctCollectionId, String search, Boolean showHideable,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -56,15 +65,6 @@ public interface CTEntryResource {
 			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
 				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
 		throws Exception;
-
-	public Page<CTEntry> getCTEntriesHistoryPage(
-			Long classNameId, Long classPK, String search, Long siteId,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

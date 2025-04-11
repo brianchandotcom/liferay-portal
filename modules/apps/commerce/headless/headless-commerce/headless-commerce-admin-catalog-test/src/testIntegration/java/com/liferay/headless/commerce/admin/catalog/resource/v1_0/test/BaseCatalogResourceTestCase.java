@@ -228,220 +228,6 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteCatalogByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Catalog catalog = testDeleteCatalogByExternalReferenceCode_addCatalog();
-
-		assertHttpResponseStatusCode(
-			204,
-			catalogResource.deleteCatalogByExternalReferenceCodeHttpResponse(
-				catalog.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
-				catalog.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			catalogResource.getCatalogByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Catalog testDeleteCatalogByExternalReferenceCode_addCatalog()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetCatalogByExternalReferenceCode() throws Exception {
-		Catalog postCatalog =
-			testGetCatalogByExternalReferenceCode_addCatalog();
-
-		Catalog getCatalog = catalogResource.getCatalogByExternalReferenceCode(
-			postCatalog.getExternalReferenceCode());
-
-		assertEquals(postCatalog, getCatalog);
-		assertValid(getCatalog);
-	}
-
-	protected Catalog testGetCatalogByExternalReferenceCode_addCatalog()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetCatalogByExternalReferenceCode()
-		throws Exception {
-
-		Catalog catalog =
-			testGraphQLGetCatalogByExternalReferenceCode_addCatalog();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				catalog,
-				CatalogSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"catalogByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												catalog.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/catalogByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				catalog,
-				CatalogSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"catalogByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													catalog.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/catalogByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetCatalogByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"catalogByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"catalogByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Catalog testGraphQLGetCatalogByExternalReferenceCode_addCatalog()
-		throws Exception {
-
-		return testGraphQLCatalog_addCatalog();
-	}
-
-	@Test
-	public void testPatchCatalogByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutCatalogByExternalReferenceCode() throws Exception {
-		Catalog postCatalog =
-			testPutCatalogByExternalReferenceCode_addCatalog();
-
-		Catalog randomCatalog = randomCatalog();
-
-		Catalog putCatalog = catalogResource.putCatalogByExternalReferenceCode(
-			postCatalog.getExternalReferenceCode(), randomCatalog);
-
-		assertEquals(randomCatalog, putCatalog);
-		assertValid(putCatalog);
-
-		Catalog getCatalog = catalogResource.getCatalogByExternalReferenceCode(
-			putCatalog.getExternalReferenceCode());
-
-		assertEquals(randomCatalog, getCatalog);
-		assertValid(getCatalog);
-
-		Catalog newCatalog =
-			testPutCatalogByExternalReferenceCode_createCatalog();
-
-		putCatalog = catalogResource.putCatalogByExternalReferenceCode(
-			newCatalog.getExternalReferenceCode(), newCatalog);
-
-		assertEquals(newCatalog, putCatalog);
-		assertValid(putCatalog);
-
-		getCatalog = catalogResource.getCatalogByExternalReferenceCode(
-			putCatalog.getExternalReferenceCode());
-
-		assertEquals(newCatalog, getCatalog);
-
-		Assert.assertEquals(
-			newCatalog.getExternalReferenceCode(),
-			putCatalog.getExternalReferenceCode());
-	}
-
-	protected Catalog testPutCatalogByExternalReferenceCode_createCatalog()
-		throws Exception {
-
-		return randomCatalog();
-	}
-
-	protected Catalog testPutCatalogByExternalReferenceCode_addCatalog()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteCatalog() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Catalog catalog = testDeleteCatalog_addCatalog();
@@ -593,6 +379,32 @@ public abstract class BaseCatalogResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteCatalogByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Catalog catalog = testDeleteCatalogByExternalReferenceCode_addCatalog();
+
+		assertHttpResponseStatusCode(
+			204,
+			catalogResource.deleteCatalogByExternalReferenceCodeHttpResponse(
+				catalog.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
+				catalog.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			catalogResource.getCatalogByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Catalog testDeleteCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -888,8 +700,135 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCatalog() throws Exception {
-		Assert.assertTrue(false);
+	public void testGetCatalogByExternalReferenceCode() throws Exception {
+		Catalog postCatalog =
+			testGetCatalogByExternalReferenceCode_addCatalog();
+
+		Catalog getCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			postCatalog.getExternalReferenceCode());
+
+		assertEquals(postCatalog, getCatalog);
+		assertValid(getCatalog);
+	}
+
+	protected Catalog testGetCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCatalogByExternalReferenceCode()
+		throws Exception {
+
+		Catalog catalog =
+			testGraphQLGetCatalogByExternalReferenceCode_addCatalog();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				catalog,
+				CatalogSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"catalogByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												catalog.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/catalogByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				catalog,
+				CatalogSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"catalogByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													catalog.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/catalogByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCatalogByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"catalogByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"catalogByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Catalog testGraphQLGetCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		return testGraphQLCatalog_addCatalog();
 	}
 
 	@Test
@@ -1271,23 +1210,6 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	@Test
-	public void testPostCatalog() throws Exception {
-		Catalog randomCatalog = randomCatalog();
-
-		Catalog postCatalog = testPostCatalog_addCatalog(randomCatalog);
-
-		assertEquals(randomCatalog, postCatalog);
-		assertValid(postCatalog);
-	}
-
-	protected Catalog testPostCatalog_addCatalog(Catalog catalog)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeCatalog()
 		throws Exception {
 
@@ -1563,6 +1485,84 @@ public abstract class BaseCatalogResourceTestCase {
 		throws Exception {
 
 		return testGraphQLCatalog_addCatalog();
+	}
+
+	@Test
+	public void testPatchCatalog() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchCatalogByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostCatalog() throws Exception {
+		Catalog randomCatalog = randomCatalog();
+
+		Catalog postCatalog = testPostCatalog_addCatalog(randomCatalog);
+
+		assertEquals(randomCatalog, postCatalog);
+		assertValid(postCatalog);
+	}
+
+	protected Catalog testPostCatalog_addCatalog(Catalog catalog)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutCatalogByExternalReferenceCode() throws Exception {
+		Catalog postCatalog =
+			testPutCatalogByExternalReferenceCode_addCatalog();
+
+		Catalog randomCatalog = randomCatalog();
+
+		Catalog putCatalog = catalogResource.putCatalogByExternalReferenceCode(
+			postCatalog.getExternalReferenceCode(), randomCatalog);
+
+		assertEquals(randomCatalog, putCatalog);
+		assertValid(putCatalog);
+
+		Catalog getCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			putCatalog.getExternalReferenceCode());
+
+		assertEquals(randomCatalog, getCatalog);
+		assertValid(getCatalog);
+
+		Catalog newCatalog =
+			testPutCatalogByExternalReferenceCode_createCatalog();
+
+		putCatalog = catalogResource.putCatalogByExternalReferenceCode(
+			newCatalog.getExternalReferenceCode(), newCatalog);
+
+		assertEquals(newCatalog, putCatalog);
+		assertValid(putCatalog);
+
+		getCatalog = catalogResource.getCatalogByExternalReferenceCode(
+			putCatalog.getExternalReferenceCode());
+
+		assertEquals(newCatalog, getCatalog);
+
+		Assert.assertEquals(
+			newCatalog.getExternalReferenceCode(),
+			putCatalog.getExternalReferenceCode());
+	}
+
+	protected Catalog testPutCatalogByExternalReferenceCode_createCatalog()
+		throws Exception {
+
+		return randomCatalog();
+	}
+
+	protected Catalog testPutCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

@@ -46,21 +46,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowDefinitionLinkResource {
 
-	public WorkflowDefinitionLink
-			putWorkflowDefinitionLinkByExternalReferenceCode(
-				String externalReferenceCode,
-				WorkflowDefinitionLink workflowDefinitionLink)
-		throws Exception;
-
 	public Page<WorkflowDefinitionLink>
 			getWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLinksPage(
 				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public WorkflowDefinitionLink
-			postWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink(
-				String externalReferenceCode,
-				WorkflowDefinitionLink workflowDefinitionLink)
 		throws Exception;
 
 	public Page<WorkflowDefinitionLink>
@@ -68,10 +56,10 @@ public interface WorkflowDefinitionLinkResource {
 				Long workflowDefinitionId, Pagination pagination)
 		throws Exception;
 
-	public Response
-			postWorkflowDefinitionWorkflowDefinitionLinksPageExportBatch(
-				Long workflowDefinitionId, String callbackURL,
-				String contentType, String fieldNames)
+	public WorkflowDefinitionLink
+			postWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink(
+				String externalReferenceCode,
+				WorkflowDefinitionLink workflowDefinitionLink)
 		throws Exception;
 
 	public WorkflowDefinitionLink postWorkflowDefinitionWorkflowDefinitionLink(
@@ -81,6 +69,18 @@ public interface WorkflowDefinitionLinkResource {
 
 	public Response postWorkflowDefinitionWorkflowDefinitionLinkBatch(
 			Long workflowDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response
+			postWorkflowDefinitionWorkflowDefinitionLinksPageExportBatch(
+				Long workflowDefinitionId, String callbackURL,
+				String contentType, String fieldNames)
+		throws Exception;
+
+	public WorkflowDefinitionLink
+			putWorkflowDefinitionLinkByExternalReferenceCode(
+				String externalReferenceCode,
+				WorkflowDefinitionLink workflowDefinitionLink)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

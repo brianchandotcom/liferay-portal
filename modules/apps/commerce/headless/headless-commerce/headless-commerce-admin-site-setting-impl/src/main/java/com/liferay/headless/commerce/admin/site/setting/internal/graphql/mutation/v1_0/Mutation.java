@@ -100,6 +100,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public AvailabilityEstimate
+			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
+				@GraphQLName("groupId") Long groupId,
+				@GraphQLName("availabilityEstimate") AvailabilityEstimate
+					availabilityEstimate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_availabilityEstimateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			availabilityEstimateResource ->
+				availabilityEstimateResource.
+					postCommerceAdminSiteSettingGroupAvailabilityEstimate(
+						groupId, availabilityEstimate));
+	}
+
+	@GraphQLField
 	public Response updateAvailabilityEstimate(
 			@GraphQLName("id") Long id,
 			@GraphQLName("availabilityEstimate") AvailabilityEstimate
@@ -126,143 +143,6 @@ public class Mutation {
 			availabilityEstimateResource ->
 				availabilityEstimateResource.putAvailabilityEstimateBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField
-	public AvailabilityEstimate
-			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
-				@GraphQLName("groupId") Long groupId,
-				@GraphQLName("availabilityEstimate") AvailabilityEstimate
-					availabilityEstimate)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_availabilityEstimateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			availabilityEstimateResource ->
-				availabilityEstimateResource.
-					postCommerceAdminSiteSettingGroupAvailabilityEstimate(
-						groupId, availabilityEstimate));
-	}
-
-	@GraphQLField
-	public Response createMeasurementUnitsPageExportBatch(
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.postMeasurementUnitsPageExportBatch(
-					_filterBiFunction.apply(
-						measurementUnitResource, filterString),
-					_sortsBiFunction.apply(
-						measurementUnitResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public MeasurementUnit createMeasurementUnit(
-			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.postMeasurementUnit(measurementUnit));
-	}
-
-	@GraphQLField
-	public Response createMeasurementUnitBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.postMeasurementUnitBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
-	public boolean deleteMeasurementUnitByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.
-					deleteMeasurementUnitByExternalReferenceCode(
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response patchMeasurementUnitByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.
-					patchMeasurementUnitByExternalReferenceCode(
-						externalReferenceCode, measurementUnit));
-	}
-
-	@GraphQLField
-	public MeasurementUnit updateMeasurementUnitByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.
-					putMeasurementUnitByExternalReferenceCode(
-						externalReferenceCode, measurementUnit));
-	}
-
-	@GraphQLField
-	public boolean deleteMeasurementUnitByKey(@GraphQLName("key") String key)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.deleteMeasurementUnitByKey(key));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response patchMeasurementUnitByKey(
-			@GraphQLName("key") String key,
-			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.patchMeasurementUnitByKey(
-					key, measurementUnit));
 	}
 
 	@GraphQLField
@@ -293,6 +173,35 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteMeasurementUnitByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.
+					deleteMeasurementUnitByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteMeasurementUnitByKey(@GraphQLName("key") String key)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.deleteMeasurementUnitByKey(key));
+
+		return true;
+	}
+
+	@GraphQLField
 	public Response patchMeasurementUnit(
 			@GraphQLName("id") Long id,
 			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
@@ -307,18 +216,94 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("taxCategory") TaxCategory taxCategory)
+	public Response patchMeasurementUnitByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_taxCategoryResourceComponentServiceObjects,
+			_measurementUnitResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxCategoryResource ->
-				taxCategoryResource.
-					postCommerceAdminSiteSettingGroupTaxCategory(
-						groupId, taxCategory));
+			measurementUnitResource ->
+				measurementUnitResource.
+					patchMeasurementUnitByExternalReferenceCode(
+						externalReferenceCode, measurementUnit));
+	}
+
+	@GraphQLField
+	public Response patchMeasurementUnitByKey(
+			@GraphQLName("key") String key,
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.patchMeasurementUnitByKey(
+					key, measurementUnit));
+	}
+
+	@GraphQLField
+	public MeasurementUnit createMeasurementUnit(
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.postMeasurementUnit(measurementUnit));
+	}
+
+	@GraphQLField
+	public Response createMeasurementUnitBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.postMeasurementUnitBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createMeasurementUnitsPageExportBatch(
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.postMeasurementUnitsPageExportBatch(
+					_filterBiFunction.apply(
+						measurementUnitResource, filterString),
+					_sortsBiFunction.apply(
+						measurementUnitResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public MeasurementUnit updateMeasurementUnitByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.
+					putMeasurementUnitByExternalReferenceCode(
+						externalReferenceCode, measurementUnit));
 	}
 
 	@GraphQLField
@@ -342,6 +327,21 @@ public class Mutation {
 			this::_populateResourceContext,
 			taxCategoryResource -> taxCategoryResource.deleteTaxCategoryBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("taxCategory") TaxCategory taxCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxCategoryResource ->
+				taxCategoryResource.
+					postCommerceAdminSiteSettingGroupTaxCategory(
+						groupId, taxCategory));
 	}
 
 	@GraphQLField
@@ -371,20 +371,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("warehouse") Warehouse warehouse)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_warehouseResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			warehouseResource ->
-				warehouseResource.postCommerceAdminSiteSettingGroupWarehouse(
-					groupId, warehouse));
-	}
-
-	@GraphQLField
 	public Response deleteWarehouse(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -405,6 +391,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.deleteWarehouseBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("warehouse") Warehouse warehouse)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseResource ->
+				warehouseResource.postCommerceAdminSiteSettingGroupWarehouse(
+					groupId, warehouse));
 	}
 
 	@GraphQLField

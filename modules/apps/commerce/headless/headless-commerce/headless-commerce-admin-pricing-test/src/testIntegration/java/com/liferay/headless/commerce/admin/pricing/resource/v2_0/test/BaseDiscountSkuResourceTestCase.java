@@ -442,29 +442,6 @@ public abstract class BaseDiscountSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountSku()
-		throws Exception {
-
-		DiscountSku randomDiscountSku = randomDiscountSku();
-
-		DiscountSku postDiscountSku =
-			testPostDiscountByExternalReferenceCodeDiscountSku_addDiscountSku(
-				randomDiscountSku);
-
-		assertEquals(randomDiscountSku, postDiscountSku);
-		assertValid(postDiscountSku);
-	}
-
-	protected DiscountSku
-			testPostDiscountByExternalReferenceCodeDiscountSku_addDiscountSku(
-				DiscountSku discountSku)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountSkusPage() throws Exception {
 		Long id = testGetDiscountIdDiscountSkusPage_getId();
 		Long irrelevantId = testGetDiscountIdDiscountSkusPage_getIrrelevantId();
@@ -879,6 +856,29 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountSku()
+		throws Exception {
+
+		DiscountSku randomDiscountSku = randomDiscountSku();
+
+		DiscountSku postDiscountSku =
+			testPostDiscountByExternalReferenceCodeDiscountSku_addDiscountSku(
+				randomDiscountSku);
+
+		assertEquals(randomDiscountSku, postDiscountSku);
+		assertValid(postDiscountSku);
+	}
+
+	protected DiscountSku
+			testPostDiscountByExternalReferenceCodeDiscountSku_addDiscountSku(
+				DiscountSku discountSku)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -55,6 +55,12 @@ public interface PageRuleConditionResource {
 				String pageRuleConditionExternalReferenceCode)
 		throws Exception;
 
+	public Page<PageRuleCondition>
+			getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
+				String siteExternalReferenceCode,
+				String pageRuleExternalReferenceCode, Boolean flatten)
+		throws Exception;
+
 	public PageRuleCondition
 			patchSiteSiteByExternalReferenceCodePageRuleCondition(
 				String siteExternalReferenceCode,
@@ -63,22 +69,16 @@ public interface PageRuleConditionResource {
 		throws Exception;
 
 	public PageRuleCondition
-			putSiteSiteByExternalReferenceCodePageRuleCondition(
-				String siteExternalReferenceCode,
-				String pageRuleConditionExternalReferenceCode,
-				PageRuleCondition pageRuleCondition)
-		throws Exception;
-
-	public Page<PageRuleCondition>
-			getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage(
-				String siteExternalReferenceCode,
-				String pageRuleExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public PageRuleCondition
 			postSiteSiteByExternalReferenceCodePageRulePageRuleCondition(
 				String siteExternalReferenceCode,
 				String pageRuleExternalReferenceCode,
+				PageRuleCondition pageRuleCondition)
+		throws Exception;
+
+	public PageRuleCondition
+			putSiteSiteByExternalReferenceCodePageRuleCondition(
+				String siteExternalReferenceCode,
+				String pageRuleConditionExternalReferenceCode,
 				PageRuleCondition pageRuleCondition)
 		throws Exception;
 

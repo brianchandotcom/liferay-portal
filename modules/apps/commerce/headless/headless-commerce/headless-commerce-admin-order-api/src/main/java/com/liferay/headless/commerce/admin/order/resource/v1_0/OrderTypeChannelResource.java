@@ -58,14 +58,14 @@ public interface OrderTypeChannelResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderTypeChannel
-			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
-				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
-		throws Exception;
-
 	public Page<OrderTypeChannel> getOrderTypeIdOrderTypeChannelsPage(
 			Long id, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OrderTypeChannel
+			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
 		throws Exception;
 
 	public OrderTypeChannel postOrderTypeIdOrderTypeChannel(

@@ -206,6 +206,119 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment = testDeleteAttachment_addAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			attachmentResource.deleteAttachmentHttpResponse(
+				attachment.getId()));
+	}
+
+	protected Attachment testDeleteAttachment_addAttachment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAttachment() throws Exception {
+
+		// No namespace
+
+		Attachment attachment1 = testGraphQLDeleteAttachment_addAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAttachment",
+						new HashMap<String, Object>() {
+							{
+								put("id", attachment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAttachment"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Attachment attachment2 = testGraphQLDeleteAttachment_addAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteAttachment",
+							new HashMap<String, Object>() {
+								{
+									put("id", attachment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteAttachment"));
+	}
+
+	protected Attachment testGraphQLDeleteAttachment_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
+	public void testDeleteAttachmentBatch() throws Exception {
+		Attachment attachment1 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", null, attachment1.getId());
+
+		Attachment attachment2 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(), null);
+
+		attachment1 = testDeleteAttachmentBatch_addAttachment();
+		attachment2 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(),
+			attachment1.getId());
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(),
+			attachment1.getId());
+	}
+
+	protected Attachment testDeleteAttachmentBatch_addAttachment()
+		throws Exception {
+
+		return testDeleteAttachment_addAttachment();
+	}
+
+	protected void testDeleteAttachmentBatch_deleteAttachment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			attachmentResource.deleteAttachmentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testDeleteAttachmentByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment =
@@ -368,208 +481,6 @@ public abstract class BaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLAttachment_addAttachment();
-	}
-
-	@Test
-	public void testPatchAttachmentByExternalReferenceCode() throws Exception {
-		Attachment postAttachment =
-			testPatchAttachmentByExternalReferenceCode_addAttachment();
-
-		Attachment randomPatchAttachment = randomPatchAttachment();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Attachment patchAttachment =
-			attachmentResource.patchAttachmentByExternalReferenceCode(
-				postAttachment.getExternalReferenceCode(),
-				randomPatchAttachment);
-
-		Attachment expectedPatchAttachment = postAttachment.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchAttachment, expectedPatchAttachment);
-
-		Attachment getAttachment =
-			attachmentResource.getAttachmentByExternalReferenceCode(
-				patchAttachment.getExternalReferenceCode());
-
-		assertEquals(expectedPatchAttachment, getAttachment);
-		assertValid(getAttachment);
-	}
-
-	protected Attachment
-			testPatchAttachmentByExternalReferenceCode_addAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAttachmentByExternalReferenceCode() throws Exception {
-		Attachment postAttachment =
-			testPutAttachmentByExternalReferenceCode_addAttachment();
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment putAttachment =
-			attachmentResource.putAttachmentByExternalReferenceCode(
-				postAttachment.getExternalReferenceCode(), randomAttachment);
-
-		assertEquals(randomAttachment, putAttachment);
-		assertValid(putAttachment);
-
-		Attachment getAttachment =
-			attachmentResource.getAttachmentByExternalReferenceCode(
-				putAttachment.getExternalReferenceCode());
-
-		assertEquals(randomAttachment, getAttachment);
-		assertValid(getAttachment);
-
-		Attachment newAttachment =
-			testPutAttachmentByExternalReferenceCode_createAttachment();
-
-		putAttachment = attachmentResource.putAttachmentByExternalReferenceCode(
-			newAttachment.getExternalReferenceCode(), newAttachment);
-
-		assertEquals(newAttachment, putAttachment);
-		assertValid(putAttachment);
-
-		getAttachment = attachmentResource.getAttachmentByExternalReferenceCode(
-			putAttachment.getExternalReferenceCode());
-
-		assertEquals(newAttachment, getAttachment);
-
-		Assert.assertEquals(
-			newAttachment.getExternalReferenceCode(),
-			putAttachment.getExternalReferenceCode());
-	}
-
-	protected Attachment
-			testPutAttachmentByExternalReferenceCode_createAttachment()
-		throws Exception {
-
-		return randomAttachment();
-	}
-
-	protected Attachment
-			testPutAttachmentByExternalReferenceCode_addAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAttachment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Attachment attachment = testDeleteAttachment_addAttachment();
-
-		assertHttpResponseStatusCode(
-			204,
-			attachmentResource.deleteAttachmentHttpResponse(
-				attachment.getId()));
-	}
-
-	protected Attachment testDeleteAttachment_addAttachment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteAttachment() throws Exception {
-
-		// No namespace
-
-		Attachment attachment1 = testGraphQLDeleteAttachment_addAttachment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAttachment",
-						new HashMap<String, Object>() {
-							{
-								put("id", attachment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAttachment"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Attachment attachment2 = testGraphQLDeleteAttachment_addAttachment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteAttachment",
-							new HashMap<String, Object>() {
-								{
-									put("id", attachment2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteAttachment"));
-	}
-
-	protected Attachment testGraphQLDeleteAttachment_addAttachment()
-		throws Exception {
-
-		return testGraphQLAttachment_addAttachment();
-	}
-
-	@Test
-	public void testDeleteAttachmentBatch() throws Exception {
-		Attachment attachment1 = testDeleteAttachmentBatch_addAttachment();
-
-		testDeleteAttachmentBatch_deleteAttachment(
-			"COMPLETED", null, attachment1.getId());
-
-		Attachment attachment2 = testDeleteAttachmentBatch_addAttachment();
-
-		testDeleteAttachmentBatch_deleteAttachment(
-			"COMPLETED", attachment2.getExternalReferenceCode(), null);
-
-		attachment1 = testDeleteAttachmentBatch_addAttachment();
-		attachment2 = testDeleteAttachmentBatch_addAttachment();
-
-		testDeleteAttachmentBatch_deleteAttachment(
-			"COMPLETED", attachment2.getExternalReferenceCode(),
-			attachment1.getId());
-
-		testDeleteAttachmentBatch_deleteAttachment(
-			"COMPLETED", attachment2.getExternalReferenceCode(),
-			attachment1.getId());
-	}
-
-	protected Attachment testDeleteAttachmentBatch_addAttachment()
-		throws Exception {
-
-		return testDeleteAttachment_addAttachment();
-	}
-
-	protected void testDeleteAttachmentBatch_deleteAttachment(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			attachmentResource.deleteAttachmentBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -769,75 +680,6 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeAttachment()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeAttachment_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeAttachment_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductByExternalReferenceCodeAttachmentByBase64()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductByExternalReferenceCodeAttachmentByUrl()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeAttachmentByUrl_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeAttachmentByUrl_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeImagesPage()
 		throws Exception {
 
@@ -1024,73 +866,6 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeImage() throws Exception {
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeImage_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeImage_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductByExternalReferenceCodeImageByBase64()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeImageByBase64_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeImageByBase64_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductByExternalReferenceCodeImageByUrl()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductByExternalReferenceCodeImageByUrl_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostProductByExternalReferenceCodeImageByUrl_addAttachment(
-				Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdAttachmentsPage() throws Exception {
 		Long id = testGetProductIdAttachmentsPage_getId();
 		Long irrelevantId = testGetProductIdAttachmentsPage_getIrrelevantId();
@@ -1253,63 +1028,6 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductIdAttachment() throws Exception {
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment = testPostProductIdAttachment_addAttachment(
-			randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment testPostProductIdAttachment_addAttachment(
-			Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductIdAttachmentByBase64() throws Exception {
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductIdAttachmentByBase64_addAttachment(randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment testPostProductIdAttachmentByBase64_addAttachment(
-			Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostProductIdAttachmentByUrl() throws Exception {
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostProductIdAttachmentByUrl_addAttachment(randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment testPostProductIdAttachmentByUrl_addAttachment(
-			Attachment attachment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdImagesPage() throws Exception {
 		Long id = testGetProductIdImagesPage_getId();
 		Long irrelevantId = testGetProductIdImagesPage_getIrrelevantId();
@@ -1462,6 +1180,233 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAttachmentByExternalReferenceCode() throws Exception {
+		Attachment postAttachment =
+			testPatchAttachmentByExternalReferenceCode_addAttachment();
+
+		Attachment randomPatchAttachment = randomPatchAttachment();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment patchAttachment =
+			attachmentResource.patchAttachmentByExternalReferenceCode(
+				postAttachment.getExternalReferenceCode(),
+				randomPatchAttachment);
+
+		Attachment expectedPatchAttachment = postAttachment.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAttachment, expectedPatchAttachment);
+
+		Attachment getAttachment =
+			attachmentResource.getAttachmentByExternalReferenceCode(
+				patchAttachment.getExternalReferenceCode());
+
+		assertEquals(expectedPatchAttachment, getAttachment);
+		assertValid(getAttachment);
+	}
+
+	protected Attachment
+			testPatchAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeAttachment()
+		throws Exception {
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeAttachment_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeAttachment_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeAttachmentByBase64()
+		throws Exception {
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeAttachmentByUrl()
+		throws Exception {
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeAttachmentByUrl_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeAttachmentByUrl_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeImage() throws Exception {
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeImage_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeImage_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeImageByBase64()
+		throws Exception {
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeImageByBase64_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeImageByBase64_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeImageByUrl()
+		throws Exception {
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeImageByUrl_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment
+			testPostProductByExternalReferenceCodeImageByUrl_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductIdAttachment() throws Exception {
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment = testPostProductIdAttachment_addAttachment(
+			randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment testPostProductIdAttachment_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductIdAttachmentByBase64() throws Exception {
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductIdAttachmentByBase64_addAttachment(randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment testPostProductIdAttachmentByBase64_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductIdAttachmentByUrl() throws Exception {
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostProductIdAttachmentByUrl_addAttachment(randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+	}
+
+	protected Attachment testPostProductIdAttachmentByUrl_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostProductIdImage() throws Exception {
 		Attachment randomAttachment = randomAttachment();
 
@@ -1512,6 +1457,61 @@ public abstract class BaseAttachmentResourceTestCase {
 
 	protected Attachment testPostProductIdImageByUrl_addAttachment(
 			Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAttachmentByExternalReferenceCode() throws Exception {
+		Attachment postAttachment =
+			testPutAttachmentByExternalReferenceCode_addAttachment();
+
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment putAttachment =
+			attachmentResource.putAttachmentByExternalReferenceCode(
+				postAttachment.getExternalReferenceCode(), randomAttachment);
+
+		assertEquals(randomAttachment, putAttachment);
+		assertValid(putAttachment);
+
+		Attachment getAttachment =
+			attachmentResource.getAttachmentByExternalReferenceCode(
+				putAttachment.getExternalReferenceCode());
+
+		assertEquals(randomAttachment, getAttachment);
+		assertValid(getAttachment);
+
+		Attachment newAttachment =
+			testPutAttachmentByExternalReferenceCode_createAttachment();
+
+		putAttachment = attachmentResource.putAttachmentByExternalReferenceCode(
+			newAttachment.getExternalReferenceCode(), newAttachment);
+
+		assertEquals(newAttachment, putAttachment);
+		assertValid(putAttachment);
+
+		getAttachment = attachmentResource.getAttachmentByExternalReferenceCode(
+			putAttachment.getExternalReferenceCode());
+
+		assertEquals(newAttachment, getAttachment);
+
+		Assert.assertEquals(
+			newAttachment.getExternalReferenceCode(),
+			putAttachment.getExternalReferenceCode());
+	}
+
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_createAttachment()
+		throws Exception {
+
+		return randomAttachment();
+	}
+
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

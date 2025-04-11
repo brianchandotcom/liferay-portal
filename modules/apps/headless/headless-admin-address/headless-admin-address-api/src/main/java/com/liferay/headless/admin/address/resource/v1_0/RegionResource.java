@@ -46,17 +46,29 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RegionResource {
 
+	public void deleteRegion(Long regionId) throws Exception;
+
+	public Response deleteRegionBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Region getCountryRegionByRegionCode(
+			Long countryId, String regionCode)
+		throws Exception;
+
 	public Page<Region> getCountryRegionsPage(
 			Long countryId, Boolean active, String search,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postCountryRegionsPageExportBatch(
-			Long countryId, Boolean active, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Region getRegion(Long regionId) throws Exception;
+
+	public Page<Region> getRegionsPage(
+			Boolean active, String search, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public Region patchRegion(Long regionId, Region region) throws Exception;
 
 	public Region postCountryRegion(Long countryId, Region region)
 		throws Exception;
@@ -65,13 +77,10 @@ public interface RegionResource {
 			Long countryId, String callbackURL, Object object)
 		throws Exception;
 
-	public Region getCountryRegionByRegionCode(
-			Long countryId, String regionCode)
-		throws Exception;
-
-	public Page<Region> getRegionsPage(
-			Boolean active, String search, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public Response postCountryRegionsPageExportBatch(
+			Long countryId, Boolean active, String search,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Response postRegionsPageExportBatch(
@@ -79,15 +88,6 @@ public interface RegionResource {
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
-
-	public void deleteRegion(Long regionId) throws Exception;
-
-	public Response deleteRegionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Region getRegion(Long regionId) throws Exception;
-
-	public Region patchRegion(Long regionId, Region region) throws Exception;
 
 	public Region putRegion(Long regionId, Region region) throws Exception;
 

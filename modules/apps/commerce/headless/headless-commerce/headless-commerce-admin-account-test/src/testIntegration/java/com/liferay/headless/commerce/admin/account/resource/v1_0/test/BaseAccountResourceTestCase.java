@@ -227,10 +227,183 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountGroupByExternalReferenceCodeAccount()
+	public void testDeleteAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account = testDeleteAccount_addAccount();
+
+		assertHttpResponseStatusCode(
+			204, accountResource.deleteAccountHttpResponse(account.getId()));
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account.getId()));
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(0L));
+	}
+
+	protected Account testDeleteAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccount() throws Exception {
+
+		// No namespace
+
+		Account account1 = testGraphQLDeleteAccount_addAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccount",
+						new HashMap<String, Object>() {
+							{
+								put("id", account1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccount"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"account",
+					new HashMap<String, Object>() {
+						{
+							put("id", account1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Account account2 = testGraphQLDeleteAccount_addAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"deleteAccount",
+							new HashMap<String, Object>() {
+								{
+									put("id", account2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminAccount_v1_0",
+				"Object/deleteAccount"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminAccount_v1_0",
+					new GraphQLField(
+						"account",
+						new HashMap<String, Object>() {
+							{
+								put("id", account2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Account testGraphQLDeleteAccount_addAccount() throws Exception {
+		return testGraphQLAccount_addAccount();
+	}
+
+	@Test
+	public void testDeleteAccountBatch() throws Exception {
+		Account account1 = testDeleteAccountBatch_addAccount();
+
+		testDeleteAccountBatch_deleteAccount(
+			"COMPLETED", null, account1.getId());
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account1.getId()));
+
+		Account account2 = testDeleteAccountBatch_addAccount();
+
+		testDeleteAccountBatch_deleteAccount(
+			"COMPLETED", account2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account2.getId()));
+
+		account1 = testDeleteAccountBatch_addAccount();
+		account2 = testDeleteAccountBatch_addAccount();
+
+		testDeleteAccountBatch_deleteAccount(
+			"COMPLETED", account2.getExternalReferenceCode(), account1.getId());
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account1.getId()));
+		assertHttpResponseStatusCode(
+			200, accountResource.getAccountHttpResponse(account2.getId()));
+
+		testDeleteAccountBatch_deleteAccount(
+			"COMPLETED", account2.getExternalReferenceCode(), account1.getId());
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account2.getId()));
+	}
+
+	protected Account testDeleteAccountBatch_addAccount() throws Exception {
+		return testDeleteAccount_addAccount();
+	}
+
+	protected void testDeleteAccountBatch_deleteAccount(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
 		throws Exception {
 
-		Assert.assertTrue(false);
+		HttpInvoker.HttpResponse httpResponse =
+			accountResource.deleteAccountBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteAccountByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -263,6 +436,430 @@ public abstract class BaseAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccount() throws Exception {
+		Account postAccount = testGetAccount_addAccount();
+
+		Account getAccount = accountResource.getAccount(postAccount.getId());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		Account postAccount = testGetAccount_addAccount();
+
+		Account getAccount = accountResource.getAccount(postAccount.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.account.dto.v1_0.Account"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postAccount.getId());
+
+		assertEquals(getAccount, AccountSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected Account testGetAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccount() throws Exception {
+		Account account = testGraphQLGetAccount_addAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"account",
+								new HashMap<String, Object>() {
+									{
+										put("id", account.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/account"))));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminAccount_v1_0",
+								new GraphQLField(
+									"account",
+									new HashMap<String, Object>() {
+										{
+											put("id", account.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminAccount_v1_0",
+						"Object/account"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"account",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"account",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Account testGraphQLGetAccount_addAccount() throws Exception {
+		return testGraphQLAccount_addAccount();
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testGetAccountByExternalReferenceCode_addAccount();
+
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testGetAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCode()
+		throws Exception {
+
+		Account account =
+			testGraphQLGetAccountByExternalReferenceCode_addAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												account.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminAccount_v1_0",
+								new GraphQLField(
+									"accountByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													account.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminAccount_v1_0",
+						"Object/accountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"accountByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Account testGraphQLGetAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		return testGraphQLAccount_addAccount();
 	}
 
 	@Test
@@ -644,6 +1241,16 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccount() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchAccountByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostAccount() throws Exception {
 		Account randomAccount = randomAccount();
 
@@ -661,621 +1268,14 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountByExternalReferenceCode() throws Exception {
-		Account postAccount =
-			testGetAccountByExternalReferenceCode_addAccount();
-
-		Account getAccount = accountResource.getAccountByExternalReferenceCode(
-			postAccount.getExternalReferenceCode());
-
-		assertEquals(postAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	protected Account testGetAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCode()
-		throws Exception {
-
-		Account account =
-			testGraphQLGetAccountByExternalReferenceCode_addAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												account.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminAccount_v1_0",
-								new GraphQLField(
-									"accountByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													account.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminAccount_v1_0",
-						"Object/accountByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminAccount_v1_0",
-						new GraphQLField(
-							"accountByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Account testGraphQLGetAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testPatchAccountByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPostAccountByExternalReferenceCodeLogo() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testDeleteAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Account account = testDeleteAccount_addAccount();
-
-		assertHttpResponseStatusCode(
-			204, accountResource.deleteAccountHttpResponse(account.getId()));
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account.getId()));
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(0L));
-	}
-
-	protected Account testDeleteAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteAccount() throws Exception {
-
-		// No namespace
-
-		Account account1 = testGraphQLDeleteAccount_addAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccount",
-						new HashMap<String, Object>() {
-							{
-								put("id", account1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAccount"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"account",
-					new HashMap<String, Object>() {
-						{
-							put("id", account1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Account account2 = testGraphQLDeleteAccount_addAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminAccount_v1_0",
-						new GraphQLField(
-							"deleteAccount",
-							new HashMap<String, Object>() {
-								{
-									put("id", account2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminAccount_v1_0",
-				"Object/deleteAccount"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminAccount_v1_0",
-					new GraphQLField(
-						"account",
-						new HashMap<String, Object>() {
-							{
-								put("id", account2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected Account testGraphQLDeleteAccount_addAccount() throws Exception {
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testDeleteAccountBatch() throws Exception {
-		Account account1 = testDeleteAccountBatch_addAccount();
-
-		testDeleteAccountBatch_deleteAccount(
-			"COMPLETED", null, account1.getId());
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account1.getId()));
-
-		Account account2 = testDeleteAccountBatch_addAccount();
-
-		testDeleteAccountBatch_deleteAccount(
-			"COMPLETED", account2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account2.getId()));
-
-		account1 = testDeleteAccountBatch_addAccount();
-		account2 = testDeleteAccountBatch_addAccount();
-
-		testDeleteAccountBatch_deleteAccount(
-			"COMPLETED", account2.getExternalReferenceCode(), account1.getId());
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account1.getId()));
-		assertHttpResponseStatusCode(
-			200, accountResource.getAccountHttpResponse(account2.getId()));
-
-		testDeleteAccountBatch_deleteAccount(
-			"COMPLETED", account2.getExternalReferenceCode(), account1.getId());
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account2.getId()));
-	}
-
-	protected Account testDeleteAccountBatch_addAccount() throws Exception {
-		return testDeleteAccount_addAccount();
-	}
-
-	protected void testDeleteAccountBatch_deleteAccount(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+	public void testPostAccountGroupByExternalReferenceCodeAccount()
 		throws Exception {
 
-		HttpInvoker.HttpResponse httpResponse =
-			accountResource.deleteAccountBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetAccount() throws Exception {
-		Account postAccount = testGetAccount_addAccount();
-
-		Account getAccount = accountResource.getAccount(postAccount.getId());
-
-		assertEquals(postAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		Account postAccount = testGetAccount_addAccount();
-
-		Account getAccount = accountResource.getAccount(postAccount.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.account.dto.v1_0.Account"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postAccount.getId());
-
-		assertEquals(getAccount, AccountSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected Account testGetAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccount() throws Exception {
-		Account account = testGraphQLGetAccount_addAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"account",
-								new HashMap<String, Object>() {
-									{
-										put("id", account.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/account"))));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminAccount_v1_0",
-								new GraphQLField(
-									"account",
-									new HashMap<String, Object>() {
-										{
-											put("id", account.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminAccount_v1_0",
-						"Object/account"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"account",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminAccount_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminAccount_v1_0",
-						new GraphQLField(
-							"account",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Account testGraphQLGetAccount_addAccount() throws Exception {
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testPatchAccount() throws Exception {
 		Assert.assertTrue(false);
 	}
 

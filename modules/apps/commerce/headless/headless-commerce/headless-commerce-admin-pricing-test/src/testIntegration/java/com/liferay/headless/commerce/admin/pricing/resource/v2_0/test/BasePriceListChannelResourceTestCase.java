@@ -454,29 +454,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceListChannel()
-		throws Exception {
-
-		PriceListChannel randomPriceListChannel = randomPriceListChannel();
-
-		PriceListChannel postPriceListChannel =
-			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
-				randomPriceListChannel);
-
-		assertEquals(randomPriceListChannel, postPriceListChannel);
-		assertValid(postPriceListChannel);
-	}
-
-	protected PriceListChannel
-			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
-				PriceListChannel priceListChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceListChannelsPage() throws Exception {
 		Long id = testGetPriceListIdPriceListChannelsPage_getId();
 		Long irrelevantId =
@@ -914,6 +891,29 @@ public abstract class BasePriceListChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListChannel()
+		throws Exception {
+
+		PriceListChannel randomPriceListChannel = randomPriceListChannel();
+
+		PriceListChannel postPriceListChannel =
+			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
+				randomPriceListChannel);
+
+		assertEquals(randomPriceListChannel, postPriceListChannel);
+		assertValid(postPriceListChannel);
+	}
+
+	protected PriceListChannel
+			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
+				PriceListChannel priceListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

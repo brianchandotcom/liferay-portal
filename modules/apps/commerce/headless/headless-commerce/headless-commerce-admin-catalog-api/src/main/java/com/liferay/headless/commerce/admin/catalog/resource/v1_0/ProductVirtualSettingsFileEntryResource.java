@@ -53,17 +53,17 @@ public interface ProductVirtualSettingsFileEntryResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<ProductVirtualSettingsFileEntry>
+			getProductVirtualSettingIdProductVirtualSettingsFileEntriesPage(
+				Long id, Pagination pagination)
+		throws Exception;
+
 	public ProductVirtualSettingsFileEntry getProductVirtualSettingsFileEntry(
 			Long id)
 		throws Exception;
 
 	public ProductVirtualSettingsFileEntry patchProductVirtualSettingsFileEntry(
 			Long id, MultipartBody multipartBody)
-		throws Exception;
-
-	public Page<ProductVirtualSettingsFileEntry>
-			getProductVirtualSettingIdProductVirtualSettingsFileEntriesPage(
-				Long id, Pagination pagination)
 		throws Exception;
 
 	public ProductVirtualSettingsFileEntry

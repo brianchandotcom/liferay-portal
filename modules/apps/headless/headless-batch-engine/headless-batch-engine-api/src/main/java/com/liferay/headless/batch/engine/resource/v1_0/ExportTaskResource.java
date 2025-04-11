@@ -42,6 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExportTaskResource {
 
+	public ExportTask getExportTask(Long exportTaskId) throws Exception;
+
 	public ExportTask getExportTaskByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -50,15 +52,13 @@ public interface ExportTaskResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public Response getExportTaskContent(Long exportTaskId) throws Exception;
+
 	public ExportTask postExportTask(
 			String className, String contentType, String batchNestedFields,
 			String callbackURL, String externalReferenceCode, String fieldNames,
 			String taskItemDelegateName)
 		throws Exception;
-
-	public ExportTask getExportTask(Long exportTaskId) throws Exception;
-
-	public Response getExportTaskContent(Long exportTaskId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

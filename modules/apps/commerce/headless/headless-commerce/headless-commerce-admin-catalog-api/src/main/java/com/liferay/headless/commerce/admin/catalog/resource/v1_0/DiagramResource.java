@@ -44,18 +44,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DiagramResource {
 
-	public Diagram patchDiagram(Long diagramId, Diagram diagram)
-		throws Exception;
-
 	public Diagram getProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Diagram getProductIdDiagram(Long id) throws Exception;
+
+	public Diagram patchDiagram(Long diagramId, Diagram diagram)
 		throws Exception;
 
 	public Diagram postProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode, Diagram diagram)
 		throws Exception;
-
-	public Diagram getProductIdDiagram(Long id) throws Exception;
 
 	public Diagram postProductIdDiagram(Long id, Diagram diagram)
 		throws Exception;

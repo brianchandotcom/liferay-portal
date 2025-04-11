@@ -46,12 +46,34 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductSpecificationResource {
 
+	public void deleteProductSpecification(Long id) throws Exception;
+
+	public Response deleteProductSpecificationBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteProductSpecificationByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<ProductSpecification>
+			getProductByExternalReferenceCodeProductSpecificationsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<ProductSpecification> getProductIdProductSpecificationsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public ProductSpecification getProductSpecification(Long id)
+		throws Exception;
+
 	public ProductSpecification getProductSpecificationByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public ProductSpecification patchProductSpecification(
+			Long id, ProductSpecification productSpecification)
 		throws Exception;
 
 	public ProductSpecification
@@ -60,32 +82,10 @@ public interface ProductSpecificationResource {
 				ProductSpecification productSpecification)
 		throws Exception;
 
-	public void deleteProductSpecification(Long id) throws Exception;
-
-	public Response deleteProductSpecificationBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ProductSpecification getProductSpecification(Long id)
-		throws Exception;
-
-	public ProductSpecification patchProductSpecification(
-			Long id, ProductSpecification productSpecification)
-		throws Exception;
-
-	public Page<ProductSpecification>
-			getProductByExternalReferenceCodeProductSpecificationsPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
 	public ProductSpecification
 			postProductByExternalReferenceCodeProductSpecification(
 				String externalReferenceCode,
 				ProductSpecification productSpecification)
-		throws Exception;
-
-	public Page<ProductSpecification> getProductIdProductSpecificationsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public ProductSpecification postProductIdProductSpecification(

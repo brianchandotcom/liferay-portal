@@ -46,7 +46,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderTypeResource {
 
+	public void deleteOrderType(Long id) throws Exception;
+
+	public Response deleteOrderTypeBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteOrderTypeByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public OrderType getOrderRuleOrderTypeOrderType(Long orderRuleOrderTypeId)
+		throws Exception;
+
+	public OrderType getOrderType(Long id) throws Exception;
+
+	public OrderType getOrderTypeByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<OrderType> getOrderTypesPage(
@@ -56,11 +71,14 @@ public interface OrderTypeResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postOrderTypesPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public OrderType getTermOrderTypeOrderType(Long termOrderTypeId)
+		throws Exception;
+
+	public OrderType patchOrderType(Long id, OrderType orderType)
+		throws Exception;
+
+	public OrderType patchOrderTypeByExternalReferenceCode(
+			String externalReferenceCode, OrderType orderType)
 		throws Exception;
 
 	public OrderType postOrderType(OrderType orderType) throws Exception;
@@ -68,33 +86,15 @@ public interface OrderTypeResource {
 	public Response postOrderTypeBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderType getOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderType patchOrderTypeByExternalReferenceCode(
-			String externalReferenceCode, OrderType orderType)
+	public Response postOrderTypesPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public OrderType putOrderTypeByExternalReferenceCode(
 			String externalReferenceCode, OrderType orderType)
-		throws Exception;
-
-	public void deleteOrderType(Long id) throws Exception;
-
-	public Response deleteOrderTypeBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public OrderType getOrderType(Long id) throws Exception;
-
-	public OrderType patchOrderType(Long id, OrderType orderType)
-		throws Exception;
-
-	public OrderType getTermOrderTypeOrderType(Long termOrderTypeId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

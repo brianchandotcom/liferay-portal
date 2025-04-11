@@ -50,12 +50,12 @@ public interface TaxCategoryResource {
 			String search, Pagination pagination)
 		throws Exception;
 
+	public TaxCategory getTaxCategory(Long id) throws Exception;
+
 	public Response postTaxCategoriesPageExportBatch(
 			String search, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
-
-	public TaxCategory getTaxCategory(Long id) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

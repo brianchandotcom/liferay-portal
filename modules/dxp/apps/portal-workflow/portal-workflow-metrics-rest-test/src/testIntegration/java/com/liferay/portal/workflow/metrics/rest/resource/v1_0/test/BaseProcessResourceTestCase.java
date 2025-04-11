@@ -222,23 +222,6 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
-	public void testPostProcess() throws Exception {
-		Process randomProcess = randomProcess();
-
-		Process postProcess = testPostProcess_addProcess(randomProcess);
-
-		assertEquals(randomProcess, postProcess);
-		assertValid(postProcess);
-	}
-
-	protected Process testPostProcess_addProcess(Process process)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteProcess() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Process process = testDeleteProcess_addProcess();
@@ -659,6 +642,28 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessTitle() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostProcess() throws Exception {
+		Process randomProcess = randomProcess();
+
+		Process postProcess = testPostProcess_addProcess(randomProcess);
+
+		assertEquals(randomProcess, postProcess);
+		assertValid(postProcess);
+	}
+
+	protected Process testPostProcess_addProcess(Process process)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutProcess() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Process process = testPutProcess_addProcess();
@@ -674,11 +679,6 @@ public abstract class BaseProcessResourceTestCase {
 	protected Process testPutProcess_addProcess() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProcessTitle() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	protected Process testGraphQLProcess_addProcess() throws Exception {

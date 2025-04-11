@@ -48,15 +48,32 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KnowledgeBaseAttachmentResource {
 
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+		throws Exception;
+
+	public Response deleteKnowledgeBaseAttachmentBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void
+			deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 				Long knowledgeBaseArticleId)
 		throws Exception;
 
-	public Response
-			postKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
-				Long knowledgeBaseArticleId, String callbackURL,
-				String contentType, String fieldNames)
+	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+			Long knowledgeBaseAttachmentId)
+		throws Exception;
+
+	public KnowledgeBaseAttachment
+			getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public KnowledgeBaseAttachment
@@ -69,27 +86,10 @@ public interface KnowledgeBaseAttachmentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
-		throws Exception;
-
-	public Response deleteKnowledgeBaseAttachmentBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			Long knowledgeBaseAttachmentId)
-		throws Exception;
-
-	public void
-			deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public KnowledgeBaseAttachment
-			getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
-				String externalReferenceCode)
+	public Response
+			postKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
+				Long knowledgeBaseArticleId, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

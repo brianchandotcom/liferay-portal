@@ -235,6 +235,183 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSku() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku sku = testDeleteSku_addSku();
+
+		assertHttpResponseStatusCode(
+			204, skuResource.deleteSkuHttpResponse(sku.getId()));
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku.getId()));
+		assertHttpResponseStatusCode(404, skuResource.getSkuHttpResponse(0L));
+	}
+
+	protected Sku testDeleteSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSku() throws Exception {
+
+		// No namespace
+
+		Sku sku1 = testGraphQLDeleteSku_addSku();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSku",
+						new HashMap<String, Object>() {
+							{
+								put("id", sku1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSku"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"sku",
+					new HashMap<String, Object>() {
+						{
+							put("id", sku1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Sku sku2 = testGraphQLDeleteSku_addSku();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSku",
+							new HashMap<String, Object>() {
+								{
+									put("id", sku2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSku"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"sku",
+						new HashMap<String, Object>() {
+							{
+								put("id", sku2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Sku testGraphQLDeleteSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
+	}
+
+	@Test
+	public void testDeleteSkuBatch() throws Exception {
+		Sku sku1 = testDeleteSkuBatch_addSku();
+
+		testDeleteSkuBatch_deleteSku("COMPLETED", null, sku1.getId());
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku1.getId()));
+
+		Sku sku2 = testDeleteSkuBatch_addSku();
+
+		testDeleteSkuBatch_deleteSku(
+			"COMPLETED", sku2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku2.getId()));
+
+		sku1 = testDeleteSkuBatch_addSku();
+		sku2 = testDeleteSkuBatch_addSku();
+
+		testDeleteSkuBatch_deleteSku(
+			"COMPLETED", sku2.getExternalReferenceCode(), sku1.getId());
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku1.getId()));
+		assertHttpResponseStatusCode(
+			200, skuResource.getSkuHttpResponse(sku2.getId()));
+
+		testDeleteSkuBatch_deleteSku(
+			"COMPLETED", sku2.getExternalReferenceCode(), sku1.getId());
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku2.getId()));
+	}
+
+	protected Sku testDeleteSkuBatch_addSku() throws Exception {
+		return testDeleteSku_addSku();
+	}
+
+	protected void testDeleteSkuBatch_deleteSku(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			skuResource.deleteSkuBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteSkuByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku sku = testDeleteSkuByExternalReferenceCode_addSku();
+
+		assertHttpResponseStatusCode(
+			204,
+			skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
+				sku.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			skuResource.getSkuByExternalReferenceCodeHttpResponse(
+				sku.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Sku testDeleteSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeSkusPage()
 		throws Exception {
 
@@ -409,24 +586,6 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeSku() throws Exception {
-		Sku randomSku = randomSku();
-
-		Sku postSku = testPostProductByExternalReferenceCodeSku_addSku(
-			randomSku);
-
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
-	}
-
-	protected Sku testPostProductByExternalReferenceCodeSku_addSku(Sku sku)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdSkusPage() throws Exception {
 		Long id = testGetProductIdSkusPage_getId();
 		Long irrelevantId = testGetProductIdSkusPage_getIrrelevantId();
@@ -565,18 +724,420 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductIdSku() throws Exception {
-		Sku randomSku = randomSku();
+	public void testGetSku() throws Exception {
+		Sku postSku = testGetSku_addSku();
 
-		Sku postSku = testPostProductIdSku_addSku(randomSku);
+		Sku getSku = skuResource.getSku(postSku.getId());
 
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
 	}
 
-	protected Sku testPostProductIdSku_addSku(Sku sku) throws Exception {
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		Sku postSku = testGetSku_addSku();
+
+		Sku getSku = skuResource.getSku(postSku.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postSku.getId());
+
+		assertEquals(getSku, SkuSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected Sku testGetSku_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSku() throws Exception {
+		Sku sku = testGraphQLGetSku_addSku();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"sku",
+								new HashMap<String, Object>() {
+									{
+										put("id", sku.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/sku"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"sku",
+									new HashMap<String, Object>() {
+										{
+											put("id", sku.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/sku"))));
+	}
+
+	@Test
+	public void testGraphQLGetSkuNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sku",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"sku",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
+	}
+
+	@Test
+	public void testGetSkuByExternalReferenceCode() throws Exception {
+		Sku postSku = testGetSkuByExternalReferenceCode_addSku();
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode());
+
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testGetSkuByExternalReferenceCode_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
+		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"skuByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												sku.getExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/skuByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"skuByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													sku.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/skuByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSkuByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"skuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"skuByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		return testGraphQLSku_addSku();
 	}
 
 	@Test
@@ -944,699 +1505,6 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSkuByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku sku = testDeleteSkuByExternalReferenceCode_addSku();
-
-		assertHttpResponseStatusCode(
-			204,
-			skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Sku testDeleteSkuByExternalReferenceCode_addSku()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSkuByExternalReferenceCode() throws Exception {
-		Sku postSku = testGetSkuByExternalReferenceCode_addSku();
-
-		Sku getSku = skuResource.getSkuByExternalReferenceCode(
-			postSku.getExternalReferenceCode());
-
-		assertEquals(postSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Sku testGetSkuByExternalReferenceCode_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
-		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"skuByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												sku.getExternalReferenceCode() +
-													"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/skuByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"skuByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													sku.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/skuByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetSkuByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"skuByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"skuByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Sku testGraphQLGetSkuByExternalReferenceCode_addSku()
-		throws Exception {
-
-		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testPatchSkuByExternalReferenceCode() throws Exception {
-		Sku postSku = testPatchSkuByExternalReferenceCode_addSku();
-
-		Sku randomPatchSku = randomPatchSku();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku patchSku = skuResource.patchSkuByExternalReferenceCode(
-			postSku.getExternalReferenceCode(), randomPatchSku);
-
-		Sku expectedPatchSku = postSku.clone();
-
-		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
-
-		Sku getSku = skuResource.getSkuByExternalReferenceCode(
-			patchSku.getExternalReferenceCode());
-
-		assertEquals(expectedPatchSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Sku testPatchSkuByExternalReferenceCode_addSku()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSkuByExternalReferenceCode() throws Exception {
-		Sku postSku = testPutSkuByExternalReferenceCode_addSku();
-
-		Sku randomSku = randomSku();
-
-		Sku putSku = skuResource.putSkuByExternalReferenceCode(
-			postSku.getExternalReferenceCode(), randomSku);
-
-		assertEquals(randomSku, putSku);
-		assertValid(putSku);
-
-		Sku getSku = skuResource.getSkuByExternalReferenceCode(
-			putSku.getExternalReferenceCode());
-
-		assertEquals(randomSku, getSku);
-		assertValid(getSku);
-
-		Sku newSku = testPutSkuByExternalReferenceCode_createSku();
-
-		putSku = skuResource.putSkuByExternalReferenceCode(
-			newSku.getExternalReferenceCode(), newSku);
-
-		assertEquals(newSku, putSku);
-		assertValid(putSku);
-
-		getSku = skuResource.getSkuByExternalReferenceCode(
-			putSku.getExternalReferenceCode());
-
-		assertEquals(newSku, getSku);
-
-		Assert.assertEquals(
-			newSku.getExternalReferenceCode(),
-			putSku.getExternalReferenceCode());
-	}
-
-	protected Sku testPutSkuByExternalReferenceCode_createSku()
-		throws Exception {
-
-		return randomSku();
-	}
-
-	protected Sku testPutSkuByExternalReferenceCode_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSku() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku sku = testDeleteSku_addSku();
-
-		assertHttpResponseStatusCode(
-			204, skuResource.deleteSkuHttpResponse(sku.getId()));
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku.getId()));
-		assertHttpResponseStatusCode(404, skuResource.getSkuHttpResponse(0L));
-	}
-
-	protected Sku testDeleteSku_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteSku() throws Exception {
-
-		// No namespace
-
-		Sku sku1 = testGraphQLDeleteSku_addSku();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSku",
-						new HashMap<String, Object>() {
-							{
-								put("id", sku1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSku"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"sku",
-					new HashMap<String, Object>() {
-						{
-							put("id", sku1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Sku sku2 = testGraphQLDeleteSku_addSku();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteSku",
-							new HashMap<String, Object>() {
-								{
-									put("id", sku2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteSku"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminCatalog_v1_0",
-					new GraphQLField(
-						"sku",
-						new HashMap<String, Object>() {
-							{
-								put("id", sku2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected Sku testGraphQLDeleteSku_addSku() throws Exception {
-		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testDeleteSkuBatch() throws Exception {
-		Sku sku1 = testDeleteSkuBatch_addSku();
-
-		testDeleteSkuBatch_deleteSku("COMPLETED", null, sku1.getId());
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku1.getId()));
-
-		Sku sku2 = testDeleteSkuBatch_addSku();
-
-		testDeleteSkuBatch_deleteSku(
-			"COMPLETED", sku2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku2.getId()));
-
-		sku1 = testDeleteSkuBatch_addSku();
-		sku2 = testDeleteSkuBatch_addSku();
-
-		testDeleteSkuBatch_deleteSku(
-			"COMPLETED", sku2.getExternalReferenceCode(), sku1.getId());
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku1.getId()));
-		assertHttpResponseStatusCode(
-			200, skuResource.getSkuHttpResponse(sku2.getId()));
-
-		testDeleteSkuBatch_deleteSku(
-			"COMPLETED", sku2.getExternalReferenceCode(), sku1.getId());
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku2.getId()));
-	}
-
-	protected Sku testDeleteSkuBatch_addSku() throws Exception {
-		return testDeleteSku_addSku();
-	}
-
-	protected void testDeleteSkuBatch_deleteSku(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			skuResource.deleteSkuBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetSku() throws Exception {
-		Sku postSku = testGetSku_addSku();
-
-		Sku getSku = skuResource.getSku(postSku.getId());
-
-		assertEquals(postSku, getSku);
-		assertValid(getSku);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		Sku postSku = testGetSku_addSku();
-
-		Sku getSku = skuResource.getSku(postSku.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postSku.getId());
-
-		assertEquals(getSku, SkuSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected Sku testGetSku_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSku() throws Exception {
-		Sku sku = testGraphQLGetSku_addSku();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"sku",
-								new HashMap<String, Object>() {
-									{
-										put("id", sku.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/sku"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"sku",
-									new HashMap<String, Object>() {
-										{
-											put("id", sku.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/sku"))));
-	}
-
-	@Test
-	public void testGraphQLGetSkuNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"sku",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"sku",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Sku testGraphQLGetSku_addSku() throws Exception {
-		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testPatchSku() throws Exception {
-		Sku postSku = testPatchSku_addSku();
-
-		Sku randomPatchSku = randomPatchSku();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku patchSku = skuResource.patchSku(postSku.getId(), randomPatchSku);
-
-		Sku expectedPatchSku = postSku.clone();
-
-		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
-
-		Sku getSku = skuResource.getSku(patchSku.getId());
-
-		assertEquals(expectedPatchSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Sku testPatchSku_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetUnitOfMeasureSkusPage() throws Exception {
 		Page<Sku> page = skuResource.getUnitOfMeasureSkusPage(
 			null, null, Pagination.of(1, 10), null);
@@ -1953,6 +1821,138 @@ public abstract class BaseSkuResourceTestCase {
 	protected Sku testGetUnitOfMeasureSkusPage_addSku(Sku sku)
 		throws Exception {
 
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSku() throws Exception {
+		Sku postSku = testPatchSku_addSku();
+
+		Sku randomPatchSku = randomPatchSku();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku patchSku = skuResource.patchSku(postSku.getId(), randomPatchSku);
+
+		Sku expectedPatchSku = postSku.clone();
+
+		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
+
+		Sku getSku = skuResource.getSku(patchSku.getId());
+
+		assertEquals(expectedPatchSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testPatchSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSkuByExternalReferenceCode() throws Exception {
+		Sku postSku = testPatchSkuByExternalReferenceCode_addSku();
+
+		Sku randomPatchSku = randomPatchSku();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku patchSku = skuResource.patchSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode(), randomPatchSku);
+
+		Sku expectedPatchSku = postSku.clone();
+
+		BeanTestUtil.copyProperties(randomPatchSku, expectedPatchSku);
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			patchSku.getExternalReferenceCode());
+
+		assertEquals(expectedPatchSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testPatchSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeSku() throws Exception {
+		Sku randomSku = randomSku();
+
+		Sku postSku = testPostProductByExternalReferenceCodeSku_addSku(
+			randomSku);
+
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
+	}
+
+	protected Sku testPostProductByExternalReferenceCodeSku_addSku(Sku sku)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductIdSku() throws Exception {
+		Sku randomSku = randomSku();
+
+		Sku postSku = testPostProductIdSku_addSku(randomSku);
+
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
+	}
+
+	protected Sku testPostProductIdSku_addSku(Sku sku) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSkuByExternalReferenceCode() throws Exception {
+		Sku postSku = testPutSkuByExternalReferenceCode_addSku();
+
+		Sku randomSku = randomSku();
+
+		Sku putSku = skuResource.putSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode(), randomSku);
+
+		assertEquals(randomSku, putSku);
+		assertValid(putSku);
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			putSku.getExternalReferenceCode());
+
+		assertEquals(randomSku, getSku);
+		assertValid(getSku);
+
+		Sku newSku = testPutSkuByExternalReferenceCode_createSku();
+
+		putSku = skuResource.putSkuByExternalReferenceCode(
+			newSku.getExternalReferenceCode(), newSku);
+
+		assertEquals(newSku, putSku);
+		assertValid(putSku);
+
+		getSku = skuResource.getSkuByExternalReferenceCode(
+			putSku.getExternalReferenceCode());
+
+		assertEquals(newSku, getSku);
+
+		Assert.assertEquals(
+			newSku.getExternalReferenceCode(),
+			putSku.getExternalReferenceCode());
+	}
+
+	protected Sku testPutSkuByExternalReferenceCode_createSku()
+		throws Exception {
+
+		return randomSku();
+	}
+
+	protected Sku testPutSkuByExternalReferenceCode_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

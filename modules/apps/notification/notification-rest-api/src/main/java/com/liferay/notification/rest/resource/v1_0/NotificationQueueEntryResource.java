@@ -46,11 +46,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NotificationQueueEntryResource {
 
+	public void deleteNotificationQueueEntry(Long notificationQueueEntryId)
+		throws Exception;
+
+	public Response deleteNotificationQueueEntryBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<NotificationQueueEntry> getNotificationQueueEntriesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public NotificationQueueEntry getNotificationQueueEntry(
+			Long notificationQueueEntryId)
 		throws Exception;
 
 	public Response postNotificationQueueEntriesPageExportBatch(
@@ -66,17 +77,6 @@ public interface NotificationQueueEntryResource {
 
 	public Response postNotificationQueueEntryBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteNotificationQueueEntry(Long notificationQueueEntryId)
-		throws Exception;
-
-	public Response deleteNotificationQueueEntryBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public NotificationQueueEntry getNotificationQueueEntry(
-			Long notificationQueueEntryId)
 		throws Exception;
 
 	public void putNotificationQueueEntryResend(Long notificationQueueEntryId)

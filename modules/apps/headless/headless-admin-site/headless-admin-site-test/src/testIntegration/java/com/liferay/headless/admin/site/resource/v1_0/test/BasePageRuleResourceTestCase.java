@@ -179,6 +179,13 @@ public abstract class BasePageRuleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodePageRule()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageExperiencePageRulesPage()
 		throws Exception {
 
@@ -303,36 +310,6 @@ public abstract class BasePageRuleResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteSiteByExternalReferenceCodePageExperiencePageRule()
-		throws Exception {
-
-		PageRule randomPageRule = randomPageRule();
-
-		PageRule postPageRule =
-			testPostSiteSiteByExternalReferenceCodePageExperiencePageRule_addPageRule(
-				randomPageRule);
-
-		assertEquals(randomPageRule, postPageRule);
-		assertValid(postPageRule);
-	}
-
-	protected PageRule
-			testPostSiteSiteByExternalReferenceCodePageExperiencePageRule_addPageRule(
-				PageRule pageRule)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodePageRule()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageRule()
 		throws Exception {
 
@@ -358,6 +335,29 @@ public abstract class BasePageRuleResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageExperiencePageRule()
+		throws Exception {
+
+		PageRule randomPageRule = randomPageRule();
+
+		PageRule postPageRule =
+			testPostSiteSiteByExternalReferenceCodePageExperiencePageRule_addPageRule(
+				randomPageRule);
+
+		assertEquals(randomPageRule, postPageRule);
+		assertValid(postPageRule);
+	}
+
+	protected PageRule
+			testPostSiteSiteByExternalReferenceCodePageExperiencePageRule_addPageRule(
+				PageRule pageRule)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

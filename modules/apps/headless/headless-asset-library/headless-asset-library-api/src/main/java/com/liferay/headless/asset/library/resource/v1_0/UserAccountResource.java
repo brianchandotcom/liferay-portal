@@ -49,14 +49,11 @@ public interface UserAccountResource {
 				String userExternalReferenceCode)
 		throws Exception;
 
-	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userExternalReferenceCode)
+	public void deleteAssetLibraryUserAccount(Long assetLibraryId, Long userId)
 		throws Exception;
 
 	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
 				String userExternalReferenceCode)
 		throws Exception;
@@ -68,17 +65,20 @@ public interface UserAccountResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public UserAccount getAssetLibraryUserAccount(
+			Long assetLibraryId, Long userId)
+		throws Exception;
+
 	public Page<UserAccount> getAssetLibraryUserAccountsPage(
 			Long assetLibraryId, String keywords, String search,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public void deleteAssetLibraryUserAccount(Long assetLibraryId, Long userId)
-		throws Exception;
-
-	public UserAccount getAssetLibraryUserAccount(
-			Long assetLibraryId, Long userId)
+	public UserAccount
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String userExternalReferenceCode)
 		throws Exception;
 
 	public UserAccount putAssetLibraryUserAccount(

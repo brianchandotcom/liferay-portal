@@ -46,6 +46,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectLayoutResource {
 
+	public void deleteObjectLayout(Long objectLayoutId) throws Exception;
+
+	public Response deleteObjectLayoutBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectLayout>
 			getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
 				String externalReferenceCode, String search,
@@ -53,19 +58,15 @@ public interface ObjectLayoutResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ObjectLayout postObjectDefinitionByExternalReferenceCodeObjectLayout(
-			String externalReferenceCode, ObjectLayout objectLayout)
-		throws Exception;
-
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			Long objectDefinitionId, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectLayoutsPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception;
+
+	public ObjectLayout postObjectDefinitionByExternalReferenceCodeObjectLayout(
+			String externalReferenceCode, ObjectLayout objectLayout)
 		throws Exception;
 
 	public ObjectLayout postObjectDefinitionObjectLayout(
@@ -76,12 +77,11 @@ public interface ObjectLayoutResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectLayout(Long objectLayoutId) throws Exception;
-
-	public Response deleteObjectLayoutBatch(String callbackURL, Object object)
+	public Response postObjectDefinitionObjectLayoutsPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
-
-	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception;
 
 	public ObjectLayout putObjectLayout(
 			Long objectLayoutId, ObjectLayout objectLayout)

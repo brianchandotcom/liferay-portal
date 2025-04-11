@@ -454,29 +454,6 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehouseByExternalReferenceCodeWarehouseAccount()
-		throws Exception {
-
-		WarehouseAccount randomWarehouseAccount = randomWarehouseAccount();
-
-		WarehouseAccount postWarehouseAccount =
-			testPostWarehouseByExternalReferenceCodeWarehouseAccount_addWarehouseAccount(
-				randomWarehouseAccount);
-
-		assertEquals(randomWarehouseAccount, postWarehouseAccount);
-		assertValid(postWarehouseAccount);
-	}
-
-	protected WarehouseAccount
-			testPostWarehouseByExternalReferenceCodeWarehouseAccount_addWarehouseAccount(
-				WarehouseAccount warehouseAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehouseIdWarehouseAccountsPage() throws Exception {
 		Long id = testGetWarehouseIdWarehouseAccountsPage_getId();
 		Long irrelevantId =
@@ -914,6 +891,29 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostWarehouseByExternalReferenceCodeWarehouseAccount()
+		throws Exception {
+
+		WarehouseAccount randomWarehouseAccount = randomWarehouseAccount();
+
+		WarehouseAccount postWarehouseAccount =
+			testPostWarehouseByExternalReferenceCodeWarehouseAccount_addWarehouseAccount(
+				randomWarehouseAccount);
+
+		assertEquals(randomWarehouseAccount, postWarehouseAccount);
+		assertValid(postWarehouseAccount);
+	}
+
+	protected WarehouseAccount
+			testPostWarehouseByExternalReferenceCodeWarehouseAccount_addWarehouseAccount(
+				WarehouseAccount warehouseAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

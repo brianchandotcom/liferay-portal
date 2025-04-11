@@ -51,21 +51,21 @@ public interface GroupedProductResource {
 	public Response deleteGroupedProductBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public GroupedProduct patchGroupedProduct(
-			Long groupedProductId, GroupedProduct groupedProduct)
-		throws Exception;
-
 	public Page<GroupedProduct>
 			getProductByExternalReferenceCodeGroupedProductsPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public GroupedProduct postProductByExternalReferenceCodeGroupedProduct(
-			String externalReferenceCode, GroupedProduct groupedProduct)
-		throws Exception;
-
 	public Page<GroupedProduct> getProductIdGroupedProductsPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public GroupedProduct patchGroupedProduct(
+			Long groupedProductId, GroupedProduct groupedProduct)
+		throws Exception;
+
+	public GroupedProduct postProductByExternalReferenceCodeGroupedProduct(
+			String externalReferenceCode, GroupedProduct groupedProduct)
 		throws Exception;
 
 	public GroupedProduct postProductIdGroupedProduct(

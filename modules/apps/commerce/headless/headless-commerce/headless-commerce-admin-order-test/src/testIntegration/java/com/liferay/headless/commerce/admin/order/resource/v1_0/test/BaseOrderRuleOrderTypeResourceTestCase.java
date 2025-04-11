@@ -461,30 +461,6 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType()
-		throws Exception {
-
-		OrderRuleOrderType randomOrderRuleOrderType =
-			randomOrderRuleOrderType();
-
-		OrderRuleOrderType postOrderRuleOrderType =
-			testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType_addOrderRuleOrderType(
-				randomOrderRuleOrderType);
-
-		assertEquals(randomOrderRuleOrderType, postOrderRuleOrderType);
-		assertValid(postOrderRuleOrderType);
-	}
-
-	protected OrderRuleOrderType
-			testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType_addOrderRuleOrderType(
-				OrderRuleOrderType orderRuleOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrderRuleIdOrderRuleOrderTypesPage() throws Exception {
 		Long id = testGetOrderRuleIdOrderRuleOrderTypesPage_getId();
 		Long irrelevantId =
@@ -682,6 +658,30 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType()
+		throws Exception {
+
+		OrderRuleOrderType randomOrderRuleOrderType =
+			randomOrderRuleOrderType();
+
+		OrderRuleOrderType postOrderRuleOrderType =
+			testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType_addOrderRuleOrderType(
+				randomOrderRuleOrderType);
+
+		assertEquals(randomOrderRuleOrderType, postOrderRuleOrderType);
+		assertValid(postOrderRuleOrderType);
+	}
+
+	protected OrderRuleOrderType
+			testPostOrderRuleByExternalReferenceCodeOrderRuleOrderType_addOrderRuleOrderType(
+				OrderRuleOrderType orderRuleOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

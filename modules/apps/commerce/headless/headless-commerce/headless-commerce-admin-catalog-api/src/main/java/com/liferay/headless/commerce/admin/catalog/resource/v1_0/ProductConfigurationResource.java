@@ -46,6 +46,27 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductConfigurationResource {
 
+	public void deleteProductConfiguration(Long id) throws Exception;
+
+	public Response deleteProductConfigurationBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProductConfigurationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductConfiguration getProductConfiguration(Long id)
+		throws Exception;
+
+	public ProductConfiguration getProductConfigurationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<ProductConfiguration>
 			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
 				String externalReferenceCode, String search,
@@ -53,12 +74,6 @@ public interface ProductConfigurationResource {
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ProductConfiguration
-			postProductConfigurationListByExternalReferenceCodeProductConfiguration(
-				String externalReferenceCode,
-				ProductConfiguration productConfiguration)
 		throws Exception;
 
 	public Page<ProductConfiguration>
@@ -69,21 +84,16 @@ public interface ProductConfigurationResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ProductConfiguration
-			postProductConfigurationListIdProductConfiguration(
-				Long id, ProductConfiguration productConfiguration)
+	public ProductConfiguration getProductIdConfiguration(Long id)
 		throws Exception;
 
-	public Response postProductConfigurationListIdProductConfigurationBatch(
-			String callbackURL, Object object)
+	public Response patchProductByExternalReferenceCodeConfiguration(
+			String externalReferenceCode,
+			ProductConfiguration productConfiguration)
 		throws Exception;
 
-	public void deleteProductConfigurationByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ProductConfiguration getProductConfigurationByExternalReferenceCode(
-			String externalReferenceCode)
+	public ProductConfiguration patchProductConfiguration(
+			Long id, ProductConfiguration productConfiguration)
 		throws Exception;
 
 	public ProductConfiguration
@@ -92,33 +102,23 @@ public interface ProductConfigurationResource {
 				ProductConfiguration productConfiguration)
 		throws Exception;
 
-	public void deleteProductConfiguration(Long id) throws Exception;
-
-	public Response deleteProductConfigurationBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ProductConfiguration getProductConfiguration(Long id)
-		throws Exception;
-
-	public ProductConfiguration patchProductConfiguration(
-			Long id, ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchProductByExternalReferenceCodeConfiguration(
-			String externalReferenceCode,
-			ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public ProductConfiguration getProductIdConfiguration(Long id)
-		throws Exception;
-
 	public Response patchProductIdConfiguration(
 			Long id, ProductConfiguration productConfiguration)
+		throws Exception;
+
+	public ProductConfiguration
+			postProductConfigurationListByExternalReferenceCodeProductConfiguration(
+				String externalReferenceCode,
+				ProductConfiguration productConfiguration)
+		throws Exception;
+
+	public ProductConfiguration
+			postProductConfigurationListIdProductConfiguration(
+				Long id, ProductConfiguration productConfiguration)
+		throws Exception;
+
+	public Response postProductConfigurationListIdProductConfigurationBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

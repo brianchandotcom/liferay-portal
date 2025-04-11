@@ -58,16 +58,16 @@ public interface PriceListAccountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public PriceListAccount
-			postPriceListByExternalReferenceCodePriceListAccount(
-				String externalReferenceCode, PriceListAccount priceListAccount)
-		throws Exception;
-
 	public Page<PriceListAccount> getPriceListIdPriceListAccountsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public PriceListAccount
+			postPriceListByExternalReferenceCodePriceListAccount(
+				String externalReferenceCode, PriceListAccount priceListAccount)
 		throws Exception;
 
 	public PriceListAccount postPriceListIdPriceListAccount(

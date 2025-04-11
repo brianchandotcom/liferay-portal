@@ -195,6 +195,57 @@ public abstract class BaseMasterPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPageNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		MasterPage postMasterPage =
+			testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage_addMasterPage();
+
+		Page<Permission> page =
+			masterPageResource.
+				getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
+					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected MasterPage
+			testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPage()
 		throws Exception {
 
@@ -650,6 +701,38 @@ public abstract class BaseMasterPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
+		throws Exception {
+
+		MasterPage postMasterPage =
+			testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage_addMasterPage();
+
+		Page<Permission> page =
+			masterPageResource.
+				getSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
+					testGroup.getExternalReferenceCode(),
+					postMasterPage.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected MasterPage
+			testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
@@ -673,26 +756,10 @@ public abstract class BaseMasterPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
+	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		MasterPage postMasterPage =
-			testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage_addMasterPage();
-
-		Page<Permission> page =
-			masterPageResource.
-				getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected MasterPage
-			testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage_addMasterPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -738,73 +805,6 @@ public abstract class BaseMasterPageResourceTestCase {
 
 	protected MasterPage
 			testPutSiteSiteByExternalReferenceCodeMasterPagePermissionsPage_addMasterPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeMasterPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeMasterPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPageNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodeMasterPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
-		throws Exception {
-
-		MasterPage postMasterPage =
-			testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage_addMasterPage();
-
-		Page<Permission> page =
-			masterPageResource.
-				getSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postMasterPage.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected MasterPage
-			testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage_addMasterPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -58,14 +58,14 @@ public interface OrderRuleOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<OrderRuleOrderType> getOrderRuleIdOrderRuleOrderTypesPage(
+			Long id, String search, Pagination pagination)
+		throws Exception;
+
 	public OrderRuleOrderType
 			postOrderRuleByExternalReferenceCodeOrderRuleOrderType(
 				String externalReferenceCode,
 				OrderRuleOrderType orderRuleOrderType)
-		throws Exception;
-
-	public Page<OrderRuleOrderType> getOrderRuleIdOrderRuleOrderTypesPage(
-			Long id, String search, Pagination pagination)
 		throws Exception;
 
 	public OrderRuleOrderType postOrderRuleIdOrderRuleOrderType(

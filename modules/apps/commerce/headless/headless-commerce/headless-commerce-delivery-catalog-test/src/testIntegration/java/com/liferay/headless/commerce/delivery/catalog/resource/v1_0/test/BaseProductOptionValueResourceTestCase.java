@@ -497,13 +497,6 @@ public abstract class BaseProductOptionValueResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetChannelProductProductOptionProductOptionValuesPage()
 		throws Exception {
 
@@ -776,6 +769,13 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -94,14 +94,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "patchKeywordBatch"));
 					put(
-						"mutation#updateKeywordBatch",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "putKeywordBatch"));
-					put(
 						"mutation#createKeywordsCommonPage",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
 							"postKeywordsCommonPage"));
+					put(
+						"mutation#updateKeywordBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "putKeywordBatch"));
 					put(
 						"mutation#createBulkSelection",
 						new ObjectValuePair<>(

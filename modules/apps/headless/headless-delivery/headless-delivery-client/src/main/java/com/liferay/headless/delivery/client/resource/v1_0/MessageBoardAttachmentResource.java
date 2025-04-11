@@ -51,6 +51,18 @@ public interface MessageBoardAttachmentResource {
 				String callbackURL, Object object)
 		throws Exception;
 
+	public void
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception;
@@ -69,15 +81,26 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
-	public void postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
-			Long messageBoardMessageId, String callbackURL, String contentType,
-			String fieldNames)
+	public Page<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
-				Long messageBoardMessageId, String callbackURL,
-				String contentType, String fieldNames)
+			getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
+				Long messageBoardThreadId)
+		throws Exception;
+
+	public MessageBoardAttachment
+			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
@@ -107,24 +130,14 @@ public interface MessageBoardAttachmentResource {
 				Object object)
 		throws Exception;
 
-	public Page<MessageBoardAttachment>
-			getMessageBoardThreadMessageBoardAttachmentsPage(
-				Long messageBoardThreadId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
-				Long messageBoardThreadId)
-		throws Exception;
-
-	public void postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
-			Long messageBoardThreadId, String callbackURL, String contentType,
+	public void postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
+			Long messageBoardMessageId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
-				Long messageBoardThreadId, String callbackURL,
+			postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
+				Long messageBoardMessageId, String callbackURL,
 				String contentType, String fieldNames)
 		throws Exception;
 
@@ -155,28 +168,15 @@ public interface MessageBoardAttachmentResource {
 				Object object)
 		throws Exception;
 
-	public void
-			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
+	public void postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
+			Long messageBoardThreadId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public MessageBoardAttachment
-			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
+			postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
+				Long messageBoardThreadId, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
 	public static class Builder {
@@ -498,6 +498,124 @@ public interface MessageBoardAttachmentResource {
 			return httpInvoker.invoke();
 		}
 
+		public void
+				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+					Long siteId,
+					String messageBoardMessageExternalReferenceCode,
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+					siteId, messageBoardMessageExternalReferenceCode,
+					externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+					Long siteId,
+					String messageBoardMessageExternalReferenceCode,
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"messageBoardMessageExternalReferenceCode",
+				messageBoardMessageExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public MessageBoardAttachment getMessageBoardAttachment(
 				Long messageBoardAttachmentId)
 			throws Exception {
@@ -714,16 +832,14 @@ public interface MessageBoardAttachmentResource {
 			return httpInvoker.invoke();
 		}
 
-		public void
-				postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
-					Long messageBoardMessageId, String callbackURL,
-					String contentType, String fieldNames)
+		public Page<MessageBoardAttachment>
+				getMessageBoardThreadMessageBoardAttachmentsPage(
+					Long messageBoardThreadId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
-					messageBoardMessageId, callbackURL, contentType,
-					fieldNames);
+				getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
+					messageBoardThreadId);
 
 			String content = httpResponse.getContent();
 
@@ -771,17 +887,25 @@ public interface MessageBoardAttachmentResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
-					Long messageBoardMessageId, String callbackURL,
-					String contentType, String fieldNames)
+				getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
+					Long messageBoardThreadId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -800,28 +924,132 @@ public interface MessageBoardAttachmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments/export-batch");
+						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments");
 
-			httpInvoker.path("messageBoardMessageId", messageBoardMessageId);
+			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public MessageBoardAttachment
+				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+					Long siteId,
+					String messageBoardMessageExternalReferenceCode,
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+					siteId, messageBoardMessageExternalReferenceCode,
+					externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MessageBoardAttachmentSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
+					Long siteId,
+					String messageBoardMessageExternalReferenceCode,
+					String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"messageBoardMessageExternalReferenceCode",
+				messageBoardMessageExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1066,124 +1294,16 @@ public interface MessageBoardAttachmentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<MessageBoardAttachment>
-				getMessageBoardThreadMessageBoardAttachmentsPage(
-					Long messageBoardThreadId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
-					messageBoardThreadId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, MessageBoardAttachmentSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getMessageBoardThreadMessageBoardAttachmentsPageHttpResponse(
-					Long messageBoardThreadId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments");
-
-			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public void
-				postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
-					Long messageBoardThreadId, String callbackURL,
+				postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
+					Long messageBoardMessageId, String callbackURL,
 					String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
-					messageBoardThreadId, callbackURL, contentType, fieldNames);
+				postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
+					messageBoardMessageId, callbackURL, contentType,
+					fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1234,8 +1354,8 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
-					Long messageBoardThreadId, String callbackURL,
+				postMessageBoardMessageMessageBoardAttachmentsPageExportBatchHttpResponse(
+					Long messageBoardMessageId, String callbackURL,
 					String contentType, String fieldNames)
 			throws Exception {
 
@@ -1279,9 +1399,9 @@ public interface MessageBoardAttachmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments/export-batch");
+						"/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments/export-batch");
 
-			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
+			httpInvoker.path("messageBoardMessageId", messageBoardMessageId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1527,16 +1647,14 @@ public interface MessageBoardAttachmentResource {
 		}
 
 		public void
-				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-					Long siteId,
-					String messageBoardMessageExternalReferenceCode,
-					String externalReferenceCode)
+				postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
+					Long messageBoardThreadId, String callbackURL,
+					String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-					siteId, messageBoardMessageExternalReferenceCode,
-					externalReferenceCode);
+				postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
+					messageBoardThreadId, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1584,27 +1702,17 @@ public interface MessageBoardAttachmentResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-					Long siteId,
-					String messageBoardMessageExternalReferenceCode,
-					String externalReferenceCode)
+				postMessageBoardThreadMessageBoardAttachmentsPageExportBatchHttpResponse(
+					Long messageBoardThreadId, String callbackURL,
+					String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1623,136 +1731,28 @@ public interface MessageBoardAttachmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments/export-batch");
 
-			httpInvoker.path("siteId", siteId);
-			httpInvoker.path(
-				"messageBoardMessageExternalReferenceCode",
-				messageBoardMessageExternalReferenceCode);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public MessageBoardAttachment
-				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-					Long siteId,
-					String messageBoardMessageExternalReferenceCode,
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-					siteId, messageBoardMessageExternalReferenceCode,
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return MessageBoardAttachmentSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCodeHttpResponse(
-					Long siteId,
-					String messageBoardMessageExternalReferenceCode,
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("siteId", siteId);
-			httpInvoker.path(
-				"messageBoardMessageExternalReferenceCode",
-				messageBoardMessageExternalReferenceCode);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -48,6 +48,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentDataDefinitionTypeResource {
 
+	public void deleteDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception;
+
+	public Response deleteDocumentDataDefinitionTypeBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DocumentDataDefinitionType>
 			getAssetLibraryDocumentDataDefinitionTypesPage(
 				Long assetLibraryId, String search,
@@ -55,31 +63,6 @@ public interface DocumentDataDefinitionTypeResource {
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
-			Long assetLibraryId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public DocumentDataDefinitionType
-			postAssetLibraryDocumentDataDefinitionType(
-				Long assetLibraryId,
-				DocumentDataDefinitionType documentDataDefinitionType)
-		throws Exception;
-
-	public Response postAssetLibraryDocumentDataDefinitionTypeBatch(
-			Long assetLibraryId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteDocumentDataDefinitionType(
-			Long documentDataDefinitionTypeId)
-		throws Exception;
-
-	public Response deleteDocumentDataDefinitionTypeBatch(
-			String callbackURL, Object object)
 		throws Exception;
 
 	public DocumentDataDefinitionType getDocumentDataDefinitionType(
@@ -95,8 +78,18 @@ public interface DocumentDataDefinitionTypeResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postSiteDocumentDataDefinitionTypesPageExportBatch(
-			Long siteId, String search,
+	public DocumentDataDefinitionType
+			postAssetLibraryDocumentDataDefinitionType(
+				Long assetLibraryId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentDataDefinitionTypeBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+			Long assetLibraryId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
@@ -108,6 +101,13 @@ public interface DocumentDataDefinitionTypeResource {
 
 	public Response postSiteDocumentDataDefinitionTypeBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postSiteDocumentDataDefinitionTypesPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

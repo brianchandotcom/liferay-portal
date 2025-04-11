@@ -52,15 +52,15 @@ public interface ProductOptionValueResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<ProductOptionValue> getProductOptionIdProductOptionValuesPage(
+			Long id, String search, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public ProductOptionValue getProductOptionValue(Long id) throws Exception;
 
 	public ProductOptionValue patchProductOptionValue(
 			Long id, ProductOptionValue productOptionValue)
-		throws Exception;
-
-	public Page<ProductOptionValue> getProductOptionIdProductOptionValuesPage(
-			Long id, String search, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public ProductOptionValue postProductOptionIdProductOptionValue(

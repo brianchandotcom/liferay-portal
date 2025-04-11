@@ -51,11 +51,6 @@ public interface ProductOptionResource {
 	public Response deleteProductOptionBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public ProductOption getProductOption(Long id) throws Exception;
-
-	public Response patchProductOption(Long id, ProductOption productOption)
-		throws Exception;
-
 	public Page<ProductOption>
 			getProductByExternalReferenceCodeProductOptionsPage(
 				String externalReferenceCode, String search,
@@ -63,14 +58,19 @@ public interface ProductOptionResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Page<ProductOption>
-			postProductByExternalReferenceCodeProductOptionsPage(
-				String externalReferenceCode, ProductOption[] productOptions)
-		throws Exception;
-
 	public Page<ProductOption> getProductIdProductOptionsPage(
 			Long id, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ProductOption getProductOption(Long id) throws Exception;
+
+	public Response patchProductOption(Long id, ProductOption productOption)
+		throws Exception;
+
+	public Page<ProductOption>
+			postProductByExternalReferenceCodeProductOptionsPage(
+				String externalReferenceCode, ProductOption[] productOptions)
 		throws Exception;
 
 	public Page<ProductOption> postProductIdProductOptionsPage(

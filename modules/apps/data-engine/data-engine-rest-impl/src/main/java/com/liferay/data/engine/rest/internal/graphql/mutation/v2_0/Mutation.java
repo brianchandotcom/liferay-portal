@@ -99,20 +99,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DataDefinition createDataDefinitionByContentType(
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.postDataDefinitionByContentType(
-					contentType, dataDefinition));
-	}
-
-	@GraphQLField
 	public boolean deleteDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -141,6 +127,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteSiteDataDefinitionByContentTypeByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.
+					deleteSiteDataDefinitionByContentTypeByExternalReferenceCode(
+						Long.valueOf(siteKey), contentType,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DataDefinition patchDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
@@ -152,6 +157,48 @@ public class Mutation {
 			dataDefinitionResource ->
 				dataDefinitionResource.patchDataDefinition(
 					dataDefinitionId, dataDefinition));
+	}
+
+	@GraphQLField
+	public DataDefinition createDataDefinitionByContentType(
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postDataDefinitionByContentType(
+					contentType, dataDefinition));
+	}
+
+	@GraphQLField
+	public DataDefinition createDataDefinitionCopy(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postDataDefinitionCopy(
+					dataDefinitionId));
+	}
+
+	@GraphQLField
+	public DataDefinition createSiteDataDefinitionByContentType(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					Long.valueOf(siteKey), contentType, dataDefinition));
 	}
 
 	@GraphQLField
@@ -182,19 +229,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DataDefinition createDataDefinitionCopy(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.postDataDefinitionCopy(
-					dataDefinitionId));
-	}
-
-	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateDataDefinitionPermissionsPage(
 				@GraphQLName("dataDefinitionId") Long dataDefinitionId,
@@ -213,40 +247,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	public DataDefinition createSiteDataDefinitionByContentType(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.postSiteDataDefinitionByContentType(
-					Long.valueOf(siteKey), contentType, dataDefinition));
-	}
-
-	@GraphQLField
-	public boolean deleteSiteDataDefinitionByContentTypeByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.
-					deleteSiteDataDefinitionByContentTypeByExternalReferenceCode(
-						Long.valueOf(siteKey), contentType,
-						externalReferenceCode));
-
-		return true;
 	}
 
 	@GraphQLField
@@ -304,23 +304,30 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDataDefinitionDataLayoutsPageExportBatch(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteDataLayout(
+			@GraphQLName("dataLayoutId") Long dataLayoutId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource -> dataLayoutResource.deleteDataLayout(
+				dataLayoutId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDataLayoutBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataLayoutResource ->
-				dataLayoutResource.postDataDefinitionDataLayoutsPageExportBatch(
-					dataDefinitionId, keywords,
-					_sortsBiFunction.apply(dataLayoutResource, sortsString),
-					callbackURL, contentType, fieldNames));
+			dataLayoutResource -> dataLayoutResource.deleteDataLayoutBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -353,30 +360,37 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteDataLayout(
-			@GraphQLName("dataLayoutId") Long dataLayoutId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataLayoutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataLayoutResource -> dataLayoutResource.deleteDataLayout(
-				dataLayoutId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteDataLayoutBatch(
+	public Response createDataDefinitionDataLayoutsPageExportBatch(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataLayoutResource -> dataLayoutResource.deleteDataLayoutBatch(
-				callbackURL, object));
+			dataLayoutResource ->
+				dataLayoutResource.postDataDefinitionDataLayoutsPageExportBatch(
+					dataDefinitionId, keywords,
+					_sortsBiFunction.apply(dataLayoutResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createDataLayoutContext(
+			@GraphQLName("dataLayoutId") Long dataLayoutId,
+			@GraphQLName("dataLayoutRenderingContext")
+				DataLayoutRenderingContext dataLayoutRenderingContext)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource -> dataLayoutResource.postDataLayoutContext(
+				dataLayoutId, dataLayoutRenderingContext));
 	}
 
 	@GraphQLField
@@ -406,20 +420,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDataLayoutContext(
-			@GraphQLName("dataLayoutId") Long dataLayoutId,
-			@GraphQLName("dataLayoutRenderingContext")
-				DataLayoutRenderingContext dataLayoutRenderingContext)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataLayoutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataLayoutResource -> dataLayoutResource.postDataLayoutContext(
-				dataLayoutId, dataLayoutRenderingContext));
-	}
-
-	@GraphQLField
 	public boolean deleteDataDefinitionDataListView(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -435,25 +435,31 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDataDefinitionDataListViewsPageExportBatch(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteDataListView(
+			@GraphQLName("dataListViewId") Long dataListViewId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataListViewResource -> dataListViewResource.deleteDataListView(
+				dataListViewId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDataListViewBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataListViewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataListViewResource ->
-				dataListViewResource.
-					postDataDefinitionDataListViewsPageExportBatch(
-						dataDefinitionId, keywords,
-						_sortsBiFunction.apply(
-							dataListViewResource, sortsString),
-						callbackURL, contentType, fieldNames));
+				dataListViewResource.deleteDataListViewBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -486,31 +492,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteDataListView(
-			@GraphQLName("dataListViewId") Long dataListViewId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataListViewResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataListViewResource -> dataListViewResource.deleteDataListView(
-				dataListViewId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteDataListViewBatch(
+	public Response createDataDefinitionDataListViewsPageExportBatch(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataListViewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataListViewResource ->
-				dataListViewResource.deleteDataListViewBatch(
-					callbackURL, object));
+				dataListViewResource.
+					postDataDefinitionDataListViewsPageExportBatch(
+						dataDefinitionId, keywords,
+						_sortsBiFunction.apply(
+							dataListViewResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -537,107 +537,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataListViewResource -> dataListViewResource.putDataListViewBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createDataDefinitionDataRecordsPageExportBatch(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("dataListViewId") Long dataListViewId,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataDefinitionDataRecordsPageExportBatch(
-					dataDefinitionId, dataListViewId, keywords,
-					_sortsBiFunction.apply(dataRecordResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public DataRecord createDataDefinitionDataRecord(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("dataRecord") DataRecord dataRecord)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataDefinitionDataRecord(
-					dataDefinitionId, dataRecord));
-	}
-
-	@GraphQLField
-	public Response createDataDefinitionDataRecordBatch(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataDefinitionDataRecordBatch(
-					dataDefinitionId, callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createDataRecordCollectionDataRecordsPageExportBatch(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
-			@GraphQLName("dataListViewId") Long dataListViewId,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.
-					postDataRecordCollectionDataRecordsPageExportBatch(
-						dataRecordCollectionId, dataListViewId, keywords,
-						_sortsBiFunction.apply(dataRecordResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public DataRecord createDataRecordCollectionDataRecord(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
-			@GraphQLName("dataRecord") DataRecord dataRecord)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataRecordCollectionDataRecord(
-					dataRecordCollectionId, dataRecord));
-	}
-
-	@GraphQLField
-	public Response createDataRecordCollectionDataRecordBatch(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordResource ->
-				dataRecordResource.postDataRecordCollectionDataRecordBatch(
-					dataRecordCollectionId, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -681,6 +580,107 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataRecord createDataDefinitionDataRecord(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("dataRecord") DataRecord dataRecord)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataDefinitionDataRecord(
+					dataDefinitionId, dataRecord));
+	}
+
+	@GraphQLField
+	public Response createDataDefinitionDataRecordBatch(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataDefinitionDataRecordBatch(
+					dataDefinitionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createDataDefinitionDataRecordsPageExportBatch(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("dataListViewId") Long dataListViewId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataDefinitionDataRecordsPageExportBatch(
+					dataDefinitionId, dataListViewId, keywords,
+					_sortsBiFunction.apply(dataRecordResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public DataRecord createDataRecordCollectionDataRecord(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("dataRecord") DataRecord dataRecord)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataRecordCollectionDataRecord(
+					dataRecordCollectionId, dataRecord));
+	}
+
+	@GraphQLField
+	public Response createDataRecordCollectionDataRecordBatch(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.postDataRecordCollectionDataRecordBatch(
+					dataRecordCollectionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createDataRecordCollectionDataRecordsPageExportBatch(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("dataListViewId") Long dataListViewId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordResource ->
+				dataRecordResource.
+					postDataRecordCollectionDataRecordsPageExportBatch(
+						dataRecordCollectionId, dataListViewId, keywords,
+						_sortsBiFunction.apply(dataRecordResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public DataRecord updateDataRecord(
 			@GraphQLName("dataRecordId") Long dataRecordId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)
@@ -707,22 +707,32 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDataDefinitionDataRecordCollectionsPageExportBatch(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("keywords") String keywords,
+	public boolean deleteDataRecordCollection(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.deleteDataRecordCollection(
+					dataRecordCollectionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDataRecordCollectionBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataRecordCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataRecordCollectionResource ->
-				dataRecordCollectionResource.
-					postDataDefinitionDataRecordCollectionsPageExportBatch(
-						dataDefinitionId, keywords, callbackURL, contentType,
-						fieldNames));
+				dataRecordCollectionResource.deleteDataRecordCollectionBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -758,32 +768,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteDataRecordCollection(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataRecordCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordCollectionResource ->
-				dataRecordCollectionResource.deleteDataRecordCollection(
-					dataRecordCollectionId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteDataRecordCollectionBatch(
+	public Response createDataDefinitionDataRecordCollectionsPageExportBatch(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("keywords") String keywords,
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dataRecordCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataRecordCollectionResource ->
-				dataRecordCollectionResource.deleteDataRecordCollectionBatch(
-					callbackURL, object));
+				dataRecordCollectionResource.
+					postDataDefinitionDataRecordCollectionsPageExportBatch(
+						dataDefinitionId, keywords, callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField

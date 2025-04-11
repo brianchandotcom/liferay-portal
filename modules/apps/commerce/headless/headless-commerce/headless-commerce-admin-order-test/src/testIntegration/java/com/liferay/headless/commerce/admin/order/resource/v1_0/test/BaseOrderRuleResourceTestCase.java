@@ -230,6 +230,631 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOrderRule() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule orderRule = testDeleteOrderRule_addOrderRule();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderRuleResource.deleteOrderRuleHttpResponse(orderRule.getId()));
+
+		assertHttpResponseStatusCode(
+			404, orderRuleResource.getOrderRuleHttpResponse(orderRule.getId()));
+		assertHttpResponseStatusCode(
+			404, orderRuleResource.getOrderRuleHttpResponse(0L));
+	}
+
+	protected OrderRule testDeleteOrderRule_addOrderRule() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrderRule() throws Exception {
+
+		// No namespace
+
+		OrderRule orderRule1 = testGraphQLDeleteOrderRule_addOrderRule();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderRule1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderRule"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"orderRule",
+					new HashMap<String, Object>() {
+						{
+							put("id", orderRule1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderRule orderRule2 = testGraphQLDeleteOrderRule_addOrderRule();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRule",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderRule2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRule"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderRule2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OrderRule testGraphQLDeleteOrderRule_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
+	}
+
+	@Test
+	public void testDeleteOrderRuleBatch() throws Exception {
+		OrderRule orderRule1 = testDeleteOrderRuleBatch_addOrderRule();
+
+		testDeleteOrderRuleBatch_deleteOrderRule(
+			"COMPLETED", null, orderRule1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleHttpResponse(orderRule1.getId()));
+
+		OrderRule orderRule2 = testDeleteOrderRuleBatch_addOrderRule();
+
+		testDeleteOrderRuleBatch_deleteOrderRule(
+			"COMPLETED", orderRule2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
+
+		orderRule1 = testDeleteOrderRuleBatch_addOrderRule();
+		orderRule2 = testDeleteOrderRuleBatch_addOrderRule();
+
+		testDeleteOrderRuleBatch_deleteOrderRule(
+			"COMPLETED", orderRule2.getExternalReferenceCode(),
+			orderRule1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleHttpResponse(orderRule1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
+
+		testDeleteOrderRuleBatch_deleteOrderRule(
+			"COMPLETED", orderRule2.getExternalReferenceCode(),
+			orderRule1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
+	}
+
+	protected OrderRule testDeleteOrderRuleBatch_addOrderRule()
+		throws Exception {
+
+		return testDeleteOrderRule_addOrderRule();
+	}
+
+	protected void testDeleteOrderRuleBatch_deleteOrderRule(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			orderRuleResource.deleteOrderRuleBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteOrderRuleByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule orderRule =
+			testDeleteOrderRuleByExternalReferenceCode_addOrderRule();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderRuleResource.
+				deleteOrderRuleByExternalReferenceCodeHttpResponse(
+					orderRule.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleByExternalReferenceCodeHttpResponse(
+				orderRule.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.getOrderRuleByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected OrderRule
+			testDeleteOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetOrderRule() throws Exception {
+		OrderRule postOrderRule = testGetOrderRule_addOrderRule();
+
+		OrderRule getOrderRule = orderRuleResource.getOrderRule(
+			postOrderRule.getId());
+
+		assertEquals(postOrderRule, getOrderRule);
+		assertValid(getOrderRule);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		OrderRule postOrderRule = testGetOrderRule_addOrderRule();
+
+		OrderRule getOrderRule = orderRuleResource.getOrderRule(
+			postOrderRule.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postOrderRule.getId());
+
+		assertEquals(getOrderRule, OrderRuleSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected OrderRule testGetOrderRule_addOrderRule() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRule() throws Exception {
+		OrderRule orderRule = testGraphQLGetOrderRule_addOrderRule();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderRule,
+				OrderRuleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRule",
+								new HashMap<String, Object>() {
+									{
+										put("id", orderRule.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderRule"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderRule,
+				OrderRuleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderRule",
+									new HashMap<String, Object>() {
+										{
+											put("id", orderRule.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderRule"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderRule",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderRule testGraphQLGetOrderRule_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
+	}
+
+	@Test
+	public void testGetOrderRuleByExternalReferenceCode() throws Exception {
+		OrderRule postOrderRule =
+			testGetOrderRuleByExternalReferenceCode_addOrderRule();
+
+		OrderRule getOrderRule =
+			orderRuleResource.getOrderRuleByExternalReferenceCode(
+				postOrderRule.getExternalReferenceCode());
+
+		assertEquals(postOrderRule, getOrderRule);
+		assertValid(getOrderRule);
+	}
+
+	protected OrderRule testGetOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleByExternalReferenceCode()
+		throws Exception {
+
+		OrderRule orderRule =
+			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderRule,
+				OrderRuleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRuleByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												orderRule.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderRuleByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderRule,
+				OrderRuleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderRuleByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													orderRule.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderRuleByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderRuleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderRuleByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderRule
+			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
+	}
+
+	@Test
 	public void testGetOrderRulesPage() throws Exception {
 		Page<OrderRule> page = orderRuleResource.getOrderRulesPage(
 			null, null, Pagination.of(1, 10), null);
@@ -627,185 +1252,30 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderRule() throws Exception {
-		OrderRule randomOrderRule = randomOrderRule();
+	public void testPatchOrderRule() throws Exception {
+		OrderRule postOrderRule = testPatchOrderRule_addOrderRule();
 
-		OrderRule postOrderRule = testPostOrderRule_addOrderRule(
-			randomOrderRule);
+		OrderRule randomPatchOrderRule = randomPatchOrderRule();
 
-		assertEquals(randomOrderRule, postOrderRule);
-		assertValid(postOrderRule);
-	}
-
-	protected OrderRule testPostOrderRule_addOrderRule(OrderRule orderRule)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrderRuleByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderRule orderRule =
-			testDeleteOrderRuleByExternalReferenceCode_addOrderRule();
+		OrderRule patchOrderRule = orderRuleResource.patchOrderRule(
+			postOrderRule.getId(), randomPatchOrderRule);
 
-		assertHttpResponseStatusCode(
-			204,
-			orderRuleResource.
-				deleteOrderRuleByExternalReferenceCodeHttpResponse(
-					orderRule.getExternalReferenceCode()));
+		OrderRule expectedPatchOrderRule = postOrderRule.clone();
 
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleByExternalReferenceCodeHttpResponse(
-				orderRule.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
+		BeanTestUtil.copyProperties(
+			randomPatchOrderRule, expectedPatchOrderRule);
 
-	protected OrderRule
-			testDeleteOrderRuleByExternalReferenceCode_addOrderRule()
-		throws Exception {
+		OrderRule getOrderRule = orderRuleResource.getOrderRule(
+			patchOrderRule.getId());
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOrderRuleByExternalReferenceCode() throws Exception {
-		OrderRule postOrderRule =
-			testGetOrderRuleByExternalReferenceCode_addOrderRule();
-
-		OrderRule getOrderRule =
-			orderRuleResource.getOrderRuleByExternalReferenceCode(
-				postOrderRule.getExternalReferenceCode());
-
-		assertEquals(postOrderRule, getOrderRule);
+		assertEquals(expectedPatchOrderRule, getOrderRule);
 		assertValid(getOrderRule);
 	}
 
-	protected OrderRule testGetOrderRuleByExternalReferenceCode_addOrderRule()
-		throws Exception {
-
+	protected OrderRule testPatchOrderRule_addOrderRule() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderRuleByExternalReferenceCode()
-		throws Exception {
-
-		OrderRule orderRule =
-			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderRule,
-				OrderRuleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderRuleByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												orderRule.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderRuleByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				orderRule,
-				OrderRuleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderRuleByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													orderRule.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderRuleByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderRuleByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderRuleByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderRuleByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderRule
-			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule()
-		throws Exception {
-
-		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -834,6 +1304,24 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	protected OrderRule testPatchOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostOrderRule() throws Exception {
+		OrderRule randomOrderRule = randomOrderRule();
+
+		OrderRule postOrderRule = testPostOrderRule_addOrderRule(
+			randomOrderRule);
+
+		assertEquals(randomOrderRule, postOrderRule);
+		assertValid(postOrderRule);
+	}
+
+	protected OrderRule testPostOrderRule_addOrderRule(OrderRule orderRule)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -890,494 +1378,6 @@ public abstract class BaseOrderRuleResourceTestCase {
 	protected OrderRule testPutOrderRuleByExternalReferenceCode_addOrderRule()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrderRule() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderRule orderRule = testDeleteOrderRule_addOrderRule();
-
-		assertHttpResponseStatusCode(
-			204,
-			orderRuleResource.deleteOrderRuleHttpResponse(orderRule.getId()));
-
-		assertHttpResponseStatusCode(
-			404, orderRuleResource.getOrderRuleHttpResponse(orderRule.getId()));
-		assertHttpResponseStatusCode(
-			404, orderRuleResource.getOrderRuleHttpResponse(0L));
-	}
-
-	protected OrderRule testDeleteOrderRule_addOrderRule() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOrderRule() throws Exception {
-
-		// No namespace
-
-		OrderRule orderRule1 = testGraphQLDeleteOrderRule_addOrderRule();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrderRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderRule1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrderRule"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"orderRule",
-					new HashMap<String, Object>() {
-						{
-							put("id", orderRule1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		OrderRule orderRule2 = testGraphQLDeleteOrderRule_addOrderRule();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"deleteOrderRule",
-							new HashMap<String, Object>() {
-								{
-									put("id", orderRule2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
-				"Object/deleteOrderRule"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminOrder_v1_0",
-					new GraphQLField(
-						"orderRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", orderRule2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected OrderRule testGraphQLDeleteOrderRule_addOrderRule()
-		throws Exception {
-
-		return testGraphQLOrderRule_addOrderRule();
-	}
-
-	@Test
-	public void testDeleteOrderRuleBatch() throws Exception {
-		OrderRule orderRule1 = testDeleteOrderRuleBatch_addOrderRule();
-
-		testDeleteOrderRuleBatch_deleteOrderRule(
-			"COMPLETED", null, orderRule1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleHttpResponse(orderRule1.getId()));
-
-		OrderRule orderRule2 = testDeleteOrderRuleBatch_addOrderRule();
-
-		testDeleteOrderRuleBatch_deleteOrderRule(
-			"COMPLETED", orderRule2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
-
-		orderRule1 = testDeleteOrderRuleBatch_addOrderRule();
-		orderRule2 = testDeleteOrderRuleBatch_addOrderRule();
-
-		testDeleteOrderRuleBatch_deleteOrderRule(
-			"COMPLETED", orderRule2.getExternalReferenceCode(),
-			orderRule1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleHttpResponse(orderRule1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
-
-		testDeleteOrderRuleBatch_deleteOrderRule(
-			"COMPLETED", orderRule2.getExternalReferenceCode(),
-			orderRule1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			orderRuleResource.getOrderRuleHttpResponse(orderRule2.getId()));
-	}
-
-	protected OrderRule testDeleteOrderRuleBatch_addOrderRule()
-		throws Exception {
-
-		return testDeleteOrderRule_addOrderRule();
-	}
-
-	protected void testDeleteOrderRuleBatch_deleteOrderRule(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			orderRuleResource.deleteOrderRuleBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetOrderRule() throws Exception {
-		OrderRule postOrderRule = testGetOrderRule_addOrderRule();
-
-		OrderRule getOrderRule = orderRuleResource.getOrderRule(
-			postOrderRule.getId());
-
-		assertEquals(postOrderRule, getOrderRule);
-		assertValid(getOrderRule);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		OrderRule postOrderRule = testGetOrderRule_addOrderRule();
-
-		OrderRule getOrderRule = orderRuleResource.getOrderRule(
-			postOrderRule.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postOrderRule.getId());
-
-		assertEquals(getOrderRule, OrderRuleSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected OrderRule testGetOrderRule_addOrderRule() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderRule() throws Exception {
-		OrderRule orderRule = testGraphQLGetOrderRule_addOrderRule();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderRule,
-				OrderRuleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderRule",
-								new HashMap<String, Object>() {
-									{
-										put("id", orderRule.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/orderRule"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				orderRule,
-				OrderRuleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderRule",
-									new HashMap<String, Object>() {
-										{
-											put("id", orderRule.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderRule"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderRuleNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderRule",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderRule testGraphQLGetOrderRule_addOrderRule()
-		throws Exception {
-
-		return testGraphQLOrderRule_addOrderRule();
-	}
-
-	@Test
-	public void testPatchOrderRule() throws Exception {
-		OrderRule postOrderRule = testPatchOrderRule_addOrderRule();
-
-		OrderRule randomPatchOrderRule = randomPatchOrderRule();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderRule patchOrderRule = orderRuleResource.patchOrderRule(
-			postOrderRule.getId(), randomPatchOrderRule);
-
-		OrderRule expectedPatchOrderRule = postOrderRule.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOrderRule, expectedPatchOrderRule);
-
-		OrderRule getOrderRule = orderRuleResource.getOrderRule(
-			patchOrderRule.getId());
-
-		assertEquals(expectedPatchOrderRule, getOrderRule);
-		assertValid(getOrderRule);
-	}
-
-	protected OrderRule testPatchOrderRule_addOrderRule() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

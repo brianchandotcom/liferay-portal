@@ -208,13 +208,6 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testPatchProductByExternalReferenceCodeSubscriptionConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdSubscriptionConfiguration() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -231,6 +224,13 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCodeSubscriptionConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

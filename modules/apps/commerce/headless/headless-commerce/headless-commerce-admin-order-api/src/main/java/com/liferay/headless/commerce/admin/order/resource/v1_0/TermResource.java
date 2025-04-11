@@ -46,11 +46,35 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TermResource {
 
+	public void deleteTerm(Long id) throws Exception;
+
+	public Response deleteTermBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteTermByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public Term getTerm(Long id) throws Exception;
+
+	public Term getTermByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
 	public Page<Term> getTermsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Term patchTerm(Long id, Term term) throws Exception;
+
+	public Term patchTermByExternalReferenceCode(
+			String externalReferenceCode, Term term)
+		throws Exception;
+
+	public Term postTerm(Term term) throws Exception;
+
+	public Response postTermBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postTermsPageExportBatch(
@@ -60,33 +84,9 @@ public interface TermResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Term postTerm(Term term) throws Exception;
-
-	public Response postTermBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteTermByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Term getTermByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Term patchTermByExternalReferenceCode(
-			String externalReferenceCode, Term term)
-		throws Exception;
-
 	public Term putTermByExternalReferenceCode(
 			String externalReferenceCode, Term term)
 		throws Exception;
-
-	public void deleteTerm(Long id) throws Exception;
-
-	public Response deleteTermBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Term getTerm(Long id) throws Exception;
-
-	public Term patchTerm(Long id, Term term) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

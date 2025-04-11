@@ -224,6 +224,192 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteCurrency() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Currency currency = testDeleteCurrency_addCurrency();
+
+		assertHttpResponseStatusCode(
+			204, currencyResource.deleteCurrencyHttpResponse(currency.getId()));
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency.getId()));
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(0L));
+	}
+
+	protected Currency testDeleteCurrency_addCurrency() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCurrency() throws Exception {
+
+		// No namespace
+
+		Currency currency1 = testGraphQLDeleteCurrency_addCurrency();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCurrency",
+						new HashMap<String, Object>() {
+							{
+								put("id", currency1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCurrency"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"currency",
+					new HashMap<String, Object>() {
+						{
+							put("id", currency1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Currency currency2 = testGraphQLDeleteCurrency_addCurrency();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteCurrency",
+							new HashMap<String, Object>() {
+								{
+									put("id", currency2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteCurrency"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"currency",
+						new HashMap<String, Object>() {
+							{
+								put("id", currency2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Currency testGraphQLDeleteCurrency_addCurrency()
+		throws Exception {
+
+		return testGraphQLCurrency_addCurrency();
+	}
+
+	@Test
+	public void testDeleteCurrencyBatch() throws Exception {
+		Currency currency1 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", null, currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
+
+		Currency currency2 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+
+		currency1 = testDeleteCurrencyBatch_addCurrency();
+		currency2 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(),
+			currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
+		assertHttpResponseStatusCode(
+			200, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(),
+			currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+	}
+
+	protected Currency testDeleteCurrencyBatch_addCurrency() throws Exception {
+		return testDeleteCurrency_addCurrency();
+	}
+
+	protected void testDeleteCurrencyBatch_deleteCurrency(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			currencyResource.deleteCurrencyBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteCurrencyByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Currency currency =
+			testDeleteCurrencyByExternalReferenceCode_addCurrency();
+
+		assertHttpResponseStatusCode(
+			204,
+			currencyResource.deleteCurrencyByExternalReferenceCodeHttpResponse(
+				currency.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
+				currency.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected Currency testDeleteCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetCurrenciesPage() throws Exception {
 		Page<Currency> page = currencyResource.getCurrenciesPage(
 			null, null, Pagination.of(1, 10), null);
@@ -619,374 +805,6 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	@Test
-	public void testPostCurrency() throws Exception {
-		Currency randomCurrency = randomCurrency();
-
-		Currency postCurrency = testPostCurrency_addCurrency(randomCurrency);
-
-		assertEquals(randomCurrency, postCurrency);
-		assertValid(postCurrency);
-	}
-
-	protected Currency testPostCurrency_addCurrency(Currency currency)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteCurrencyByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Currency currency =
-			testDeleteCurrencyByExternalReferenceCode_addCurrency();
-
-		assertHttpResponseStatusCode(
-			204,
-			currencyResource.deleteCurrencyByExternalReferenceCodeHttpResponse(
-				currency.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
-				currency.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
-
-	protected Currency testDeleteCurrencyByExternalReferenceCode_addCurrency()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetCurrencyByExternalReferenceCode() throws Exception {
-		Currency postCurrency =
-			testGetCurrencyByExternalReferenceCode_addCurrency();
-
-		Currency getCurrency =
-			currencyResource.getCurrencyByExternalReferenceCode(
-				postCurrency.getExternalReferenceCode());
-
-		assertEquals(postCurrency, getCurrency);
-		assertValid(getCurrency);
-	}
-
-	protected Currency testGetCurrencyByExternalReferenceCode_addCurrency()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetCurrencyByExternalReferenceCode()
-		throws Exception {
-
-		Currency currency =
-			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				currency,
-				CurrencySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"currencyByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												currency.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/currencyByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				currency,
-				CurrencySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"currencyByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													currency.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/currencyByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetCurrencyByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"currencyByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"currencyByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Currency
-			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency()
-		throws Exception {
-
-		return testGraphQLCurrency_addCurrency();
-	}
-
-	@Test
-	public void testPatchCurrencyByExternalReferenceCode() throws Exception {
-		Currency postCurrency =
-			testPatchCurrencyByExternalReferenceCode_addCurrency();
-
-		Currency randomPatchCurrency = randomPatchCurrency();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Currency patchCurrency =
-			currencyResource.patchCurrencyByExternalReferenceCode(
-				postCurrency.getExternalReferenceCode(), randomPatchCurrency);
-
-		Currency expectedPatchCurrency = postCurrency.clone();
-
-		BeanTestUtil.copyProperties(randomPatchCurrency, expectedPatchCurrency);
-
-		Currency getCurrency =
-			currencyResource.getCurrencyByExternalReferenceCode(
-				patchCurrency.getExternalReferenceCode());
-
-		assertEquals(expectedPatchCurrency, getCurrency);
-		assertValid(getCurrency);
-	}
-
-	protected Currency testPatchCurrencyByExternalReferenceCode_addCurrency()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteCurrency() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Currency currency = testDeleteCurrency_addCurrency();
-
-		assertHttpResponseStatusCode(
-			204, currencyResource.deleteCurrencyHttpResponse(currency.getId()));
-
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency.getId()));
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(0L));
-	}
-
-	protected Currency testDeleteCurrency_addCurrency() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteCurrency() throws Exception {
-
-		// No namespace
-
-		Currency currency1 = testGraphQLDeleteCurrency_addCurrency();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteCurrency",
-						new HashMap<String, Object>() {
-							{
-								put("id", currency1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteCurrency"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"currency",
-					new HashMap<String, Object>() {
-						{
-							put("id", currency1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Currency currency2 = testGraphQLDeleteCurrency_addCurrency();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteCurrency",
-							new HashMap<String, Object>() {
-								{
-									put("id", currency2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteCurrency"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminCatalog_v1_0",
-					new GraphQLField(
-						"currency",
-						new HashMap<String, Object>() {
-							{
-								put("id", currency2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected Currency testGraphQLDeleteCurrency_addCurrency()
-		throws Exception {
-
-		return testGraphQLCurrency_addCurrency();
-	}
-
-	@Test
-	public void testDeleteCurrencyBatch() throws Exception {
-		Currency currency1 = testDeleteCurrencyBatch_addCurrency();
-
-		testDeleteCurrencyBatch_deleteCurrency(
-			"COMPLETED", null, currency1.getId());
-
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
-
-		Currency currency2 = testDeleteCurrencyBatch_addCurrency();
-
-		testDeleteCurrencyBatch_deleteCurrency(
-			"COMPLETED", currency2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
-
-		currency1 = testDeleteCurrencyBatch_addCurrency();
-		currency2 = testDeleteCurrencyBatch_addCurrency();
-
-		testDeleteCurrencyBatch_deleteCurrency(
-			"COMPLETED", currency2.getExternalReferenceCode(),
-			currency1.getId());
-
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
-		assertHttpResponseStatusCode(
-			200, currencyResource.getCurrencyHttpResponse(currency2.getId()));
-
-		testDeleteCurrencyBatch_deleteCurrency(
-			"COMPLETED", currency2.getExternalReferenceCode(),
-			currency1.getId());
-
-		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
-	}
-
-	protected Currency testDeleteCurrencyBatch_addCurrency() throws Exception {
-		return testDeleteCurrency_addCurrency();
-	}
-
-	protected void testDeleteCurrencyBatch_deleteCurrency(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			currencyResource.deleteCurrencyBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetCurrency() throws Exception {
 		Currency postCurrency = testGetCurrency_addCurrency();
 
@@ -1281,6 +1099,140 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	@Test
+	public void testGetCurrencyByExternalReferenceCode() throws Exception {
+		Currency postCurrency =
+			testGetCurrencyByExternalReferenceCode_addCurrency();
+
+		Currency getCurrency =
+			currencyResource.getCurrencyByExternalReferenceCode(
+				postCurrency.getExternalReferenceCode());
+
+		assertEquals(postCurrency, getCurrency);
+		assertValid(getCurrency);
+	}
+
+	protected Currency testGetCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCurrencyByExternalReferenceCode()
+		throws Exception {
+
+		Currency currency =
+			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				currency,
+				CurrencySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"currencyByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												currency.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/currencyByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				currency,
+				CurrencySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"currencyByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													currency.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/currencyByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCurrencyByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"currencyByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"currencyByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Currency
+			testGraphQLGetCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		return testGraphQLCurrency_addCurrency();
+	}
+
+	@Test
 	public void testPatchCurrency() throws Exception {
 		Currency postCurrency = testPatchCurrency_addCurrency();
 
@@ -1302,6 +1254,54 @@ public abstract class BaseCurrencyResourceTestCase {
 	}
 
 	protected Currency testPatchCurrency_addCurrency() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchCurrencyByExternalReferenceCode() throws Exception {
+		Currency postCurrency =
+			testPatchCurrencyByExternalReferenceCode_addCurrency();
+
+		Currency randomPatchCurrency = randomPatchCurrency();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Currency patchCurrency =
+			currencyResource.patchCurrencyByExternalReferenceCode(
+				postCurrency.getExternalReferenceCode(), randomPatchCurrency);
+
+		Currency expectedPatchCurrency = postCurrency.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCurrency, expectedPatchCurrency);
+
+		Currency getCurrency =
+			currencyResource.getCurrencyByExternalReferenceCode(
+				patchCurrency.getExternalReferenceCode());
+
+		assertEquals(expectedPatchCurrency, getCurrency);
+		assertValid(getCurrency);
+	}
+
+	protected Currency testPatchCurrencyByExternalReferenceCode_addCurrency()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCurrency() throws Exception {
+		Currency randomCurrency = randomCurrency();
+
+		Currency postCurrency = testPostCurrency_addCurrency(randomCurrency);
+
+		assertEquals(randomCurrency, postCurrency);
+		assertValid(postCurrency);
+	}
+
+	protected Currency testPostCurrency_addCurrency(Currency currency)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

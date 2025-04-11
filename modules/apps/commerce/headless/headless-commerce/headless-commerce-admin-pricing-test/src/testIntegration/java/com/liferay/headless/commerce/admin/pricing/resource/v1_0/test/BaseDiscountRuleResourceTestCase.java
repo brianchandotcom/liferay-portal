@@ -219,6 +219,150 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDiscountRule() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountRule discountRule = testDeleteDiscountRule_addDiscountRule();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountRuleResource.deleteDiscountRuleHttpResponse(
+				discountRule.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			discountRuleResource.getDiscountRuleHttpResponse(
+				discountRule.getId()));
+		assertHttpResponseStatusCode(
+			404, discountRuleResource.getDiscountRuleHttpResponse(0L));
+	}
+
+	protected DiscountRule testDeleteDiscountRule_addDiscountRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDiscountRule() throws Exception {
+
+		// No namespace
+
+		DiscountRule discountRule1 =
+			testGraphQLDeleteDiscountRule_addDiscountRule();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", discountRule1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountRule"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"discountRule",
+					new HashMap<String, Object>() {
+						{
+							put("id", discountRule1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		DiscountRule discountRule2 =
+			testGraphQLDeleteDiscountRule_addDiscountRule();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v1_0",
+						new GraphQLField(
+							"deleteDiscountRule",
+							new HashMap<String, Object>() {
+								{
+									put("id", discountRule2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v1_0",
+				"Object/deleteDiscountRule"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v1_0",
+					new GraphQLField(
+						"discountRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", discountRule2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected DiscountRule testGraphQLDeleteDiscountRule_addDiscountRule()
+		throws Exception {
+
+		return testGraphQLDiscountRule_addDiscountRule();
+	}
+
+	@Test
+	public void testDeleteDiscountRuleBatch() throws Exception {
+		DiscountRule discountRule1 =
+			testDeleteDiscountRuleBatch_addDiscountRule();
+
+		testDeleteDiscountRuleBatch_deleteDiscountRule(
+			"COMPLETED", null, discountRule1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			discountRuleResource.getDiscountRuleHttpResponse(
+				discountRule1.getId()));
+	}
+
+	protected DiscountRule testDeleteDiscountRuleBatch_addDiscountRule()
+		throws Exception {
+
+		return testDeleteDiscountRule_addDiscountRule();
+	}
+
+	protected void testDeleteDiscountRuleBatch_deleteDiscountRule(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			discountRuleResource.deleteDiscountRuleBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetDiscountByExternalReferenceCodeDiscountRulesPage()
 		throws Exception {
 
@@ -422,170 +566,176 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountRule()
-		throws Exception {
+	public void testGetDiscountIdDiscountRulesPage() throws Exception {
+		Long id = testGetDiscountIdDiscountRulesPage_getId();
+		Long irrelevantId =
+			testGetDiscountIdDiscountRulesPage_getIrrelevantId();
 
-		DiscountRule randomDiscountRule = randomDiscountRule();
+		Page<DiscountRule> page =
+			discountRuleResource.getDiscountIdDiscountRulesPage(
+				id, Pagination.of(1, 10));
 
-		DiscountRule postDiscountRule =
-			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
-				randomDiscountRule);
+		long totalCount = page.getTotalCount();
 
-		assertEquals(randomDiscountRule, postDiscountRule);
-		assertValid(postDiscountRule);
-	}
+		if (irrelevantId != null) {
+			DiscountRule irrelevantDiscountRule =
+				testGetDiscountIdDiscountRulesPage_addDiscountRule(
+					irrelevantId, randomIrrelevantDiscountRule());
 
-	protected DiscountRule
-			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
-				DiscountRule discountRule)
-		throws Exception {
+			page = discountRuleResource.getDiscountIdDiscountRulesPage(
+				irrelevantId, Pagination.of(1, (int)totalCount + 1));
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-	@Test
-	public void testDeleteDiscountRule() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountRule discountRule = testDeleteDiscountRule_addDiscountRule();
-
-		assertHttpResponseStatusCode(
-			204,
-			discountRuleResource.deleteDiscountRuleHttpResponse(
-				discountRule.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			discountRuleResource.getDiscountRuleHttpResponse(
-				discountRule.getId()));
-		assertHttpResponseStatusCode(
-			404, discountRuleResource.getDiscountRuleHttpResponse(0L));
-	}
-
-	protected DiscountRule testDeleteDiscountRule_addDiscountRule()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDiscountRule() throws Exception {
-
-		// No namespace
+			assertContains(
+				irrelevantDiscountRule, (List<DiscountRule>)page.getItems());
+			assertValid(
+				page,
+				testGetDiscountIdDiscountRulesPage_getExpectedActions(
+					irrelevantId));
+		}
 
 		DiscountRule discountRule1 =
-			testGraphQLDeleteDiscountRule_addDiscountRule();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscountRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountRule1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscountRule"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"discountRule",
-					new HashMap<String, Object>() {
-						{
-							put("id", discountRule1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminPricing_v1_0
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
 
 		DiscountRule discountRule2 =
-			testGraphQLDeleteDiscountRule_addDiscountRule();
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPricing_v1_0",
-						new GraphQLField(
-							"deleteDiscountRule",
-							new HashMap<String, Object>() {
-								{
-									put("id", discountRule2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPricing_v1_0",
-				"Object/deleteDiscountRule"));
+		page = discountRuleResource.getDiscountIdDiscountRulesPage(
+			id, Pagination.of(1, 10));
 
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminPricing_v1_0",
-					new GraphQLField(
-						"discountRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", discountRule2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
+		assertContains(discountRule1, (List<DiscountRule>)page.getItems());
+		assertContains(discountRule2, (List<DiscountRule>)page.getItems());
+		assertValid(
+			page, testGetDiscountIdDiscountRulesPage_getExpectedActions(id));
+
+		discountRuleResource.deleteDiscountRule(discountRule1.getId());
+
+		discountRuleResource.deleteDiscountRule(discountRule2.getId());
 	}
 
-	protected DiscountRule testGraphQLDeleteDiscountRule_addDiscountRule()
+	protected Map<String, Map<String, String>>
+			testGetDiscountIdDiscountRulesPage_getExpectedActions(Long id)
 		throws Exception {
 
-		return testGraphQLDiscountRule_addDiscountRule();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
-	public void testDeleteDiscountRuleBatch() throws Exception {
+	public void testGetDiscountIdDiscountRulesPageWithPagination()
+		throws Exception {
+
+		Long id = testGetDiscountIdDiscountRulesPage_getId();
+
+		Page<DiscountRule> discountRulePage =
+			discountRuleResource.getDiscountIdDiscountRulesPage(id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			discountRulePage.getTotalCount());
+
 		DiscountRule discountRule1 =
-			testDeleteDiscountRuleBatch_addDiscountRule();
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
 
-		testDeleteDiscountRuleBatch_deleteDiscountRule(
-			"COMPLETED", null, discountRule1.getId());
+		DiscountRule discountRule2 =
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
 
-		assertHttpResponseStatusCode(
-			404,
-			discountRuleResource.getDiscountRuleHttpResponse(
-				discountRule1.getId()));
+		DiscountRule discountRule3 =
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<DiscountRule> page1 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(discountRule1, (List<DiscountRule>)page1.getItems());
+
+			Page<DiscountRule> page2 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(discountRule2, (List<DiscountRule>)page2.getItems());
+
+			Page<DiscountRule> page3 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
+		}
+		else {
+			Page<DiscountRule> page1 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<DiscountRule> discountRules1 =
+				(List<DiscountRule>)page1.getItems();
+
+			Assert.assertEquals(
+				discountRules1.toString(), totalCount + 2,
+				discountRules1.size());
+
+			Page<DiscountRule> page2 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountRule> discountRules2 =
+				(List<DiscountRule>)page2.getItems();
+
+			Assert.assertEquals(
+				discountRules2.toString(), 1, discountRules2.size());
+
+			Page<DiscountRule> page3 =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(discountRule1, (List<DiscountRule>)page3.getItems());
+			assertContains(discountRule2, (List<DiscountRule>)page3.getItems());
+			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
+		}
 	}
 
-	protected DiscountRule testDeleteDiscountRuleBatch_addDiscountRule()
+	protected DiscountRule testGetDiscountIdDiscountRulesPage_addDiscountRule(
+			Long id, DiscountRule discountRule)
 		throws Exception {
 
-		return testDeleteDiscountRule_addDiscountRule();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected void testDeleteDiscountRuleBatch_deleteDiscountRule(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+	protected Long testGetDiscountIdDiscountRulesPage_getId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetDiscountIdDiscountRulesPage_getIrrelevantId()
 		throws Exception {
 
-		HttpInvoker.HttpResponse httpResponse =
-			discountRuleResource.deleteDiscountRuleBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		return null;
 	}
 
 	@Test
@@ -894,176 +1044,26 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountIdDiscountRulesPage() throws Exception {
-		Long id = testGetDiscountIdDiscountRulesPage_getId();
-		Long irrelevantId =
-			testGetDiscountIdDiscountRulesPage_getIrrelevantId();
-
-		Page<DiscountRule> page =
-			discountRuleResource.getDiscountIdDiscountRulesPage(
-				id, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantId != null) {
-			DiscountRule irrelevantDiscountRule =
-				testGetDiscountIdDiscountRulesPage_addDiscountRule(
-					irrelevantId, randomIrrelevantDiscountRule());
-
-			page = discountRuleResource.getDiscountIdDiscountRulesPage(
-				irrelevantId, Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantDiscountRule, (List<DiscountRule>)page.getItems());
-			assertValid(
-				page,
-				testGetDiscountIdDiscountRulesPage_getExpectedActions(
-					irrelevantId));
-		}
-
-		DiscountRule discountRule1 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		DiscountRule discountRule2 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		page = discountRuleResource.getDiscountIdDiscountRulesPage(
-			id, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(discountRule1, (List<DiscountRule>)page.getItems());
-		assertContains(discountRule2, (List<DiscountRule>)page.getItems());
-		assertValid(
-			page, testGetDiscountIdDiscountRulesPage_getExpectedActions(id));
-
-		discountRuleResource.deleteDiscountRule(discountRule1.getId());
-
-		discountRuleResource.deleteDiscountRule(discountRule2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetDiscountIdDiscountRulesPage_getExpectedActions(Long id)
+	public void testPostDiscountByExternalReferenceCodeDiscountRule()
 		throws Exception {
 
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+		DiscountRule randomDiscountRule = randomDiscountRule();
 
-		return expectedActions;
+		DiscountRule postDiscountRule =
+			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
+				randomDiscountRule);
+
+		assertEquals(randomDiscountRule, postDiscountRule);
+		assertValid(postDiscountRule);
 	}
 
-	@Test
-	public void testGetDiscountIdDiscountRulesPageWithPagination()
-		throws Exception {
-
-		Long id = testGetDiscountIdDiscountRulesPage_getId();
-
-		Page<DiscountRule> discountRulePage =
-			discountRuleResource.getDiscountIdDiscountRulesPage(id, null);
-
-		int totalCount = GetterUtil.getInteger(
-			discountRulePage.getTotalCount());
-
-		DiscountRule discountRule1 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		DiscountRule discountRule2 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		DiscountRule discountRule3 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<DiscountRule> page1 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(discountRule1, (List<DiscountRule>)page1.getItems());
-
-			Page<DiscountRule> page2 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(discountRule2, (List<DiscountRule>)page2.getItems());
-
-			Page<DiscountRule> page3 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
-		}
-		else {
-			Page<DiscountRule> page1 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(1, totalCount + 2));
-
-			List<DiscountRule> discountRules1 =
-				(List<DiscountRule>)page1.getItems();
-
-			Assert.assertEquals(
-				discountRules1.toString(), totalCount + 2,
-				discountRules1.size());
-
-			Page<DiscountRule> page2 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<DiscountRule> discountRules2 =
-				(List<DiscountRule>)page2.getItems();
-
-			Assert.assertEquals(
-				discountRules2.toString(), 1, discountRules2.size());
-
-			Page<DiscountRule> page3 =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(discountRule1, (List<DiscountRule>)page3.getItems());
-			assertContains(discountRule2, (List<DiscountRule>)page3.getItems());
-			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
-		}
-	}
-
-	protected DiscountRule testGetDiscountIdDiscountRulesPage_addDiscountRule(
-			Long id, DiscountRule discountRule)
+	protected DiscountRule
+			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
+				DiscountRule discountRule)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long testGetDiscountIdDiscountRulesPage_getId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetDiscountIdDiscountRulesPage_getIrrelevantId()
-		throws Exception {
-
-		return null;
 	}
 
 	@Test

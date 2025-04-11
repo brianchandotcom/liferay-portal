@@ -183,213 +183,22 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetCartByExternalReferenceCodeAttachmentsPage()
-		throws Exception {
+	public void testDeleteCartAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment = testDeleteCartAttachment_addAttachment();
 
-		String externalReferenceCode =
-			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetCartByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
-
-		Page<Attachment> page =
-			attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
-				externalReferenceCode, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantExternalReferenceCode != null) {
-			Attachment irrelevantAttachment =
-				testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantAttachment());
-
-			page =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						irrelevantExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantAttachment, (List<Attachment>)page.getItems());
-			assertValid(
-				page,
-				testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-					irrelevantExternalReferenceCode));
-		}
-
-		Attachment attachment1 =
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment2 =
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		page = attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
-			externalReferenceCode, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(attachment1, (List<Attachment>)page.getItems());
-		assertContains(attachment2, (List<Attachment>)page.getItems());
-		assertValid(
-			page,
-			testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-				externalReferenceCode));
+		assertHttpResponseStatusCode(
+			204,
+			attachmentResource.deleteCartAttachmentHttpResponse(
+				attachment.getId(), testDeleteCartAttachment_getCartId()));
 	}
 
-	protected Map<String, Map<String, String>>
-			testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
-				String externalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetCartByExternalReferenceCodeAttachmentsPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
-
-		Page<Attachment> attachmentPage =
-			attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
-				externalReferenceCode, null);
-
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
-
-		Attachment attachment1 =
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment2 =
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		Attachment attachment3 =
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				externalReferenceCode, randomAttachment());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Attachment> page1 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(attachment1, (List<Attachment>)page1.getItems());
-
-			Page<Attachment> page2 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(attachment2, (List<Attachment>)page2.getItems());
-
-			Page<Attachment> page3 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(attachment3, (List<Attachment>)page3.getItems());
-		}
-		else {
-			Page<Attachment> page1 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, totalCount + 2));
-
-			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
-
-			Assert.assertEquals(
-				attachments1.toString(), totalCount + 2, attachments1.size());
-
-			Page<Attachment> page2 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
-
-			Assert.assertEquals(
-				attachments2.toString(), 1, attachments2.size());
-
-			Page<Attachment> page3 =
-				attachmentResource.
-					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(attachment1, (List<Attachment>)page3.getItems());
-			assertContains(attachment2, (List<Attachment>)page3.getItems());
-			assertContains(attachment3, (List<Attachment>)page3.getItems());
-		}
-	}
-
-	protected Attachment
-			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
-				String externalReferenceCode, Attachment attachment)
-		throws Exception {
-
+	protected Long testDeleteCartAttachment_getCartId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetCartByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testPostCartByExternalReferenceCodeAttachmentByBase64()
-		throws Exception {
-
-		Attachment randomAttachment = randomAttachment();
-
-		Attachment postAttachment =
-			testPostCartByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				randomAttachment);
-
-		assertEquals(randomAttachment, postAttachment);
-		assertValid(postAttachment);
-	}
-
-	protected Attachment
-			testPostCartByExternalReferenceCodeAttachmentByBase64_addAttachment(
-				Attachment attachment)
+	protected Attachment testDeleteCartAttachment_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -589,6 +398,197 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetCartByExternalReferenceCodeAttachmentsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetCartByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
+
+		Page<Attachment> page =
+			attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
+				externalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			Attachment irrelevantAttachment =
+				testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantAttachment());
+
+			page =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantAttachment, (List<Attachment>)page.getItems());
+			assertValid(
+				page,
+				testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		Attachment attachment1 =
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment2 =
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		page = attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
+			externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(attachment1, (List<Attachment>)page.getItems());
+		assertContains(attachment2, (List<Attachment>)page.getItems());
+		assertValid(
+			page,
+			testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCartByExternalReferenceCodeAttachmentsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodeAttachmentsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+
+		Page<Attachment> attachmentPage =
+			attachmentResource.getCartByExternalReferenceCodeAttachmentsPage(
+				externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+
+		Attachment attachment1 =
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment2 =
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		Attachment attachment3 =
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Attachment> page1 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
+
+			Page<Attachment> page2 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
+
+			Page<Attachment> page3 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 =
+				attachmentResource.
+					getCartByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+	}
+
+	protected Attachment
+			testGetCartByExternalReferenceCodeAttachmentsPage_addAttachment(
+				String externalReferenceCode, Attachment attachment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostCartAttachmentByBase64() throws Exception {
 		Attachment randomAttachment = randomAttachment();
 
@@ -608,22 +608,22 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteCartAttachment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Attachment attachment = testDeleteCartAttachment_addAttachment();
+	public void testPostCartByExternalReferenceCodeAttachmentByBase64()
+		throws Exception {
 
-		assertHttpResponseStatusCode(
-			204,
-			attachmentResource.deleteCartAttachmentHttpResponse(
-				attachment.getId(), testDeleteCartAttachment_getCartId()));
+		Attachment randomAttachment = randomAttachment();
+
+		Attachment postAttachment =
+			testPostCartByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
 	}
 
-	protected Long testDeleteCartAttachment_getCartId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Attachment testDeleteCartAttachment_addAttachment()
+	protected Attachment
+			testPostCartByExternalReferenceCodeAttachmentByBase64_addAttachment(
+				Attachment attachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

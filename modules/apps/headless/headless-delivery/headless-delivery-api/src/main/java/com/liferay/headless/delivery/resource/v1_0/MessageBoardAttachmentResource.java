@@ -55,6 +55,12 @@ public interface MessageBoardAttachmentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception;
@@ -64,10 +70,15 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
-	public Response
-			postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
-				Long messageBoardMessageId, String callbackURL,
-				String contentType, String fieldNames)
+	public Page<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
+		throws Exception;
+
+	public MessageBoardAttachment
+			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
 		throws Exception;
 
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
@@ -79,14 +90,9 @@ public interface MessageBoardAttachmentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Page<MessageBoardAttachment>
-			getMessageBoardThreadMessageBoardAttachmentsPage(
-				Long messageBoardThreadId)
-		throws Exception;
-
 	public Response
-			postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
-				Long messageBoardThreadId, String callbackURL,
+			postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
+				Long messageBoardMessageId, String callbackURL,
 				String contentType, String fieldNames)
 		throws Exception;
 
@@ -99,16 +105,10 @@ public interface MessageBoardAttachmentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void
-			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public MessageBoardAttachment
-			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-				Long siteId, String messageBoardMessageExternalReferenceCode,
-				String externalReferenceCode)
+	public Response
+			postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
+				Long messageBoardThreadId, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

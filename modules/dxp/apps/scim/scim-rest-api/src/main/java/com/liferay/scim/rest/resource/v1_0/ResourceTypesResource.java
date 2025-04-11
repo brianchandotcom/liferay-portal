@@ -43,9 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ResourceTypesResource {
 
-	public Object getV2ResourceTypes() throws Exception;
-
 	public Object getV2ResourceTypeById(String id) throws Exception;
+
+	public Object getV2ResourceTypes() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

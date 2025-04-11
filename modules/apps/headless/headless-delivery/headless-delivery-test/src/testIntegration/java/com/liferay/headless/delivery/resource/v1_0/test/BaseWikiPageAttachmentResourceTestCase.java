@@ -286,6 +286,163 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWikiPageAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPageAttachment wikiPageAttachment =
+			testDeleteWikiPageAttachment_addWikiPageAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageAttachmentResource.deleteWikiPageAttachmentHttpResponse(
+				wikiPageAttachment.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
+				wikiPageAttachment.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(0L));
+	}
+
+	protected WikiPageAttachment
+			testDeleteWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWikiPageAttachment() throws Exception {
+
+		// No namespace
+
+		WikiPageAttachment wikiPageAttachment1 =
+			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWikiPageAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"wikiPageAttachmentId",
+									wikiPageAttachment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWikiPageAttachment"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"wikiPageAttachment",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"wikiPageAttachmentId",
+								wikiPageAttachment1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		WikiPageAttachment wikiPageAttachment2 =
+			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteWikiPageAttachment",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"wikiPageAttachmentId",
+										wikiPageAttachment2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteWikiPageAttachment"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"wikiPageAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"wikiPageAttachmentId",
+									wikiPageAttachment2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected WikiPageAttachment
+			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
+	}
+
+	@Test
+	public void testDeleteWikiPageAttachmentBatch() throws Exception {
+		WikiPageAttachment wikiPageAttachment1 =
+			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment();
+
+		testDeleteWikiPageAttachmentBatch_deleteWikiPageAttachment(
+			"COMPLETED", null, wikiPageAttachment1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
+				wikiPageAttachment1.getId()));
+	}
+
+	protected WikiPageAttachment
+			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment()
+		throws Exception {
+
+		return testDeleteWikiPageAttachment_addWikiPageAttachment();
+	}
+
+	protected void testDeleteWikiPageAttachmentBatch_deleteWikiPageAttachment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			wikiPageAttachmentResource.
+				deleteWikiPageAttachmentBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode()
 		throws Exception {
 
@@ -493,163 +650,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
-	}
-
-	@Test
-	public void testDeleteWikiPageAttachment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiPageAttachment wikiPageAttachment =
-			testDeleteWikiPageAttachment_addWikiPageAttachment();
-
-		assertHttpResponseStatusCode(
-			204,
-			wikiPageAttachmentResource.deleteWikiPageAttachmentHttpResponse(
-				wikiPageAttachment.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
-				wikiPageAttachment.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(0L));
-	}
-
-	protected WikiPageAttachment
-			testDeleteWikiPageAttachment_addWikiPageAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteWikiPageAttachment() throws Exception {
-
-		// No namespace
-
-		WikiPageAttachment wikiPageAttachment1 =
-			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWikiPageAttachment",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"wikiPageAttachmentId",
-									wikiPageAttachment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWikiPageAttachment"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"wikiPageAttachment",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"wikiPageAttachmentId",
-								wikiPageAttachment1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessDelivery_v1_0
-
-		WikiPageAttachment wikiPageAttachment2 =
-			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteWikiPageAttachment",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"wikiPageAttachmentId",
-										wikiPageAttachment2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteWikiPageAttachment"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessDelivery_v1_0",
-					new GraphQLField(
-						"wikiPageAttachment",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"wikiPageAttachmentId",
-									wikiPageAttachment2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected WikiPageAttachment
-			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment()
-		throws Exception {
-
-		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
-	}
-
-	@Test
-	public void testDeleteWikiPageAttachmentBatch() throws Exception {
-		WikiPageAttachment wikiPageAttachment1 =
-			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment();
-
-		testDeleteWikiPageAttachmentBatch_deleteWikiPageAttachment(
-			"COMPLETED", null, wikiPageAttachment1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
-				wikiPageAttachment1.getId()));
-	}
-
-	protected WikiPageAttachment
-			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment()
-		throws Exception {
-
-		return testDeleteWikiPageAttachment_addWikiPageAttachment();
-	}
-
-	protected void testDeleteWikiPageAttachmentBatch_deleteWikiPageAttachment(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			wikiPageAttachmentResource.
-				deleteWikiPageAttachmentBatchHttpResponse(
-					null,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"externalReferenceCode", () -> externalReferenceCode
-						).put(
-							"id", () -> id
-						)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test

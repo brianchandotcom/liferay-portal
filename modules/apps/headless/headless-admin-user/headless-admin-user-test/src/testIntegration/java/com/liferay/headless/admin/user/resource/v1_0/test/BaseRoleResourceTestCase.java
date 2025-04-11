@@ -225,553 +225,6 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testGetRolesPage() throws Exception {
-		Page<Role> page = roleResource.getRolesPage(
-			null, null, null, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		Role role1 = testGetRolesPage_addRole(randomRole());
-
-		Role role2 = testGetRolesPage_addRole(randomRole());
-
-		page = roleResource.getRolesPage(
-			null, null, null, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(role1, (List<Role>)page.getItems());
-		assertContains(role2, (List<Role>)page.getItems());
-		assertValid(page, testGetRolesPage_getExpectedActions());
-
-		roleResource.deleteRole(role1.getId());
-
-		roleResource.deleteRole(role2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetRolesPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetRolesPageWithFilterDateTimeEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Role role1 = randomRole();
-
-		role1 = testGetRolesPage_addRole(role1);
-
-		for (EntityField entityField : entityFields) {
-			Page<Role> page = roleResource.getRolesPage(
-				null, null, getFilterString(entityField, "between", role1),
-				Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(role1), (List<Role>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetRolesPageWithFilterDoubleEquals() throws Exception {
-		testGetRolesPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetRolesPageWithFilterStringContains() throws Exception {
-		testGetRolesPageWithFilter("contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetRolesPageWithFilterStringEquals() throws Exception {
-		testGetRolesPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetRolesPageWithFilterStringStartsWith() throws Exception {
-		testGetRolesPageWithFilter("startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetRolesPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Role role1 = testGetRolesPage_addRole(randomRole());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role2 = testGetRolesPage_addRole(randomRole());
-
-		for (EntityField entityField : entityFields) {
-			Page<Role> page = roleResource.getRolesPage(
-				null, null, getFilterString(entityField, operator, role1),
-				Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(role1), (List<Role>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetRolesPageWithPagination() throws Exception {
-		Page<Role> rolePage = roleResource.getRolesPage(null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(rolePage.getTotalCount());
-
-		Role role1 = testGetRolesPage_addRole(randomRole());
-
-		Role role2 = testGetRolesPage_addRole(randomRole());
-
-		Role role3 = testGetRolesPage_addRole(randomRole());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Role> page1 = roleResource.getRolesPage(
-				null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(role1, (List<Role>)page1.getItems());
-
-			Page<Role> page2 = roleResource.getRolesPage(
-				null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(role2, (List<Role>)page2.getItems());
-
-			Page<Role> page3 = roleResource.getRolesPage(
-				null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(role3, (List<Role>)page3.getItems());
-		}
-		else {
-			Page<Role> page1 = roleResource.getRolesPage(
-				null, null, null, Pagination.of(1, totalCount + 2));
-
-			List<Role> roles1 = (List<Role>)page1.getItems();
-
-			Assert.assertEquals(
-				roles1.toString(), totalCount + 2, roles1.size());
-
-			Page<Role> page2 = roleResource.getRolesPage(
-				null, null, null, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Role> roles2 = (List<Role>)page2.getItems();
-
-			Assert.assertEquals(roles2.toString(), 1, roles2.size());
-
-			Page<Role> page3 = roleResource.getRolesPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(role1, (List<Role>)page3.getItems());
-			assertContains(role2, (List<Role>)page3.getItems());
-			assertContains(role3, (List<Role>)page3.getItems());
-		}
-	}
-
-	protected Role testGetRolesPage_addRole(Role role) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetRolesPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"roles",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject rolesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/roles");
-
-		long totalCount = rolesJSONObject.getLong("totalCount");
-
-		Role role1 = testGraphQLGetRolesPage_addRole();
-		Role role2 = testGraphQLGetRolesPage_addRole();
-
-		rolesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/roles");
-
-		Assert.assertEquals(
-			totalCount + 2, rolesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			role1,
-			Arrays.asList(
-				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
-		assertContains(
-			role2,
-			Arrays.asList(
-				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		rolesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-			"JSONObject/roles");
-
-		Assert.assertEquals(
-			totalCount + 2, rolesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			role1,
-			Arrays.asList(
-				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
-		assertContains(
-			role2,
-			Arrays.asList(
-				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
-	}
-
-	protected Role testGraphQLGetRolesPage_addRole() throws Exception {
-		return testGraphQLRole_addRole();
-	}
-
-	@Test
-	public void testPostRole() throws Exception {
-		Role randomRole = randomRole();
-
-		Role postRole = testPostRole_addRole(randomRole);
-
-		assertEquals(randomRole, postRole);
-		assertValid(postRole);
-	}
-
-	protected Role testPostRole_addRole(Role role) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteRoleByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role = testDeleteRoleByExternalReferenceCode_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteRoleByExternalReferenceCodeHttpResponse(
-				role.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			roleResource.getRoleByExternalReferenceCodeHttpResponse(
-				role.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404, roleResource.getRoleByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Role testDeleteRoleByExternalReferenceCode_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetRoleByExternalReferenceCode() throws Exception {
-		Role postRole = testGetRoleByExternalReferenceCode_addRole();
-
-		Role getRole = roleResource.getRoleByExternalReferenceCode(
-			postRole.getExternalReferenceCode());
-
-		assertEquals(postRole, getRole);
-		assertValid(getRole);
-	}
-
-	protected Role testGetRoleByExternalReferenceCode_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetRoleByExternalReferenceCode() throws Exception {
-		Role role = testGraphQLGetRoleByExternalReferenceCode_addRole();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				role,
-				RoleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"roleByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												role.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/roleByExternalReferenceCode"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				role,
-				RoleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"roleByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													role.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/roleByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetRoleByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"roleByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"roleByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Role testGraphQLGetRoleByExternalReferenceCode_addRole()
-		throws Exception {
-
-		return testGraphQLRole_addRole();
-	}
-
-	@Test
-	public void testPatchRoleByExternalReferenceCode() throws Exception {
-		Role postRole = testPatchRoleByExternalReferenceCode_addRole();
-
-		Role randomPatchRole = randomPatchRole();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role patchRole = roleResource.patchRoleByExternalReferenceCode(
-			postRole.getExternalReferenceCode(), randomPatchRole);
-
-		Role expectedPatchRole = postRole.clone();
-
-		BeanTestUtil.copyProperties(randomPatchRole, expectedPatchRole);
-
-		Role getRole = roleResource.getRoleByExternalReferenceCode(
-			patchRole.getExternalReferenceCode());
-
-		assertEquals(expectedPatchRole, getRole);
-		assertValid(getRole);
-	}
-
-	protected Role testPatchRoleByExternalReferenceCode_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutRoleByExternalReferenceCode() throws Exception {
-		Role postRole = testPutRoleByExternalReferenceCode_addRole();
-
-		Role randomRole = randomRole();
-
-		Role putRole = roleResource.putRoleByExternalReferenceCode(
-			postRole.getExternalReferenceCode(), randomRole);
-
-		assertEquals(randomRole, putRole);
-		assertValid(putRole);
-
-		Role getRole = roleResource.getRoleByExternalReferenceCode(
-			putRole.getExternalReferenceCode());
-
-		assertEquals(randomRole, getRole);
-		assertValid(getRole);
-
-		Role newRole = testPutRoleByExternalReferenceCode_createRole();
-
-		putRole = roleResource.putRoleByExternalReferenceCode(
-			newRole.getExternalReferenceCode(), newRole);
-
-		assertEquals(newRole, putRole);
-		assertValid(putRole);
-
-		getRole = roleResource.getRoleByExternalReferenceCode(
-			putRole.getExternalReferenceCode());
-
-		assertEquals(newRole, getRole);
-
-		Assert.assertEquals(
-			newRole.getExternalReferenceCode(),
-			putRole.getExternalReferenceCode());
-	}
-
-	protected Role testPutRoleByExternalReferenceCode_createRole()
-		throws Exception {
-
-		return randomRole();
-	}
-
-	protected Role testPutRoleByExternalReferenceCode_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteRoleByExternalReferenceCodeUserAccountAssociation()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role =
-			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				deleteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(),
-					testDeleteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()));
-	}
-
-	protected Long
-			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role
-			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostRoleByExternalReferenceCodeUserAccountAssociation()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role =
-			testPostRoleByExternalReferenceCodeUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				postRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null));
-
-		assertHttpResponseStatusCode(
-			404,
-			roleResource.
-				postRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null));
-	}
-
-	protected Role
-			testPostRoleByExternalReferenceCodeUserAccountAssociation_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation()
 		throws Exception {
 
@@ -813,53 +266,23 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation()
+	public void testDeleteOrganizationRoleUserAccountAssociation()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role =
-			testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole();
+		Role role = testDeleteOrganizationRoleUserAccountAssociation_addRole();
 
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.
-				postOrganizationRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			roleResource.
-				postOrganizationRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null, null));
-	}
-
-	protected Role
-			testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role =
-			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				deleteSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(),
-					testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId(),
-					testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getSiteId()));
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					role.getId(),
+					testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId(),
+					testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()));
 	}
 
 	protected Long
-			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()
+			testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -867,46 +290,14 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Long
-			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getSiteId()
+			testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Role
-			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSiteRoleByExternalReferenceCodeUserAccountAssociation()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role =
-			testPostSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				postSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null,
-					testGroup.getGroupId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			roleResource.
-				postSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
-					role.getExternalReferenceCode(), null,
-					testGroup.getGroupId()));
-	}
-
-	protected Role
-			testPostSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
+	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1062,6 +453,164 @@ public abstract class BaseRoleResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteRoleByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testDeleteRoleByExternalReferenceCode_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.deleteRoleByExternalReferenceCodeHttpResponse(
+				role.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.getRoleByExternalReferenceCodeHttpResponse(
+				role.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Role testDeleteRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteRoleByExternalReferenceCodeUserAccountAssociation()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role =
+			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.
+				deleteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(),
+					testDeleteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long
+			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role
+			testDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteRoleUserAccountAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testDeleteRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.deleteRoleUserAccountAssociationHttpResponse(
+				role.getId(),
+				testDeleteRoleUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role testDeleteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role =
+			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.
+				deleteSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(),
+					testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId(),
+					testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getSiteId()));
+	}
+
+	protected Long
+			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role
+			testDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteSiteRoleUserAccountAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testDeleteSiteRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
+				role.getId(),
+				testDeleteSiteRoleUserAccountAssociation_getUserAccountId(),
+				testDeleteSiteRoleUserAccountAssociation_getSiteId()));
+	}
+
+	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testDeleteSiteRoleUserAccountAssociation_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1355,6 +904,375 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testGetRoleByExternalReferenceCode() throws Exception {
+		Role postRole = testGetRoleByExternalReferenceCode_addRole();
+
+		Role getRole = roleResource.getRoleByExternalReferenceCode(
+			postRole.getExternalReferenceCode());
+
+		assertEquals(postRole, getRole);
+		assertValid(getRole);
+	}
+
+	protected Role testGetRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetRoleByExternalReferenceCode() throws Exception {
+		Role role = testGraphQLGetRoleByExternalReferenceCode_addRole();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				role,
+				RoleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"roleByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												role.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/roleByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				role,
+				RoleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"roleByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													role.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/roleByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetRoleByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"roleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"roleByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Role testGraphQLGetRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
+		return testGraphQLRole_addRole();
+	}
+
+	@Test
+	public void testGetRolesPage() throws Exception {
+		Page<Role> page = roleResource.getRolesPage(
+			null, null, null, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Role role1 = testGetRolesPage_addRole(randomRole());
+
+		Role role2 = testGetRolesPage_addRole(randomRole());
+
+		page = roleResource.getRolesPage(
+			null, null, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(role1, (List<Role>)page.getItems());
+		assertContains(role2, (List<Role>)page.getItems());
+		assertValid(page, testGetRolesPage_getExpectedActions());
+
+		roleResource.deleteRole(role1.getId());
+
+		roleResource.deleteRole(role2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetRolesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetRolesPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Role role1 = randomRole();
+
+		role1 = testGetRolesPage_addRole(role1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Role> page = roleResource.getRolesPage(
+				null, null, getFilterString(entityField, "between", role1),
+				Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(role1), (List<Role>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetRolesPageWithFilterDoubleEquals() throws Exception {
+		testGetRolesPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetRolesPageWithFilterStringContains() throws Exception {
+		testGetRolesPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetRolesPageWithFilterStringEquals() throws Exception {
+		testGetRolesPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetRolesPageWithFilterStringStartsWith() throws Exception {
+		testGetRolesPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetRolesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Role role1 = testGetRolesPage_addRole(randomRole());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role2 = testGetRolesPage_addRole(randomRole());
+
+		for (EntityField entityField : entityFields) {
+			Page<Role> page = roleResource.getRolesPage(
+				null, null, getFilterString(entityField, operator, role1),
+				Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(role1), (List<Role>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetRolesPageWithPagination() throws Exception {
+		Page<Role> rolePage = roleResource.getRolesPage(null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(rolePage.getTotalCount());
+
+		Role role1 = testGetRolesPage_addRole(randomRole());
+
+		Role role2 = testGetRolesPage_addRole(randomRole());
+
+		Role role3 = testGetRolesPage_addRole(randomRole());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Role> page1 = roleResource.getRolesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(role1, (List<Role>)page1.getItems());
+
+			Page<Role> page2 = roleResource.getRolesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(role2, (List<Role>)page2.getItems());
+
+			Page<Role> page3 = roleResource.getRolesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(role3, (List<Role>)page3.getItems());
+		}
+		else {
+			Page<Role> page1 = roleResource.getRolesPage(
+				null, null, null, Pagination.of(1, totalCount + 2));
+
+			List<Role> roles1 = (List<Role>)page1.getItems();
+
+			Assert.assertEquals(
+				roles1.toString(), totalCount + 2, roles1.size());
+
+			Page<Role> page2 = roleResource.getRolesPage(
+				null, null, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Role> roles2 = (List<Role>)page2.getItems();
+
+			Assert.assertEquals(roles2.toString(), 1, roles2.size());
+
+			Page<Role> page3 = roleResource.getRolesPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(role1, (List<Role>)page3.getItems());
+			assertContains(role2, (List<Role>)page3.getItems());
+			assertContains(role3, (List<Role>)page3.getItems());
+		}
+	}
+
+	protected Role testGetRolesPage_addRole(Role role) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetRolesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"roles",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject rolesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/roles");
+
+		long totalCount = rolesJSONObject.getLong("totalCount");
+
+		Role role1 = testGraphQLGetRolesPage_addRole();
+		Role role2 = testGraphQLGetRolesPage_addRole();
+
+		rolesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/roles");
+
+		Assert.assertEquals(
+			totalCount + 2, rolesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			role1,
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+		assertContains(
+			role2,
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		rolesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/roles");
+
+		Assert.assertEquals(
+			totalCount + 2, rolesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			role1,
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+		assertContains(
+			role2,
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+	}
+
+	protected Role testGraphQLGetRolesPage_addRole() throws Exception {
+		return testGraphQLRole_addRole();
+	}
+
+	@Test
 	public void testPatchRole() throws Exception {
 		Role postRole = testPatchRole_addRole();
 
@@ -1380,47 +1298,27 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testPutRole() throws Exception {
-		Role postRole = testPutRole_addRole();
+	public void testPatchRoleByExternalReferenceCode() throws Exception {
+		Role postRole = testPatchRoleByExternalReferenceCode_addRole();
 
-		Role randomRole = randomRole();
+		Role randomPatchRole = randomPatchRole();
 
-		Role putRole = roleResource.putRole(postRole.getId(), randomRole);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role patchRole = roleResource.patchRoleByExternalReferenceCode(
+			postRole.getExternalReferenceCode(), randomPatchRole);
 
-		assertEquals(randomRole, putRole);
-		assertValid(putRole);
+		Role expectedPatchRole = postRole.clone();
 
-		Role getRole = roleResource.getRole(putRole.getId());
+		BeanTestUtil.copyProperties(randomPatchRole, expectedPatchRole);
 
-		assertEquals(randomRole, getRole);
+		Role getRole = roleResource.getRoleByExternalReferenceCode(
+			patchRole.getExternalReferenceCode());
+
+		assertEquals(expectedPatchRole, getRole);
 		assertValid(getRole);
 	}
 
-	protected Role testPutRole_addRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteRoleUserAccountAssociation() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role = testDeleteRoleUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteRoleUserAccountAssociationHttpResponse(
-				role.getId(),
-				testDeleteRoleUserAccountAssociation_getUserAccountId()));
-	}
-
-	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role testDeleteRoleUserAccountAssociation_addRole()
+	protected Role testPatchRoleByExternalReferenceCode_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1428,60 +1326,28 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testPostRoleUserAccountAssociation() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role = testPostRoleUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.postRoleUserAccountAssociationHttpResponse(
-				role.getId(), null));
-
-		assertHttpResponseStatusCode(
-			404,
-			roleResource.postRoleUserAccountAssociationHttpResponse(0L, null));
-	}
-
-	protected Role testPostRoleUserAccountAssociation_addRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrganizationRoleUserAccountAssociation()
+	public void testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role = testDeleteOrganizationRoleUserAccountAssociation_addRole();
+		Role role =
+			testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.
-				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					role.getId(),
-					testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId(),
-					testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()));
+				postOrganizationRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.
+				postOrganizationRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null, null));
 	}
 
-	protected Long
-			testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
+	protected Role
+			testPostOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1514,33 +1380,96 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteRoleUserAccountAssociation() throws Exception {
+	public void testPostRole() throws Exception {
+		Role randomRole = randomRole();
+
+		Role postRole = testPostRole_addRole(randomRole);
+
+		assertEquals(randomRole, postRole);
+		assertValid(postRole);
+	}
+
+	protected Role testPostRole_addRole(Role role) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostRoleByExternalReferenceCodeUserAccountAssociation()
+		throws Exception {
+
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Role role = testDeleteSiteRoleUserAccountAssociation_addRole();
+		Role role =
+			testPostRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
 		assertHttpResponseStatusCode(
 			204,
-			roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
-				role.getId(),
-				testDeleteSiteRoleUserAccountAssociation_getUserAccountId(),
-				testDeleteSiteRoleUserAccountAssociation_getSiteId()));
+			roleResource.
+				postRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.
+				postRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null));
 	}
 
-	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()
+	protected Role
+			testPostRoleByExternalReferenceCodeUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testDeleteSiteRoleUserAccountAssociation_getSiteId()
+	@Test
+	public void testPostRoleUserAccountAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role = testPostRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				role.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.postRoleUserAccountAssociationHttpResponse(0L, null));
+	}
+
+	protected Role testPostRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()
+	@Test
+	public void testPostSiteRoleByExternalReferenceCodeUserAccountAssociation()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Role role =
+			testPostSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.
+				postSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null,
+					testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.
+				postSiteRoleByExternalReferenceCodeUserAccountAssociationHttpResponse(
+					role.getExternalReferenceCode(), null,
+					testGroup.getGroupId()));
+	}
+
+	protected Role
+			testPostSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1564,6 +1493,77 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Role testPostSiteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutRole() throws Exception {
+		Role postRole = testPutRole_addRole();
+
+		Role randomRole = randomRole();
+
+		Role putRole = roleResource.putRole(postRole.getId(), randomRole);
+
+		assertEquals(randomRole, putRole);
+		assertValid(putRole);
+
+		Role getRole = roleResource.getRole(putRole.getId());
+
+		assertEquals(randomRole, getRole);
+		assertValid(getRole);
+	}
+
+	protected Role testPutRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutRoleByExternalReferenceCode() throws Exception {
+		Role postRole = testPutRoleByExternalReferenceCode_addRole();
+
+		Role randomRole = randomRole();
+
+		Role putRole = roleResource.putRoleByExternalReferenceCode(
+			postRole.getExternalReferenceCode(), randomRole);
+
+		assertEquals(randomRole, putRole);
+		assertValid(putRole);
+
+		Role getRole = roleResource.getRoleByExternalReferenceCode(
+			putRole.getExternalReferenceCode());
+
+		assertEquals(randomRole, getRole);
+		assertValid(getRole);
+
+		Role newRole = testPutRoleByExternalReferenceCode_createRole();
+
+		putRole = roleResource.putRoleByExternalReferenceCode(
+			newRole.getExternalReferenceCode(), newRole);
+
+		assertEquals(newRole, putRole);
+		assertValid(putRole);
+
+		getRole = roleResource.getRoleByExternalReferenceCode(
+			putRole.getExternalReferenceCode());
+
+		assertEquals(newRole, getRole);
+
+		Assert.assertEquals(
+			newRole.getExternalReferenceCode(),
+			putRole.getExternalReferenceCode());
+	}
+
+	protected Role testPutRoleByExternalReferenceCode_createRole()
+		throws Exception {
+
+		return randomRole();
+	}
+
+	protected Role testPutRoleByExternalReferenceCode_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

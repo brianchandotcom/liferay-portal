@@ -49,6 +49,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(dsEnvelopeId: ___, siteKey: ___){dateCreated, dateModified, dsDocument, dsRecipient, emailBlurb, emailSubject, id, name, senderEmailAddress, siteId, status}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DSEnvelope dSEnvelope(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("dsEnvelopeId") String dsEnvelopeId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dsEnvelopeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dsEnvelopeResource -> dsEnvelopeResource.getSiteDSEnvelope(
+				Long.valueOf(siteKey), dsEnvelopeId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopes(fromDate: ___, keywords: ___, order: ___, page: ___, pageSize: ___, siteKey: ___, status: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -69,24 +87,6 @@ public class Query {
 				dsEnvelopeResource.getSiteDSEnvelopesPage(
 					Long.valueOf(siteKey), fromDate, keywords, order, status,
 					Pagination.of(page, pageSize))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(dsEnvelopeId: ___, siteKey: ___){dateCreated, dateModified, dsDocument, dsRecipient, emailBlurb, emailSubject, id, name, senderEmailAddress, siteId, status}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public DSEnvelope dSEnvelope(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("dsEnvelopeId") String dsEnvelopeId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dsEnvelopeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dsEnvelopeResource -> dsEnvelopeResource.getSiteDSEnvelope(
-				Long.valueOf(siteKey), dsEnvelopeId));
 	}
 
 	@GraphQLName("DSEnvelopePage")

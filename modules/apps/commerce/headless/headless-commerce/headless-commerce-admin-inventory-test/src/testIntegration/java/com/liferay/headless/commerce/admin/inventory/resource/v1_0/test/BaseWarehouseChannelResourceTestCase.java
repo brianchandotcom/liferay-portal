@@ -454,29 +454,6 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehouseByExternalReferenceCodeWarehouseChannel()
-		throws Exception {
-
-		WarehouseChannel randomWarehouseChannel = randomWarehouseChannel();
-
-		WarehouseChannel postWarehouseChannel =
-			testPostWarehouseByExternalReferenceCodeWarehouseChannel_addWarehouseChannel(
-				randomWarehouseChannel);
-
-		assertEquals(randomWarehouseChannel, postWarehouseChannel);
-		assertValid(postWarehouseChannel);
-	}
-
-	protected WarehouseChannel
-			testPostWarehouseByExternalReferenceCodeWarehouseChannel_addWarehouseChannel(
-				WarehouseChannel warehouseChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehouseIdWarehouseChannelsPage() throws Exception {
 		Long id = testGetWarehouseIdWarehouseChannelsPage_getId();
 		Long irrelevantId =
@@ -914,6 +891,29 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostWarehouseByExternalReferenceCodeWarehouseChannel()
+		throws Exception {
+
+		WarehouseChannel randomWarehouseChannel = randomWarehouseChannel();
+
+		WarehouseChannel postWarehouseChannel =
+			testPostWarehouseByExternalReferenceCodeWarehouseChannel_addWarehouseChannel(
+				randomWarehouseChannel);
+
+		assertEquals(randomWarehouseChannel, postWarehouseChannel);
+		assertValid(postWarehouseChannel);
+	}
+
+	protected WarehouseChannel
+			testPostWarehouseByExternalReferenceCodeWarehouseChannel_addWarehouseChannel(
+				WarehouseChannel warehouseChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

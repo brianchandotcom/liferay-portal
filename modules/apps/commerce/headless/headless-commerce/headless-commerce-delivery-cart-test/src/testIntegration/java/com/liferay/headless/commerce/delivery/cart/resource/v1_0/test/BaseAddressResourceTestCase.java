@@ -207,6 +207,130 @@ public abstract class BaseAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGetCartBillingAddres() throws Exception {
+		Address postAddress = testGetCartBillingAddres_addAddress();
+
+		Address getAddress = addressResource.getCartBillingAddres(
+			testGetCartBillingAddres_getCartId());
+
+		assertEquals(postAddress, getAddress);
+		assertValid(getAddress);
+	}
+
+	protected Long testGetCartBillingAddres_getCartId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Address testGetCartBillingAddres_addAddress() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartBillingAddres() throws Exception {
+		Address address = testGraphQLGetCartBillingAddres_addAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartBillingAddres",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"cartId",
+											testGraphQLGetCartBillingAddres_getCartId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/cartBillingAddres"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartBillingAddres",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"cartId",
+												testGraphQLGetCartBillingAddres_getCartId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartBillingAddres"))));
+	}
+
+	protected Long testGraphQLGetCartBillingAddres_getCartId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartBillingAddresNotFound() throws Exception {
+		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartBillingAddres",
+						new HashMap<String, Object>() {
+							{
+								put("cartId", irrelevantCartId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartBillingAddres",
+							new HashMap<String, Object>() {
+								{
+									put("cartId", irrelevantCartId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Address testGraphQLGetCartBillingAddres_addAddress()
+		throws Exception {
+
+		return testGraphQLAddress_addAddress();
+	}
+
+	@Test
 	public void testGetCartByExternalReferenceCodeBillingAddress()
 		throws Exception {
 
@@ -505,130 +629,6 @@ public abstract class BaseAddressResourceTestCase {
 
 	protected Address
 			testGraphQLGetCartByExternalReferenceCodeShippingAddress_addAddress()
-		throws Exception {
-
-		return testGraphQLAddress_addAddress();
-	}
-
-	@Test
-	public void testGetCartBillingAddres() throws Exception {
-		Address postAddress = testGetCartBillingAddres_addAddress();
-
-		Address getAddress = addressResource.getCartBillingAddres(
-			testGetCartBillingAddres_getCartId());
-
-		assertEquals(postAddress, getAddress);
-		assertValid(getAddress);
-	}
-
-	protected Long testGetCartBillingAddres_getCartId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Address testGetCartBillingAddres_addAddress() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetCartBillingAddres() throws Exception {
-		Address address = testGraphQLGetCartBillingAddres_addAddress();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				address,
-				AddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"cartBillingAddres",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"cartId",
-											testGraphQLGetCartBillingAddres_getCartId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/cartBillingAddres"))));
-
-		// Using the namespace headlessCommerceDeliveryCart_v1_0
-
-		Assert.assertTrue(
-			equals(
-				address,
-				AddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceDeliveryCart_v1_0",
-								new GraphQLField(
-									"cartBillingAddres",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"cartId",
-												testGraphQLGetCartBillingAddres_getCartId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceDeliveryCart_v1_0",
-						"Object/cartBillingAddres"))));
-	}
-
-	protected Long testGraphQLGetCartBillingAddres_getCartId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetCartBillingAddresNotFound() throws Exception {
-		Long irrelevantCartId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"cartBillingAddres",
-						new HashMap<String, Object>() {
-							{
-								put("cartId", irrelevantCartId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceDeliveryCart_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceDeliveryCart_v1_0",
-						new GraphQLField(
-							"cartBillingAddres",
-							new HashMap<String, Object>() {
-								{
-									put("cartId", irrelevantCartId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Address testGraphQLGetCartBillingAddres_addAddress()
 		throws Exception {
 
 		return testGraphQLAddress_addAddress();

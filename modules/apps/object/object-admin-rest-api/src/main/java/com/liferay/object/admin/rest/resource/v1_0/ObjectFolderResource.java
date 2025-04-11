@@ -46,13 +46,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectFolderResource {
 
+	public void deleteObjectFolder(Long objectFolderId) throws Exception;
+
+	public Response deleteObjectFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectFolder getObjectFolder(Long objectFolderId) throws Exception;
+
+	public ObjectFolder getObjectFolderByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<ObjectFolder> getObjectFoldersPage(
 			String search, Pagination pagination)
 		throws Exception;
 
-	public Response postObjectFoldersPageExportBatch(
-			String search, String callbackURL, String contentType,
-			String fieldNames)
+	public ObjectFolder patchObjectFolder(
+			Long objectFolderId, ObjectFolder objectFolder)
 		throws Exception;
 
 	public ObjectFolder postObjectFolder(ObjectFolder objectFolder)
@@ -61,23 +71,9 @@ public interface ObjectFolderResource {
 	public Response postObjectFolderBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public ObjectFolder getObjectFolderByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ObjectFolder putObjectFolderByExternalReferenceCode(
-			String externalReferenceCode, ObjectFolder objectFolder)
-		throws Exception;
-
-	public void deleteObjectFolder(Long objectFolderId) throws Exception;
-
-	public Response deleteObjectFolderBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectFolder getObjectFolder(Long objectFolderId) throws Exception;
-
-	public ObjectFolder patchObjectFolder(
-			Long objectFolderId, ObjectFolder objectFolder)
+	public Response postObjectFoldersPageExportBatch(
+			String search, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public ObjectFolder putObjectFolder(
@@ -85,6 +81,10 @@ public interface ObjectFolderResource {
 		throws Exception;
 
 	public Response putObjectFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectFolder putObjectFolderByExternalReferenceCode(
+			String externalReferenceCode, ObjectFolder objectFolder)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -70,23 +70,6 @@ public class Mutation {
 					Long.valueOf(siteKey), pageDefinition));
 	}
 
-	@GraphQLField(description = "Creates a draft of a structured content")
-	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
-			createSiteStructuredContentDraft(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("structuredContent")
-					com.liferay.headless.delivery.dto.v1_0.StructuredContent
-						structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postSiteStructuredContentDraft(
-					Long.valueOf(siteKey), structuredContent));
-	}
-
 	@GraphQLField(
 		description = "Deletes a version of a structured content via its ID."
 	)
@@ -103,6 +86,23 @@ public class Mutation {
 					structuredContentId, version));
 
 		return true;
+	}
+
+	@GraphQLField(description = "Creates a draft of a structured content")
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			createSiteStructuredContentDraft(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("structuredContent")
+					com.liferay.headless.delivery.dto.v1_0.StructuredContent
+						structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postSiteStructuredContentDraft(
+					Long.valueOf(siteKey), structuredContent));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

@@ -54,22 +54,16 @@ public interface PageRuleActionResource {
 			String pageRuleActionExternalReferenceCode)
 		throws Exception;
 
-	public PageRuleAction patchSiteSiteByExternalReferenceCodePageRuleAction(
-			String siteExternalReferenceCode,
-			String pageRuleActionExternalReferenceCode,
-			PageRuleAction pageRuleAction)
-		throws Exception;
-
-	public PageRuleAction putSiteSiteByExternalReferenceCodePageRuleAction(
-			String siteExternalReferenceCode,
-			String pageRuleActionExternalReferenceCode,
-			PageRuleAction pageRuleAction)
-		throws Exception;
-
 	public Page<PageRuleAction>
 			getSiteSiteByExternalReferenceCodePageRulePageRuleActionsPage(
 				String siteExternalReferenceCode,
 				String pageRuleExternalReferenceCode, Boolean flatten)
+		throws Exception;
+
+	public PageRuleAction patchSiteSiteByExternalReferenceCodePageRuleAction(
+			String siteExternalReferenceCode,
+			String pageRuleActionExternalReferenceCode,
+			PageRuleAction pageRuleAction)
 		throws Exception;
 
 	public PageRuleAction
@@ -77,6 +71,12 @@ public interface PageRuleActionResource {
 				String siteExternalReferenceCode,
 				String pageRuleExternalReferenceCode,
 				PageRuleAction pageRuleAction)
+		throws Exception;
+
+	public PageRuleAction putSiteSiteByExternalReferenceCodePageRuleAction(
+			String siteExternalReferenceCode,
+			String pageRuleActionExternalReferenceCode,
+			PageRuleAction pageRuleAction)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

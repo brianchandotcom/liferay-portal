@@ -47,18 +47,49 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartResource {
 
+	public Response deleteCart(Long cartId) throws Exception;
+
+	public Response deleteCartBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Response deleteCartByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public Cart getCart(Long cartId) throws Exception;
+
 	public Cart getCartByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
-	public Cart patchCartByExternalReferenceCode(
-			String externalReferenceCode, Cart cart)
+	public String getCartByExternalReferenceCodePaymentUrl(
+			String externalReferenceCode, String callbackURL)
 		throws Exception;
 
-	public Cart putCartByExternalReferenceCode(
+	public String getCartPaymentURL(Long cartId, String callbackURL)
+		throws Exception;
+
+	public Page<Cart> getChannelAccountCartsPage(
+			Long accountId, Long channelId, String search,
+			Pagination pagination)
+		throws Exception;
+
+	public Page<Cart>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public Page<Cart> getChannelCartsPage(
+			Long channelId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Cart patchCart(Long cartId, Cart cart) throws Exception;
+
+	public Cart patchCartByExternalReferenceCode(
 			String externalReferenceCode, Cart cart)
 		throws Exception;
 
@@ -70,56 +101,25 @@ public interface CartResource {
 			String externalReferenceCode, CouponCode couponCode)
 		throws Exception;
 
-	public String getCartByExternalReferenceCodePaymentUrl(
-			String externalReferenceCode, String callbackURL)
+	public Cart postCartCheckout(Long cartId) throws Exception;
+
+	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public Response deleteCart(Long cartId) throws Exception;
+	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;
 
-	public Response deleteCartBatch(String callbackURL, Object object)
+	public Cart postChannelCartByExternalReferenceCode(
+			String externalReferenceCode, Cart cart)
 		throws Exception;
-
-	public Cart getCart(Long cartId) throws Exception;
-
-	public Cart patchCart(Long cartId, Cart cart) throws Exception;
 
 	public Cart putCart(Long cartId, Cart cart) throws Exception;
 
 	public Response putCartBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Cart postCartCheckout(Long cartId) throws Exception;
-
-	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
-		throws Exception;
-
-	public String getCartPaymentURL(Long cartId, String callbackURL)
-		throws Exception;
-
-	public Page<Cart>
-			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
-				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, String search,
-				Pagination pagination)
-		throws Exception;
-
-	public Cart postChannelCartByExternalReferenceCode(
+	public Cart putCartByExternalReferenceCode(
 			String externalReferenceCode, Cart cart)
 		throws Exception;
-
-	public Page<Cart> getChannelAccountCartsPage(
-			Long accountId, Long channelId, String search,
-			Pagination pagination)
-		throws Exception;
-
-	public Page<Cart> getChannelCartsPage(
-			Long channelId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

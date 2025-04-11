@@ -59,8 +59,59 @@ public interface MessageBoardSectionResource {
 			Long messageBoardSectionId)
 		throws Exception;
 
+	public Page<MessageBoardSection>
+			getMessageBoardSectionMessageBoardSectionsPage(
+				Long parentMessageBoardSectionId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getMessageBoardSectionPermissionsPage(
+				Long messageBoardSectionId, String roleNames)
+		throws Exception;
+
+	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMessageBoardSectionPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public MessageBoardSection patchMessageBoardSection(
 			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			Long parentMessageBoardSectionId,
+			MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public MessageBoardSection postSiteMessageBoardSection(
+			Long siteId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public Response postSiteMessageBoardSectionBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postSiteMessageBoardSectionsPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public MessageBoardSection putMessageBoardSection(
@@ -69,11 +120,6 @@ public interface MessageBoardSectionResource {
 
 	public Response putMessageBoardSectionBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getMessageBoardSectionPermissionsPage(
-				Long messageBoardSectionId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -86,52 +132,6 @@ public interface MessageBoardSectionResource {
 		throws Exception;
 
 	public void putMessageBoardSectionUnsubscribe(Long messageBoardSectionId)
-		throws Exception;
-
-	public Page<MessageBoardSection>
-			getMessageBoardSectionMessageBoardSectionsPage(
-				Long parentMessageBoardSectionId, String search,
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			Long parentMessageBoardSectionId,
-			MessageBoardSection messageBoardSection)
-		throws Exception;
-
-	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteMessageBoardSectionsPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public MessageBoardSection postSiteMessageBoardSection(
-			Long siteId, MessageBoardSection messageBoardSection)
-		throws Exception;
-
-	public Response postSiteMessageBoardSectionBatch(
-			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteMessageBoardSectionPermissionsPage(
-				Long siteId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

@@ -679,61 +679,6 @@ public abstract class BaseObjectActionResourceTestCase {
 	}
 
 	@Test
-	public void testPatchObjectAction() throws Exception {
-		ObjectAction postObjectAction = testPatchObjectAction_addObjectAction();
-
-		ObjectAction randomPatchObjectAction = randomPatchObjectAction();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectAction patchObjectAction = objectActionResource.patchObjectAction(
-			postObjectAction.getId(), randomPatchObjectAction);
-
-		ObjectAction expectedPatchObjectAction = postObjectAction.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchObjectAction, expectedPatchObjectAction);
-
-		ObjectAction getObjectAction = objectActionResource.getObjectAction(
-			patchObjectAction.getId());
-
-		assertEquals(expectedPatchObjectAction, getObjectAction);
-		assertValid(getObjectAction);
-	}
-
-	protected ObjectAction testPatchObjectAction_addObjectAction()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutObjectAction() throws Exception {
-		ObjectAction postObjectAction = testPutObjectAction_addObjectAction();
-
-		ObjectAction randomObjectAction = randomObjectAction();
-
-		ObjectAction putObjectAction = objectActionResource.putObjectAction(
-			postObjectAction.getId(), randomObjectAction);
-
-		assertEquals(randomObjectAction, putObjectAction);
-		assertValid(putObjectAction);
-
-		ObjectAction getObjectAction = objectActionResource.getObjectAction(
-			putObjectAction.getId());
-
-		assertEquals(randomObjectAction, getObjectAction);
-		assertValid(getObjectAction);
-	}
-
-	protected ObjectAction testPutObjectAction_addObjectAction()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage()
 		throws Exception {
 
@@ -1098,29 +1043,6 @@ public abstract class BaseObjectActionResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionByExternalReferenceCodeObjectAction()
-		throws Exception {
-
-		ObjectAction randomObjectAction = randomObjectAction();
-
-		ObjectAction postObjectAction =
-			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
-				randomObjectAction);
-
-		assertEquals(randomObjectAction, postObjectAction);
-		assertValid(postObjectAction);
-	}
-
-	protected ObjectAction
-			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
-				ObjectAction objectAction)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetObjectDefinitionObjectActionsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectActionsPage_getObjectDefinitionId();
@@ -1478,6 +1400,58 @@ public abstract class BaseObjectActionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchObjectAction() throws Exception {
+		ObjectAction postObjectAction = testPatchObjectAction_addObjectAction();
+
+		ObjectAction randomPatchObjectAction = randomPatchObjectAction();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectAction patchObjectAction = objectActionResource.patchObjectAction(
+			postObjectAction.getId(), randomPatchObjectAction);
+
+		ObjectAction expectedPatchObjectAction = postObjectAction.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectAction, expectedPatchObjectAction);
+
+		ObjectAction getObjectAction = objectActionResource.getObjectAction(
+			patchObjectAction.getId());
+
+		assertEquals(expectedPatchObjectAction, getObjectAction);
+		assertValid(getObjectAction);
+	}
+
+	protected ObjectAction testPatchObjectAction_addObjectAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectAction()
+		throws Exception {
+
+		ObjectAction randomObjectAction = randomObjectAction();
+
+		ObjectAction postObjectAction =
+			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
+				randomObjectAction);
+
+		assertEquals(randomObjectAction, postObjectAction);
+		assertValid(postObjectAction);
+	}
+
+	protected ObjectAction
+			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
+				ObjectAction objectAction)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostObjectDefinitionObjectAction() throws Exception {
 		ObjectAction randomObjectAction = randomObjectAction();
 
@@ -1496,6 +1470,32 @@ public abstract class BaseObjectActionResourceTestCase {
 		return objectActionResource.postObjectDefinitionObjectAction(
 			testGetObjectDefinitionObjectActionsPage_getObjectDefinitionId(),
 			objectAction);
+	}
+
+	@Test
+	public void testPutObjectAction() throws Exception {
+		ObjectAction postObjectAction = testPutObjectAction_addObjectAction();
+
+		ObjectAction randomObjectAction = randomObjectAction();
+
+		ObjectAction putObjectAction = objectActionResource.putObjectAction(
+			postObjectAction.getId(), randomObjectAction);
+
+		assertEquals(randomObjectAction, putObjectAction);
+		assertValid(putObjectAction);
+
+		ObjectAction getObjectAction = objectActionResource.getObjectAction(
+			putObjectAction.getId());
+
+		assertEquals(randomObjectAction, getObjectAction);
+		assertValid(getObjectAction);
+	}
+
+	protected ObjectAction testPutObjectAction_addObjectAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ObjectAction testGraphQLObjectAction_addObjectAction()

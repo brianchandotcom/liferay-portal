@@ -48,17 +48,17 @@ public interface CartTransitionResource {
 	public Page<CartTransition> getCartCartTransitionsPage(Long cartId)
 		throws Exception;
 
-	public Response postCartCartTransitionsPageExportBatch(
-			Long cartId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public CartTransition postCartCartTransition(
 			Long cartId, CartTransition cartTransition)
 		throws Exception;
 
 	public Response postCartCartTransitionBatch(
 			Long cartId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postCartCartTransitionsPageExportBatch(
+			Long cartId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

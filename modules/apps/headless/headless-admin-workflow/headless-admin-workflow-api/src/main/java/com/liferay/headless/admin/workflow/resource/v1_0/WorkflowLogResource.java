@@ -50,15 +50,15 @@ public interface WorkflowLogResource {
 			Long workflowInstanceId, String[] types, Pagination pagination)
 		throws Exception;
 
-	public Response postWorkflowInstanceWorkflowLogsPageExportBatch(
-			Long workflowInstanceId, String[] types, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
 	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception;
 
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			Long workflowTaskId, String[] types, Pagination pagination)
+		throws Exception;
+
+	public Response postWorkflowInstanceWorkflowLogsPageExportBatch(
+			Long workflowInstanceId, String[] types, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Response postWorkflowTaskWorkflowLogsPageExportBatch(

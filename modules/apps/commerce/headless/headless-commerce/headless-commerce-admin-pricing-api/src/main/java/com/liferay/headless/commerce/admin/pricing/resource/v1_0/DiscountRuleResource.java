@@ -46,18 +46,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DiscountRuleResource {
 
+	public Response deleteDiscountRule(Long id) throws Exception;
+
+	public Response deleteDiscountRuleBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DiscountRule>
 			getDiscountByExternalReferenceCodeDiscountRulesPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountRule postDiscountByExternalReferenceCodeDiscountRule(
-			String externalReferenceCode, DiscountRule discountRule)
-		throws Exception;
-
-	public Response deleteDiscountRule(Long id) throws Exception;
-
-	public Response deleteDiscountRuleBatch(String callbackURL, Object object)
+	public Page<DiscountRule> getDiscountIdDiscountRulesPage(
+			Long id, Pagination pagination)
 		throws Exception;
 
 	public DiscountRule getDiscountRule(Long id) throws Exception;
@@ -65,8 +65,8 @@ public interface DiscountRuleResource {
 	public Response patchDiscountRule(Long id, DiscountRule discountRule)
 		throws Exception;
 
-	public Page<DiscountRule> getDiscountIdDiscountRulesPage(
-			Long id, Pagination pagination)
+	public DiscountRule postDiscountByExternalReferenceCodeDiscountRule(
+			String externalReferenceCode, DiscountRule discountRule)
 		throws Exception;
 
 	public DiscountRule postDiscountIdDiscountRule(

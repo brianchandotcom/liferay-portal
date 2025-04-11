@@ -213,6 +213,57 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
+		throws Exception {
+
+		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
+
+		Page<Permission> page =
+			displayPageTemplateFolderResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
+					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected DisplayPageTemplateFolder
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage()
 		throws Exception {
 
@@ -716,6 +767,38 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
+		throws Exception {
+
+		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
+			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
+
+		Page<Permission> page =
+			displayPageTemplateFolderResource.
+				getSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
+					testGroup.getExternalReferenceCode(),
+					postDisplayPageTemplateFolder.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected DisplayPageTemplateFolder
+			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
@@ -741,26 +824,10 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
+	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
-		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		Page<Permission> page =
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -806,73 +873,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 
 	protected DisplayPageTemplateFolder
 			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		Page<Permission> page =
-			displayPageTemplateFolderResource.
-				getSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplateFolder.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

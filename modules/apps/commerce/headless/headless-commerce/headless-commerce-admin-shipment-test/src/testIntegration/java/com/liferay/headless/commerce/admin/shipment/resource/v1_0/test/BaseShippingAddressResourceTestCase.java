@@ -351,46 +351,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchShipmentByExternalReferenceCodeShippingAddress()
-		throws Exception {
-
-		ShippingAddress postShippingAddress =
-			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress();
-
-		ShippingAddress randomPatchShippingAddress =
-			randomPatchShippingAddress();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ShippingAddress patchShippingAddress =
-			shippingAddressResource.
-				patchShipmentByExternalReferenceCodeShippingAddress(
-					postShippingAddress.getExternalReferenceCode(),
-					randomPatchShippingAddress);
-
-		ShippingAddress expectedPatchShippingAddress =
-			postShippingAddress.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchShippingAddress, expectedPatchShippingAddress);
-
-		ShippingAddress getShippingAddress =
-			shippingAddressResource.
-				getShipmentByExternalReferenceCodeShippingAddress(
-					patchShippingAddress.getExternalReferenceCode());
-
-		assertEquals(expectedPatchShippingAddress, getShippingAddress);
-		assertValid(getShippingAddress);
-	}
-
-	protected ShippingAddress
-			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetShipmentShippingAddress() throws Exception {
 		ShippingAddress postShippingAddress =
 			testGetShipmentShippingAddress_addShippingAddress();
@@ -523,6 +483,46 @@ public abstract class BaseShippingAddressResourceTestCase {
 		throws Exception {
 
 		return testGraphQLShippingAddress_addShippingAddress();
+	}
+
+	@Test
+	public void testPatchShipmentByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		ShippingAddress postShippingAddress =
+			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress();
+
+		ShippingAddress randomPatchShippingAddress =
+			randomPatchShippingAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ShippingAddress patchShippingAddress =
+			shippingAddressResource.
+				patchShipmentByExternalReferenceCodeShippingAddress(
+					postShippingAddress.getExternalReferenceCode(),
+					randomPatchShippingAddress);
+
+		ShippingAddress expectedPatchShippingAddress =
+			postShippingAddress.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchShippingAddress, expectedPatchShippingAddress);
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.
+				getShipmentByExternalReferenceCodeShippingAddress(
+					patchShippingAddress.getExternalReferenceCode());
+
+		assertEquals(expectedPatchShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+	}
+
+	protected ShippingAddress
+			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

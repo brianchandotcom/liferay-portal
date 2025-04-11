@@ -46,11 +46,40 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SXPBlueprintResource {
 
+	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception;
+
+	public Response deleteSXPBlueprintBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception;
+
+	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response getSXPBlueprintExport(Long sxpBlueprintId) throws Exception;
+
 	public Page<SXPBlueprint> getSXPBlueprintsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public SXPBlueprint patchSXPBlueprint(
+			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
+		throws Exception;
+
+	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws Exception;
+
+	public Response postSXPBlueprintBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public SXPBlueprint postSXPBlueprintCopy(Long sxpBlueprintId)
+		throws Exception;
+
+	public SXPBlueprint postSXPBlueprintValidate(String string)
 		throws Exception;
 
 	public Response postSXPBlueprintsPageExportBatch(
@@ -60,34 +89,6 @@ public interface SXPBlueprintResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
-		throws Exception;
-
-	public Response postSXPBlueprintBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
-			String externalReferenceCode, SXPBlueprint sxpBlueprint)
-		throws Exception;
-
-	public SXPBlueprint postSXPBlueprintValidate(String string)
-		throws Exception;
-
-	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception;
-
-	public Response deleteSXPBlueprintBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception;
-
-	public SXPBlueprint patchSXPBlueprint(
-			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
-		throws Exception;
-
 	public SXPBlueprint putSXPBlueprint(
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
 		throws Exception;
@@ -95,10 +96,9 @@ public interface SXPBlueprintResource {
 	public Response putSXPBlueprintBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public SXPBlueprint postSXPBlueprintCopy(Long sxpBlueprintId)
+	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode, SXPBlueprint sxpBlueprint)
 		throws Exception;
-
-	public Response getSXPBlueprintExport(Long sxpBlueprintId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

@@ -50,6 +50,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentResource {
 
+	public void deleteAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public void deleteDocument(Long documentId) throws Exception;
+
+	public Response deleteDocumentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteDocumentMyRating(Long documentId) throws Exception;
+
+	public void deleteSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Document getAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryDocumentPermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
 	public Page<Document> getAssetLibraryDocumentsPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -58,11 +82,51 @@ public interface DocumentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryDocumentsPageExportBatch(
-			Long assetLibraryId, String search,
+	public Page<Document> getAssetLibraryDocumentsRatedByMePage(
+			Long assetLibraryId, Pagination pagination)
+		throws Exception;
+
+	public Document getDocument(Long documentId) throws Exception;
+
+	public Page<Document> getDocumentFolderDocumentsPage(
+			Long documentFolderId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Rating getDocumentMyRating(Long documentId) throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getDocumentPermissionsPage(Long documentId, String roleNames)
+		throws Exception;
+
+	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+			Long documentId, String displayPageKey)
+		throws Exception;
+
+	public Document getSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteDocumentPermissionsPage(Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<Document> getSiteDocumentsPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<Document> getSiteDocumentsRatedByMePage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
+	public Document patchDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Document postAssetLibraryDocument(
@@ -74,44 +138,8 @@ public interface DocumentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAssetLibraryDocumentByExternalReferenceCode(
-			Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public Document getAssetLibraryDocumentByExternalReferenceCode(
-			Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public Document putAssetLibraryDocumentByExternalReferenceCode(
-			Long assetLibraryId, String externalReferenceCode,
-			MultipartBody multipartBody)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getAssetLibraryDocumentPermissionsPage(
-				Long assetLibraryId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryDocumentPermissionsPage(
-				Long assetLibraryId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<Document> getAssetLibraryDocumentsRatedByMePage(
-			Long assetLibraryId, Pagination pagination)
-		throws Exception;
-
-	public Page<Document> getDocumentFolderDocumentsPage(
-			Long documentFolderId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postDocumentFolderDocumentsPageExportBatch(
-			Long documentFolderId, String search,
+	public Response postAssetLibraryDocumentsPageExportBatch(
+			Long assetLibraryId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
@@ -126,60 +154,14 @@ public interface DocumentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDocument(Long documentId) throws Exception;
-
-	public Response deleteDocumentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Document getDocument(Long documentId) throws Exception;
-
-	public Document patchDocument(Long documentId, MultipartBody multipartBody)
-		throws Exception;
-
-	public Document putDocument(Long documentId, MultipartBody multipartBody)
-		throws Exception;
-
-	public Response putDocumentBatch(
-			MultipartBody multipartBody, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteDocumentMyRating(Long documentId) throws Exception;
-
-	public Rating getDocumentMyRating(Long documentId) throws Exception;
-
-	public Rating postDocumentMyRating(Long documentId, Rating rating)
-		throws Exception;
-
-	public Rating putDocumentMyRating(Long documentId, Rating rating)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDocumentPermissionsPage(Long documentId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putDocumentPermissionsPage(
-				Long documentId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
-			Long documentId, String displayPageKey)
-		throws Exception;
-
-	public Page<Document> getSiteDocumentsPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteDocumentsPageExportBatch(
-			Long siteId, String search,
+	public Response postDocumentFolderDocumentsPageExportBatch(
+			Long documentFolderId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
+		throws Exception;
+
+	public Rating postDocumentMyRating(Long documentId, Rating rating)
 		throws Exception;
 
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
@@ -190,12 +172,38 @@ public interface DocumentResource {
 			Object object)
 		throws Exception;
 
-	public void deleteSiteDocumentByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteDocumentsPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public Document getSiteDocumentByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Document putAssetLibraryDocumentByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryDocumentPermissionsPage(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Document putDocument(Long documentId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response putDocumentBatch(
+			MultipartBody multipartBody, String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putDocumentMyRating(Long documentId, Rating rating)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDocumentPermissionsPage(
+				Long documentId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Document putSiteDocumentByExternalReferenceCode(
@@ -204,17 +212,9 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteDocumentPermissionsPage(Long siteId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putSiteDocumentPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<Document> getSiteDocumentsRatedByMePage(
-			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

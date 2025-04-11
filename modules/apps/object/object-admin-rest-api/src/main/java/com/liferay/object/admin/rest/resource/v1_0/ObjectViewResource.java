@@ -46,6 +46,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectViewResource {
 
+	public void deleteObjectView(Long objectViewId) throws Exception;
+
+	public Response deleteObjectViewBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectView>
 			getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 				String externalReferenceCode, String search,
@@ -53,19 +58,15 @@ public interface ObjectViewResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ObjectView postObjectDefinitionByExternalReferenceCodeObjectView(
-			String externalReferenceCode, ObjectView objectView)
-		throws Exception;
-
 	public Page<ObjectView> getObjectDefinitionObjectViewsPage(
 			Long objectDefinitionId, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectViewsPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectView getObjectView(Long objectViewId) throws Exception;
+
+	public ObjectView postObjectDefinitionByExternalReferenceCodeObjectView(
+			String externalReferenceCode, ObjectView objectView)
 		throws Exception;
 
 	public ObjectView postObjectDefinitionObjectView(
@@ -76,20 +77,19 @@ public interface ObjectViewResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectView(Long objectViewId) throws Exception;
-
-	public Response deleteObjectViewBatch(String callbackURL, Object object)
+	public Response postObjectDefinitionObjectViewsPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public ObjectView getObjectView(Long objectViewId) throws Exception;
+	public ObjectView postObjectViewCopy(Long objectViewId) throws Exception;
 
 	public ObjectView putObjectView(Long objectViewId, ObjectView objectView)
 		throws Exception;
 
 	public Response putObjectViewBatch(String callbackURL, Object object)
 		throws Exception;
-
-	public ObjectView postObjectViewCopy(Long objectViewId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

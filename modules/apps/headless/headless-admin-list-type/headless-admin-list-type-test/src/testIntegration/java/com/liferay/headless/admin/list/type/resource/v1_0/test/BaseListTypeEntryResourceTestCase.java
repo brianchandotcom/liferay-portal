@@ -226,6 +226,152 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteListTypeEntry() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry =
+			testDeleteListTypeEntry_addListTypeEntry();
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeEntryResource.deleteListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeEntryResource.getListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
+		assertHttpResponseStatusCode(
+			404, listTypeEntryResource.getListTypeEntryHttpResponse(0L));
+	}
+
+	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteListTypeEntry() throws Exception {
+
+		// No namespace
+
+		ListTypeEntry listTypeEntry1 =
+			testGraphQLDeleteListTypeEntry_addListTypeEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteListTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put("listTypeEntryId", listTypeEntry1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteListTypeEntry"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"listTypeEntry",
+					new HashMap<String, Object>() {
+						{
+							put("listTypeEntryId", listTypeEntry1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		ListTypeEntry listTypeEntry2 =
+			testGraphQLDeleteListTypeEntry_addListTypeEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminListType_v1_0",
+						new GraphQLField(
+							"deleteListTypeEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"listTypeEntryId",
+										listTypeEntry2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"Object/deleteListTypeEntry"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminListType_v1_0",
+					new GraphQLField(
+						"listTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put("listTypeEntryId", listTypeEntry2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ListTypeEntry testGraphQLDeleteListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return testGraphQLListTypeEntry_addListTypeEntry();
+	}
+
+	@Test
+	public void testDeleteListTypeEntryBatch() throws Exception {
+		ListTypeEntry listTypeEntry1 =
+			testDeleteListTypeEntryBatch_addListTypeEntry();
+
+		testDeleteListTypeEntryBatch_deleteListTypeEntry(
+			"COMPLETED", null, listTypeEntry1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeEntryResource.getListTypeEntryHttpResponse(
+				listTypeEntry1.getId()));
+	}
+
+	protected ListTypeEntry testDeleteListTypeEntryBatch_addListTypeEntry()
+		throws Exception {
+
+		return testDeleteListTypeEntry_addListTypeEntry();
+	}
+
+	protected void testDeleteListTypeEntryBatch_deleteListTypeEntry(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			listTypeEntryResource.deleteListTypeEntryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage()
 		throws Exception {
 
@@ -702,29 +848,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
-	public void testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
-		throws Exception {
-
-		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
-
-		ListTypeEntry postListTypeEntry =
-			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
-				randomListTypeEntry);
-
-		assertEquals(randomListTypeEntry, postListTypeEntry);
-		assertValid(postListTypeEntry);
-	}
-
-	protected ListTypeEntry
-			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
-				ListTypeEntry listTypeEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetListTypeDefinitionListTypeEntriesPage()
 		throws Exception {
 
@@ -1193,174 +1316,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
-	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
-		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
-
-		ListTypeEntry postListTypeEntry =
-			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
-				randomListTypeEntry);
-
-		assertEquals(randomListTypeEntry, postListTypeEntry);
-		assertValid(postListTypeEntry);
-	}
-
-	protected ListTypeEntry
-			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
-				ListTypeEntry listTypeEntry)
-		throws Exception {
-
-		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId(),
-			listTypeEntry);
-	}
-
-	@Test
-	public void testDeleteListTypeEntry() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeEntry listTypeEntry =
-			testDeleteListTypeEntry_addListTypeEntry();
-
-		assertHttpResponseStatusCode(
-			204,
-			listTypeEntryResource.deleteListTypeEntryHttpResponse(
-				listTypeEntry.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			listTypeEntryResource.getListTypeEntryHttpResponse(
-				listTypeEntry.getId()));
-		assertHttpResponseStatusCode(
-			404, listTypeEntryResource.getListTypeEntryHttpResponse(0L));
-	}
-
-	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteListTypeEntry() throws Exception {
-
-		// No namespace
-
-		ListTypeEntry listTypeEntry1 =
-			testGraphQLDeleteListTypeEntry_addListTypeEntry();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteListTypeEntry",
-						new HashMap<String, Object>() {
-							{
-								put("listTypeEntryId", listTypeEntry1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteListTypeEntry"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"listTypeEntry",
-					new HashMap<String, Object>() {
-						{
-							put("listTypeEntryId", listTypeEntry1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminListType_v1_0
-
-		ListTypeEntry listTypeEntry2 =
-			testGraphQLDeleteListTypeEntry_addListTypeEntry();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminListType_v1_0",
-						new GraphQLField(
-							"deleteListTypeEntry",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"listTypeEntryId",
-										listTypeEntry2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
-				"Object/deleteListTypeEntry"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminListType_v1_0",
-					new GraphQLField(
-						"listTypeEntry",
-						new HashMap<String, Object>() {
-							{
-								put("listTypeEntryId", listTypeEntry2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ListTypeEntry testGraphQLDeleteListTypeEntry_addListTypeEntry()
-		throws Exception {
-
-		return testGraphQLListTypeEntry_addListTypeEntry();
-	}
-
-	@Test
-	public void testDeleteListTypeEntryBatch() throws Exception {
-		ListTypeEntry listTypeEntry1 =
-			testDeleteListTypeEntryBatch_addListTypeEntry();
-
-		testDeleteListTypeEntryBatch_deleteListTypeEntry(
-			"COMPLETED", null, listTypeEntry1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			listTypeEntryResource.getListTypeEntryHttpResponse(
-				listTypeEntry1.getId()));
-	}
-
-	protected ListTypeEntry testDeleteListTypeEntryBatch_addListTypeEntry()
-		throws Exception {
-
-		return testDeleteListTypeEntry_addListTypeEntry();
-	}
-
-	protected void testDeleteListTypeEntryBatch_deleteListTypeEntry(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			listTypeEntryResource.deleteListTypeEntryBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetListTypeEntry() throws Exception {
 		ListTypeEntry postListTypeEntry =
 			testGetListTypeEntry_addListTypeEntry();
@@ -1668,6 +1623,51 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLListTypeEntry_addListTypeEntry();
+	}
+
+	@Test
+	public void testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
+		throws Exception {
+
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry postListTypeEntry =
+			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
+				randomListTypeEntry);
+
+		assertEquals(randomListTypeEntry, postListTypeEntry);
+		assertValid(postListTypeEntry);
+	}
+
+	protected ListTypeEntry
+			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
+				ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry postListTypeEntry =
+			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
+				randomListTypeEntry);
+
+		assertEquals(randomListTypeEntry, postListTypeEntry);
+		assertValid(postListTypeEntry);
+	}
+
+	protected ListTypeEntry
+			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
+				ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId(),
+			listTypeEntry);
 	}
 
 	@Test

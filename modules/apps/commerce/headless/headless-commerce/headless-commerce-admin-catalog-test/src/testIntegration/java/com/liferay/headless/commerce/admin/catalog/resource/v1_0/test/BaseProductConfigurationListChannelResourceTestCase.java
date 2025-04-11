@@ -494,32 +494,6 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel()
-		throws Exception {
-
-		ProductConfigurationListChannel randomProductConfigurationListChannel =
-			randomProductConfigurationListChannel();
-
-		ProductConfigurationListChannel postProductConfigurationListChannel =
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel_addProductConfigurationListChannel(
-				randomProductConfigurationListChannel);
-
-		assertEquals(
-			randomProductConfigurationListChannel,
-			postProductConfigurationListChannel);
-		assertValid(postProductConfigurationListChannel);
-	}
-
-	protected ProductConfigurationListChannel
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel_addProductConfigurationListChannel(
-				ProductConfigurationListChannel productConfigurationListChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductConfigurationListIdProductConfigurationListChannelsPage()
 		throws Exception {
 
@@ -1025,6 +999,32 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel()
+		throws Exception {
+
+		ProductConfigurationListChannel randomProductConfigurationListChannel =
+			randomProductConfigurationListChannel();
+
+		ProductConfigurationListChannel postProductConfigurationListChannel =
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel_addProductConfigurationListChannel(
+				randomProductConfigurationListChannel);
+
+		assertEquals(
+			randomProductConfigurationListChannel,
+			postProductConfigurationListChannel);
+		assertValid(postProductConfigurationListChannel);
+	}
+
+	protected ProductConfigurationListChannel
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel_addProductConfigurationListChannel(
+				ProductConfigurationListChannel productConfigurationListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -61,6 +61,43 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinition(listTypeDefinitionId: ___){actions, dateCreated, dateModified, defaultLanguageId, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeDefinition listTypeDefinition(
+			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.getListTypeDefinition(
+					listTypeDefinitionId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, defaultLanguageId, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeDefinition listTypeDefinitionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.
+					getListTypeDefinitionByExternalReferenceCode(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitions(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -86,43 +123,6 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						listTypeDefinitionResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, defaultLanguageId, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ListTypeDefinition listTypeDefinitionByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_listTypeDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			listTypeDefinitionResource ->
-				listTypeDefinitionResource.
-					getListTypeDefinitionByExternalReferenceCode(
-						externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinition(listTypeDefinitionId: ___){actions, dateCreated, dateModified, defaultLanguageId, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ListTypeDefinition listTypeDefinition(
-			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_listTypeDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			listTypeDefinitionResource ->
-				listTypeDefinitionResource.getListTypeDefinition(
-					listTypeDefinitionId));
 	}
 
 	/**

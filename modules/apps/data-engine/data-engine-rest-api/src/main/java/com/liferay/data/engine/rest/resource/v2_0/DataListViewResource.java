@@ -49,16 +49,17 @@ public interface DataListViewResource {
 	public void deleteDataDefinitionDataListView(Long dataDefinitionId)
 		throws Exception;
 
+	public void deleteDataListView(Long dataListViewId) throws Exception;
+
+	public Response deleteDataListViewBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postDataDefinitionDataListViewsPageExportBatch(
-			Long dataDefinitionId, String keywords,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
+	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
 	public DataListView postDataDefinitionDataListView(
 			Long dataDefinitionId, DataListView dataListView)
@@ -68,12 +69,11 @@ public interface DataListViewResource {
 			Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDataListView(Long dataListViewId) throws Exception;
-
-	public Response deleteDataListViewBatch(String callbackURL, Object object)
+	public Response postDataDefinitionDataListViewsPageExportBatch(
+			Long dataDefinitionId, String keywords,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
-
-	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
 	public DataListView putDataListView(
 			Long dataListViewId, DataListView dataListView)

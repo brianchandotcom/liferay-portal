@@ -46,17 +46,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageTemplateResource {
 
+	public void deleteSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception;
+
+	public PageTemplate getSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public Page<PageTemplate>
 			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
 				String siteExternalReferenceCode,
 				String pageTemplateSetExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public PageTemplate
-			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode,
-				PageTemplate pageTemplate)
 		throws Exception;
 
 	public Page<PageTemplate>
@@ -68,29 +76,10 @@ public interface PageTemplateResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode, PageTemplate pageTemplate)
-		throws Exception;
-
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+			getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
 				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public void deleteSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode)
-		throws Exception;
-
-	public PageTemplate getSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode)
+				String pageTemplateExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public PageTemplate patchSiteSiteByExternalReferenceCodePageTemplate(
@@ -98,9 +87,8 @@ public interface PageTemplateResource {
 			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception;
 
-	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception;
 
 	public ContentPageSpecification
@@ -110,10 +98,22 @@ public interface PageTemplateResource {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
+	public PageTemplate
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode, String roleNames)
+				String pageTemplateSetExternalReferenceCode,
+				PageTemplate pageTemplate)
+		throws Exception;
+
+	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

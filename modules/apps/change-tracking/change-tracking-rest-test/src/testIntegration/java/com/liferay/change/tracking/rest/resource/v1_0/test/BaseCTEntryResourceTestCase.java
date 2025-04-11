@@ -221,604 +221,6 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionCTEntriesPage() throws Exception {
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-		Long irrelevantCtCollectionId =
-			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId();
-
-		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantCtCollectionId != null) {
-			CTEntry irrelevantCTEntry =
-				testGetCtCollectionCTEntriesPage_addCTEntry(
-					irrelevantCtCollectionId, randomIrrelevantCTEntry());
-
-			page = ctEntryResource.getCtCollectionCTEntriesPage(
-				irrelevantCtCollectionId, null, null, null,
-				Pagination.of(1, (int)totalCount + 1), null);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(irrelevantCTEntry, (List<CTEntry>)page.getItems());
-			assertValid(
-				page,
-				testGetCtCollectionCTEntriesPage_getExpectedActions(
-					irrelevantCtCollectionId));
-		}
-
-		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		page = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(ctEntry1, (List<CTEntry>)page.getItems());
-		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
-		assertValid(
-			page,
-			testGetCtCollectionCTEntriesPage_getExpectedActions(
-				ctCollectionId));
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetCtCollectionCTEntriesPage_getExpectedActions(
-				Long ctCollectionId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-
-		CTEntry ctEntry1 = randomCTEntry();
-
-		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, ctEntry1);
-
-		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null,
-				getFilterString(entityField, "between", ctEntry1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(ctEntry1),
-				(List<CTEntry>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithFilter(
-			"eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithFilterStringContains()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithFilter(
-			"contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithFilter(
-			"eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetCtCollectionCTEntriesPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-
-		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null,
-				getFilterString(entityField, operator, ctEntry1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(ctEntry1),
-				(List<CTEntry>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithPagination()
-		throws Exception {
-
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-
-		Page<CTEntry> ctEntryPage =
-			ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(ctEntryPage.getTotalCount());
-
-		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		CTEntry ctEntry3 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(ctEntry1, (List<CTEntry>)page1.getItems());
-
-			Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(ctEntry2, (List<CTEntry>)page2.getItems());
-
-			Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
-		}
-		else {
-			Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
-
-			List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
-
-			Assert.assertEquals(
-				ctEntries1.toString(), totalCount + 2, ctEntries1.size());
-
-			Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<CTEntry> ctEntries2 = (List<CTEntry>)page2.getItems();
-
-			Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
-
-			Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
-			assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
-			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithSortDateTime()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, ctEntry1, ctEntry2) -> {
-				BeanTestUtil.setProperty(
-					ctEntry1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithSortDouble()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, ctEntry1, ctEntry2) -> {
-				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithSortInteger()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, ctEntry1, ctEntry2) -> {
-				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntriesPageWithSortString()
-		throws Exception {
-
-		testGetCtCollectionCTEntriesPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, ctEntry1, ctEntry2) -> {
-				Class<?> clazz = ctEntry1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						ctEntry1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						ctEntry2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						ctEntry1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						ctEntry2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						ctEntry1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						ctEntry2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetCtCollectionCTEntriesPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, CTEntry, CTEntry, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-
-		CTEntry ctEntry1 = randomCTEntry();
-		CTEntry ctEntry2 = randomCTEntry();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, ctEntry1, ctEntry2);
-		}
-
-		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, ctEntry1);
-
-		ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, ctEntry2);
-
-		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<CTEntry> ascPage =
-				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
-
-			assertContains(ctEntry1, (List<CTEntry>)ascPage.getItems());
-			assertContains(ctEntry2, (List<CTEntry>)ascPage.getItems());
-
-			Page<CTEntry> descPage =
-				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(ctEntry2, (List<CTEntry>)descPage.getItems());
-			assertContains(ctEntry1, (List<CTEntry>)descPage.getItems());
-		}
-	}
-
-	protected CTEntry testGetCtCollectionCTEntriesPage_addCTEntry(
-			Long ctCollectionId, CTEntry ctEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetCtCollectionCTEntriesPage_getCtCollectionId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
-		throws Exception {
-
-		CTEntry postCTEntry =
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
-
-		CTEntry getCTEntry =
-			ctEntryResource.
-				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
-					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-						postCTEntry),
-					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-						postCTEntry),
-					postCTEntry.getModelClassPK());
-
-		assertEquals(postCTEntry, getCTEntry);
-		assertValid(getCTEntry);
-	}
-
-	protected Long
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getCtCollectionId();
-	}
-
-	protected Long
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getModelClassNameId();
-	}
-
-	protected CTEntry
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
-		throws Exception {
-
-		CTEntry ctEntry =
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				ctEntry,
-				CTEntrySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"ctCollectionId",
-											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-												ctEntry));
-
-										put(
-											"modelClassNameId",
-											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-												ctEntry));
-
-										put(
-											"modelClassPK",
-											ctEntry.getModelClassPK());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
-
-		// Using the namespace changeTracking_v1_0
-
-		Assert.assertTrue(
-			equals(
-				ctEntry,
-				CTEntrySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"changeTracking_v1_0",
-								new GraphQLField(
-									"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"ctCollectionId",
-												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-													ctEntry));
-
-											put(
-												"modelClassNameId",
-												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-													ctEntry));
-
-											put(
-												"modelClassPK",
-												ctEntry.getModelClassPK());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/changeTracking_v1_0",
-						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
-	}
-
-	protected Long
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getCtCollectionId();
-	}
-
-	protected Long
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getModelClassNameId();
-	}
-
-	@Test
-	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKNotFound()
-		throws Exception {
-
-		Long irrelevantCtCollectionId = RandomTestUtil.randomLong();
-		Long irrelevantModelClassNameId = RandomTestUtil.randomLong();
-		Long irrelevantModelClassPK = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
-						new HashMap<String, Object>() {
-							{
-								put("ctCollectionId", irrelevantCtCollectionId);
-								put(
-									"modelClassNameId",
-									irrelevantModelClassNameId);
-								put("modelClassPK", irrelevantModelClassPK);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace changeTracking_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"changeTracking_v1_0",
-						new GraphQLField(
-							"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"ctCollectionId",
-										irrelevantCtCollectionId);
-									put(
-										"modelClassNameId",
-										irrelevantModelClassNameId);
-									put("modelClassPK", irrelevantModelClassPK);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected CTEntry
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
-		throws Exception {
-
-		return testGraphQLCTEntry_addCTEntry();
-	}
-
-	@Test
 	public void testGetCTEntriesHistoryPage() throws Exception {
 		Page<CTEntry> page = ctEntryResource.getCTEntriesHistoryPage(
 			null, null, null, null, null, Pagination.of(1, 10), null);
@@ -1437,6 +839,604 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	protected CTEntry testGraphQLGetCTEntry_addCTEntry() throws Exception {
+		return testGraphQLCTEntry_addCTEntry();
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPage() throws Exception {
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+		Long irrelevantCtCollectionId =
+			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId();
+
+		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantCtCollectionId != null) {
+			CTEntry irrelevantCTEntry =
+				testGetCtCollectionCTEntriesPage_addCTEntry(
+					irrelevantCtCollectionId, randomIrrelevantCTEntry());
+
+			page = ctEntryResource.getCtCollectionCTEntriesPage(
+				irrelevantCtCollectionId, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantCTEntry, (List<CTEntry>)page.getItems());
+			assertValid(
+				page,
+				testGetCtCollectionCTEntriesPage_getExpectedActions(
+					irrelevantCtCollectionId));
+		}
+
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(ctEntry1, (List<CTEntry>)page.getItems());
+		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
+		assertValid(
+			page,
+			testGetCtCollectionCTEntriesPage_getExpectedActions(
+				ctCollectionId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCtCollectionCTEntriesPage_getExpectedActions(
+				Long ctCollectionId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+
+		CTEntry ctEntry1 = randomCTEntry();
+
+		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry1);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null,
+				getFilterString(entityField, "between", ctEntry1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctEntry1),
+				(List<CTEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterStringContains()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetCtCollectionCTEntriesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null,
+				getFilterString(entityField, operator, ctEntry1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(ctEntry1),
+				(List<CTEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithPagination()
+		throws Exception {
+
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+
+		Page<CTEntry> ctEntryPage =
+			ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(ctEntryPage.getTotalCount());
+
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		CTEntry ctEntry3 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(ctEntry1, (List<CTEntry>)page1.getItems());
+
+			Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctEntry2, (List<CTEntry>)page2.getItems());
+
+			Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+		}
+		else {
+			Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
+
+			List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				ctEntries1.toString(), totalCount + 2, ctEntries1.size());
+
+			Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTEntry> ctEntries2 = (List<CTEntry>)page2.getItems();
+
+			Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
+
+			Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
+			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithSortDateTime()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(
+					ctEntry1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithSortDouble()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithSortInteger()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, ctEntry1, ctEntry2) -> {
+				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(ctEntry2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithSortString()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, ctEntry1, ctEntry2) -> {
+				Class<?> clazz = ctEntry1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						ctEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						ctEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCtCollectionCTEntriesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, CTEntry, CTEntry, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+
+		CTEntry ctEntry1 = randomCTEntry();
+		CTEntry ctEntry2 = randomCTEntry();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, ctEntry1, ctEntry2);
+		}
+
+		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry1);
+
+		ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry2);
+
+		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<CTEntry> ascPage =
+				ctEntryResource.getCtCollectionCTEntriesPage(
+					ctCollectionId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(ctEntry1, (List<CTEntry>)ascPage.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)ascPage.getItems());
+
+			Page<CTEntry> descPage =
+				ctEntryResource.getCtCollectionCTEntriesPage(
+					ctCollectionId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(ctEntry2, (List<CTEntry>)descPage.getItems());
+			assertContains(ctEntry1, (List<CTEntry>)descPage.getItems());
+		}
+	}
+
+	protected CTEntry testGetCtCollectionCTEntriesPage_addCTEntry(
+			Long ctCollectionId, CTEntry ctEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetCtCollectionCTEntriesPage_getCtCollectionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
+		throws Exception {
+
+		CTEntry postCTEntry =
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
+
+		CTEntry getCTEntry =
+			ctEntryResource.
+				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+						postCTEntry),
+					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+						postCTEntry),
+					postCTEntry.getModelClassPK());
+
+		assertEquals(postCTEntry, getCTEntry);
+		assertValid(getCTEntry);
+	}
+
+	protected Long
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getCtCollectionId();
+	}
+
+	protected Long
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getModelClassNameId();
+	}
+
+	protected CTEntry
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
+		throws Exception {
+
+		CTEntry ctEntry =
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				ctEntry,
+				CTEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"ctCollectionId",
+											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+												ctEntry));
+
+										put(
+											"modelClassNameId",
+											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+												ctEntry));
+
+										put(
+											"modelClassPK",
+											ctEntry.getModelClassPK());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertTrue(
+			equals(
+				ctEntry,
+				CTEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"changeTracking_v1_0",
+								new GraphQLField(
+									"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"ctCollectionId",
+												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+													ctEntry));
+
+											put(
+												"modelClassNameId",
+												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+													ctEntry));
+
+											put(
+												"modelClassPK",
+												ctEntry.getModelClassPK());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/changeTracking_v1_0",
+						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
+	}
+
+	protected Long
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getCtCollectionId();
+	}
+
+	protected Long
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getModelClassNameId();
+	}
+
+	@Test
+	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKNotFound()
+		throws Exception {
+
+		Long irrelevantCtCollectionId = RandomTestUtil.randomLong();
+		Long irrelevantModelClassNameId = RandomTestUtil.randomLong();
+		Long irrelevantModelClassPK = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+						new HashMap<String, Object>() {
+							{
+								put("ctCollectionId", irrelevantCtCollectionId);
+								put(
+									"modelClassNameId",
+									irrelevantModelClassNameId);
+								put("modelClassPK", irrelevantModelClassPK);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"ctCollectionId",
+										irrelevantCtCollectionId);
+									put(
+										"modelClassNameId",
+										irrelevantModelClassNameId);
+									put("modelClassPK", irrelevantModelClassPK);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected CTEntry
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
 		return testGraphQLCTEntry_addCTEntry();
 	}
 

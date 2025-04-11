@@ -193,6 +193,57 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPageNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
+		throws Exception {
+
+		UtilityPage postUtilityPage =
+			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
+
+		Page<Permission> page =
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
+					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected UtilityPage
+			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPage()
 		throws Exception {
 
@@ -654,6 +705,38 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
+		throws Exception {
+
+		UtilityPage postUtilityPage =
+			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
+
+		Page<Permission> page =
+			utilityPageResource.
+				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
+					testGroup.getExternalReferenceCode(),
+					postUtilityPage.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected UtilityPage
+			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
@@ -677,26 +760,10 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
+	public void testPutSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		UtilityPage postUtilityPage =
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
-
-		Page<Permission> page =
-			utilityPageResource.
-				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected UtilityPage
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -742,73 +809,6 @@ public abstract class BaseUtilityPageResourceTestCase {
 
 	protected UtilityPage
 			testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeUtilityPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeUtilityPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPage()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPageNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodeUtilityPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeUtilityPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		UtilityPage postUtilityPage =
-			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
-
-		Page<Permission> page =
-			utilityPageResource.
-				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postUtilityPage.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected UtilityPage
-			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

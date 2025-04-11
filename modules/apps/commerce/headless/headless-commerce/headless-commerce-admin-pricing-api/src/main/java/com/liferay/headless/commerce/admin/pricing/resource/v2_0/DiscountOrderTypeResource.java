@@ -58,17 +58,17 @@ public interface DiscountOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountOrderType
-			postDiscountByExternalReferenceCodeDiscountOrderType(
-				String externalReferenceCode,
-				DiscountOrderType discountOrderType)
-		throws Exception;
-
 	public Page<DiscountOrderType> getDiscountIdDiscountOrderTypesPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DiscountOrderType
+			postDiscountByExternalReferenceCodeDiscountOrderType(
+				String externalReferenceCode,
+				DiscountOrderType discountOrderType)
 		throws Exception;
 
 	public DiscountOrderType postDiscountIdDiscountOrderType(

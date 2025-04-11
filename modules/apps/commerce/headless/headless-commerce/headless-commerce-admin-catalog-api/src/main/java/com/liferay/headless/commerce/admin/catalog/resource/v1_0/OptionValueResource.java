@@ -46,26 +46,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OptionValueResource {
 
-	public Response deleteOptionValueByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OptionValue getOptionValueByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchOptionValueByExternalReferenceCode(
-			String externalReferenceCode, OptionValue optionValue)
-		throws Exception;
-
 	public Response deleteOptionValue(Long id) throws Exception;
 
 	public Response deleteOptionValueBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public OptionValue getOptionValue(Long id) throws Exception;
-
-	public Response patchOptionValue(Long id, OptionValue optionValue)
+	public Response deleteOptionValueByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
@@ -73,13 +60,26 @@ public interface OptionValueResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public OptionValue postOptionByExternalReferenceCodeOptionValue(
-			String externalReferenceCode, OptionValue optionValue)
-		throws Exception;
-
 	public Page<OptionValue> getOptionIdOptionValuesPage(
 			Long id, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OptionValue getOptionValue(Long id) throws Exception;
+
+	public OptionValue getOptionValueByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchOptionValue(Long id, OptionValue optionValue)
+		throws Exception;
+
+	public Response patchOptionValueByExternalReferenceCode(
+			String externalReferenceCode, OptionValue optionValue)
+		throws Exception;
+
+	public OptionValue postOptionByExternalReferenceCodeOptionValue(
+			String externalReferenceCode, OptionValue optionValue)
 		throws Exception;
 
 	public OptionValue postOptionIdOptionValue(Long id, OptionValue optionValue)

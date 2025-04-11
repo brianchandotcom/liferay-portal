@@ -88,10 +88,27 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createShipmentsPageExportBatch",
+						"mutation#deleteShipment",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class, "deleteShipment"));
+					put(
+						"mutation#deleteShipmentBatch",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class, "deleteShipmentBatch"));
+					put(
+						"mutation#deleteShipmentByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class,
-							"postShipmentsPageExportBatch"));
+							"deleteShipmentByExternalReferenceCode"));
+					put(
+						"mutation#patchShipment",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class, "patchShipment"));
+					put(
+						"mutation#patchShipmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"patchShipmentByExternalReferenceCode"));
 					put(
 						"mutation#createShipment",
 						new ObjectValuePair<>(
@@ -100,21 +117,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createShipmentBatch",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class, "postShipmentBatch"));
-					put(
-						"mutation#deleteShipmentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class,
-							"deleteShipmentByExternalReferenceCode"));
-					put(
-						"mutation#patchShipmentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class,
-							"patchShipmentByExternalReferenceCode"));
-					put(
-						"mutation#updateShipmentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class,
-							"putShipmentByExternalReferenceCode"));
 					put(
 						"mutation#createShipmentByExternalReferenceCodeStatusDelivered",
 						new ObjectValuePair<>(
@@ -131,18 +133,6 @@ public class ServletDataImpl implements ServletData {
 							ShipmentResourceImpl.class,
 							"postShipmentByExternalReferenceCodeStatusShipped"));
 					put(
-						"mutation#deleteShipment",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "deleteShipment"));
-					put(
-						"mutation#deleteShipmentBatch",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "deleteShipmentBatch"));
-					put(
-						"mutation#patchShipment",
-						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "patchShipment"));
-					put(
 						"mutation#createShipmentStatusDelivered",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class,
@@ -158,15 +148,15 @@ public class ServletDataImpl implements ServletData {
 							ShipmentResourceImpl.class,
 							"postShipmentStatusShipped"));
 					put(
-						"mutation#deleteShipmentItemByExternalReferenceCode",
+						"mutation#createShipmentsPageExportBatch",
 						new ObjectValuePair<>(
-							ShipmentItemResourceImpl.class,
-							"deleteShipmentItemByExternalReferenceCode"));
+							ShipmentResourceImpl.class,
+							"postShipmentsPageExportBatch"));
 					put(
-						"mutation#patchShipmentItemByExternalReferenceCode",
+						"mutation#updateShipmentByExternalReferenceCode",
 						new ObjectValuePair<>(
-							ShipmentItemResourceImpl.class,
-							"patchShipmentItemByExternalReferenceCode"));
+							ShipmentResourceImpl.class,
+							"putShipmentByExternalReferenceCode"));
 					put(
 						"mutation#deleteShipmentItem",
 						new ObjectValuePair<>(
@@ -178,10 +168,25 @@ public class ServletDataImpl implements ServletData {
 							ShipmentItemResourceImpl.class,
 							"deleteShipmentItemBatch"));
 					put(
+						"mutation#deleteShipmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class,
+							"deleteShipmentItemByExternalReferenceCode"));
+					put(
 						"mutation#patchShipmentItem",
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,
 							"patchShipmentItem"));
+					put(
+						"mutation#patchShipmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class,
+							"patchShipmentItemByExternalReferenceCode"));
+					put(
+						"mutation#createShipmentItem",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class,
+							"postShipmentItem"));
 					put(
 						"mutation#createShipmentItemByExternalReferenceCode",
 						new ObjectValuePair<>(
@@ -192,11 +197,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,
 							"putShipmentByExternalReferenceCodeItem"));
-					put(
-						"mutation#createShipmentItem",
-						new ObjectValuePair<>(
-							ShipmentItemResourceImpl.class,
-							"postShipmentItem"));
 					put(
 						"mutation#patchShipmentByExternalReferenceCodeShippingAddress",
 						new ObjectValuePair<>(
@@ -209,32 +209,32 @@ public class ServletDataImpl implements ServletData {
 							"patchShipmentShippingAddress"));
 
 					put(
-						"query#shipments",
+						"query#shipment",
 						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "getShipmentsPage"));
+							ShipmentResourceImpl.class, "getShipment"));
 					put(
 						"query#shipmentByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class,
 							"getShipmentByExternalReferenceCode"));
 					put(
-						"query#shipment",
+						"query#shipments",
 						new ObjectValuePair<>(
-							ShipmentResourceImpl.class, "getShipment"));
+							ShipmentResourceImpl.class, "getShipmentsPage"));
 					put(
 						"query#shipmentByExternalReferenceCodeItem",
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,
 							"getShipmentByExternalReferenceCodeItem"));
 					put(
-						"query#shipmentItem",
-						new ObjectValuePair<>(
-							ShipmentItemResourceImpl.class, "getShipmentItem"));
-					put(
 						"query#shipmentByExternalReferenceCodeItems",
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,
 							"getShipmentByExternalReferenceCodeItemsPage"));
+					put(
+						"query#shipmentItem",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class, "getShipmentItem"));
 					put(
 						"query#shipmentItems",
 						new ObjectValuePair<>(

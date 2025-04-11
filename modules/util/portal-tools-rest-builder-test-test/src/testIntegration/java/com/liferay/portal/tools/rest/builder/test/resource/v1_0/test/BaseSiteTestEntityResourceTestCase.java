@@ -221,6 +221,146 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSiteTestEntitiesPage() throws Exception {
+		Long siteId = testGetSiteSiteTestEntitiesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId();
+
+		Page<SiteTestEntity> page =
+			siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantSiteId != null) {
+			SiteTestEntity irrelevantSiteTestEntity =
+				testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+					irrelevantSiteId, randomIrrelevantSiteTestEntity());
+
+			page = siteTestEntityResource.getSiteSiteTestEntitiesPage(
+				irrelevantSiteId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantSiteTestEntity,
+				(List<SiteTestEntity>)page.getItems());
+			assertValid(
+				page,
+				testGetSiteSiteTestEntitiesPage_getExpectedActions(
+					irrelevantSiteId));
+		}
+
+		SiteTestEntity siteTestEntity1 =
+			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
+
+		SiteTestEntity siteTestEntity2 =
+			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
+
+		page = siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(siteTestEntity1, (List<SiteTestEntity>)page.getItems());
+		assertContains(siteTestEntity2, (List<SiteTestEntity>)page.getItems());
+		assertValid(
+			page, testGetSiteSiteTestEntitiesPage_getExpectedActions(siteId));
+
+		for (SiteTestEntity siteTestEntity : page.getItems()) {
+			Assert.assertNull(siteTestEntity.getPermissions());
+		}
+
+		page = permissionsSiteTestEntityResource.getSiteSiteTestEntitiesPage(
+			siteId);
+
+		for (SiteTestEntity siteTestEntity : page.getItems()) {
+			Assert.assertNotNull(siteTestEntity.getPermissions());
+		}
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSiteSiteTestEntitiesPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/test/v1.0/sites/{siteId}/site-test-entities/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
+	}
+
+	protected SiteTestEntity testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+			Long siteId, SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			siteId, siteTestEntity);
+	}
+
+	protected Long testGetSiteSiteTestEntitiesPage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testGetSiteSiteTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		SiteTestEntity postSiteTestEntity =
+			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
+				postSiteTestEntity.getExternalReferenceCode(),
+				testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					postSiteTestEntity));
+
+		assertEquals(postSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+
+		Assert.assertNull(getSiteTestEntity.getPermissions());
+
+		getSiteTestEntity =
+			permissionsSiteTestEntityResource.
+				getSiteSiteTestEntityByExternalReferenceCode(
+					postSiteTestEntity.getExternalReferenceCode(),
+					testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						postSiteTestEntity));
+
+		Assert.assertNotNull(getSiteTestEntity.getPermissions());
+	}
+
+	protected Long testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntity.getSiteId();
+	}
+
+	protected SiteTestEntity
+			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
 	public void testGetSiteTestEntity() throws Exception {
 		SiteTestEntity postSiteTestEntity =
 			testGetSiteTestEntity_addSiteTestEntity();
@@ -440,6 +580,26 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteTestEntityPermissionsPage() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testGetSiteTestEntityPermissionsPage_addSiteTestEntity();
+
+		Page<Permission> page =
+			siteTestEntityResource.getSiteTestEntityPermissionsPage(
+				postSiteTestEntity.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected SiteTestEntity
+			testGetSiteTestEntityPermissionsPage_addSiteTestEntity()
+		throws Exception {
+
+		return testPostSiteSiteTestEntity_addSiteTestEntity(
+			randomSiteTestEntity());
+	}
+
+	@Test
 	public void testPatchSiteTestEntity() throws Exception {
 		SiteTestEntity postSiteTestEntity =
 			testPatchSiteTestEntity_addSiteTestEntity();
@@ -469,214 +629,6 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		return siteTestEntityResource.postSiteSiteTestEntity(
 			testGroup.getGroupId(), randomSiteTestEntity());
-	}
-
-	@Test
-	public void testPutSiteTestEntity() throws Exception {
-		SiteTestEntity postSiteTestEntity =
-			testPutSiteTestEntity_addSiteTestEntity();
-
-		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
-
-		SiteTestEntity putSiteTestEntity =
-			siteTestEntityResource.putSiteTestEntity(
-				postSiteTestEntity.getId(), randomSiteTestEntity);
-
-		assertEquals(randomSiteTestEntity, putSiteTestEntity);
-		assertValid(putSiteTestEntity);
-
-		Assert.assertNull(putSiteTestEntity.getPermissions());
-
-		SiteTestEntity getSiteTestEntity =
-			siteTestEntityResource.getSiteTestEntity(putSiteTestEntity.getId());
-
-		assertEquals(randomSiteTestEntity, getSiteTestEntity);
-		assertValid(getSiteTestEntity);
-
-		SiteTestEntity randomPermissionsSiteTestEntity =
-			randomPermissionsSiteTestEntity();
-
-		putSiteTestEntity = siteTestEntityResource.putSiteTestEntity(
-			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
-
-		assertEquals(randomPermissionsSiteTestEntity, putSiteTestEntity);
-		assertValid(putSiteTestEntity);
-
-		Assert.assertNull(putSiteTestEntity.getPermissions());
-
-		putSiteTestEntity = permissionsSiteTestEntityResource.putSiteTestEntity(
-			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
-
-		Assert.assertNotNull(putSiteTestEntity.getPermissions());
-	}
-
-	protected SiteTestEntity testPutSiteTestEntity_addSiteTestEntity()
-		throws Exception {
-
-		return siteTestEntityResource.postSiteSiteTestEntity(
-			testGroup.getGroupId(), randomSiteTestEntity());
-	}
-
-	@Test
-	public void testGetSiteTestEntityPermissionsPage() throws Exception {
-		SiteTestEntity postSiteTestEntity =
-			testGetSiteTestEntityPermissionsPage_addSiteTestEntity();
-
-		Page<Permission> page =
-			siteTestEntityResource.getSiteTestEntityPermissionsPage(
-				postSiteTestEntity.getId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected SiteTestEntity
-			testGetSiteTestEntityPermissionsPage_addSiteTestEntity()
-		throws Exception {
-
-		return testPostSiteSiteTestEntity_addSiteTestEntity(
-			randomSiteTestEntity());
-	}
-
-	@Test
-	public void testPutSiteTestEntityPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		SiteTestEntity siteTestEntity =
-			testPutSiteTestEntityPermissionsPage_addSiteTestEntity();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
-				siteTestEntity.getId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"PERMISSIONS"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
-
-		assertHttpResponseStatusCode(
-			404,
-			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
-				0L,
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
-	}
-
-	protected SiteTestEntity
-			testPutSiteTestEntityPermissionsPage_addSiteTestEntity()
-		throws Exception {
-
-		return siteTestEntityResource.postSiteSiteTestEntity(
-			testGroup.getGroupId(), randomSiteTestEntity());
-	}
-
-	@Test
-	public void testGetSiteSiteTestEntitiesPage() throws Exception {
-		Long siteId = testGetSiteSiteTestEntitiesPage_getSiteId();
-		Long irrelevantSiteId =
-			testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId();
-
-		Page<SiteTestEntity> page =
-			siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantSiteId != null) {
-			SiteTestEntity irrelevantSiteTestEntity =
-				testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
-					irrelevantSiteId, randomIrrelevantSiteTestEntity());
-
-			page = siteTestEntityResource.getSiteSiteTestEntitiesPage(
-				irrelevantSiteId);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantSiteTestEntity,
-				(List<SiteTestEntity>)page.getItems());
-			assertValid(
-				page,
-				testGetSiteSiteTestEntitiesPage_getExpectedActions(
-					irrelevantSiteId));
-		}
-
-		SiteTestEntity siteTestEntity1 =
-			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
-				siteId, randomSiteTestEntity());
-
-		SiteTestEntity siteTestEntity2 =
-			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
-				siteId, randomSiteTestEntity());
-
-		page = siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(siteTestEntity1, (List<SiteTestEntity>)page.getItems());
-		assertContains(siteTestEntity2, (List<SiteTestEntity>)page.getItems());
-		assertValid(
-			page, testGetSiteSiteTestEntitiesPage_getExpectedActions(siteId));
-
-		for (SiteTestEntity siteTestEntity : page.getItems()) {
-			Assert.assertNull(siteTestEntity.getPermissions());
-		}
-
-		page = permissionsSiteTestEntityResource.getSiteSiteTestEntitiesPage(
-			siteId);
-
-		for (SiteTestEntity siteTestEntity : page.getItems()) {
-			Assert.assertNotNull(siteTestEntity.getPermissions());
-		}
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetSiteSiteTestEntitiesPage_getExpectedActions(Long siteId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/test/v1.0/sites/{siteId}/site-test-entities/batch".
-				replace("{siteId}", String.valueOf(siteId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
-		return expectedActions;
-	}
-
-	protected SiteTestEntity testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
-			Long siteId, SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		return siteTestEntityResource.postSiteSiteTestEntity(
-			siteId, siteTestEntity);
-	}
-
-	protected Long testGetSiteSiteTestEntitiesPage_getSiteId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
-	protected Long testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId()
-		throws Exception {
-
-		return irrelevantGroup.getGroupId();
 	}
 
 	@Test
@@ -723,49 +675,6 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		return permissionsSiteTestEntityResource.postSiteSiteTestEntity(
 			testGetSiteSiteTestEntitiesPage_getSiteId(), siteTestEntity);
-	}
-
-	@Test
-	public void testGetSiteSiteTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		SiteTestEntity postSiteTestEntity =
-			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
-
-		SiteTestEntity getSiteTestEntity =
-			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
-				postSiteTestEntity.getExternalReferenceCode(),
-				testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					postSiteTestEntity));
-
-		assertEquals(postSiteTestEntity, getSiteTestEntity);
-		assertValid(getSiteTestEntity);
-
-		Assert.assertNull(getSiteTestEntity.getPermissions());
-
-		getSiteTestEntity =
-			permissionsSiteTestEntityResource.
-				getSiteSiteTestEntityByExternalReferenceCode(
-					postSiteTestEntity.getExternalReferenceCode(),
-					testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						postSiteTestEntity));
-
-		Assert.assertNotNull(getSiteTestEntity.getPermissions());
-	}
-
-	protected Long testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-			SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		return siteTestEntity.getSiteId();
-	}
-
-	protected SiteTestEntity
-			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
-		throws Exception {
-
-		return siteTestEntityResource.postSiteSiteTestEntity(
-			testGroup.getGroupId(), randomSiteTestEntity());
 	}
 
 	@Test
@@ -865,6 +774,97 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 	protected SiteTestEntity
 			testPutSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testPutSiteTestEntity() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testPutSiteTestEntity_addSiteTestEntity();
+
+		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
+
+		SiteTestEntity putSiteTestEntity =
+			siteTestEntityResource.putSiteTestEntity(
+				postSiteTestEntity.getId(), randomSiteTestEntity);
+
+		assertEquals(randomSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteTestEntity(putSiteTestEntity.getId());
+
+		assertEquals(randomSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+
+		SiteTestEntity randomPermissionsSiteTestEntity =
+			randomPermissionsSiteTestEntity();
+
+		putSiteTestEntity = siteTestEntityResource.putSiteTestEntity(
+			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
+
+		assertEquals(randomPermissionsSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
+		putSiteTestEntity = permissionsSiteTestEntityResource.putSiteTestEntity(
+			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
+
+		Assert.assertNotNull(putSiteTestEntity.getPermissions());
+	}
+
+	protected SiteTestEntity testPutSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testPutSiteTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SiteTestEntity siteTestEntity =
+			testPutSiteTestEntityPermissionsPage_addSiteTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
+				siteTestEntity.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected SiteTestEntity
+			testPutSiteTestEntityPermissionsPage_addSiteTestEntity()
 		throws Exception {
 
 		return siteTestEntityResource.postSiteSiteTestEntity(

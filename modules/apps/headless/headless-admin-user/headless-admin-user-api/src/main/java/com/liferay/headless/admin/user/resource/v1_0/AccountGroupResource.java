@@ -46,6 +46,36 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountGroupResource {
 
+	public void deleteAccountGroup(Long accountGroupId) throws Exception;
+
+	public Response deleteAccountGroupBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void
+			deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Page<AccountGroup> getAccountAccountGroupsPage(
+			Long accountId, Pagination pagination)
+		throws Exception;
+
+	public Page<AccountGroup>
+			getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+				String accountExternalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public AccountGroup getAccountGroup(Long accountGroupId) throws Exception;
+
+	public AccountGroup getAccountGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<AccountGroup> getAccountGroupsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -53,11 +83,17 @@ public interface AccountGroupResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postAccountGroupsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public AccountGroup patchAccountGroup(
+			Long accountGroupId, AccountGroup accountGroup)
+		throws Exception;
+
+	public AccountGroup patchAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AccountGroup accountGroup)
+		throws Exception;
+
+	public Response postAccountAccountGroupsPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public AccountGroup postAccountGroup(AccountGroup accountGroup)
@@ -67,42 +103,16 @@ public interface AccountGroupResource {
 		throws Exception;
 
 	public void
-			deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
-				String accountExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public void
 			postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
-	public void deleteAccountGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AccountGroup getAccountGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AccountGroup patchAccountGroupByExternalReferenceCode(
-			String externalReferenceCode, AccountGroup accountGroup)
-		throws Exception;
-
-	public AccountGroup putAccountGroupByExternalReferenceCode(
-			String externalReferenceCode, AccountGroup accountGroup)
-		throws Exception;
-
-	public void deleteAccountGroup(Long accountGroupId) throws Exception;
-
-	public Response deleteAccountGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public AccountGroup getAccountGroup(Long accountGroupId) throws Exception;
-
-	public AccountGroup patchAccountGroup(
-			Long accountGroupId, AccountGroup accountGroup)
+	public Response postAccountGroupsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public AccountGroup putAccountGroup(
@@ -112,18 +122,8 @@ public interface AccountGroupResource {
 	public Response putAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<AccountGroup>
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
-				String accountExternalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Page<AccountGroup> getAccountAccountGroupsPage(
-			Long accountId, Pagination pagination)
-		throws Exception;
-
-	public Response postAccountAccountGroupsPageExportBatch(
-			Long accountId, String callbackURL, String contentType,
-			String fieldNames)
+	public AccountGroup putAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AccountGroup accountGroup)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -85,6 +85,38 @@ public abstract class BaseIndexResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/refresh' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Index")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/indexes/refresh")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchIndexRefresh(Index index) throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/reindex' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Index")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/indexes/reindex")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchIndexReindex(Index index) throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -140,38 +172,6 @@ public abstract class BaseIndexResourceImpl
 			vulcanBatchEngineExportTaskResource.postExportTask(
 				Index.class.getName(), callbackURL, contentType, fieldNames)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/refresh' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Index")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/indexes/refresh")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchIndexRefresh(Index index) throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/reindex' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Index")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/indexes/reindex")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchIndexReindex(Index index) throws Exception {
 	}
 
 	@Override

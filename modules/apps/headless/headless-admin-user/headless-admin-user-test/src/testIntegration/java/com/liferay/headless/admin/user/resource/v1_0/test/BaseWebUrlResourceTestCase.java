@@ -219,6 +219,184 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWebUrl() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WebUrl webUrl = testDeleteWebUrl_addWebUrl();
+
+		assertHttpResponseStatusCode(
+			204, webUrlResource.deleteWebUrlHttpResponse(webUrl.getId()));
+
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(webUrl.getId()));
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(0L));
+	}
+
+	protected WebUrl testDeleteWebUrl_addWebUrl() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWebUrl() throws Exception {
+
+		// No namespace
+
+		WebUrl webUrl1 = testGraphQLDeleteWebUrl_addWebUrl();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWebUrl",
+						new HashMap<String, Object>() {
+							{
+								put("webUrlId", webUrl1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWebUrl"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"webUrl",
+					new HashMap<String, Object>() {
+						{
+							put("webUrlId", webUrl1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		WebUrl webUrl2 = testGraphQLDeleteWebUrl_addWebUrl();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteWebUrl",
+							new HashMap<String, Object>() {
+								{
+									put("webUrlId", webUrl2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteWebUrl"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"webUrl",
+						new HashMap<String, Object>() {
+							{
+								put("webUrlId", webUrl2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected WebUrl testGraphQLDeleteWebUrl_addWebUrl() throws Exception {
+		return testGraphQLWebUrl_addWebUrl();
+	}
+
+	@Test
+	public void testDeleteWebUrlBatch() throws Exception {
+		WebUrl webUrl1 = testDeleteWebUrlBatch_addWebUrl();
+
+		testDeleteWebUrlBatch_deleteWebUrl("COMPLETED", null, webUrl1.getId());
+
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(webUrl1.getId()));
+
+		WebUrl webUrl2 = testDeleteWebUrlBatch_addWebUrl();
+
+		testDeleteWebUrlBatch_deleteWebUrl(
+			"COMPLETED", webUrl2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
+
+		webUrl1 = testDeleteWebUrlBatch_addWebUrl();
+		webUrl2 = testDeleteWebUrlBatch_addWebUrl();
+
+		testDeleteWebUrlBatch_deleteWebUrl(
+			"COMPLETED", webUrl2.getExternalReferenceCode(), webUrl1.getId());
+
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(webUrl1.getId()));
+		assertHttpResponseStatusCode(
+			200, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
+
+		testDeleteWebUrlBatch_deleteWebUrl(
+			"COMPLETED", webUrl2.getExternalReferenceCode(), webUrl1.getId());
+
+		assertHttpResponseStatusCode(
+			404, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
+	}
+
+	protected WebUrl testDeleteWebUrlBatch_addWebUrl() throws Exception {
+		return testDeleteWebUrl_addWebUrl();
+	}
+
+	protected void testDeleteWebUrlBatch_deleteWebUrl(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			webUrlResource.deleteWebUrlBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteWebUrlByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WebUrl webUrl = testDeleteWebUrlByExternalReferenceCode_addWebUrl();
+
+		assertHttpResponseStatusCode(
+			204,
+			webUrlResource.deleteWebUrlByExternalReferenceCodeHttpResponse(
+				webUrl.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse(
+				webUrl.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected WebUrl testDeleteWebUrlByExternalReferenceCode_addWebUrl()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountByExternalReferenceCodeWebUrlsPage()
 		throws Exception {
 
@@ -726,339 +904,6 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteWebUrlByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WebUrl webUrl = testDeleteWebUrlByExternalReferenceCode_addWebUrl();
-
-		assertHttpResponseStatusCode(
-			204,
-			webUrlResource.deleteWebUrlByExternalReferenceCodeHttpResponse(
-				webUrl.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse(
-				webUrl.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected WebUrl testDeleteWebUrlByExternalReferenceCode_addWebUrl()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetWebUrlByExternalReferenceCode() throws Exception {
-		WebUrl postWebUrl = testGetWebUrlByExternalReferenceCode_addWebUrl();
-
-		WebUrl getWebUrl = webUrlResource.getWebUrlByExternalReferenceCode(
-			postWebUrl.getExternalReferenceCode());
-
-		assertEquals(postWebUrl, getWebUrl);
-		assertValid(getWebUrl);
-	}
-
-	protected WebUrl testGetWebUrlByExternalReferenceCode_addWebUrl()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWebUrlByExternalReferenceCode() throws Exception {
-		WebUrl webUrl = testGraphQLGetWebUrlByExternalReferenceCode_addWebUrl();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				webUrl,
-				WebUrlSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"webUrlByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												webUrl.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/webUrlByExternalReferenceCode"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				webUrl,
-				WebUrlSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"webUrlByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													webUrl.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/webUrlByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetWebUrlByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"webUrlByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"webUrlByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WebUrl testGraphQLGetWebUrlByExternalReferenceCode_addWebUrl()
-		throws Exception {
-
-		return testGraphQLWebUrl_addWebUrl();
-	}
-
-	@Test
-	public void testPatchWebUrlByExternalReferenceCode() throws Exception {
-		WebUrl postWebUrl = testPatchWebUrlByExternalReferenceCode_addWebUrl();
-
-		WebUrl randomPatchWebUrl = randomPatchWebUrl();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WebUrl patchWebUrl = webUrlResource.patchWebUrlByExternalReferenceCode(
-			postWebUrl.getExternalReferenceCode(), randomPatchWebUrl);
-
-		WebUrl expectedPatchWebUrl = postWebUrl.clone();
-
-		BeanTestUtil.copyProperties(randomPatchWebUrl, expectedPatchWebUrl);
-
-		WebUrl getWebUrl = webUrlResource.getWebUrlByExternalReferenceCode(
-			patchWebUrl.getExternalReferenceCode());
-
-		assertEquals(expectedPatchWebUrl, getWebUrl);
-		assertValid(getWebUrl);
-	}
-
-	protected WebUrl testPatchWebUrlByExternalReferenceCode_addWebUrl()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteWebUrl() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WebUrl webUrl = testDeleteWebUrl_addWebUrl();
-
-		assertHttpResponseStatusCode(
-			204, webUrlResource.deleteWebUrlHttpResponse(webUrl.getId()));
-
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(webUrl.getId()));
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(0L));
-	}
-
-	protected WebUrl testDeleteWebUrl_addWebUrl() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteWebUrl() throws Exception {
-
-		// No namespace
-
-		WebUrl webUrl1 = testGraphQLDeleteWebUrl_addWebUrl();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWebUrl",
-						new HashMap<String, Object>() {
-							{
-								put("webUrlId", webUrl1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWebUrl"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"webUrl",
-					new HashMap<String, Object>() {
-						{
-							put("webUrlId", webUrl1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		WebUrl webUrl2 = testGraphQLDeleteWebUrl_addWebUrl();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteWebUrl",
-							new HashMap<String, Object>() {
-								{
-									put("webUrlId", webUrl2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteWebUrl"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminUser_v1_0",
-					new GraphQLField(
-						"webUrl",
-						new HashMap<String, Object>() {
-							{
-								put("webUrlId", webUrl2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected WebUrl testGraphQLDeleteWebUrl_addWebUrl() throws Exception {
-		return testGraphQLWebUrl_addWebUrl();
-	}
-
-	@Test
-	public void testDeleteWebUrlBatch() throws Exception {
-		WebUrl webUrl1 = testDeleteWebUrlBatch_addWebUrl();
-
-		testDeleteWebUrlBatch_deleteWebUrl("COMPLETED", null, webUrl1.getId());
-
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(webUrl1.getId()));
-
-		WebUrl webUrl2 = testDeleteWebUrlBatch_addWebUrl();
-
-		testDeleteWebUrlBatch_deleteWebUrl(
-			"COMPLETED", webUrl2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
-
-		webUrl1 = testDeleteWebUrlBatch_addWebUrl();
-		webUrl2 = testDeleteWebUrlBatch_addWebUrl();
-
-		testDeleteWebUrlBatch_deleteWebUrl(
-			"COMPLETED", webUrl2.getExternalReferenceCode(), webUrl1.getId());
-
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(webUrl1.getId()));
-		assertHttpResponseStatusCode(
-			200, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
-
-		testDeleteWebUrlBatch_deleteWebUrl(
-			"COMPLETED", webUrl2.getExternalReferenceCode(), webUrl1.getId());
-
-		assertHttpResponseStatusCode(
-			404, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
-	}
-
-	protected WebUrl testDeleteWebUrlBatch_addWebUrl() throws Exception {
-		return testDeleteWebUrl_addWebUrl();
-	}
-
-	protected void testDeleteWebUrlBatch_deleteWebUrl(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			webUrlResource.deleteWebUrlBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetWebUrl() throws Exception {
 		WebUrl postWebUrl = testGetWebUrl_addWebUrl();
 
@@ -1349,6 +1194,133 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
+	public void testGetWebUrlByExternalReferenceCode() throws Exception {
+		WebUrl postWebUrl = testGetWebUrlByExternalReferenceCode_addWebUrl();
+
+		WebUrl getWebUrl = webUrlResource.getWebUrlByExternalReferenceCode(
+			postWebUrl.getExternalReferenceCode());
+
+		assertEquals(postWebUrl, getWebUrl);
+		assertValid(getWebUrl);
+	}
+
+	protected WebUrl testGetWebUrlByExternalReferenceCode_addWebUrl()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWebUrlByExternalReferenceCode() throws Exception {
+		WebUrl webUrl = testGraphQLGetWebUrlByExternalReferenceCode_addWebUrl();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				webUrl,
+				WebUrlSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"webUrlByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												webUrl.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/webUrlByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				webUrl,
+				WebUrlSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"webUrlByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													webUrl.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/webUrlByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetWebUrlByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"webUrlByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"webUrlByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WebUrl testGraphQLGetWebUrlByExternalReferenceCode_addWebUrl()
+		throws Exception {
+
+		return testGraphQLWebUrl_addWebUrl();
+	}
+
+	@Test
 	public void testPatchWebUrl() throws Exception {
 		WebUrl postWebUrl = testPatchWebUrl_addWebUrl();
 
@@ -1369,6 +1341,34 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected WebUrl testPatchWebUrl_addWebUrl() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchWebUrlByExternalReferenceCode() throws Exception {
+		WebUrl postWebUrl = testPatchWebUrlByExternalReferenceCode_addWebUrl();
+
+		WebUrl randomPatchWebUrl = randomPatchWebUrl();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WebUrl patchWebUrl = webUrlResource.patchWebUrlByExternalReferenceCode(
+			postWebUrl.getExternalReferenceCode(), randomPatchWebUrl);
+
+		WebUrl expectedPatchWebUrl = postWebUrl.clone();
+
+		BeanTestUtil.copyProperties(randomPatchWebUrl, expectedPatchWebUrl);
+
+		WebUrl getWebUrl = webUrlResource.getWebUrlByExternalReferenceCode(
+			patchWebUrl.getExternalReferenceCode());
+
+		assertEquals(expectedPatchWebUrl, getWebUrl);
+		assertValid(getWebUrl);
+	}
+
+	protected WebUrl testPatchWebUrlByExternalReferenceCode_addWebUrl()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

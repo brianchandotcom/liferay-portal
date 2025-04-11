@@ -183,274 +183,6 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrderRuleChannelChannel() throws Exception {
-		Channel postChannel = testGetOrderRuleChannelChannel_addChannel();
-
-		Channel getChannel = channelResource.getOrderRuleChannelChannel(
-			testGetOrderRuleChannelChannel_getOrderRuleChannelId());
-
-		assertEquals(postChannel, getChannel);
-		assertValid(getChannel);
-	}
-
-	protected Long testGetOrderRuleChannelChannel_getOrderRuleChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Channel testGetOrderRuleChannelChannel_addChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderRuleChannelChannel() throws Exception {
-		Channel channel = testGraphQLGetOrderRuleChannelChannel_addChannel();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderRuleChannelChannel",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"orderRuleChannelId",
-											testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/orderRuleChannelChannel"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderRuleChannelChannel",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"orderRuleChannelId",
-												testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderRuleChannelChannel"))));
-	}
-
-	protected Long testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderRuleChannelChannelNotFound()
-		throws Exception {
-
-		Long irrelevantOrderRuleChannelId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderRuleChannelChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"orderRuleChannelId",
-									irrelevantOrderRuleChannelId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderRuleChannelChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"orderRuleChannelId",
-										irrelevantOrderRuleChannelId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Channel testGraphQLGetOrderRuleChannelChannel_addChannel()
-		throws Exception {
-
-		return testGraphQLChannel_addChannel();
-	}
-
-	@Test
-	public void testGetOrderTypeChannelChannel() throws Exception {
-		Channel postChannel = testGetOrderTypeChannelChannel_addChannel();
-
-		Channel getChannel = channelResource.getOrderTypeChannelChannel(
-			testGetOrderTypeChannelChannel_getOrderTypeChannelId());
-
-		assertEquals(postChannel, getChannel);
-		assertValid(getChannel);
-	}
-
-	protected Long testGetOrderTypeChannelChannel_getOrderTypeChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Channel testGetOrderTypeChannelChannel_addChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderTypeChannelChannel() throws Exception {
-		Channel channel = testGraphQLGetOrderTypeChannelChannel_addChannel();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderTypeChannelChannel",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"orderTypeChannelId",
-											testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/orderTypeChannelChannel"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderTypeChannelChannel",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"orderTypeChannelId",
-												testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderTypeChannelChannel"))));
-	}
-
-	protected Long testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderTypeChannelChannelNotFound()
-		throws Exception {
-
-		Long irrelevantOrderTypeChannelId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderTypeChannelChannel",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"orderTypeChannelId",
-									irrelevantOrderTypeChannelId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderTypeChannelChannel",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"orderTypeChannelId",
-										irrelevantOrderTypeChannelId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Channel testGraphQLGetOrderTypeChannelChannel_addChannel()
-		throws Exception {
-
-		return testGraphQLChannel_addChannel();
-	}
-
-	@Test
 	public void testGetOrderByExternalReferenceCodeChannel() throws Exception {
 		Channel postChannel =
 			testGetOrderByExternalReferenceCodeChannel_addChannel();
@@ -720,6 +452,274 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	protected Channel testGraphQLGetOrderIdChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
+	@Test
+	public void testGetOrderRuleChannelChannel() throws Exception {
+		Channel postChannel = testGetOrderRuleChannelChannel_addChannel();
+
+		Channel getChannel = channelResource.getOrderRuleChannelChannel(
+			testGetOrderRuleChannelChannel_getOrderRuleChannelId());
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Channel testGetOrderRuleChannelChannel_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleChannelChannel() throws Exception {
+		Channel channel = testGraphQLGetOrderRuleChannelChannel_addChannel();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderRuleChannelChannel",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"orderRuleChannelId",
+											testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderRuleChannelChannel"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderRuleChannelChannel",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"orderRuleChannelId",
+												testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderRuleChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRuleChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantOrderRuleChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderRuleChannelChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleChannelId",
+									irrelevantOrderRuleChannelId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderRuleChannelChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderRuleChannelId",
+										irrelevantOrderRuleChannelId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetOrderRuleChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
+	@Test
+	public void testGetOrderTypeChannelChannel() throws Exception {
+		Channel postChannel = testGetOrderTypeChannelChannel_addChannel();
+
+		Channel getChannel = channelResource.getOrderTypeChannelChannel(
+			testGetOrderTypeChannelChannel_getOrderTypeChannelId());
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Channel testGetOrderTypeChannelChannel_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeChannelChannel() throws Exception {
+		Channel channel = testGraphQLGetOrderTypeChannelChannel_addChannel();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderTypeChannelChannel",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"orderTypeChannelId",
+											testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderTypeChannelChannel"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderTypeChannelChannel",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"orderTypeChannelId",
+												testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderTypeChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantOrderTypeChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderTypeChannelChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderTypeChannelId",
+									irrelevantOrderTypeChannelId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderTypeChannelChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderTypeChannelId",
+										irrelevantOrderTypeChannelId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetOrderTypeChannelChannel_addChannel()
 		throws Exception {
 
 		return testGraphQLChannel_addChannel();

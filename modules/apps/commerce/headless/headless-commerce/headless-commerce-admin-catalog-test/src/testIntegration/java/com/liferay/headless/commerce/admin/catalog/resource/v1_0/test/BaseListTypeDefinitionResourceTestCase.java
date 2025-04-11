@@ -182,6 +182,36 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSpecificationListTypeDefinition() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeDefinition listTypeDefinition =
+			testDeleteSpecificationListTypeDefinition_addListTypeDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeDefinitionResource.
+				deleteSpecificationListTypeDefinitionHttpResponse(
+					testDeleteSpecificationListTypeDefinition_getSpecificationId(),
+					listTypeDefinition.getId()));
+	}
+
+	protected Long
+			testDeleteSpecificationListTypeDefinition_getSpecificationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ListTypeDefinition
+			testDeleteSpecificationListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSpecificationIdListTypeDefinitionsPage()
 		throws Exception {
 
@@ -288,36 +318,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	protected ListTypeDefinition
 			testPostSpecificationIdListTypeDefinition_addListTypeDefinition(
 				ListTypeDefinition listTypeDefinition)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSpecificationListTypeDefinition() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeDefinition listTypeDefinition =
-			testDeleteSpecificationListTypeDefinition_addListTypeDefinition();
-
-		assertHttpResponseStatusCode(
-			204,
-			listTypeDefinitionResource.
-				deleteSpecificationListTypeDefinitionHttpResponse(
-					testDeleteSpecificationListTypeDefinition_getSpecificationId(),
-					listTypeDefinition.getId()));
-	}
-
-	protected Long
-			testDeleteSpecificationListTypeDefinition_getSpecificationId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected ListTypeDefinition
-			testDeleteSpecificationListTypeDefinition_addListTypeDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

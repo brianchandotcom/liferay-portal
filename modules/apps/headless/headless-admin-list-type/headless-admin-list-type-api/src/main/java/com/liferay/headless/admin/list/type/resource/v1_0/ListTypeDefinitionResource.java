@@ -46,37 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ListTypeDefinitionResource {
 
-	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-			String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postListTypeDefinitionsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public ListTypeDefinition postListTypeDefinition(
-			ListTypeDefinition listTypeDefinition)
-		throws Exception;
-
-	public Response postListTypeDefinitionBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
-			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
-		throws Exception;
-
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)
 		throws Exception;
 
@@ -87,8 +56,35 @@ public interface ListTypeDefinitionResource {
 	public ListTypeDefinition getListTypeDefinition(Long listTypeDefinitionId)
 		throws Exception;
 
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
+			String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public ListTypeDefinition patchListTypeDefinition(
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
+	public ListTypeDefinition postListTypeDefinition(
+			ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
+	public Response postListTypeDefinitionBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Response postListTypeDefinitionsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ListTypeDefinition putListTypeDefinition(
@@ -97,6 +93,10 @@ public interface ListTypeDefinitionResource {
 
 	public Response putListTypeDefinitionBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

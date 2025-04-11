@@ -328,6 +328,41 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the blog post rating of the user who authenticated the request."
+	)
+	public boolean deleteBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the blog post by external reference code."
+	)
+	public boolean deleteSiteBlogPostingByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.
+					deleteSiteBlogPostingByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post."
 	)
 	public BlogPosting patchBlogPosting(
@@ -340,6 +375,70 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.patchBlogPosting(
 				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField(
+		description = "Creates a new blog post rating by the user who authenticated the request."
+	)
+	public Rating createBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
+				blogPostingId, rating));
+	}
+
+	@GraphQLField(description = "Creates a new blog post.")
+	public BlogPosting createSiteBlogPosting(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("blogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
+				Long.valueOf(siteKey), blogPosting));
+	}
+
+	@GraphQLField
+	public Response createSiteBlogPostingBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
+				Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteBlogPostingsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.postSiteBlogPostingsPageExportBatch(
+					Long.valueOf(siteKey), search,
+					_filterBiFunction.apply(blogPostingResource, filterString),
+					_sortsBiFunction.apply(blogPostingResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -368,37 +467,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.putBlogPostingBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the blog post rating of the user who authenticated the request."
-	)
-	public boolean deleteBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource ->
-				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a new blog post rating by the user who authenticated the request."
-	)
-	public Rating createBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
-				blogPostingId, rating));
 	}
 
 	@GraphQLField(
@@ -435,74 +503,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	public Response createSiteBlogPostingsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource ->
-				blogPostingResource.postSiteBlogPostingsPageExportBatch(
-					Long.valueOf(siteKey), search,
-					_filterBiFunction.apply(blogPostingResource, filterString),
-					_sortsBiFunction.apply(blogPostingResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new blog post.")
-	public BlogPosting createSiteBlogPosting(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("blogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
-				Long.valueOf(siteKey), blogPosting));
-	}
-
-	@GraphQLField
-	public Response createSiteBlogPostingBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
-				Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the blog post by external reference code."
-	)
-	public boolean deleteSiteBlogPostingByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource ->
-				blogPostingResource.
-					deleteSiteBlogPostingByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
 	}
 
 	@GraphQLField(
@@ -602,29 +602,23 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
-	public Response createSiteBlogPostingImagesPageExportBatch(
+	@GraphQLField(
+		description = "Deletes the site's blog post image by external reference code."
+	)
+	public boolean deleteSiteBlogPostingImageByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingImageResource ->
 				blogPostingImageResource.
-					postSiteBlogPostingImagesPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							blogPostingImageResource, filterString),
-						_sortsBiFunction.apply(
-							blogPostingImageResource, sortsString),
-						callbackURL, contentType, fieldNames));
+					deleteSiteBlogPostingImageByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -663,28 +657,9 @@ public class Mutation {
 					Long.valueOf(siteKey), multipartBody, callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the site's blog post image by external reference code."
-	)
-	public boolean deleteSiteBlogPostingImageByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingImageResource ->
-				blogPostingImageResource.
-					deleteSiteBlogPostingImageByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
-	}
-
 	@GraphQLField
-	public Response createBlogPostingCommentsPageExportBatch(
-			@GraphQLName("blogPostingId") Long blogPostingId,
+	public Response createSiteBlogPostingImagesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
@@ -694,41 +669,17 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
+			_blogPostingImageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource ->
-				commentResource.postBlogPostingCommentsPageExportBatch(
-					blogPostingId, search,
-					_filterBiFunction.apply(commentResource, filterString),
-					_sortsBiFunction.apply(commentResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new comment on the blog post.")
-	public Comment createBlogPostingComment(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource -> commentResource.postBlogPostingComment(
-				blogPostingId, comment));
-	}
-
-	@GraphQLField
-	public Response createBlogPostingCommentBatch(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource -> commentResource.postBlogPostingCommentBatch(
-				blogPostingId, callbackURL, object));
+			blogPostingImageResource ->
+				blogPostingImageResource.
+					postSiteBlogPostingImagesPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							blogPostingImageResource, filterString),
+						_sortsBiFunction.apply(
+							blogPostingImageResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -759,21 +710,119 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
+		description = "Deletes the blog posting's comment by blog posting's and comment's external reference codes."
 	)
-	public Comment updateComment(
-			@GraphQLName("commentId") Long commentId,
+	public boolean
+			deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("blogPostingExternalReferenceCode") String
+					blogPostingExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), blogPostingExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the parent comment's comment by its parent comment's and comment's external reference codes."
+	)
+	public boolean
+			deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("parentCommentExternalReferenceCode") String
+					parentCommentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						parentCommentExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the document's comment by document's and comment's external reference codes."
+	)
+	public boolean
+			deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("documentExternalReferenceCode") String
+					documentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), documentExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the structured content's comment by structured content's and comment's external reference codes."
+	)
+	public boolean
+			deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("structuredContentExternalReferenceCode") String
+					structuredContentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						structuredContentExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Creates a new comment on the blog post.")
+	public Comment createBlogPostingComment(
+			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.putComment(commentId, comment));
+			commentResource -> commentResource.postBlogPostingComment(
+				blogPostingId, comment));
 	}
 
 	@GraphQLField
-	public Response updateCommentBatch(
+	public Response createBlogPostingCommentBatch(
+			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -781,8 +830,30 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.putCommentBatch(
-				callbackURL, object));
+			commentResource -> commentResource.postBlogPostingCommentBatch(
+				blogPostingId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createBlogPostingCommentsPageExportBatch(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.postBlogPostingCommentsPageExportBatch(
+					blogPostingId, search,
+					_filterBiFunction.apply(commentResource, filterString),
+					_sortsBiFunction.apply(commentResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -798,28 +869,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			commentResource -> commentResource.postCommentComment(
 				parentCommentId, comment));
-	}
-
-	@GraphQLField
-	public Response createDocumentCommentsPageExportBatch(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.postDocumentCommentsPageExportBatch(
-					documentId, search,
-					_filterBiFunction.apply(commentResource, filterString),
-					_sortsBiFunction.apply(commentResource, sortsString),
-					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(description = "Creates a new comment on the document.")
@@ -849,201 +898,9 @@ public class Mutation {
 				documentId, callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the blog posting's comment by blog posting's and comment's external reference codes."
-	)
-	public boolean
-			deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("blogPostingExternalReferenceCode") String
-					blogPostingExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey), blogPostingExternalReferenceCode,
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates the blog posting's comment given the blog posting's and comment's external reference codes, or creates it if it not exists."
-	)
-	public Comment
-			updateSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("blogPostingExternalReferenceCode") String
-					blogPostingExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey), blogPostingExternalReferenceCode,
-						externalReferenceCode, comment));
-	}
-
-	@GraphQLField(
-		description = "Deletes the parent comment's comment by its parent comment's and comment's external reference codes."
-	)
-	public boolean
-			deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("parentCommentExternalReferenceCode") String
-					parentCommentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						parentCommentExternalReferenceCode,
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates the parent comment's comment given the parent comment's and comment's external reference codes, or creates it if it not exists."
-	)
-	public Comment
-			updateSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("parentCommentExternalReferenceCode") String
-					parentCommentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						parentCommentExternalReferenceCode,
-						externalReferenceCode, comment));
-	}
-
-	@GraphQLField(
-		description = "Deletes the document's comment by document's and comment's external reference codes."
-	)
-	public boolean
-			deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("documentExternalReferenceCode") String
-					documentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey), documentExternalReferenceCode,
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates the document's comment given the document's and comment's external reference codes, or creates it if it not exists."
-	)
-	public Comment
-			updateSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("documentExternalReferenceCode") String
-					documentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey), documentExternalReferenceCode,
-						externalReferenceCode, comment));
-	}
-
-	@GraphQLField(
-		description = "Deletes the structured content's comment by structured content's and comment's external reference codes."
-	)
-	public boolean
-			deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("structuredContentExternalReferenceCode") String
-					structuredContentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						structuredContentExternalReferenceCode,
-						externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates the structured content's comment given the structured content's and comment's external reference codes, or creates it if it not exists."
-	)
-	public Comment
-			updateSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("structuredContentExternalReferenceCode") String
-					structuredContentExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource ->
-				commentResource.
-					putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						structuredContentExternalReferenceCode,
-						externalReferenceCode, comment));
-	}
-
 	@GraphQLField
-	public Response createStructuredContentCommentsPageExportBatch(
-			@GraphQLName("structuredContentId") Long structuredContentId,
+	public Response createDocumentCommentsPageExportBatch(
+			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
@@ -1056,8 +913,8 @@ public class Mutation {
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource ->
-				commentResource.postStructuredContentCommentsPageExportBatch(
-					structuredContentId, search,
+				commentResource.postDocumentCommentsPageExportBatch(
+					documentId, search,
 					_filterBiFunction.apply(commentResource, filterString),
 					_sortsBiFunction.apply(commentResource, sortsString),
 					callbackURL, contentType, fieldNames));
@@ -1091,6 +948,149 @@ public class Mutation {
 			commentResource ->
 				commentResource.postStructuredContentCommentBatch(
 					structuredContentId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createStructuredContentCommentsPageExportBatch(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.postStructuredContentCommentsPageExportBatch(
+					structuredContentId, search,
+					_filterBiFunction.apply(commentResource, filterString),
+					_sortsBiFunction.apply(commentResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public Comment updateComment(
+			@GraphQLName("commentId") Long commentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
+	}
+
+	@GraphQLField
+	public Response updateCommentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putCommentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates the blog posting's comment given the blog posting's and comment's external reference codes, or creates it if it not exists."
+	)
+	public Comment
+			updateSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("blogPostingExternalReferenceCode") String
+					blogPostingExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), blogPostingExternalReferenceCode,
+						externalReferenceCode, comment));
+	}
+
+	@GraphQLField(
+		description = "Updates the parent comment's comment given the parent comment's and comment's external reference codes, or creates it if it not exists."
+	)
+	public Comment
+			updateSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("parentCommentExternalReferenceCode") String
+					parentCommentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						parentCommentExternalReferenceCode,
+						externalReferenceCode, comment));
+	}
+
+	@GraphQLField(
+		description = "Updates the document's comment given the document's and comment's external reference codes, or creates it if it not exists."
+	)
+	public Comment
+			updateSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("documentExternalReferenceCode") String
+					documentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), documentExternalReferenceCode,
+						externalReferenceCode, comment));
+	}
+
+	@GraphQLField(
+		description = "Updates the structured content's comment given the structured content's and comment's external reference codes, or creates it if it not exists."
+	)
+	public Comment
+			updateSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("structuredContentExternalReferenceCode") String
+					structuredContentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						structuredContentExternalReferenceCode,
+						externalReferenceCode, comment));
 	}
 
 	@GraphQLField
@@ -1167,6 +1167,31 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createSiteContentStructuresPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentStructureResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentStructureResource ->
+				contentStructureResource.
+					postSiteContentStructuresPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							contentStructureResource, filterString),
+						_sortsBiFunction.apply(
+							contentStructureResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateAssetLibraryContentStructurePermissionsPage(
 				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
@@ -1207,31 +1232,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	public Response createSiteContentStructuresPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_contentStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			contentStructureResource ->
-				contentStructureResource.
-					postSiteContentStructuresPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							contentStructureResource, filterString),
-						_sortsBiFunction.apply(
-							contentStructureResource, sortsString),
-						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1305,26 +1305,103 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
-	public Response createAssetLibraryDocumentsPageExportBatch(
+	@GraphQLField(
+		description = "Deletes the asset library's document by external reference code."
+	)
+	public boolean deleteAssetLibraryDocumentByExternalReferenceCode(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.
+					deleteAssetLibraryDocumentByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the document and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocument(documentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the document's rating and returns a 204 if the operation succeeded."
+	)
+	public boolean deleteDocumentMyRating(
+			@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentMyRating(
+				documentId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the site's document by external reference code returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteDocumentByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
 			documentResource ->
-				documentResource.postAssetLibraryDocumentsPageExportBatch(
-					Long.valueOf(assetLibraryId), search,
-					_filterBiFunction.apply(documentResource, filterString),
-					_sortsBiFunction.apply(documentResource, sortsString),
-					callbackURL, contentType, fieldNames));
+				documentResource.deleteSiteDocumentByExternalReferenceCode(
+					Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "patchDocumentDocumentIdMultipartBody"
+	)
+	public Document patchDocument(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.patchDocument(
+				documentId, multipartBody));
 	}
 
 	@GraphQLField
@@ -1360,23 +1437,154 @@ public class Mutation {
 				object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the asset library's document by external reference code."
-	)
-	public boolean deleteAssetLibraryDocumentByExternalReferenceCode(
+	@GraphQLField
+	public Response createAssetLibraryDocumentsPageExportBatch(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource ->
-				documentResource.
-					deleteAssetLibraryDocumentByExternalReferenceCode(
-						Long.valueOf(assetLibraryId), externalReferenceCode));
+				documentResource.postAssetLibraryDocumentsPageExportBatch(
+					Long.valueOf(assetLibraryId), search,
+					_filterBiFunction.apply(documentResource, filterString),
+					_sortsBiFunction.apply(documentResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
 
-		return true;
+	@GraphQLField(
+		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "postDocumentFolderDocumentDocumentFolderIdMultipartBody"
+	)
+	public Document createDocumentFolderDocument(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postDocumentFolderDocument(
+				documentFolderId, multipartBody));
+	}
+
+	@GraphQLField
+	public Response createDocumentFolderDocumentBatch(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.postDocumentFolderDocumentBatch(
+					documentFolderId, multipartBody, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createDocumentFolderDocumentsPageExportBatch(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.postDocumentFolderDocumentsPageExportBatch(
+					documentFolderId, search,
+					_filterBiFunction.apply(documentResource, filterString),
+					_sortsBiFunction.apply(documentResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Creates a new rating for the document, by the user who authenticated the request."
+	)
+	public Rating createDocumentMyRating(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postDocumentMyRating(
+				documentId, rating));
+	}
+
+	@GraphQLField(
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "postSiteDocumentSiteIdMultipartBody"
+	)
+	public Document createSiteDocument(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postSiteDocument(
+				Long.valueOf(siteKey), multipartBody));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postSiteDocumentBatch(
+				Long.valueOf(siteKey), multipartBody, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.postSiteDocumentsPageExportBatch(
+					Long.valueOf(siteKey), search,
+					_filterBiFunction.apply(documentResource, filterString),
+					_sortsBiFunction.apply(documentResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -1422,109 +1630,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response createDocumentFolderDocumentsPageExportBatch(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource ->
-				documentResource.postDocumentFolderDocumentsPageExportBatch(
-					documentFolderId, search,
-					_filterBiFunction.apply(documentResource, filterString),
-					_sortsBiFunction.apply(documentResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
-		value = "postDocumentFolderDocumentDocumentFolderIdMultipartBody"
-	)
-	public Document createDocumentFolderDocument(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postDocumentFolderDocument(
-				documentFolderId, multipartBody));
-	}
-
-	@GraphQLField
-	public Response createDocumentFolderDocumentBatch(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource ->
-				documentResource.postDocumentFolderDocumentBatch(
-					documentFolderId, multipartBody, callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the document and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocument(documentId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteDocumentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocumentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
-		value = "patchDocumentDocumentIdMultipartBody"
-	)
-	public Document patchDocument(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.patchDocument(
-				documentId, multipartBody));
-	}
-
 	@GraphQLField(
 		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
@@ -1556,37 +1661,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> documentResource.putDocumentBatch(
 				multipartBody, callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the document's rating and returns a 204 if the operation succeeded."
-	)
-	public boolean deleteDocumentMyRating(
-			@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocumentMyRating(
-				documentId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a new rating for the document, by the user who authenticated the request."
-	)
-	public Rating createDocumentMyRating(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postDocumentMyRating(
-				documentId, rating));
 	}
 
 	@GraphQLField(
@@ -1623,80 +1697,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource ->
-				documentResource.postSiteDocumentsPageExportBatch(
-					Long.valueOf(siteKey), search,
-					_filterBiFunction.apply(documentResource, filterString),
-					_sortsBiFunction.apply(documentResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
-		value = "postSiteDocumentSiteIdMultipartBody"
-	)
-	public Document createSiteDocument(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postSiteDocument(
-				Long.valueOf(siteKey), multipartBody));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("multipartBody") MultipartBody multipartBody,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postSiteDocumentBatch(
-				Long.valueOf(siteKey), multipartBody, callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the site's document by external reference code returns a 204 if the operation succeeds."
-	)
-	public boolean deleteSiteDocumentByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource ->
-				documentResource.deleteSiteDocumentByExternalReferenceCode(
-					Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
 	}
 
 	@GraphQLField(
@@ -1743,15 +1743,26 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response
-			createAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("sort") String sortsString,
-				@GraphQLName("callbackURL") String callbackURL,
-				@GraphQLName("contentType") String contentType,
-				@GraphQLName("fieldNames") String fieldNames)
+	public boolean deleteDocumentDataDefinitionType(
+			@GraphQLName("documentDataDefinitionTypeId") Long
+				documentDataDefinitionTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					deleteDocumentDataDefinitionType(
+						documentDataDefinitionTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentDataDefinitionTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1759,13 +1770,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentDataDefinitionTypeResource ->
 				documentDataDefinitionTypeResource.
-					postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
-						Long.valueOf(assetLibraryId), search,
-						_filterBiFunction.apply(
-							documentDataDefinitionTypeResource, filterString),
-						_sortsBiFunction.apply(
-							documentDataDefinitionTypeResource, sortsString),
-						callbackURL, contentType, fieldNames));
+					deleteDocumentDataDefinitionTypeBatch(callbackURL, object));
 	}
 
 	@GraphQLField(description = "Creates a new document data definition type.")
@@ -1803,26 +1808,15 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteDocumentDataDefinitionType(
-			@GraphQLName("documentDataDefinitionTypeId") Long
-				documentDataDefinitionTypeId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentDataDefinitionTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentDataDefinitionTypeResource ->
-				documentDataDefinitionTypeResource.
-					deleteDocumentDataDefinitionType(
-						documentDataDefinitionTypeId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteDocumentDataDefinitionTypeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+	public Response
+			createAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("sort") String sortsString,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1830,27 +1824,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentDataDefinitionTypeResource ->
 				documentDataDefinitionTypeResource.
-					deleteDocumentDataDefinitionTypeBatch(callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentDataDefinitionTypesPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentDataDefinitionTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentDataDefinitionTypeResource ->
-				documentDataDefinitionTypeResource.
-					postSiteDocumentDataDefinitionTypesPageExportBatch(
-						Long.valueOf(siteKey), search,
+					postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
 						_filterBiFunction.apply(
 							documentDataDefinitionTypeResource, filterString),
 						_sortsBiFunction.apply(
@@ -1891,8 +1866,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createAssetLibraryDocumentFoldersPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+	public Response createSiteDocumentDataDefinitionTypesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
@@ -1902,68 +1877,17 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.
-					postAssetLibraryDocumentFoldersPageExportBatch(
-						Long.valueOf(assetLibraryId), search,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					postSiteDocumentDataDefinitionTypesPageExportBatch(
+						Long.valueOf(siteKey), search,
 						_filterBiFunction.apply(
-							documentFolderResource, filterString),
+							documentDataDefinitionTypeResource, filterString),
 						_sortsBiFunction.apply(
-							documentFolderResource, sortsString),
+							documentDataDefinitionTypeResource, sortsString),
 						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public DocumentFolder createAssetLibraryDocumentFolder(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("documentFolder") DocumentFolder documentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postAssetLibraryDocumentFolder(
-					Long.valueOf(assetLibraryId), documentFolder));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryDocumentFolderBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postAssetLibraryDocumentFolderBatch(
-					Long.valueOf(assetLibraryId), callbackURL, object));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryDocumentFolderPermissionsPage(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource -> {
-				Page paginationPage =
-					documentFolderResource.
-						putAssetLibraryDocumentFolderPermissionsPage(
-							Long.valueOf(assetLibraryId), permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(
@@ -1997,6 +1921,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the document folder's rating and returns a 204 if the operation succeeded."
+	)
+	public boolean deleteDocumentFolderMyRating(
+			@GraphQLName("documentFolderId") Long documentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.deleteDocumentFolderMyRating(
+					documentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the site's document folder by external reference code returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteDocumentsFolderByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.
+					deleteSiteDocumentsFolderByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body. Any other fields are left untouched."
 	)
 	public DocumentFolder patchDocumentFolder(
@@ -2010,6 +1970,166 @@ public class Mutation {
 			documentFolderResource ->
 				documentFolderResource.patchDocumentFolder(
 					documentFolderId, documentFolder));
+	}
+
+	@GraphQLField
+	public DocumentFolder createAssetLibraryDocumentFolder(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postAssetLibraryDocumentFolder(
+					Long.valueOf(assetLibraryId), documentFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentFolderBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postAssetLibraryDocumentFolderBatch(
+					Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentFoldersPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.
+					postAssetLibraryDocumentFoldersPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							documentFolderResource, filterString),
+						_sortsBiFunction.apply(
+							documentFolderResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Creates a new folder in a folder identified by `parentDocumentFolderId`."
+	)
+	public DocumentFolder createDocumentFolderDocumentFolder(
+			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderDocumentFolder(
+					parentDocumentFolderId, documentFolder));
+	}
+
+	@GraphQLField(
+		description = "Creates a new rating for the document folder, by the user who authenticated the request."
+	)
+	public Rating createDocumentFolderMyRating(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderMyRating(
+					documentFolderId, rating));
+	}
+
+	@GraphQLField(description = "Creates a new document folder.")
+	public DocumentFolder createSiteDocumentFolder(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolder(
+					Long.valueOf(siteKey), documentFolder));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolderBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentFoldersPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFoldersPageExportBatch(
+					Long.valueOf(siteKey), search,
+					_filterBiFunction.apply(
+						documentFolderResource, filterString),
+					_sortsBiFunction.apply(documentFolderResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateAssetLibraryDocumentFolderPermissionsPage(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource -> {
+				Page paginationPage =
+					documentFolderResource.
+						putAssetLibraryDocumentFolderPermissionsPage(
+							Long.valueOf(assetLibraryId), permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -2039,39 +2159,6 @@ public class Mutation {
 			documentFolderResource ->
 				documentFolderResource.putDocumentFolderBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the document folder's rating and returns a 204 if the operation succeeded."
-	)
-	public boolean deleteDocumentFolderMyRating(
-			@GraphQLName("documentFolderId") Long documentFolderId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.deleteDocumentFolderMyRating(
-					documentFolderId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a new rating for the document folder, by the user who authenticated the request."
-	)
-	public Rating createDocumentFolderMyRating(
-			@GraphQLName("documentFolderId") Long documentFolderId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postDocumentFolderMyRating(
-					documentFolderId, rating));
 	}
 
 	@GraphQLField(
@@ -2141,74 +2228,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(
-		description = "Creates a new folder in a folder identified by `parentDocumentFolderId`."
-	)
-	public DocumentFolder createDocumentFolderDocumentFolder(
-			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
-			@GraphQLName("documentFolder") DocumentFolder documentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postDocumentFolderDocumentFolder(
-					parentDocumentFolderId, documentFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentFoldersPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFoldersPageExportBatch(
-					Long.valueOf(siteKey), search,
-					_filterBiFunction.apply(
-						documentFolderResource, filterString),
-					_sortsBiFunction.apply(documentFolderResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new document folder.")
-	public DocumentFolder createSiteDocumentFolder(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("documentFolder") DocumentFolder documentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFolder(
-					Long.valueOf(siteKey), documentFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentFolderBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFolderBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateSiteDocumentFolderPermissionsPage(
@@ -2231,25 +2250,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the site's document folder by external reference code returns a 204 if the operation succeeds."
-	)
-	public boolean deleteSiteDocumentsFolderByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.
-					deleteSiteDocumentsFolderByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField(
 		description = "Replaces the document folder by external reference code with the information sent in the request body, or replaces it if it not exists."
 	)
 	public DocumentFolder updateSiteDocumentsFolderByExternalReferenceCode(
@@ -2266,55 +2266,6 @@ public class Mutation {
 					putSiteDocumentsFolderByExternalReferenceCode(
 						Long.valueOf(siteKey), externalReferenceCode,
 						documentFolder));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryDocumentMetadataSetsPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentMetadataSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentMetadataSetResource ->
-				documentMetadataSetResource.
-					postAssetLibraryDocumentMetadataSetsPageExportBatch(
-						Long.valueOf(assetLibraryId), callbackURL, contentType,
-						fieldNames));
-	}
-
-	@GraphQLField
-	public DocumentMetadataSet createAssetLibraryDocumentMetadataSet(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("documentMetadataSet") DocumentMetadataSet
-				documentMetadataSet)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentMetadataSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentMetadataSetResource ->
-				documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
-					Long.valueOf(assetLibraryId), documentMetadataSet));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryDocumentMetadataSetBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentMetadataSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentMetadataSetResource ->
-				documentMetadataSetResource.
-					postAssetLibraryDocumentMetadataSetBatch(
-						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -2334,28 +2285,6 @@ public class Mutation {
 						Long.valueOf(assetLibraryId), externalReferenceCode));
 
 		return true;
-	}
-
-	@GraphQLField(
-		description = "Updates the asset Library's Document Metadata Set with the given external reference code, or creates it if it does not exists."
-	)
-	public DocumentMetadataSet
-			updateAssetLibraryDocumentMetadataSetByExternalReferenceCode(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("documentMetadataSet") DocumentMetadataSet
-					documentMetadataSet)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentMetadataSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentMetadataSetResource ->
-				documentMetadataSetResource.
-					putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
-						Long.valueOf(assetLibraryId), externalReferenceCode,
-						documentMetadataSet));
 	}
 
 	@GraphQLField(
@@ -2389,9 +2318,59 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
-	public Response createSiteDocumentMetadataSetsPageExportBatch(
+	@GraphQLField(
+		description = "Deletes the site's Document Metadata Set by external reference code."
+	)
+	public boolean deleteSiteDocumentMetadataSetByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.
+					deleteSiteDocumentMetadataSetByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public DocumentMetadataSet createAssetLibraryDocumentMetadataSet(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("documentMetadataSet") DocumentMetadataSet
+				documentMetadataSet)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+					Long.valueOf(assetLibraryId), documentMetadataSet));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentMetadataSetBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.
+					postAssetLibraryDocumentMetadataSetBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentMetadataSetsPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -2402,8 +2381,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentMetadataSetResource ->
 				documentMetadataSetResource.
-					postSiteDocumentMetadataSetsPageExportBatch(
-						Long.valueOf(siteKey), callbackURL, contentType,
+					postAssetLibraryDocumentMetadataSetsPageExportBatch(
+						Long.valueOf(assetLibraryId), callbackURL, contentType,
 						fieldNames));
 	}
 
@@ -2437,23 +2416,44 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the site's Document Metadata Set by external reference code."
-	)
-	public boolean deleteSiteDocumentMetadataSetByExternalReferenceCode(
+	@GraphQLField
+	public Response createSiteDocumentMetadataSetsPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_documentMetadataSetResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentMetadataSetResource ->
 				documentMetadataSetResource.
-					deleteSiteDocumentMetadataSetByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
+					postSiteDocumentMetadataSetsPageExportBatch(
+						Long.valueOf(siteKey), callbackURL, contentType,
+						fieldNames));
+	}
 
-		return true;
+	@GraphQLField(
+		description = "Updates the asset Library's Document Metadata Set with the given external reference code, or creates it if it does not exists."
+	)
+	public DocumentMetadataSet
+			updateAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("documentMetadataSet") DocumentMetadataSet
+					documentMetadataSet)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.
+					putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode,
+						documentMetadataSet));
 	}
 
 	@GraphQLField(
@@ -2476,53 +2476,6 @@ public class Mutation {
 					putSiteDocumentMetadataSetByExternalReferenceCode(
 						Long.valueOf(siteKey), externalReferenceCode,
 						documentMetadataSet));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryDocumentShortcutsPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentShortcutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentShortcutResource ->
-				documentShortcutResource.
-					postAssetLibraryDocumentShortcutsPageExportBatch(
-						Long.valueOf(assetLibraryId), callbackURL, contentType,
-						fieldNames));
-	}
-
-	@GraphQLField
-	public DocumentShortcut createAssetLibraryDocumentShortcut(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentShortcutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentShortcutResource ->
-				documentShortcutResource.postAssetLibraryDocumentShortcut(
-					Long.valueOf(assetLibraryId), documentShortcut));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryDocumentShortcutBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentShortcutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentShortcutResource ->
-				documentShortcutResource.postAssetLibraryDocumentShortcutBatch(
-					Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -2557,6 +2510,25 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteDocumentShortcutByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.
+					deleteSiteDocumentShortcutByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	public DocumentShortcut patchDocumentShortcut(
@@ -2572,11 +2544,9 @@ public class Mutation {
 					documentShortcutId, documentShortcut));
 	}
 
-	@GraphQLField(
-		description = "Replaces the document shortcut with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public DocumentShortcut updateDocumentShortcut(
-			@GraphQLName("documentShortcutId") Long documentShortcutId,
+	@GraphQLField
+	public DocumentShortcut createAssetLibraryDocumentShortcut(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
 		throws Exception {
 
@@ -2584,12 +2554,13 @@ public class Mutation {
 			_documentShortcutResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentShortcutResource ->
-				documentShortcutResource.putDocumentShortcut(
-					documentShortcutId, documentShortcut));
+				documentShortcutResource.postAssetLibraryDocumentShortcut(
+					Long.valueOf(assetLibraryId), documentShortcut));
 	}
 
 	@GraphQLField
-	public Response updateDocumentShortcutBatch(
+	public Response createAssetLibraryDocumentShortcutBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -2598,13 +2569,13 @@ public class Mutation {
 			_documentShortcutResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentShortcutResource ->
-				documentShortcutResource.putDocumentShortcutBatch(
-					callbackURL, object));
+				documentShortcutResource.postAssetLibraryDocumentShortcutBatch(
+					Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField
-	public Response createSiteDocumentShortcutsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
+	public Response createAssetLibraryDocumentShortcutsPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -2615,8 +2586,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentShortcutResource ->
 				documentShortcutResource.
-					postSiteDocumentShortcutsPageExportBatch(
-						Long.valueOf(siteKey), callbackURL, contentType,
+					postAssetLibraryDocumentShortcutsPageExportBatch(
+						Long.valueOf(assetLibraryId), callbackURL, contentType,
 						fieldNames));
 	}
 
@@ -2649,23 +2620,52 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds."
-	)
-	public boolean deleteSiteDocumentShortcutByExternalReferenceCode(
+	@GraphQLField
+	public Response createSiteDocumentShortcutsPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_documentShortcutResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentShortcutResource ->
 				documentShortcutResource.
-					deleteSiteDocumentShortcutByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
+					postSiteDocumentShortcutsPageExportBatch(
+						Long.valueOf(siteKey), callbackURL, contentType,
+						fieldNames));
+	}
 
-		return true;
+	@GraphQLField(
+		description = "Replaces the document shortcut with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public DocumentShortcut updateDocumentShortcut(
+			@GraphQLName("documentShortcutId") Long documentShortcutId,
+			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.putDocumentShortcut(
+					documentShortcutId, documentShortcut));
+	}
+
+	@GraphQLField
+	public Response updateDocumentShortcutBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.putDocumentShortcutBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -2717,6 +2717,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the knowledge base article's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the knowledge base article by external reference code."
+	)
+	public boolean deleteSiteKnowledgeBaseArticleByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					deleteSiteKnowledgeBaseArticleByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
@@ -2731,6 +2767,157 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
 					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField(
+		description = "Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`."
+	)
+	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
+			@GraphQLName("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseArticleKnowledgeBaseArticle(
+						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField(
+		description = "Creates a rating for the knowledge base article."
+	)
+	public Rating createKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId, rating));
+	}
+
+	@GraphQLField(
+		description = "Creates a new knowledge base article in the folder."
+	)
+	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticle(
+						knowledgeBaseFolderId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public Response createKnowledgeBaseFolderKnowledgeBaseArticleBatch(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticleBatch(
+						knowledgeBaseFolderId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response
+			createKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
+				@GraphQLName("knowledgeBaseFolderId") Long
+					knowledgeBaseFolderId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("sort") String sortsString,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
+						knowledgeBaseFolderId, search,
+						_filterBiFunction.apply(
+							knowledgeBaseArticleResource, filterString),
+						_sortsBiFunction.apply(
+							knowledgeBaseArticleResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Creates a new knowledge base article.")
+	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+					Long.valueOf(siteKey), knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public Response createSiteKnowledgeBaseArticleBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticleBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteKnowledgeBaseArticlesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postSiteKnowledgeBaseArticlesPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							knowledgeBaseArticleResource, filterString),
+						_sortsBiFunction.apply(
+							knowledgeBaseArticleResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -2762,39 +2949,6 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticleBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the knowledge base article's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleMyRating(
-					knowledgeBaseArticleId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a rating for the knowledge base article."
-	)
-	public Rating createKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
-					knowledgeBaseArticleId, rating));
 	}
 
 	@GraphQLField(
@@ -2862,160 +3016,6 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticleUnsubscribe(
 					knowledgeBaseArticleId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`."
-	)
-	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
-			@GraphQLName("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
-			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postKnowledgeBaseArticleKnowledgeBaseArticle(
-						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
-	}
-
-	@GraphQLField
-	public Response
-			createKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
-				@GraphQLName("knowledgeBaseFolderId") Long
-					knowledgeBaseFolderId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("sort") String sortsString,
-				@GraphQLName("callbackURL") String callbackURL,
-				@GraphQLName("contentType") String contentType,
-				@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
-						knowledgeBaseFolderId, search,
-						_filterBiFunction.apply(
-							knowledgeBaseArticleResource, filterString),
-						_sortsBiFunction.apply(
-							knowledgeBaseArticleResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new knowledge base article in the folder."
-	)
-	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postKnowledgeBaseFolderKnowledgeBaseArticle(
-						knowledgeBaseFolderId, knowledgeBaseArticle));
-	}
-
-	@GraphQLField
-	public Response createKnowledgeBaseFolderKnowledgeBaseArticleBatch(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postKnowledgeBaseFolderKnowledgeBaseArticleBatch(
-						knowledgeBaseFolderId, callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createSiteKnowledgeBaseArticlesPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					postSiteKnowledgeBaseArticlesPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							knowledgeBaseArticleResource, filterString),
-						_sortsBiFunction.apply(
-							knowledgeBaseArticleResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new knowledge base article.")
-	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-					Long.valueOf(siteKey), knowledgeBaseArticle));
-	}
-
-	@GraphQLField
-	public Response createSiteKnowledgeBaseArticleBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticleBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the knowledge base article by external reference code."
-	)
-	public boolean deleteSiteKnowledgeBaseArticleByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.
-					deleteSiteKnowledgeBaseArticleByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
 
 		return true;
 	}
@@ -3096,67 +3096,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	public Response
-			createKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
-				@GraphQLName("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
-				@GraphQLName("callbackURL") String callbackURL,
-				@GraphQLName("contentType") String contentType,
-				@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.
-					postKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
-						knowledgeBaseArticleId, callbackURL, contentType,
-						fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
-		value = "postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
-	)
-	public KnowledgeBaseAttachment
-			createKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@GraphQLName("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
-				@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.
-					postKnowledgeBaseArticleKnowledgeBaseAttachment(
-						knowledgeBaseArticleId, multipartBody));
-	}
-
-	@GraphQLField
-	public Response createKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.
-					postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
-						knowledgeBaseArticleId, multipartBody, callbackURL,
-						object));
-	}
-
 	@GraphQLField(
 		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
 	)
@@ -3215,6 +3154,67 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
+		value = "postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
+	)
+	public KnowledgeBaseAttachment
+			createKnowledgeBaseArticleKnowledgeBaseAttachment(
+				@GraphQLName("knowledgeBaseArticleId") Long
+					knowledgeBaseArticleId,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachment(
+						knowledgeBaseArticleId, multipartBody));
+	}
+
+	@GraphQLField
+	public Response createKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
+						knowledgeBaseArticleId, multipartBody, callbackURL,
+						object));
+	}
+
+	@GraphQLField
+	public Response
+			createKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
+				@GraphQLName("knowledgeBaseArticleId") Long
+					knowledgeBaseArticleId,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachmentsPageExportBatch(
+						knowledgeBaseArticleId, callbackURL, contentType,
+						fieldNames));
+	}
+
+	@GraphQLField(
 		description = "Deletes the knowledge base folder and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteKnowledgeBaseFolder(
@@ -3246,6 +3246,25 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the knowledge base folder by external reference code."
+	)
+	public boolean deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.
+					deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
@@ -3260,6 +3279,73 @@ public class Mutation {
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
 					knowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField(
+		description = "Creates a knowledge base folder inside the parent folder."
+	)
+	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
+			@GraphQLName("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.
+					postKnowledgeBaseFolderKnowledgeBaseFolder(
+						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField(description = "Creates a new knowledge base folder.")
+	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+					Long.valueOf(siteKey), knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public Response createSiteKnowledgeBaseFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolderBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteKnowledgeBaseFoldersPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.
+					postSiteKnowledgeBaseFoldersPageExportBatch(
+						Long.valueOf(siteKey), callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField(
@@ -3314,92 +3400,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField(
-		description = "Creates a knowledge base folder inside the parent folder."
-	)
-	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
-			@GraphQLName("parentKnowledgeBaseFolderId") Long
-				parentKnowledgeBaseFolderId,
-			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.
-					postKnowledgeBaseFolderKnowledgeBaseFolder(
-						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteKnowledgeBaseFoldersPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.
-					postSiteKnowledgeBaseFoldersPageExportBatch(
-						Long.valueOf(siteKey), callbackURL, contentType,
-						fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new knowledge base folder.")
-	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-					Long.valueOf(siteKey), knowledgeBaseFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteKnowledgeBaseFolderBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolderBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the knowledge base folder by external reference code."
-	)
-	public boolean deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.
-					deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
 	}
 
 	@GraphQLField(
@@ -3512,24 +3512,29 @@ public class Mutation {
 					deleteMessageBoardAttachmentBatch(callbackURL, object));
 	}
 
-	@GraphQLField
-	public Response
-			createMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
-				@GraphQLName("messageBoardMessageId") Long
-					messageBoardMessageId,
-				@GraphQLName("callbackURL") String callbackURL,
-				@GraphQLName("contentType") String contentType,
-				@GraphQLName("fieldNames") String fieldNames)
+	@GraphQLField(
+		description = "Delete the message board attachment by message board message's and message board attachment's external reference codes."
+	)
+	public boolean
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("messageBoardMessageExternalReferenceCode") String
+					messageBoardMessageExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
-					postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
-						messageBoardMessageId, callbackURL, contentType,
-						fieldNames));
+					deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						messageBoardMessageExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
 	}
 
 	@GraphQLField(
@@ -3575,8 +3580,9 @@ public class Mutation {
 
 	@GraphQLField
 	public Response
-			createMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
-				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			createMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
+				@GraphQLName("messageBoardMessageId") Long
+					messageBoardMessageId,
 				@GraphQLName("callbackURL") String callbackURL,
 				@GraphQLName("contentType") String contentType,
 				@GraphQLName("fieldNames") String fieldNames)
@@ -3587,8 +3593,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
-					postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
-						messageBoardThreadId, callbackURL, contentType,
+					postMessageBoardMessageMessageBoardAttachmentsPageExportBatch(
+						messageBoardMessageId, callbackURL, contentType,
 						fieldNames));
 	}
 
@@ -3632,29 +3638,23 @@ public class Mutation {
 						object));
 	}
 
-	@GraphQLField(
-		description = "Delete the message board attachment by message board message's and message board attachment's external reference codes."
-	)
-	public boolean
-			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("messageBoardMessageExternalReferenceCode") String
-					messageBoardMessageExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
+	@GraphQLField
+	public Response
+			createMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
+				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
-					deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						messageBoardMessageExternalReferenceCode,
-						externalReferenceCode));
-
-		return true;
+					postMessageBoardThreadMessageBoardAttachmentsPageExportBatch(
+						messageBoardThreadId, callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField(
@@ -3689,6 +3689,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the site's message board message by external reference code."
+	)
+	public boolean deleteSiteMessageBoardMessageByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					deleteSiteMessageBoardMessageByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	public MessageBoardMessage patchMessageBoardMessage(
@@ -3703,6 +3739,125 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.patchMessageBoardMessage(
 					messageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField(
+		description = "Creates a child message board message of the parent message."
+	)
+	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardMessageMessageBoardMessage(
+						parentMessageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField(
+		description = "Creates a rating for the message board message."
+	)
+	public Rating createMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.postMessageBoardMessageMyRating(
+					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField(
+		description = "Creates a new message in the message board thread."
+	)
+	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessage(
+						messageBoardThreadId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public Response createMessageBoardThreadMessageBoardMessageBatch(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessageBatch(
+						messageBoardThreadId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createMessageBoardThreadMessageBoardMessagesPageExportBatch(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessagesPageExportBatch(
+						messageBoardThreadId, search,
+						_filterBiFunction.apply(
+							messageBoardMessageResource, filterString),
+						_sortsBiFunction.apply(
+							messageBoardMessageResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardMessagesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postSiteMessageBoardMessagesPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							messageBoardMessageResource, filterString),
+						_sortsBiFunction.apply(
+							messageBoardMessageResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -3749,39 +3904,6 @@ public class Mutation {
 					messageBoardMessageId));
 
 		return true;
-	}
-
-	@GraphQLField(
-		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
-					messageBoardMessageId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a rating for the message board message."
-	)
-	public Rating createMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.postMessageBoardMessageMyRating(
-					messageBoardMessageId, rating));
 	}
 
 	@GraphQLField(
@@ -3865,128 +3987,6 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessageUnsubscribe(
 					messageBoardMessageId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a child message board message of the parent message."
-	)
-	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
-			@GraphQLName("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
-			@GraphQLName("messageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardMessageMessageBoardMessage(
-						parentMessageBoardMessageId, messageBoardMessage));
-	}
-
-	@GraphQLField
-	public Response createMessageBoardThreadMessageBoardMessagesPageExportBatch(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessagesPageExportBatch(
-						messageBoardThreadId, search,
-						_filterBiFunction.apply(
-							messageBoardMessageResource, filterString),
-						_sortsBiFunction.apply(
-							messageBoardMessageResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new message in the message board thread."
-	)
-	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("messageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessage(
-						messageBoardThreadId, messageBoardMessage));
-	}
-
-	@GraphQLField
-	public Response createMessageBoardThreadMessageBoardMessageBatch(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessageBatch(
-						messageBoardThreadId, callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createSiteMessageBoardMessagesPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postSiteMessageBoardMessagesPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							messageBoardMessageResource, filterString),
-						_sortsBiFunction.apply(
-							messageBoardMessageResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Deletes the site's message board message by external reference code."
-	)
-	public boolean deleteSiteMessageBoardMessageByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					deleteSiteMessageBoardMessageByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
 
 		return true;
 	}
@@ -4084,6 +4084,80 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Creates a new message board section in the parent section."
+	)
+	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
+			@GraphQLName("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					postMessageBoardSectionMessageBoardSection(
+						parentMessageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField(description = "Creates a new message board section.")
+	public MessageBoardSection createSiteMessageBoardSection(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSection(
+					Long.valueOf(siteKey), messageBoardSection));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardSectionBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardSectionsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					postSiteMessageBoardSectionsPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							messageBoardSectionResource, filterString),
+						_sortsBiFunction.apply(
+							messageBoardSectionResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
 		description = "Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
 	public MessageBoardSection updateMessageBoardSection(
@@ -4167,80 +4241,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(
-		description = "Creates a new message board section in the parent section."
-	)
-	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
-			@GraphQLName("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
-			@GraphQLName("messageBoardSection") MessageBoardSection
-				messageBoardSection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.
-					postMessageBoardSectionMessageBoardSection(
-						parentMessageBoardSectionId, messageBoardSection));
-	}
-
-	@GraphQLField
-	public Response createSiteMessageBoardSectionsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.
-					postSiteMessageBoardSectionsPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							messageBoardSectionResource, filterString),
-						_sortsBiFunction.apply(
-							messageBoardSectionResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new message board section.")
-	public MessageBoardSection createSiteMessageBoardSection(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("messageBoardSection") MessageBoardSection
-				messageBoardSection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.postSiteMessageBoardSection(
-					Long.valueOf(siteKey), messageBoardSection));
-	}
-
-	@GraphQLField
-	public Response createSiteMessageBoardSectionBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateSiteMessageBoardSectionPermissionsPage(
@@ -4263,29 +4263,69 @@ public class Mutation {
 			});
 	}
 
+	@GraphQLField(
+		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThread(
+					messageBoardThreadId));
+
+		return true;
+	}
+
 	@GraphQLField
-	public Response createMessageBoardSectionMessageBoardThreadsPageExportBatch(
-			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public Response deleteMessageBoardThreadBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.
-					postMessageBoardSectionMessageBoardThreadsPageExportBatch(
-						messageBoardSectionId, search,
-						_filterBiFunction.apply(
-							messageBoardThreadResource, filterString),
-						_sortsBiFunction.apply(
-							messageBoardThreadResource, sortsString),
-						callbackURL, contentType, fieldNames));
+				messageBoardThreadResource.deleteMessageBoardThreadBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public MessageBoardThread patchMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.patchMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
 	}
 
 	@GraphQLField(
@@ -4322,42 +4362,48 @@ public class Mutation {
 						messageBoardSectionId, callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThread(
-					messageBoardThreadId));
-
-		return true;
-	}
-
 	@GraphQLField
-	public Response deleteMessageBoardThreadBatch(
+	public Response createMessageBoardSectionMessageBoardThreadsPageExportBatch(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThreadBatch(
-					callbackURL, object));
+				messageBoardThreadResource.
+					postMessageBoardSectionMessageBoardThreadsPageExportBatch(
+						messageBoardSectionId, search,
+						_filterBiFunction.apply(
+							messageBoardThreadResource, filterString),
+						_sortsBiFunction.apply(
+							messageBoardThreadResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public MessageBoardThread patchMessageBoardThread(
+	@GraphQLField(description = "Creates the message board thread's rating.")
+	public Rating createMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postMessageBoardThreadMyRating(
+					messageBoardThreadId, rating));
+	}
+
+	@GraphQLField(description = "Creates a new message board thread.")
+	public MessageBoardThread createSiteMessageBoardThread(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
 		throws Exception {
@@ -4366,8 +4412,48 @@ public class Mutation {
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.patchMessageBoardThread(
-					messageBoardThreadId, messageBoardThread));
+				messageBoardThreadResource.postSiteMessageBoardThread(
+					Long.valueOf(siteKey), messageBoardThread));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardThreadBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardThreadsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.
+					postSiteMessageBoardThreadsPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							messageBoardThreadResource, filterString),
+						_sortsBiFunction.apply(
+							messageBoardThreadResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -4399,37 +4485,6 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThreadBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
-					messageBoardThreadId));
-
-		return true;
-	}
-
-	@GraphQLField(description = "Creates the message board thread's rating.")
-	public Rating createMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postMessageBoardThreadMyRating(
-					messageBoardThreadId, rating));
 	}
 
 	@GraphQLField(
@@ -4501,61 +4556,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createSiteMessageBoardThreadsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.
-					postSiteMessageBoardThreadsPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							messageBoardThreadResource, filterString),
-						_sortsBiFunction.apply(
-							messageBoardThreadResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new message board thread.")
-	public MessageBoardThread createSiteMessageBoardThread(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("messageBoardThread") MessageBoardThread
-				messageBoardThread)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postSiteMessageBoardThread(
-					Long.valueOf(siteKey), messageBoardThread));
-	}
-
-	@GraphQLField
-	public Response createSiteMessageBoardThreadBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateSiteMessageBoardThreadPermissionsPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -4608,6 +4608,71 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the navigation menu by external reference code and returns a 204 if the operation succeeds"
+	)
+	public boolean deleteSiteNavigationMenuByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.
+					deleteSiteNavigationMenuByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Creates a new navigation menu.")
+	public NavigationMenu createSiteNavigationMenu(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("navigationMenu") NavigationMenu navigationMenu)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.postSiteNavigationMenu(
+					Long.valueOf(siteKey), navigationMenu));
+	}
+
+	@GraphQLField
+	public Response createSiteNavigationMenuBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.postSiteNavigationMenuBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteNavigationMenusPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.postSiteNavigationMenusPageExportBatch(
+					Long.valueOf(siteKey), callbackURL, contentType,
+					fieldNames));
+	}
+
+	@GraphQLField(
 		description = "Replaces the navigation menu with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
 	public NavigationMenu updateNavigationMenu(
@@ -4657,71 +4722,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response createSiteNavigationMenusPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_navigationMenuResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			navigationMenuResource ->
-				navigationMenuResource.postSiteNavigationMenusPageExportBatch(
-					Long.valueOf(siteKey), callbackURL, contentType,
-					fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new navigation menu.")
-	public NavigationMenu createSiteNavigationMenu(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("navigationMenu") NavigationMenu navigationMenu)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_navigationMenuResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			navigationMenuResource ->
-				navigationMenuResource.postSiteNavigationMenu(
-					Long.valueOf(siteKey), navigationMenu));
-	}
-
-	@GraphQLField
-	public Response createSiteNavigationMenuBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_navigationMenuResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			navigationMenuResource ->
-				navigationMenuResource.postSiteNavigationMenuBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the navigation menu by external reference code and returns a 204 if the operation succeeds"
-	)
-	public boolean deleteSiteNavigationMenuByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_navigationMenuResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			navigationMenuResource ->
-				navigationMenuResource.
-					deleteSiteNavigationMenuByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
-	}
-
 	@GraphQLField(
 		description = "Updates the navigation menu with the given external reference code or creates it if it does not exist."
 	)
@@ -4762,28 +4762,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response createSiteSitePagesPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sitePageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sitePageResource ->
-				sitePageResource.postSiteSitePagesPageExportBatch(
-					Long.valueOf(siteKey), search,
-					_filterBiFunction.apply(sitePageResource, filterString),
-					_sortsBiFunction.apply(sitePageResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
 	@GraphQLField(description = "Adds a new site page")
 	public SitePage createSiteSitePage(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -4812,8 +4790,8 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createAssetLibraryStructuredContentsPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+	public Response createSiteSitePagesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
@@ -4823,17 +4801,117 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource ->
+				sitePageResource.postSiteSitePagesPageExportBatch(
+					Long.valueOf(siteKey), search,
+					_filterBiFunction.apply(sitePageResource, filterString),
+					_sortsBiFunction.apply(sitePageResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Deletes the asset library's structured content by external reference code."
+	)
+	public boolean deleteAssetLibraryStructuredContentByExternalReferenceCode(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.
-					postAssetLibraryStructuredContentsPageExportBatch(
-						Long.valueOf(assetLibraryId), search,
-						_filterBiFunction.apply(
-							structuredContentResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentResource, sortsString),
-						callbackURL, contentType, fieldNames));
+					deleteAssetLibraryStructuredContentByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the site's structured content by external reference code."
+	)
+	public boolean deleteSiteStructuredContentByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					deleteSiteStructuredContentByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the structured content and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContent(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteStructuredContentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentMyRating(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.patchStructuredContent(
+					structuredContentId, structuredContent));
 	}
 
 	@GraphQLField
@@ -4867,23 +4945,186 @@ public class Mutation {
 						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the asset library's structured content by external reference code."
-	)
-	public boolean deleteAssetLibraryStructuredContentByExternalReferenceCode(
+	@GraphQLField
+	public Response createAssetLibraryStructuredContentsPageExportBatch(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.
-					deleteAssetLibraryStructuredContentByExternalReferenceCode(
-						Long.valueOf(assetLibraryId), externalReferenceCode));
+					postAssetLibraryStructuredContentsPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							structuredContentResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
 
-		return true;
+	@GraphQLField
+	public Response createContentStructureStructuredContentsPageExportBatch(
+			@GraphQLName("contentStructureId") Long contentStructureId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postContentStructureStructuredContentsPageExportBatch(
+						contentStructureId, search,
+						_filterBiFunction.apply(
+							structuredContentResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Creates a new structured content.")
+	public StructuredContent createSiteStructuredContent(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postSiteStructuredContent(
+					Long.valueOf(siteKey), structuredContent));
+	}
+
+	@GraphQLField
+	public Response createSiteStructuredContentBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postSiteStructuredContentBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteStructuredContentsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postSiteStructuredContentsPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							structuredContentResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Creates a new structured content in the folder."
+	)
+	public StructuredContent createStructuredContentFolderStructuredContent(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						structuredContentFolderId, structuredContent));
+	}
+
+	@GraphQLField
+	public Response createStructuredContentFolderStructuredContentBatch(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContentBatch(
+						structuredContentFolderId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response
+			createStructuredContentFolderStructuredContentsPageExportBatch(
+				@GraphQLName("structuredContentFolderId") Long
+					structuredContentFolderId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("sort") String sortsString,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContentsPageExportBatch(
+						structuredContentFolderId, search,
+						_filterBiFunction.apply(
+							structuredContentResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Create a rating for the structured content.")
+	public Rating createStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postStructuredContentMyRating(
+					structuredContentId, rating));
 	}
 
 	@GraphQLField(
@@ -4930,105 +5171,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response createContentStructureStructuredContentsPageExportBatch(
-			@GraphQLName("contentStructureId") Long contentStructureId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postContentStructureStructuredContentsPageExportBatch(
-						contentStructureId, search,
-						_filterBiFunction.apply(
-							structuredContentResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public Response createSiteStructuredContentsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postSiteStructuredContentsPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							structuredContentResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new structured content.")
-	public StructuredContent createSiteStructuredContent(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("structuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postSiteStructuredContent(
-					Long.valueOf(siteKey), structuredContent));
-	}
-
-	@GraphQLField
-	public Response createSiteStructuredContentBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postSiteStructuredContentBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the site's structured content by external reference code."
-	)
-	public boolean deleteSiteStructuredContentByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					deleteSiteStructuredContentByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
-	}
-
 	@GraphQLField(
 		description = "Updates the site's structured content with the given external reference code, or creates it if it not exists."
 	)
@@ -5071,117 +5213,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response
-			createStructuredContentFolderStructuredContentsPageExportBatch(
-				@GraphQLName("structuredContentFolderId") Long
-					structuredContentFolderId,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("sort") String sortsString,
-				@GraphQLName("callbackURL") String callbackURL,
-				@GraphQLName("contentType") String contentType,
-				@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postStructuredContentFolderStructuredContentsPageExportBatch(
-						structuredContentFolderId, search,
-						_filterBiFunction.apply(
-							structuredContentResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(
-		description = "Creates a new structured content in the folder."
-	)
-	public StructuredContent createStructuredContentFolderStructuredContent(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("structuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postStructuredContentFolderStructuredContent(
-						structuredContentFolderId, structuredContent));
-	}
-
-	@GraphQLField
-	public Response createStructuredContentFolderStructuredContentBatch(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.
-					postStructuredContentFolderStructuredContentBatch(
-						structuredContentFolderId, callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the structured content and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContent(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteStructuredContentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContentBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public StructuredContent patchStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("structuredContent") StructuredContent
-				structuredContent)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.patchStructuredContent(
-					structuredContentId, structuredContent));
-	}
-
 	@GraphQLField(
 		description = "Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
@@ -5211,37 +5242,6 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.putStructuredContentBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContentMyRating(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField(description = "Create a rating for the structured content.")
-	public Rating createStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postStructuredContentMyRating(
-					structuredContentId, rating));
 	}
 
 	@GraphQLField(
@@ -5312,63 +5312,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	public Response createAssetLibraryStructuredContentFoldersPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postAssetLibraryStructuredContentFoldersPageExportBatch(
-						Long.valueOf(assetLibraryId), search,
-						_filterBiFunction.apply(
-							structuredContentFolderResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentFolderResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public StructuredContentFolder createAssetLibraryStructuredContentFolder(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("structuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postAssetLibraryStructuredContentFolder(
-						Long.valueOf(assetLibraryId), structuredContentFolder));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryStructuredContentFolderBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postAssetLibraryStructuredContentFolderBatch(
-						Long.valueOf(assetLibraryId), callbackURL, object));
-	}
-
 	@GraphQLField(
 		description = "Deletes the asset library's structured content folder by external reference code."
 	)
@@ -5390,106 +5333,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(
-		description = "Updates the asset library's structured content folder with the given external reference code, or creates it if it not exists."
-	)
-	public StructuredContentFolder
-			updateAssetLibraryStructuredContentFolderByExternalReferenceCode(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("structuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					putAssetLibraryStructuredContentFolderByExternalReferenceCode(
-						Long.valueOf(assetLibraryId), externalReferenceCode,
-						structuredContentFolder));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateAssetLibraryStructuredContentFolderPermissionsPage(
-				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource -> {
-				Page paginationPage =
-					structuredContentFolderResource.
-						putAssetLibraryStructuredContentFolderPermissionsPage(
-							Long.valueOf(assetLibraryId), permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public Response createSiteStructuredContentFoldersPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postSiteStructuredContentFoldersPageExportBatch(
-						Long.valueOf(siteKey), search,
-						_filterBiFunction.apply(
-							structuredContentFolderResource, filterString),
-						_sortsBiFunction.apply(
-							structuredContentFolderResource, sortsString),
-						callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField(description = "Creates a new structured content folder.")
-	public StructuredContentFolder createSiteStructuredContentFolder(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("structuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.postSiteStructuredContentFolder(
-					Long.valueOf(siteKey), structuredContentFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteStructuredContentFolderBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postSiteStructuredContentFolderBatch(
-						Long.valueOf(siteKey), callbackURL, object));
-	}
-
 	@GraphQLField
 	public boolean deleteSiteStructuredContentFolderByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -5505,92 +5348,6 @@ public class Mutation {
 						Long.valueOf(siteKey), externalReferenceCode));
 
 		return true;
-	}
-
-	@GraphQLField
-	public StructuredContentFolder
-			updateSiteStructuredContentFolderByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("structuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					putSiteStructuredContentFolderByExternalReferenceCode(
-						Long.valueOf(siteKey), externalReferenceCode,
-						structuredContentFolder));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteStructuredContentFolderPermissionsPage(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource -> {
-				Page paginationPage =
-					structuredContentFolderResource.
-						putSiteStructuredContentFolderPermissionsPage(
-							Long.valueOf(siteKey), permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateStructuredContentFolderPermissionsPage(
-				@GraphQLName("structuredContentFolderId") Long
-					structuredContentFolderId,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource -> {
-				Page paginationPage =
-					structuredContentFolderResource.
-						putStructuredContentFolderPermissionsPage(
-							structuredContentFolderId, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField(
-		description = "Creates a new structured content folder in an existing folder."
-	)
-	public StructuredContentFolder
-			createStructuredContentFolderStructuredContentFolder(
-				@GraphQLName("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
-				@GraphQLName("structuredContentFolder") StructuredContentFolder
-					structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					postStructuredContentFolderStructuredContentFolder(
-						parentStructuredContentFolderId,
-						structuredContentFolder));
 	}
 
 	@GraphQLField(
@@ -5643,6 +5400,226 @@ public class Mutation {
 					structuredContentFolderId, structuredContentFolder));
 	}
 
+	@GraphQLField
+	public StructuredContentFolder createAssetLibraryStructuredContentFolder(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postAssetLibraryStructuredContentFolder(
+						Long.valueOf(assetLibraryId), structuredContentFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryStructuredContentFolderBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postAssetLibraryStructuredContentFolderBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryStructuredContentFoldersPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postAssetLibraryStructuredContentFoldersPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							structuredContentFolderResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentFolderResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(description = "Creates a new structured content folder.")
+	public StructuredContentFolder createSiteStructuredContentFolder(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.postSiteStructuredContentFolder(
+					Long.valueOf(siteKey), structuredContentFolder));
+	}
+
+	@GraphQLField
+	public Response createSiteStructuredContentFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postSiteStructuredContentFolderBatch(
+						Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteStructuredContentFoldersPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postSiteStructuredContentFoldersPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							structuredContentFolderResource, filterString),
+						_sortsBiFunction.apply(
+							structuredContentFolderResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Creates a new structured content folder in an existing folder."
+	)
+	public StructuredContentFolder
+			createStructuredContentFolderStructuredContentFolder(
+				@GraphQLName("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
+				@GraphQLName("structuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						parentStructuredContentFolderId,
+						structuredContentFolder));
+	}
+
+	@GraphQLField(
+		description = "Updates the asset library's structured content folder with the given external reference code, or creates it if it not exists."
+	)
+	public StructuredContentFolder
+			updateAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("structuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode,
+						structuredContentFolder));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateAssetLibraryStructuredContentFolderPermissionsPage(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource -> {
+				Page paginationPage =
+					structuredContentFolderResource.
+						putAssetLibraryStructuredContentFolderPermissionsPage(
+							Long.valueOf(assetLibraryId), permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	public StructuredContentFolder
+			updateSiteStructuredContentFolderByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("structuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putSiteStructuredContentFolderByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode,
+						structuredContentFolder));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteStructuredContentFolderPermissionsPage(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource -> {
+				Page paginationPage =
+					structuredContentFolderResource.
+						putSiteStructuredContentFolderPermissionsPage(
+							Long.valueOf(siteKey), permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
@@ -5673,6 +5650,29 @@ public class Mutation {
 			structuredContentFolderResource ->
 				structuredContentFolderResource.putStructuredContentFolderBatch(
 					callbackURL, object));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateStructuredContentFolderPermissionsPage(
+				@GraphQLName("structuredContentFolderId") Long
+					structuredContentFolderId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource -> {
+				Page paginationPage =
+					structuredContentFolderResource.
+						putStructuredContentFolderPermissionsPage(
+							structuredContentFolderId, permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -5709,26 +5709,49 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	public Response createSiteWikiNodesPageExportBatch(
+	@GraphQLField(
+		description = "Deletes the site's wiki node by external reference code."
+	)
+	public boolean deleteSiteWikiNodeByExternalReferenceCode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource ->
+				wikiNodeResource.deleteSiteWikiNodeByExternalReferenceCode(
+					Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWikiNodeBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_wikiNodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiNodeResource ->
-				wikiNodeResource.postSiteWikiNodesPageExportBatch(
-					Long.valueOf(siteKey), search,
-					_filterBiFunction.apply(wikiNodeResource, filterString),
-					_sortsBiFunction.apply(wikiNodeResource, sortsString),
-					callbackURL, contentType, fieldNames));
+			wikiNodeResource -> wikiNodeResource.deleteWikiNodeBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(description = "Creates a new wiki node")
@@ -5758,22 +5781,26 @@ public class Mutation {
 				Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the site's wiki node by external reference code."
-	)
-	public boolean deleteSiteWikiNodeByExternalReferenceCode(
+	@GraphQLField
+	public Response createSiteWikiNodesPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_wikiNodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiNodeResource ->
-				wikiNodeResource.deleteSiteWikiNodeByExternalReferenceCode(
-					Long.valueOf(siteKey), externalReferenceCode));
-
-		return true;
+				wikiNodeResource.postSiteWikiNodesPageExportBatch(
+					Long.valueOf(siteKey), search,
+					_filterBiFunction.apply(wikiNodeResource, filterString),
+					_sortsBiFunction.apply(wikiNodeResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(
@@ -5812,33 +5839,6 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
-	}
-
-	@GraphQLField(
-		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteWikiNodeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.deleteWikiNodeBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -5937,42 +5937,30 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates the wiki page with the given external reference code, or creates it if it not exists."
+		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
 	)
-	public WikiPage updateSiteWikiPageByExternalReferenceCode(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("wikiPage") WikiPage wikiPage)
+	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiPageResource ->
-				wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-					Long.valueOf(siteKey), externalReferenceCode, wikiPage));
+			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
+
+		return true;
 	}
 
 	@GraphQLField
-	public Response createWikiNodeWikiPagesPageExportBatch(
-			@GraphQLName("wikiNodeId") Long wikiNodeId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public Response deleteWikiPageBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiPageResource ->
-				wikiPageResource.postWikiNodeWikiPagesPageExportBatch(
-					wikiNodeId, search,
-					_filterBiFunction.apply(wikiPageResource, filterString),
-					_sortsBiFunction.apply(wikiPageResource, sortsString),
-					callbackURL, contentType, fieldNames));
+			wikiPageResource -> wikiPageResource.deleteWikiPageBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(description = "Creates a new wiki page")
@@ -6002,6 +5990,28 @@ public class Mutation {
 				wikiNodeId, callbackURL, object));
 	}
 
+	@GraphQLField
+	public Response createWikiNodeWikiPagesPageExportBatch(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource ->
+				wikiPageResource.postWikiNodeWikiPagesPageExportBatch(
+					wikiNodeId, search,
+					_filterBiFunction.apply(wikiPageResource, filterString),
+					_sortsBiFunction.apply(wikiPageResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
 	@GraphQLField(
 		description = "Creates a child wiki page of the parent wiki page."
 	)
@@ -6018,30 +6028,20 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
+		description = "Updates the wiki page with the given external reference code, or creates it if it not exists."
 	)
-	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_wikiPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteWikiPageBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+	public WikiPage updateSiteWikiPageByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.deleteWikiPageBatch(
-				callbackURL, object));
+			wikiPageResource ->
+				wikiPageResource.putSiteWikiPageByExternalReferenceCode(
+					Long.valueOf(siteKey), externalReferenceCode, wikiPage));
 	}
 
 	@GraphQLField(
@@ -6176,23 +6176,6 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
-	public Response createWikiPageWikiPageAttachmentsPageExportBatch(
-			@GraphQLName("wikiPageId") Long wikiPageId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wikiPageAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageAttachmentResource ->
-				wikiPageAttachmentResource.
-					postWikiPageWikiPageAttachmentsPageExportBatch(
-						wikiPageId, callbackURL, contentType, fieldNames));
-	}
-
 	@GraphQLField(
 		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
 	)
@@ -6227,6 +6210,23 @@ public class Mutation {
 			wikiPageAttachmentResource ->
 				wikiPageAttachmentResource.postWikiPageWikiPageAttachmentBatch(
 					wikiPageId, multipartBody, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createWikiPageWikiPageAttachmentsPageExportBatch(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.
+					postWikiPageWikiPageAttachmentsPageExportBatch(
+						wikiPageId, callbackURL, contentType, fieldNames));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

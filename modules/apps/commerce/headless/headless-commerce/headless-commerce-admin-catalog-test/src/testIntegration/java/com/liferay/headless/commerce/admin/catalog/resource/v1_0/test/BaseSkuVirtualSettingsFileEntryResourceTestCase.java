@@ -395,6 +395,226 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage()
+		throws Exception {
+
+		Long id =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
+		Long irrelevantId =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId();
+
+		Page<SkuVirtualSettingsFileEntry> page =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantId != null) {
+			SkuVirtualSettingsFileEntry irrelevantSkuVirtualSettingsFileEntry =
+				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+					irrelevantId,
+					randomIrrelevantSkuVirtualSettingsFileEntry());
+
+			page =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						irrelevantId, Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantSkuVirtualSettingsFileEntry,
+				(List<SkuVirtualSettingsFileEntry>)page.getItems());
+			assertValid(
+				page,
+				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+					irrelevantId));
+		}
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		page =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			skuVirtualSettingsFileEntry1,
+			(List<SkuVirtualSettingsFileEntry>)page.getItems());
+		assertContains(
+			skuVirtualSettingsFileEntry2,
+			(List<SkuVirtualSettingsFileEntry>)page.getItems());
+		assertValid(
+			page,
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+				id));
+
+		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
+			skuVirtualSettingsFileEntry1.getId());
+
+		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
+			skuVirtualSettingsFileEntry2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPageWithPagination()
+		throws Exception {
+
+		Long id =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
+
+		Page<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntryPage =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			skuVirtualSettingsFileEntryPage.getTotalCount());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry3 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<SkuVirtualSettingsFileEntry> page1 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				skuVirtualSettingsFileEntry1,
+				(List<SkuVirtualSettingsFileEntry>)page1.getItems());
+
+			Page<SkuVirtualSettingsFileEntry> page2 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				skuVirtualSettingsFileEntry2,
+				(List<SkuVirtualSettingsFileEntry>)page2.getItems());
+
+			Page<SkuVirtualSettingsFileEntry> page3 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				skuVirtualSettingsFileEntry3,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+		}
+		else {
+			Page<SkuVirtualSettingsFileEntry> page1 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries1 =
+				(List<SkuVirtualSettingsFileEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				skuVirtualSettingsFileEntries1.toString(), totalCount + 2,
+				skuVirtualSettingsFileEntries1.size());
+
+			Page<SkuVirtualSettingsFileEntry> page2 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries2 =
+				(List<SkuVirtualSettingsFileEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				skuVirtualSettingsFileEntries2.toString(), 1,
+				skuVirtualSettingsFileEntries2.size());
+
+			Page<SkuVirtualSettingsFileEntry> page3 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				skuVirtualSettingsFileEntry1,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+			assertContains(
+				skuVirtualSettingsFileEntry2,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+			assertContains(
+				skuVirtualSettingsFileEntry3,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+		}
+	}
+
+	protected SkuVirtualSettingsFileEntry
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				Long id,
+				SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetSkuVirtualSettingsFileEntry() throws Exception {
 		SkuVirtualSettingsFileEntry postSkuVirtualSettingsFileEntry =
 			testGetSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
@@ -754,226 +974,6 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage()
-		throws Exception {
-
-		Long id =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
-		Long irrelevantId =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId();
-
-		Page<SkuVirtualSettingsFileEntry> page =
-			skuVirtualSettingsFileEntryResource.
-				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-					id, Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantId != null) {
-			SkuVirtualSettingsFileEntry irrelevantSkuVirtualSettingsFileEntry =
-				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-					irrelevantId,
-					randomIrrelevantSkuVirtualSettingsFileEntry());
-
-			page =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						irrelevantId, Pagination.of(1, (int)totalCount + 1));
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantSkuVirtualSettingsFileEntry,
-				(List<SkuVirtualSettingsFileEntry>)page.getItems());
-			assertValid(
-				page,
-				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
-					irrelevantId));
-		}
-
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				id, randomSkuVirtualSettingsFileEntry());
-
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				id, randomSkuVirtualSettingsFileEntry());
-
-		page =
-			skuVirtualSettingsFileEntryResource.
-				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-					id, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			skuVirtualSettingsFileEntry1,
-			(List<SkuVirtualSettingsFileEntry>)page.getItems());
-		assertContains(
-			skuVirtualSettingsFileEntry2,
-			(List<SkuVirtualSettingsFileEntry>)page.getItems());
-		assertValid(
-			page,
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
-				id));
-
-		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
-			skuVirtualSettingsFileEntry1.getId());
-
-		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
-			skuVirtualSettingsFileEntry2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
-				Long id)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPageWithPagination()
-		throws Exception {
-
-		Long id =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
-
-		Page<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntryPage =
-			skuVirtualSettingsFileEntryResource.
-				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-					id, null);
-
-		int totalCount = GetterUtil.getInteger(
-			skuVirtualSettingsFileEntryPage.getTotalCount());
-
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				id, randomSkuVirtualSettingsFileEntry());
-
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				id, randomSkuVirtualSettingsFileEntry());
-
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry3 =
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				id, randomSkuVirtualSettingsFileEntry());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<SkuVirtualSettingsFileEntry> page1 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				skuVirtualSettingsFileEntry1,
-				(List<SkuVirtualSettingsFileEntry>)page1.getItems());
-
-			Page<SkuVirtualSettingsFileEntry> page2 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				skuVirtualSettingsFileEntry2,
-				(List<SkuVirtualSettingsFileEntry>)page2.getItems());
-
-			Page<SkuVirtualSettingsFileEntry> page3 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
-
-			assertContains(
-				skuVirtualSettingsFileEntry3,
-				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
-		}
-		else {
-			Page<SkuVirtualSettingsFileEntry> page1 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id, Pagination.of(1, totalCount + 2));
-
-			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries1 =
-				(List<SkuVirtualSettingsFileEntry>)page1.getItems();
-
-			Assert.assertEquals(
-				skuVirtualSettingsFileEntries1.toString(), totalCount + 2,
-				skuVirtualSettingsFileEntries1.size());
-
-			Page<SkuVirtualSettingsFileEntry> page2 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries2 =
-				(List<SkuVirtualSettingsFileEntry>)page2.getItems();
-
-			Assert.assertEquals(
-				skuVirtualSettingsFileEntries2.toString(), 1,
-				skuVirtualSettingsFileEntries2.size());
-
-			Page<SkuVirtualSettingsFileEntry> page3 =
-				skuVirtualSettingsFileEntryResource.
-					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
-						id, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(
-				skuVirtualSettingsFileEntry1,
-				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
-			assertContains(
-				skuVirtualSettingsFileEntry2,
-				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
-			assertContains(
-				skuVirtualSettingsFileEntry3,
-				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
-		}
-	}
-
-	protected SkuVirtualSettingsFileEntry
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
-				Long id,
-				SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId()
-		throws Exception {
-
-		return null;
 	}
 
 	@Test

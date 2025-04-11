@@ -283,11 +283,6 @@ public abstract class BasePinResourceTestCase {
 	}
 
 	@Test
-	public void testPatchPin() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodePinsPage()
 		throws Exception {
 
@@ -609,24 +604,6 @@ public abstract class BasePinResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodePin() throws Exception {
-		Pin randomPin = randomPin();
-
-		Pin postPin = testPostProductByExternalReferenceCodePin_addPin(
-			randomPin);
-
-		assertEquals(randomPin, postPin);
-		assertValid(postPin);
-	}
-
-	protected Pin testPostProductByExternalReferenceCodePin_addPin(Pin pin)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdPinsPage() throws Exception {
 		Long id = testGetProductIdPinsPage_getId();
 		Long irrelevantId = testGetProductIdPinsPage_getIrrelevantId();
@@ -894,6 +871,29 @@ public abstract class BasePinResourceTestCase {
 
 	protected Long testGetProductIdPinsPage_getIrrelevantId() throws Exception {
 		return null;
+	}
+
+	@Test
+	public void testPatchPin() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodePin() throws Exception {
+		Pin randomPin = randomPin();
+
+		Pin postPin = testPostProductByExternalReferenceCodePin_addPin(
+			randomPin);
+
+		assertEquals(randomPin, postPin);
+		assertValid(postPin);
+	}
+
+	protected Pin testPostProductByExternalReferenceCodePin_addPin(Pin pin)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

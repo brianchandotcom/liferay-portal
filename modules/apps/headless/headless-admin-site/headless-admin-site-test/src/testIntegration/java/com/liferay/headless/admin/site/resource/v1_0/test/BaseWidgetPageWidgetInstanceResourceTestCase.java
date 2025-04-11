@@ -202,6 +202,13 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage()
 		throws Exception {
 
@@ -330,38 +337,6 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance()
-		throws Exception {
-
-		WidgetPageWidgetInstance randomWidgetPageWidgetInstance =
-			randomWidgetPageWidgetInstance();
-
-		WidgetPageWidgetInstance postWidgetPageWidgetInstance =
-			testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance_addWidgetPageWidgetInstance(
-				randomWidgetPageWidgetInstance);
-
-		assertEquals(
-			randomWidgetPageWidgetInstance, postWidgetPageWidgetInstance);
-		assertValid(postWidgetPageWidgetInstance);
-	}
-
-	protected WidgetPageWidgetInstance
-			testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance_addWidgetPageWidgetInstance(
-				WidgetPageWidgetInstance widgetPageWidgetInstance)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode()
 		throws Exception {
 
@@ -387,6 +362,31 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance()
+		throws Exception {
+
+		WidgetPageWidgetInstance randomWidgetPageWidgetInstance =
+			randomWidgetPageWidgetInstance();
+
+		WidgetPageWidgetInstance postWidgetPageWidgetInstance =
+			testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance_addWidgetPageWidgetInstance(
+				randomWidgetPageWidgetInstance);
+
+		assertEquals(
+			randomWidgetPageWidgetInstance, postWidgetPageWidgetInstance);
+		assertValid(postWidgetPageWidgetInstance);
+	}
+
+	protected WidgetPageWidgetInstance
+			testPostSiteSiteByExternalReferenceCodeSitePageWidgetInstance_addWidgetPageWidgetInstance(
+				WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

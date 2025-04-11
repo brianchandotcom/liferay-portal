@@ -55,12 +55,58 @@ public interface KnowledgeBaseFolderResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
 			Long knowledgeBaseFolderId)
 		throws Exception;
 
+	public Page<KnowledgeBaseFolder>
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+				Long parentKnowledgeBaseFolderId, Pagination pagination)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getKnowledgeBaseFolderPermissionsPage(
+				Long knowledgeBaseFolderId, String roleNames)
+		throws Exception;
+
+	public KnowledgeBaseFolder
+			getSiteKnowledgeBaseFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteKnowledgeBaseFolderPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+			Long parentKnowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	public Response postSiteKnowledgeBaseFolderBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postSiteKnowledgeBaseFoldersPageExportBatch(
+			Long siteId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
@@ -72,61 +118,15 @@ public interface KnowledgeBaseFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getKnowledgeBaseFolderPermissionsPage(
-				Long knowledgeBaseFolderId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putKnowledgeBaseFolderPermissionsPage(
 				Long knowledgeBaseFolderId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<KnowledgeBaseFolder>
-			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long parentKnowledgeBaseFolderId, Pagination pagination)
-		throws Exception;
-
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			Long parentKnowledgeBaseFolderId,
-			KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
-			Long siteId, Pagination pagination)
-		throws Exception;
-
-	public Response postSiteKnowledgeBaseFoldersPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
-			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Response postSiteKnowledgeBaseFolderBatch(
-			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public KnowledgeBaseFolder
-			getSiteKnowledgeBaseFolderByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public KnowledgeBaseFolder
 			putSiteKnowledgeBaseFolderByExternalReferenceCode(
 				Long siteId, String externalReferenceCode,
 				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteKnowledgeBaseFolderPermissionsPage(
-				Long siteId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

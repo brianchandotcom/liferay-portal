@@ -48,13 +48,41 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentMetadataSetResource {
 
+	public void deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public void deleteDocumentMetadataSet(Long documentMetadataSetId)
+		throws Exception;
+
+	public Response deleteDocumentMetadataSetBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteSiteDocumentMetadataSetByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public DocumentMetadataSet
+			getAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
 	public Page<DocumentMetadataSet> getAssetLibraryDocumentMetadataSetsPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public Response postAssetLibraryDocumentMetadataSetsPageExportBatch(
-			Long assetLibraryId, String callbackURL, String contentType,
-			String fieldNames)
+	public DocumentMetadataSet getDocumentMetadataSet(
+			Long documentMetadataSetId)
+		throws Exception;
+
+	public DocumentMetadataSet
+			getSiteDocumentMetadataSetByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<DocumentMetadataSet> getSiteDocumentMetadataSetsPage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public DocumentMetadataSet postAssetLibraryDocumentMetadataSet(
@@ -65,38 +93,8 @@ public interface DocumentMetadataSetResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAssetLibraryDocumentMetadataSetByExternalReferenceCode(
-			Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public DocumentMetadataSet
-			getAssetLibraryDocumentMetadataSetByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public DocumentMetadataSet
-			putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode,
-				DocumentMetadataSet documentMetadataSet)
-		throws Exception;
-
-	public void deleteDocumentMetadataSet(Long documentMetadataSetId)
-		throws Exception;
-
-	public Response deleteDocumentMetadataSetBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public DocumentMetadataSet getDocumentMetadataSet(
-			Long documentMetadataSetId)
-		throws Exception;
-
-	public Page<DocumentMetadataSet> getSiteDocumentMetadataSetsPage(
-			Long siteId, Pagination pagination)
-		throws Exception;
-
-	public Response postSiteDocumentMetadataSetsPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
+	public Response postAssetLibraryDocumentMetadataSetsPageExportBatch(
+			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
@@ -108,13 +106,15 @@ public interface DocumentMetadataSetResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSiteDocumentMetadataSetByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteDocumentMetadataSetsPageExportBatch(
+			Long siteId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public DocumentMetadataSet
-			getSiteDocumentMetadataSetByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
+			putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				DocumentMetadataSet documentMetadataSet)
 		throws Exception;
 
 	public DocumentMetadataSet

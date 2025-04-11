@@ -47,12 +47,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AttachmentResource {
 
-	public Page<Attachment> getCartByExternalReferenceCodeAttachmentsPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Attachment postCartByExternalReferenceCodeAttachmentByBase64(
-			String externalReferenceCode, AttachmentBase64 attachmentBase64)
+	public void deleteCartAttachment(Long attachmentId, Long cartId)
 		throws Exception;
 
 	public void
@@ -65,16 +60,21 @@ public interface AttachmentResource {
 			Long cartId, Pagination pagination)
 		throws Exception;
 
-	public Response postCartAttachmentsPageExportBatch(
-			Long cartId, String callbackURL, String contentType,
-			String fieldNames)
+	public Page<Attachment> getCartByExternalReferenceCodeAttachmentsPage(
+			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public Attachment postCartAttachmentByBase64(
 			Long cartId, AttachmentBase64 attachmentBase64)
 		throws Exception;
 
-	public void deleteCartAttachment(Long attachmentId, Long cartId)
+	public Response postCartAttachmentsPageExportBatch(
+			Long cartId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public Attachment postCartByExternalReferenceCodeAttachmentByBase64(
+			String externalReferenceCode, AttachmentBase64 attachmentBase64)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -222,6 +222,220 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOptionCategory() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory optionCategory =
+			testDeleteOptionCategory_addOptionCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionCategoryResource.deleteOptionCategoryHttpResponse(
+				optionCategory.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory.getId()));
+		assertHttpResponseStatusCode(
+			404, optionCategoryResource.getOptionCategoryHttpResponse(0L));
+	}
+
+	protected OptionCategory testDeleteOptionCategory_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOptionCategory() throws Exception {
+
+		// No namespace
+
+		OptionCategory optionCategory1 =
+			testGraphQLDeleteOptionCategory_addOptionCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOptionCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionCategory1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOptionCategory"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"optionCategory",
+					new HashMap<String, Object>() {
+						{
+							put("id", optionCategory1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		OptionCategory optionCategory2 =
+			testGraphQLDeleteOptionCategory_addOptionCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteOptionCategory",
+							new HashMap<String, Object>() {
+								{
+									put("id", optionCategory2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteOptionCategory"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"optionCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionCategory2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
+	}
+
+	@Test
+	public void testDeleteOptionCategoryBatch() throws Exception {
+		OptionCategory optionCategory1 =
+			testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", null, optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory1.getId()));
+
+		OptionCategory optionCategory2 =
+			testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+
+		optionCategory1 = testDeleteOptionCategoryBatch_addOptionCategory();
+		optionCategory2 = testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(),
+			optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(),
+			optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+	}
+
+	protected OptionCategory testDeleteOptionCategoryBatch_addOptionCategory()
+		throws Exception {
+
+		return testDeleteOptionCategory_addOptionCategory();
+	}
+
+	protected void testDeleteOptionCategoryBatch_deleteOptionCategory(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			optionCategoryResource.deleteOptionCategoryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory optionCategory =
+			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionCategoryResource.
+				deleteOptionCategoryByExternalReferenceCodeHttpResponse(
+					optionCategory.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.
+				getOptionCategoryByExternalReferenceCodeHttpResponse(
+					optionCategory.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.
+				getOptionCategoryByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected OptionCategory
+			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOptionCategoriesPage() throws Exception {
 		Page<OptionCategory> page =
 			optionCategoryResource.getOptionCategoriesPage(
@@ -669,473 +883,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostOptionCategory() throws Exception {
-		OptionCategory randomOptionCategory = randomOptionCategory();
-
-		OptionCategory postOptionCategory =
-			testPostOptionCategory_addOptionCategory(randomOptionCategory);
-
-		assertEquals(randomOptionCategory, postOptionCategory);
-		assertValid(postOptionCategory);
-	}
-
-	protected OptionCategory testPostOptionCategory_addOptionCategory(
-			OptionCategory optionCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOptionCategoryByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OptionCategory optionCategory =
-			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			optionCategoryResource.
-				deleteOptionCategoryByExternalReferenceCodeHttpResponse(
-					optionCategory.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.
-				getOptionCategoryByExternalReferenceCodeHttpResponse(
-					optionCategory.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.
-				getOptionCategoryByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected OptionCategory
-			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOptionCategoryByExternalReferenceCode()
-		throws Exception {
-
-		OptionCategory postOptionCategory =
-			testGetOptionCategoryByExternalReferenceCode_addOptionCategory();
-
-		OptionCategory getOptionCategory =
-			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
-				postOptionCategory.getExternalReferenceCode());
-
-		assertEquals(postOptionCategory, getOptionCategory);
-		assertValid(getOptionCategory);
-	}
-
-	protected OptionCategory
-			testGetOptionCategoryByExternalReferenceCode_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOptionCategoryByExternalReferenceCode()
-		throws Exception {
-
-		OptionCategory optionCategory =
-			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				optionCategory,
-				OptionCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"optionCategoryByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												optionCategory.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/optionCategoryByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				optionCategory,
-				OptionCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"optionCategoryByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													optionCategory.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/optionCategoryByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOptionCategoryByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"optionCategoryByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"optionCategoryByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OptionCategory
-			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory()
-		throws Exception {
-
-		return testGraphQLOptionCategory_addOptionCategory();
-	}
-
-	@Test
-	public void testPatchOptionCategoryByExternalReferenceCode()
-		throws Exception {
-
-		OptionCategory postOptionCategory =
-			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory();
-
-		OptionCategory randomPatchOptionCategory = randomPatchOptionCategory();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OptionCategory patchOptionCategory =
-			optionCategoryResource.patchOptionCategoryByExternalReferenceCode(
-				postOptionCategory.getExternalReferenceCode(),
-				randomPatchOptionCategory);
-
-		OptionCategory expectedPatchOptionCategory = postOptionCategory.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOptionCategory, expectedPatchOptionCategory);
-
-		OptionCategory getOptionCategory =
-			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
-				patchOptionCategory.getExternalReferenceCode());
-
-		assertEquals(expectedPatchOptionCategory, getOptionCategory);
-		assertValid(getOptionCategory);
-	}
-
-	protected OptionCategory
-			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutOptionCategoryByExternalReferenceCode()
-		throws Exception {
-
-		OptionCategory postOptionCategory =
-			testPutOptionCategoryByExternalReferenceCode_addOptionCategory();
-
-		OptionCategory randomOptionCategory = randomOptionCategory();
-
-		OptionCategory putOptionCategory =
-			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
-				postOptionCategory.getExternalReferenceCode(),
-				randomOptionCategory);
-
-		assertEquals(randomOptionCategory, putOptionCategory);
-		assertValid(putOptionCategory);
-
-		OptionCategory getOptionCategory =
-			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
-				putOptionCategory.getExternalReferenceCode());
-
-		assertEquals(randomOptionCategory, getOptionCategory);
-		assertValid(getOptionCategory);
-
-		OptionCategory newOptionCategory =
-			testPutOptionCategoryByExternalReferenceCode_createOptionCategory();
-
-		putOptionCategory =
-			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
-				newOptionCategory.getExternalReferenceCode(),
-				newOptionCategory);
-
-		assertEquals(newOptionCategory, putOptionCategory);
-		assertValid(putOptionCategory);
-
-		getOptionCategory =
-			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
-				putOptionCategory.getExternalReferenceCode());
-
-		assertEquals(newOptionCategory, getOptionCategory);
-
-		Assert.assertEquals(
-			newOptionCategory.getExternalReferenceCode(),
-			putOptionCategory.getExternalReferenceCode());
-	}
-
-	protected OptionCategory
-			testPutOptionCategoryByExternalReferenceCode_createOptionCategory()
-		throws Exception {
-
-		return randomOptionCategory();
-	}
-
-	protected OptionCategory
-			testPutOptionCategoryByExternalReferenceCode_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOptionCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OptionCategory optionCategory =
-			testDeleteOptionCategory_addOptionCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			optionCategoryResource.deleteOptionCategoryHttpResponse(
-				optionCategory.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory.getId()));
-		assertHttpResponseStatusCode(
-			404, optionCategoryResource.getOptionCategoryHttpResponse(0L));
-	}
-
-	protected OptionCategory testDeleteOptionCategory_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOptionCategory() throws Exception {
-
-		// No namespace
-
-		OptionCategory optionCategory1 =
-			testGraphQLDeleteOptionCategory_addOptionCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOptionCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", optionCategory1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOptionCategory"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"optionCategory",
-					new HashMap<String, Object>() {
-						{
-							put("id", optionCategory1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		OptionCategory optionCategory2 =
-			testGraphQLDeleteOptionCategory_addOptionCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteOptionCategory",
-							new HashMap<String, Object>() {
-								{
-									put("id", optionCategory2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteOptionCategory"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminCatalog_v1_0",
-					new GraphQLField(
-						"optionCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", optionCategory2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
-		throws Exception {
-
-		return testGraphQLOptionCategory_addOptionCategory();
-	}
-
-	@Test
-	public void testDeleteOptionCategoryBatch() throws Exception {
-		OptionCategory optionCategory1 =
-			testDeleteOptionCategoryBatch_addOptionCategory();
-
-		testDeleteOptionCategoryBatch_deleteOptionCategory(
-			"COMPLETED", null, optionCategory1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory1.getId()));
-
-		OptionCategory optionCategory2 =
-			testDeleteOptionCategoryBatch_addOptionCategory();
-
-		testDeleteOptionCategoryBatch_deleteOptionCategory(
-			"COMPLETED", optionCategory2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory2.getId()));
-
-		optionCategory1 = testDeleteOptionCategoryBatch_addOptionCategory();
-		optionCategory2 = testDeleteOptionCategoryBatch_addOptionCategory();
-
-		testDeleteOptionCategoryBatch_deleteOptionCategory(
-			"COMPLETED", optionCategory2.getExternalReferenceCode(),
-			optionCategory1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory2.getId()));
-
-		testDeleteOptionCategoryBatch_deleteOptionCategory(
-			"COMPLETED", optionCategory2.getExternalReferenceCode(),
-			optionCategory1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory2.getId()));
-	}
-
-	protected OptionCategory testDeleteOptionCategoryBatch_addOptionCategory()
-		throws Exception {
-
-		return testDeleteOptionCategory_addOptionCategory();
-	}
-
-	protected void testDeleteOptionCategoryBatch_deleteOptionCategory(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			optionCategoryResource.deleteOptionCategoryBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetOptionCategory() throws Exception {
 		OptionCategory postOptionCategory =
 			testGetOptionCategory_addOptionCategory();
@@ -1441,8 +1188,261 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testGetOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode());
+
+		assertEquals(postOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+	}
+
+	protected OptionCategory
+			testGetOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory optionCategory =
+			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				optionCategory,
+				OptionCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"optionCategoryByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												optionCategory.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/optionCategoryByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				optionCategory,
+				OptionCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"optionCategoryByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													optionCategory.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/optionCategoryByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionCategoryByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"optionCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OptionCategory
+			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
+	}
+
+	@Test
 	public void testPatchOptionCategory() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory randomPatchOptionCategory = randomPatchOptionCategory();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory patchOptionCategory =
+			optionCategoryResource.patchOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode(),
+				randomPatchOptionCategory);
+
+		OptionCategory expectedPatchOptionCategory = postOptionCategory.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOptionCategory, expectedPatchOptionCategory);
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				patchOptionCategory.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+	}
+
+	protected OptionCategory
+			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostOptionCategory() throws Exception {
+		OptionCategory randomOptionCategory = randomOptionCategory();
+
+		OptionCategory postOptionCategory =
+			testPostOptionCategory_addOptionCategory(randomOptionCategory);
+
+		assertEquals(randomOptionCategory, postOptionCategory);
+		assertValid(postOptionCategory);
+	}
+
+	protected OptionCategory testPostOptionCategory_addOptionCategory(
+			OptionCategory optionCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testPutOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory randomOptionCategory = randomOptionCategory();
+
+		OptionCategory putOptionCategory =
+			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode(),
+				randomOptionCategory);
+
+		assertEquals(randomOptionCategory, putOptionCategory);
+		assertValid(putOptionCategory);
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				putOptionCategory.getExternalReferenceCode());
+
+		assertEquals(randomOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+
+		OptionCategory newOptionCategory =
+			testPutOptionCategoryByExternalReferenceCode_createOptionCategory();
+
+		putOptionCategory =
+			optionCategoryResource.putOptionCategoryByExternalReferenceCode(
+				newOptionCategory.getExternalReferenceCode(),
+				newOptionCategory);
+
+		assertEquals(newOptionCategory, putOptionCategory);
+		assertValid(putOptionCategory);
+
+		getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				putOptionCategory.getExternalReferenceCode());
+
+		assertEquals(newOptionCategory, getOptionCategory);
+
+		Assert.assertEquals(
+			newOptionCategory.getExternalReferenceCode(),
+			putOptionCategory.getExternalReferenceCode());
+	}
+
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_createOptionCategory()
+		throws Exception {
+
+		return randomOptionCategory();
+	}
+
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

@@ -44,18 +44,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlanResource {
 
-	public Page<Plan> getPlansPage(Pagination pagination) throws Exception;
-
-	public Plan postPlan(Plan plan) throws Exception;
-
-	public Response getPlanTemplate(String internalClassNameKey)
-		throws Exception;
-
 	public void deletePlan(Long planId) throws Exception;
 
 	public Plan getPlan(Long planId) throws Exception;
 
+	public Response getPlanTemplate(String internalClassNameKey)
+		throws Exception;
+
+	public Page<Plan> getPlansPage(Pagination pagination) throws Exception;
+
 	public Plan patchPlan(Long planId, Plan plan) throws Exception;
+
+	public Plan postPlan(Plan plan) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

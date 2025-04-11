@@ -58,17 +58,17 @@ public interface DiscountProductGroupResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountProductGroup
-			postDiscountByExternalReferenceCodeDiscountProductGroup(
-				String externalReferenceCode,
-				DiscountProductGroup discountProductGroup)
-		throws Exception;
-
 	public Page<DiscountProductGroup> getDiscountIdDiscountProductGroupsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DiscountProductGroup
+			postDiscountByExternalReferenceCodeDiscountProductGroup(
+				String externalReferenceCode,
+				DiscountProductGroup discountProductGroup)
 		throws Exception;
 
 	public DiscountProductGroup postDiscountIdDiscountProductGroup(

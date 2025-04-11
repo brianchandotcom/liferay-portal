@@ -46,18 +46,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RelatedProductResource {
 
+	public Response deleteRelatedProduct(Long id) throws Exception;
+
+	public Response deleteRelatedProductBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<RelatedProduct>
 			getProductByExternalReferenceCodeRelatedProductsPage(
 				String externalReferenceCode, String type,
 				Pagination pagination)
 		throws Exception;
 
-	public RelatedProduct postProductByExternalReferenceCodeRelatedProduct(
-			String externalReferenceCode, RelatedProduct relatedProduct)
-		throws Exception;
-
 	public Page<RelatedProduct> getProductIdRelatedProductsPage(
 			Long id, String type, Pagination pagination)
+		throws Exception;
+
+	public RelatedProduct getRelatedProduct(Long id) throws Exception;
+
+	public RelatedProduct postProductByExternalReferenceCodeRelatedProduct(
+			String externalReferenceCode, RelatedProduct relatedProduct)
 		throws Exception;
 
 	public RelatedProduct postProductIdRelatedProduct(
@@ -67,13 +74,6 @@ public interface RelatedProductResource {
 	public Response postProductIdRelatedProductBatch(
 			String callbackURL, Object object)
 		throws Exception;
-
-	public Response deleteRelatedProduct(Long id) throws Exception;
-
-	public Response deleteRelatedProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public RelatedProduct getRelatedProduct(Long id) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

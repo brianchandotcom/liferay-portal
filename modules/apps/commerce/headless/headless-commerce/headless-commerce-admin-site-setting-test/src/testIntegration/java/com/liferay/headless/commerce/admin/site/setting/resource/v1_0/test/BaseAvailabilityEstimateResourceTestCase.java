@@ -680,11 +680,6 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 	}
 
 	@Test
-	public void testPutAvailabilityEstimate() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage()
 		throws Exception {
 
@@ -923,6 +918,11 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAvailabilityEstimate() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected AvailabilityEstimate

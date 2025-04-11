@@ -215,130 +215,6 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlansPage() throws Exception {
-		Page<Plan> page = planResource.getPlansPage(Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
-
-		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
-
-		page = planResource.getPlansPage(Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(plan1, (List<Plan>)page.getItems());
-		assertContains(plan2, (List<Plan>)page.getItems());
-		assertValid(page, testGetPlansPage_getExpectedActions());
-
-		planResource.deletePlan(plan1.getId());
-
-		planResource.deletePlan(plan2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetPlansPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetPlansPageWithPagination() throws Exception {
-		Page<Plan> planPage = planResource.getPlansPage(null);
-
-		int totalCount = GetterUtil.getInteger(planPage.getTotalCount());
-
-		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
-
-		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
-
-		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Plan> page1 = planResource.getPlansPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(plan1, (List<Plan>)page1.getItems());
-
-			Page<Plan> page2 = planResource.getPlansPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(plan2, (List<Plan>)page2.getItems());
-
-			Page<Plan> page3 = planResource.getPlansPage(
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit));
-
-			assertContains(plan3, (List<Plan>)page3.getItems());
-		}
-		else {
-			Page<Plan> page1 = planResource.getPlansPage(
-				Pagination.of(1, totalCount + 2));
-
-			List<Plan> plans1 = (List<Plan>)page1.getItems();
-
-			Assert.assertEquals(
-				plans1.toString(), totalCount + 2, plans1.size());
-
-			Page<Plan> page2 = planResource.getPlansPage(
-				Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Plan> plans2 = (List<Plan>)page2.getItems();
-
-			Assert.assertEquals(plans2.toString(), 1, plans2.size());
-
-			Page<Plan> page3 = planResource.getPlansPage(
-				Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(plan1, (List<Plan>)page3.getItems());
-			assertContains(plan2, (List<Plan>)page3.getItems());
-			assertContains(plan3, (List<Plan>)page3.getItems());
-		}
-	}
-
-	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostPlan() throws Exception {
-		Plan randomPlan = randomPlan();
-
-		Plan postPlan = testPostPlan_addPlan(randomPlan);
-
-		assertEquals(randomPlan, postPlan);
-		assertValid(postPlan);
-	}
-
-	protected Plan testPostPlan_addPlan(Plan plan) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetPlanTemplate() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeletePlan() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Plan plan = testDeletePlan_addPlan();
@@ -558,6 +434,115 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlanTemplate() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetPlansPage() throws Exception {
+		Page<Plan> page = planResource.getPlansPage(Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
+
+		page = planResource.getPlansPage(Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(plan1, (List<Plan>)page.getItems());
+		assertContains(plan2, (List<Plan>)page.getItems());
+		assertValid(page, testGetPlansPage_getExpectedActions());
+
+		planResource.deletePlan(plan1.getId());
+
+		planResource.deletePlan(plan2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetPlansPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetPlansPageWithPagination() throws Exception {
+		Page<Plan> planPage = planResource.getPlansPage(null);
+
+		int totalCount = GetterUtil.getInteger(planPage.getTotalCount());
+
+		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Plan> page1 = planResource.getPlansPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(plan1, (List<Plan>)page1.getItems());
+
+			Page<Plan> page2 = planResource.getPlansPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(plan2, (List<Plan>)page2.getItems());
+
+			Page<Plan> page3 = planResource.getPlansPage(
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
+
+			assertContains(plan3, (List<Plan>)page3.getItems());
+		}
+		else {
+			Page<Plan> page1 = planResource.getPlansPage(
+				Pagination.of(1, totalCount + 2));
+
+			List<Plan> plans1 = (List<Plan>)page1.getItems();
+
+			Assert.assertEquals(
+				plans1.toString(), totalCount + 2, plans1.size());
+
+			Page<Plan> page2 = planResource.getPlansPage(
+				Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Plan> plans2 = (List<Plan>)page2.getItems();
+
+			Assert.assertEquals(plans2.toString(), 1, plans2.size());
+
+			Page<Plan> page3 = planResource.getPlansPage(
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(plan1, (List<Plan>)page3.getItems());
+			assertContains(plan2, (List<Plan>)page3.getItems());
+			assertContains(plan3, (List<Plan>)page3.getItems());
+		}
+	}
+
+	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchPlan() throws Exception {
 		Plan postPlan = testPatchPlan_addPlan();
 
@@ -578,6 +563,21 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	protected Plan testPatchPlan_addPlan() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostPlan() throws Exception {
+		Plan randomPlan = randomPlan();
+
+		Plan postPlan = testPostPlan_addPlan(randomPlan);
+
+		assertEquals(randomPlan, postPlan);
+		assertValid(postPlan);
+	}
+
+	protected Plan testPostPlan_addPlan(Plan plan) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

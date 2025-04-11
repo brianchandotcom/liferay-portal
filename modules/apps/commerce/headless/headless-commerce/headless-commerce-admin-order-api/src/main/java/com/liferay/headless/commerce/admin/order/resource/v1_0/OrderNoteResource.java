@@ -46,38 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderNoteResource {
 
-	public Response deleteOrderNoteByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderNote getOrderNoteByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchOrderNoteByExternalReferenceCode(
-			String externalReferenceCode, OrderNote orderNote)
-		throws Exception;
-
 	public Response deleteOrderNote(Long id) throws Exception;
 
 	public Response deleteOrderNoteBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public OrderNote getOrderNote(Long id) throws Exception;
-
-	public Response patchOrderNote(Long id, OrderNote orderNote)
+	public Response deleteOrderNoteByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<OrderNote> getOrderByExternalReferenceCodeOrderNotesPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderNote postOrderByExternalReferenceCodeOrderNote(
+	public Page<OrderNote> getOrderIdOrderNotesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public OrderNote getOrderNote(Long id) throws Exception;
+
+	public OrderNote getOrderNoteByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchOrderNote(Long id, OrderNote orderNote)
+		throws Exception;
+
+	public Response patchOrderNoteByExternalReferenceCode(
 			String externalReferenceCode, OrderNote orderNote)
 		throws Exception;
 
-	public Page<OrderNote> getOrderIdOrderNotesPage(
-			Long id, Pagination pagination)
+	public OrderNote postOrderByExternalReferenceCodeOrderNote(
+			String externalReferenceCode, OrderNote orderNote)
 		throws Exception;
 
 	public OrderNote postOrderIdOrderNote(Long id, OrderNote orderNote)

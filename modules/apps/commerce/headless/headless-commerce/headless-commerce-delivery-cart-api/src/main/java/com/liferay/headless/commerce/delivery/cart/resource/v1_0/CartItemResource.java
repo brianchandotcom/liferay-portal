@@ -46,30 +46,42 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartItemResource {
 
+	public void deleteCartItem(Long cartItemId) throws Exception;
+
+	public Response deleteCartItemBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteCartItemByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, String search, Long skuId,
+			Pagination pagination)
+		throws Exception;
+
+	public CartItem getCartItem(Long cartItemId) throws Exception;
+
 	public CartItem getCartItemByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Page<CartItem> getCartItemsPage(
+			Long cartId, String search, Long skuId, Pagination pagination)
+		throws Exception;
+
+	public CartItem patchCartItem(Long cartItemId, CartItem cartItem)
 		throws Exception;
 
 	public CartItem patchCartItemByExternalReferenceCode(
 			String externalReferenceCode, CartItem cartItem)
 		throws Exception;
 
-	public CartItem putCartItemByExternalReferenceCode(
+	public CartItem postCartByExternalReferenceCodeItem(
 			String externalReferenceCode, CartItem cartItem)
 		throws Exception;
 
-	public void deleteCartItem(Long cartItemId) throws Exception;
-
-	public Response deleteCartItemBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public CartItem getCartItem(Long cartItemId) throws Exception;
-
-	public CartItem patchCartItem(Long cartItemId, CartItem cartItem)
+	public CartItem postCartItem(Long cartId, CartItem cartItem)
 		throws Exception;
 
 	public CartItem putCartItem(Long cartItemId, CartItem cartItem)
@@ -78,20 +90,8 @@ public interface CartItemResource {
 	public Response putCartItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
-			String externalReferenceCode, String search, Long skuId,
-			Pagination pagination)
-		throws Exception;
-
-	public CartItem postCartByExternalReferenceCodeItem(
+	public CartItem putCartItemByExternalReferenceCode(
 			String externalReferenceCode, CartItem cartItem)
-		throws Exception;
-
-	public Page<CartItem> getCartItemsPage(
-			Long cartId, String search, Long skuId, Pagination pagination)
-		throws Exception;
-
-	public CartItem postCartItem(Long cartId, CartItem cartItem)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

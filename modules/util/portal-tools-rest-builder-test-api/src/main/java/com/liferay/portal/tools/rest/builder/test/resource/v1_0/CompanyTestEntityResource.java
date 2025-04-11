@@ -52,6 +52,22 @@ public interface CompanyTestEntityResource {
 	public Page<CompanyTestEntity> getCompanyTestEntitiesPage()
 		throws Exception;
 
+	public CompanyTestEntity getCompanyTestEntity(Long companyTestEntityId)
+		throws Exception;
+
+	public CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getCompanyTestEntityPermissionsPage(
+				Long companyTestEntityId, String roleNames)
+		throws Exception;
+
+	public CompanyTestEntity patchCompanyTestEntity(
+			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
+		throws Exception;
+
 	public Response postCompanyTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
@@ -64,21 +80,6 @@ public interface CompanyTestEntityResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
-			String externalReferenceCode, CompanyTestEntity companyTestEntity)
-		throws Exception;
-
-	public CompanyTestEntity getCompanyTestEntity(Long companyTestEntityId)
-		throws Exception;
-
-	public CompanyTestEntity patchCompanyTestEntity(
-			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
-		throws Exception;
-
 	public CompanyTestEntity putCompanyTestEntity(
 			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
 		throws Exception;
@@ -86,9 +87,8 @@ public interface CompanyTestEntityResource {
 	public Response putCompanyTestEntityBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getCompanyTestEntityPermissionsPage(
-				Long companyTestEntityId, String roleNames)
+	public CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
+			String externalReferenceCode, CompanyTestEntity companyTestEntity)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

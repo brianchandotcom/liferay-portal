@@ -73,34 +73,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryKeywords(aggregation: ___, assetLibraryId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public KeywordPage assetLibraryKeywords(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> new KeywordPage(
-				keywordResource.getAssetLibraryKeywordsPage(
-					Long.valueOf(assetLibraryId), search,
-					_aggregationBiFunction.apply(keywordResource, aggregations),
-					_filterBiFunction.apply(keywordResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(keywordResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryKeywordByExternalReferenceCode(assetLibraryId: ___, externalReferenceCode: ___){actions, assetLibraries, assetLibraryKey, creator, dateCreated, dateModified, externalReferenceCode, id, keywordUsageCount, name, siteExternalReferenceCode, siteId, subscribed}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -136,6 +108,49 @@ public class Query {
 			keywordResource -> new KeywordPage(
 				keywordResource.getAssetLibraryKeywordPermissionsPage(
 					Long.valueOf(assetLibraryId), roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryKeywords(aggregation: ___, assetLibraryId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public KeywordPage assetLibraryKeywords(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> new KeywordPage(
+				keywordResource.getAssetLibraryKeywordsPage(
+					Long.valueOf(assetLibraryId), search,
+					_aggregationBiFunction.apply(keywordResource, aggregations),
+					_filterBiFunction.apply(keywordResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(keywordResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keyword(keywordId: ___){actions, assetLibraries, assetLibraryKey, creator, dateCreated, dateModified, externalReferenceCode, id, keywordUsageCount, name, siteExternalReferenceCode, siteId, subscribed}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves a keyword.")
+	public Keyword keyword(@GraphQLName("keywordId") Long keywordId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.getKeyword(keywordId));
 	}
 
 	/**
@@ -190,51 +205,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keyword(keywordId: ___){actions, assetLibraries, assetLibraryKey, creator, dateCreated, dateModified, externalReferenceCode, id, keywordUsageCount, name, siteExternalReferenceCode, siteId, subscribed}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(description = "Retrieves a keyword.")
-	public Keyword keyword(@GraphQLName("keywordId") Long keywordId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.getKeyword(keywordId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteKeywords(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted."
-	)
-	public KeywordPage siteKeywords(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> new KeywordPage(
-				keywordResource.getSiteKeywordsPage(
-					Long.valueOf(siteKey), search,
-					_aggregationBiFunction.apply(keywordResource, aggregations),
-					_filterBiFunction.apply(keywordResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(keywordResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___){actions, assetLibraries, assetLibraryKey, creator, dateCreated, dateModified, externalReferenceCode, id, keywordUsageCount, name, siteExternalReferenceCode, siteId, subscribed}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -275,6 +245,36 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteKeywords(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted."
+	)
+	public KeywordPage siteKeywords(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> new KeywordPage(
+				keywordResource.getSiteKeywordsPage(
+					Long.valueOf(siteKey), search,
+					_aggregationBiFunction.apply(keywordResource, aggregations),
+					_filterBiFunction.apply(keywordResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(keywordResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategoriesRanked(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -290,41 +290,6 @@ public class Query {
 			taxonomyCategoryResource -> new TaxonomyCategoryPage(
 				taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategoryTaxonomyCategories(aggregation: ___, filter: ___, page: ___, pageSize: ___, parentTaxonomyCategoryId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted."
-	)
-	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategories(
-			@GraphQLName("parentTaxonomyCategoryId") String
-				parentTaxonomyCategoryId,
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyCategoryResource -> new TaxonomyCategoryPage(
-				taxonomyCategoryResource.
-					getTaxonomyCategoryTaxonomyCategoriesPage(
-						parentTaxonomyCategoryId, search,
-						_aggregationBiFunction.apply(
-							taxonomyCategoryResource, aggregations),
-						_filterBiFunction.apply(
-							taxonomyCategoryResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							taxonomyCategoryResource, sortsString))));
 	}
 
 	/**
@@ -362,6 +327,41 @@ public class Query {
 			taxonomyCategoryResource -> new TaxonomyCategoryPage(
 				taxonomyCategoryResource.getTaxonomyCategoryPermissionsPage(
 					taxonomyCategoryId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategoryTaxonomyCategories(aggregation: ___, filter: ___, page: ___, pageSize: ___, parentTaxonomyCategoryId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted."
+	)
+	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategories(
+			@GraphQLName("parentTaxonomyCategoryId") String
+				parentTaxonomyCategoryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource -> new TaxonomyCategoryPage(
+				taxonomyCategoryResource.
+					getTaxonomyCategoryTaxonomyCategoriesPage(
+						parentTaxonomyCategoryId, search,
+						_aggregationBiFunction.apply(
+							taxonomyCategoryResource, aggregations),
+						_filterBiFunction.apply(
+							taxonomyCategoryResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							taxonomyCategoryResource, sortsString))));
 	}
 
 	/**

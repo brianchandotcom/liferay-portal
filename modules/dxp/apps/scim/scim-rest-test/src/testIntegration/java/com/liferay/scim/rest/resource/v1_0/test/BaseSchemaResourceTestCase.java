@@ -183,12 +183,12 @@ public abstract class BaseSchemaResourceTestCase {
 	}
 
 	@Test
-	public void testGetV2Schemas() throws Exception {
+	public void testGetV2SchemaById() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetV2SchemaById() throws Exception {
+	public void testGetV2Schemas() throws Exception {
 		Assert.assertTrue(false);
 	}
 

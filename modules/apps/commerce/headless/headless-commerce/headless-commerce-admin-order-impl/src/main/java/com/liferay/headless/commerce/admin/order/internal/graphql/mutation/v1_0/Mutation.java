@@ -204,22 +204,60 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createOrdersPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public Response deleteOrder(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.deleteOrder(id));
+	}
+
+	@GraphQLField
+	public Response deleteOrderBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderResource -> orderResource.postOrdersPageExportBatch(
-				search, _filterBiFunction.apply(orderResource, filterString),
-				_sortsBiFunction.apply(orderResource, sortsString), callbackURL,
-				contentType, fieldNames));
+			orderResource -> orderResource.deleteOrderBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response deleteOrderByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.deleteOrderByExternalReferenceCode(
+				externalReferenceCode));
+	}
+
+	@GraphQLField
+	public Order patchOrder(
+			@GraphQLName("id") Long id, @GraphQLName("order") Order order)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.patchOrder(id, order));
+	}
+
+	@GraphQLField
+	public Order patchOrderByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("order") Order order)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.patchOrderByExternalReferenceCode(
+				externalReferenceCode, order));
 	}
 
 	@GraphQLField
@@ -245,28 +283,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteOrderByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+	public Response createOrdersPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderResource -> orderResource.deleteOrderByExternalReferenceCode(
-				externalReferenceCode));
-	}
-
-	@GraphQLField
-	public Order patchOrderByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("order") Order order)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.patchOrderByExternalReferenceCode(
-				externalReferenceCode, order));
+			orderResource -> orderResource.postOrdersPageExportBatch(
+				search, _filterBiFunction.apply(orderResource, filterString),
+				_sortsBiFunction.apply(orderResource, sortsString), callbackURL,
+				contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -280,100 +312,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			orderResource -> orderResource.putOrderByExternalReferenceCode(
 				externalReferenceCode, order));
-	}
-
-	@GraphQLField
-	public Response deleteOrder(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.deleteOrder(id));
-	}
-
-	@GraphQLField
-	public Response deleteOrderBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.deleteOrderBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
-	public Order patchOrder(
-			@GraphQLName("id") Long id, @GraphQLName("order") Order order)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderResource -> orderResource.patchOrder(id, order));
-	}
-
-	@GraphQLField
-	public Response createOrderItemsPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource ->
-				orderItemResource.postOrderItemsPageExportBatch(
-					search,
-					_filterBiFunction.apply(orderItemResource, filterString),
-					_sortsBiFunction.apply(orderItemResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public Response deleteOrderItemByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource ->
-				orderItemResource.deleteOrderItemByExternalReferenceCode(
-					externalReferenceCode));
-	}
-
-	@GraphQLField
-	public Response patchOrderItemByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("orderItem") OrderItem orderItem)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource ->
-				orderItemResource.patchOrderItemByExternalReferenceCode(
-					externalReferenceCode, orderItem));
-	}
-
-	@GraphQLField
-	public OrderItem updateOrderItemByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("orderItem") OrderItem orderItem)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource ->
-				orderItemResource.putOrderItemByExternalReferenceCode(
-					externalReferenceCode, orderItem));
 	}
 
 	@GraphQLField
@@ -400,6 +338,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteOrderItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderItemResource ->
+				orderItemResource.deleteOrderItemByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	@GraphQLField
 	public Response patchOrderItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderItem") OrderItem orderItem)
@@ -413,28 +364,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public OrderItem updateOrderItem(
-			@GraphQLName("id") Long id,
+	public Response patchOrderItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderItem") OrderItem orderItem)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderItemResource -> orderItemResource.putOrderItem(id, orderItem));
-	}
-
-	@GraphQLField
-	public Response updateOrderItemBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderItemResource -> orderItemResource.putOrderItemBatch(
-				callbackURL, object));
+			orderItemResource ->
+				orderItemResource.patchOrderItemByExternalReferenceCode(
+					externalReferenceCode, orderItem));
 	}
 
 	@GraphQLField
@@ -478,30 +418,63 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteOrderNoteByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+	public Response createOrderItemsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_orderNoteResourceComponentServiceObjects,
+			_orderItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderNoteResource ->
-				orderNoteResource.deleteOrderNoteByExternalReferenceCode(
-					externalReferenceCode));
+			orderItemResource ->
+				orderItemResource.postOrderItemsPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderItemResource, filterString),
+					_sortsBiFunction.apply(orderItemResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
-	public Response patchOrderNoteByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("orderNote") OrderNote orderNote)
+	public OrderItem updateOrderItem(
+			@GraphQLName("id") Long id,
+			@GraphQLName("orderItem") OrderItem orderItem)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_orderNoteResourceComponentServiceObjects,
+			_orderItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			orderNoteResource ->
-				orderNoteResource.patchOrderNoteByExternalReferenceCode(
-					externalReferenceCode, orderNote));
+			orderItemResource -> orderItemResource.putOrderItem(id, orderItem));
+	}
+
+	@GraphQLField
+	public Response updateOrderItemBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderItemResource -> orderItemResource.putOrderItemBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public OrderItem updateOrderItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderItem") OrderItem orderItem)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderItemResource ->
+				orderItemResource.putOrderItemByExternalReferenceCode(
+					externalReferenceCode, orderItem));
 	}
 
 	@GraphQLField
@@ -528,6 +501,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteOrderNoteByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderNoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderNoteResource ->
+				orderNoteResource.deleteOrderNoteByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	@GraphQLField
 	public Response patchOrderNote(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderNote") OrderNote orderNote)
@@ -538,6 +524,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			orderNoteResource -> orderNoteResource.patchOrderNote(
 				id, orderNote));
+	}
+
+	@GraphQLField
+	public Response patchOrderNoteByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderNote") OrderNote orderNote)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderNoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderNoteResource ->
+				orderNoteResource.patchOrderNoteByExternalReferenceCode(
+					externalReferenceCode, orderNote));
 	}
 
 	@GraphQLField
@@ -581,24 +581,70 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createOrderRulesPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteOrderRule(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource -> orderRuleResource.deleteOrderRule(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteOrderRuleBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource -> orderRuleResource.deleteOrderRuleBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteOrderRuleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource ->
+				orderRuleResource.deleteOrderRuleByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public OrderRule patchOrderRule(
+			@GraphQLName("id") Long id,
+			@GraphQLName("orderRule") OrderRule orderRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource -> orderRuleResource.patchOrderRule(
+				id, orderRule));
+	}
+
+	@GraphQLField
+	public OrderRule patchOrderRuleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderRule") OrderRule orderRule)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			orderRuleResource ->
-				orderRuleResource.postOrderRulesPageExportBatch(
-					search,
-					_filterBiFunction.apply(orderRuleResource, filterString),
-					_sortsBiFunction.apply(orderRuleResource, sortsString),
-					callbackURL, contentType, fieldNames));
+				orderRuleResource.patchOrderRuleByExternalReferenceCode(
+					externalReferenceCode, orderRule));
 	}
 
 	@GraphQLField
@@ -626,32 +672,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteOrderRuleByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_orderRuleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderRuleResource ->
-				orderRuleResource.deleteOrderRuleByExternalReferenceCode(
-					externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
-	public OrderRule patchOrderRuleByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("orderRule") OrderRule orderRule)
+	public Response createOrderRulesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			orderRuleResource ->
-				orderRuleResource.patchOrderRuleByExternalReferenceCode(
-					externalReferenceCode, orderRule));
+				orderRuleResource.postOrderRulesPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderRuleResource, filterString),
+					_sortsBiFunction.apply(orderRuleResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -666,44 +704,6 @@ public class Mutation {
 			orderRuleResource ->
 				orderRuleResource.putOrderRuleByExternalReferenceCode(
 					externalReferenceCode, orderRule));
-	}
-
-	@GraphQLField
-	public boolean deleteOrderRule(@GraphQLName("id") Long id)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_orderRuleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderRuleResource -> orderRuleResource.deleteOrderRule(id));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteOrderRuleBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderRuleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderRuleResource -> orderRuleResource.deleteOrderRuleBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
-	public OrderRule patchOrderRule(
-			@GraphQLName("id") Long id,
-			@GraphQLName("orderRule") OrderRule orderRule)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderRuleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderRuleResource -> orderRuleResource.patchOrderRule(
-				id, orderRule));
 	}
 
 	@GraphQLField
@@ -1013,24 +1013,70 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createOrderTypesPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteOrderType(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.deleteOrderType(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteOrderTypeBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.deleteOrderTypeBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteOrderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.deleteOrderTypeByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public OrderType patchOrderType(
+			@GraphQLName("id") Long id,
+			@GraphQLName("orderType") OrderType orderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.patchOrderType(
+				id, orderType));
+	}
+
+	@GraphQLField
+	public OrderType patchOrderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderType") OrderType orderType)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderTypeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			orderTypeResource ->
-				orderTypeResource.postOrderTypesPageExportBatch(
-					search,
-					_filterBiFunction.apply(orderTypeResource, filterString),
-					_sortsBiFunction.apply(orderTypeResource, sortsString),
-					callbackURL, contentType, fieldNames));
+				orderTypeResource.patchOrderTypeByExternalReferenceCode(
+					externalReferenceCode, orderType));
 	}
 
 	@GraphQLField
@@ -1058,32 +1104,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteOrderTypeByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_orderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderTypeResource ->
-				orderTypeResource.deleteOrderTypeByExternalReferenceCode(
-					externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
-	public OrderType patchOrderTypeByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("orderType") OrderType orderType)
+	public Response createOrderTypesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_orderTypeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			orderTypeResource ->
-				orderTypeResource.patchOrderTypeByExternalReferenceCode(
-					externalReferenceCode, orderType));
+				orderTypeResource.postOrderTypesPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderTypeResource, filterString),
+					_sortsBiFunction.apply(orderTypeResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1098,44 +1136,6 @@ public class Mutation {
 			orderTypeResource ->
 				orderTypeResource.putOrderTypeByExternalReferenceCode(
 					externalReferenceCode, orderType));
-	}
-
-	@GraphQLField
-	public boolean deleteOrderType(@GraphQLName("id") Long id)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_orderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderTypeResource -> orderTypeResource.deleteOrderType(id));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteOrderTypeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderTypeResource -> orderTypeResource.deleteOrderTypeBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
-	public OrderType patchOrderType(
-			@GraphQLName("id") Long id,
-			@GraphQLName("orderType") OrderType orderType)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_orderTypeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			orderTypeResource -> orderTypeResource.patchOrderType(
-				id, orderType));
 	}
 
 	@GraphQLField
@@ -1243,22 +1243,63 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createTermsPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public boolean deleteTerm(@GraphQLName("id") Long id) throws Exception {
+		_applyVoidComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.deleteTerm(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteTermBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_termResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			termResource -> termResource.postTermsPageExportBatch(
-				search, _filterBiFunction.apply(termResource, filterString),
-				_sortsBiFunction.apply(termResource, sortsString), callbackURL,
-				contentType, fieldNames));
+			termResource -> termResource.deleteTermBatch(callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteTermByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.deleteTermByExternalReferenceCode(
+				externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Term patchTerm(
+			@GraphQLName("id") Long id, @GraphQLName("term") Term term)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.patchTerm(id, term));
+	}
+
+	@GraphQLField
+	public Term patchTermByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("term") Term term)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.patchTermByExternalReferenceCode(
+				externalReferenceCode, term));
 	}
 
 	@GraphQLField
@@ -1282,30 +1323,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteTermByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_termResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			termResource -> termResource.deleteTermByExternalReferenceCode(
-				externalReferenceCode));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Term patchTermByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("term") Term term)
+	public Response createTermsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_termResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			termResource -> termResource.patchTermByExternalReferenceCode(
-				externalReferenceCode, term));
+			termResource -> termResource.postTermsPageExportBatch(
+				search, _filterBiFunction.apply(termResource, filterString),
+				_sortsBiFunction.apply(termResource, sortsString), callbackURL,
+				contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1319,39 +1352,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			termResource -> termResource.putTermByExternalReferenceCode(
 				externalReferenceCode, term));
-	}
-
-	@GraphQLField
-	public boolean deleteTerm(@GraphQLName("id") Long id) throws Exception {
-		_applyVoidComponentServiceObjects(
-			_termResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			termResource -> termResource.deleteTerm(id));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteTermBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_termResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			termResource -> termResource.deleteTermBatch(callbackURL, object));
-	}
-
-	@GraphQLField
-	public Term patchTerm(
-			@GraphQLName("id") Long id, @GraphQLName("term") Term term)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_termResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			termResource -> termResource.patchTerm(id, term));
 	}
 
 	@GraphQLField

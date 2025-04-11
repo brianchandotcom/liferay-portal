@@ -224,282 +224,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ReplenishmentItem replenishmentItem =
-			testDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		assertHttpResponseStatusCode(
-			204,
-			replenishmentItemResource.
-				deleteReplenishmentItemByExternalReferenceCodeHttpResponse(
-					replenishmentItem.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCodeHttpResponse(
-					replenishmentItem.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected ReplenishmentItem
-			testDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		ReplenishmentItem postReplenishmentItem =
-			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		ReplenishmentItem getReplenishmentItem =
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCode(
-					postReplenishmentItem.getExternalReferenceCode());
-
-		assertEquals(postReplenishmentItem, getReplenishmentItem);
-		assertValid(getReplenishmentItem);
-	}
-
-	protected ReplenishmentItem
-			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		ReplenishmentItem replenishmentItem =
-			testGraphQLGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				replenishmentItem,
-				ReplenishmentItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"replenishmentItemByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												replenishmentItem.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/replenishmentItemByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminInventory_v1_0
-
-		Assert.assertTrue(
-			equals(
-				replenishmentItem,
-				ReplenishmentItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminInventory_v1_0",
-								new GraphQLField(
-									"replenishmentItemByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													replenishmentItem.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminInventory_v1_0",
-						"Object/replenishmentItemByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetReplenishmentItemByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"replenishmentItemByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminInventory_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminInventory_v1_0",
-						new GraphQLField(
-							"replenishmentItemByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ReplenishmentItem
-			testGraphQLGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
-		throws Exception {
-
-		return testGraphQLReplenishmentItem_addReplenishmentItem();
-	}
-
-	@Test
-	public void testPatchReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		ReplenishmentItem postReplenishmentItem =
-			testPatchReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		ReplenishmentItem randomPatchReplenishmentItem =
-			randomPatchReplenishmentItem();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ReplenishmentItem patchReplenishmentItem =
-			replenishmentItemResource.
-				patchReplenishmentItemByExternalReferenceCode(
-					postReplenishmentItem.getExternalReferenceCode(),
-					randomPatchReplenishmentItem);
-
-		ReplenishmentItem expectedPatchReplenishmentItem =
-			postReplenishmentItem.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchReplenishmentItem, expectedPatchReplenishmentItem);
-
-		ReplenishmentItem getReplenishmentItem =
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCode(
-					patchReplenishmentItem.getExternalReferenceCode());
-
-		assertEquals(expectedPatchReplenishmentItem, getReplenishmentItem);
-		assertValid(getReplenishmentItem);
-	}
-
-	protected ReplenishmentItem
-			testPatchReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutReplenishmentItemByExternalReferenceCode()
-		throws Exception {
-
-		ReplenishmentItem postReplenishmentItem =
-			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
-
-		ReplenishmentItem randomReplenishmentItem = randomReplenishmentItem();
-
-		ReplenishmentItem putReplenishmentItem =
-			replenishmentItemResource.
-				putReplenishmentItemByExternalReferenceCode(
-					postReplenishmentItem.getExternalReferenceCode(),
-					randomReplenishmentItem);
-
-		assertEquals(randomReplenishmentItem, putReplenishmentItem);
-		assertValid(putReplenishmentItem);
-
-		ReplenishmentItem getReplenishmentItem =
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCode(
-					putReplenishmentItem.getExternalReferenceCode());
-
-		assertEquals(randomReplenishmentItem, getReplenishmentItem);
-		assertValid(getReplenishmentItem);
-
-		ReplenishmentItem newReplenishmentItem =
-			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem();
-
-		putReplenishmentItem =
-			replenishmentItemResource.
-				putReplenishmentItemByExternalReferenceCode(
-					newReplenishmentItem.getExternalReferenceCode(),
-					newReplenishmentItem);
-
-		assertEquals(newReplenishmentItem, putReplenishmentItem);
-		assertValid(putReplenishmentItem);
-
-		getReplenishmentItem =
-			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCode(
-					putReplenishmentItem.getExternalReferenceCode());
-
-		assertEquals(newReplenishmentItem, getReplenishmentItem);
-
-		Assert.assertEquals(
-			newReplenishmentItem.getExternalReferenceCode(),
-			putReplenishmentItem.getExternalReferenceCode());
-	}
-
-	protected ReplenishmentItem
-			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem()
-		throws Exception {
-
-		return randomReplenishmentItem();
-	}
-
-	protected ReplenishmentItem
-			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteReplenishmentItem() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem =
@@ -692,6 +416,39 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ReplenishmentItem replenishmentItem =
+			testDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		assertHttpResponseStatusCode(
+			204,
+			replenishmentItemResource.
+				deleteReplenishmentItemByExternalReferenceCodeHttpResponse(
+					replenishmentItem.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCodeHttpResponse(
+					replenishmentItem.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected ReplenishmentItem
+			testDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1010,38 +767,141 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
-	public void testPatchReplenishmentItem() throws Exception {
+	public void testGetReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
 		ReplenishmentItem postReplenishmentItem =
-			testPatchReplenishmentItem_addReplenishmentItem();
-
-		ReplenishmentItem randomPatchReplenishmentItem =
-			randomPatchReplenishmentItem();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ReplenishmentItem patchReplenishmentItem =
-			replenishmentItemResource.patchReplenishmentItem(
-				postReplenishmentItem.getId(), randomPatchReplenishmentItem);
-
-		ReplenishmentItem expectedPatchReplenishmentItem =
-			postReplenishmentItem.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchReplenishmentItem, expectedPatchReplenishmentItem);
+			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
 		ReplenishmentItem getReplenishmentItem =
-			replenishmentItemResource.getReplenishmentItem(
-				patchReplenishmentItem.getId());
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					postReplenishmentItem.getExternalReferenceCode());
 
-		assertEquals(expectedPatchReplenishmentItem, getReplenishmentItem);
+		assertEquals(postReplenishmentItem, getReplenishmentItem);
 		assertValid(getReplenishmentItem);
 	}
 
 	protected ReplenishmentItem
-			testPatchReplenishmentItem_addReplenishmentItem()
+			testGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		ReplenishmentItem replenishmentItem =
+			testGraphQLGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				replenishmentItem,
+				ReplenishmentItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"replenishmentItemByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												replenishmentItem.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/replenishmentItemByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertTrue(
+			equals(
+				replenishmentItem,
+				ReplenishmentItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminInventory_v1_0",
+								new GraphQLField(
+									"replenishmentItemByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													replenishmentItem.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminInventory_v1_0",
+						"Object/replenishmentItemByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetReplenishmentItemByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"replenishmentItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"replenishmentItemByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ReplenishmentItem
+			testGraphQLGetReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
+		throws Exception {
+
+		return testGraphQLReplenishmentItem_addReplenishmentItem();
 	}
 
 	@Test
@@ -1502,6 +1362,81 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	@Test
+	public void testPatchReplenishmentItem() throws Exception {
+		ReplenishmentItem postReplenishmentItem =
+			testPatchReplenishmentItem_addReplenishmentItem();
+
+		ReplenishmentItem randomPatchReplenishmentItem =
+			randomPatchReplenishmentItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ReplenishmentItem patchReplenishmentItem =
+			replenishmentItemResource.patchReplenishmentItem(
+				postReplenishmentItem.getId(), randomPatchReplenishmentItem);
+
+		ReplenishmentItem expectedPatchReplenishmentItem =
+			postReplenishmentItem.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchReplenishmentItem, expectedPatchReplenishmentItem);
+
+		ReplenishmentItem getReplenishmentItem =
+			replenishmentItemResource.getReplenishmentItem(
+				patchReplenishmentItem.getId());
+
+		assertEquals(expectedPatchReplenishmentItem, getReplenishmentItem);
+		assertValid(getReplenishmentItem);
+	}
+
+	protected ReplenishmentItem
+			testPatchReplenishmentItem_addReplenishmentItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		ReplenishmentItem postReplenishmentItem =
+			testPatchReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		ReplenishmentItem randomPatchReplenishmentItem =
+			randomPatchReplenishmentItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ReplenishmentItem patchReplenishmentItem =
+			replenishmentItemResource.
+				patchReplenishmentItemByExternalReferenceCode(
+					postReplenishmentItem.getExternalReferenceCode(),
+					randomPatchReplenishmentItem);
+
+		ReplenishmentItem expectedPatchReplenishmentItem =
+			postReplenishmentItem.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchReplenishmentItem, expectedPatchReplenishmentItem);
+
+		ReplenishmentItem getReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					patchReplenishmentItem.getExternalReferenceCode());
+
+		assertEquals(expectedPatchReplenishmentItem, getReplenishmentItem);
+		assertValid(getReplenishmentItem);
+	}
+
+	protected ReplenishmentItem
+			testPatchReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostReplenishmentItem() throws Exception {
 		ReplenishmentItem randomReplenishmentItem = randomReplenishmentItem();
 
@@ -1515,6 +1450,71 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 	protected ReplenishmentItem testPostReplenishmentItem_addReplenishmentItem(
 			ReplenishmentItem replenishmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutReplenishmentItemByExternalReferenceCode()
+		throws Exception {
+
+		ReplenishmentItem postReplenishmentItem =
+			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
+
+		ReplenishmentItem randomReplenishmentItem = randomReplenishmentItem();
+
+		ReplenishmentItem putReplenishmentItem =
+			replenishmentItemResource.
+				putReplenishmentItemByExternalReferenceCode(
+					postReplenishmentItem.getExternalReferenceCode(),
+					randomReplenishmentItem);
+
+		assertEquals(randomReplenishmentItem, putReplenishmentItem);
+		assertValid(putReplenishmentItem);
+
+		ReplenishmentItem getReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					putReplenishmentItem.getExternalReferenceCode());
+
+		assertEquals(randomReplenishmentItem, getReplenishmentItem);
+		assertValid(getReplenishmentItem);
+
+		ReplenishmentItem newReplenishmentItem =
+			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem();
+
+		putReplenishmentItem =
+			replenishmentItemResource.
+				putReplenishmentItemByExternalReferenceCode(
+					newReplenishmentItem.getExternalReferenceCode(),
+					newReplenishmentItem);
+
+		assertEquals(newReplenishmentItem, putReplenishmentItem);
+		assertValid(putReplenishmentItem);
+
+		getReplenishmentItem =
+			replenishmentItemResource.
+				getReplenishmentItemByExternalReferenceCode(
+					putReplenishmentItem.getExternalReferenceCode());
+
+		assertEquals(newReplenishmentItem, getReplenishmentItem);
+
+		Assert.assertEquals(
+			newReplenishmentItem.getExternalReferenceCode(),
+			putReplenishmentItem.getExternalReferenceCode());
+	}
+
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_createReplenishmentItem()
+		throws Exception {
+
+		return randomReplenishmentItem();
+	}
+
+	protected ReplenishmentItem
+			testPutReplenishmentItemByExternalReferenceCode_addReplenishmentItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -187,6 +187,23 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteDisplayPageTemplate() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteDisplayPageTemplate() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteDisplayPageTemplateNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetSiteDisplayPageTemplatesPage() throws Exception {
 		Long siteId = testGetSiteDisplayPageTemplatesPage_getSiteId();
 		Long irrelevantSiteId =
@@ -537,23 +554,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	@Test
 	public void testGraphQLGetSiteDisplayPageTemplatesPage() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteDisplayPageTemplate() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplate() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteDisplayPageTemplateNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(

@@ -55,14 +55,6 @@ public interface AvailabilityEstimateResource {
 	public AvailabilityEstimate getAvailabilityEstimate(Long id)
 		throws Exception;
 
-	public Response putAvailabilityEstimate(
-			Long id, AvailabilityEstimate availabilityEstimate)
-		throws Exception;
-
-	public Response putAvailabilityEstimateBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public Page<AvailabilityEstimate>
 			getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
 				Long groupId, Pagination pagination)
@@ -71,6 +63,14 @@ public interface AvailabilityEstimateResource {
 	public AvailabilityEstimate
 			postCommerceAdminSiteSettingGroupAvailabilityEstimate(
 				Long groupId, AvailabilityEstimate availabilityEstimate)
+		throws Exception;
+
+	public Response putAvailabilityEstimate(
+			Long id, AvailabilityEstimate availabilityEstimate)
+		throws Exception;
+
+	public Response putAvailabilityEstimateBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

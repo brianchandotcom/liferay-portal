@@ -59,18 +59,18 @@ public interface ProductConfigurationListAccountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public ProductConfigurationListAccount
-			postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount(
-				String externalReferenceCode,
-				ProductConfigurationListAccount productConfigurationListAccount)
-		throws Exception;
-
 	public Page<ProductConfigurationListAccount>
 			getProductConfigurationListIdProductConfigurationListAccountsPage(
 				Long id, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ProductConfigurationListAccount
+			postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount(
+				String externalReferenceCode,
+				ProductConfigurationListAccount productConfigurationListAccount)
 		throws Exception;
 
 	public ProductConfigurationListAccount

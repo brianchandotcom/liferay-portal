@@ -44,6 +44,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageSpecificationResource {
 
+	public void deleteSiteSiteByExternalReferenceCodePageSpecification(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode)
+		throws Exception;
+
 	public Page<PageSpecification>
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage(
 				String siteExternalReferenceCode,
@@ -56,33 +61,8 @@ public interface PageSpecificationResource {
 				String masterPageExternalReferenceCode)
 		throws Exception;
 
-	public void deleteSiteSiteByExternalReferenceCodePageSpecification(
-			String siteExternalReferenceCode,
-			String pageSpecificationExternalReferenceCode)
-		throws Exception;
-
 	public PageSpecification
 			getSiteSiteByExternalReferenceCodePageSpecification(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode)
-		throws Exception;
-
-	public PageSpecification
-			patchSiteSiteByExternalReferenceCodePageSpecification(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				PageSpecification pageSpecification)
-		throws Exception;
-
-	public PageSpecification
-			putSiteSiteByExternalReferenceCodePageSpecification(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				PageSpecification pageSpecification)
-		throws Exception;
-
-	public PageSpecification
-			postSiteSiteByExternalReferenceCodePageSpecificationPublish(
 				String siteExternalReferenceCode,
 				String pageSpecificationExternalReferenceCode)
 		throws Exception;
@@ -103,6 +83,26 @@ public interface PageSpecificationResource {
 			getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage(
 				String siteExternalReferenceCode,
 				String utilityPageExternalReferenceCode)
+		throws Exception;
+
+	public PageSpecification
+			patchSiteSiteByExternalReferenceCodePageSpecification(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				PageSpecification pageSpecification)
+		throws Exception;
+
+	public PageSpecification
+			postSiteSiteByExternalReferenceCodePageSpecificationPublish(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode)
+		throws Exception;
+
+	public PageSpecification
+			putSiteSiteByExternalReferenceCodePageSpecification(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				PageSpecification pageSpecification)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

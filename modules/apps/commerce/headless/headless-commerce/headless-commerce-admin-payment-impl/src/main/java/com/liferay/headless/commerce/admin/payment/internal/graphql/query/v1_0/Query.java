@@ -47,26 +47,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payments(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payment(id: ___){actions, amount, amountFormatted, author, callbackURL, cancelURL, channelId, comment, createDate, currencyCode, currencyExternalReferenceCode, currencyId, errorMessages, externalReferenceCode, id, languageId, payload, paymentIntegrationKey, paymentIntegrationType, paymentStatus, paymentStatusStatus, reasonKey, reasonName, redirectURL, relatedItemId, relatedItemName, relatedItemNameLabel, transactionCode, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public PaymentPage payments(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
+	public Payment payment(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_paymentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			paymentResource -> new PaymentPage(
-				paymentResource.getPaymentsPage(
-					search,
-					_filterBiFunction.apply(paymentResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(paymentResource, sortsString))));
+			paymentResource -> paymentResource.getPayment(id));
 	}
 
 	/**
@@ -90,14 +78,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payment(id: ___){actions, amount, amountFormatted, author, callbackURL, cancelURL, channelId, comment, createDate, currencyCode, currencyExternalReferenceCode, currencyId, errorMessages, externalReferenceCode, id, languageId, payload, paymentIntegrationKey, paymentIntegrationType, paymentStatus, paymentStatusStatus, reasonKey, reasonName, redirectURL, relatedItemId, relatedItemName, relatedItemNameLabel, transactionCode, type, typeLabel}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {payments(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Payment payment(@GraphQLName("id") Long id) throws Exception {
+	public PaymentPage payments(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_paymentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			paymentResource -> paymentResource.getPayment(id));
+			paymentResource -> new PaymentPage(
+				paymentResource.getPaymentsPage(
+					search,
+					_filterBiFunction.apply(paymentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(paymentResource, sortsString))));
 	}
 
 	@GraphQLName("PaymentPage")

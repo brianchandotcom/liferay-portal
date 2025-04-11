@@ -219,6 +219,210 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteTaxonomyCategory() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory taxonomyCategory =
+			testDeleteTaxonomyCategory_addTaxonomyCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			taxonomyCategoryResource.deleteTaxonomyCategoryHttpResponse(
+				taxonomyCategory.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory.getId()));
+		assertHttpResponseStatusCode(
+			404, taxonomyCategoryResource.getTaxonomyCategoryHttpResponse("-"));
+	}
+
+	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteTaxonomyCategory() throws Exception {
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTaxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyCategoryId",
+									"\"" + taxonomyCategory1.getId() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteTaxonomyCategory"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"taxonomyCategory",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"taxonomyCategoryId",
+								"\"" + taxonomyCategory1.getId() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteTaxonomyCategory",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyCategoryId",
+										"\"" + taxonomyCategory2.getId() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteTaxonomyCategory"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"taxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyCategoryId",
+									"\"" + taxonomyCategory2.getId() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
+	public void testDeleteTaxonomyCategoryBatch() throws Exception {
+		TaxonomyCategory taxonomyCategory1 =
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
+
+		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			"COMPLETED", null, taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+	}
+
+	protected TaxonomyCategory
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory()
+		throws Exception {
+
+		return testDeleteTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	protected void testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			String expectedExecuteStatus, String externalReferenceCode,
+			String id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			taxonomyCategoryResource.deleteTaxonomyCategoryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory taxonomyCategory =
+			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			taxonomyCategoryResource.
+				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						taxonomyCategory),
+					taxonomyCategory.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						taxonomyCategory),
+					taxonomyCategory.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						taxonomyCategory),
+					"-"));
+	}
+
+	protected Long
+			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return taxonomyCategory.getTaxonomyVocabularyId();
+	}
+
+	protected TaxonomyCategory
+			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetTaxonomyCategoriesRankedPage() throws Exception {
 		Page<TaxonomyCategory> page =
 			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
@@ -366,6 +570,160 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testGetTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory getTaxonomyCategory =
+			taxonomyCategoryResource.getTaxonomyCategory(
+				postTaxonomyCategory.getId());
+
+		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+
+		Assert.assertNull(getTaxonomyCategory.getPermissions());
+
+		getTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.getTaxonomyCategory(
+				postTaxonomyCategory.getId());
+
+		Assert.assertNotNull(getTaxonomyCategory.getPermissions());
+	}
+
+	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetTaxonomyCategory() throws Exception {
+		TaxonomyCategory taxonomyCategory =
+			testGraphQLGetTaxonomyCategory_addTaxonomyCategory();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"taxonomyCategory",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"taxonomyCategoryId",
+											"\"" + taxonomyCategory.getId() +
+												"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/taxonomyCategory"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyCategory",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"taxonomyCategoryId",
+												"\"" +
+													taxonomyCategory.getId() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyCategory"))));
+	}
+
+	@Test
+	public void testGraphQLGetTaxonomyCategoryNotFound() throws Exception {
+		String irrelevantTaxonomyCategoryId =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"taxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyCategoryId",
+									irrelevantTaxonomyCategoryId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyCategory",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyCategoryId",
+										irrelevantTaxonomyCategoryId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
+	public void testGetTaxonomyCategoryPermissionsPage() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
+
+		Page<Permission> page =
+			taxonomyCategoryResource.getTaxonomyCategoryPermissionsPage(
+				postTaxonomyCategory.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected TaxonomyCategory
+			testGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
+		throws Exception {
+
+		return testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+			randomTaxonomyCategory());
 	}
 
 	@Test
@@ -844,468 +1202,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostTaxonomyCategoryTaxonomyCategory() throws Exception {
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		TaxonomyCategory postTaxonomyCategory =
-			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory);
-
-		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
-		assertValid(postTaxonomyCategory);
-	}
-
-	protected TaxonomyCategory
-			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
-			taxonomyCategory);
-	}
-
-	@Test
-	public void testDeleteTaxonomyCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaxonomyCategory taxonomyCategory =
-			testDeleteTaxonomyCategory_addTaxonomyCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			taxonomyCategoryResource.deleteTaxonomyCategoryHttpResponse(
-				taxonomyCategory.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
-				taxonomyCategory.getId()));
-		assertHttpResponseStatusCode(
-			404, taxonomyCategoryResource.getTaxonomyCategoryHttpResponse("-"));
-	}
-
-	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteTaxonomyCategory() throws Exception {
-
-		// No namespace
-
-		TaxonomyCategory taxonomyCategory1 =
-			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTaxonomyCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"taxonomyCategoryId",
-									"\"" + taxonomyCategory1.getId() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deleteTaxonomyCategory"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"taxonomyCategory",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"taxonomyCategoryId",
-								"\"" + taxonomyCategory1.getId() + "\"");
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		TaxonomyCategory taxonomyCategory2 =
-			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminTaxonomy_v1_0",
-						new GraphQLField(
-							"deleteTaxonomyCategory",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"taxonomyCategoryId",
-										"\"" + taxonomyCategory2.getId() +
-											"\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
-				"Object/deleteTaxonomyCategory"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminTaxonomy_v1_0",
-					new GraphQLField(
-						"taxonomyCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"taxonomyCategoryId",
-									"\"" + taxonomyCategory2.getId() + "\"");
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected TaxonomyCategory
-			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
-	}
-
-	@Test
-	public void testDeleteTaxonomyCategoryBatch() throws Exception {
-		TaxonomyCategory taxonomyCategory1 =
-			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
-
-		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
-			"COMPLETED", null, taxonomyCategory1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
-				taxonomyCategory1.getId()));
-	}
-
-	protected TaxonomyCategory
-			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory()
-		throws Exception {
-
-		return testDeleteTaxonomyCategory_addTaxonomyCategory();
-	}
-
-	protected void testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
-			String expectedExecuteStatus, String externalReferenceCode,
-			String id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			taxonomyCategoryResource.deleteTaxonomyCategoryBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testGetTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory getTaxonomyCategory =
-			taxonomyCategoryResource.getTaxonomyCategory(
-				postTaxonomyCategory.getId());
-
-		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-
-		Assert.assertNull(getTaxonomyCategory.getPermissions());
-
-		getTaxonomyCategory =
-			permissionsTaxonomyCategoryResource.getTaxonomyCategory(
-				postTaxonomyCategory.getId());
-
-		Assert.assertNotNull(getTaxonomyCategory.getPermissions());
-	}
-
-	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetTaxonomyCategory() throws Exception {
-		TaxonomyCategory taxonomyCategory =
-			testGraphQLGetTaxonomyCategory_addTaxonomyCategory();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				taxonomyCategory,
-				TaxonomyCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"taxonomyCategory",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"taxonomyCategoryId",
-											"\"" + taxonomyCategory.getId() +
-												"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/taxonomyCategory"))));
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		Assert.assertTrue(
-			equals(
-				taxonomyCategory,
-				TaxonomyCategorySerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminTaxonomy_v1_0",
-								new GraphQLField(
-									"taxonomyCategory",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"taxonomyCategoryId",
-												"\"" +
-													taxonomyCategory.getId() +
-														"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessAdminTaxonomy_v1_0",
-						"Object/taxonomyCategory"))));
-	}
-
-	@Test
-	public void testGraphQLGetTaxonomyCategoryNotFound() throws Exception {
-		String irrelevantTaxonomyCategoryId =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"taxonomyCategory",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"taxonomyCategoryId",
-									irrelevantTaxonomyCategoryId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminTaxonomy_v1_0",
-						new GraphQLField(
-							"taxonomyCategory",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"taxonomyCategoryId",
-										irrelevantTaxonomyCategoryId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected TaxonomyCategory
-			testGraphQLGetTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
-	}
-
-	@Test
-	public void testPatchTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory randomPatchTaxonomyCategory =
-			randomPatchTaxonomyCategory();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaxonomyCategory patchTaxonomyCategory =
-			taxonomyCategoryResource.patchTaxonomyCategory(
-				postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
-
-		TaxonomyCategory expectedPatchTaxonomyCategory =
-			postTaxonomyCategory.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchTaxonomyCategory, expectedPatchTaxonomyCategory);
-
-		TaxonomyCategory getTaxonomyCategory =
-			taxonomyCategoryResource.getTaxonomyCategory(
-				patchTaxonomyCategory.getId());
-
-		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-	}
-
-	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutTaxonomyCategory() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testPutTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		TaxonomyCategory putTaxonomyCategory =
-			taxonomyCategoryResource.putTaxonomyCategory(
-				postTaxonomyCategory.getId(), randomTaxonomyCategory);
-
-		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
-		assertValid(putTaxonomyCategory);
-
-		Assert.assertNull(putTaxonomyCategory.getPermissions());
-
-		TaxonomyCategory getTaxonomyCategory =
-			taxonomyCategoryResource.getTaxonomyCategory(
-				putTaxonomyCategory.getId());
-
-		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
-		assertValid(getTaxonomyCategory);
-
-		TaxonomyCategory randomPermissionsTaxonomyCategory =
-			randomPermissionsTaxonomyCategory();
-
-		putTaxonomyCategory = taxonomyCategoryResource.putTaxonomyCategory(
-			postTaxonomyCategory.getId(), randomPermissionsTaxonomyCategory);
-
-		assertEquals(randomPermissionsTaxonomyCategory, putTaxonomyCategory);
-		assertValid(putTaxonomyCategory);
-
-		Assert.assertNull(putTaxonomyCategory.getPermissions());
-
-		putTaxonomyCategory =
-			permissionsTaxonomyCategoryResource.putTaxonomyCategory(
-				postTaxonomyCategory.getId(),
-				randomPermissionsTaxonomyCategory);
-
-		Assert.assertNotNull(putTaxonomyCategory.getPermissions());
-	}
-
-	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetTaxonomyCategoryPermissionsPage() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
-
-		Page<Permission> page =
-			taxonomyCategoryResource.getTaxonomyCategoryPermissionsPage(
-				postTaxonomyCategory.getId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected TaxonomyCategory
-			testGetTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
-		throws Exception {
-
-		return testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
-			randomTaxonomyCategory());
-	}
-
-	@Test
-	public void testPutTaxonomyCategoryPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaxonomyCategory taxonomyCategory =
-			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			taxonomyCategoryResource.
-				putTaxonomyCategoryPermissionsPageHttpResponse(
-					taxonomyCategory.getId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.
-				putTaxonomyCategoryPermissionsPageHttpResponse(
-					"-",
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected TaxonomyCategory
-			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1815,105 +1711,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostTaxonomyVocabularyTaxonomyCategory() throws Exception {
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		TaxonomyCategory postTaxonomyCategory =
-			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory);
-
-		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
-		assertValid(postTaxonomyCategory);
-
-		TaxonomyCategory randomPermissionsTaxonomyCategory1 =
-			randomPermissionsTaxonomyCategory();
-
-		TaxonomyCategory postPermissionsTaxonomyCategory1 =
-			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
-				randomPermissionsTaxonomyCategory1);
-
-		Assert.assertNull(postPermissionsTaxonomyCategory1.getPermissions());
-
-		TaxonomyCategory randomPermissionsTaxonomyCategory2 =
-			randomPermissionsTaxonomyCategory();
-
-		TaxonomyCategory postPermissionsTaxonomyCategory2 =
-			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
-				randomPermissionsTaxonomyCategory2);
-
-		Assert.assertNotNull(postPermissionsTaxonomyCategory2.getPermissions());
-	}
-
-	protected TaxonomyCategory
-			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
-			taxonomyCategory);
-	}
-
-	protected TaxonomyCategory
-			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return permissionsTaxonomyCategoryResource.
-			postTaxonomyVocabularyTaxonomyCategory(
-				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
-				taxonomyCategory);
-	}
-
-	@Test
-	public void testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaxonomyCategory taxonomyCategory =
-			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			taxonomyCategoryResource.
-				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-						taxonomyCategory),
-					taxonomyCategory.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-						taxonomyCategory),
-					taxonomyCategory.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-						taxonomyCategory),
-					"-"));
-	}
-
-	protected Long
-			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
-				TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		return taxonomyCategory.getTaxonomyVocabularyId();
-	}
-
-	protected TaxonomyCategory
-			testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -2095,6 +1892,209 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
+	public void testPatchTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPatchTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory randomPatchTaxonomyCategory =
+			randomPatchTaxonomyCategory();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory patchTaxonomyCategory =
+			taxonomyCategoryResource.patchTaxonomyCategory(
+				postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
+
+		TaxonomyCategory expectedPatchTaxonomyCategory =
+			postTaxonomyCategory.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchTaxonomyCategory, expectedPatchTaxonomyCategory);
+
+		TaxonomyCategory getTaxonomyCategory =
+			taxonomyCategoryResource.getTaxonomyCategory(
+				patchTaxonomyCategory.getId());
+
+		assertEquals(expectedPatchTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory testPatchTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostTaxonomyCategoryTaxonomyCategory() throws Exception {
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory postTaxonomyCategory =
+			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory);
+
+		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
+		assertValid(postTaxonomyCategory);
+	}
+
+	protected TaxonomyCategory
+			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+			taxonomyCategory);
+	}
+
+	@Test
+	public void testPostTaxonomyVocabularyTaxonomyCategory() throws Exception {
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory postTaxonomyCategory =
+			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory);
+
+		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
+		assertValid(postTaxonomyCategory);
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory1 =
+			randomPermissionsTaxonomyCategory();
+
+		TaxonomyCategory postPermissionsTaxonomyCategory1 =
+			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				randomPermissionsTaxonomyCategory1);
+
+		Assert.assertNull(postPermissionsTaxonomyCategory1.getPermissions());
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory2 =
+			randomPermissionsTaxonomyCategory();
+
+		TaxonomyCategory postPermissionsTaxonomyCategory2 =
+			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
+				randomPermissionsTaxonomyCategory2);
+
+		Assert.assertNotNull(postPermissionsTaxonomyCategory2.getPermissions());
+	}
+
+	protected TaxonomyCategory
+			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+			taxonomyCategory);
+	}
+
+	protected TaxonomyCategory
+			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return permissionsTaxonomyCategoryResource.
+			postTaxonomyVocabularyTaxonomyCategory(
+				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+				taxonomyCategory);
+	}
+
+	@Test
+	public void testPutTaxonomyCategory() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPutTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory putTaxonomyCategory =
+			taxonomyCategoryResource.putTaxonomyCategory(
+				postTaxonomyCategory.getId(), randomTaxonomyCategory);
+
+		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
+		TaxonomyCategory getTaxonomyCategory =
+			taxonomyCategoryResource.getTaxonomyCategory(
+				putTaxonomyCategory.getId());
+
+		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
+		assertValid(getTaxonomyCategory);
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory =
+			randomPermissionsTaxonomyCategory();
+
+		putTaxonomyCategory = taxonomyCategoryResource.putTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomPermissionsTaxonomyCategory);
+
+		assertEquals(randomPermissionsTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
+		putTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.putTaxonomyCategory(
+				postTaxonomyCategory.getId(),
+				randomPermissionsTaxonomyCategory);
+
+		Assert.assertNotNull(putTaxonomyCategory.getPermissions());
+	}
+
+	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutTaxonomyCategoryPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory taxonomyCategory =
+			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					taxonomyCategory.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					"-",
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected TaxonomyCategory
+			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

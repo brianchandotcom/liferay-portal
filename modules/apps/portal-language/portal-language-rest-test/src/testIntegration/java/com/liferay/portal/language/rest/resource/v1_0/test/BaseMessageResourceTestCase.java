@@ -220,7 +220,7 @@ public abstract class BaseMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPutMessage() throws Exception {
+	public void testPostMessageImport() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -230,7 +230,7 @@ public abstract class BaseMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageImport() throws Exception {
+	public void testPutMessage() throws Exception {
 		Assert.assertTrue(false);
 	}
 

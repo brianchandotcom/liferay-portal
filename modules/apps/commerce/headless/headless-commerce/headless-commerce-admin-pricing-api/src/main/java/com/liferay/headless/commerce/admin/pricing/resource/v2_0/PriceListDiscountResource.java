@@ -58,14 +58,14 @@ public interface PriceListDiscountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<PriceListDiscount> getPriceListIdPriceListDiscountsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public PriceListDiscount
 			postPriceListByExternalReferenceCodePriceListDiscount(
 				String externalReferenceCode,
 				PriceListDiscount priceListDiscount)
-		throws Exception;
-
-	public Page<PriceListDiscount> getPriceListIdPriceListDiscountsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public PriceListDiscount postPriceListIdPriceListDiscount(

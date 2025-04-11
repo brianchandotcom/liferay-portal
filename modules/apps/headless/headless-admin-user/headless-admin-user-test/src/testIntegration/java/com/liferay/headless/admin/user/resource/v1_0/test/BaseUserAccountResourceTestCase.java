@@ -299,6 +299,376 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountUserAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount = testDeleteAccountUserAccount_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.deleteAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(),
+				userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(),
+				userAccount.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(), 0L));
+	}
+
+	protected Long testDeleteAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testDeleteAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserAccountByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAccountUserAccountByEmailAddress_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteAccountUserAccountByEmailAddressHttpResponse(
+					testDeleteAccountUserAccountByEmailAddress_getAccountId(),
+					userAccount.getEmailAddress()));
+	}
+
+	protected Long testDeleteAccountUserAccountByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testDeleteAccountUserAccountByEmailAddress_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
+					testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+						userAccount),
+					userAccount.getEmailAddress()));
+	}
+
+	protected String
+			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		return userAccount.getExternalReferenceCode();
+	}
+
+	protected UserAccount
+			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserAccountsByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAccountUserAccountsByEmailAddress_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteAccountUserAccountsByEmailAddressHttpResponse(
+					testDeleteAccountUserAccountsByEmailAddress_getAccountId(),
+					null));
+	}
+
+	protected Long testDeleteAccountUserAccountsByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testDeleteAccountUserAccountsByEmailAddress_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
+					testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+						userAccount),
+					null));
+	}
+
+	protected String
+			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		return userAccount.getExternalReferenceCode();
+	}
+
+	protected UserAccount
+			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteUserAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.deleteUserAccountHttpResponse(
+				userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount.getId()));
+		assertHttpResponseStatusCode(
+			404, userAccountResource.getUserAccountHttpResponse(0L));
+	}
+
+	protected UserAccount testDeleteUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteUserAccount() throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteUserAccount_addUserAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", userAccount1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserAccount"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"userAccount",
+					new HashMap<String, Object>() {
+						{
+							put("userAccountId", userAccount1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserAccount userAccount2 =
+			testGraphQLDeleteUserAccount_addUserAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserAccount",
+							new HashMap<String, Object>() {
+								{
+									put("userAccountId", userAccount2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserAccount"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"userAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", userAccount2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected UserAccount testGraphQLDeleteUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
+	public void testDeleteUserAccountBatch() throws Exception {
+		UserAccount userAccount1 = testDeleteUserAccountBatch_addUserAccount();
+
+		testDeleteUserAccountBatch_deleteUserAccount(
+			"COMPLETED", null, userAccount1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount1.getId()));
+
+		UserAccount userAccount2 = testDeleteUserAccountBatch_addUserAccount();
+
+		testDeleteUserAccountBatch_deleteUserAccount(
+			"COMPLETED", userAccount2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount2.getId()));
+
+		userAccount1 = testDeleteUserAccountBatch_addUserAccount();
+		userAccount2 = testDeleteUserAccountBatch_addUserAccount();
+
+		testDeleteUserAccountBatch_deleteUserAccount(
+			"COMPLETED", userAccount2.getExternalReferenceCode(),
+			userAccount1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount2.getId()));
+
+		testDeleteUserAccountBatch_deleteUserAccount(
+			"COMPLETED", userAccount2.getExternalReferenceCode(),
+			userAccount1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount2.getId()));
+	}
+
+	protected UserAccount testDeleteUserAccountBatch_addUserAccount()
+		throws Exception {
+
+		return testDeleteUserAccount_addUserAccount();
+	}
+
+	protected void testDeleteUserAccountBatch_deleteUserAccount(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			userAccountResource.deleteUserAccountBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteUserAccountByExternalReferenceCode_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteUserAccountByExternalReferenceCodeHttpResponse(
+					userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getUserAccountByExternalReferenceCodeHttpResponse(
+					userAccount.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getUserAccountByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected UserAccount
+			testDeleteUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -473,32 +843,143 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
-		throws Exception {
+	public void testGetAccountUserAccount() throws Exception {
+		UserAccount postUserAccount =
+			testGetAccountUserAccount_addUserAccount();
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+		UserAccount getUserAccount = userAccountResource.getAccountUserAccount(
+			testGetAccountUserAccount_getAccountId(), postUserAccount.getId());
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, userAccount.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, userAccount.getExternalReferenceCode()));
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
-	protected UserAccount
-			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+	protected Long testGetAccountUserAccount_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetAccountUserAccount_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountUserAccount() throws Exception {
+		UserAccount userAccount =
+			testGraphQLGetAccountUserAccount_addUserAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountUserAccount",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"accountId",
+											testGraphQLGetAccountUserAccount_getAccountId());
+
+										put(
+											"userAccountId",
+											userAccount.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/accountUserAccount"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"accountUserAccount",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"accountId",
+												testGraphQLGetAccountUserAccount_getAccountId());
+
+											put(
+												"userAccountId",
+												userAccount.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/accountUserAccount"))));
+	}
+
+	protected Long testGraphQLGetAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountUserAccountNotFound() throws Exception {
+		Long irrelevantAccountId = RandomTestUtil.randomLong();
+		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("accountId", irrelevantAccountId);
+								put("userAccountId", irrelevantUserAccountId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"accountUserAccount",
+							new HashMap<String, Object>() {
+								{
+									put("accountId", irrelevantAccountId);
+									put(
+										"userAccountId",
+										irrelevantUserAccountId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected UserAccount testGraphQLGetAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -967,125 +1448,6 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountUserAccountByExternalReferenceCode()
-		throws Exception {
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount =
-			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
-				randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount
-			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
-				UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-						userAccount),
-					null));
-	}
-
-	protected String
-			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-				UserAccount userAccount)
-		throws Exception {
-
-		return userAccount.getExternalReferenceCode();
-	}
-
-	protected UserAccount
-			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-						userAccount),
-					userAccount.getEmailAddress()));
-	}
-
-	protected String
-			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-				UserAccount userAccount)
-		throws Exception {
-
-		return userAccount.getExternalReferenceCode();
-	}
-
-	protected UserAccount
-			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostAccountUserAccountByExternalReferenceCodeByEmailAddress()
-		throws Exception {
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount =
-			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
-				randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount
-			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
-				UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountUserAccountsPage() throws Exception {
 		Long accountId = testGetAccountUserAccountsPage_getAccountId();
 		Long irrelevantAccountId =
@@ -1514,285 +1876,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostAccountUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount = testPostAccountUserAccount_addUserAccount(
-			randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount testPostAccountUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		return userAccountResource.postAccountUserAccount(
-			testGetAccountUserAccountsPage_getAccountId(), userAccount);
-	}
-
-	@Test
-	public void testDeleteAccountUserAccountsByEmailAddress() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteAccountUserAccountsByEmailAddress_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountsByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountsByEmailAddress_getAccountId(),
-					null));
-	}
-
-	protected Long testDeleteAccountUserAccountsByEmailAddress_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount
-			testDeleteAccountUserAccountsByEmailAddress_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostAccountUserAccountsByEmailAddress() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteAccountUserAccountByEmailAddress() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteAccountUserAccountByEmailAddress_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountByEmailAddress_getAccountId(),
-					userAccount.getEmailAddress()));
-	}
-
-	protected Long testDeleteAccountUserAccountByEmailAddress_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount
-			testDeleteAccountUserAccountByEmailAddress_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostAccountUserAccountByEmailAddress() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount =
-			testPostAccountUserAccountByEmailAddress_addUserAccount(
-				randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount
-			testPostAccountUserAccountByEmailAddress_addUserAccount(
-				UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountUserAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount = testDeleteAccountUserAccount_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.deleteAccountUserAccountHttpResponse(
-				testDeleteAccountUserAccount_getAccountId(),
-				userAccount.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getAccountUserAccountHttpResponse(
-				testDeleteAccountUserAccount_getAccountId(),
-				userAccount.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getAccountUserAccountHttpResponse(
-				testDeleteAccountUserAccount_getAccountId(), 0L));
-	}
-
-	protected Long testDeleteAccountUserAccount_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount testDeleteAccountUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountUserAccount() throws Exception {
-		UserAccount postUserAccount =
-			testGetAccountUserAccount_addUserAccount();
-
-		UserAccount getUserAccount = userAccountResource.getAccountUserAccount(
-			testGetAccountUserAccount_getAccountId(), postUserAccount.getId());
-
-		assertEquals(postUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected Long testGetAccountUserAccount_getAccountId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount testGetAccountUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountUserAccount() throws Exception {
-		UserAccount userAccount =
-			testGraphQLGetAccountUserAccount_addUserAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				userAccount,
-				UserAccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountUserAccount",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"accountId",
-											testGraphQLGetAccountUserAccount_getAccountId());
-
-										put(
-											"userAccountId",
-											userAccount.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/accountUserAccount"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				userAccount,
-				UserAccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"accountUserAccount",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"accountId",
-												testGraphQLGetAccountUserAccount_getAccountId());
-
-											put(
-												"userAccountId",
-												userAccount.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/accountUserAccount"))));
-	}
-
-	protected Long testGraphQLGetAccountUserAccount_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountUserAccountNotFound() throws Exception {
-		Long irrelevantAccountId = RandomTestUtil.randomLong();
-		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountUserAccount",
-						new HashMap<String, Object>() {
-							{
-								put("accountId", irrelevantAccountId);
-								put("userAccountId", irrelevantUserAccountId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"accountUserAccount",
-							new HashMap<String, Object>() {
-								{
-									put("accountId", irrelevantAccountId);
-									put(
-										"userAccountId",
-										irrelevantUserAccountId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected UserAccount testGraphQLGetAccountUserAccount_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -2766,69 +2849,15 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
-					null, null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
-					null, null, null));
-	}
-
-	protected UserAccount
-			testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteAccountUserAccountSelected() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPatchSiteAccountUserAccountSelected() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testPatchSiteAccountUserAccountSelected_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.patchSiteAccountUserAccountSelectedHttpResponse(
-				testGroup.getGroupId(), null, userAccount.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.patchSiteAccountUserAccountSelectedHttpResponse(
-				testGroup.getGroupId(), null, 0L));
-	}
-
-	protected UserAccount
-			testPatchSiteAccountUserAccountSelected_addUserAccount()
+	public void testGetSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -3232,434 +3261,304 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetUserAccountsPage() throws Exception {
-		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(1, 10), null);
+	public void testGetUserAccount() throws Exception {
+		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
 
-		long totalCount = page.getTotalCount();
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			postUserAccount.getId());
 
-		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		page = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(userAccount1, (List<UserAccount>)page.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page.getItems());
-		assertValid(page, testGetUserAccountsPage_getExpectedActions());
-
-		userAccountResource.deleteUserAccount(userAccount1.getId());
-
-		userAccountResource.deleteUserAccount(userAccount2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetUserAccountsPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
 	}
 
 	@Test
-	public void testGetUserAccountsPageWithFilterDateTimeEquals()
-		throws Exception {
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			postUserAccount.getId());
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.admin.user.dto.v1_0.UserAccount"
+			).acceptLanguage(
+				new AcceptLanguage() {
 
-		UserAccount userAccount1 = randomUserAccount();
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
 
-		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
 
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-				null, getFilterString(entityField, "between", userAccount1),
-				Pagination.of(1, 2), null);
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
 
-			assertEquals(
-				Collections.singletonList(userAccount1),
-				(List<UserAccount>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetUserAccountsPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithFilterStringContains()
-		throws Exception {
-
-		testGetUserAccountsPageWithFilter("contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetUserAccountsPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetUserAccountsPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetUserAccountsPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-				null, getFilterString(entityField, operator, userAccount1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(userAccount1),
-				(List<UserAccount>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithPagination() throws Exception {
-		Page<UserAccount> userAccountPage =
-			userAccountResource.getUserAccountsPage(null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
-
-		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		UserAccount userAccount3 = testGetUserAccountsPage_addUserAccount(
-			randomUserAccount());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
-				null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
-
-			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
-				null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
-
-			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
-				null, null,
-				Pagination.of(
-					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit),
-				null);
-
-			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
-		}
-		else {
-			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(1, totalCount + 2), null);
-
-			List<UserAccount> userAccounts1 =
-				(List<UserAccount>)page1.getItems();
-
-			Assert.assertEquals(
-				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
-
-			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<UserAccount> userAccounts2 =
-				(List<UserAccount>)page2.getItems();
-
-			Assert.assertEquals(
-				userAccounts2.toString(), 1, userAccounts2.size());
-
-			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithSortDateTime() throws Exception {
-		testGetUserAccountsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, userAccount1, userAccount2) -> {
-				BeanTestUtil.setProperty(
-					userAccount1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithSortDouble() throws Exception {
-		testGetUserAccountsPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, userAccount1, userAccount2) -> {
-				BeanTestUtil.setProperty(
-					userAccount1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					userAccount2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithSortInteger() throws Exception {
-		testGetUserAccountsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, userAccount1, userAccount2) -> {
-				BeanTestUtil.setProperty(
-					userAccount1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(
-					userAccount2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithSortString() throws Exception {
-		testGetUserAccountsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, userAccount1, userAccount2) -> {
-				Class<?> clazz = userAccount1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						userAccount1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						userAccount2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
 				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						userAccount1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						userAccount2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						userAccount1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						userAccount2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postUserAccount.getId());
+
+		assertEquals(getUserAccount, UserAccountSerDes.toDTO(item.toString()));
 	}
 
-	protected void testGetUserAccountsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
-				unsafeTriConsumer)
-		throws Exception {
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
 
-		List<EntityField> entityFields = getEntityFields(type);
+		return new MockHttpServletRequest() {
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
 
-		UserAccount userAccount1 = randomUserAccount();
-		UserAccount userAccount2 = randomUserAccount();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
-		}
-
-		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
-
-		userAccount2 = testGetUserAccountsPage_addUserAccount(userAccount2);
-
-		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> ascPage = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
-				entityField.getName() + ":asc");
-
-			assertContains(userAccount1, (List<UserAccount>)ascPage.getItems());
-			assertContains(userAccount2, (List<UserAccount>)ascPage.getItems());
-
-			Page<UserAccount> descPage =
-				userAccountResource.getUserAccountsPage(
-					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(
-				userAccount2, (List<UserAccount>)descPage.getItems());
-			assertContains(
-				userAccount1, (List<UserAccount>)descPage.getItems());
-		}
+		};
 	}
 
-	protected UserAccount testGetUserAccountsPage_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
 
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetUserAccountsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"userAccounts",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
+	public void testGraphQLGetUserAccount() throws Exception {
+		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
 
 		// No namespace
 
-		JSONObject userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/userAccounts");
-
-		long totalCount = userAccountsJSONObject.getLong("totalCount");
-
-		UserAccount userAccount1 =
-			testGraphQLGetUserAccountsPage_addUserAccount();
-		UserAccount userAccount2 =
-			testGraphQLGetUserAccountsPage_addUserAccount();
-
-		userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/userAccounts");
-
-		Assert.assertEquals(
-			totalCount + 2, userAccountsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			userAccount1,
-			Arrays.asList(
-				UserAccountSerDes.toDTOs(
-					userAccountsJSONObject.getString("items"))));
-		assertContains(
-			userAccount2,
-			Arrays.asList(
-				UserAccountSerDes.toDTOs(
-					userAccountsJSONObject.getString("items"))));
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"userAccount",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"userAccountId",
+											userAccount.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/userAccount"))));
 
 		// Using the namespace headlessAdminUser_v1_0
 
-		userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-			"JSONObject/userAccounts");
-
-		Assert.assertEquals(
-			totalCount + 2, userAccountsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			userAccount1,
-			Arrays.asList(
-				UserAccountSerDes.toDTOs(
-					userAccountsJSONObject.getString("items"))));
-		assertContains(
-			userAccount2,
-			Arrays.asList(
-				UserAccountSerDes.toDTOs(
-					userAccountsJSONObject.getString("items"))));
-	}
-
-	protected UserAccount testGraphQLGetUserAccountsPage_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"userAccount",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"userAccountId",
+												userAccount.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/userAccount"))));
 	}
 
 	@Test
-	public void testPostUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
+	public void testGraphQLGetUserAccountNotFound() throws Exception {
+		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
 
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
+		// No namespace
 
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"userAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", irrelevantUserAccountId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"userAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"userAccountId",
+										irrelevantUserAccountId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
-	protected UserAccount testPostUserAccount_addUserAccount(
-			UserAccount userAccount)
+	protected UserAccount testGraphQLGetUserAccount_addUserAccount()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -3786,39 +3685,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
-	public void testDeleteUserAccountByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteUserAccountByExternalReferenceCode_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteUserAccountByExternalReferenceCodeHttpResponse(
-					userAccount.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				getUserAccountByExternalReferenceCodeHttpResponse(
-					userAccount.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.
-				getUserAccountByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected UserAccount
-			testDeleteUserAccountByExternalReferenceCode_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3953,97 +3819,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
-	public void testPatchUserAccountByExternalReferenceCode() throws Exception {
-		UserAccount postUserAccount =
-			testPatchUserAccountByExternalReferenceCode_addUserAccount();
-
-		UserAccount randomPatchUserAccount = randomPatchUserAccount();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount patchUserAccount =
-			userAccountResource.patchUserAccountByExternalReferenceCode(
-				postUserAccount.getExternalReferenceCode(),
-				randomPatchUserAccount);
-
-		UserAccount expectedPatchUserAccount = postUserAccount.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchUserAccount, expectedPatchUserAccount);
-
-		UserAccount getUserAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode(
-				patchUserAccount.getExternalReferenceCode());
-
-		assertEquals(expectedPatchUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount
-			testPatchUserAccountByExternalReferenceCode_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutUserAccountByExternalReferenceCode() throws Exception {
-		UserAccount postUserAccount =
-			testPutUserAccountByExternalReferenceCode_addUserAccount();
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount putUserAccount =
-			userAccountResource.putUserAccountByExternalReferenceCode(
-				postUserAccount.getExternalReferenceCode(), randomUserAccount);
-
-		assertEquals(randomUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		UserAccount getUserAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode(
-				putUserAccount.getExternalReferenceCode());
-
-		assertEquals(randomUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-
-		UserAccount newUserAccount =
-			testPutUserAccountByExternalReferenceCode_createUserAccount();
-
-		putUserAccount =
-			userAccountResource.putUserAccountByExternalReferenceCode(
-				newUserAccount.getExternalReferenceCode(), newUserAccount);
-
-		assertEquals(newUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		getUserAccount =
-			userAccountResource.getUserAccountByExternalReferenceCode(
-				putUserAccount.getExternalReferenceCode());
-
-		assertEquals(newUserAccount, getUserAccount);
-
-		Assert.assertEquals(
-			newUserAccount.getExternalReferenceCode(),
-			putUserAccount.getExternalReferenceCode());
-	}
-
-	protected UserAccount
-			testPutUserAccountByExternalReferenceCode_createUserAccount()
-		throws Exception {
-
-		return randomUserAccount();
-	}
-
-	protected UserAccount
-			testPutUserAccountByExternalReferenceCode_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -4471,24 +4246,338 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteUserAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
+	public void testGetUserAccountsPage() throws Exception {
+		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+			null, null, Pagination.of(1, 10), null);
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.deleteUserAccountHttpResponse(
-				userAccount.getId()));
+		long totalCount = page.getTotalCount();
 
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount.getId()));
-		assertHttpResponseStatusCode(
-			404, userAccountResource.getUserAccountHttpResponse(0L));
+		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		page = userAccountResource.getUserAccountsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(userAccount1, (List<UserAccount>)page.getItems());
+		assertContains(userAccount2, (List<UserAccount>)page.getItems());
+		assertValid(page, testGetUserAccountsPage_getExpectedActions());
+
+		userAccountResource.deleteUserAccount(userAccount1.getId());
+
+		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected UserAccount testDeleteUserAccount_addUserAccount()
+	protected Map<String, Map<String, String>>
+			testGetUserAccountsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserAccount userAccount1 = randomUserAccount();
+
+		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+				null, getFilterString(entityField, "between", userAccount1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetUserAccountsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetUserAccountsPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetUserAccountsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetUserAccountsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetUserAccountsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+				null, getFilterString(entityField, operator, userAccount1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithPagination() throws Exception {
+		Page<UserAccount> userAccountPage =
+			userAccountResource.getUserAccountsPage(null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
+
+		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		UserAccount userAccount3 = testGetUserAccountsPage_addUserAccount(
+			randomUserAccount());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
+
+			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
+
+			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithSortDateTime() throws Exception {
+		testGetUserAccountsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithSortDouble() throws Exception {
+		testGetUserAccountsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithSortInteger() throws Exception {
+		testGetUserAccountsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsPageWithSortString() throws Exception {
+		testGetUserAccountsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, userAccount1, userAccount2) -> {
+				Class<?> clazz = userAccount1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetUserAccountsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserAccount userAccount1 = randomUserAccount();
+		UserAccount userAccount2 = randomUserAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
+		}
+
+		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
+
+		userAccount2 = testGetUserAccountsPage_addUserAccount(userAccount2);
+
+		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+			null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> ascPage = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
+
+			assertContains(userAccount1, (List<UserAccount>)ascPage.getItems());
+			assertContains(userAccount2, (List<UserAccount>)ascPage.getItems());
+
+			Page<UserAccount> descPage =
+				userAccountResource.getUserAccountsPage(
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				userAccount2, (List<UserAccount>)descPage.getItems());
+			assertContains(
+				userAccount1, (List<UserAccount>)descPage.getItems());
+		}
+	}
+
+	protected UserAccount testGetUserAccountsPage_addUserAccount(
+			UserAccount userAccount)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -4496,514 +4585,76 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLDeleteUserAccount() throws Exception {
+	public void testGraphQLGetUserAccountsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"userAccounts",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
 
 		// No namespace
+
+		JSONObject userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userAccounts");
+
+		long totalCount = userAccountsJSONObject.getLong("totalCount");
 
 		UserAccount userAccount1 =
-			testGraphQLDeleteUserAccount_addUserAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteUserAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", userAccount1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteUserAccount"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"userAccount",
-					new HashMap<String, Object>() {
-						{
-							put("userAccountId", userAccount1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminUser_v1_0
-
+			testGraphQLGetUserAccountsPage_addUserAccount();
 		UserAccount userAccount2 =
-			testGraphQLDeleteUserAccount_addUserAccount();
+			testGraphQLGetUserAccountsPage_addUserAccount();
 
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteUserAccount",
-							new HashMap<String, Object>() {
-								{
-									put("userAccountId", userAccount2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteUserAccount"));
+		userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userAccounts");
 
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+		Assert.assertEquals(
+			totalCount + 2, userAccountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminUser_v1_0",
-					new GraphQLField(
-						"userAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", userAccount2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/userAccounts");
 
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
+		Assert.assertEquals(
+			totalCount + 2, userAccountsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userAccount1,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
+		assertContains(
+			userAccount2,
+			Arrays.asList(
+				UserAccountSerDes.toDTOs(
+					userAccountsJSONObject.getString("items"))));
 	}
 
-	protected UserAccount testGraphQLDeleteUserAccount_addUserAccount()
+	protected UserAccount testGraphQLGetUserAccountsPage_addUserAccount()
 		throws Exception {
 
 		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
-	public void testDeleteUserAccountBatch() throws Exception {
-		UserAccount userAccount1 = testDeleteUserAccountBatch_addUserAccount();
-
-		testDeleteUserAccountBatch_deleteUserAccount(
-			"COMPLETED", null, userAccount1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount1.getId()));
-
-		UserAccount userAccount2 = testDeleteUserAccountBatch_addUserAccount();
-
-		testDeleteUserAccountBatch_deleteUserAccount(
-			"COMPLETED", userAccount2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount2.getId()));
-
-		userAccount1 = testDeleteUserAccountBatch_addUserAccount();
-		userAccount2 = testDeleteUserAccountBatch_addUserAccount();
-
-		testDeleteUserAccountBatch_deleteUserAccount(
-			"COMPLETED", userAccount2.getExternalReferenceCode(),
-			userAccount1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount2.getId()));
-
-		testDeleteUserAccountBatch_deleteUserAccount(
-			"COMPLETED", userAccount2.getExternalReferenceCode(),
-			userAccount1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount2.getId()));
-	}
-
-	protected UserAccount testDeleteUserAccountBatch_addUserAccount()
-		throws Exception {
-
-		return testDeleteUserAccount_addUserAccount();
-	}
-
-	protected void testDeleteUserAccountBatch_deleteUserAccount(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			userAccountResource.deleteUserAccountBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetUserAccount() throws Exception {
-		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
-
-		UserAccount getUserAccount = userAccountResource.getUserAccount(
-			postUserAccount.getId());
-
-		assertEquals(postUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
-
-		UserAccount getUserAccount = userAccountResource.getUserAccount(
-			postUserAccount.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.admin.user.dto.v1_0.UserAccount"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postUserAccount.getId());
-
-		assertEquals(getUserAccount, UserAccountSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetUserAccount() throws Exception {
-		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				userAccount,
-				UserAccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"userAccount",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"userAccountId",
-											userAccount.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/userAccount"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				userAccount,
-				UserAccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"userAccount",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"userAccountId",
-												userAccount.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/userAccount"))));
-	}
-
-	@Test
-	public void testGraphQLGetUserAccountNotFound() throws Exception {
-		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"userAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", irrelevantUserAccountId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"userAccount",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"userAccountId",
-										irrelevantUserAccountId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected UserAccount testGraphQLGetUserAccount_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
-	public void testPatchUserAccount() throws Exception {
-		UserAccount postUserAccount = testPatchUserAccount_addUserAccount();
-
-		UserAccount randomPatchUserAccount = randomPatchUserAccount();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount patchUserAccount = userAccountResource.patchUserAccount(
-			postUserAccount.getId(), randomPatchUserAccount);
-
-		UserAccount expectedPatchUserAccount = postUserAccount.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchUserAccount, expectedPatchUserAccount);
-
-		UserAccount getUserAccount = userAccountResource.getUserAccount(
-			patchUserAccount.getId());
-
-		assertEquals(expectedPatchUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testPatchUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutUserAccount() throws Exception {
-		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount putUserAccount = userAccountResource.putUserAccount(
-			postUserAccount.getId(), randomUserAccount);
-
-		assertEquals(randomUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		UserAccount getUserAccount = userAccountResource.getUserAccount(
-			putUserAccount.getId());
-
-		assertEquals(randomUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostUserAccountImage() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -5854,6 +5505,355 @@ public abstract class BaseUserAccountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchSiteAccountUserAccountSelected() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testPatchSiteAccountUserAccountSelected_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.patchSiteAccountUserAccountSelectedHttpResponse(
+				testGroup.getGroupId(), null, userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.patchSiteAccountUserAccountSelectedHttpResponse(
+				testGroup.getGroupId(), null, 0L));
+	}
+
+	protected UserAccount
+			testPatchSiteAccountUserAccountSelected_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
+					null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
+					null, null, null));
+	}
+
+	protected UserAccount
+			testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchUserAccount() throws Exception {
+		UserAccount postUserAccount = testPatchUserAccount_addUserAccount();
+
+		UserAccount randomPatchUserAccount = randomPatchUserAccount();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount patchUserAccount = userAccountResource.patchUserAccount(
+			postUserAccount.getId(), randomPatchUserAccount);
+
+		UserAccount expectedPatchUserAccount = postUserAccount.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchUserAccount, expectedPatchUserAccount);
+
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			patchUserAccount.getId());
+
+		assertEquals(expectedPatchUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount testPatchUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchUserAccountByExternalReferenceCode() throws Exception {
+		UserAccount postUserAccount =
+			testPatchUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount randomPatchUserAccount = randomPatchUserAccount();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount patchUserAccount =
+			userAccountResource.patchUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode(),
+				randomPatchUserAccount);
+
+		UserAccount expectedPatchUserAccount = postUserAccount.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchUserAccount, expectedPatchUserAccount);
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				patchUserAccount.getExternalReferenceCode());
+
+		assertEquals(expectedPatchUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount
+			testPatchUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					null, userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					null, userAccount.getExternalReferenceCode()));
+	}
+
+	protected UserAccount
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount = testPostAccountUserAccount_addUserAccount(
+			randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount testPostAccountUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		return userAccountResource.postAccountUserAccount(
+			testGetAccountUserAccountsPage_getAccountId(), userAccount);
+	}
+
+	@Test
+	public void testPostAccountUserAccountByEmailAddress() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount =
+			testPostAccountUserAccountByEmailAddress_addUserAccount(
+				randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount
+			testPostAccountUserAccountByEmailAddress_addUserAccount(
+				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount =
+			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
+				randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount
+			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
+				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserAccountByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount =
+			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
+				randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount
+			testPostAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount(
+				UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserAccountsByEmailAddress() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+			randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount testPostUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostUserAccountImage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutUserAccount() throws Exception {
+		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount putUserAccount = userAccountResource.putUserAccount(
+			postUserAccount.getId(), randomUserAccount);
+
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			putUserAccount.getId());
+
+		assertEquals(randomUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutUserAccountByExternalReferenceCode() throws Exception {
+		UserAccount postUserAccount =
+			testPutUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount putUserAccount =
+			userAccountResource.putUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode(), randomUserAccount);
+
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				putUserAccount.getExternalReferenceCode());
+
+		assertEquals(randomUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+
+		UserAccount newUserAccount =
+			testPutUserAccountByExternalReferenceCode_createUserAccount();
+
+		putUserAccount =
+			userAccountResource.putUserAccountByExternalReferenceCode(
+				newUserAccount.getExternalReferenceCode(), newUserAccount);
+
+		assertEquals(newUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				putUserAccount.getExternalReferenceCode());
+
+		assertEquals(newUserAccount, getUserAccount);
+
+		Assert.assertEquals(
+			newUserAccount.getExternalReferenceCode(),
+			putUserAccount.getExternalReferenceCode());
+	}
+
+	protected UserAccount
+			testPutUserAccountByExternalReferenceCode_createUserAccount()
+		throws Exception {
+
+		return randomUserAccount();
+	}
+
+	protected UserAccount
+			testPutUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

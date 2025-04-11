@@ -133,24 +133,10 @@ public class ServletDataImpl implements ServletData {
 							ObjectActionResourceImpl.class,
 							"patchObjectAction"));
 					put(
-						"mutation#updateObjectAction",
-						new ObjectValuePair<>(
-							ObjectActionResourceImpl.class, "putObjectAction"));
-					put(
-						"mutation#updateObjectActionBatch",
-						new ObjectValuePair<>(
-							ObjectActionResourceImpl.class,
-							"putObjectActionBatch"));
-					put(
 						"mutation#createObjectDefinitionByExternalReferenceCodeObjectAction",
 						new ObjectValuePair<>(
 							ObjectActionResourceImpl.class,
 							"postObjectDefinitionByExternalReferenceCodeObjectAction"));
-					put(
-						"mutation#createObjectDefinitionObjectActionsPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectActionResourceImpl.class,
-							"postObjectDefinitionObjectActionsPageExportBatch"));
 					put(
 						"mutation#createObjectDefinitionObjectAction",
 						new ObjectValuePair<>(
@@ -162,25 +148,19 @@ public class ServletDataImpl implements ServletData {
 							ObjectActionResourceImpl.class,
 							"postObjectDefinitionObjectActionBatch"));
 					put(
-						"mutation#createObjectDefinitionsPageExportBatch",
+						"mutation#createObjectDefinitionObjectActionsPageExportBatch",
 						new ObjectValuePair<>(
-							ObjectDefinitionResourceImpl.class,
-							"postObjectDefinitionsPageExportBatch"));
+							ObjectActionResourceImpl.class,
+							"postObjectDefinitionObjectActionsPageExportBatch"));
 					put(
-						"mutation#createObjectDefinition",
+						"mutation#updateObjectAction",
 						new ObjectValuePair<>(
-							ObjectDefinitionResourceImpl.class,
-							"postObjectDefinition"));
+							ObjectActionResourceImpl.class, "putObjectAction"));
 					put(
-						"mutation#createObjectDefinitionBatch",
+						"mutation#updateObjectActionBatch",
 						new ObjectValuePair<>(
-							ObjectDefinitionResourceImpl.class,
-							"postObjectDefinitionBatch"));
-					put(
-						"mutation#updateObjectDefinitionByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ObjectDefinitionResourceImpl.class,
-							"putObjectDefinitionByExternalReferenceCode"));
+							ObjectActionResourceImpl.class,
+							"putObjectActionBatch"));
 					put(
 						"mutation#deleteObjectDefinition",
 						new ObjectValuePair<>(
@@ -197,6 +177,26 @@ public class ServletDataImpl implements ServletData {
 							ObjectDefinitionResourceImpl.class,
 							"patchObjectDefinition"));
 					put(
+						"mutation#createObjectDefinition",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"postObjectDefinition"));
+					put(
+						"mutation#createObjectDefinitionBatch",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"postObjectDefinitionBatch"));
+					put(
+						"mutation#createObjectDefinitionPublish",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"postObjectDefinitionPublish"));
+					put(
+						"mutation#createObjectDefinitionsPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"postObjectDefinitionsPageExportBatch"));
+					put(
 						"mutation#updateObjectDefinition",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
@@ -207,30 +207,10 @@ public class ServletDataImpl implements ServletData {
 							ObjectDefinitionResourceImpl.class,
 							"putObjectDefinitionBatch"));
 					put(
-						"mutation#createObjectDefinitionPublish",
+						"mutation#updateObjectDefinitionByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
-							"postObjectDefinitionPublish"));
-					put(
-						"mutation#createObjectDefinitionByExternalReferenceCodeObjectField",
-						new ObjectValuePair<>(
-							ObjectFieldResourceImpl.class,
-							"postObjectDefinitionByExternalReferenceCodeObjectField"));
-					put(
-						"mutation#createObjectDefinitionObjectFieldsPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectFieldResourceImpl.class,
-							"postObjectDefinitionObjectFieldsPageExportBatch"));
-					put(
-						"mutation#createObjectDefinitionObjectField",
-						new ObjectValuePair<>(
-							ObjectFieldResourceImpl.class,
-							"postObjectDefinitionObjectField"));
-					put(
-						"mutation#createObjectDefinitionObjectFieldBatch",
-						new ObjectValuePair<>(
-							ObjectFieldResourceImpl.class,
-							"postObjectDefinitionObjectFieldBatch"));
+							"putObjectDefinitionByExternalReferenceCode"));
 					put(
 						"mutation#deleteObjectField",
 						new ObjectValuePair<>(
@@ -246,6 +226,26 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class, "patchObjectField"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectField",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectField"));
+					put(
+						"mutation#createObjectDefinitionObjectField",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"postObjectDefinitionObjectField"));
+					put(
+						"mutation#createObjectDefinitionObjectFieldBatch",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"postObjectDefinitionObjectFieldBatch"));
+					put(
+						"mutation#createObjectDefinitionObjectFieldsPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"postObjectDefinitionObjectFieldsPageExportBatch"));
+					put(
 						"mutation#updateObjectField",
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class, "putObjectField"));
@@ -254,26 +254,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class,
 							"putObjectFieldBatch"));
-					put(
-						"mutation#createObjectFoldersPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class,
-							"postObjectFoldersPageExportBatch"));
-					put(
-						"mutation#createObjectFolder",
-						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class,
-							"postObjectFolder"));
-					put(
-						"mutation#createObjectFolderBatch",
-						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class,
-							"postObjectFolderBatch"));
-					put(
-						"mutation#updateObjectFolderByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class,
-							"putObjectFolderByExternalReferenceCode"));
 					put(
 						"mutation#deleteObjectFolder",
 						new ObjectValuePair<>(
@@ -290,6 +270,21 @@ public class ServletDataImpl implements ServletData {
 							ObjectFolderResourceImpl.class,
 							"patchObjectFolder"));
 					put(
+						"mutation#createObjectFolder",
+						new ObjectValuePair<>(
+							ObjectFolderResourceImpl.class,
+							"postObjectFolder"));
+					put(
+						"mutation#createObjectFolderBatch",
+						new ObjectValuePair<>(
+							ObjectFolderResourceImpl.class,
+							"postObjectFolderBatch"));
+					put(
+						"mutation#createObjectFoldersPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectFolderResourceImpl.class,
+							"postObjectFoldersPageExportBatch"));
+					put(
 						"mutation#updateObjectFolder",
 						new ObjectValuePair<>(
 							ObjectFolderResourceImpl.class, "putObjectFolder"));
@@ -299,25 +294,10 @@ public class ServletDataImpl implements ServletData {
 							ObjectFolderResourceImpl.class,
 							"putObjectFolderBatch"));
 					put(
-						"mutation#createObjectDefinitionByExternalReferenceCodeObjectLayout",
+						"mutation#updateObjectFolderByExternalReferenceCode",
 						new ObjectValuePair<>(
-							ObjectLayoutResourceImpl.class,
-							"postObjectDefinitionByExternalReferenceCodeObjectLayout"));
-					put(
-						"mutation#createObjectDefinitionObjectLayoutsPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectLayoutResourceImpl.class,
-							"postObjectDefinitionObjectLayoutsPageExportBatch"));
-					put(
-						"mutation#createObjectDefinitionObjectLayout",
-						new ObjectValuePair<>(
-							ObjectLayoutResourceImpl.class,
-							"postObjectDefinitionObjectLayout"));
-					put(
-						"mutation#createObjectDefinitionObjectLayoutBatch",
-						new ObjectValuePair<>(
-							ObjectLayoutResourceImpl.class,
-							"postObjectDefinitionObjectLayoutBatch"));
+							ObjectFolderResourceImpl.class,
+							"putObjectFolderByExternalReferenceCode"));
 					put(
 						"mutation#deleteObjectLayout",
 						new ObjectValuePair<>(
@@ -329,6 +309,26 @@ public class ServletDataImpl implements ServletData {
 							ObjectLayoutResourceImpl.class,
 							"deleteObjectLayoutBatch"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectLayout",
+						new ObjectValuePair<>(
+							ObjectLayoutResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectLayout"));
+					put(
+						"mutation#createObjectDefinitionObjectLayout",
+						new ObjectValuePair<>(
+							ObjectLayoutResourceImpl.class,
+							"postObjectDefinitionObjectLayout"));
+					put(
+						"mutation#createObjectDefinitionObjectLayoutBatch",
+						new ObjectValuePair<>(
+							ObjectLayoutResourceImpl.class,
+							"postObjectDefinitionObjectLayoutBatch"));
+					put(
+						"mutation#createObjectDefinitionObjectLayoutsPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectLayoutResourceImpl.class,
+							"postObjectDefinitionObjectLayoutsPageExportBatch"));
+					put(
 						"mutation#updateObjectLayout",
 						new ObjectValuePair<>(
 							ObjectLayoutResourceImpl.class, "putObjectLayout"));
@@ -337,31 +337,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectLayoutResourceImpl.class,
 							"putObjectLayoutBatch"));
-					put(
-						"mutation#createObjectDefinitionByExternalReferenceCodeObjectRelationship",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"postObjectDefinitionByExternalReferenceCodeObjectRelationship"));
-					put(
-						"mutation#createObjectDefinitionObjectRelationshipsPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"postObjectDefinitionObjectRelationshipsPageExportBatch"));
-					put(
-						"mutation#createObjectDefinitionObjectRelationship",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"postObjectDefinitionObjectRelationship"));
-					put(
-						"mutation#createObjectDefinitionObjectRelationshipBatch",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"postObjectDefinitionObjectRelationshipBatch"));
-					put(
-						"mutation#updateObjectRelationshipByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ObjectRelationshipResourceImpl.class,
-							"putObjectRelationshipByExternalReferenceCode"));
 					put(
 						"mutation#deleteObjectRelationship",
 						new ObjectValuePair<>(
@@ -373,6 +348,26 @@ public class ServletDataImpl implements ServletData {
 							ObjectRelationshipResourceImpl.class,
 							"deleteObjectRelationshipBatch"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectRelationship",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectRelationship"));
+					put(
+						"mutation#createObjectDefinitionObjectRelationship",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"postObjectDefinitionObjectRelationship"));
+					put(
+						"mutation#createObjectDefinitionObjectRelationshipBatch",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"postObjectDefinitionObjectRelationshipBatch"));
+					put(
+						"mutation#createObjectDefinitionObjectRelationshipsPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"postObjectDefinitionObjectRelationshipsPageExportBatch"));
+					put(
 						"mutation#updateObjectRelationship",
 						new ObjectValuePair<>(
 							ObjectRelationshipResourceImpl.class,
@@ -383,25 +378,10 @@ public class ServletDataImpl implements ServletData {
 							ObjectRelationshipResourceImpl.class,
 							"putObjectRelationshipBatch"));
 					put(
-						"mutation#createObjectDefinitionByExternalReferenceCodeObjectValidationRule",
+						"mutation#updateObjectRelationshipByExternalReferenceCode",
 						new ObjectValuePair<>(
-							ObjectValidationRuleResourceImpl.class,
-							"postObjectDefinitionByExternalReferenceCodeObjectValidationRule"));
-					put(
-						"mutation#createObjectDefinitionObjectValidationRulesPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectValidationRuleResourceImpl.class,
-							"postObjectDefinitionObjectValidationRulesPageExportBatch"));
-					put(
-						"mutation#createObjectDefinitionObjectValidationRule",
-						new ObjectValuePair<>(
-							ObjectValidationRuleResourceImpl.class,
-							"postObjectDefinitionObjectValidationRule"));
-					put(
-						"mutation#createObjectDefinitionObjectValidationRuleBatch",
-						new ObjectValuePair<>(
-							ObjectValidationRuleResourceImpl.class,
-							"postObjectDefinitionObjectValidationRuleBatch"));
+							ObjectRelationshipResourceImpl.class,
+							"putObjectRelationshipByExternalReferenceCode"));
 					put(
 						"mutation#deleteObjectValidationRule",
 						new ObjectValuePair<>(
@@ -418,6 +398,26 @@ public class ServletDataImpl implements ServletData {
 							ObjectValidationRuleResourceImpl.class,
 							"patchObjectValidationRule"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectValidationRule",
+						new ObjectValuePair<>(
+							ObjectValidationRuleResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectValidationRule"));
+					put(
+						"mutation#createObjectDefinitionObjectValidationRule",
+						new ObjectValuePair<>(
+							ObjectValidationRuleResourceImpl.class,
+							"postObjectDefinitionObjectValidationRule"));
+					put(
+						"mutation#createObjectDefinitionObjectValidationRuleBatch",
+						new ObjectValuePair<>(
+							ObjectValidationRuleResourceImpl.class,
+							"postObjectDefinitionObjectValidationRuleBatch"));
+					put(
+						"mutation#createObjectDefinitionObjectValidationRulesPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectValidationRuleResourceImpl.class,
+							"postObjectDefinitionObjectValidationRulesPageExportBatch"));
+					put(
 						"mutation#updateObjectValidationRule",
 						new ObjectValuePair<>(
 							ObjectValidationRuleResourceImpl.class,
@@ -428,15 +428,19 @@ public class ServletDataImpl implements ServletData {
 							ObjectValidationRuleResourceImpl.class,
 							"putObjectValidationRuleBatch"));
 					put(
+						"mutation#deleteObjectView",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class, "deleteObjectView"));
+					put(
+						"mutation#deleteObjectViewBatch",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"deleteObjectViewBatch"));
+					put(
 						"mutation#createObjectDefinitionByExternalReferenceCodeObjectView",
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
 							"postObjectDefinitionByExternalReferenceCodeObjectView"));
-					put(
-						"mutation#createObjectDefinitionObjectViewsPageExportBatch",
-						new ObjectValuePair<>(
-							ObjectViewResourceImpl.class,
-							"postObjectDefinitionObjectViewsPageExportBatch"));
 					put(
 						"mutation#createObjectDefinitionObjectView",
 						new ObjectValuePair<>(
@@ -448,14 +452,15 @@ public class ServletDataImpl implements ServletData {
 							ObjectViewResourceImpl.class,
 							"postObjectDefinitionObjectViewBatch"));
 					put(
-						"mutation#deleteObjectView",
-						new ObjectValuePair<>(
-							ObjectViewResourceImpl.class, "deleteObjectView"));
-					put(
-						"mutation#deleteObjectViewBatch",
+						"mutation#createObjectDefinitionObjectViewsPageExportBatch",
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
-							"deleteObjectViewBatch"));
+							"postObjectDefinitionObjectViewsPageExportBatch"));
+					put(
+						"mutation#createObjectViewCopy",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"postObjectViewCopy"));
 					put(
 						"mutation#updateObjectView",
 						new ObjectValuePair<>(
@@ -465,11 +470,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
 							"putObjectViewBatch"));
-					put(
-						"mutation#createObjectViewCopy",
-						new ObjectValuePair<>(
-							ObjectViewResourceImpl.class,
-							"postObjectViewCopy"));
 
 					put(
 						"query#objectAction",
@@ -486,20 +486,20 @@ public class ServletDataImpl implements ServletData {
 							ObjectActionResourceImpl.class,
 							"getObjectDefinitionObjectActionsPage"));
 					put(
-						"query#objectDefinitions",
+						"query#objectDefinition",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
-							"getObjectDefinitionsPage"));
+							"getObjectDefinition"));
 					put(
 						"query#objectDefinitionByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
 							"getObjectDefinitionByExternalReferenceCode"));
 					put(
-						"query#objectDefinition",
+						"query#objectDefinitions",
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
-							"getObjectDefinition"));
+							"getObjectDefinitionsPage"));
 					put(
 						"query#objectDefinitionByExternalReferenceCodeObjectFields",
 						new ObjectValuePair<>(
@@ -515,19 +515,19 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class, "getObjectField"));
 					put(
-						"query#objectFolders",
+						"query#objectFolder",
 						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class,
-							"getObjectFoldersPage"));
+							ObjectFolderResourceImpl.class, "getObjectFolder"));
 					put(
 						"query#objectFolderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ObjectFolderResourceImpl.class,
 							"getObjectFolderByExternalReferenceCode"));
 					put(
-						"query#objectFolder",
+						"query#objectFolders",
 						new ObjectValuePair<>(
-							ObjectFolderResourceImpl.class, "getObjectFolder"));
+							ObjectFolderResourceImpl.class,
+							"getObjectFoldersPage"));
 					put(
 						"query#objectDefinitionByExternalReferenceCodeObjectLayouts",
 						new ObjectValuePair<>(

@@ -41,6 +41,14 @@ public interface ProductShippingConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public ProductShippingConfiguration getProductIdShippingConfiguration(
+			Long id)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getProductIdShippingConfigurationHttpResponse(Long id)
+		throws Exception;
+
 	public void patchProductByExternalReferenceCodeShippingConfiguration(
 			String externalReferenceCode,
 			ProductShippingConfiguration productShippingConfiguration)
@@ -50,14 +58,6 @@ public interface ProductShippingConfigurationResource {
 			patchProductByExternalReferenceCodeShippingConfigurationHttpResponse(
 				String externalReferenceCode,
 				ProductShippingConfiguration productShippingConfiguration)
-		throws Exception;
-
-	public ProductShippingConfiguration getProductIdShippingConfiguration(
-			Long id)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getProductIdShippingConfigurationHttpResponse(Long id)
 		throws Exception;
 
 	public void patchProductIdShippingConfiguration(
@@ -290,108 +290,6 @@ public interface ProductShippingConfigurationResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchProductByExternalReferenceCodeShippingConfiguration(
-				String externalReferenceCode,
-				ProductShippingConfiguration productShippingConfiguration)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchProductByExternalReferenceCodeShippingConfigurationHttpResponse(
-					externalReferenceCode, productShippingConfiguration);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				patchProductByExternalReferenceCodeShippingConfigurationHttpResponse(
-					String externalReferenceCode,
-					ProductShippingConfiguration productShippingConfiguration)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				productShippingConfiguration.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public ProductShippingConfiguration getProductIdShippingConfiguration(
 				Long id)
 			throws Exception {
@@ -491,6 +389,108 @@ public interface ProductShippingConfigurationResource {
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/shippingConfiguration");
 
 			httpInvoker.path("id", id);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchProductByExternalReferenceCodeShippingConfiguration(
+				String externalReferenceCode,
+				ProductShippingConfiguration productShippingConfiguration)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchProductByExternalReferenceCodeShippingConfigurationHttpResponse(
+					externalReferenceCode, productShippingConfiguration);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				patchProductByExternalReferenceCodeShippingConfigurationHttpResponse(
+					String externalReferenceCode,
+					ProductShippingConfiguration productShippingConfiguration)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				productShippingConfiguration.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -117,20 +117,6 @@ public class ServletDataImpl implements ServletData {
 							FormDocumentResourceImpl.class,
 							"deleteFormDocumentBatch"));
 					put(
-						"mutation#updateFormRecord",
-						new ObjectValuePair<>(
-							FormRecordResourceImpl.class, "putFormRecord"));
-					put(
-						"mutation#updateFormRecordBatch",
-						new ObjectValuePair<>(
-							FormRecordResourceImpl.class,
-							"putFormRecordBatch"));
-					put(
-						"mutation#createFormFormRecordsPageExportBatch",
-						new ObjectValuePair<>(
-							FormRecordResourceImpl.class,
-							"postFormFormRecordsPageExportBatch"));
-					put(
 						"mutation#createFormFormRecord",
 						new ObjectValuePair<>(
 							FormRecordResourceImpl.class,
@@ -140,6 +126,20 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							FormRecordResourceImpl.class,
 							"postFormFormRecordBatch"));
+					put(
+						"mutation#createFormFormRecordsPageExportBatch",
+						new ObjectValuePair<>(
+							FormRecordResourceImpl.class,
+							"postFormFormRecordsPageExportBatch"));
+					put(
+						"mutation#updateFormRecord",
+						new ObjectValuePair<>(
+							FormRecordResourceImpl.class, "putFormRecord"));
+					put(
+						"mutation#updateFormRecordBatch",
+						new ObjectValuePair<>(
+							FormRecordResourceImpl.class,
+							"putFormRecordBatch"));
 					put(
 						"mutation#createSiteFormStructuresPageExportBatch",
 						new ObjectValuePair<>(
@@ -159,19 +159,19 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							FormDocumentResourceImpl.class, "getFormDocument"));
 					put(
-						"query#formRecord",
+						"query#formFormRecordByLatestDraft",
 						new ObjectValuePair<>(
-							FormRecordResourceImpl.class, "getFormRecord"));
+							FormRecordResourceImpl.class,
+							"getFormFormRecordByLatestDraft"));
 					put(
 						"query#formFormRecords",
 						new ObjectValuePair<>(
 							FormRecordResourceImpl.class,
 							"getFormFormRecordsPage"));
 					put(
-						"query#formFormRecordByLatestDraft",
+						"query#formRecord",
 						new ObjectValuePair<>(
-							FormRecordResourceImpl.class,
-							"getFormFormRecordByLatestDraft"));
+							FormRecordResourceImpl.class, "getFormRecord"));
 					put(
 						"query#formStructure",
 						new ObjectValuePair<>(

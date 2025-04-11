@@ -196,6 +196,34 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeFragmentComposition()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeFragmentComposition()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentCompositionNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeFragmentCompositionsPage()
 		throws Exception {
 
@@ -685,6 +713,13 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeFragmentComposition()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodeFragmentComposition()
 		throws Exception {
 
@@ -706,41 +741,6 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodeFragmentComposition()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeFragmentComposition()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentCompositionNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodeFragmentComposition()
-		throws Exception {
-
-		Assert.assertTrue(false);
 	}
 
 	@Test

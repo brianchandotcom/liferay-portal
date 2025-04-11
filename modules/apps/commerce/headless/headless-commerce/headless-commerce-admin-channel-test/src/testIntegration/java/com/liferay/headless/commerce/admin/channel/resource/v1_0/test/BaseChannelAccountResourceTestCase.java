@@ -451,29 +451,6 @@ public abstract class BaseChannelAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelByExternalReferenceCodeChannelAccount()
-		throws Exception {
-
-		ChannelAccount randomChannelAccount = randomChannelAccount();
-
-		ChannelAccount postChannelAccount =
-			testPostChannelByExternalReferenceCodeChannelAccount_addChannelAccount(
-				randomChannelAccount);
-
-		assertEquals(randomChannelAccount, postChannelAccount);
-		assertValid(postChannelAccount);
-	}
-
-	protected ChannelAccount
-			testPostChannelByExternalReferenceCodeChannelAccount_addChannelAccount(
-				ChannelAccount channelAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetChannelIdChannelAccountsPage() throws Exception {
 		Long id = testGetChannelIdChannelAccountsPage_getId();
 		Long irrelevantId =
@@ -905,6 +882,29 @@ public abstract class BaseChannelAccountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostChannelByExternalReferenceCodeChannelAccount()
+		throws Exception {
+
+		ChannelAccount randomChannelAccount = randomChannelAccount();
+
+		ChannelAccount postChannelAccount =
+			testPostChannelByExternalReferenceCodeChannelAccount_addChannelAccount(
+				randomChannelAccount);
+
+		assertEquals(randomChannelAccount, postChannelAccount);
+		assertValid(postChannelAccount);
+	}
+
+	protected ChannelAccount
+			testPostChannelByExternalReferenceCodeChannelAccount_addChannelAccount(
+				ChannelAccount channelAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

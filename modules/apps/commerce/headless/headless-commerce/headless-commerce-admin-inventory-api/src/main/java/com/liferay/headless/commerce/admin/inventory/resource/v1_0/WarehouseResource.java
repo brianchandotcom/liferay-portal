@@ -46,11 +46,35 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WarehouseResource {
 
+	public void deleteWarehouseByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteWarehouseId(Long id) throws Exception;
+
+	public Warehouse getWarehouseByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Warehouse getWarehouseId(Long id) throws Exception;
+
 	public Page<Warehouse> getWarehousesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Response patchWarehouseByExternalReferenceCode(
+			String externalReferenceCode, Warehouse warehouse)
+		throws Exception;
+
+	public Response patchWarehouseId(Long id, Warehouse warehouse)
+		throws Exception;
+
+	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;
+
+	public Response postWarehouseBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postWarehousesPageExportBatch(
@@ -60,32 +84,8 @@ public interface WarehouseResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;
-
-	public Response postWarehouseBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Warehouse getWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchWarehouseByExternalReferenceCode(
-			String externalReferenceCode, Warehouse warehouse)
-		throws Exception;
-
 	public Warehouse putWarehouseByExternalReferenceCode(
 			String externalReferenceCode, Warehouse warehouse)
-		throws Exception;
-
-	public void deleteWarehouseId(Long id) throws Exception;
-
-	public Warehouse getWarehouseId(Long id) throws Exception;
-
-	public Response patchWarehouseId(Long id, Warehouse warehouse)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

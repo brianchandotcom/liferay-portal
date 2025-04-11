@@ -46,11 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PriceListResource {
 
+	public void deletePriceList(Long id) throws Exception;
+
+	public Response deletePriceListBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deletePriceListByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public PriceList getPriceList(Long id) throws Exception;
+
+	public PriceList getPriceListByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<PriceList> getPriceListsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public PriceList patchPriceList(Long id, PriceList priceList)
+		throws Exception;
+
+	public PriceList patchPriceListByExternalReferenceCode(
+			String externalReferenceCode, PriceList priceList)
+		throws Exception;
+
+	public PriceList postPriceList(PriceList priceList) throws Exception;
+
+	public Response postPriceListBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postPriceListsPageExportBatch(
@@ -60,35 +87,8 @@ public interface PriceListResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public PriceList postPriceList(PriceList priceList) throws Exception;
-
-	public Response postPriceListBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deletePriceListByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PriceList getPriceListByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PriceList patchPriceListByExternalReferenceCode(
-			String externalReferenceCode, PriceList priceList)
-		throws Exception;
-
 	public PriceList putPriceListByExternalReferenceCode(
 			String externalReferenceCode, PriceList priceList)
-		throws Exception;
-
-	public void deletePriceList(Long id) throws Exception;
-
-	public Response deletePriceListBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public PriceList getPriceList(Long id) throws Exception;
-
-	public PriceList patchPriceList(Long id, PriceList priceList)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

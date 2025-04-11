@@ -454,29 +454,6 @@ public abstract class BaseDiscountProductResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountProduct()
-		throws Exception {
-
-		DiscountProduct randomDiscountProduct = randomDiscountProduct();
-
-		DiscountProduct postDiscountProduct =
-			testPostDiscountByExternalReferenceCodeDiscountProduct_addDiscountProduct(
-				randomDiscountProduct);
-
-		assertEquals(randomDiscountProduct, postDiscountProduct);
-		assertValid(postDiscountProduct);
-	}
-
-	protected DiscountProduct
-			testPostDiscountByExternalReferenceCodeDiscountProduct_addDiscountProduct(
-				DiscountProduct discountProduct)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountProductsPage() throws Exception {
 		Long id = testGetDiscountIdDiscountProductsPage_getId();
 		Long irrelevantId =
@@ -913,6 +890,29 @@ public abstract class BaseDiscountProductResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountProduct()
+		throws Exception {
+
+		DiscountProduct randomDiscountProduct = randomDiscountProduct();
+
+		DiscountProduct postDiscountProduct =
+			testPostDiscountByExternalReferenceCodeDiscountProduct_addDiscountProduct(
+				randomDiscountProduct);
+
+		assertEquals(randomDiscountProduct, postDiscountProduct);
+		assertValid(postDiscountProduct);
+	}
+
+	protected DiscountProduct
+			testPostDiscountByExternalReferenceCodeDiscountProduct_addDiscountProduct(
+				DiscountProduct discountProduct)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

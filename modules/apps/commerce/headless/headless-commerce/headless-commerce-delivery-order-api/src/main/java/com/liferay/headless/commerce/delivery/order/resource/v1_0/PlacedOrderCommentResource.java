@@ -46,16 +46,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlacedOrderCommentResource {
 
-	public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<PlacedOrderComment>
+			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public PlacedOrderComment getPlacedOrderComment(Long placedOrderCommentId)
 		throws Exception;
 
-	public Page<PlacedOrderComment>
-			getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage(
-				String externalReferenceCode, Pagination pagination)
+	public PlacedOrderComment getPlacedOrderCommentByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<PlacedOrderComment> getPlacedOrderPlacedOrderCommentsPage(

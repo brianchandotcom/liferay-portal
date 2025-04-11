@@ -46,11 +46,36 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OptionResource {
 
+	public Response deleteOption(Long id) throws Exception;
+
+	public Response deleteOptionBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteOptionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Option getOption(Long id) throws Exception;
+
+	public Option getOptionByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
 	public Page<Option> getOptionsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Response patchOption(Long id, Option option) throws Exception;
+
+	public Response patchOptionByExternalReferenceCode(
+			String externalReferenceCode, Option option)
+		throws Exception;
+
+	public Option postOption(Option option) throws Exception;
+
+	public Response postOptionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postOptionsPageExportBatch(
@@ -60,34 +85,9 @@ public interface OptionResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Option postOption(Option option) throws Exception;
-
-	public Response postOptionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteOptionByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Option getOptionByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Response patchOptionByExternalReferenceCode(
-			String externalReferenceCode, Option option)
-		throws Exception;
-
 	public Option putOptionByExternalReferenceCode(
 			String externalReferenceCode, Option option)
 		throws Exception;
-
-	public Response deleteOption(Long id) throws Exception;
-
-	public Response deleteOptionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Option getOption(Long id) throws Exception;
-
-	public Response patchOption(Long id, Option option) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

@@ -41,17 +41,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ChannelResource {
 
-	public Channel getOrderRuleChannelChannel(Long orderRuleChannelId)
-		throws Exception;
-
-	public Channel getOrderTypeChannelChannel(Long orderTypeChannelId)
-		throws Exception;
-
 	public Channel getOrderByExternalReferenceCodeChannel(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Channel getOrderIdChannel(Long id) throws Exception;
+
+	public Channel getOrderRuleChannelChannel(Long orderRuleChannelId)
+		throws Exception;
+
+	public Channel getOrderTypeChannelChannel(Long orderTypeChannelId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

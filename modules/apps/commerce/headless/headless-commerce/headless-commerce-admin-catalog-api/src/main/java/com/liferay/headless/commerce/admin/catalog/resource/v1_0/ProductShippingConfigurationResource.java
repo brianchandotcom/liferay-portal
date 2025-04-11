@@ -47,13 +47,13 @@ public interface ProductShippingConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public ProductShippingConfiguration getProductIdShippingConfiguration(
+			Long id)
+		throws Exception;
+
 	public Response patchProductByExternalReferenceCodeShippingConfiguration(
 			String externalReferenceCode,
 			ProductShippingConfiguration productShippingConfiguration)
-		throws Exception;
-
-	public ProductShippingConfiguration getProductIdShippingConfiguration(
-			Long id)
 		throws Exception;
 
 	public Response patchProductIdShippingConfiguration(

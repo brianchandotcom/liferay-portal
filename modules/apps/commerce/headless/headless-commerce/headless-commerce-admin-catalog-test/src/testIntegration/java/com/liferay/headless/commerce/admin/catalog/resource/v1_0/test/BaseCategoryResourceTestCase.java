@@ -372,13 +372,6 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPatchProductByExternalReferenceCodeCategory()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdCategoriesPage() throws Exception {
 		Long id = testGetProductIdCategoriesPage_getId();
 		Long irrelevantId = testGetProductIdCategoriesPage_getIrrelevantId();
@@ -526,6 +519,13 @@ public abstract class BaseCategoryResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCodeCategory()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -194,6 +194,13 @@ public abstract class BaseDefaultProductDisplayPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteChannelIdDefaultProductDisplayPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeDefaultProductDisplayPage()
 		throws Exception {
 
@@ -209,6 +216,25 @@ public abstract class BaseDefaultProductDisplayPageResourceTestCase {
 
 	@Test
 	public void testGraphQLGetChannelByExternalReferenceCodeDefaultProductDisplayPageNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetChannelIdDefaultProductDisplayPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetChannelIdDefaultProductDisplayPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetChannelIdDefaultProductDisplayPageNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);
@@ -237,32 +263,6 @@ public abstract class BaseDefaultProductDisplayPageResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteChannelIdDefaultProductDisplayPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetChannelIdDefaultProductDisplayPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetChannelIdDefaultProductDisplayPage()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetChannelIdDefaultProductDisplayPageNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	@Test

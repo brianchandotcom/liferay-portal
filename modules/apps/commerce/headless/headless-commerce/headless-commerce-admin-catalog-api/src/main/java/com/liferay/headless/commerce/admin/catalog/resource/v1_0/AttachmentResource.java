@@ -48,6 +48,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AttachmentResource {
 
+	public void deleteAttachment(Long id) throws Exception;
+
+	public Response deleteAttachmentBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteAttachmentByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -56,21 +61,24 @@ public interface AttachmentResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public Attachment patchAttachmentByExternalReferenceCode(
-			String externalReferenceCode, Attachment attachment)
-		throws Exception;
-
-	public Attachment putAttachmentByExternalReferenceCode(
-			String externalReferenceCode, Attachment attachment)
-		throws Exception;
-
-	public void deleteAttachment(Long id) throws Exception;
-
-	public Response deleteAttachmentBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(
 			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<Attachment> getProductByExternalReferenceCodeImagesPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<Attachment> getProductIdAttachmentsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public Page<Attachment> getProductIdImagesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public Attachment patchAttachmentByExternalReferenceCode(
+			String externalReferenceCode, Attachment attachment)
 		throws Exception;
 
 	public Attachment postProductByExternalReferenceCodeAttachment(
@@ -85,10 +93,6 @@ public interface AttachmentResource {
 			String externalReferenceCode, AttachmentUrl attachmentUrl)
 		throws Exception;
 
-	public Page<Attachment> getProductByExternalReferenceCodeImagesPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
 	public Attachment postProductByExternalReferenceCodeImage(
 			String externalReferenceCode, Attachment attachment)
 		throws Exception;
@@ -99,10 +103,6 @@ public interface AttachmentResource {
 
 	public Attachment postProductByExternalReferenceCodeImageByUrl(
 			String externalReferenceCode, AttachmentUrl attachmentUrl)
-		throws Exception;
-
-	public Page<Attachment> getProductIdAttachmentsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public Attachment postProductIdAttachment(Long id, Attachment attachment)
@@ -120,10 +120,6 @@ public interface AttachmentResource {
 			Long id, AttachmentUrl attachmentUrl)
 		throws Exception;
 
-	public Page<Attachment> getProductIdImagesPage(
-			Long id, Pagination pagination)
-		throws Exception;
-
 	public Attachment postProductIdImage(Long id, Attachment attachment)
 		throws Exception;
 
@@ -133,6 +129,10 @@ public interface AttachmentResource {
 
 	public Attachment postProductIdImageByUrl(
 			Long id, AttachmentUrl attachmentUrl)
+		throws Exception;
+
+	public Attachment putAttachmentByExternalReferenceCode(
+			String externalReferenceCode, Attachment attachment)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

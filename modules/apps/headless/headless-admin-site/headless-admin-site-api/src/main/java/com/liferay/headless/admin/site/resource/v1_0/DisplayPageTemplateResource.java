@@ -46,46 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DisplayPageTemplateResource {
 
-	public Page<DisplayPageTemplate>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage(
-				String siteExternalReferenceCode,
-				String displayPageTemplateFolderExternalReferenceCode,
-				Boolean flatten)
-		throws Exception;
-
-	public DisplayPageTemplate
-			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
-				String siteExternalReferenceCode,
-				String displayPageTemplateFolderExternalReferenceCode,
-				DisplayPageTemplate displayPageTemplate)
-		throws Exception;
-
-	public Page<DisplayPageTemplate>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
-				String siteExternalReferenceCode, String search,
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public DisplayPageTemplate
-			postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-				String siteExternalReferenceCode,
-				DisplayPageTemplate displayPageTemplate)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
 	public void deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode)
@@ -97,6 +57,34 @@ public interface DisplayPageTemplateResource {
 				String displayPageTemplateExternalReferenceCode)
 		throws Exception;
 
+	public Page<DisplayPageTemplate>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				Boolean flatten)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
+	public Page<DisplayPageTemplate>
+			getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
+				String siteExternalReferenceCode, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				String displayPageTemplateExternalReferenceCode,
+				String roleNames)
+		throws Exception;
+
 	public DisplayPageTemplate
 			patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,
@@ -105,9 +93,15 @@ public interface DisplayPageTemplateResource {
 		throws Exception;
 
 	public DisplayPageTemplate
-			putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode,
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception;
+
+	public DisplayPageTemplate
+			postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
 				DisplayPageTemplate displayPageTemplate)
 		throws Exception;
 
@@ -118,11 +112,17 @@ public interface DisplayPageTemplateResource {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
+	public DisplayPageTemplate
+			putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,
 				String displayPageTemplateExternalReferenceCode,
-				String roleNames)
+				DisplayPageTemplate displayPageTemplate)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

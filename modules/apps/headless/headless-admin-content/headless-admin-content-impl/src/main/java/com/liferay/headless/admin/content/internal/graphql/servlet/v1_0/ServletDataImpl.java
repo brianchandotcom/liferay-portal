@@ -94,26 +94,26 @@ public class ServletDataImpl implements ServletData {
 							PageDefinitionResourceImpl.class,
 							"postSitePageDefinitionPreview"));
 					put(
-						"mutation#createSiteStructuredContentDraft",
-						new ObjectValuePair<>(
-							StructuredContentResourceImpl.class,
-							"postSiteStructuredContentDraft"));
-					put(
 						"mutation#deleteStructuredContentByVersion",
 						new ObjectValuePair<>(
 							StructuredContentResourceImpl.class,
 							"deleteStructuredContentByVersion"));
-
 					put(
-						"query#displayPageTemplates",
+						"mutation#createSiteStructuredContentDraft",
 						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"getSiteDisplayPageTemplatesPage"));
+							StructuredContentResourceImpl.class,
+							"postSiteStructuredContentDraft"));
+
 					put(
 						"query#displayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
 							"getSiteDisplayPageTemplate"));
+					put(
+						"query#displayPageTemplates",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"getSiteDisplayPageTemplatesPage"));
 					put(
 						"query#structuredContents",
 						new ObjectValuePair<>(

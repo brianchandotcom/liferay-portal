@@ -51,8 +51,9 @@ public interface MappedProductResource {
 	public Response deleteMappedProductBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public MappedProduct patchMappedProduct(
-			Long mappedProductId, MappedProduct mappedProduct)
+	public MappedProduct
+			getProductByExternalReferenceCodeMappedProductBySequence(
+				String externalReferenceCode, String sequence)
 		throws Exception;
 
 	public Page<MappedProduct>
@@ -62,18 +63,21 @@ public interface MappedProductResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
-			String externalReferenceCode, MappedProduct mappedProduct)
-		throws Exception;
-
-	public MappedProduct
-			getProductByExternalReferenceCodeMappedProductBySequence(
-				String externalReferenceCode, String sequence)
+	public MappedProduct getProductIdMappedProductBySequence(
+			Long id, String sequence)
 		throws Exception;
 
 	public Page<MappedProduct> getProductIdMappedProductsPage(
 			Long id, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public MappedProduct patchMappedProduct(
+			Long mappedProductId, MappedProduct mappedProduct)
+		throws Exception;
+
+	public MappedProduct postProductByExternalReferenceCodeMappedProduct(
+			String externalReferenceCode, MappedProduct mappedProduct)
 		throws Exception;
 
 	public MappedProduct postProductIdMappedProduct(
@@ -82,10 +86,6 @@ public interface MappedProductResource {
 
 	public Response postProductIdMappedProductBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public MappedProduct getProductIdMappedProductBySequence(
-			Long id, String sequence)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

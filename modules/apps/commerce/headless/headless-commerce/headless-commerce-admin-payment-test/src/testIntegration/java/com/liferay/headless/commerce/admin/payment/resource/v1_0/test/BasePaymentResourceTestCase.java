@@ -254,6 +254,610 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePayment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Payment payment = testDeletePayment_addPayment();
+
+		assertHttpResponseStatusCode(
+			204, paymentResource.deletePaymentHttpResponse(payment.getId()));
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment.getId()));
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(0L));
+	}
+
+	protected Payment testDeletePayment_addPayment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePayment() throws Exception {
+
+		// No namespace
+
+		Payment payment1 = testGraphQLDeletePayment_addPayment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePayment",
+						new HashMap<String, Object>() {
+							{
+								put("id", payment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePayment"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"payment",
+					new HashMap<String, Object>() {
+						{
+							put("id", payment1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Payment payment2 = testGraphQLDeletePayment_addPayment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"deletePayment",
+							new HashMap<String, Object>() {
+								{
+									put("id", payment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPayment_v1_0",
+				"Object/deletePayment"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPayment_v1_0",
+					new GraphQLField(
+						"payment",
+						new HashMap<String, Object>() {
+							{
+								put("id", payment2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Payment testGraphQLDeletePayment_addPayment() throws Exception {
+		return testGraphQLPayment_addPayment();
+	}
+
+	@Test
+	public void testDeletePaymentBatch() throws Exception {
+		Payment payment1 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", null, payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
+
+		Payment payment2 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
+
+		payment1 = testDeletePaymentBatch_addPayment();
+		payment2 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
+		assertHttpResponseStatusCode(
+			200, paymentResource.getPaymentHttpResponse(payment2.getId()));
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
+	}
+
+	protected Payment testDeletePaymentBatch_addPayment() throws Exception {
+		return testDeletePayment_addPayment();
+	}
+
+	protected void testDeletePaymentBatch_deletePayment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			paymentResource.deletePaymentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeletePaymentByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Payment payment = testDeletePaymentByExternalReferenceCode_addPayment();
+
+		assertHttpResponseStatusCode(
+			204,
+			paymentResource.deletePaymentByExternalReferenceCodeHttpResponse(
+				payment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			paymentResource.getPaymentByExternalReferenceCodeHttpResponse(
+				payment.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			paymentResource.getPaymentByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Payment testDeletePaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetPayment() throws Exception {
+		Payment postPayment = testGetPayment_addPayment();
+
+		Payment getPayment = paymentResource.getPayment(postPayment.getId());
+
+		assertEquals(postPayment, getPayment);
+		assertValid(getPayment);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		Payment postPayment = testGetPayment_addPayment();
+
+		Payment getPayment = paymentResource.getPayment(postPayment.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postPayment.getId());
+
+		assertEquals(getPayment, PaymentSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected Payment testGetPayment_addPayment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPayment() throws Exception {
+		Payment payment = testGraphQLGetPayment_addPayment();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"payment",
+								new HashMap<String, Object>() {
+									{
+										put("id", payment.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/payment"))));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPayment_v1_0",
+								new GraphQLField(
+									"payment",
+									new HashMap<String, Object>() {
+										{
+											put("id", payment.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPayment_v1_0",
+						"Object/payment"))));
+	}
+
+	@Test
+	public void testGraphQLGetPaymentNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"payment",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"payment",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Payment testGraphQLGetPayment_addPayment() throws Exception {
+		return testGraphQLPayment_addPayment();
+	}
+
+	@Test
+	public void testGetPaymentByExternalReferenceCode() throws Exception {
+		Payment postPayment =
+			testGetPaymentByExternalReferenceCode_addPayment();
+
+		Payment getPayment = paymentResource.getPaymentByExternalReferenceCode(
+			postPayment.getExternalReferenceCode());
+
+		assertEquals(postPayment, getPayment);
+		assertValid(getPayment);
+	}
+
+	protected Payment testGetPaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPaymentByExternalReferenceCode()
+		throws Exception {
+
+		Payment payment =
+			testGraphQLGetPaymentByExternalReferenceCode_addPayment();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"paymentByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												payment.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/paymentByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPayment_v1_0",
+								new GraphQLField(
+									"paymentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													payment.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPayment_v1_0",
+						"Object/paymentByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetPaymentByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"paymentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"paymentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Payment testGraphQLGetPaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		return testGraphQLPayment_addPayment();
+	}
+
+	@Test
 	public void testGetPaymentsPage() throws Exception {
 		Page<Payment> page = paymentResource.getPaymentsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -632,178 +1236,28 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	@Test
-	public void testPostPayment() throws Exception {
-		Payment randomPayment = randomPayment();
+	public void testPatchPayment() throws Exception {
+		Payment postPayment = testPatchPayment_addPayment();
 
-		Payment postPayment = testPostPayment_addPayment(randomPayment);
+		Payment randomPatchPayment = randomPatchPayment();
 
-		assertEquals(randomPayment, postPayment);
-		assertValid(postPayment);
-	}
-
-	protected Payment testPostPayment_addPayment(Payment payment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeletePaymentByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Payment payment = testDeletePaymentByExternalReferenceCode_addPayment();
+		Payment patchPayment = paymentResource.patchPayment(
+			postPayment.getId(), randomPatchPayment);
 
-		assertHttpResponseStatusCode(
-			204,
-			paymentResource.deletePaymentByExternalReferenceCodeHttpResponse(
-				payment.getExternalReferenceCode()));
+		Payment expectedPatchPayment = postPayment.clone();
 
-		assertHttpResponseStatusCode(
-			404,
-			paymentResource.getPaymentByExternalReferenceCodeHttpResponse(
-				payment.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			paymentResource.getPaymentByExternalReferenceCodeHttpResponse("-"));
-	}
+		BeanTestUtil.copyProperties(randomPatchPayment, expectedPatchPayment);
 
-	protected Payment testDeletePaymentByExternalReferenceCode_addPayment()
-		throws Exception {
+		Payment getPayment = paymentResource.getPayment(patchPayment.getId());
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetPaymentByExternalReferenceCode() throws Exception {
-		Payment postPayment =
-			testGetPaymentByExternalReferenceCode_addPayment();
-
-		Payment getPayment = paymentResource.getPaymentByExternalReferenceCode(
-			postPayment.getExternalReferenceCode());
-
-		assertEquals(postPayment, getPayment);
+		assertEquals(expectedPatchPayment, getPayment);
 		assertValid(getPayment);
 	}
 
-	protected Payment testGetPaymentByExternalReferenceCode_addPayment()
-		throws Exception {
-
+	protected Payment testPatchPayment_addPayment() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPaymentByExternalReferenceCode()
-		throws Exception {
-
-		Payment payment =
-			testGraphQLGetPaymentByExternalReferenceCode_addPayment();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				payment,
-				PaymentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"paymentByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												payment.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/paymentByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminPayment_v1_0
-
-		Assert.assertTrue(
-			equals(
-				payment,
-				PaymentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminPayment_v1_0",
-								new GraphQLField(
-									"paymentByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													payment.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminPayment_v1_0",
-						"Object/paymentByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetPaymentByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"paymentByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminPayment_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminPayment_v1_0",
-						new GraphQLField(
-							"paymentByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Payment testGraphQLGetPaymentByExternalReferenceCode_addPayment()
-		throws Exception {
-
-		return testGraphQLPayment_addPayment();
 	}
 
 	@Test
@@ -830,6 +1284,62 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	protected Payment testPatchPaymentByExternalReferenceCode_addPayment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostPayment() throws Exception {
+		Payment randomPayment = randomPayment();
+
+		Payment postPayment = testPostPayment_addPayment(randomPayment);
+
+		assertEquals(randomPayment, postPayment);
+		assertValid(postPayment);
+	}
+
+	protected Payment testPostPayment_addPayment(Payment payment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostPaymentByExternalReferenceCodeRefund()
+		throws Exception {
+
+		Payment randomPayment = randomPayment();
+
+		Payment postPayment =
+			testPostPaymentByExternalReferenceCodeRefund_addPayment(
+				randomPayment);
+
+		assertEquals(randomPayment, postPayment);
+		assertValid(postPayment);
+	}
+
+	protected Payment testPostPaymentByExternalReferenceCodeRefund_addPayment(
+			Payment payment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostPaymentRefund() throws Exception {
+		Payment randomPayment = randomPayment();
+
+		Payment postPayment = testPostPaymentRefund_addPayment(randomPayment);
+
+		assertEquals(randomPayment, postPayment);
+		assertValid(postPayment);
+	}
+
+	protected Payment testPostPaymentRefund_addPayment(Payment payment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -881,516 +1391,6 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	protected Payment testPutPaymentByExternalReferenceCode_addPayment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostPaymentByExternalReferenceCodeRefund()
-		throws Exception {
-
-		Payment randomPayment = randomPayment();
-
-		Payment postPayment =
-			testPostPaymentByExternalReferenceCodeRefund_addPayment(
-				randomPayment);
-
-		assertEquals(randomPayment, postPayment);
-		assertValid(postPayment);
-	}
-
-	protected Payment testPostPaymentByExternalReferenceCodeRefund_addPayment(
-			Payment payment)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeletePayment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Payment payment = testDeletePayment_addPayment();
-
-		assertHttpResponseStatusCode(
-			204, paymentResource.deletePaymentHttpResponse(payment.getId()));
-
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment.getId()));
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(0L));
-	}
-
-	protected Payment testDeletePayment_addPayment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeletePayment() throws Exception {
-
-		// No namespace
-
-		Payment payment1 = testGraphQLDeletePayment_addPayment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePayment",
-						new HashMap<String, Object>() {
-							{
-								put("id", payment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePayment"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"payment",
-					new HashMap<String, Object>() {
-						{
-							put("id", payment1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminPayment_v1_0
-
-		Payment payment2 = testGraphQLDeletePayment_addPayment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminPayment_v1_0",
-						new GraphQLField(
-							"deletePayment",
-							new HashMap<String, Object>() {
-								{
-									put("id", payment2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminPayment_v1_0",
-				"Object/deletePayment"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminPayment_v1_0",
-					new GraphQLField(
-						"payment",
-						new HashMap<String, Object>() {
-							{
-								put("id", payment2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected Payment testGraphQLDeletePayment_addPayment() throws Exception {
-		return testGraphQLPayment_addPayment();
-	}
-
-	@Test
-	public void testDeletePaymentBatch() throws Exception {
-		Payment payment1 = testDeletePaymentBatch_addPayment();
-
-		testDeletePaymentBatch_deletePayment(
-			"COMPLETED", null, payment1.getId());
-
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
-
-		Payment payment2 = testDeletePaymentBatch_addPayment();
-
-		testDeletePaymentBatch_deletePayment(
-			"COMPLETED", payment2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
-
-		payment1 = testDeletePaymentBatch_addPayment();
-		payment2 = testDeletePaymentBatch_addPayment();
-
-		testDeletePaymentBatch_deletePayment(
-			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
-
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
-		assertHttpResponseStatusCode(
-			200, paymentResource.getPaymentHttpResponse(payment2.getId()));
-
-		testDeletePaymentBatch_deletePayment(
-			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
-
-		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
-	}
-
-	protected Payment testDeletePaymentBatch_addPayment() throws Exception {
-		return testDeletePayment_addPayment();
-	}
-
-	protected void testDeletePaymentBatch_deletePayment(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			paymentResource.deletePaymentBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetPayment() throws Exception {
-		Payment postPayment = testGetPayment_addPayment();
-
-		Payment getPayment = paymentResource.getPayment(postPayment.getId());
-
-		assertEquals(postPayment, getPayment);
-		assertValid(getPayment);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		Payment postPayment = testGetPayment_addPayment();
-
-		Payment getPayment = paymentResource.getPayment(postPayment.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postPayment.getId());
-
-		assertEquals(getPayment, PaymentSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected Payment testGetPayment_addPayment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPayment() throws Exception {
-		Payment payment = testGraphQLGetPayment_addPayment();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				payment,
-				PaymentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"payment",
-								new HashMap<String, Object>() {
-									{
-										put("id", payment.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/payment"))));
-
-		// Using the namespace headlessCommerceAdminPayment_v1_0
-
-		Assert.assertTrue(
-			equals(
-				payment,
-				PaymentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminPayment_v1_0",
-								new GraphQLField(
-									"payment",
-									new HashMap<String, Object>() {
-										{
-											put("id", payment.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminPayment_v1_0",
-						"Object/payment"))));
-	}
-
-	@Test
-	public void testGraphQLGetPaymentNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"payment",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminPayment_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminPayment_v1_0",
-						new GraphQLField(
-							"payment",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Payment testGraphQLGetPayment_addPayment() throws Exception {
-		return testGraphQLPayment_addPayment();
-	}
-
-	@Test
-	public void testPatchPayment() throws Exception {
-		Payment postPayment = testPatchPayment_addPayment();
-
-		Payment randomPatchPayment = randomPatchPayment();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Payment patchPayment = paymentResource.patchPayment(
-			postPayment.getId(), randomPatchPayment);
-
-		Payment expectedPatchPayment = postPayment.clone();
-
-		BeanTestUtil.copyProperties(randomPatchPayment, expectedPatchPayment);
-
-		Payment getPayment = paymentResource.getPayment(patchPayment.getId());
-
-		assertEquals(expectedPatchPayment, getPayment);
-		assertValid(getPayment);
-	}
-
-	protected Payment testPatchPayment_addPayment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostPaymentRefund() throws Exception {
-		Payment randomPayment = randomPayment();
-
-		Payment postPayment = testPostPaymentRefund_addPayment(randomPayment);
-
-		assertEquals(randomPayment, postPayment);
-		assertValid(postPayment);
-	}
-
-	protected Payment testPostPaymentRefund_addPayment(Payment payment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

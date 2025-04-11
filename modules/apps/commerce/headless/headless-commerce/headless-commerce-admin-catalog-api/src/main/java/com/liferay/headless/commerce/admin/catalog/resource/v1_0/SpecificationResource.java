@@ -46,11 +46,40 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SpecificationResource {
 
+	public void deleteSpecification(Long id) throws Exception;
+
+	public Response deleteSpecificationBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Specification getSpecification(Long id) throws Exception;
+
+	public Specification getSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Specification> getSpecificationsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Specification patchSpecification(
+			Long id, Specification specification)
+		throws Exception;
+
+	public Specification patchSpecificationByExternalReferenceCode(
+			String externalReferenceCode, Specification specification)
+		throws Exception;
+
+	public Specification postSpecification(Specification specification)
+		throws Exception;
+
+	public Response postSpecificationBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postSpecificationsPageExportBatch(
@@ -60,37 +89,8 @@ public interface SpecificationResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Specification postSpecification(Specification specification)
-		throws Exception;
-
-	public Response postSpecificationBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteSpecificationByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Specification getSpecificationByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Specification patchSpecificationByExternalReferenceCode(
-			String externalReferenceCode, Specification specification)
-		throws Exception;
-
 	public Specification putSpecificationByExternalReferenceCode(
 			String externalReferenceCode, Specification specification)
-		throws Exception;
-
-	public void deleteSpecification(Long id) throws Exception;
-
-	public Response deleteSpecificationBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Specification getSpecification(Long id) throws Exception;
-
-	public Specification patchSpecification(
-			Long id, Specification specification)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

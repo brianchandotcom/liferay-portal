@@ -54,10 +54,6 @@ public interface CategoryDisplayPageResource {
 
 	public CategoryDisplayPage getCategoryDisplayPage(Long id) throws Exception;
 
-	public CategoryDisplayPage patchCategoryDisplayPage(
-			Long id, CategoryDisplayPage categoryDisplayPage)
-		throws Exception;
-
 	public Page<CategoryDisplayPage>
 			getChannelByExternalReferenceCodeCategoryDisplayPagesPage(
 				String externalReferenceCode, String search,
@@ -66,17 +62,21 @@ public interface CategoryDisplayPageResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public CategoryDisplayPage
-			postChannelByExternalReferenceCodeCategoryDisplayPage(
-				String externalReferenceCode,
-				CategoryDisplayPage categoryDisplayPage)
-		throws Exception;
-
 	public Page<CategoryDisplayPage> getChannelIdCategoryDisplayPagesPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public CategoryDisplayPage patchCategoryDisplayPage(
+			Long id, CategoryDisplayPage categoryDisplayPage)
+		throws Exception;
+
+	public CategoryDisplayPage
+			postChannelByExternalReferenceCodeCategoryDisplayPage(
+				String externalReferenceCode,
+				CategoryDisplayPage categoryDisplayPage)
 		throws Exception;
 
 	public CategoryDisplayPage postChannelIdCategoryDisplayPage(

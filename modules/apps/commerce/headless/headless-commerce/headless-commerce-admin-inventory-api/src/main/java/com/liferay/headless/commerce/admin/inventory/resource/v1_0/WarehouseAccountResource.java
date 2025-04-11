@@ -58,16 +58,16 @@ public interface WarehouseAccountResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public WarehouseAccount
-			postWarehouseByExternalReferenceCodeWarehouseAccount(
-				String externalReferenceCode, WarehouseAccount warehouseAccount)
-		throws Exception;
-
 	public Page<WarehouseAccount> getWarehouseIdWarehouseAccountsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public WarehouseAccount
+			postWarehouseByExternalReferenceCodeWarehouseAccount(
+				String externalReferenceCode, WarehouseAccount warehouseAccount)
 		throws Exception;
 
 	public WarehouseAccount postWarehouseIdWarehouseAccount(

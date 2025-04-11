@@ -59,27 +59,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createSiteDSEnvelopesPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("fromDate") String fromDate,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("order") String order,
-			@GraphQLName("status") String status,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dsEnvelopeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dsEnvelopeResource ->
-				dsEnvelopeResource.postSiteDSEnvelopesPageExportBatch(
-					Long.valueOf(siteKey), fromDate, keywords, order, status,
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
 	public DSEnvelope createSiteDSEnvelope(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("dsEnvelope") DSEnvelope dsEnvelope)
@@ -104,6 +83,27 @@ public class Mutation {
 			this::_populateResourceContext,
 			dsEnvelopeResource -> dsEnvelopeResource.postSiteDSEnvelopeBatch(
 				Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteDSEnvelopesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("fromDate") String fromDate,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("order") String order,
+			@GraphQLName("status") String status,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dsEnvelopeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dsEnvelopeResource ->
+				dsEnvelopeResource.postSiteDSEnvelopesPageExportBatch(
+					Long.valueOf(siteKey), fromDate, keywords, order, status,
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField

@@ -46,49 +46,55 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RoleResource {
 
-	public Page<Role> getRolesPage(
-			String search, Integer[] types,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination)
+	public void
+			deleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation(
+				String externalReferenceCode, Long userAccountId,
+				Long organizationId)
 		throws Exception;
 
-	public Response postRolesPageExportBatch(
-			String search, Integer[] types,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			String callbackURL, String contentType, String fieldNames)
+	public void deleteOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
 		throws Exception;
 
-	public Role postRole(Role role) throws Exception;
+	public void deleteRole(Long roleId) throws Exception;
 
-	public Response postRoleBatch(String callbackURL, Object object)
+	public Response deleteRoleBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteRoleByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Role getRoleByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Role patchRoleByExternalReferenceCode(
-			String externalReferenceCode, Role role)
-		throws Exception;
-
-	public Role putRoleByExternalReferenceCode(
-			String externalReferenceCode, Role role)
 		throws Exception;
 
 	public void deleteRoleByExternalReferenceCodeUserAccountAssociation(
 			String externalReferenceCode, Long userAccountId)
 		throws Exception;
 
-	public void postRoleByExternalReferenceCodeUserAccountAssociation(
-			String externalReferenceCode, Long userAccountId)
+	public void deleteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId)
 		throws Exception;
 
-	public void
-			deleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation(
-				String externalReferenceCode, Long userAccountId,
-				Long organizationId)
+	public void deleteSiteRoleByExternalReferenceCodeUserAccountAssociation(
+			String externalReferenceCode, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public void deleteSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public Role getRole(Long roleId) throws Exception;
+
+	public Role getRoleByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public Page<Role> getRolesPage(
+			String search, Integer[] types,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination)
+		throws Exception;
+
+	public Role patchRole(Long roleId, Role role) throws Exception;
+
+	public Role patchRoleByExternalReferenceCode(
+			String externalReferenceCode, Role role)
 		throws Exception;
 
 	public void
@@ -97,49 +103,43 @@ public interface RoleResource {
 				Long organizationId)
 		throws Exception;
 
-	public void deleteSiteRoleByExternalReferenceCodeUserAccountAssociation(
-			String externalReferenceCode, Long userAccountId, Long siteId)
+	public void postOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public Role postRole(Role role) throws Exception;
+
+	public Response postRoleBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void postRoleByExternalReferenceCodeUserAccountAssociation(
+			String externalReferenceCode, Long userAccountId)
+		throws Exception;
+
+	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
+		throws Exception;
+
+	public Response postRolesPageExportBatch(
+			String search, Integer[] types,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public void postSiteRoleByExternalReferenceCodeUserAccountAssociation(
 			String externalReferenceCode, Long userAccountId, Long siteId)
 		throws Exception;
 
-	public void deleteRole(Long roleId) throws Exception;
-
-	public Response deleteRoleBatch(String callbackURL, Object object)
+	public void postSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
 		throws Exception;
-
-	public Role getRole(Long roleId) throws Exception;
-
-	public Role patchRole(Long roleId, Role role) throws Exception;
 
 	public Role putRole(Long roleId, Role role) throws Exception;
 
 	public Response putRoleBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteRoleUserAccountAssociation(
-			Long roleId, Long userAccountId)
-		throws Exception;
-
-	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
-		throws Exception;
-
-	public void deleteOrganizationRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long organizationId)
-		throws Exception;
-
-	public void postOrganizationRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long organizationId)
-		throws Exception;
-
-	public void deleteSiteRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long siteId)
-		throws Exception;
-
-	public void postSiteRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long siteId)
+	public Role putRoleByExternalReferenceCode(
+			String externalReferenceCode, Role role)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

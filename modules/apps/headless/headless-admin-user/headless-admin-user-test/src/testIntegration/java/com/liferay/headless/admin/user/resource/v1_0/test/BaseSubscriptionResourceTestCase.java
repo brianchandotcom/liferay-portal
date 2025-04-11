@@ -182,141 +182,6 @@ public abstract class BaseSubscriptionResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccountSubscriptionsPage() throws Exception {
-		Page<Subscription> page =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				RandomTestUtil.randomString(), Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		Subscription subscription1 =
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				randomSubscription());
-
-		Subscription subscription2 =
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				randomSubscription());
-
-		page = subscriptionResource.getMyUserAccountSubscriptionsPage(
-			null, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(subscription1, (List<Subscription>)page.getItems());
-		assertContains(subscription2, (List<Subscription>)page.getItems());
-		assertValid(
-			page, testGetMyUserAccountSubscriptionsPage_getExpectedActions());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetMyUserAccountSubscriptionsPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetMyUserAccountSubscriptionsPageWithPagination()
-		throws Exception {
-
-		Page<Subscription> subscriptionPage =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			subscriptionPage.getTotalCount());
-
-		Subscription subscription1 =
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				randomSubscription());
-
-		Subscription subscription2 =
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				randomSubscription());
-
-		Subscription subscription3 =
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				randomSubscription());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Subscription> page1 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(subscription1, (List<Subscription>)page1.getItems());
-
-			Page<Subscription> page2 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(subscription2, (List<Subscription>)page2.getItems());
-
-			Page<Subscription> page3 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(subscription3, (List<Subscription>)page3.getItems());
-		}
-		else {
-			Page<Subscription> page1 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(1, totalCount + 2));
-
-			List<Subscription> subscriptions1 =
-				(List<Subscription>)page1.getItems();
-
-			Assert.assertEquals(
-				subscriptions1.toString(), totalCount + 2,
-				subscriptions1.size());
-
-			Page<Subscription> page2 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Subscription> subscriptions2 =
-				(List<Subscription>)page2.getItems();
-
-			Assert.assertEquals(
-				subscriptions2.toString(), 1, subscriptions2.size());
-
-			Page<Subscription> page3 =
-				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(subscription1, (List<Subscription>)page3.getItems());
-			assertContains(subscription2, (List<Subscription>)page3.getItems());
-			assertContains(subscription3, (List<Subscription>)page3.getItems());
-		}
-	}
-
-	protected Subscription
-			testGetMyUserAccountSubscriptionsPage_addSubscription(
-				Subscription subscription)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteMyUserAccountSubscription() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Subscription subscription =
@@ -463,6 +328,141 @@ public abstract class BaseSubscriptionResourceTestCase {
 		throws Exception {
 
 		return testGraphQLSubscription_addSubscription();
+	}
+
+	@Test
+	public void testGetMyUserAccountSubscriptionsPage() throws Exception {
+		Page<Subscription> page =
+			subscriptionResource.getMyUserAccountSubscriptionsPage(
+				RandomTestUtil.randomString(), Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Subscription subscription1 =
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				randomSubscription());
+
+		Subscription subscription2 =
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				randomSubscription());
+
+		page = subscriptionResource.getMyUserAccountSubscriptionsPage(
+			null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(subscription1, (List<Subscription>)page.getItems());
+		assertContains(subscription2, (List<Subscription>)page.getItems());
+		assertValid(
+			page, testGetMyUserAccountSubscriptionsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetMyUserAccountSubscriptionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetMyUserAccountSubscriptionsPageWithPagination()
+		throws Exception {
+
+		Page<Subscription> subscriptionPage =
+			subscriptionResource.getMyUserAccountSubscriptionsPage(null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			subscriptionPage.getTotalCount());
+
+		Subscription subscription1 =
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				randomSubscription());
+
+		Subscription subscription2 =
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				randomSubscription());
+
+		Subscription subscription3 =
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				randomSubscription());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Subscription> page1 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(subscription1, (List<Subscription>)page1.getItems());
+
+			Page<Subscription> page2 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(subscription2, (List<Subscription>)page2.getItems());
+
+			Page<Subscription> page3 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(subscription3, (List<Subscription>)page3.getItems());
+		}
+		else {
+			Page<Subscription> page1 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(1, totalCount + 2));
+
+			List<Subscription> subscriptions1 =
+				(List<Subscription>)page1.getItems();
+
+			Assert.assertEquals(
+				subscriptions1.toString(), totalCount + 2,
+				subscriptions1.size());
+
+			Page<Subscription> page2 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Subscription> subscriptions2 =
+				(List<Subscription>)page2.getItems();
+
+			Assert.assertEquals(
+				subscriptions2.toString(), 1, subscriptions2.size());
+
+			Page<Subscription> page3 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(subscription1, (List<Subscription>)page3.getItems());
+			assertContains(subscription2, (List<Subscription>)page3.getItems());
+			assertContains(subscription3, (List<Subscription>)page3.getItems());
+		}
+	}
+
+	protected Subscription
+			testGetMyUserAccountSubscriptionsPage_addSubscription(
+				Subscription subscription)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Subscription testGraphQLSubscription_addSubscription()

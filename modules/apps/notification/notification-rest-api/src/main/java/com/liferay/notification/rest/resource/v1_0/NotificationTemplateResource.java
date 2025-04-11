@@ -46,38 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NotificationTemplateResource {
 
-	public Page<NotificationTemplate> getNotificationTemplatesPage(
-			String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postNotificationTemplatesPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public NotificationTemplate postNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws Exception;
-
-	public Response postNotificationTemplateBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public NotificationTemplate putNotificationTemplateByExternalReferenceCode(
-			String externalReferenceCode,
-			NotificationTemplate notificationTemplate)
-		throws Exception;
-
 	public void deleteNotificationTemplate(Long notificationTemplateId)
 		throws Exception;
 
@@ -89,9 +57,40 @@ public interface NotificationTemplateResource {
 			Long notificationTemplateId)
 		throws Exception;
 
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<NotificationTemplate> getNotificationTemplatesPage(
+			String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public NotificationTemplate patchNotificationTemplate(
 			Long notificationTemplateId,
 			NotificationTemplate notificationTemplate)
+		throws Exception;
+
+	public NotificationTemplate postNotificationTemplate(
+			NotificationTemplate notificationTemplate)
+		throws Exception;
+
+	public Response postNotificationTemplateBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public NotificationTemplate postNotificationTemplateCopy(
+			Long notificationTemplateId)
+		throws Exception;
+
+	public Response postNotificationTemplatesPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public NotificationTemplate putNotificationTemplate(
@@ -103,8 +102,9 @@ public interface NotificationTemplateResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public NotificationTemplate postNotificationTemplateCopy(
-			Long notificationTemplateId)
+	public NotificationTemplate putNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode,
+			NotificationTemplate notificationTemplate)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

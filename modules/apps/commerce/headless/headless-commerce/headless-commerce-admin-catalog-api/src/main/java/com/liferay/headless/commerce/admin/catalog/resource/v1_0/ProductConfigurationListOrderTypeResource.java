@@ -59,19 +59,19 @@ public interface ProductConfigurationListOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public ProductConfigurationListOrderType
-			postProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
-				String externalReferenceCode,
-				ProductConfigurationListOrderType
-					productConfigurationListOrderType)
-		throws Exception;
-
 	public Page<ProductConfigurationListOrderType>
 			getProductConfigurationListIdProductConfigurationListOrderTypesPage(
 				Long id, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ProductConfigurationListOrderType
+			postProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
+				String externalReferenceCode,
+				ProductConfigurationListOrderType
+					productConfigurationListOrderType)
 		throws Exception;
 
 	public ProductConfigurationListOrderType

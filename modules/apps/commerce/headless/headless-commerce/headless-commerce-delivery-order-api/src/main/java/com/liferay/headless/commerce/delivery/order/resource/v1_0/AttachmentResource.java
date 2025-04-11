@@ -47,13 +47,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AttachmentResource {
 
-	public Page<Attachment>
-			getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Attachment postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
-			String externalReferenceCode, AttachmentBase64 attachmentBase64)
+	public void deletePlacedOrderAttachment(
+			Long attachmentId, Long placedOrderId)
 		throws Exception;
 
 	public void
@@ -66,17 +61,22 @@ public interface AttachmentResource {
 			Long placedOrderId, Pagination pagination)
 		throws Exception;
 
-	public Response postPlacedOrderAttachmentsPageExportBatch(
-			Long placedOrderId, String callbackURL, String contentType,
-			String fieldNames)
+	public Page<Attachment>
+			getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public Attachment postPlacedOrderAttachmentByBase64(
 			Long placedOrderId, AttachmentBase64 attachmentBase64)
 		throws Exception;
 
-	public void deletePlacedOrderAttachment(
-			Long attachmentId, Long placedOrderId)
+	public Response postPlacedOrderAttachmentsPageExportBatch(
+			Long placedOrderId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public Attachment postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
+			String externalReferenceCode, AttachmentBase64 attachmentBase64)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

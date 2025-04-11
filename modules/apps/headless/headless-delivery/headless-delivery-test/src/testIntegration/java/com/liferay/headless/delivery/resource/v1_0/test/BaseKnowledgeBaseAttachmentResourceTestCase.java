@@ -237,157 +237,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
-		throws Exception {
-
-		Long knowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId();
-		Long irrelevantKnowledgeBaseArticleId =
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId();
-
-		Page<KnowledgeBaseAttachment> page =
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-					knowledgeBaseArticleId);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantKnowledgeBaseArticleId != null) {
-			KnowledgeBaseAttachment irrelevantKnowledgeBaseAttachment =
-				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
-					irrelevantKnowledgeBaseArticleId,
-					randomIrrelevantKnowledgeBaseAttachment());
-
-			page =
-				knowledgeBaseAttachmentResource.
-					getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-						irrelevantKnowledgeBaseArticleId);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantKnowledgeBaseAttachment,
-				(List<KnowledgeBaseAttachment>)page.getItems());
-			assertValid(
-				page,
-				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
-					irrelevantKnowledgeBaseArticleId));
-		}
-
-		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
-				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
-
-		KnowledgeBaseAttachment knowledgeBaseAttachment2 =
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
-				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
-
-		page =
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-					knowledgeBaseArticleId);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			knowledgeBaseAttachment1,
-			(List<KnowledgeBaseAttachment>)page.getItems());
-		assertContains(
-			knowledgeBaseAttachment2,
-			(List<KnowledgeBaseAttachment>)page.getItems());
-		assertValid(
-			page,
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
-				knowledgeBaseArticleId));
-
-		knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
-			knowledgeBaseAttachment1.getId());
-
-		knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
-			knowledgeBaseAttachment2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
-				Long knowledgeBaseArticleId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments/batch".
-				replace(
-					"{knowledgeBaseArticleId}",
-					String.valueOf(knowledgeBaseArticleId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
-		return expectedActions;
-	}
-
-	protected KnowledgeBaseAttachment
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
-				Long knowledgeBaseArticleId,
-				KnowledgeBaseAttachment knowledgeBaseAttachment)
-		throws Exception {
-
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				knowledgeBaseArticleId, knowledgeBaseAttachment,
-				getMultipartFiles());
-	}
-
-	protected Long
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long
-			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
-		throws Exception {
-
-		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
-			randomKnowledgeBaseAttachment();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-				randomKnowledgeBaseAttachment, multipartFiles);
-
-		assertEquals(
-			randomKnowledgeBaseAttachment, postKnowledgeBaseAttachment);
-		assertValid(postKnowledgeBaseAttachment);
-
-		assertValid(postKnowledgeBaseAttachment, multipartFiles);
-	}
-
-	protected KnowledgeBaseAttachment
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-				KnowledgeBaseAttachment knowledgeBaseAttachment,
-				Map<String, File> multipartFiles)
-		throws Exception {
-
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
-				knowledgeBaseAttachment, multipartFiles);
-	}
-
-	@Test
 	public void testDeleteKnowledgeBaseAttachment() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseAttachment knowledgeBaseAttachment =
@@ -548,6 +397,181 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseAttachmentResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					"-"));
+	}
+
+	protected Long
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseAttachment
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
+		throws Exception {
+
+		Long knowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId();
+		Long irrelevantKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId();
+
+		Page<KnowledgeBaseAttachment> page =
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+					knowledgeBaseArticleId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantKnowledgeBaseArticleId != null) {
+			KnowledgeBaseAttachment irrelevantKnowledgeBaseAttachment =
+				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
+					irrelevantKnowledgeBaseArticleId,
+					randomIrrelevantKnowledgeBaseAttachment());
+
+			page =
+				knowledgeBaseAttachmentResource.
+					getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+						irrelevantKnowledgeBaseArticleId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantKnowledgeBaseAttachment,
+				(List<KnowledgeBaseAttachment>)page.getItems());
+			assertValid(
+				page,
+				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
+					irrelevantKnowledgeBaseArticleId));
+		}
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
+				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment2 =
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
+				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
+
+		page =
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+					knowledgeBaseArticleId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			knowledgeBaseAttachment1,
+			(List<KnowledgeBaseAttachment>)page.getItems());
+		assertContains(
+			knowledgeBaseAttachment2,
+			(List<KnowledgeBaseAttachment>)page.getItems());
+		assertValid(
+			page,
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
+				knowledgeBaseArticleId));
+
+		knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
+			knowledgeBaseAttachment1.getId());
+
+		knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
+			knowledgeBaseAttachment2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
+				Long knowledgeBaseArticleId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments/batch".
+				replace(
+					"{knowledgeBaseArticleId}",
+					String.valueOf(knowledgeBaseArticleId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
+	}
+
+	protected KnowledgeBaseAttachment
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
+				Long knowledgeBaseArticleId,
+				KnowledgeBaseAttachment knowledgeBaseAttachment)
+		throws Exception {
+
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				knowledgeBaseArticleId, knowledgeBaseAttachment,
+				getMultipartFiles());
+	}
+
+	protected Long
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -869,62 +893,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		KnowledgeBaseAttachment knowledgeBaseAttachment =
-			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
-
-		assertHttpResponseStatusCode(
-			204,
-			knowledgeBaseAttachmentResource.
-				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					knowledgeBaseAttachment.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseAttachmentResource.
-				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					knowledgeBaseAttachment.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseAttachmentResource.
-				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected KnowledgeBaseAttachment
-			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
 		throws Exception {
 
@@ -1132,6 +1100,38 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+	}
+
+	@Test
+	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
+		throws Exception {
+
+		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
+			randomKnowledgeBaseAttachment();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+				randomKnowledgeBaseAttachment, multipartFiles);
+
+		assertEquals(
+			randomKnowledgeBaseAttachment, postKnowledgeBaseAttachment);
+		assertValid(postKnowledgeBaseAttachment);
+
+		assertValid(postKnowledgeBaseAttachment, multipartFiles);
+	}
+
+	protected KnowledgeBaseAttachment
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+				KnowledgeBaseAttachment knowledgeBaseAttachment,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
+				knowledgeBaseAttachment, multipartFiles);
 	}
 
 	protected KnowledgeBaseAttachment

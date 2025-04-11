@@ -46,6 +46,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataRecordCollectionResource {
 
+	public void deleteDataRecordCollection(Long dataRecordCollectionId)
+		throws Exception;
+
+	public Response deleteDataRecordCollectionBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public DataRecordCollection getDataDefinitionDataRecordCollection(
 			Long dataDefinitionId)
 		throws Exception;
@@ -55,9 +62,22 @@ public interface DataRecordCollectionResource {
 				Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception;
 
-	public Response postDataDefinitionDataRecordCollectionsPageExportBatch(
-			Long dataDefinitionId, String keywords, String callbackURL,
-			String contentType, String fieldNames)
+	public DataRecordCollection getDataRecordCollection(
+			Long dataRecordCollectionId)
+		throws Exception;
+
+	public String getDataRecordCollectionPermissionByCurrentUser(
+			Long dataRecordCollectionId)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getDataRecordCollectionPermissionsPage(
+				Long dataRecordCollectionId, String roleNames)
+		throws Exception;
+
+	public DataRecordCollection
+			getSiteDataRecordCollectionByDataRecordCollectionKey(
+				Long siteId, String dataRecordCollectionKey)
 		throws Exception;
 
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
@@ -68,15 +88,9 @@ public interface DataRecordCollectionResource {
 			Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDataRecordCollection(Long dataRecordCollectionId)
-		throws Exception;
-
-	public Response deleteDataRecordCollectionBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public DataRecordCollection getDataRecordCollection(
-			Long dataRecordCollectionId)
+	public Response postDataDefinitionDataRecordCollectionsPageExportBatch(
+			Long dataDefinitionId, String keywords, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public DataRecordCollection putDataRecordCollection(
@@ -89,23 +103,9 @@ public interface DataRecordCollectionResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDataRecordCollectionPermissionsPage(
-				Long dataRecordCollectionId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putDataRecordCollectionPermissionsPage(
 				Long dataRecordCollectionId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public String getDataRecordCollectionPermissionByCurrentUser(
-			Long dataRecordCollectionId)
-		throws Exception;
-
-	public DataRecordCollection
-			getSiteDataRecordCollectionByDataRecordCollectionKey(
-				Long siteId, String dataRecordCollectionKey)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

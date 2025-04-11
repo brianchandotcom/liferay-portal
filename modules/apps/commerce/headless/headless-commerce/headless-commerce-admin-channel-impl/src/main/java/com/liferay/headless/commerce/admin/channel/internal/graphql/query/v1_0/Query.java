@@ -366,26 +366,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channel(channelId: ___){accountExternalReferenceCode, accountId, currencyCode, currencyExternalReferenceCode, currencyId, externalReferenceCode, id, name, siteGroupId, type}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves channels.")
-	public ChannelPage channels(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+	@GraphQLField(description = "Retrive information of the given Channel.")
+	public Channel channel(@GraphQLName("channelId") Long channelId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_channelResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			channelResource -> new ChannelPage(
-				channelResource.getChannelsPage(
-					search,
-					_filterBiFunction.apply(channelResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(channelResource, sortsString))));
+			channelResource -> channelResource.getChannel(channelId));
 	}
 
 	/**
@@ -409,16 +399,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channel(channelId: ___){accountExternalReferenceCode, accountId, currencyCode, currencyExternalReferenceCode, currencyId, externalReferenceCode, id, name, siteGroupId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrive information of the given Channel.")
-	public Channel channel(@GraphQLName("channelId") Long channelId)
+	@GraphQLField(description = "Retrieves channels.")
+	public ChannelPage channels(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_channelResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			channelResource -> channelResource.getChannel(channelId));
+			channelResource -> new ChannelPage(
+				channelResource.getChannelsPage(
+					search,
+					_filterBiFunction.apply(channelResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(channelResource, sortsString))));
 	}
 
 	/**

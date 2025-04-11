@@ -201,6 +201,64 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibrary() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary = testDeleteAssetLibrary_addAssetLibrary();
+
+		assertHttpResponseStatusCode(
+			204,
+			assetLibraryResource.deleteAssetLibraryHttpResponse(
+				assetLibrary.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.getAssetLibraryHttpResponse(
+				assetLibrary.getId()));
+		assertHttpResponseStatusCode(
+			404, assetLibraryResource.getAssetLibraryHttpResponse(0L));
+	}
+
+	protected AssetLibrary testDeleteAssetLibrary_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAssetLibraryByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary =
+			testDeleteAssetLibraryByExternalReferenceCode_addAssetLibrary();
+
+		assertHttpResponseStatusCode(
+			204,
+			assetLibraryResource.
+				deleteAssetLibraryByExternalReferenceCodeHttpResponse(
+					assetLibrary.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.
+				getAssetLibraryByExternalReferenceCodeHttpResponse(
+					assetLibrary.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.
+				getAssetLibraryByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected AssetLibrary
+			testDeleteAssetLibraryByExternalReferenceCode_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibrariesPage() throws Exception {
 		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
 			null, null, null, Pagination.of(1, 10), null);
@@ -564,51 +622,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibrary() throws Exception {
-		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+	public void testGetAssetLibrary() throws Exception {
+		AssetLibrary postAssetLibrary = testGetAssetLibrary_addAssetLibrary();
 
-		AssetLibrary postAssetLibrary = testPostAssetLibrary_addAssetLibrary(
-			randomAssetLibrary);
+		AssetLibrary getAssetLibrary = assetLibraryResource.getAssetLibrary(
+			postAssetLibrary.getId());
 
-		assertEquals(randomAssetLibrary, postAssetLibrary);
-		assertValid(postAssetLibrary);
+		assertEquals(postAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
 	}
 
-	protected AssetLibrary testPostAssetLibrary_addAssetLibrary(
-			AssetLibrary assetLibrary)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAssetLibraryByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AssetLibrary assetLibrary =
-			testDeleteAssetLibraryByExternalReferenceCode_addAssetLibrary();
-
-		assertHttpResponseStatusCode(
-			204,
-			assetLibraryResource.
-				deleteAssetLibraryByExternalReferenceCodeHttpResponse(
-					assetLibrary.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			assetLibraryResource.
-				getAssetLibraryByExternalReferenceCodeHttpResponse(
-					assetLibrary.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			assetLibraryResource.
-				getAssetLibraryByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected AssetLibrary
-			testDeleteAssetLibraryByExternalReferenceCode_addAssetLibrary()
+	protected AssetLibrary testGetAssetLibrary_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -630,6 +654,35 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary
 			testGetAssetLibraryByExternalReferenceCode_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchAssetLibrary() throws Exception {
+		AssetLibrary postAssetLibrary = testPatchAssetLibrary_addAssetLibrary();
+
+		AssetLibrary randomPatchAssetLibrary = randomPatchAssetLibrary();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary patchAssetLibrary = assetLibraryResource.patchAssetLibrary(
+			postAssetLibrary.getId(), randomPatchAssetLibrary);
+
+		AssetLibrary expectedPatchAssetLibrary = postAssetLibrary.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAssetLibrary, expectedPatchAssetLibrary);
+
+		AssetLibrary getAssetLibrary = assetLibraryResource.getAssetLibrary(
+			patchAssetLibrary.getId());
+
+		assertEquals(expectedPatchAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
+	}
+
+	protected AssetLibrary testPatchAssetLibrary_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -666,6 +719,25 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary
 			testPatchAssetLibraryByExternalReferenceCode_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAssetLibrary() throws Exception {
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		AssetLibrary postAssetLibrary = testPostAssetLibrary_addAssetLibrary(
+			randomAssetLibrary);
+
+		assertEquals(randomAssetLibrary, postAssetLibrary);
+		assertValid(postAssetLibrary);
+	}
+
+	protected AssetLibrary testPostAssetLibrary_addAssetLibrary(
+			AssetLibrary assetLibrary)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -724,78 +796,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary
 			testPutAssetLibraryByExternalReferenceCode_addAssetLibrary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAssetLibrary() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AssetLibrary assetLibrary = testDeleteAssetLibrary_addAssetLibrary();
-
-		assertHttpResponseStatusCode(
-			204,
-			assetLibraryResource.deleteAssetLibraryHttpResponse(
-				assetLibrary.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			assetLibraryResource.getAssetLibraryHttpResponse(
-				assetLibrary.getId()));
-		assertHttpResponseStatusCode(
-			404, assetLibraryResource.getAssetLibraryHttpResponse(0L));
-	}
-
-	protected AssetLibrary testDeleteAssetLibrary_addAssetLibrary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAssetLibrary() throws Exception {
-		AssetLibrary postAssetLibrary = testGetAssetLibrary_addAssetLibrary();
-
-		AssetLibrary getAssetLibrary = assetLibraryResource.getAssetLibrary(
-			postAssetLibrary.getId());
-
-		assertEquals(postAssetLibrary, getAssetLibrary);
-		assertValid(getAssetLibrary);
-	}
-
-	protected AssetLibrary testGetAssetLibrary_addAssetLibrary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPatchAssetLibrary() throws Exception {
-		AssetLibrary postAssetLibrary = testPatchAssetLibrary_addAssetLibrary();
-
-		AssetLibrary randomPatchAssetLibrary = randomPatchAssetLibrary();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AssetLibrary patchAssetLibrary = assetLibraryResource.patchAssetLibrary(
-			postAssetLibrary.getId(), randomPatchAssetLibrary);
-
-		AssetLibrary expectedPatchAssetLibrary = postAssetLibrary.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchAssetLibrary, expectedPatchAssetLibrary);
-
-		AssetLibrary getAssetLibrary = assetLibraryResource.getAssetLibrary(
-			patchAssetLibrary.getId());
-
-		assertEquals(expectedPatchAssetLibrary, getAssetLibrary);
-		assertValid(getAssetLibrary);
-	}
-
-	protected AssetLibrary testPatchAssetLibrary_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -43,9 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SchemaResource {
 
-	public Object getV2Schemas() throws Exception;
-
 	public Object getV2SchemaById(String id) throws Exception;
+
+	public Object getV2Schemas() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

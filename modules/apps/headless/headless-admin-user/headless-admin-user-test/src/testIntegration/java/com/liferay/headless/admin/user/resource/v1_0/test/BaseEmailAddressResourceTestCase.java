@@ -219,389 +219,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountByExternalReferenceCodeEmailAddressesPage()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode();
-
-		Page<EmailAddress> page =
-			emailAddressResource.
-				getAccountByExternalReferenceCodeEmailAddressesPage(
-					externalReferenceCode);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantExternalReferenceCode != null) {
-			EmailAddress irrelevantEmailAddress =
-				testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantEmailAddress());
-
-			page =
-				emailAddressResource.
-					getAccountByExternalReferenceCodeEmailAddressesPage(
-						irrelevantExternalReferenceCode);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
-			assertValid(
-				page,
-				testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
-					irrelevantExternalReferenceCode));
-		}
-
-		EmailAddress emailAddress1 =
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
-				externalReferenceCode, randomEmailAddress());
-
-		EmailAddress emailAddress2 =
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
-				externalReferenceCode, randomEmailAddress());
-
-		page =
-			emailAddressResource.
-				getAccountByExternalReferenceCodeEmailAddressesPage(
-					externalReferenceCode);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
-		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
-		assertValid(
-			page,
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
-				externalReferenceCode));
-
-		emailAddressResource.deleteEmailAddress(emailAddress1.getId());
-
-		emailAddressResource.deleteEmailAddress(emailAddress2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
-				String externalReferenceCode)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	protected EmailAddress
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
-				String externalReferenceCode, EmailAddress emailAddress)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testGetAccountEmailAddressesPage() throws Exception {
-		Long accountId = testGetAccountEmailAddressesPage_getAccountId();
-		Long irrelevantAccountId =
-			testGetAccountEmailAddressesPage_getIrrelevantAccountId();
-
-		Page<EmailAddress> page =
-			emailAddressResource.getAccountEmailAddressesPage(accountId);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantAccountId != null) {
-			EmailAddress irrelevantEmailAddress =
-				testGetAccountEmailAddressesPage_addEmailAddress(
-					irrelevantAccountId, randomIrrelevantEmailAddress());
-
-			page = emailAddressResource.getAccountEmailAddressesPage(
-				irrelevantAccountId);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(
-				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
-			assertValid(
-				page,
-				testGetAccountEmailAddressesPage_getExpectedActions(
-					irrelevantAccountId));
-		}
-
-		EmailAddress emailAddress1 =
-			testGetAccountEmailAddressesPage_addEmailAddress(
-				accountId, randomEmailAddress());
-
-		EmailAddress emailAddress2 =
-			testGetAccountEmailAddressesPage_addEmailAddress(
-				accountId, randomEmailAddress());
-
-		page = emailAddressResource.getAccountEmailAddressesPage(accountId);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
-		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
-		assertValid(
-			page,
-			testGetAccountEmailAddressesPage_getExpectedActions(accountId));
-
-		emailAddressResource.deleteEmailAddress(emailAddress1.getId());
-
-		emailAddressResource.deleteEmailAddress(emailAddress2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetAccountEmailAddressesPage_getExpectedActions(Long accountId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	protected EmailAddress testGetAccountEmailAddressesPage_addEmailAddress(
-			Long accountId, EmailAddress emailAddress)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountEmailAddressesPage_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAccountEmailAddressesPage_getIrrelevantAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testDeleteEmailAddressByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		EmailAddress emailAddress =
-			testDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
-
-		assertHttpResponseStatusCode(
-			204,
-			emailAddressResource.
-				deleteEmailAddressByExternalReferenceCodeHttpResponse(
-					emailAddress.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			emailAddressResource.
-				getEmailAddressByExternalReferenceCodeHttpResponse(
-					emailAddress.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			emailAddressResource.
-				getEmailAddressByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected EmailAddress
-			testDeleteEmailAddressByExternalReferenceCode_addEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetEmailAddressByExternalReferenceCode() throws Exception {
-		EmailAddress postEmailAddress =
-			testGetEmailAddressByExternalReferenceCode_addEmailAddress();
-
-		EmailAddress getEmailAddress =
-			emailAddressResource.getEmailAddressByExternalReferenceCode(
-				postEmailAddress.getExternalReferenceCode());
-
-		assertEquals(postEmailAddress, getEmailAddress);
-		assertValid(getEmailAddress);
-	}
-
-	protected EmailAddress
-			testGetEmailAddressByExternalReferenceCode_addEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetEmailAddressByExternalReferenceCode()
-		throws Exception {
-
-		EmailAddress emailAddress =
-			testGraphQLGetEmailAddressByExternalReferenceCode_addEmailAddress();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				emailAddress,
-				EmailAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"emailAddressByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												emailAddress.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/emailAddressByExternalReferenceCode"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				emailAddress,
-				EmailAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"emailAddressByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													emailAddress.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/emailAddressByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetEmailAddressByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"emailAddressByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"emailAddressByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected EmailAddress
-			testGraphQLGetEmailAddressByExternalReferenceCode_addEmailAddress()
-		throws Exception {
-
-		return testGraphQLEmailAddress_addEmailAddress();
-	}
-
-	@Test
-	public void testPatchEmailAddressByExternalReferenceCode()
-		throws Exception {
-
-		EmailAddress postEmailAddress =
-			testPatchEmailAddressByExternalReferenceCode_addEmailAddress();
-
-		EmailAddress randomPatchEmailAddress = randomPatchEmailAddress();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		EmailAddress patchEmailAddress =
-			emailAddressResource.patchEmailAddressByExternalReferenceCode(
-				postEmailAddress.getExternalReferenceCode(),
-				randomPatchEmailAddress);
-
-		EmailAddress expectedPatchEmailAddress = postEmailAddress.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchEmailAddress, expectedPatchEmailAddress);
-
-		EmailAddress getEmailAddress =
-			emailAddressResource.getEmailAddressByExternalReferenceCode(
-				patchEmailAddress.getExternalReferenceCode());
-
-		assertEquals(expectedPatchEmailAddress, getEmailAddress);
-		assertValid(getEmailAddress);
-	}
-
-	protected EmailAddress
-			testPatchEmailAddressByExternalReferenceCode_addEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteEmailAddress() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		EmailAddress emailAddress = testDeleteEmailAddress_addEmailAddress();
@@ -780,6 +397,219 @@ public abstract class BaseEmailAddressResourceTestCase {
 		waitForFinish(
 			expectedExecuteStatus,
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteEmailAddressByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		EmailAddress emailAddress =
+			testDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
+
+		assertHttpResponseStatusCode(
+			204,
+			emailAddressResource.
+				deleteEmailAddressByExternalReferenceCodeHttpResponse(
+					emailAddress.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.
+				getEmailAddressByExternalReferenceCodeHttpResponse(
+					emailAddress.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.
+				getEmailAddressByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected EmailAddress
+			testDeleteEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeEmailAddressesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode();
+
+		Page<EmailAddress> page =
+			emailAddressResource.
+				getAccountByExternalReferenceCodeEmailAddressesPage(
+					externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			EmailAddress irrelevantEmailAddress =
+				testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantEmailAddress());
+
+			page =
+				emailAddressResource.
+					getAccountByExternalReferenceCodeEmailAddressesPage(
+						irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		EmailAddress emailAddress1 =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				externalReferenceCode, randomEmailAddress());
+
+		EmailAddress emailAddress2 =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				externalReferenceCode, randomEmailAddress());
+
+		page =
+			emailAddressResource.
+				getAccountByExternalReferenceCodeEmailAddressesPage(
+					externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
+		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+				externalReferenceCode));
+
+		emailAddressResource.deleteEmailAddress(emailAddress1.getId());
+
+		emailAddressResource.deleteEmailAddress(emailAddress2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected EmailAddress
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountEmailAddressesPage() throws Exception {
+		Long accountId = testGetAccountEmailAddressesPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountEmailAddressesPage_getIrrelevantAccountId();
+
+		Page<EmailAddress> page =
+			emailAddressResource.getAccountEmailAddressesPage(accountId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountId != null) {
+			EmailAddress irrelevantEmailAddress =
+				testGetAccountEmailAddressesPage_addEmailAddress(
+					irrelevantAccountId, randomIrrelevantEmailAddress());
+
+			page = emailAddressResource.getAccountEmailAddressesPage(
+				irrelevantAccountId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountEmailAddressesPage_getExpectedActions(
+					irrelevantAccountId));
+		}
+
+		EmailAddress emailAddress1 =
+			testGetAccountEmailAddressesPage_addEmailAddress(
+				accountId, randomEmailAddress());
+
+		EmailAddress emailAddress2 =
+			testGetAccountEmailAddressesPage_addEmailAddress(
+				accountId, randomEmailAddress());
+
+		page = emailAddressResource.getAccountEmailAddressesPage(accountId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
+		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountEmailAddressesPage_getExpectedActions(accountId));
+
+		emailAddressResource.deleteEmailAddress(emailAddress1.getId());
+
+		emailAddressResource.deleteEmailAddress(emailAddress2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountEmailAddressesPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected EmailAddress testGetAccountEmailAddressesPage_addEmailAddress(
+			Long accountId, EmailAddress emailAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountEmailAddressesPage_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountEmailAddressesPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -1088,32 +918,137 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchEmailAddress() throws Exception {
-		EmailAddress postEmailAddress = testPatchEmailAddress_addEmailAddress();
+	public void testGetEmailAddressByExternalReferenceCode() throws Exception {
+		EmailAddress postEmailAddress =
+			testGetEmailAddressByExternalReferenceCode_addEmailAddress();
 
-		EmailAddress randomPatchEmailAddress = randomPatchEmailAddress();
+		EmailAddress getEmailAddress =
+			emailAddressResource.getEmailAddressByExternalReferenceCode(
+				postEmailAddress.getExternalReferenceCode());
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		EmailAddress patchEmailAddress = emailAddressResource.patchEmailAddress(
-			postEmailAddress.getId(), randomPatchEmailAddress);
-
-		EmailAddress expectedPatchEmailAddress = postEmailAddress.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchEmailAddress, expectedPatchEmailAddress);
-
-		EmailAddress getEmailAddress = emailAddressResource.getEmailAddress(
-			patchEmailAddress.getId());
-
-		assertEquals(expectedPatchEmailAddress, getEmailAddress);
+		assertEquals(postEmailAddress, getEmailAddress);
 		assertValid(getEmailAddress);
 	}
 
-	protected EmailAddress testPatchEmailAddress_addEmailAddress()
+	protected EmailAddress
+			testGetEmailAddressByExternalReferenceCode_addEmailAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetEmailAddressByExternalReferenceCode()
+		throws Exception {
+
+		EmailAddress emailAddress =
+			testGraphQLGetEmailAddressByExternalReferenceCode_addEmailAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				emailAddress,
+				EmailAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"emailAddressByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												emailAddress.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/emailAddressByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				emailAddress,
+				EmailAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"emailAddressByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													emailAddress.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/emailAddressByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetEmailAddressByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"emailAddressByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"emailAddressByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected EmailAddress
+			testGraphQLGetEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		return testGraphQLEmailAddress_addEmailAddress();
 	}
 
 	@Test
@@ -1487,6 +1422,71 @@ public abstract class BaseEmailAddressResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchEmailAddress() throws Exception {
+		EmailAddress postEmailAddress = testPatchEmailAddress_addEmailAddress();
+
+		EmailAddress randomPatchEmailAddress = randomPatchEmailAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		EmailAddress patchEmailAddress = emailAddressResource.patchEmailAddress(
+			postEmailAddress.getId(), randomPatchEmailAddress);
+
+		EmailAddress expectedPatchEmailAddress = postEmailAddress.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchEmailAddress, expectedPatchEmailAddress);
+
+		EmailAddress getEmailAddress = emailAddressResource.getEmailAddress(
+			patchEmailAddress.getId());
+
+		assertEquals(expectedPatchEmailAddress, getEmailAddress);
+		assertValid(getEmailAddress);
+	}
+
+	protected EmailAddress testPatchEmailAddress_addEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchEmailAddressByExternalReferenceCode()
+		throws Exception {
+
+		EmailAddress postEmailAddress =
+			testPatchEmailAddressByExternalReferenceCode_addEmailAddress();
+
+		EmailAddress randomPatchEmailAddress = randomPatchEmailAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		EmailAddress patchEmailAddress =
+			emailAddressResource.patchEmailAddressByExternalReferenceCode(
+				postEmailAddress.getExternalReferenceCode(),
+				randomPatchEmailAddress);
+
+		EmailAddress expectedPatchEmailAddress = postEmailAddress.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchEmailAddress, expectedPatchEmailAddress);
+
+		EmailAddress getEmailAddress =
+			emailAddressResource.getEmailAddressByExternalReferenceCode(
+				patchEmailAddress.getExternalReferenceCode());
+
+		assertEquals(expectedPatchEmailAddress, getEmailAddress);
+		assertValid(getEmailAddress);
+	}
+
+	protected EmailAddress
+			testPatchEmailAddressByExternalReferenceCode_addEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected EmailAddress testGraphQLEmailAddress_addEmailAddress()

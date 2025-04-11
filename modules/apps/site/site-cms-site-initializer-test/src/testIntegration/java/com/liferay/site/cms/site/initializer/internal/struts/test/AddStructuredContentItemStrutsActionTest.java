@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -92,7 +94,8 @@ public class AddStructuredContentItemStrutsActionTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_group = _depotEntry.getGroup();
+		_group = GroupLocalServiceUtil.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 

@@ -101,7 +101,7 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 		try (Connection connection = DataAccess.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(
 				 StringBundler.concat(
-					 "select * from StyleBookEntryVersion where ",
+					 "select uuid_, themeId from StyleBookEntryVersion where ",
 					 "styleBookEntryId = ",
 					 styleBookEntry.getStyleBookEntryId(), " or ",
 					 "styleBookEntryId = ",
@@ -112,9 +112,9 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 			Assert.assertTrue(resultSet.next());
 
 			Assert.assertEquals(
-				"classic_WAR_classictheme", resultSet.getString("themeId"));
-			Assert.assertEquals(
 				styleBookEntry.getUuid(), resultSet.getString("uuid_"));
+			Assert.assertEquals(
+				"classic_WAR_classictheme", resultSet.getString("themeId"));
 
 			Assert.assertFalse(resultSet.next());
 		}

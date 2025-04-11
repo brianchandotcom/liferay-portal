@@ -802,10 +802,22 @@ public class GitHubDevSyncUtil {
 				continue;
 			}
 
+			String gitRepositoryName =
+				gitWorkingDirectory.getGitRepositoryName();
+
+			String upstreamBranchName =
+				gitWorkingDirectory.getUpstreamBranchName();
+
+			if (gitRepositoryName.equals("liferay-portal-ee") &&
+				upstreamBranchName.equals("master")) {
+
+				gitRepositoryName = "liferay-portal";
+			}
+
 			gitHubDevRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
 					"git@", gitHubDevNodeHostname, ":liferay/",
-					gitWorkingDirectory.getGitRepositoryName(), ".git"));
+					gitRepositoryName, ".git"));
 		}
 
 		return gitHubDevRemoteURLs;

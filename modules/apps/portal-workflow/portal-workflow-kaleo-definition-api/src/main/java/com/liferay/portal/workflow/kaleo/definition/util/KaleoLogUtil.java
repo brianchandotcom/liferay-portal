@@ -14,7 +14,10 @@ import com.liferay.portal.workflow.kaleo.definition.LogType;
 public class KaleoLogUtil {
 
 	public static String convert(int type) {
-		if (type == WorkflowLog.NODE_ENTRY) {
+		if (type == WorkflowLog.INSTANCE_FAIL) {
+			return LogType.INSTANCE_FAIL.name();
+		}
+		else if (type == WorkflowLog.NODE_ENTRY) {
 			return LogType.NODE_ENTRY.name();
 		}
 		else if (type == WorkflowLog.TASK_ASSIGN) {
@@ -36,7 +39,10 @@ public class KaleoLogUtil {
 	public static int convert(String type) {
 		LogType logType = LogType.valueOf(type);
 
-		if (logType.equals(LogType.NODE_ENTRY)) {
+		if (logType.equals(LogType.INSTANCE_FAIL)) {
+			return WorkflowLog.INSTANCE_FAIL;
+		}
+		else if (logType.equals(LogType.NODE_ENTRY)) {
 			return WorkflowLog.NODE_ENTRY;
 		}
 		else if (logType.equals(LogType.NODE_EXIT)) {

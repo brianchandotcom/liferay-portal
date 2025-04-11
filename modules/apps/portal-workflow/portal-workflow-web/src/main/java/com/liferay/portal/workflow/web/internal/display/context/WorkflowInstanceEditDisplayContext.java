@@ -405,8 +405,9 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	private static final List<Integer> _logTypes = Arrays.asList(
-		WorkflowLog.TASK_ASSIGN, WorkflowLog.TASK_COMPLETION,
-		WorkflowLog.TASK_UPDATE, WorkflowLog.TRANSITION);
+		WorkflowLog.INSTANCE_FAIL, WorkflowLog.TASK_ASSIGN,
+		WorkflowLog.TASK_COMPLETION, WorkflowLog.TASK_UPDATE,
+		WorkflowLog.TRANSITION);
 
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();

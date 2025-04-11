@@ -92,7 +92,10 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private String _toLogTypeName(WorkflowLog.Type type) {
-		if (type == WorkflowLog.Type.NODE_ENTRY) {
+		if (type == WorkflowLog.Type.INSTANCE_FAIL) {
+			return LogType.INSTANCE_FAIL.name();
+		}
+		else if (type == WorkflowLog.Type.NODE_ENTRY) {
 			return LogType.NODE_ENTRY.name();
 		}
 		else if (type == WorkflowLog.Type.TASK_ASSIGN) {

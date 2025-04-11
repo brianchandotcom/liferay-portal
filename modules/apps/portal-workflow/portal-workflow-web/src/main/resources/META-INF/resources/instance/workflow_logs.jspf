@@ -28,6 +28,9 @@
 					<td>
 						<div>
 							<c:choose>
+								<c:when test="<%= workflowLog.getType() == WorkflowLog.INSTANCE_FAIL %>">
+									<liferay-ui:message key="the-workflow-instance-failed" />
+								</c:when>
 								<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
 									<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getTaskCompletionMessageArguments(workflowLog) %>" key="x-completed-the-task-x" translateArguments="<%= false %>" />
 								</c:when>

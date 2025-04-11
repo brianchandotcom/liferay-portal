@@ -16,6 +16,8 @@ import java.util.Locale;
  */
 public interface WorkflowLog extends WorkflowModel {
 
+	public static final int INSTANCE_FAIL = 5;
+
 	public static final int NODE_ENTRY = 4;
 
 	public static final int TASK_ASSIGN = 1;

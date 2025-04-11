@@ -16,6 +16,7 @@ import {
 
 import './DatePicker.css';
 
+import {IYears} from '@clayui/date-picker/lib/types';
 import getIconSpriteMap from '~/utils/getIconSpriteMap';
 
 interface IProps {
@@ -32,6 +33,8 @@ interface IProps {
 	placeholder?: string;
 	required?: boolean;
 	validations?: ((value: any) => string | undefined)[];
+	years?: IYears;
+	yearsCheck?: boolean;
 }
 
 const DatePicker: React.FC<IProps> = ({
@@ -48,6 +51,8 @@ const DatePicker: React.FC<IProps> = ({
 	placeholder,
 	required,
 	validations = [],
+	years,
+	yearsCheck,
 }) => {
 	if (required) {
 		validations = validations
@@ -106,6 +111,8 @@ const DatePicker: React.FC<IProps> = ({
 					placeholder={placeholder}
 					spritemap={getIconSpriteMap()}
 					value={field.value}
+					years={years}
+					yearsCheck={yearsCheck}
 				/>
 			</label>
 

@@ -25,6 +25,7 @@ import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
+import {isValidDate} from '~/utils/validations.form';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
@@ -46,6 +47,8 @@ interface IProps {
 	) => void;
 	values: any;
 }
+
+const NAVIGATION_YEARS_RANGE = 2;
 
 const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	businessEvent,
@@ -102,6 +105,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	);
 
 	const navigate = useNavigate();
+
+	const now = new Date();
+
+	const years = {
+		end: now.getFullYear() + NAVIGATION_YEARS_RANGE,
+		start: now.getFullYear(),
+	};
 
 	const {observer, onClose} = useModal({
 		onClose: () => setIsModalOpen(false),
@@ -453,6 +463,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						<BusinessEventsConfirmationPage
 							eventName={businessEvent?.name}
 							handleSubmit={handleSubmit}
+							headerTitle={businessEvent.name!}
 							message={i18n.translate(
 								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
 							)}
@@ -587,6 +598,15 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 														'mm-dd-yyyy'
 													)}
 													required
+													validations={[
+														(value) =>
+															isValidDate(
+																value,
+																years
+															),
+													]}
+													years={years}
+													yearsCheck
 												/>
 											</ClayInput.GroupItem>
 

@@ -3,24 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IYears} from '@clayui/date-picker/lib/types';
 import i18n from '~/utils/I18n';
 
 const EMAIL_REGEX =
 	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const LOWCASE_NUMBERS_REGEX = /^[0-9a-z]+$/;
 const FRIENDLY_URL_REGEX = /^\/[^. "]+[0-9a-z]+[^A-Z]$/;
+const LOWCASE_NUMBERS_REGEX = /^[0-9a-z]+$/;
 
-const required = (value: string) => {
-	if (value === '') {
-		return i18n.translate('this-field-is-required');
+const isLiferayDomain = (liferayDomain: string) => {
+	if (liferayDomain) {
+		return i18n.translate(
+			'this-liferay-contact-does-not-exist-please-enter-a-correct-email-address'
+		);
 	}
 };
 
-const maxLength = (value: string, max: number) => {
-	if (value.length > max) {
-		return i18n.sub('this-field-exceeded-x-characters', [
-			max as unknown as string,
-		]);
+const isLowercaseAndNumbers = (value: string) => {
+	if (value && !LOWCASE_NUMBERS_REGEX.test(value)) {
+		return i18n.translate('lowercase-letters-and-numbers-only');
+	}
+};
+
+const isValidDate = (value: string, years?: IYears) => {
+	const date = new Date(value);
+
+	if (date.toString() === 'Invalid Date') {
+		return i18n.translate('please-insert-a-valid-date');
+	}
+
+	const year = date.getFullYear();
+
+	if (years && (year > years?.end || year < years?.start)) {
+		return i18n.translate('please-insert-a-valid-date');
 	}
 };
 
@@ -34,23 +49,9 @@ const isValidEmail = (value: string, bannedEmailDomains: string[]) => {
 	}
 };
 
-const isLiferayDomain = (liferayDomain: string) => {
-	if (liferayDomain) {
-		return i18n.translate(
-			'this-liferay-contact-does-not-exist-please-enter-a-correct-email-address'
-		);
-	}
-};
-
 const isValidEmailDomain = (bannedEmailDomains: string[]) => {
 	if (bannedEmailDomains.length) {
 		return i18n.translate('domain-not-allowed');
-	}
-};
-
-const isLowercaseAndNumbers = (value: string) => {
-	if (value && !LOWCASE_NUMBERS_REGEX.test(value)) {
-		return i18n.translate('lowercase-letters-and-numbers-only');
 	}
 };
 
@@ -109,6 +110,20 @@ const isValidMac = (value: string) => {
 		if (!/^([0-9A-F]{2}[.:-]){5}[0-9A-F]{2}$/i.test(macArray[i])) {
 			return i18n.translate('invalid-mac');
 		}
+	}
+};
+
+const maxLength = (value: string, max: number) => {
+	if (value.length > max) {
+		return i18n.sub('this-field-exceeded-x-characters', [
+			max as unknown as string,
+		]);
+	}
+};
+
+const required = (value: string) => {
+	if (value === '') {
+		return i18n.translate('this-field-is-required');
 	}
 };
 
@@ -171,16 +186,17 @@ const validateEmailsArray = (
 };
 
 export {
-	isLowercaseAndNumbers,
-	isValidEmail,
 	isLiferayDomain,
-	isValidFriendlyURL,
+	isLowercaseAndNumbers,
+	isValidDate,
+	isValidEmail,
 	isValidEmailDomain,
-	maxLength,
-	required,
-	validate,
+	isValidFriendlyURL,
 	isValidHost,
 	isValidIp,
 	isValidMac,
+	maxLength,
+	required,
+	validate,
 	validateEmailsArray,
 };

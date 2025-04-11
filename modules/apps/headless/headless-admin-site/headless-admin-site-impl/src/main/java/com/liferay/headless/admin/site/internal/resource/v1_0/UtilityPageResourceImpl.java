@@ -221,25 +221,20 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 
-		if (Validator.isNotNull(utilityPage.getMarkedAsDefault())) {
-			if (GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
-				!layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+		if (GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
+			!layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
 
-				layoutUtilityPageEntry =
-					_layoutUtilityPageEntryService.
-						setDefaultLayoutUtilityPageEntry(
-							layoutUtilityPageEntry.
-								getLayoutUtilityPageEntryId());
-			}
-			else if (!GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
-					 layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+			layoutUtilityPageEntry =
+				_layoutUtilityPageEntryService.setDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
+		else if (!GetterUtil.getBoolean(utilityPage.getMarkedAsDefault()) &&
+				 layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
 
-				layoutUtilityPageEntry =
-					_layoutUtilityPageEntryService.
-						unsetDefaultLayoutUtilityPageEntry(
-							layoutUtilityPageEntry.
-								getLayoutUtilityPageEntryId());
-			}
+			layoutUtilityPageEntry =
+				_layoutUtilityPageEntryService.
+					unsetDefaultLayoutUtilityPageEntry(
+						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 		}
 
 		return _utilityPageDTOConverter.toDTO(

@@ -257,8 +257,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					WorkflowConstants.STATUS_APPROVED);
 		}
 
-		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&
-			!Objects.equals(
+		if (!Objects.equals(
 				GetterUtil.getBoolean(masterPage.getMarkedAsDefault()),
 				layoutPageTemplateEntry.isDefaultTemplate())) {
 

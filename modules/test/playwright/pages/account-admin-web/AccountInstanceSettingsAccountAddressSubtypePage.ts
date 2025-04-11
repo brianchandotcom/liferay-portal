@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
@@ -45,19 +45,13 @@ export class AccountInstanceSettingsAccountAddressSubtypePage {
 	}
 
 	async setAddressSubtypeExternalReferenceCodes(
-		listTypeDefinitionBilling?,
-		listTypeDefinitionBillingAndShipping?,
-		listTypeDefinitionShipping?
+		listTypeDefinitionBilling = '',
+		listTypeDefinitionBillingAndShipping = '',
+		listTypeDefinitionShipping = ''
 	) {
 		await this.goto();
 
-		await this.page.waitForTimeout(1500);
-
-		if (
-			listTypeDefinitionBilling ||
-			listTypeDefinitionBillingAndShipping ||
-			listTypeDefinitionShipping
-		) {
+		await expect(async () => {
 			await this.billingAddressSubtypePicklistInput.fill(
 				listTypeDefinitionBilling
 			);
@@ -67,15 +61,19 @@ export class AccountInstanceSettingsAccountAddressSubtypePage {
 			await this.shippingAddressSubtypePicklistInput.fill(
 				listTypeDefinitionShipping
 			);
-		}
-		else {
-			await this.billingAddressSubtypePicklistInput.clear();
-			await this.billingAndShippingAddressSubtypePicklistInput.clear();
-			await this.shippingAddressSubtypePicklistInput.clear();
-		}
+			await this.updateButton.click();
 
-		await this.updateButton.click();
+			await waitForAlert(this.page);
 
-		await waitForAlert(this.page);
+			await expect(this.billingAddressSubtypePicklistInput).toHaveValue(
+				listTypeDefinitionBilling
+			);
+			await expect(
+				this.billingAndShippingAddressSubtypePicklistInput
+			).toHaveValue(listTypeDefinitionBillingAndShipping);
+			await expect(this.shippingAddressSubtypePicklistInput).toHaveValue(
+				listTypeDefinitionShipping
+			);
+		}).toPass();
 	}
 }

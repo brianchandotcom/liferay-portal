@@ -454,11 +454,13 @@ export class PageEditorPage {
 	) {
 		await this.goToSidebarTab('Page Content');
 
+		const content = this.page.getByLabel(name);
+
 		if (subMenuAction) {
 			await clickAndExpectToBeVisible({
 				autoClick: false,
 				target: this.page.getByRole('menuitem', {name: action}),
-				trigger: this.page.getByTitle('Open Actions Menu'),
+				trigger: content.getByTitle('Open Actions Menu'),
 			});
 
 			await hoverAndExpectToBeVisible({
@@ -471,7 +473,7 @@ export class PageEditorPage {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: this.page.getByRole('menuitem', {name: action}),
-				trigger: this.page.getByTitle('Open Actions Menu'),
+				trigger: content.getByTitle('Open Actions Menu'),
 			});
 		}
 	}

@@ -24,13 +24,13 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	cssClass="container-fluid container-fluid-max-xl lfr-calendar__notification-header"
+	cssClass="container-fluid container-fluid-max-xxxl"
 	localizeTitle="<%= false %>"
 	title="<%= calendarName %>"
 />
 
 <clay:navigation-bar
-	cssClass="lfr-calendar__navigation-bar"
+	cssClass="container-fluid-max-xxxl"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

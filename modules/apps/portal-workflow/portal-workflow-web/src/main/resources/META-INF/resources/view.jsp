@@ -24,7 +24,6 @@ if (Validator.isNotNull(backURL)) {
 
 <c:if test="<%= workflowPortletTabs.size() != 1 %>">
 	<clay:navigation-bar
-		cssClass="lfr-workflow__navigation-bar"
 		inverted="<%= false %>"
 		navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
 	/>

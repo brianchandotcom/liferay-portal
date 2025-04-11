@@ -57,7 +57,7 @@ PortletURL navigationURL = PortletURLBuilder.createRenderURL(
 %>
 
 <clay:navigation-bar
-	cssClass="lfr-calendar__navigation-bar"
+	cssClass="container-fluid-max-xxxl"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

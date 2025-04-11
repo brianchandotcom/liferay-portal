@@ -7,7 +7,7 @@
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	cssClass="container-fluid container-fluid-max-xl lfr-calendar__general-header"
+	cssClass="container-fluid container-fluid-max-xxxl"
 	localizeTitle="<%= false %>"
 	title='<%= (calendar == null) ? LanguageUtil.format(request, "new-calendar-for-x", calendarResourceName, false) : calendarName %>'
 />

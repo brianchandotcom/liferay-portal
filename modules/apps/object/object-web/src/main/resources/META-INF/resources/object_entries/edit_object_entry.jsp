@@ -20,7 +20,7 @@ ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelat
 <c:if test="<%= (objectEntryDisplayContext.getObjectEntry() != null) && ((objectLayoutTab != null) || (objectDefinition.getRootObjectDefinitionId() > 0)) %>">
 	<liferay-frontend:screen-navigation
 		key="<%= objectDefinition.getClassName() %>"
-		navBarCssClass="lfr-object__edit-object-definition__screen-navigation"
+		navBarCssClass="container-fluid-max-xxxl"
 		portletURL="<%= currentURLObj %>"
 	/>
 </c:if>

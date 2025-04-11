@@ -53,6 +53,7 @@
 		<column name="listTypeDefinitionId" type="long" />
 		<column name="key" type="String" />
 		<column localized="true" name="name" type="String" />
+		<column name="system" type="boolean" />
 		<column name="type" type="String" />
 
 		<!-- Finder methods -->
@@ -84,6 +85,7 @@
 		<exception>ListTypeDefinitionSystem</exception>
 		<exception>ListTypeEntryKey</exception>
 		<exception>ListTypeEntryName</exception>
+		<exception>ListTypeEntrySystem</exception>
 		<exception>RequiredListTypeDefinition</exception>
 	</exceptions>
 </service-builder>

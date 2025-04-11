@@ -503,35 +503,6 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType()
-		throws Exception {
-
-		ProductConfigurationListOrderType
-			randomProductConfigurationListOrderType =
-				randomProductConfigurationListOrderType();
-
-		ProductConfigurationListOrderType
-			postProductConfigurationListOrderType =
-				testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType_addProductConfigurationListOrderType(
-					randomProductConfigurationListOrderType);
-
-		assertEquals(
-			randomProductConfigurationListOrderType,
-			postProductConfigurationListOrderType);
-		assertValid(postProductConfigurationListOrderType);
-	}
-
-	protected ProductConfigurationListOrderType
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType_addProductConfigurationListOrderType(
-				ProductConfigurationListOrderType
-					productConfigurationListOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductConfigurationListIdProductConfigurationListOrderTypesPage()
 		throws Exception {
 
@@ -1040,6 +1011,35 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType()
+		throws Exception {
+
+		ProductConfigurationListOrderType
+			randomProductConfigurationListOrderType =
+				randomProductConfigurationListOrderType();
+
+		ProductConfigurationListOrderType
+			postProductConfigurationListOrderType =
+				testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType_addProductConfigurationListOrderType(
+					randomProductConfigurationListOrderType);
+
+		assertEquals(
+			randomProductConfigurationListOrderType,
+			postProductConfigurationListOrderType);
+		assertValid(postProductConfigurationListOrderType);
+	}
+
+	protected ProductConfigurationListOrderType
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType_addProductConfigurationListOrderType(
+				ProductConfigurationListOrderType
+					productConfigurationListOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

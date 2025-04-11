@@ -256,6 +256,462 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					structuredContentFolder.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					"-"));
+	}
+
+	protected Long
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postAssetLibraryStructuredContentFolder(
+				testDepotEntry.getDepotEntryId(),
+				randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testDeleteSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						structuredContentFolder),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						structuredContentFolder),
+					structuredContentFolder.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						structuredContentFolder),
+					"-"));
+	}
+
+	protected Long
+			testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return structuredContentFolder.getSiteId();
+	}
+
+	protected StructuredContentFolder
+			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testDeleteStructuredContentFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testDeleteStructuredContentFolder_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteStructuredContentFolderHttpResponse(
+					structuredContentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(0L));
+	}
+
+	protected StructuredContentFolder
+			testDeleteStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGraphQLDeleteStructuredContentFolder() throws Exception {
+
+		// No namespace
+
+		StructuredContentFolder structuredContentFolder1 =
+			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteStructuredContentFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentFolderId",
+									structuredContentFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteStructuredContentFolder"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"structuredContentFolder",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentFolderId",
+								structuredContentFolder1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		StructuredContentFolder structuredContentFolder2 =
+			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteStructuredContentFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentFolderId",
+										structuredContentFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteStructuredContentFolder"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"structuredContentFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentFolderId",
+									structuredContentFolder2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected StructuredContentFolder
+			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	@Test
+	public void testDeleteStructuredContentFolderBatch() throws Exception {
+		StructuredContentFolder structuredContentFolder1 =
+			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
+
+		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
+			"COMPLETED", null, structuredContentFolder1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getStructuredContentFolderHttpResponse(
+					structuredContentFolder1.getId()));
+	}
+
+	protected StructuredContentFolder
+			testDeleteStructuredContentFolderBatch_addStructuredContentFolder()
+		throws Exception {
+
+		return testDeleteStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	protected void
+			testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentFolderResource.
+				deleteStructuredContentFolderBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+	}
+
+	protected Long
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postAssetLibraryStructuredContentFolder(
+				testDepotEntry.getDepotEntryId(),
+				randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder structuredContentFolder =
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				structuredContentFolder,
+				StructuredContentFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"assetLibraryStructuredContentFolderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"assetLibraryId",
+											"\"" +
+												testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+													"\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												structuredContentFolder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/assetLibraryStructuredContentFolderByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContentFolder,
+				StructuredContentFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"assetLibraryStructuredContentFolderByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													structuredContentFolder.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/assetLibraryStructuredContentFolderByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"assetLibraryStructuredContentFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"assetLibraryStructuredContentFolderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	@Test
+	public void testGetAssetLibraryStructuredContentFolderPermissionsPage()
+		throws Exception {
+
+		Page<Permission> page =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderPermissionsPage(
+					testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected StructuredContentFolder
+			testGetAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder()
+		throws Exception {
+
+		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+			randomStructuredContentFolder());
+	}
+
+	@Test
 	public void testGetAssetLibraryStructuredContentFoldersPage()
 		throws Exception {
 
@@ -764,88 +1220,17 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryStructuredContentFolder() throws Exception {
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
-		StructuredContentFolder postStructuredContentFolder =
-			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-				randomStructuredContentFolder);
-
-		assertEquals(
-			randomStructuredContentFolder, postStructuredContentFolder);
-		assertValid(postStructuredContentFolder);
-	}
-
-	protected StructuredContentFolder
-			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolderResource.
-			postAssetLibraryStructuredContentFolder(
-				testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId(),
-				structuredContentFolder);
-	}
-
-	@Test
-	public void testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentFolderResource.
-				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					structuredContentFolder.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					structuredContentFolder.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					"-"));
-	}
-
-	protected Long
-			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected StructuredContentFolder
-			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.
-			postAssetLibraryStructuredContentFolder(
-				testDepotEntry.getDepotEntryId(),
-				randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+	public void testGetSiteStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
 
 		StructuredContentFolder postStructuredContentFolder =
-			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
 
 		StructuredContentFolder getStructuredContentFolder =
 			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
-					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					testGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						postStructuredContentFolder),
 					postStructuredContentFolder.getExternalReferenceCode());
 
 		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
@@ -853,29 +1238,27 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	protected Long
-			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+			testGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return structuredContentFolder.getSiteId();
 	}
 
 	protected StructuredContentFolder
-			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
 		throws Exception {
 
-		return structuredContentFolderResource.
-			postAssetLibraryStructuredContentFolder(
-				testDepotEntry.getDepotEntryId(),
-				randomStructuredContentFolder());
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
 	@Test
-	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
 
 		StructuredContentFolder structuredContentFolder =
-			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
 
 		// No namespace
 
@@ -886,14 +1269,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"assetLibraryStructuredContentFolderByExternalReferenceCode",
+								"structuredContentFolderByExternalReferenceCode",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"assetLibraryId",
+											"siteKey",
 											"\"" +
-												testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-													"\"");
+												testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+													structuredContentFolder) +
+														"\"");
 
 										put(
 											"externalReferenceCode",
@@ -905,7 +1289,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/assetLibraryStructuredContentFolderByExternalReferenceCode"))));
+						"Object/structuredContentFolderByExternalReferenceCode"))));
 
 		// Using the namespace headlessDelivery_v1_0
 
@@ -918,14 +1302,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 							new GraphQLField(
 								"headlessDelivery_v1_0",
 								new GraphQLField(
-									"assetLibraryStructuredContentFolderByExternalReferenceCode",
+									"structuredContentFolderByExternalReferenceCode",
 									new HashMap<String, Object>() {
 										{
 											put(
-												"assetLibraryId",
+												"siteKey",
 												"\"" +
-													testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-														"\"");
+													testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+														structuredContentFolder) +
+															"\"");
 
 											put(
 												"externalReferenceCode",
@@ -937,19 +1322,19 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/assetLibraryStructuredContentFolderByExternalReferenceCode"))));
+						"Object/structuredContentFolderByExternalReferenceCode"))));
 	}
 
 	protected Long
-			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return structuredContentFolder.getSiteId();
 	}
 
 	@Test
-	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCodeNotFound()
+	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
@@ -962,14 +1347,12 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"assetLibraryStructuredContentFolderByExternalReferenceCode",
+						"structuredContentFolderByExternalReferenceCode",
 						new HashMap<String, Object>() {
 							{
 								put(
-									"assetLibraryId",
-									"\"" +
-										testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-											"\"");
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
 								put(
 									"externalReferenceCode",
 									irrelevantExternalReferenceCode);
@@ -988,14 +1371,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					new GraphQLField(
 						"headlessDelivery_v1_0",
 						new GraphQLField(
-							"assetLibraryStructuredContentFolderByExternalReferenceCode",
+							"structuredContentFolderByExternalReferenceCode",
 							new HashMap<String, Object>() {
 								{
 									put(
-										"assetLibraryId",
-										"\"" +
-											testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-												"\"");
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
 									put(
 										"externalReferenceCode",
 										irrelevantExternalReferenceCode);
@@ -1007,161 +1389,30 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	protected StructuredContentFolder
-			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
 		throws Exception {
 
 		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test
-	public void testPutAssetLibraryStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
-		StructuredContentFolder postStructuredContentFolder =
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
-
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
-		StructuredContentFolder putStructuredContentFolder =
-			structuredContentFolderResource.
-				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
-					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					postStructuredContentFolder.getExternalReferenceCode(),
-					randomStructuredContentFolder);
-
-		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
-		assertValid(putStructuredContentFolder);
-
-		StructuredContentFolder getStructuredContentFolder =
-			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
-					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					putStructuredContentFolder.getExternalReferenceCode());
-
-		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
-		assertValid(getStructuredContentFolder);
-
-		StructuredContentFolder newStructuredContentFolder =
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
-
-		putStructuredContentFolder =
-			structuredContentFolderResource.
-				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
-					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					newStructuredContentFolder.getExternalReferenceCode(),
-					newStructuredContentFolder);
-
-		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
-		assertValid(putStructuredContentFolder);
-
-		getStructuredContentFolder =
-			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
-					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					putStructuredContentFolder.getExternalReferenceCode());
-
-		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
-
-		Assert.assertEquals(
-			newStructuredContentFolder.getExternalReferenceCode(),
-			putStructuredContentFolder.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected StructuredContentFolder
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
-		throws Exception {
-
-		return randomStructuredContentFolder();
-	}
-
-	protected StructuredContentFolder
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.
-			postAssetLibraryStructuredContentFolder(
-				testDepotEntry.getDepotEntryId(),
-				randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGetAssetLibraryStructuredContentFolderPermissionsPage()
+	public void testGetSiteStructuredContentFolderPermissionsPage()
 		throws Exception {
 
 		Page<Permission> page =
 			structuredContentFolderResource.
-				getAssetLibraryStructuredContentFolderPermissionsPage(
-					testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
+				getSiteStructuredContentFolderPermissionsPage(
+					testGroup.getGroupId(), RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
 	}
 
 	protected StructuredContentFolder
-			testGetAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder()
+			testGetSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder()
 		throws Exception {
 
-		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+		return testPostSiteStructuredContentFolder_addStructuredContentFolder(
 			randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testPutAssetLibraryStructuredContentFolderPermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testPutAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentFolderResource.
-				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected StructuredContentFolder
-			testPutAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.
-			postAssetLibraryStructuredContentFolder(
-				testDepotEntry.getDepotEntryId(),
-				randomStructuredContentFolder());
 	}
 
 	@Test
@@ -1739,118 +1990,213 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteStructuredContentFolder() throws Exception {
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
+	public void testGetStructuredContentFolder() throws Exception {
 		StructuredContentFolder postStructuredContentFolder =
-			testPostSiteStructuredContentFolder_addStructuredContentFolder(
-				randomStructuredContentFolder);
-
-		assertEquals(
-			randomStructuredContentFolder, postStructuredContentFolder);
-		assertValid(postStructuredContentFolder);
-	}
-
-	protected StructuredContentFolder
-			testPostSiteStructuredContentFolder_addStructuredContentFolder(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGetSiteStructuredContentFoldersPage_getSiteId(),
-			structuredContentFolder);
-	}
-
-	@Test
-	public void testGraphQLPostSiteStructuredContentFolder() throws Exception {
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
-		StructuredContentFolder structuredContentFolder =
-			testGraphQLStructuredContentFolder_addStructuredContentFolder(
-				randomStructuredContentFolder);
-
-		Assert.assertTrue(
-			equals(randomStructuredContentFolder, structuredContentFolder));
-	}
-
-	@Test
-	public void testDeleteSiteStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentFolderResource.
-				deleteSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						structuredContentFolder),
-					structuredContentFolder.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						structuredContentFolder),
-					structuredContentFolder.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						structuredContentFolder),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolder.getSiteId();
-	}
-
-	protected StructuredContentFolder
-			testDeleteSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGetSiteStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
-		StructuredContentFolder postStructuredContentFolder =
-			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+			testGetStructuredContentFolder_addStructuredContentFolder();
 
 		StructuredContentFolder getStructuredContentFolder =
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderByExternalReferenceCode(
-					testGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						postStructuredContentFolder),
-					postStructuredContentFolder.getExternalReferenceCode());
+			structuredContentFolderResource.getStructuredContentFolder(
+				postStructuredContentFolder.getId());
 
 		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
 		assertValid(getStructuredContentFolder);
 	}
 
-	protected Long
-			testGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		StructuredContentFolder postStructuredContentFolder =
+			testGetStructuredContentFolder_addStructuredContentFolder();
 
-		return structuredContentFolder.getSiteId();
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.getStructuredContentFolder(
+				postStructuredContentFolder.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postStructuredContentFolder.getId());
+
+		assertEquals(
+			getStructuredContentFolder,
+			StructuredContentFolderSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
 	}
 
 	protected StructuredContentFolder
-			testGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+			testGetStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
 		return structuredContentFolderResource.postSiteStructuredContentFolder(
@@ -1858,11 +2204,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
+	public void testGraphQLGetStructuredContentFolder() throws Exception {
 		StructuredContentFolder structuredContentFolder =
-			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+			testGraphQLGetStructuredContentFolder_addStructuredContentFolder();
 
 		// No namespace
 
@@ -1873,27 +2217,16 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"structuredContentFolderByExternalReferenceCode",
+								"structuredContentFolder",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-													structuredContentFolder) +
-														"\"");
-
-										put(
-											"externalReferenceCode",
-											"\"" +
-												structuredContentFolder.
-													getExternalReferenceCode() +
-														"\"");
+											"structuredContentFolderId",
+											structuredContentFolder.getId());
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/structuredContentFolderByExternalReferenceCode"))));
+						"JSONObject/data", "Object/structuredContentFolder"))));
 
 		// Using the namespace headlessDelivery_v1_0
 
@@ -1906,43 +2239,25 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 							new GraphQLField(
 								"headlessDelivery_v1_0",
 								new GraphQLField(
-									"structuredContentFolderByExternalReferenceCode",
+									"structuredContentFolder",
 									new HashMap<String, Object>() {
 										{
 											put(
-												"siteKey",
-												"\"" +
-													testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-														structuredContentFolder) +
-															"\"");
-
-											put(
-												"externalReferenceCode",
-												"\"" +
-													structuredContentFolder.
-														getExternalReferenceCode() +
-															"\"");
+												"structuredContentFolderId",
+												structuredContentFolder.
+													getId());
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/structuredContentFolderByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolder.getSiteId();
+						"Object/structuredContentFolder"))));
 	}
 
 	@Test
-	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCodeNotFound()
+	public void testGraphQLGetStructuredContentFolderNotFound()
 		throws Exception {
 
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
+		Long irrelevantStructuredContentFolderId = RandomTestUtil.randomLong();
 
 		// No namespace
 
@@ -1951,15 +2266,12 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"structuredContentFolderByExternalReferenceCode",
+						"structuredContentFolder",
 						new HashMap<String, Object>() {
 							{
 								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
+									"structuredContentFolderId",
+									irrelevantStructuredContentFolderId);
 							}
 						},
 						getGraphQLFields())),
@@ -1975,16 +2287,12 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					new GraphQLField(
 						"headlessDelivery_v1_0",
 						new GraphQLField(
-							"structuredContentFolderByExternalReferenceCode",
+							"structuredContentFolder",
 							new HashMap<String, Object>() {
 								{
 									put(
-										"siteKey",
-										"\"" + irrelevantGroup.getGroupId() +
-											"\"");
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
+										"structuredContentFolderId",
+										irrelevantStructuredContentFolderId);
 								}
 							},
 							getGraphQLFields()))),
@@ -1993,161 +2301,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	protected StructuredContentFolder
-			testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+			testGraphQLGetStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
 		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
-	}
-
-	@Test
-	public void testPutSiteStructuredContentFolderByExternalReferenceCode()
-		throws Exception {
-
-		StructuredContentFolder postStructuredContentFolder =
-			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
-
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
-		StructuredContentFolder putStructuredContentFolder =
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderByExternalReferenceCode(
-					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						postStructuredContentFolder),
-					postStructuredContentFolder.getExternalReferenceCode(),
-					randomStructuredContentFolder);
-
-		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
-		assertValid(putStructuredContentFolder);
-
-		StructuredContentFolder getStructuredContentFolder =
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderByExternalReferenceCode(
-					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						putStructuredContentFolder),
-					putStructuredContentFolder.getExternalReferenceCode());
-
-		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
-		assertValid(getStructuredContentFolder);
-
-		StructuredContentFolder newStructuredContentFolder =
-			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
-
-		putStructuredContentFolder =
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderByExternalReferenceCode(
-					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						newStructuredContentFolder),
-					newStructuredContentFolder.getExternalReferenceCode(),
-					newStructuredContentFolder);
-
-		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
-		assertValid(putStructuredContentFolder);
-
-		getStructuredContentFolder =
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderByExternalReferenceCode(
-					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-						putStructuredContentFolder),
-					putStructuredContentFolder.getExternalReferenceCode());
-
-		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
-
-		Assert.assertEquals(
-			newStructuredContentFolder.getExternalReferenceCode(),
-			putStructuredContentFolder.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolder.getSiteId();
-	}
-
-	protected StructuredContentFolder
-			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
-		throws Exception {
-
-		return randomStructuredContentFolder();
-	}
-
-	protected StructuredContentFolder
-			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGetSiteStructuredContentFolderPermissionsPage()
-		throws Exception {
-
-		Page<Permission> page =
-			structuredContentFolderResource.
-				getSiteStructuredContentFolderPermissionsPage(
-					testGroup.getGroupId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected StructuredContentFolder
-			testGetSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder()
-		throws Exception {
-
-		return testPostSiteStructuredContentFolder_addStructuredContentFolder(
-			randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testPutSiteStructuredContentFolderPermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testPutSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderPermissionsPageHttpResponse(
-					structuredContentFolder.getSiteId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderPermissionsPageHttpResponse(
-					structuredContentFolder.getSiteId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected StructuredContentFolder
-			testPutSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
 	@Test
@@ -2171,55 +2328,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		return testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
 			randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testPutStructuredContentFolderPermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testPutStructuredContentFolderPermissionsPage_addStructuredContentFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentFolderResource.
-				putStructuredContentFolderPermissionsPageHttpResponse(
-					structuredContentFolder.getId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				putStructuredContentFolderPermissionsPageHttpResponse(
-					0L,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected StructuredContentFolder
-			testPutStructuredContentFolderPermissionsPage_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
 	@Test
@@ -2734,514 +2842,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostStructuredContentFolderStructuredContentFolder()
-		throws Exception {
-
-		StructuredContentFolder randomStructuredContentFolder =
-			randomStructuredContentFolder();
-
-		StructuredContentFolder postStructuredContentFolder =
-			testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
-				randomStructuredContentFolder);
-
-		assertEquals(
-			randomStructuredContentFolder, postStructuredContentFolder);
-		assertValid(postStructuredContentFolder);
-	}
-
-	protected StructuredContentFolder
-			testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return structuredContentFolderResource.
-			postStructuredContentFolderStructuredContentFolder(
-				testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
-				structuredContentFolder);
-	}
-
-	@Test
-	public void testDeleteStructuredContentFolder() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContentFolder structuredContentFolder =
-			testDeleteStructuredContentFolder_addStructuredContentFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentFolderResource.
-				deleteStructuredContentFolderHttpResponse(
-					structuredContentFolder.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(0L));
-	}
-
-	protected StructuredContentFolder
-			testDeleteStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGraphQLDeleteStructuredContentFolder() throws Exception {
-
-		// No namespace
-
-		StructuredContentFolder structuredContentFolder1 =
-			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteStructuredContentFolder",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentFolderId",
-									structuredContentFolder1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteStructuredContentFolder"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"structuredContentFolder",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"structuredContentFolderId",
-								structuredContentFolder1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessDelivery_v1_0
-
-		StructuredContentFolder structuredContentFolder2 =
-			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteStructuredContentFolder",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"structuredContentFolderId",
-										structuredContentFolder2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteStructuredContentFolder"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessDelivery_v1_0",
-					new GraphQLField(
-						"structuredContentFolder",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentFolderId",
-									structuredContentFolder2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected StructuredContentFolder
-			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
-	}
-
-	@Test
-	public void testDeleteStructuredContentFolderBatch() throws Exception {
-		StructuredContentFolder structuredContentFolder1 =
-			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
-
-		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
-			"COMPLETED", null, structuredContentFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder1.getId()));
-	}
-
-	protected StructuredContentFolder
-			testDeleteStructuredContentFolderBatch_addStructuredContentFolder()
-		throws Exception {
-
-		return testDeleteStructuredContentFolder_addStructuredContentFolder();
-	}
-
-	protected void
-			testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			structuredContentFolderResource.
-				deleteStructuredContentFolderBatchHttpResponse(
-					null,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"externalReferenceCode", () -> externalReferenceCode
-						).put(
-							"id", () -> id
-						)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetStructuredContentFolder() throws Exception {
-		StructuredContentFolder postStructuredContentFolder =
-			testGetStructuredContentFolder_addStructuredContentFolder();
-
-		StructuredContentFolder getStructuredContentFolder =
-			structuredContentFolderResource.getStructuredContentFolder(
-				postStructuredContentFolder.getId());
-
-		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
-		assertValid(getStructuredContentFolder);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		StructuredContentFolder postStructuredContentFolder =
-			testGetStructuredContentFolder_addStructuredContentFolder();
-
-		StructuredContentFolder getStructuredContentFolder =
-			structuredContentFolderResource.getStructuredContentFolder(
-				postStructuredContentFolder.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(
-			postStructuredContentFolder.getId());
-
-		assertEquals(
-			getStructuredContentFolder,
-			StructuredContentFolderSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected StructuredContentFolder
-			testGetStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return structuredContentFolderResource.postSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Test
-	public void testGraphQLGetStructuredContentFolder() throws Exception {
-		StructuredContentFolder structuredContentFolder =
-			testGraphQLGetStructuredContentFolder_addStructuredContentFolder();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				structuredContentFolder,
-				StructuredContentFolderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"structuredContentFolder",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"structuredContentFolderId",
-											structuredContentFolder.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/structuredContentFolder"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertTrue(
-			equals(
-				structuredContentFolder,
-				StructuredContentFolderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessDelivery_v1_0",
-								new GraphQLField(
-									"structuredContentFolder",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"structuredContentFolderId",
-												structuredContentFolder.
-													getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/structuredContentFolder"))));
-	}
-
-	@Test
-	public void testGraphQLGetStructuredContentFolderNotFound()
-		throws Exception {
-
-		Long irrelevantStructuredContentFolderId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"structuredContentFolder",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentFolderId",
-									irrelevantStructuredContentFolderId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"structuredContentFolder",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"structuredContentFolderId",
-										irrelevantStructuredContentFolderId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected StructuredContentFolder
-			testGraphQLGetStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
-	}
-
-	@Test
 	public void testPatchStructuredContentFolder() throws Exception {
 		StructuredContentFolder postStructuredContentFolder =
 			testPatchStructuredContentFolder_addStructuredContentFolder();
@@ -3280,6 +2880,357 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryStructuredContentFolder() throws Exception {
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder);
+
+		assertEquals(
+			randomStructuredContentFolder, postStructuredContentFolder);
+		assertValid(postStructuredContentFolder);
+	}
+
+	protected StructuredContentFolder
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postAssetLibraryStructuredContentFolder(
+				testGetAssetLibraryStructuredContentFoldersPage_getAssetLibraryId(),
+				structuredContentFolder);
+	}
+
+	@Test
+	public void testPostSiteStructuredContentFolder() throws Exception {
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPostSiteStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder);
+
+		assertEquals(
+			randomStructuredContentFolder, postStructuredContentFolder);
+		assertValid(postStructuredContentFolder);
+	}
+
+	protected StructuredContentFolder
+			testPostSiteStructuredContentFolder_addStructuredContentFolder(
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGetSiteStructuredContentFoldersPage_getSiteId(),
+			structuredContentFolder);
+	}
+
+	@Test
+	public void testGraphQLPostSiteStructuredContentFolder() throws Exception {
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder structuredContentFolder =
+			testGraphQLStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder);
+
+		Assert.assertTrue(
+			equals(randomStructuredContentFolder, structuredContentFolder));
+	}
+
+	@Test
+	public void testPostStructuredContentFolderStructuredContentFolder()
+		throws Exception {
+
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder);
+
+		assertEquals(
+			randomStructuredContentFolder, postStructuredContentFolder);
+		assertValid(postStructuredContentFolder);
+	}
+
+	protected StructuredContentFolder
+			testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postStructuredContentFolderStructuredContentFolder(
+				testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+				structuredContentFolder);
+	}
+
+	@Test
+	public void testPutAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder putStructuredContentFolder =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder.getExternalReferenceCode(),
+					randomStructuredContentFolder);
+
+		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+
+		StructuredContentFolder newStructuredContentFolder =
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
+
+		putStructuredContentFolder =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					newStructuredContentFolder.getExternalReferenceCode(),
+					newStructuredContentFolder);
+
+		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
+
+		Assert.assertEquals(
+			newStructuredContentFolder.getExternalReferenceCode(),
+			putStructuredContentFolder.getExternalReferenceCode());
+	}
+
+	protected Long
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
+		throws Exception {
+
+		return randomStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postAssetLibraryStructuredContentFolder(
+				testDepotEntry.getDepotEntryId(),
+				randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testPutAssetLibraryStructuredContentFolderPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testPutAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderPermissionsPageHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected StructuredContentFolder
+			testPutAssetLibraryStructuredContentFolderPermissionsPage_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.
+			postAssetLibraryStructuredContentFolder(
+				testDepotEntry.getDepotEntryId(),
+				randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testPutSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder putStructuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						postStructuredContentFolder),
+					postStructuredContentFolder.getExternalReferenceCode(),
+					randomStructuredContentFolder);
+
+		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						putStructuredContentFolder),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+
+		StructuredContentFolder newStructuredContentFolder =
+			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
+
+		putStructuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						newStructuredContentFolder),
+					newStructuredContentFolder.getExternalReferenceCode(),
+					newStructuredContentFolder);
+
+		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		getStructuredContentFolder =
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCode(
+					testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						putStructuredContentFolder),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
+
+		Assert.assertEquals(
+			newStructuredContentFolder.getExternalReferenceCode(),
+			putStructuredContentFolder.getExternalReferenceCode());
+	}
+
+	protected Long
+			testPutSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		return structuredContentFolder.getSiteId();
+	}
+
+	protected StructuredContentFolder
+			testPutSiteStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
+		throws Exception {
+
+		return randomStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testPutSiteStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testPutSiteStructuredContentFolderPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testPutSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderPermissionsPageHttpResponse(
+					structuredContentFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderPermissionsPageHttpResponse(
+					structuredContentFolder.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected StructuredContentFolder
+			testPutSiteStructuredContentFolderPermissionsPage_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
 	public void testPutStructuredContentFolder() throws Exception {
 		StructuredContentFolder postStructuredContentFolder =
 			testPutStructuredContentFolder_addStructuredContentFolder();
@@ -3305,6 +3256,55 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	protected StructuredContentFolder
 			testPutStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testPutStructuredContentFolderPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testPutStructuredContentFolderPermissionsPage_addStructuredContentFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			structuredContentFolderResource.
+				putStructuredContentFolderPermissionsPageHttpResponse(
+					structuredContentFolder.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				putStructuredContentFolderPermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected StructuredContentFolder
+			testPutStructuredContentFolderPermissionsPage_addStructuredContentFolder()
 		throws Exception {
 
 		return structuredContentFolderResource.postSiteStructuredContentFolder(

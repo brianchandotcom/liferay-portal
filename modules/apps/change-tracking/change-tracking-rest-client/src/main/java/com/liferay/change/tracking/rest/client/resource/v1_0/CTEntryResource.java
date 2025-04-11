@@ -34,6 +34,21 @@ public interface CTEntryResource {
 		return new Builder();
 	}
 
+	public Page<CTEntry> getCTEntriesHistoryPage(
+			Long classNameId, Long classPK, String search, Long siteId,
+			String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getCTEntriesHistoryPageHttpResponse(
+			Long classNameId, Long classPK, String search, Long siteId,
+			String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
+
+	public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
+		throws Exception;
+
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
 			Long ctCollectionId, String search, Boolean showHideable,
 			String filterString, Pagination pagination, String sortString)
@@ -52,21 +67,6 @@ public interface CTEntryResource {
 	public HttpInvoker.HttpResponse
 			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKHttpResponse(
 				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
-		throws Exception;
-
-	public Page<CTEntry> getCTEntriesHistoryPage(
-			Long classNameId, Long classPK, String search, Long siteId,
-			String filterString, Pagination pagination, String sortString)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getCTEntriesHistoryPageHttpResponse(
-			Long classNameId, Long classPK, String search, Long siteId,
-			String filterString, Pagination pagination, String sortString)
-		throws Exception;
-
-	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
-
-	public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
 		throws Exception;
 
 	public static class Builder {
@@ -176,6 +176,248 @@ public interface CTEntryResource {
 	}
 
 	public static class CTEntryResourceImpl implements CTEntryResource {
+
+		public Page<CTEntry> getCTEntriesHistoryPage(
+				Long classNameId, Long classPK, String search, Long siteId,
+				String filterString, Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getCTEntriesHistoryPageHttpResponse(
+					classNameId, classPK, search, siteId, filterString,
+					pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, CTEntrySerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getCTEntriesHistoryPageHttpResponse(
+				Long classNameId, Long classPK, String search, Long siteId,
+				String filterString, Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (classNameId != null) {
+				httpInvoker.parameter(
+					"classNameId", String.valueOf(classNameId));
+			}
+
+			if (classPK != null) {
+				httpInvoker.parameter("classPK", String.valueOf(classPK));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (siteId != null) {
+				httpInvoker.parameter("siteId", String.valueOf(siteId));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/change-tracking-rest/v1.0/ct-entries/history");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public CTEntry getCTEntry(Long ctEntryId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getCTEntryHttpResponse(
+				ctEntryId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CTEntrySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/change-tracking-rest/v1.0/ct-entries/{ctEntryId}");
+
+			httpInvoker.path("ctEntryId", ctEntryId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
 
 		public Page<CTEntry> getCtCollectionCTEntriesPage(
 				Long ctCollectionId, String search, Boolean showHideable,
@@ -417,248 +659,6 @@ public interface CTEntryResource {
 			httpInvoker.path("ctCollectionId", ctCollectionId);
 			httpInvoker.path("modelClassNameId", modelClassNameId);
 			httpInvoker.path("modelClassPK", modelClassPK);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<CTEntry> getCTEntriesHistoryPage(
-				Long classNameId, Long classPK, String search, Long siteId,
-				String filterString, Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getCTEntriesHistoryPageHttpResponse(
-					classNameId, classPK, search, siteId, filterString,
-					pagination, sortString);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, CTEntrySerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getCTEntriesHistoryPageHttpResponse(
-				Long classNameId, Long classPK, String search, Long siteId,
-				String filterString, Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (classNameId != null) {
-				httpInvoker.parameter(
-					"classNameId", String.valueOf(classNameId));
-			}
-
-			if (classPK != null) {
-				httpInvoker.parameter("classPK", String.valueOf(classPK));
-			}
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if (siteId != null) {
-				httpInvoker.parameter("siteId", String.valueOf(siteId));
-			}
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-entries/history");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public CTEntry getCTEntry(Long ctEntryId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getCTEntryHttpResponse(
-				ctEntryId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return CTEntrySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-entries/{ctEntryId}");
-
-			httpInvoker.path("ctEntryId", ctEntryId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

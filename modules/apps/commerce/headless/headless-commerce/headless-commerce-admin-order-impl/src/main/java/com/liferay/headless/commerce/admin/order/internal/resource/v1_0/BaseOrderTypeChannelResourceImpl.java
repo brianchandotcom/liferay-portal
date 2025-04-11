@@ -191,43 +191,6 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderTypeChannel")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
-	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public OrderTypeChannel
-			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				OrderTypeChannel orderTypeChannel)
-		throws Exception {
-
-		return new OrderTypeChannel();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -276,6 +239,43 @@ public abstract class BaseOrderTypeChannelResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "OrderTypeChannel")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public OrderTypeChannel
+			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				OrderTypeChannel orderTypeChannel)
+		throws Exception {
+
+		return new OrderTypeChannel();
 	}
 
 	/**

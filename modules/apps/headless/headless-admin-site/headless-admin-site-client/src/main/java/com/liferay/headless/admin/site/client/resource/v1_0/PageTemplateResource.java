@@ -39,75 +39,6 @@ public interface PageTemplateResource {
 		return new Builder();
 	}
 
-	public Page<PageTemplate>
-			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public PageTemplate
-			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode,
-				PageTemplate pageTemplate)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
-				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode,
-				PageTemplate pageTemplate)
-		throws Exception;
-
-	public Page<PageTemplate>
-			getSiteSiteByExternalReferenceCodePageTemplatesPage(
-				String siteExternalReferenceCode, String search,
-				List<String> aggregations, String filterString,
-				Pagination pagination, String sortString)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
-				String siteExternalReferenceCode, String search,
-				List<String> aggregations, String filterString,
-				Pagination pagination, String sortString)
-		throws Exception;
-
-	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode, PageTemplate pageTemplate)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-				String siteExternalReferenceCode, PageTemplate pageTemplate)
-		throws Exception;
-
-	public Page<Permission>
-			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public Page<Permission>
-			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-				String siteExternalReferenceCode, Permission[] permissions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-				String siteExternalReferenceCode, Permission[] permissions)
-		throws Exception;
-
 	public void deleteSiteSiteByExternalReferenceCodePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode)
@@ -130,6 +61,54 @@ public interface PageTemplateResource {
 				String pageTemplateExternalReferenceCode)
 		throws Exception;
 
+	public Page<Permission>
+			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
+	public Page<PageTemplate>
+			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode, Boolean flatten)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode, Boolean flatten)
+		throws Exception;
+
+	public Page<PageTemplate>
+			getSiteSiteByExternalReferenceCodePageTemplatesPage(
+				String siteExternalReferenceCode, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
+				String siteExternalReferenceCode, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception;
+
+	public Page<Permission>
+			getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				String pageTemplateExternalReferenceCode, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+				String siteExternalReferenceCode,
+				String pageTemplateExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public PageTemplate patchSiteSiteByExternalReferenceCodePageTemplate(
 			String siteExternalReferenceCode,
 			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
@@ -142,16 +121,13 @@ public interface PageTemplateResource {
 				PageTemplate pageTemplate)
 		throws Exception;
 
-	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
-			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+	public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode,
-				PageTemplate pageTemplate)
+			postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+				String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception;
 
 	public ContentPageSpecification
@@ -168,16 +144,40 @@ public interface PageTemplateResource {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception;
 
-	public Page<Permission>
-			getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
+	public PageTemplate
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode, String roleNames)
+				String pageTemplateSetExternalReferenceCode,
+				PageTemplate pageTemplate)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode, String roleNames)
+				String pageTemplateSetExternalReferenceCode,
+				PageTemplate pageTemplate)
+		throws Exception;
+
+	public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+				String siteExternalReferenceCode,
+				String pageTemplateExternalReferenceCode,
+				PageTemplate pageTemplate)
+		throws Exception;
+
+	public Page<Permission>
+			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+				String siteExternalReferenceCode, Permission[] permissions)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+				String siteExternalReferenceCode, Permission[] permissions)
 		throws Exception;
 
 	public Page<Permission>
@@ -300,725 +300,6 @@ public interface PageTemplateResource {
 
 	public static class PageTemplateResourceImpl
 		implements PageTemplateResource {
-
-		public Page<PageTemplate>
-				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
-					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode,
-					Boolean flatten)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
-					siteExternalReferenceCode,
-					pageTemplateSetExternalReferenceCode, flatten);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, PageTemplateSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
-					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode,
-					Boolean flatten)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (flatten != null) {
-				httpInvoker.parameter("flatten", String.valueOf(flatten));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}/page-templates");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"pageTemplateSetExternalReferenceCode",
-				pageTemplateSetExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public PageTemplate
-				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
-					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode,
-					PageTemplate pageTemplate)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
-					siteExternalReferenceCode,
-					pageTemplateSetExternalReferenceCode, pageTemplate);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return PageTemplateSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
-					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode,
-					PageTemplate pageTemplate)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(pageTemplate.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}/page-templates");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"pageTemplateSetExternalReferenceCode",
-				pageTemplateSetExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<PageTemplate>
-				getSiteSiteByExternalReferenceCodePageTemplatesPage(
-					String siteExternalReferenceCode, String search,
-					List<String> aggregations, String filterString,
-					Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
-					siteExternalReferenceCode, search, aggregations,
-					filterString, pagination, sortString);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, PageTemplateSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
-					String siteExternalReferenceCode, String search,
-					List<String> aggregations, String filterString,
-					Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
-				String siteExternalReferenceCode, PageTemplate pageTemplate)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-					siteExternalReferenceCode, pageTemplate);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return PageTemplateSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-					String siteExternalReferenceCode, PageTemplate pageTemplate)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(pageTemplate.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Permission>
-				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-					String siteExternalReferenceCode, String roleNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					siteExternalReferenceCode, roleNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					String siteExternalReferenceCode, String roleNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (roleNames != null) {
-				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/permissions");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Permission>
-				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-					String siteExternalReferenceCode, Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					siteExternalReferenceCode, permissions);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					String siteExternalReferenceCode, Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Permission permissionValue : permissions) {
-				values.add(String.valueOf(permissionValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/permissions");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
 
 		public void deleteSiteSiteByExternalReferenceCodePageTemplate(
 				String siteExternalReferenceCode,
@@ -1250,6 +531,496 @@ public interface PageTemplateResource {
 			return httpInvoker.invoke();
 		}
 
+		public Page<Permission>
+				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+					String siteExternalReferenceCode, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					siteExternalReferenceCode, roleNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, Permission::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					String siteExternalReferenceCode, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/permissions");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<PageTemplate>
+				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage(
+					String siteExternalReferenceCode,
+					String pageTemplateSetExternalReferenceCode,
+					Boolean flatten)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
+					siteExternalReferenceCode,
+					pageTemplateSetExternalReferenceCode, flatten);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, PageTemplateSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPageHttpResponse(
+					String siteExternalReferenceCode,
+					String pageTemplateSetExternalReferenceCode,
+					Boolean flatten)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}/page-templates");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"pageTemplateSetExternalReferenceCode",
+				pageTemplateSetExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<PageTemplate>
+				getSiteSiteByExternalReferenceCodePageTemplatesPage(
+					String siteExternalReferenceCode, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
+					siteExternalReferenceCode, search, aggregations,
+					filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, PageTemplateSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteSiteByExternalReferenceCodePageTemplatesPageHttpResponse(
+					String siteExternalReferenceCode, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission>
+				getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
+					String siteExternalReferenceCode,
+					String pageTemplateExternalReferenceCode, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					siteExternalReferenceCode,
+					pageTemplateExternalReferenceCode, roleNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, Permission::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					String siteExternalReferenceCode,
+					String pageTemplateExternalReferenceCode, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/{pageTemplateExternalReferenceCode}/permissions");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"pageTemplateExternalReferenceCode",
+				pageTemplateExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public PageTemplate patchSiteSiteByExternalReferenceCodePageTemplate(
 				String siteExternalReferenceCode,
 				String pageTemplateExternalReferenceCode,
@@ -1369,16 +1140,13 @@ public interface PageTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
-				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode,
-				PageTemplate pageTemplate)
+		public PageTemplate postSiteSiteByExternalReferenceCodePageTemplate(
+				String siteExternalReferenceCode, PageTemplate pageTemplate)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-					siteExternalReferenceCode,
-					pageTemplateExternalReferenceCode, pageTemplate);
+				postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+					siteExternalReferenceCode, pageTemplate);
 
 			String content = httpResponse.getContent();
 
@@ -1440,10 +1208,8 @@ public interface PageTemplateResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
-					String siteExternalReferenceCode,
-					String pageTemplateExternalReferenceCode,
-					PageTemplate pageTemplate)
+				postSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+					String siteExternalReferenceCode, PageTemplate pageTemplate)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1467,18 +1233,15 @@ public interface PageTemplateResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/{pageTemplateExternalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"pageTemplateExternalReferenceCode",
-				pageTemplateExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1610,16 +1373,253 @@ public interface PageTemplateResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission>
-				getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
+		public PageTemplate
+				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
 					String siteExternalReferenceCode,
-					String pageTemplateExternalReferenceCode, String roleNames)
+					String pageTemplateSetExternalReferenceCode,
+					PageTemplate pageTemplate)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
 					siteExternalReferenceCode,
-					pageTemplateExternalReferenceCode, roleNames);
+					pageTemplateSetExternalReferenceCode, pageTemplate);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return PageTemplateSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplateHttpResponse(
+					String siteExternalReferenceCode,
+					String pageTemplateSetExternalReferenceCode,
+					PageTemplate pageTemplate)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(pageTemplate.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}/page-templates");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"pageTemplateSetExternalReferenceCode",
+				pageTemplateSetExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public PageTemplate putSiteSiteByExternalReferenceCodePageTemplate(
+				String siteExternalReferenceCode,
+				String pageTemplateExternalReferenceCode,
+				PageTemplate pageTemplate)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+					siteExternalReferenceCode,
+					pageTemplateExternalReferenceCode, pageTemplate);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return PageTemplateSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putSiteSiteByExternalReferenceCodePageTemplateHttpResponse(
+					String siteExternalReferenceCode,
+					String pageTemplateExternalReferenceCode,
+					PageTemplate pageTemplate)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(pageTemplate.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/{pageTemplateExternalReferenceCode}");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"pageTemplateExternalReferenceCode",
+				pageTemplateExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission>
+				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
+					String siteExternalReferenceCode, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					siteExternalReferenceCode, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1681,12 +1681,19 @@ public interface PageTemplateResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					String siteExternalReferenceCode,
-					String pageTemplateExternalReferenceCode, String roleNames)
+				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
+					String siteExternalReferenceCode, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1705,22 +1712,15 @@ public interface PageTemplateResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (roleNames != null) {
-				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/{pageTemplateExternalReferenceCode}/permissions");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-templates/permissions");
 
 			httpInvoker.path(
 				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"pageTemplateExternalReferenceCode",
-				pageTemplateExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

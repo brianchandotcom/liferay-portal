@@ -53,17 +53,6 @@ public interface ObjectActionResource {
 
 	public ObjectAction getObjectAction(Long objectActionId) throws Exception;
 
-	public ObjectAction patchObjectAction(
-			Long objectActionId, ObjectAction objectAction)
-		throws Exception;
-
-	public ObjectAction putObjectAction(
-			Long objectActionId, ObjectAction objectAction)
-		throws Exception;
-
-	public Response putObjectActionBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Page<ObjectAction>
 			getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 				String externalReferenceCode, String search,
@@ -71,19 +60,17 @@ public interface ObjectActionResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ObjectAction postObjectDefinitionByExternalReferenceCodeObjectAction(
-			String externalReferenceCode, ObjectAction objectAction)
-		throws Exception;
-
 	public Page<ObjectAction> getObjectDefinitionObjectActionsPage(
 			Long objectDefinitionId, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectActionsPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectAction patchObjectAction(
+			Long objectActionId, ObjectAction objectAction)
+		throws Exception;
+
+	public ObjectAction postObjectDefinitionByExternalReferenceCodeObjectAction(
+			String externalReferenceCode, ObjectAction objectAction)
 		throws Exception;
 
 	public ObjectAction postObjectDefinitionObjectAction(
@@ -92,6 +79,19 @@ public interface ObjectActionResource {
 
 	public Response postObjectDefinitionObjectActionBatch(
 			Long objectDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postObjectDefinitionObjectActionsPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public ObjectAction putObjectAction(
+			Long objectActionId, ObjectAction objectAction)
+		throws Exception;
+
+	public Response putObjectActionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -75,6 +75,147 @@ public abstract class BaseTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/test-entities")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<TestEntity> getTestEntitiesPage() throws Exception {
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/test-entities/{testEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public TestEntity getTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testEntityId")
+			Long testEntityId)
+		throws Exception {
+
+		return null;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities/count'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the count."
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/test-entities/count")
+	@javax.ws.rs.Produces("text/plain")
+	@Override
+	public Integer getTestEntityCount() throws Exception {
+		return 0;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testEntityId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "optionalParameter"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/test-entities/{testEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public TestEntity patchTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testEntityId")
+			Long testEntityId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("optionalParameter")
+			Long optionalParameter,
+			TestEntity testEntity)
+		throws Exception {
+
+		TestEntity existingTestEntity = getTestEntity(testEntityId);
+
+		if (testEntity.getDateCreated() != null) {
+			existingTestEntity.setDateCreated(testEntity.getDateCreated());
+		}
+
+		if (testEntity.getDateModified() != null) {
+			existingTestEntity.setDateModified(testEntity.getDateModified());
+		}
+
+		if (testEntity.getDescription() != null) {
+			existingTestEntity.setDescription(testEntity.getDescription());
+		}
+
+		if (testEntity.getDocumentId() != null) {
+			existingTestEntity.setDocumentId(testEntity.getDocumentId());
+		}
+
+		if (testEntity.getJsonProperty() != null) {
+			existingTestEntity.setJsonProperty(testEntity.getJsonProperty());
+		}
+
+		if (testEntity.getName() != null) {
+			existingTestEntity.setName(testEntity.getName());
+		}
+
+		if (testEntity.getSelf() != null) {
+			existingTestEntity.setSelf(testEntity.getSelf());
+		}
+
+		if (testEntity.getType() != null) {
+			existingTestEntity.setType(testEntity.getType());
+		}
+
+		preparePatch(testEntity, existingTestEntity);
+
+		return putTestEntity(
+			testEntityId, optionalParameter, existingTestEntity);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/reserved-word'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -88,22 +229,6 @@ public abstract class BaseTestEntityResourceImpl
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-entities")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<TestEntity> getTestEntitiesPage() throws Exception {
-		return Page.of(Collections.emptyList());
 	}
 
 	/**
@@ -226,131 +351,6 @@ public abstract class BaseTestEntityResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				TestEntity.class.getName(), callbackURL, null, object)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities/count'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the count."
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-entities/count")
-	@javax.ws.rs.Produces("text/plain")
-	@Override
-	public Integer getTestEntityCount() throws Exception {
-		return 0;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "testEntityId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-entities/{testEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public TestEntity getTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("testEntityId")
-			Long testEntityId)
-		throws Exception {
-
-		return null;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "testEntityId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "optionalParameter"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/test-entities/{testEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public TestEntity patchTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("testEntityId")
-			Long testEntityId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("optionalParameter")
-			Long optionalParameter,
-			TestEntity testEntity)
-		throws Exception {
-
-		TestEntity existingTestEntity = getTestEntity(testEntityId);
-
-		if (testEntity.getDateCreated() != null) {
-			existingTestEntity.setDateCreated(testEntity.getDateCreated());
-		}
-
-		if (testEntity.getDateModified() != null) {
-			existingTestEntity.setDateModified(testEntity.getDateModified());
-		}
-
-		if (testEntity.getDescription() != null) {
-			existingTestEntity.setDescription(testEntity.getDescription());
-		}
-
-		if (testEntity.getDocumentId() != null) {
-			existingTestEntity.setDocumentId(testEntity.getDocumentId());
-		}
-
-		if (testEntity.getJsonProperty() != null) {
-			existingTestEntity.setJsonProperty(testEntity.getJsonProperty());
-		}
-
-		if (testEntity.getName() != null) {
-			existingTestEntity.setName(testEntity.getName());
-		}
-
-		if (testEntity.getSelf() != null) {
-			existingTestEntity.setSelf(testEntity.getSelf());
-		}
-
-		if (testEntity.getType() != null) {
-			existingTestEntity.setType(testEntity.getType());
-		}
-
-		preparePatch(testEntity, existingTestEntity);
-
-		return putTestEntity(
-			testEntityId, optionalParameter, existingTestEntity);
 	}
 
 	/**

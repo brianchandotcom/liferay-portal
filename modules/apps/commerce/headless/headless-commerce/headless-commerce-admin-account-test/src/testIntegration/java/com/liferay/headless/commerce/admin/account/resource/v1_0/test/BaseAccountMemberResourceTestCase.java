@@ -187,6 +187,39 @@ public abstract class BaseAccountMemberResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteAccountIdAccountMember() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeAccountMemberNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetAccountByExternalReferenceCodeAccountMembersPage()
 		throws Exception {
 
@@ -392,61 +425,20 @@ public abstract class BaseAccountMemberResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountByExternalReferenceCodeAccountMember()
-		throws Exception {
-
-		AccountMember randomAccountMember = randomAccountMember();
-
-		AccountMember postAccountMember =
-			testPostAccountByExternalReferenceCodeAccountMember_addAccountMember(
-				randomAccountMember);
-
-		assertEquals(randomAccountMember, postAccountMember);
-		assertValid(postAccountMember);
-	}
-
-	protected AccountMember
-			testPostAccountByExternalReferenceCodeAccountMember_addAccountMember(
-				AccountMember accountMember)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountByExternalReferenceCodeAccountMember()
-		throws Exception {
-
+	public void testGetAccountIdAccountMember() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetAccountByExternalReferenceCodeAccountMember()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeAccountMember()
-		throws Exception {
-
+	public void testGraphQLGetAccountIdAccountMember() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeAccountMemberNotFound()
+	public void testGraphQLGetAccountIdAccountMemberNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchAccountByExternalReferenceCodeAccountMember()
-		throws Exception {
-
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -625,6 +617,41 @@ public abstract class BaseAccountMemberResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchAccountIdAccountMember() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeAccountMember()
+		throws Exception {
+
+		AccountMember randomAccountMember = randomAccountMember();
+
+		AccountMember postAccountMember =
+			testPostAccountByExternalReferenceCodeAccountMember_addAccountMember(
+				randomAccountMember);
+
+		assertEquals(randomAccountMember, postAccountMember);
+		assertValid(postAccountMember);
+	}
+
+	protected AccountMember
+			testPostAccountByExternalReferenceCodeAccountMember_addAccountMember(
+				AccountMember accountMember)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostAccountIdAccountMember() throws Exception {
 		AccountMember randomAccountMember = randomAccountMember();
 
@@ -642,33 +669,6 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountIdAccountMember() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetAccountIdAccountMember() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetAccountIdAccountMember() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetAccountIdAccountMemberNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchAccountIdAccountMember() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(

@@ -195,6 +195,13 @@ public abstract class BaseDefaultCategoryDisplayPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteChannelIdDefaultCategoryDisplayPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeDefaultCategoryDisplayPage()
 		throws Exception {
 
@@ -210,6 +217,25 @@ public abstract class BaseDefaultCategoryDisplayPageResourceTestCase {
 
 	@Test
 	public void testGraphQLGetChannelByExternalReferenceCodeDefaultCategoryDisplayPageNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetChannelIdDefaultCategoryDisplayPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetChannelIdDefaultCategoryDisplayPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetChannelIdDefaultCategoryDisplayPageNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);
@@ -238,32 +264,6 @@ public abstract class BaseDefaultCategoryDisplayPageResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteChannelIdDefaultCategoryDisplayPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetChannelIdDefaultCategoryDisplayPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetChannelIdDefaultCategoryDisplayPage()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetChannelIdDefaultCategoryDisplayPageNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	@Test

@@ -46,11 +46,11 @@ public interface BillingAddressResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public BillingAddress getOrderIdBillingAddress(Long id) throws Exception;
+
 	public Response patchOrderByExternalReferenceCodeBillingAddress(
 			String externalReferenceCode, BillingAddress billingAddress)
 		throws Exception;
-
-	public BillingAddress getOrderIdBillingAddress(Long id) throws Exception;
 
 	public Response patchOrderIdBillingAddress(
 			Long id, BillingAddress billingAddress)

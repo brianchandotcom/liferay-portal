@@ -177,6 +177,21 @@ public abstract class BaseProcessMetricResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessMetric() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetProcessMetric() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetProcessMetricNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetProcessMetricsPage() throws Exception {
 		Page<ProcessMetric> page = processMetricResource.getProcessMetricsPage(
 			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
@@ -452,21 +467,6 @@ public abstract class BaseProcessMetricResourceTestCase {
 	@Test
 	public void testGraphQLGetProcessMetricsPage() throws Exception {
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetProcessMetric() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetProcessMetric() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetProcessMetricNotFound() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(

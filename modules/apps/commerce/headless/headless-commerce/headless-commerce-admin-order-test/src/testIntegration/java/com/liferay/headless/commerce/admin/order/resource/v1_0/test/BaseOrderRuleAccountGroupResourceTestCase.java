@@ -475,30 +475,6 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup()
-		throws Exception {
-
-		OrderRuleAccountGroup randomOrderRuleAccountGroup =
-			randomOrderRuleAccountGroup();
-
-		OrderRuleAccountGroup postOrderRuleAccountGroup =
-			testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup_addOrderRuleAccountGroup(
-				randomOrderRuleAccountGroup);
-
-		assertEquals(randomOrderRuleAccountGroup, postOrderRuleAccountGroup);
-		assertValid(postOrderRuleAccountGroup);
-	}
-
-	protected OrderRuleAccountGroup
-			testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup_addOrderRuleAccountGroup(
-				OrderRuleAccountGroup orderRuleAccountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrderRuleIdOrderRuleAccountGroupsPage()
 		throws Exception {
 
@@ -976,6 +952,30 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup()
+		throws Exception {
+
+		OrderRuleAccountGroup randomOrderRuleAccountGroup =
+			randomOrderRuleAccountGroup();
+
+		OrderRuleAccountGroup postOrderRuleAccountGroup =
+			testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup_addOrderRuleAccountGroup(
+				randomOrderRuleAccountGroup);
+
+		assertEquals(randomOrderRuleAccountGroup, postOrderRuleAccountGroup);
+		assertValid(postOrderRuleAccountGroup);
+	}
+
+	protected OrderRuleAccountGroup
+			testPostOrderRuleByExternalReferenceCodeOrderRuleAccountGroup_addOrderRuleAccountGroup(
+				OrderRuleAccountGroup orderRuleAccountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

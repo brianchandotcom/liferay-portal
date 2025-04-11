@@ -131,17 +131,18 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formRecord(formRecordId: ___){creator, dateCreated, dateModified, datePublished, draft, formFieldValues, formId, id}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formFormRecordByLatestDraft(formId: ___){creator, dateCreated, dateModified, datePublished, draft, formFieldValues, formId, id}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public FormRecord formRecord(@GraphQLName("formRecordId") Long formRecordId)
+	public FormRecord formFormRecordByLatestDraft(
+			@GraphQLName("formId") Long formId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.getFormRecord(
-				formRecordId));
+			formRecordResource ->
+				formRecordResource.getFormFormRecordByLatestDraft(formId));
 	}
 
 	/**
@@ -167,18 +168,17 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formFormRecordByLatestDraft(formId: ___){creator, dateCreated, dateModified, datePublished, draft, formFieldValues, formId, id}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formRecord(formRecordId: ___){creator, dateCreated, dateModified, datePublished, draft, formFieldValues, formId, id}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public FormRecord formFormRecordByLatestDraft(
-			@GraphQLName("formId") Long formId)
+	public FormRecord formRecord(@GraphQLName("formRecordId") Long formRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formRecordResource ->
-				formRecordResource.getFormFormRecordByLatestDraft(formId));
+			formRecordResource -> formRecordResource.getFormRecord(
+				formRecordId));
 	}
 
 	/**

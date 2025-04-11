@@ -51,15 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowTaskResource {
 
-	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			Long workflowInstanceId, Boolean completed, Pagination pagination)
-		throws Exception;
-
-	public Response postWorkflowInstanceWorkflowTasksPageExportBatch(
-			Long workflowInstanceId, Boolean completed, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksAssignedToMePage(
 			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
@@ -70,14 +61,13 @@ public interface WorkflowTaskResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> postWorkflowTasksPage(
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts,
-			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
 
-	public void patchWorkflowTaskAssignToUser(
-			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+
+	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
@@ -100,19 +90,26 @@ public interface WorkflowTaskResource {
 			Long assigneeId, Pagination pagination)
 		throws Exception;
 
-	public void patchWorkflowTaskChangeTransition(
-			ChangeTransition[] changeTransitions)
-		throws Exception;
-
 	public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
 			Long creatorId, Pagination pagination)
+		throws Exception;
+
+	public void patchWorkflowTaskAssignToUser(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception;
+
+	public void patchWorkflowTaskChangeTransition(
+			ChangeTransition[] changeTransitions)
 		throws Exception;
 
 	public void patchWorkflowTaskUpdateDueDate(
 			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 		throws Exception;
 
-	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+	public Response postWorkflowInstanceWorkflowTasksPageExportBatch(
+			Long workflowInstanceId, Boolean completed, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
@@ -132,11 +129,14 @@ public interface WorkflowTaskResource {
 			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
-	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
-		throws Exception;
-
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
+		throws Exception;
+
+	public Page<WorkflowTask> postWorkflowTasksPage(
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts,
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

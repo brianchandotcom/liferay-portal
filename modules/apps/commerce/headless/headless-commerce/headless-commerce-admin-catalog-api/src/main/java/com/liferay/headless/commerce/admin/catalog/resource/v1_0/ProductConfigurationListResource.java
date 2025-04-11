@@ -46,6 +46,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductConfigurationListResource {
 
+	public void deleteProductConfigurationList(Long id) throws Exception;
+
+	public Response deleteProductConfigurationListBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProductConfigurationListByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductConfigurationList getProductConfigurationList(Long id)
+		throws Exception;
+
+	public ProductConfigurationList
+			getProductConfigurationListByExternalReferenceCode(
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<ProductConfigurationList> getProductConfigurationListsPage(
 			Long catalogId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -53,11 +71,14 @@ public interface ProductConfigurationListResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postProductConfigurationListsPageExportBatch(
-			Long catalogId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ProductConfigurationList patchProductConfigurationList(
+			Long id, ProductConfigurationList productConfigurationList)
+		throws Exception;
+
+	public ProductConfigurationList
+			patchProductConfigurationListByExternalReferenceCode(
+				String externalReferenceCode,
+				ProductConfigurationList productConfigurationList)
 		throws Exception;
 
 	public ProductConfigurationList postProductConfigurationList(
@@ -68,32 +89,11 @@ public interface ProductConfigurationListResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteProductConfigurationListByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ProductConfigurationList
-			getProductConfigurationListByExternalReferenceCode(
-				String externalReferenceCode)
-		throws Exception;
-
-	public ProductConfigurationList
-			patchProductConfigurationListByExternalReferenceCode(
-				String externalReferenceCode,
-				ProductConfigurationList productConfigurationList)
-		throws Exception;
-
-	public void deleteProductConfigurationList(Long id) throws Exception;
-
-	public Response deleteProductConfigurationListBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ProductConfigurationList getProductConfigurationList(Long id)
-		throws Exception;
-
-	public ProductConfigurationList patchProductConfigurationList(
-			Long id, ProductConfigurationList productConfigurationList)
+	public Response postProductConfigurationListsPageExportBatch(
+			Long catalogId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

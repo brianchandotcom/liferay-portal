@@ -61,6 +61,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {displayPageTemplate(displayPageTemplateKey: ___, siteKey: ___){actions, availableLanguages, creator, customFields, dateCreated, dateModified, displayPageTemplateKey, displayPageTemplateSettings, markedAsDefault, pageDefinition, siteId, title, uuid}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves a display page template of a site")
+	public DisplayPageTemplate displayPageTemplate(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("displayPageTemplateKey") String
+				displayPageTemplateKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateResource ->
+				displayPageTemplateResource.getSiteDisplayPageTemplate(
+					Long.valueOf(siteKey), displayPageTemplateKey));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {displayPageTemplates(page: ___, pageSize: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -81,26 +101,6 @@ public class Query {
 					Long.valueOf(siteKey), Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						displayPageTemplateResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {displayPageTemplate(displayPageTemplateKey: ___, siteKey: ___){actions, availableLanguages, creator, customFields, dateCreated, dateModified, displayPageTemplateKey, displayPageTemplateSettings, markedAsDefault, pageDefinition, siteId, title, uuid}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(description = "Retrieves a display page template of a site")
-	public DisplayPageTemplate displayPageTemplate(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("displayPageTemplateKey") String
-				displayPageTemplateKey)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateResource ->
-				displayPageTemplateResource.getSiteDisplayPageTemplate(
-					Long.valueOf(siteKey), displayPageTemplateKey));
 	}
 
 	/**

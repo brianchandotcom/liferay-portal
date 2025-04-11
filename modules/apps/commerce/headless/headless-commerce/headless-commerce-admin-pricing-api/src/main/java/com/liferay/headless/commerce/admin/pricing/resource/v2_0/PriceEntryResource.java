@@ -46,26 +46,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PriceEntryResource {
 
-	public void deletePriceEntryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PriceEntry getPriceEntryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PriceEntry patchPriceEntryByExternalReferenceCode(
-			String externalReferenceCode, PriceEntry priceEntry)
-		throws Exception;
-
 	public void deletePriceEntry(Long priceEntryId) throws Exception;
 
 	public Response deletePriceEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deletePriceEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public PriceEntry getPriceEntry(Long priceEntryId) throws Exception;
 
-	public PriceEntry patchPriceEntry(Long priceEntryId, PriceEntry priceEntry)
+	public PriceEntry getPriceEntryByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<PriceEntry> getPriceListByExternalReferenceCodePriceEntriesPage(
@@ -75,15 +68,22 @@ public interface PriceEntryResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public PriceEntry postPriceListByExternalReferenceCodePriceEntry(
-			String externalReferenceCode, PriceEntry priceEntry)
-		throws Exception;
-
 	public Page<PriceEntry> getPriceListIdPriceEntriesPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public PriceEntry patchPriceEntry(Long priceEntryId, PriceEntry priceEntry)
+		throws Exception;
+
+	public PriceEntry patchPriceEntryByExternalReferenceCode(
+			String externalReferenceCode, PriceEntry priceEntry)
+		throws Exception;
+
+	public PriceEntry postPriceListByExternalReferenceCodePriceEntry(
+			String externalReferenceCode, PriceEntry priceEntry)
 		throws Exception;
 
 	public PriceEntry postPriceListIdPriceEntry(Long id, PriceEntry priceEntry)

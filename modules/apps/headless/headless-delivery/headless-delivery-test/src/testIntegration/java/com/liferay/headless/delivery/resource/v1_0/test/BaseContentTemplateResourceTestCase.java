@@ -658,6 +658,165 @@ public abstract class BaseContentTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteContentTemplate() throws Exception {
+		ContentTemplate postContentTemplate =
+			testGetSiteContentTemplate_addContentTemplate();
+
+		ContentTemplate getContentTemplate =
+			contentTemplateResource.getSiteContentTemplate(
+				testGetSiteContentTemplate_getSiteId(postContentTemplate),
+				postContentTemplate.getId());
+
+		assertEquals(postContentTemplate, getContentTemplate);
+		assertValid(getContentTemplate);
+	}
+
+	protected Long testGetSiteContentTemplate_getSiteId(
+			ContentTemplate contentTemplate)
+		throws Exception {
+
+		return contentTemplate.getSiteId();
+	}
+
+	protected ContentTemplate testGetSiteContentTemplate_addContentTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteContentTemplate() throws Exception {
+		ContentTemplate contentTemplate =
+			testGraphQLGetSiteContentTemplate_addContentTemplate();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				contentTemplate,
+				ContentTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"contentTemplate",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteContentTemplate_getSiteId(
+													contentTemplate) + "\"");
+
+										put(
+											"contentTemplateId",
+											"\"" + contentTemplate.getId() +
+												"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/contentTemplate"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				contentTemplate,
+				ContentTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"contentTemplate",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteContentTemplate_getSiteId(
+														contentTemplate) +
+															"\"");
+
+											put(
+												"contentTemplateId",
+												"\"" + contentTemplate.getId() +
+													"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/contentTemplate"))));
+	}
+
+	protected Long testGraphQLGetSiteContentTemplate_getSiteId(
+			ContentTemplate contentTemplate)
+		throws Exception {
+
+		return contentTemplate.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteContentTemplateNotFound() throws Exception {
+		String irrelevantContentTemplateId =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"contentTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"contentTemplateId",
+									irrelevantContentTemplateId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"contentTemplate",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"contentTemplateId",
+										irrelevantContentTemplateId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ContentTemplate
+			testGraphQLGetSiteContentTemplate_addContentTemplate()
+		throws Exception {
+
+		return testGraphQLContentTemplate_addContentTemplate();
+	}
+
+	@Test
 	public void testGetSiteContentTemplatesPage() throws Exception {
 		Long siteId = testGetSiteContentTemplatesPage_getSiteId();
 		Long irrelevantSiteId =
@@ -1167,165 +1326,6 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 	protected ContentTemplate
 			testGraphQLGetSiteContentTemplatesPage_addContentTemplate()
-		throws Exception {
-
-		return testGraphQLContentTemplate_addContentTemplate();
-	}
-
-	@Test
-	public void testGetSiteContentTemplate() throws Exception {
-		ContentTemplate postContentTemplate =
-			testGetSiteContentTemplate_addContentTemplate();
-
-		ContentTemplate getContentTemplate =
-			contentTemplateResource.getSiteContentTemplate(
-				testGetSiteContentTemplate_getSiteId(postContentTemplate),
-				postContentTemplate.getId());
-
-		assertEquals(postContentTemplate, getContentTemplate);
-		assertValid(getContentTemplate);
-	}
-
-	protected Long testGetSiteContentTemplate_getSiteId(
-			ContentTemplate contentTemplate)
-		throws Exception {
-
-		return contentTemplate.getSiteId();
-	}
-
-	protected ContentTemplate testGetSiteContentTemplate_addContentTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSiteContentTemplate() throws Exception {
-		ContentTemplate contentTemplate =
-			testGraphQLGetSiteContentTemplate_addContentTemplate();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				contentTemplate,
-				ContentTemplateSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"contentTemplate",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteContentTemplate_getSiteId(
-													contentTemplate) + "\"");
-
-										put(
-											"contentTemplateId",
-											"\"" + contentTemplate.getId() +
-												"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/contentTemplate"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertTrue(
-			equals(
-				contentTemplate,
-				ContentTemplateSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessDelivery_v1_0",
-								new GraphQLField(
-									"contentTemplate",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteKey",
-												"\"" +
-													testGraphQLGetSiteContentTemplate_getSiteId(
-														contentTemplate) +
-															"\"");
-
-											put(
-												"contentTemplateId",
-												"\"" + contentTemplate.getId() +
-													"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/contentTemplate"))));
-	}
-
-	protected Long testGraphQLGetSiteContentTemplate_getSiteId(
-			ContentTemplate contentTemplate)
-		throws Exception {
-
-		return contentTemplate.getSiteId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteContentTemplateNotFound() throws Exception {
-		String irrelevantContentTemplateId =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"contentTemplate",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"contentTemplateId",
-									irrelevantContentTemplateId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"contentTemplate",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteKey",
-										"\"" + irrelevantGroup.getGroupId() +
-											"\"");
-									put(
-										"contentTemplateId",
-										irrelevantContentTemplateId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ContentTemplate
-			testGraphQLGetSiteContentTemplate_addContentTemplate()
 		throws Exception {
 
 		return testGraphQLContentTemplate_addContentTemplate();

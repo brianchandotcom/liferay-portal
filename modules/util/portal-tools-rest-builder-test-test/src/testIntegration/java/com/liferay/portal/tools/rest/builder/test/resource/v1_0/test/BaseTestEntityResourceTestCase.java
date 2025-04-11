@@ -213,11 +213,6 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	@Test
-	public void testPostReservedWord() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetTestEntitiesPage() throws Exception {
 		Page<TestEntity> page = testEntityResource.getTestEntitiesPage();
 
@@ -253,96 +248,6 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostTestEntity() throws Exception {
-		TestEntity randomTestEntity = randomTestEntity();
-
-		TestEntity postTestEntity = testPostTestEntity_addTestEntity(
-			randomTestEntity);
-
-		assertEquals(randomTestEntity, postTestEntity);
-		assertValid(postTestEntity);
-
-		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				property1 = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity1");
-			}
-		};
-
-		assertEquals(
-			childTestEntity1,
-			testPostTestEntity_addTestEntity(childTestEntity1));
-
-		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				property2 = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity2");
-			}
-		};
-
-		assertEquals(
-			childTestEntity2,
-			testPostTestEntity_addTestEntity(childTestEntity2));
-
-		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity3");
-			}
-		};
-
-		assertEquals(
-			childTestEntity3,
-			testPostTestEntity_addTestEntity(childTestEntity3));
-	}
-
-	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetTestEntityCount() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -550,6 +455,11 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetTestEntityCount() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPatchTestEntity() throws Exception {
 		TestEntity postTestEntity = testPatchTestEntity_addTestEntity();
 
@@ -578,6 +488,96 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected Long testPatchTestEntity_getOptionalParameter() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostReservedWord() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostTestEntity() throws Exception {
+		TestEntity randomTestEntity = randomTestEntity();
+
+		TestEntity postTestEntity = testPostTestEntity_addTestEntity(
+			randomTestEntity);
+
+		assertEquals(randomTestEntity, postTestEntity);
+		assertValid(postTestEntity);
+
+		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				property1 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+
+				type = Type.create("ChildTestEntity1");
+			}
+		};
+
+		assertEquals(
+			childTestEntity1,
+			testPostTestEntity_addTestEntity(childTestEntity1));
+
+		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				property2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+
+				type = Type.create("ChildTestEntity2");
+			}
+		};
+
+		assertEquals(
+			childTestEntity2,
+			testPostTestEntity_addTestEntity(childTestEntity2));
+
+		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+				type = Type.create("ChildTestEntity3");
+			}
+		};
+
+		assertEquals(
+			childTestEntity3,
+			testPostTestEntity_addTestEntity(childTestEntity3));
+	}
+
+	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

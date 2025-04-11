@@ -45,22 +45,22 @@ public interface DefaultProductDisplayPageResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public void deleteChannelIdDefaultProductDisplayPage(Long id)
+		throws Exception;
+
 	public DefaultProductDisplayPage
 			getChannelByExternalReferenceCodeDefaultProductDisplayPage(
 				String externalReferenceCode)
+		throws Exception;
+
+	public DefaultProductDisplayPage getChannelIdDefaultProductDisplayPage(
+			Long id)
 		throws Exception;
 
 	public DefaultProductDisplayPage
 			postChannelByExternalReferenceCodeDefaultProductDisplayPage(
 				String externalReferenceCode,
 				DefaultProductDisplayPage defaultProductDisplayPage)
-		throws Exception;
-
-	public void deleteChannelIdDefaultProductDisplayPage(Long id)
-		throws Exception;
-
-	public DefaultProductDisplayPage getChannelIdDefaultProductDisplayPage(
-			Long id)
 		throws Exception;
 
 	public DefaultProductDisplayPage postChannelIdDefaultProductDisplayPage(

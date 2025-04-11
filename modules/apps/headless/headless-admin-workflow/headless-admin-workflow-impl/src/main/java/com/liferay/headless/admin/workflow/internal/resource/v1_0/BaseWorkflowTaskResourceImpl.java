@@ -77,130 +77,6 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "workflowInstanceId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "completed"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/workflow-instances/{workflowInstanceId}/workflow-tasks")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("workflowInstanceId")
-			Long workflowInstanceId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("completed")
-			Boolean completed,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "workflowInstanceId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "completed"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "contentType"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fieldNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path(
-		"/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch"
-	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postWorkflowInstanceWorkflowTasksPageExportBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("workflowInstanceId")
-			Long workflowInstanceId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("completed")
-			Boolean completed,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.DefaultValue("JSON")
-			@javax.ws.rs.QueryParam("contentType")
-			String contentType,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("fieldNames")
-			String fieldNames)
-		throws Exception {
-
-		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
-		vulcanBatchEngineExportTaskResource.setGroupLocalService(
-			groupLocalService);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineExportTaskResource.postExportTask(
-				WorkflowTask.class.getName(), callbackURL, contentType,
-				fieldNames)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -305,10 +181,18 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks' -d $'{"andOperator": ___, "assetPrimaryKeys": ___, "assetTitle": ___, "assetTypes": ___, "assigneeIds": ___, "completed": ___, "dateDueEnd": ___, "dateDueStart": ___, "searchByRoles": ___, "searchByUserRoles": ___, "workflowDefinitionId": ___, "workflowInstanceIds": ___, "workflowTaskNames": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "workflowInstanceId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "completed"
+			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -316,26 +200,25 @@ public abstract class BaseWorkflowTaskResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/workflow-tasks")
-	@javax.ws.rs.POST
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/workflow-instances/{workflowInstanceId}/workflow-tasks")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<WorkflowTask> postWorkflowTasksPage(
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
-				sorts,
-			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("workflowInstanceId")
+			Long workflowInstanceId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("completed")
+			Boolean completed,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -344,19 +227,61 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "workflowTaskId"
+			)
+		}
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/workflow-tasks/assign-to-user")
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/workflow-tasks/{workflowTaskId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void patchWorkflowTaskAssignToUser(
-			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+	public WorkflowTask getWorkflowTask(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("workflowTaskId")
+			Long workflowTaskId)
 		throws Exception {
+
+		return new WorkflowTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "workflowTaskId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/workflow-tasks/{workflowTaskId}/has-assignable-users")
+	@javax.ws.rs.Produces("text/plain")
+	@Override
+	public Boolean getWorkflowTaskHasAssignableUsers(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("workflowTaskId")
+			Long workflowTaskId)
+		throws Exception {
+
+		return false;
 	}
 
 	/**
@@ -539,24 +464,6 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/change-transition'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/workflow-tasks/change-transition")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchWorkflowTaskChangeTransition(
-			ChangeTransition[] changeTransitions)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/submitting-user'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -595,6 +502,42 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/workflow-tasks/assign-to-user")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchWorkflowTaskAssignToUser(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/change-transition'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/workflow-tasks/change-transition")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchWorkflowTaskChangeTransition(
+			ChangeTransition[] changeTransitions)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/update-due-date'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -613,31 +556,79 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "workflowTaskId"
+				name = "workflowInstanceId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "completed"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "contentType"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fieldNames"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/workflow-tasks/{workflowTaskId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path(
+		"/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
 	@Override
-	public WorkflowTask getWorkflowTask(
+	public Response postWorkflowInstanceWorkflowTasksPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("workflowTaskId")
-			Long workflowTaskId)
+			@javax.ws.rs.PathParam("workflowInstanceId")
+			Long workflowInstanceId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("completed")
+			Boolean completed,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.DefaultValue("JSON")
+			@javax.ws.rs.QueryParam("contentType")
+			String contentType,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fieldNames")
+			String fieldNames)
 		throws Exception {
 
-		return new WorkflowTask();
+		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
+		vulcanBatchEngineExportTaskResource.setGroupLocalService(
+			groupLocalService);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineExportTaskResource.postExportTask(
+				WorkflowTask.class.getName(), callbackURL, contentType,
+				fieldNames)
+		).build();
 	}
 
 	/**
@@ -771,36 +762,6 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "workflowTaskId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/workflow-tasks/{workflowTaskId}/has-assignable-users")
-	@javax.ws.rs.Produces("text/plain")
-	@Override
-	public Boolean getWorkflowTaskHasAssignableUsers(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("workflowTaskId")
-			Long workflowTaskId)
-		throws Exception {
-
-		return false;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/update-due-date' -d $'{"comment": ___, "dueDate": ___, "workflowTaskId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -828,6 +789,45 @@ public abstract class BaseWorkflowTaskResourceImpl
 		throws Exception {
 
 		return new WorkflowTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks' -d $'{"andOperator": ___, "assetPrimaryKeys": ___, "assetTitle": ___, "assetTypes": ___, "assigneeIds": ___, "completed": ___, "dateDueEnd": ___, "dateDueStart": ___, "searchByRoles": ___, "searchByUserRoles": ___, "workflowDefinitionId": ___, "workflowInstanceIds": ___, "workflowTaskNames": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "WorkflowTask")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/workflow-tasks")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<WorkflowTask> postWorkflowTasksPage(
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+				sorts,
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override

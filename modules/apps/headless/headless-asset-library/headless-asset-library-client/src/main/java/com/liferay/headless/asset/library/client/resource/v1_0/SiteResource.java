@@ -46,6 +46,13 @@ public interface SiteResource {
 				String siteExternalReferenceCode)
 		throws Exception;
 
+	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
+			Long assetLibraryId, Long siteId)
+		throws Exception;
+
 	public Site
 			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
@@ -54,18 +61,6 @@ public interface SiteResource {
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
-				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
-		throws Exception;
-
-	public Site
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
 				String assetLibraryExternalReferenceCode,
 				String siteExternalReferenceCode)
 		throws Exception;
@@ -79,6 +74,13 @@ public interface SiteResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
+			Long assetLibraryId, Long siteId)
+		throws Exception;
+
 	public Page<Site> getAssetLibrarySitesPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
@@ -87,18 +89,16 @@ public interface SiteResource {
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String siteExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId)
-		throws Exception;
-
-	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
-			Long assetLibraryId, Long siteId)
+	public HttpInvoker.HttpResponse
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+				String assetLibraryExternalReferenceCode,
+				String siteExternalReferenceCode)
 		throws Exception;
 
 	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)
@@ -332,6 +332,112 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
+		public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
+				Long assetLibraryId, Long siteId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path("siteId", siteId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Site
 				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 					String assetLibraryExternalReferenceCode,
@@ -428,124 +534,6 @@ public interface SiteResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}");
-
-			httpInvoker.path(
-				"assetLibraryExternalReferenceCode",
-				assetLibraryExternalReferenceCode);
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Site
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
-					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
-					assetLibraryExternalReferenceCode,
-					siteExternalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return SiteSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
-					String assetLibraryExternalReferenceCode,
-					String siteExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -681,6 +669,112 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
+		public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return SiteSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
+				Long assetLibraryId, Long siteId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+			httpInvoker.path("siteId", siteId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<Site> getAssetLibrarySitesPage(
 				Long assetLibraryId, Pagination pagination)
 			throws Exception {
@@ -795,117 +889,16 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
+		public Site
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+					String assetLibraryExternalReferenceCode,
+					String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
-
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("siteId", siteId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibrarySiteHttpResponse(assetLibraryId, siteId);
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+					assetLibraryExternalReferenceCode,
+					siteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -966,11 +959,15 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAssetLibrarySiteHttpResponse(
-				Long assetLibraryId, Long siteId)
+		public HttpInvoker.HttpResponse
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCodeHttpResponse(
+					String assetLibraryExternalReferenceCode,
+					String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -989,15 +986,18 @@ public interface SiteResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/sites/{siteId}");
+						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/sites/by-external-reference-code/{siteExternalReferenceCode}");
 
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

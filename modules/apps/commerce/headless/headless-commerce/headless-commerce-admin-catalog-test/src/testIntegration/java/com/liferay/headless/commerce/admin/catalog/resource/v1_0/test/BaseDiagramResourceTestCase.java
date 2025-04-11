@@ -183,11 +183,6 @@ public abstract class BaseDiagramResourceTestCase {
 	}
 
 	@Test
-	public void testPatchDiagram() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeDiagram()
 		throws Exception {
 
@@ -338,28 +333,6 @@ public abstract class BaseDiagramResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeDiagram()
-		throws Exception {
-
-		Diagram randomDiagram = randomDiagram();
-
-		Diagram postDiagram =
-			testPostProductByExternalReferenceCodeDiagram_addDiagram(
-				randomDiagram);
-
-		assertEquals(randomDiagram, postDiagram);
-		assertValid(postDiagram);
-	}
-
-	protected Diagram testPostProductByExternalReferenceCodeDiagram_addDiagram(
-			Diagram diagram)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdDiagram() throws Exception {
 		Diagram postDiagram = testGetProductIdDiagram_addDiagram();
 
@@ -483,6 +456,33 @@ public abstract class BaseDiagramResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDiagram_addDiagram();
+	}
+
+	@Test
+	public void testPatchDiagram() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeDiagram()
+		throws Exception {
+
+		Diagram randomDiagram = randomDiagram();
+
+		Diagram postDiagram =
+			testPostProductByExternalReferenceCodeDiagram_addDiagram(
+				randomDiagram);
+
+		assertEquals(randomDiagram, postDiagram);
+		assertValid(postDiagram);
+	}
+
+	protected Diagram testPostProductByExternalReferenceCodeDiagram_addDiagram(
+			Diagram diagram)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

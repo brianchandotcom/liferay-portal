@@ -45,20 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentCompositionResource {
 
-	public Page<FragmentComposition>
-			getSiteSiteByExternalReferenceCodeFragmentCompositionsPage(
-				String siteExternalReferenceCode, String search,
-				com.liferay.portal.kernel.search.filter.Filter filter,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public FragmentComposition
-			postSiteSiteByExternalReferenceCodeFragmentComposition(
-				String siteExternalReferenceCode, Boolean saveInlineContent,
-				Boolean saveMapping, FragmentComposition fragmentComposition)
-		throws Exception;
-
 	public void deleteSiteSiteByExternalReferenceCodeFragmentComposition(
 			String siteExternalReferenceCode,
 			String fragmentCompositionExternalReferenceCode)
@@ -70,11 +56,25 @@ public interface FragmentCompositionResource {
 				String fragmentCompositionExternalReferenceCode)
 		throws Exception;
 
+	public Page<FragmentComposition>
+			getSiteSiteByExternalReferenceCodeFragmentCompositionsPage(
+				String siteExternalReferenceCode, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public FragmentComposition
 			patchSiteSiteByExternalReferenceCodeFragmentComposition(
 				String siteExternalReferenceCode,
 				String fragmentCompositionExternalReferenceCode,
 				FragmentComposition fragmentComposition)
+		throws Exception;
+
+	public FragmentComposition
+			postSiteSiteByExternalReferenceCodeFragmentComposition(
+				String siteExternalReferenceCode, Boolean saveInlineContent,
+				Boolean saveMapping, FragmentComposition fragmentComposition)
 		throws Exception;
 
 	public FragmentComposition

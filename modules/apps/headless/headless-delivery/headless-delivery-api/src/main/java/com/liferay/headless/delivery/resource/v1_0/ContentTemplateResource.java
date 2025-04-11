@@ -56,11 +56,8 @@ public interface ContentTemplateResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryContentTemplatesPageExportBatch(
-			Long assetLibraryId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ContentTemplate getSiteContentTemplate(
+			Long siteId, String contentTemplateId)
 		throws Exception;
 
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
@@ -71,15 +68,18 @@ public interface ContentTemplateResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postSiteContentTemplatesPageExportBatch(
-			Long siteId, String search,
+	public Response postAssetLibraryContentTemplatesPageExportBatch(
+			Long assetLibraryId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public ContentTemplate getSiteContentTemplate(
-			Long siteId, String contentTemplateId)
+	public Response postSiteContentTemplatesPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

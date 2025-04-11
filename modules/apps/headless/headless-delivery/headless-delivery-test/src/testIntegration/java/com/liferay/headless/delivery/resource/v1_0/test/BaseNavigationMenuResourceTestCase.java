@@ -375,6 +375,54 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu navigationMenu =
+			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		assertHttpResponseStatusCode(
+			204,
+			navigationMenuResource.
+				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					navigationMenu.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.
+				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					navigationMenu.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.
+				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					"-"));
+	}
+
+	protected Long
+			testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+				NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	protected NavigationMenu
+			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
 	public void testGetNavigationMenu() throws Exception {
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenu_addNavigationMenu();
@@ -687,34 +735,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
-	public void testPutNavigationMenu() throws Exception {
-		NavigationMenu postNavigationMenu =
-			testPutNavigationMenu_addNavigationMenu();
-
-		NavigationMenu randomNavigationMenu = randomNavigationMenu();
-
-		NavigationMenu putNavigationMenu =
-			navigationMenuResource.putNavigationMenu(
-				postNavigationMenu.getId(), randomNavigationMenu);
-
-		assertEquals(randomNavigationMenu, putNavigationMenu);
-		assertValid(putNavigationMenu);
-
-		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getNavigationMenu(putNavigationMenu.getId());
-
-		assertEquals(randomNavigationMenu, getNavigationMenu);
-		assertValid(getNavigationMenu);
-	}
-
-	protected NavigationMenu testPutNavigationMenu_addNavigationMenu()
-		throws Exception {
-
-		return navigationMenuResource.postSiteNavigationMenu(
-			testGroup.getGroupId(), randomNavigationMenu());
-	}
-
-	@Test
 	public void testGetNavigationMenuPermissionsPage() throws Exception {
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenuPermissionsPage_addNavigationMenu();
@@ -735,48 +755,192 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
-	public void testPutNavigationMenuPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		NavigationMenu navigationMenu =
-			testPutNavigationMenuPermissionsPage_addNavigationMenu();
+	public void testGetSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		NavigationMenu postNavigationMenu =
+			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 
-		assertHttpResponseStatusCode(
-			200,
-			navigationMenuResource.putNavigationMenuPermissionsPageHttpResponse(
-				navigationMenu.getId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"VIEW"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
+				testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					postNavigationMenu),
+				postNavigationMenu.getExternalReferenceCode());
 
-		assertHttpResponseStatusCode(
-			404,
-			navigationMenuResource.putNavigationMenuPermissionsPageHttpResponse(
-				0L,
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
+		assertEquals(postNavigationMenu, getNavigationMenu);
+		assertValid(getNavigationMenu);
+	}
+
+	protected Long testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+			NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
 	}
 
 	protected NavigationMenu
-			testPutNavigationMenuPermissionsPage_addNavigationMenu()
+			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
 		throws Exception {
 
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
+	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		NavigationMenu navigationMenu =
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				navigationMenu,
+				NavigationMenuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"navigationMenuByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+													navigationMenu) + "\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												navigationMenu.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/navigationMenuByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				navigationMenu,
+				NavigationMenuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"navigationMenuByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+														navigationMenu) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													navigationMenu.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/navigationMenuByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+				NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"navigationMenuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"navigationMenuByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected NavigationMenu
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
+	}
+
+	@Test
+	public void testGetSiteNavigationMenuPermissionsPage() throws Exception {
+		Page<Permission> page =
+			navigationMenuResource.getSiteNavigationMenuPermissionsPage(
+				testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected NavigationMenu
+			testGetSiteNavigationMenuPermissionsPage_addNavigationMenu()
+		throws Exception {
+
+		return testPostSiteNavigationMenu_addNavigationMenu(
+			randomNavigationMenu());
 	}
 
 	@Test
@@ -1075,79 +1239,27 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteNavigationMenuByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		NavigationMenu navigationMenu =
-			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
-
-		assertHttpResponseStatusCode(
-			204,
-			navigationMenuResource.
-				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
-					navigationMenu.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			navigationMenuResource.
-				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
-					navigationMenu.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			navigationMenuResource.
-				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-				NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
-	}
-
-	protected NavigationMenu
-			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
-		throws Exception {
-
-		return navigationMenuResource.postSiteNavigationMenu(
-			testGroup.getGroupId(), randomNavigationMenu());
-	}
-
-	@Test
-	public void testGetSiteNavigationMenuByExternalReferenceCode()
-		throws Exception {
-
+	public void testPutNavigationMenu() throws Exception {
 		NavigationMenu postNavigationMenu =
-			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+			testPutNavigationMenu_addNavigationMenu();
+
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		NavigationMenu putNavigationMenu =
+			navigationMenuResource.putNavigationMenu(
+				postNavigationMenu.getId(), randomNavigationMenu);
+
+		assertEquals(randomNavigationMenu, putNavigationMenu);
+		assertValid(putNavigationMenu);
 
 		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
-				testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					postNavigationMenu),
-				postNavigationMenu.getExternalReferenceCode());
+			navigationMenuResource.getNavigationMenu(putNavigationMenu.getId());
 
-		assertEquals(postNavigationMenu, getNavigationMenu);
+		assertEquals(randomNavigationMenu, getNavigationMenu);
 		assertValid(getNavigationMenu);
 	}
 
-	protected Long testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-			NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
-	}
-
-	protected NavigationMenu
-			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+	protected NavigationMenu testPutNavigationMenu_addNavigationMenu()
 		throws Exception {
 
 		return navigationMenuResource.postSiteNavigationMenu(
@@ -1155,143 +1267,48 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCode()
-		throws Exception {
-
+	public void testPutNavigationMenuPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu navigationMenu =
-			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+			testPutNavigationMenuPermissionsPage_addNavigationMenu();
 
-		// No namespace
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
-		Assert.assertTrue(
-			equals(
-				navigationMenu,
-				NavigationMenuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"navigationMenuByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-													navigationMenu) + "\"");
+		assertHttpResponseStatusCode(
+			200,
+			navigationMenuResource.putNavigationMenuPermissionsPageHttpResponse(
+				navigationMenu.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
 
-										put(
-											"externalReferenceCode",
-											"\"" +
-												navigationMenu.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/navigationMenuByExternalReferenceCode"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertTrue(
-			equals(
-				navigationMenu,
-				NavigationMenuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessDelivery_v1_0",
-								new GraphQLField(
-									"navigationMenuByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteKey",
-												"\"" +
-													testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-														navigationMenu) + "\"");
-
-											put(
-												"externalReferenceCode",
-												"\"" +
-													navigationMenu.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/navigationMenuByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-				NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"navigationMenuByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"navigationMenuByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteKey",
-										"\"" + irrelevantGroup.getGroupId() +
-											"\"");
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.putNavigationMenuPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
 	}
 
 	protected NavigationMenu
-			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+			testPutNavigationMenuPermissionsPage_addNavigationMenu()
 		throws Exception {
 
-		return testGraphQLNavigationMenu_addNavigationMenu();
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
 	}
 
 	@Test
@@ -1368,23 +1385,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
-	}
-
-	@Test
-	public void testGetSiteNavigationMenuPermissionsPage() throws Exception {
-		Page<Permission> page =
-			navigationMenuResource.getSiteNavigationMenuPermissionsPage(
-				testGroup.getGroupId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected NavigationMenu
-			testGetSiteNavigationMenuPermissionsPage_addNavigationMenu()
-		throws Exception {
-
-		return testPostSiteNavigationMenu_addNavigationMenu(
-			randomNavigationMenu());
 	}
 
 	@Test

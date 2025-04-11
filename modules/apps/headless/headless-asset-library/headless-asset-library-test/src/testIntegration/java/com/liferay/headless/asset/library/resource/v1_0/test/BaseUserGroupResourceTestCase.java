@@ -251,6 +251,42 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryUserGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup = testDeleteAssetLibraryUserGroup_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.deleteAssetLibraryUserGroupHttpResponse(
+				testDeleteAssetLibraryUserGroup_getAssetLibraryId(),
+				userGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getAssetLibraryUserGroupHttpResponse(
+				testDeleteAssetLibraryUserGroup_getAssetLibraryId(),
+				userGroup.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getAssetLibraryUserGroupHttpResponse(
+				testDeleteAssetLibraryUserGroup_getAssetLibraryId(), 0L));
+	}
+
+	protected Long testDeleteAssetLibraryUserGroup_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserGroup testDeleteAssetLibraryUserGroup_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode()
 		throws Exception {
 
@@ -285,58 +321,6 @@ public abstract class BaseUserGroupResourceTestCase {
 
 	protected UserGroup
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode()
-		throws Exception {
-
-		UserGroup postUserGroup =
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup();
-
-		UserGroup randomUserGroup = randomUserGroup();
-
-		UserGroup putUserGroup =
-			userGroupResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode());
-
-		assertEquals(randomUserGroup, putUserGroup);
-		assertValid(putUserGroup);
-
-		UserGroup getUserGroup =
-			userGroupResource.
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode());
-
-		assertEquals(randomUserGroup, getUserGroup);
-		assertValid(getUserGroup);
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserGroup
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -694,6 +678,32 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryUserGroup() throws Exception {
+		UserGroup postUserGroup = testGetAssetLibraryUserGroup_addUserGroup();
+
+		UserGroup getUserGroup = userGroupResource.getAssetLibraryUserGroup(
+			testGetAssetLibraryUserGroup_getAssetLibraryId(),
+			postUserGroup.getId());
+
+		assertEquals(postUserGroup, getUserGroup);
+		assertValid(getUserGroup);
+	}
+
+	protected Long testGetAssetLibraryUserGroup_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserGroup testGetAssetLibraryUserGroup_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryUserGroupsPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryUserGroupsPage_getAssetLibraryId();
@@ -1011,61 +1021,51 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAssetLibraryUserGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserGroup userGroup = testDeleteAssetLibraryUserGroup_addUserGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			userGroupResource.deleteAssetLibraryUserGroupHttpResponse(
-				testDeleteAssetLibraryUserGroup_getAssetLibraryId(),
-				userGroup.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userGroupResource.getAssetLibraryUserGroupHttpResponse(
-				testDeleteAssetLibraryUserGroup_getAssetLibraryId(),
-				userGroup.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			userGroupResource.getAssetLibraryUserGroupHttpResponse(
-				testDeleteAssetLibraryUserGroup_getAssetLibraryId(), 0L));
-	}
-
-	protected Long testDeleteAssetLibraryUserGroup_getAssetLibraryId()
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		UserGroup postUserGroup =
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup();
 
-	protected UserGroup testDeleteAssetLibraryUserGroup_addUserGroup()
-		throws Exception {
+		UserGroup randomUserGroup = randomUserGroup();
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		UserGroup putUserGroup =
+			userGroupResource.
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode());
 
-	@Test
-	public void testGetAssetLibraryUserGroup() throws Exception {
-		UserGroup postUserGroup = testGetAssetLibraryUserGroup_addUserGroup();
+		assertEquals(randomUserGroup, putUserGroup);
+		assertValid(putUserGroup);
 
-		UserGroup getUserGroup = userGroupResource.getAssetLibraryUserGroup(
-			testGetAssetLibraryUserGroup_getAssetLibraryId(),
-			postUserGroup.getId());
+		UserGroup getUserGroup =
+			userGroupResource.
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode());
 
-		assertEquals(postUserGroup, getUserGroup);
+		assertEquals(randomUserGroup, getUserGroup);
 		assertValid(getUserGroup);
 	}
 
-	protected Long testGetAssetLibraryUserGroup_getAssetLibraryId()
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected UserGroup testGetAssetLibraryUserGroup_addUserGroup()
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserGroup
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

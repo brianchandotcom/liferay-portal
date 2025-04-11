@@ -58,18 +58,18 @@ public interface AccountAddressChannelResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public AccountAddressChannel
-			postAccountAddressByExternalReferenceCodeAccountAddressChannel(
-				String externalReferenceCode,
-				AccountAddressChannel accountAddressChannel)
-		throws Exception;
-
 	public Page<AccountAddressChannel>
 			getAccountAddressIdAccountAddressChannelsPage(
 				Long addressId, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public AccountAddressChannel
+			postAccountAddressByExternalReferenceCodeAccountAddressChannel(
+				String externalReferenceCode,
+				AccountAddressChannel accountAddressChannel)
 		throws Exception;
 
 	public AccountAddressChannel postAccountAddressIdAccountAddressChannel(

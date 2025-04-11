@@ -46,9 +46,27 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CountryResource {
 
+	public void deleteCountry(Long countryId) throws Exception;
+
+	public Response deleteCountryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Country> getCountriesPage(
 			Boolean active, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Country getCountry(Long countryId) throws Exception;
+
+	public Country getCountryByA2(String a2) throws Exception;
+
+	public Country getCountryByA3(String a3) throws Exception;
+
+	public Country getCountryByName(String name) throws Exception;
+
+	public Country getCountryByNumber(Integer number) throws Exception;
+
+	public Country patchCountry(Long countryId, Country country)
 		throws Exception;
 
 	public Response postCountriesPageExportBatch(
@@ -60,24 +78,6 @@ public interface CountryResource {
 	public Country postCountry(Country country) throws Exception;
 
 	public Response postCountryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Country getCountryByA2(String a2) throws Exception;
-
-	public Country getCountryByA3(String a3) throws Exception;
-
-	public Country getCountryByName(String name) throws Exception;
-
-	public Country getCountryByNumber(Integer number) throws Exception;
-
-	public void deleteCountry(Long countryId) throws Exception;
-
-	public Response deleteCountryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Country getCountry(Long countryId) throws Exception;
-
-	public Country patchCountry(Long countryId, Country country)
 		throws Exception;
 
 	public Country putCountry(Long countryId, Country country) throws Exception;

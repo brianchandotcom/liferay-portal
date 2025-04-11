@@ -57,12 +57,12 @@ public interface DiscountCategoryResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountCategory postDiscountByExternalReferenceCodeDiscountCategory(
-			String externalReferenceCode, DiscountCategory discountCategory)
-		throws Exception;
-
 	public Page<DiscountCategory> getDiscountIdDiscountCategoriesPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public DiscountCategory postDiscountByExternalReferenceCodeDiscountCategory(
+			String externalReferenceCode, DiscountCategory discountCategory)
 		throws Exception;
 
 	public DiscountCategory postDiscountIdDiscountCategory(

@@ -46,6 +46,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ShipmentItemResource {
 
+	public void deleteShipmentItem(Long shipmentItemId) throws Exception;
+
+	public Response deleteShipmentItemBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteShipmentItemByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -54,23 +59,26 @@ public interface ShipmentItemResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public ShipmentItem patchShipmentItemByExternalReferenceCode(
-			String externalReferenceCode, ShipmentItem shipmentItem)
-		throws Exception;
-
-	public void deleteShipmentItem(Long shipmentItemId) throws Exception;
-
-	public Response deleteShipmentItemBatch(String callbackURL, Object object)
+	public Page<ShipmentItem> getShipmentByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public ShipmentItem getShipmentItem(Long shipmentItemId) throws Exception;
+
+	public Page<ShipmentItem> getShipmentItemsPage(
+			Long shipmentId, Pagination pagination)
+		throws Exception;
 
 	public ShipmentItem patchShipmentItem(
 			Long shipmentItemId, ShipmentItem shipmentItem)
 		throws Exception;
 
-	public Page<ShipmentItem> getShipmentByExternalReferenceCodeItemsPage(
-			String externalReferenceCode, Pagination pagination)
+	public ShipmentItem patchShipmentItemByExternalReferenceCode(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception;
+
+	public ShipmentItem postShipmentItem(
+			Long shipmentId, ShipmentItem shipmentItem)
 		throws Exception;
 
 	public ShipmentItem postShipmentItemByExternalReferenceCode(
@@ -79,14 +87,6 @@ public interface ShipmentItemResource {
 
 	public ShipmentItem putShipmentByExternalReferenceCodeItem(
 			String externalReferenceCode, ShipmentItem shipmentItem)
-		throws Exception;
-
-	public Page<ShipmentItem> getShipmentItemsPage(
-			Long shipmentId, Pagination pagination)
-		throws Exception;
-
-	public ShipmentItem postShipmentItem(
-			Long shipmentId, ShipmentItem shipmentItem)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

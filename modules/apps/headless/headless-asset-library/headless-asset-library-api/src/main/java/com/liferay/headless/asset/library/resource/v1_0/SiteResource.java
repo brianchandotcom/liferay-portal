@@ -49,14 +49,11 @@ public interface SiteResource {
 				String siteExternalReferenceCode)
 		throws Exception;
 
-	public Site
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
 		throws Exception;
 
 	public Site
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
 				String assetLibraryExternalReferenceCode,
 				String siteExternalReferenceCode)
 		throws Exception;
@@ -65,14 +62,17 @@ public interface SiteResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+		throws Exception;
+
 	public Page<Site> getAssetLibrarySitesPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
-	public void deleteAssetLibrarySite(Long assetLibraryId, Long siteId)
-		throws Exception;
-
-	public Site getAssetLibrarySite(Long assetLibraryId, Long siteId)
+	public Site
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String siteExternalReferenceCode)
 		throws Exception;
 
 	public Site putAssetLibrarySite(Long assetLibraryId, Long siteId)

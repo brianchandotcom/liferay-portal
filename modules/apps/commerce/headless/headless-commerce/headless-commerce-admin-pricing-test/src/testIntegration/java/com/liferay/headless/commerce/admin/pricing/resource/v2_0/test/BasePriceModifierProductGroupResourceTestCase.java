@@ -480,31 +480,6 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup()
-		throws Exception {
-
-		PriceModifierProductGroup randomPriceModifierProductGroup =
-			randomPriceModifierProductGroup();
-
-		PriceModifierProductGroup postPriceModifierProductGroup =
-			testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup_addPriceModifierProductGroup(
-				randomPriceModifierProductGroup);
-
-		assertEquals(
-			randomPriceModifierProductGroup, postPriceModifierProductGroup);
-		assertValid(postPriceModifierProductGroup);
-	}
-
-	protected PriceModifierProductGroup
-			testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup_addPriceModifierProductGroup(
-				PriceModifierProductGroup priceModifierProductGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceModifierIdPriceModifierProductGroupsPage()
 		throws Exception {
 
@@ -992,6 +967,31 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup()
+		throws Exception {
+
+		PriceModifierProductGroup randomPriceModifierProductGroup =
+			randomPriceModifierProductGroup();
+
+		PriceModifierProductGroup postPriceModifierProductGroup =
+			testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup_addPriceModifierProductGroup(
+				randomPriceModifierProductGroup);
+
+		assertEquals(
+			randomPriceModifierProductGroup, postPriceModifierProductGroup);
+		assertValid(postPriceModifierProductGroup);
+	}
+
+	protected PriceModifierProductGroup
+			testPostPriceModifierByExternalReferenceCodePriceModifierProductGroup_addPriceModifierProductGroup(
+				PriceModifierProductGroup priceModifierProductGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

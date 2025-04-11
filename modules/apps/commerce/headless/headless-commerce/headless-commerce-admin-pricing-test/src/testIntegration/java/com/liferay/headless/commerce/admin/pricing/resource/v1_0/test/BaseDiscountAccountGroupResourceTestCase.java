@@ -530,30 +530,6 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountAccountGroup()
-		throws Exception {
-
-		DiscountAccountGroup randomDiscountAccountGroup =
-			randomDiscountAccountGroup();
-
-		DiscountAccountGroup postDiscountAccountGroup =
-			testPostDiscountByExternalReferenceCodeDiscountAccountGroup_addDiscountAccountGroup(
-				randomDiscountAccountGroup);
-
-		assertEquals(randomDiscountAccountGroup, postDiscountAccountGroup);
-		assertValid(postDiscountAccountGroup);
-	}
-
-	protected DiscountAccountGroup
-			testPostDiscountByExternalReferenceCodeDiscountAccountGroup_addDiscountAccountGroup(
-				DiscountAccountGroup discountAccountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountAccountGroupsPage() throws Exception {
 		Long id = testGetDiscountIdDiscountAccountGroupsPage_getId();
 		Long irrelevantId =
@@ -757,6 +733,30 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountAccountGroup()
+		throws Exception {
+
+		DiscountAccountGroup randomDiscountAccountGroup =
+			randomDiscountAccountGroup();
+
+		DiscountAccountGroup postDiscountAccountGroup =
+			testPostDiscountByExternalReferenceCodeDiscountAccountGroup_addDiscountAccountGroup(
+				randomDiscountAccountGroup);
+
+		assertEquals(randomDiscountAccountGroup, postDiscountAccountGroup);
+		assertValid(postDiscountAccountGroup);
+	}
+
+	protected DiscountAccountGroup
+			testPostDiscountByExternalReferenceCodeDiscountAccountGroup_addDiscountAccountGroup(
+				DiscountAccountGroup discountAccountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

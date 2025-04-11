@@ -54,22 +54,16 @@ public interface PageExperienceResource {
 			String pageExperienceExternalReferenceCode)
 		throws Exception;
 
-	public PageExperience patchSiteSiteByExternalReferenceCodePageExperience(
-			String siteExternalReferenceCode,
-			String pageExperienceExternalReferenceCode,
-			PageExperience pageExperience)
-		throws Exception;
-
-	public PageExperience putSiteSiteByExternalReferenceCodePageExperience(
-			String siteExternalReferenceCode,
-			String pageExperienceExternalReferenceCode,
-			PageExperience pageExperience)
-		throws Exception;
-
 	public Page<PageExperience>
 			getSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage(
 				String siteExternalReferenceCode,
 				String pageSpecificationExternalReferenceCode)
+		throws Exception;
+
+	public PageExperience patchSiteSiteByExternalReferenceCodePageExperience(
+			String siteExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
+			PageExperience pageExperience)
 		throws Exception;
 
 	public PageExperience
@@ -77,6 +71,12 @@ public interface PageExperienceResource {
 				String siteExternalReferenceCode,
 				String pageSpecificationExternalReferenceCode,
 				PageExperience pageExperience)
+		throws Exception;
+
+	public PageExperience putSiteSiteByExternalReferenceCodePageExperience(
+			String siteExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
+			PageExperience pageExperience)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -47,6 +47,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface InstanceResource {
 
+	public void deleteProcessInstance(Long processId, Long instanceId)
+		throws Exception;
+
+	public Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception;
+
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs, Date dateEnd,
 			Date dateStart, String[] slaStatuses, String[] statuses,
@@ -54,11 +60,12 @@ public interface InstanceResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postProcessInstancesPageExportBatch(
-			Long processId, Long[] assigneeIds, Long[] classPKs, Date dateEnd,
-			Date dateStart, String[] slaStatuses, String[] statuses,
-			String[] taskNames, com.liferay.portal.kernel.search.Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
+	public void patchProcessInstance(
+			Long processId, Long instanceId, Instance instance)
+		throws Exception;
+
+	public void patchProcessInstanceComplete(
+			Long processId, Long instanceId, Instance instance)
 		throws Exception;
 
 	public Instance postProcessInstance(Long processId, Instance instance)
@@ -68,18 +75,11 @@ public interface InstanceResource {
 			Long processId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteProcessInstance(Long processId, Long instanceId)
-		throws Exception;
-
-	public Instance getProcessInstance(Long processId, Long instanceId)
-		throws Exception;
-
-	public void patchProcessInstance(
-			Long processId, Long instanceId, Instance instance)
-		throws Exception;
-
-	public void patchProcessInstanceComplete(
-			Long processId, Long instanceId, Instance instance)
+	public Response postProcessInstancesPageExportBatch(
+			Long processId, Long[] assigneeIds, Long[] classPKs, Date dateEnd,
+			Date dateStart, String[] slaStatuses, String[] statuses,
+			String[] taskNames, com.liferay.portal.kernel.search.Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

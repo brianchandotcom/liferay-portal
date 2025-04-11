@@ -154,74 +154,6 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/account-channel-shipping-options/{id}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "AccountChannelShippingOption"
-			)
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/account-channel-shipping-options/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public AccountChannelShippingOption getAccountChannelShippingOption(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
-		throws Exception {
-
-		return new AccountChannelShippingOption();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/account-channel-shipping-options/{id}' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "id": ___, "shippingMethodId": ___, "shippingMethodKey": ___, "shippingOptionId": ___, "shippingOptionKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "AccountChannelShippingOption"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/account-channel-shipping-options/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public AccountChannelShippingOption patchAccountChannelShippingOption(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id,
-			AccountChannelShippingOption accountChannelShippingOption)
-		throws Exception {
-
-		return new AccountChannelShippingOption();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-option'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -268,13 +200,13 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-option' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "id": ___, "shippingMethodId": ___, "shippingMethodKey": ___, "shippingOptionId": ___, "shippingOptionKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/account-channel-shipping-options/{id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "id"
 			)
 		}
 	)
@@ -285,20 +217,14 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			)
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-option"
-	)
-	@javax.ws.rs.POST
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/account-channel-shipping-options/{id}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AccountChannelShippingOption
-			postAccountByExternalReferenceCodeAccountChannelShippingOption(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				AccountChannelShippingOption accountChannelShippingOption)
+	public AccountChannelShippingOption getAccountChannelShippingOption(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id)
 		throws Exception {
 
 		return new AccountChannelShippingOption();
@@ -346,6 +272,80 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/account-channel-shipping-options/{id}' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "id": ___, "shippingMethodId": ___, "shippingMethodKey": ___, "shippingOptionId": ___, "shippingOptionKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "AccountChannelShippingOption"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/account-channel-shipping-options/{id}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public AccountChannelShippingOption patchAccountChannelShippingOption(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id,
+			AccountChannelShippingOption accountChannelShippingOption)
+		throws Exception {
+
+		return new AccountChannelShippingOption();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-option' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "id": ___, "shippingMethodId": ___, "shippingMethodKey": ___, "shippingOptionId": ___, "shippingOptionKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "AccountChannelShippingOption"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-option"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public AccountChannelShippingOption
+			postAccountByExternalReferenceCodeAccountChannelShippingOption(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				AccountChannelShippingOption accountChannelShippingOption)
+		throws Exception {
+
+		return new AccountChannelShippingOption();
 	}
 
 	/**

@@ -50,6 +50,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBoardThreadResource {
 
+	public void deleteMessageBoardThread(Long messageBoardThreadId)
+		throws Exception;
+
+	public Response deleteMessageBoardThreadBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception;
+
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				Long messageBoardSectionId, String search,
@@ -59,11 +69,42 @@ public interface MessageBoardThreadResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postMessageBoardSectionMessageBoardThreadsPageExportBatch(
-			Long messageBoardSectionId, String search,
+	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
+		throws Exception;
+
+	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getMessageBoardThreadPermissionsPage(
+				Long messageBoardThreadId, String roleNames)
+		throws Exception;
+
+	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
+			Date dateCreated, Date dateModified, Long messageBoardSectionId,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMessageBoardThreadPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public MessageBoardThread patchMessageBoardThread(
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
@@ -74,24 +115,30 @@ public interface MessageBoardThreadResource {
 			Long messageBoardSectionId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
-			Date dateCreated, Date dateModified, Long messageBoardSectionId,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public Response postMessageBoardSectionMessageBoardThreadsPageExportBatch(
+			Long messageBoardSectionId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public void deleteMessageBoardThread(Long messageBoardThreadId)
+	public Rating postMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
 		throws Exception;
 
-	public Response deleteMessageBoardThreadBatch(
-			String callbackURL, Object object)
+	public MessageBoardThread postSiteMessageBoardThread(
+			Long siteId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
-	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
+	public Response postSiteMessageBoardThreadBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public MessageBoardThread patchMessageBoardThread(
-			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
+	public Response postSiteMessageBoardThreadsPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public MessageBoardThread putMessageBoardThread(
@@ -102,23 +149,8 @@ public interface MessageBoardThreadResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
-		throws Exception;
-
-	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
-		throws Exception;
-
-	public Rating postMessageBoardThreadMyRating(
-			Long messageBoardThreadId, Rating rating)
-		throws Exception;
-
 	public Rating putMessageBoardThreadMyRating(
 			Long messageBoardThreadId, Rating rating)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getMessageBoardThreadPermissionsPage(
-				Long messageBoardThreadId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -131,38 +163,6 @@ public interface MessageBoardThreadResource {
 		throws Exception;
 
 	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
-		throws Exception;
-
-	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteMessageBoardThreadsPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public MessageBoardThread postSiteMessageBoardThread(
-			Long siteId, MessageBoardThread messageBoardThread)
-		throws Exception;
-
-	public Response postSiteMessageBoardThreadBatch(
-			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
-	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteMessageBoardThreadPermissionsPage(
-				Long siteId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

@@ -209,6 +209,578 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
+					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
+					organization.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.
+				getAccountByExternalReferenceCodeOrganizationHttpResponse(
+					organization.getExternalReferenceCode(),
+					organization.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.
+				getAccountByExternalReferenceCodeOrganizationHttpResponse(
+					"-", "-"));
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return organization.getExternalReferenceCode();
+	}
+
+	protected Organization
+			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountOrganization() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteAccountOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteAccountOrganizationHttpResponse(
+				testDeleteAccountOrganization_getAccountId(),
+				organization.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getAccountOrganizationHttpResponse(
+				testDeleteAccountOrganization_getAccountId(),
+				organization.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getAccountOrganizationHttpResponse(
+				testDeleteAccountOrganization_getAccountId(), "-"));
+	}
+
+	protected Long testDeleteAccountOrganization_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Organization testDeleteAccountOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteOrganization() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization = testDeleteOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteOrganizationHttpResponse(
+				organization.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization.getId()));
+		assertHttpResponseStatusCode(
+			404, organizationResource.getOrganizationHttpResponse("-"));
+	}
+
+	protected Organization testDeleteOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrganization() throws Exception {
+
+		// No namespace
+
+		Organization organization1 =
+			testGraphQLDeleteOrganization_addOrganization();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrganization",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"organizationId",
+									"\"" + organization1.getId() + "\"");
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrganization"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"organization",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"organizationId",
+								"\"" + organization1.getId() + "\"");
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Organization organization2 =
+			testGraphQLDeleteOrganization_addOrganization();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteOrganization",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"organizationId",
+										"\"" + organization2.getId() + "\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteOrganization"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"organization",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"organizationId",
+									"\"" + organization2.getId() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected Organization testGraphQLDeleteOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
+	}
+
+	@Test
+	public void testDeleteOrganizationBatch() throws Exception {
+		Organization organization1 =
+			testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", null, organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+
+		Organization organization2 =
+			testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+
+		organization1 = testDeleteOrganizationBatch_addOrganization();
+		organization2 = testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+	}
+
+	protected Organization testDeleteOrganizationBatch_addOrganization()
+		throws Exception {
+
+		return testDeleteOrganization_addOrganization();
+	}
+
+	protected void testDeleteOrganizationBatch_deleteOrganization(
+			String expectedExecuteStatus, String externalReferenceCode,
+			String id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			organizationResource.deleteOrganizationBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteOrganizationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteOrganizationByExternalReferenceCode_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				deleteOrganizationByExternalReferenceCodeHttpResponse(
+					organization.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.
+				getOrganizationByExternalReferenceCodeHttpResponse(
+					organization.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.
+				getOrganizationByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Organization
+			testDeleteOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				deleteOrganizationByExternalReferenceCodeUserAccountByEmailAddressHttpResponse(
+					organization.getExternalReferenceCode(),
+					testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String
+			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Organization
+			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddressHttpResponse(
+					organization.getExternalReferenceCode(), null));
+	}
+
+	protected Organization
+			testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteUserAccountByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteUserAccountByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
+				organization.getId(),
+				testDeleteUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String testDeleteUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Organization testDeleteUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteUserAccountsByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteUserAccountsByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteUserAccountsByEmailAddressHttpResponse(
+				organization.getId(), null));
+	}
+
+	protected Organization
+			testDeleteUserAccountsByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		Organization postOrganization =
+			testGetAccountByExternalReferenceCodeOrganization_addOrganization();
+
+		Organization getOrganization =
+			organizationResource.getAccountByExternalReferenceCodeOrganization(
+				testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+					postOrganization),
+				postOrganization.getId());
+
+		assertEquals(postOrganization, getOrganization);
+		assertValid(getOrganization);
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return organization.getExternalReferenceCode();
+	}
+
+	protected Organization
+			testGetAccountByExternalReferenceCodeOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		Organization organization =
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				organization,
+				OrganizationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCodeOrganization",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+													organization) + "\"");
+
+										put(
+											"organizationId",
+											"\"" + organization.getId() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCodeOrganization"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				organization,
+				OrganizationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"accountByExternalReferenceCodeOrganization",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+														organization) + "\"");
+
+											put(
+												"organizationId",
+												"\"" + organization.getId() +
+													"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/accountByExternalReferenceCodeOrganization"))));
+	}
+
+	protected String
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return organization.getExternalReferenceCode();
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantOrganizationId =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCodeOrganization",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+								put("organizationId", irrelevantOrganizationId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"accountByExternalReferenceCodeOrganization",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+									put(
+										"organizationId",
+										irrelevantOrganizationId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Organization
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
+	}
+
+	@Test
 	public void testGetAccountByExternalReferenceCodeOrganizationsPage()
 		throws Exception {
 
@@ -678,77 +1250,25 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountByExternalReferenceCodeOrganization()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-						organization),
-					organization.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.
-				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					organization.getExternalReferenceCode(),
-					organization.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.
-				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					"-", "-"));
-	}
-
-	protected String
-			testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-				Organization organization)
-		throws Exception {
-
-		return organization.getExternalReferenceCode();
-	}
-
-	protected Organization
-			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountByExternalReferenceCodeOrganization()
-		throws Exception {
-
+	public void testGetAccountOrganization() throws Exception {
 		Organization postOrganization =
-			testGetAccountByExternalReferenceCodeOrganization_addOrganization();
+			testGetAccountOrganization_addOrganization();
 
 		Organization getOrganization =
-			organizationResource.getAccountByExternalReferenceCodeOrganization(
-				testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-					postOrganization),
+			organizationResource.getAccountOrganization(
+				testGetAccountOrganization_getAccountId(),
 				postOrganization.getId());
 
 		assertEquals(postOrganization, getOrganization);
 		assertValid(getOrganization);
 	}
 
-	protected String
-			testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-				Organization organization)
-		throws Exception {
-
-		return organization.getExternalReferenceCode();
+	protected Long testGetAccountOrganization_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected Organization
-			testGetAccountByExternalReferenceCodeOrganization_addOrganization()
+	protected Organization testGetAccountOrganization_addOrganization()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -756,11 +1276,9 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeOrganization()
-		throws Exception {
-
+	public void testGraphQLGetAccountOrganization() throws Exception {
 		Organization organization =
-			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization();
+			testGraphQLGetAccountOrganization_addOrganization();
 
 		// No namespace
 
@@ -771,14 +1289,12 @@ public abstract class BaseOrganizationResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"accountByExternalReferenceCodeOrganization",
+								"accountOrganization",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"externalReferenceCode",
-											"\"" +
-												testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-													organization) + "\"");
+											"accountId",
+											testGraphQLGetAccountOrganization_getAccountId());
 
 										put(
 											"organizationId",
@@ -786,8 +1302,7 @@ public abstract class BaseOrganizationResourceTestCase {
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountByExternalReferenceCodeOrganization"))));
+						"JSONObject/data", "Object/accountOrganization"))));
 
 		// Using the namespace headlessAdminUser_v1_0
 
@@ -800,14 +1315,12 @@ public abstract class BaseOrganizationResourceTestCase {
 							new GraphQLField(
 								"headlessAdminUser_v1_0",
 								new GraphQLField(
-									"accountByExternalReferenceCodeOrganization",
+									"accountOrganization",
 									new HashMap<String, Object>() {
 										{
 											put(
-												"externalReferenceCode",
-												"\"" +
-													testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-														organization) + "\"");
+												"accountId",
+												testGraphQLGetAccountOrganization_getAccountId());
 
 											put(
 												"organizationId",
@@ -817,23 +1330,19 @@ public abstract class BaseOrganizationResourceTestCase {
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/accountByExternalReferenceCodeOrganization"))));
+						"Object/accountOrganization"))));
 	}
 
-	protected String
-			testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-				Organization organization)
+	protected Long testGraphQLGetAccountOrganization_getAccountId()
 		throws Exception {
 
-		return organization.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
+	public void testGraphQLGetAccountOrganizationNotFound() throws Exception {
+		Long irrelevantAccountId = RandomTestUtil.randomLong();
 		String irrelevantOrganizationId =
 			"\"" + RandomTestUtil.randomString() + "\"";
 
@@ -844,12 +1353,10 @@ public abstract class BaseOrganizationResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"accountByExternalReferenceCodeOrganization",
+						"accountOrganization",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
+								put("accountId", irrelevantAccountId);
 								put("organizationId", irrelevantOrganizationId);
 							}
 						},
@@ -866,12 +1373,10 @@ public abstract class BaseOrganizationResourceTestCase {
 					new GraphQLField(
 						"headlessAdminUser_v1_0",
 						new GraphQLField(
-							"accountByExternalReferenceCodeOrganization",
+							"accountOrganization",
 							new HashMap<String, Object>() {
 								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
+									put("accountId", irrelevantAccountId);
 									put(
 										"organizationId",
 										irrelevantOrganizationId);
@@ -882,41 +1387,10 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Object/code"));
 	}
 
-	protected Organization
-			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization()
+	protected Organization testGraphQLGetAccountOrganization_addOrganization()
 		throws Exception {
 
 		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testPostAccountByExternalReferenceCodeOrganization()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testPostAccountByExternalReferenceCodeOrganization_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				postAccountByExternalReferenceCodeOrganizationHttpResponse(
-					organization.getExternalReferenceCode(),
-					organization.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.
-				postAccountByExternalReferenceCodeOrganizationHttpResponse(
-					organization.getExternalReferenceCode(), "-"));
-	}
-
-	protected Organization
-			testPostAccountByExternalReferenceCodeOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1352,62 +1826,17 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountOrganization() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteAccountOrganization_addOrganization();
+	public void testGetOrganization() throws Exception {
+		Organization postOrganization = testGetOrganization_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteAccountOrganizationHttpResponse(
-				testDeleteAccountOrganization_getAccountId(),
-				organization.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getAccountOrganizationHttpResponse(
-				testDeleteAccountOrganization_getAccountId(),
-				organization.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getAccountOrganizationHttpResponse(
-				testDeleteAccountOrganization_getAccountId(), "-"));
-	}
-
-	protected Long testDeleteAccountOrganization_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Organization testDeleteAccountOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountOrganization() throws Exception {
-		Organization postOrganization =
-			testGetAccountOrganization_addOrganization();
-
-		Organization getOrganization =
-			organizationResource.getAccountOrganization(
-				testGetAccountOrganization_getAccountId(),
-				postOrganization.getId());
+		Organization getOrganization = organizationResource.getOrganization(
+			postOrganization.getId());
 
 		assertEquals(postOrganization, getOrganization);
 		assertValid(getOrganization);
 	}
 
-	protected Long testGetAccountOrganization_getAccountId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Organization testGetAccountOrganization_addOrganization()
+	protected Organization testGetOrganization_addOrganization()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1415,9 +1844,9 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetAccountOrganization() throws Exception {
+	public void testGraphQLGetOrganization() throws Exception {
 		Organization organization =
-			testGraphQLGetAccountOrganization_addOrganization();
+			testGraphQLGetOrganization_addOrganization();
 
 		// No namespace
 
@@ -1428,20 +1857,16 @@ public abstract class BaseOrganizationResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"accountOrganization",
+								"organization",
 								new HashMap<String, Object>() {
 									{
-										put(
-											"accountId",
-											testGraphQLGetAccountOrganization_getAccountId());
-
 										put(
 											"organizationId",
 											"\"" + organization.getId() + "\"");
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/accountOrganization"))));
+						"JSONObject/data", "Object/organization"))));
 
 		// Using the namespace headlessAdminUser_v1_0
 
@@ -1454,13 +1879,9 @@ public abstract class BaseOrganizationResourceTestCase {
 							new GraphQLField(
 								"headlessAdminUser_v1_0",
 								new GraphQLField(
-									"accountOrganization",
+									"organization",
 									new HashMap<String, Object>() {
 										{
-											put(
-												"accountId",
-												testGraphQLGetAccountOrganization_getAccountId());
-
 											put(
 												"organizationId",
 												"\"" + organization.getId() +
@@ -1469,19 +1890,11 @@ public abstract class BaseOrganizationResourceTestCase {
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/accountOrganization"))));
-	}
-
-	protected Long testGraphQLGetAccountOrganization_getAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+						"Object/organization"))));
 	}
 
 	@Test
-	public void testGraphQLGetAccountOrganizationNotFound() throws Exception {
-		Long irrelevantAccountId = RandomTestUtil.randomLong();
+	public void testGraphQLGetOrganizationNotFound() throws Exception {
 		String irrelevantOrganizationId =
 			"\"" + RandomTestUtil.randomString() + "\"";
 
@@ -1492,10 +1905,9 @@ public abstract class BaseOrganizationResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"accountOrganization",
+						"organization",
 						new HashMap<String, Object>() {
 							{
-								put("accountId", irrelevantAccountId);
 								put("organizationId", irrelevantOrganizationId);
 							}
 						},
@@ -1512,10 +1924,9 @@ public abstract class BaseOrganizationResourceTestCase {
 					new GraphQLField(
 						"headlessAdminUser_v1_0",
 						new GraphQLField(
-							"accountOrganization",
+							"organization",
 							new HashMap<String, Object>() {
 								{
-									put("accountId", irrelevantAccountId);
 									put(
 										"organizationId",
 										irrelevantOrganizationId);
@@ -1526,516 +1937,10 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Object/code"));
 	}
 
-	protected Organization testGraphQLGetAccountOrganization_addOrganization()
+	protected Organization testGraphQLGetOrganization_addOrganization()
 		throws Exception {
 
 		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testPostAccountOrganization() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testPostAccountOrganization_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.postAccountOrganizationHttpResponse(
-				null, organization.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.postAccountOrganizationHttpResponse(
-				null, "-"));
-	}
-
-	protected Organization testPostAccountOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOrganizationsPage() throws Exception {
-		Page<Organization> page = organizationResource.getOrganizationsPage(
-			null, null, null, Pagination.of(1, 10), null);
-
-		long totalCount = page.getTotalCount();
-
-		Organization organization1 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		Organization organization2 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		page = organizationResource.getOrganizationsPage(
-			null, null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(organization1, (List<Organization>)page.getItems());
-		assertContains(organization2, (List<Organization>)page.getItems());
-		assertValid(page, testGetOrganizationsPage_getExpectedActions());
-
-		organizationResource.deleteOrganization(organization1.getId());
-
-		organizationResource.deleteOrganization(organization2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetOrganizationsPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Organization organization1 = randomOrganization();
-
-		organization1 = testGetOrganizationsPage_addOrganization(organization1);
-
-		for (EntityField entityField : entityFields) {
-			Page<Organization> page = organizationResource.getOrganizationsPage(
-				null, null,
-				getFilterString(entityField, "between", organization1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(organization1),
-				(List<Organization>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithFilterDoubleEquals()
-		throws Exception {
-
-		testGetOrganizationsPageWithFilter("eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithFilterStringContains()
-		throws Exception {
-
-		testGetOrganizationsPageWithFilter("contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetOrganizationsPageWithFilter("eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetOrganizationsPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetOrganizationsPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Organization organization1 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization2 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		for (EntityField entityField : entityFields) {
-			Page<Organization> page = organizationResource.getOrganizationsPage(
-				null, null,
-				getFilterString(entityField, operator, organization1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(organization1),
-				(List<Organization>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithPagination() throws Exception {
-		Page<Organization> organizationPage =
-			organizationResource.getOrganizationsPage(
-				null, null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			organizationPage.getTotalCount());
-
-		Organization organization1 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		Organization organization2 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		Organization organization3 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<Organization> page1 =
-				organizationResource.getOrganizationsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(organization1, (List<Organization>)page1.getItems());
-
-			Page<Organization> page2 =
-				organizationResource.getOrganizationsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(organization2, (List<Organization>)page2.getItems());
-
-			Page<Organization> page3 =
-				organizationResource.getOrganizationsPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(organization3, (List<Organization>)page3.getItems());
-		}
-		else {
-			Page<Organization> page1 =
-				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(1, totalCount + 2), null);
-
-			List<Organization> organizations1 =
-				(List<Organization>)page1.getItems();
-
-			Assert.assertEquals(
-				organizations1.toString(), totalCount + 2,
-				organizations1.size());
-
-			Page<Organization> page2 =
-				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<Organization> organizations2 =
-				(List<Organization>)page2.getItems();
-
-			Assert.assertEquals(
-				organizations2.toString(), 1, organizations2.size());
-
-			Page<Organization> page3 =
-				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
-
-			assertContains(organization1, (List<Organization>)page3.getItems());
-			assertContains(organization2, (List<Organization>)page3.getItems());
-			assertContains(organization3, (List<Organization>)page3.getItems());
-		}
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithSortDateTime() throws Exception {
-		testGetOrganizationsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, organization1, organization2) -> {
-				BeanTestUtil.setProperty(
-					organization1, entityField.getName(),
-					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
-			});
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithSortDouble() throws Exception {
-		testGetOrganizationsPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, organization1, organization2) -> {
-				BeanTestUtil.setProperty(
-					organization1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					organization2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithSortInteger() throws Exception {
-		testGetOrganizationsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, organization1, organization2) -> {
-				BeanTestUtil.setProperty(
-					organization1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(
-					organization2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetOrganizationsPageWithSortString() throws Exception {
-		testGetOrganizationsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, organization1, organization2) -> {
-				Class<?> clazz = organization1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						organization1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						organization2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						organization1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						organization2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						organization1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						organization2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void testGetOrganizationsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer
-				<EntityField, Organization, Organization, Exception>
-					unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Organization organization1 = randomOrganization();
-		Organization organization2 = randomOrganization();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, organization1, organization2);
-		}
-
-		organization1 = testGetOrganizationsPage_addOrganization(organization1);
-
-		organization2 = testGetOrganizationsPage_addOrganization(organization2);
-
-		Page<Organization> page = organizationResource.getOrganizationsPage(
-			null, null, null, null, null);
-
-		for (EntityField entityField : entityFields) {
-			Page<Organization> ascPage =
-				organizationResource.getOrganizationsPage(
-					null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
-
-			assertContains(
-				organization1, (List<Organization>)ascPage.getItems());
-			assertContains(
-				organization2, (List<Organization>)ascPage.getItems());
-
-			Page<Organization> descPage =
-				organizationResource.getOrganizationsPage(
-					null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
-
-			assertContains(
-				organization2, (List<Organization>)descPage.getItems());
-			assertContains(
-				organization1, (List<Organization>)descPage.getItems());
-		}
-	}
-
-	protected Organization testGetOrganizationsPage_addOrganization(
-			Organization organization)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrganizationsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"organizations",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject organizationsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/organizations");
-
-		long totalCount = organizationsJSONObject.getLong("totalCount");
-
-		Organization organization1 =
-			testGraphQLGetOrganizationsPage_addOrganization();
-		Organization organization2 =
-			testGraphQLGetOrganizationsPage_addOrganization();
-
-		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/organizations");
-
-		Assert.assertEquals(
-			totalCount + 2, organizationsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			organization1,
-			Arrays.asList(
-				OrganizationSerDes.toDTOs(
-					organizationsJSONObject.getString("items"))));
-		assertContains(
-			organization2,
-			Arrays.asList(
-				OrganizationSerDes.toDTOs(
-					organizationsJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-			"JSONObject/organizations");
-
-		Assert.assertEquals(
-			totalCount + 2, organizationsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			organization1,
-			Arrays.asList(
-				OrganizationSerDes.toDTOs(
-					organizationsJSONObject.getString("items"))));
-		assertContains(
-			organization2,
-			Arrays.asList(
-				OrganizationSerDes.toDTOs(
-					organizationsJSONObject.getString("items"))));
-	}
-
-	protected Organization testGraphQLGetOrganizationsPage_addOrganization()
-		throws Exception {
-
-		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testPostOrganization() throws Exception {
-		Organization randomOrganization = randomOrganization();
-
-		Organization postOrganization = testPostOrganization_addOrganization(
-			randomOrganization);
-
-		assertEquals(randomOrganization, postOrganization);
-		assertValid(postOrganization);
-	}
-
-	protected Organization testPostOrganization_addOrganization(
-			Organization organization)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrganizationByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteOrganizationByExternalReferenceCode_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteOrganizationByExternalReferenceCodeHttpResponse(
-					organization.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.
-				getOrganizationByExternalReferenceCodeHttpResponse(
-					organization.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.
-				getOrganizationByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Organization
-			testDeleteOrganizationByExternalReferenceCode_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2170,100 +2075,6 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testPatchOrganizationByExternalReferenceCode()
-		throws Exception {
-
-		Organization postOrganization =
-			testPatchOrganizationByExternalReferenceCode_addOrganization();
-
-		Organization randomPatchOrganization = randomPatchOrganization();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization patchOrganization =
-			organizationResource.patchOrganizationByExternalReferenceCode(
-				postOrganization.getExternalReferenceCode(),
-				randomPatchOrganization);
-
-		Organization expectedPatchOrganization = postOrganization.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOrganization, expectedPatchOrganization);
-
-		Organization getOrganization =
-			organizationResource.getOrganizationByExternalReferenceCode(
-				patchOrganization.getExternalReferenceCode());
-
-		assertEquals(expectedPatchOrganization, getOrganization);
-		assertValid(getOrganization);
-	}
-
-	protected Organization
-			testPatchOrganizationByExternalReferenceCode_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutOrganizationByExternalReferenceCode() throws Exception {
-		Organization postOrganization =
-			testPutOrganizationByExternalReferenceCode_addOrganization();
-
-		Organization randomOrganization = randomOrganization();
-
-		Organization putOrganization =
-			organizationResource.putOrganizationByExternalReferenceCode(
-				postOrganization.getExternalReferenceCode(),
-				randomOrganization);
-
-		assertEquals(randomOrganization, putOrganization);
-		assertValid(putOrganization);
-
-		Organization getOrganization =
-			organizationResource.getOrganizationByExternalReferenceCode(
-				putOrganization.getExternalReferenceCode());
-
-		assertEquals(randomOrganization, getOrganization);
-		assertValid(getOrganization);
-
-		Organization newOrganization =
-			testPutOrganizationByExternalReferenceCode_createOrganization();
-
-		putOrganization =
-			organizationResource.putOrganizationByExternalReferenceCode(
-				newOrganization.getExternalReferenceCode(), newOrganization);
-
-		assertEquals(newOrganization, putOrganization);
-		assertValid(putOrganization);
-
-		getOrganization =
-			organizationResource.getOrganizationByExternalReferenceCode(
-				putOrganization.getExternalReferenceCode());
-
-		assertEquals(newOrganization, getOrganization);
-
-		Assert.assertEquals(
-			newOrganization.getExternalReferenceCode(),
-			putOrganization.getExternalReferenceCode());
-	}
-
-	protected Organization
-			testPutOrganizationByExternalReferenceCode_createOrganization()
-		throws Exception {
-
-		return randomOrganization();
-	}
-
-	protected Organization
-			testPutOrganizationByExternalReferenceCode_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2736,429 +2547,6 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddressHttpResponse(
-					organization.getExternalReferenceCode(), null));
-	}
-
-	protected Organization
-			testDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteOrganizationByExternalReferenceCodeUserAccountByEmailAddressHttpResponse(
-					organization.getExternalReferenceCode(),
-					testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()));
-	}
-
-	protected String
-			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Organization
-			testDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrganization() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization = testDeleteOrganization_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteOrganizationHttpResponse(
-				organization.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getOrganizationHttpResponse(
-				organization.getId()));
-		assertHttpResponseStatusCode(
-			404, organizationResource.getOrganizationHttpResponse("-"));
-	}
-
-	protected Organization testDeleteOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOrganization() throws Exception {
-
-		// No namespace
-
-		Organization organization1 =
-			testGraphQLDeleteOrganization_addOrganization();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrganization",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"organizationId",
-									"\"" + organization1.getId() + "\"");
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrganization"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"organization",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"organizationId",
-								"\"" + organization1.getId() + "\"");
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Organization organization2 =
-			testGraphQLDeleteOrganization_addOrganization();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"deleteOrganization",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"organizationId",
-										"\"" + organization2.getId() + "\"");
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-				"Object/deleteOrganization"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessAdminUser_v1_0",
-					new GraphQLField(
-						"organization",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"organizationId",
-									"\"" + organization2.getId() + "\"");
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected Organization testGraphQLDeleteOrganization_addOrganization()
-		throws Exception {
-
-		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testDeleteOrganizationBatch() throws Exception {
-		Organization organization1 =
-			testDeleteOrganizationBatch_addOrganization();
-
-		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", null, organization1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getOrganizationHttpResponse(
-				organization1.getId()));
-
-		Organization organization2 =
-			testDeleteOrganizationBatch_addOrganization();
-
-		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getOrganizationHttpResponse(
-				organization2.getId()));
-
-		organization1 = testDeleteOrganizationBatch_addOrganization();
-		organization2 = testDeleteOrganizationBatch_addOrganization();
-
-		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(),
-			organization1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getOrganizationHttpResponse(
-				organization1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			organizationResource.getOrganizationHttpResponse(
-				organization2.getId()));
-
-		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(),
-			organization1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			organizationResource.getOrganizationHttpResponse(
-				organization2.getId()));
-	}
-
-	protected Organization testDeleteOrganizationBatch_addOrganization()
-		throws Exception {
-
-		return testDeleteOrganization_addOrganization();
-	}
-
-	protected void testDeleteOrganizationBatch_deleteOrganization(
-			String expectedExecuteStatus, String externalReferenceCode,
-			String id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			organizationResource.deleteOrganizationBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetOrganization() throws Exception {
-		Organization postOrganization = testGetOrganization_addOrganization();
-
-		Organization getOrganization = organizationResource.getOrganization(
-			postOrganization.getId());
-
-		assertEquals(postOrganization, getOrganization);
-		assertValid(getOrganization);
-	}
-
-	protected Organization testGetOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrganization() throws Exception {
-		Organization organization =
-			testGraphQLGetOrganization_addOrganization();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				organization,
-				OrganizationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"organization",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"organizationId",
-											"\"" + organization.getId() + "\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/organization"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				organization,
-				OrganizationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"organization",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"organizationId",
-												"\"" + organization.getId() +
-													"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/organization"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrganizationNotFound() throws Exception {
-		String irrelevantOrganizationId =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"organization",
-						new HashMap<String, Object>() {
-							{
-								put("organizationId", irrelevantOrganizationId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"organization",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"organizationId",
-										irrelevantOrganizationId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Organization testGraphQLGetOrganization_addOrganization()
-		throws Exception {
-
-		return testGraphQLOrganization_addOrganization();
-	}
-
-	@Test
-	public void testPatchOrganization() throws Exception {
-		Organization postOrganization = testPatchOrganization_addOrganization();
-
-		Organization randomPatchOrganization = randomPatchOrganization();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization patchOrganization = organizationResource.patchOrganization(
-			postOrganization.getId(), randomPatchOrganization);
-
-		Organization expectedPatchOrganization = postOrganization.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchOrganization, expectedPatchOrganization);
-
-		Organization getOrganization = organizationResource.getOrganization(
-			patchOrganization.getId());
-
-		assertEquals(expectedPatchOrganization, getOrganization);
-		assertValid(getOrganization);
-	}
-
-	protected Organization testPatchOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutOrganization() throws Exception {
-		Organization postOrganization = testPutOrganization_addOrganization();
-
-		Organization randomOrganization = randomOrganization();
-
-		Organization putOrganization = organizationResource.putOrganization(
-			postOrganization.getId(), randomOrganization);
-
-		assertEquals(randomOrganization, putOrganization);
-		assertValid(putOrganization);
-
-		Organization getOrganization = organizationResource.getOrganization(
-			putOrganization.getId());
-
-		assertEquals(randomOrganization, getOrganization);
-		assertValid(getOrganization);
-	}
-
-	protected Organization testPutOrganization_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrganizationChildOrganizationsPage() throws Exception {
 		String organizationId =
 			testGetOrganizationChildOrganizationsPage_getOrganizationId();
@@ -3604,58 +2992,6 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteUserAccountsByEmailAddress() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteUserAccountsByEmailAddress_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteUserAccountsByEmailAddressHttpResponse(
-				organization.getId(), null));
-	}
-
-	protected Organization
-			testDeleteUserAccountsByEmailAddress_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostUserAccountsByEmailAddress() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteUserAccountByEmailAddress() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization =
-			testDeleteUserAccountByEmailAddress_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
-				organization.getId(),
-				testDeleteUserAccountByEmailAddress_getEmailAddress()));
-	}
-
-	protected String testDeleteUserAccountByEmailAddress_getEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Organization testDeleteUserAccountByEmailAddress_addOrganization()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
 		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
@@ -4096,6 +3432,670 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetOrganizationsPage() throws Exception {
+		Page<Organization> page = organizationResource.getOrganizationsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		page = organizationResource.getOrganizationsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(organization1, (List<Organization>)page.getItems());
+		assertContains(organization2, (List<Organization>)page.getItems());
+		assertValid(page, testGetOrganizationsPage_getExpectedActions());
+
+		organizationResource.deleteOrganization(organization1.getId());
+
+		organizationResource.deleteOrganization(organization2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetOrganizationsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Organization organization1 = randomOrganization();
+
+		organization1 = testGetOrganizationsPage_addOrganization(organization1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page = organizationResource.getOrganizationsPage(
+				null, null,
+				getFilterString(entityField, "between", organization1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetOrganizationsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetOrganizationsPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetOrganizationsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetOrganizationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetOrganizationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page = organizationResource.getOrganizationsPage(
+				null, null,
+				getFilterString(entityField, operator, organization1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithPagination() throws Exception {
+		Page<Organization> organizationPage =
+			organizationResource.getOrganizationsPage(
+				null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			organizationPage.getTotalCount());
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		Organization organization3 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Organization> page1 =
+				organizationResource.getOrganizationsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(organization1, (List<Organization>)page1.getItems());
+
+			Page<Organization> page2 =
+				organizationResource.getOrganizationsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(organization2, (List<Organization>)page2.getItems());
+
+			Page<Organization> page3 =
+				organizationResource.getOrganizationsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(organization3, (List<Organization>)page3.getItems());
+		}
+		else {
+			Page<Organization> page1 =
+				organizationResource.getOrganizationsPage(
+					null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Organization> organizations1 =
+				(List<Organization>)page1.getItems();
+
+			Assert.assertEquals(
+				organizations1.toString(), totalCount + 2,
+				organizations1.size());
+
+			Page<Organization> page2 =
+				organizationResource.getOrganizationsPage(
+					null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Organization> organizations2 =
+				(List<Organization>)page2.getItems();
+
+			Assert.assertEquals(
+				organizations2.toString(), 1, organizations2.size());
+
+			Page<Organization> page3 =
+				organizationResource.getOrganizationsPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(organization1, (List<Organization>)page3.getItems());
+			assertContains(organization2, (List<Organization>)page3.getItems());
+			assertContains(organization3, (List<Organization>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortDateTime() throws Exception {
+		testGetOrganizationsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, organization1, organization2) -> {
+				BeanTestUtil.setProperty(
+					organization1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortDouble() throws Exception {
+		testGetOrganizationsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, organization1, organization2) -> {
+				BeanTestUtil.setProperty(
+					organization1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					organization2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortInteger() throws Exception {
+		testGetOrganizationsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, organization1, organization2) -> {
+				BeanTestUtil.setProperty(
+					organization1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					organization2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortString() throws Exception {
+		testGetOrganizationsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, organization1, organization2) -> {
+				Class<?> clazz = organization1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						organization1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						organization2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						organization1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						organization2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						organization1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						organization2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetOrganizationsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, Organization, Organization, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, organization1, organization2);
+		}
+
+		organization1 = testGetOrganizationsPage_addOrganization(organization1);
+
+		organization2 = testGetOrganizationsPage_addOrganization(organization2);
+
+		Page<Organization> page = organizationResource.getOrganizationsPage(
+			null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> ascPage =
+				organizationResource.getOrganizationsPage(
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				organization1, (List<Organization>)ascPage.getItems());
+			assertContains(
+				organization2, (List<Organization>)ascPage.getItems());
+
+			Page<Organization> descPage =
+				organizationResource.getOrganizationsPage(
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				organization2, (List<Organization>)descPage.getItems());
+			assertContains(
+				organization1, (List<Organization>)descPage.getItems());
+		}
+	}
+
+	protected Organization testGetOrganizationsPage_addOrganization(
+			Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrganizationsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"organizations",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject organizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/organizations");
+
+		long totalCount = organizationsJSONObject.getLong("totalCount");
+
+		Organization organization1 =
+			testGraphQLGetOrganizationsPage_addOrganization();
+		Organization organization2 =
+			testGraphQLGetOrganizationsPage_addOrganization();
+
+		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/organizations");
+
+		Assert.assertEquals(
+			totalCount + 2, organizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+			"JSONObject/organizations");
+
+		Assert.assertEquals(
+			totalCount + 2, organizationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			organization1,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationsJSONObject.getString("items"))));
+		assertContains(
+			organization2,
+			Arrays.asList(
+				OrganizationSerDes.toDTOs(
+					organizationsJSONObject.getString("items"))));
+	}
+
+	protected Organization testGraphQLGetOrganizationsPage_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
+	}
+
+	@Test
+	public void testPatchOrganization() throws Exception {
+		Organization postOrganization = testPatchOrganization_addOrganization();
+
+		Organization randomPatchOrganization = randomPatchOrganization();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization patchOrganization = organizationResource.patchOrganization(
+			postOrganization.getId(), randomPatchOrganization);
+
+		Organization expectedPatchOrganization = postOrganization.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrganization, expectedPatchOrganization);
+
+		Organization getOrganization = organizationResource.getOrganization(
+			patchOrganization.getId());
+
+		assertEquals(expectedPatchOrganization, getOrganization);
+		assertValid(getOrganization);
+	}
+
+	protected Organization testPatchOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchOrganizationByExternalReferenceCode()
+		throws Exception {
+
+		Organization postOrganization =
+			testPatchOrganizationByExternalReferenceCode_addOrganization();
+
+		Organization randomPatchOrganization = randomPatchOrganization();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization patchOrganization =
+			organizationResource.patchOrganizationByExternalReferenceCode(
+				postOrganization.getExternalReferenceCode(),
+				randomPatchOrganization);
+
+		Organization expectedPatchOrganization = postOrganization.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrganization, expectedPatchOrganization);
+
+		Organization getOrganization =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				patchOrganization.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOrganization, getOrganization);
+		assertValid(getOrganization);
+	}
+
+	protected Organization
+			testPatchOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testPostAccountByExternalReferenceCodeOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.
+				postAccountByExternalReferenceCodeOrganizationHttpResponse(
+					organization.getExternalReferenceCode(),
+					organization.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.
+				postAccountByExternalReferenceCodeOrganizationHttpResponse(
+					organization.getExternalReferenceCode(), "-"));
+	}
+
+	protected Organization
+			testPostAccountByExternalReferenceCodeOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountOrganization() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testPostAccountOrganization_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.postAccountOrganizationHttpResponse(
+				null, organization.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.postAccountOrganizationHttpResponse(
+				null, "-"));
+	}
+
+	protected Organization testPostAccountOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostOrganization() throws Exception {
+		Organization randomOrganization = randomOrganization();
+
+		Organization postOrganization = testPostOrganization_addOrganization(
+			randomOrganization);
+
+		assertEquals(randomOrganization, postOrganization);
+		assertValid(postOrganization);
+	}
+
+	protected Organization testPostOrganization_addOrganization(
+			Organization organization)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostOrganizationByExternalReferenceCodeUserAccountsByEmailAddress()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostUserAccountsByEmailAddress() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutOrganization() throws Exception {
+		Organization postOrganization = testPutOrganization_addOrganization();
+
+		Organization randomOrganization = randomOrganization();
+
+		Organization putOrganization = organizationResource.putOrganization(
+			postOrganization.getId(), randomOrganization);
+
+		assertEquals(randomOrganization, putOrganization);
+		assertValid(putOrganization);
+
+		Organization getOrganization = organizationResource.getOrganization(
+			putOrganization.getId());
+
+		assertEquals(randomOrganization, getOrganization);
+		assertValid(getOrganization);
+	}
+
+	protected Organization testPutOrganization_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutOrganizationByExternalReferenceCode() throws Exception {
+		Organization postOrganization =
+			testPutOrganizationByExternalReferenceCode_addOrganization();
+
+		Organization randomOrganization = randomOrganization();
+
+		Organization putOrganization =
+			organizationResource.putOrganizationByExternalReferenceCode(
+				postOrganization.getExternalReferenceCode(),
+				randomOrganization);
+
+		assertEquals(randomOrganization, putOrganization);
+		assertValid(putOrganization);
+
+		Organization getOrganization =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				putOrganization.getExternalReferenceCode());
+
+		assertEquals(randomOrganization, getOrganization);
+		assertValid(getOrganization);
+
+		Organization newOrganization =
+			testPutOrganizationByExternalReferenceCode_createOrganization();
+
+		putOrganization =
+			organizationResource.putOrganizationByExternalReferenceCode(
+				newOrganization.getExternalReferenceCode(), newOrganization);
+
+		assertEquals(newOrganization, putOrganization);
+		assertValid(putOrganization);
+
+		getOrganization =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				putOrganization.getExternalReferenceCode());
+
+		assertEquals(newOrganization, getOrganization);
+
+		Assert.assertEquals(
+			newOrganization.getExternalReferenceCode(),
+			putOrganization.getExternalReferenceCode());
+	}
+
+	protected Organization
+			testPutOrganizationByExternalReferenceCode_createOrganization()
+		throws Exception {
+
+		return randomOrganization();
+	}
+
+	protected Organization
+			testPutOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

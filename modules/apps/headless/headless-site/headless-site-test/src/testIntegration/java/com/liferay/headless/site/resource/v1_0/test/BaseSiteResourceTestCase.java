@@ -203,6 +203,56 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site site = testDeleteSiteByExternalReferenceCode_addSite();
+
+		assertHttpResponseStatusCode(
+			204,
+			siteResource.deleteSiteByExternalReferenceCodeHttpResponse(
+				site.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.getSiteByExternalReferenceCodeHttpResponse(
+				site.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404, siteResource.getSiteByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Site testDeleteSiteByExternalReferenceCode_addSite()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteByExternalReferenceCode() throws Exception {
+		Site postSite = testGetSiteByExternalReferenceCode_addSite();
+
+		Site getSite = siteResource.getSiteByExternalReferenceCode(
+			postSite.getExternalReferenceCode());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSiteByExternalReferenceCode_addSite()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteByExternalReferenceCodeSiteInitializer()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSite() throws Exception {
 		Site randomSite = randomSite();
 
@@ -241,49 +291,6 @@ public abstract class BaseSiteResourceTestCase {
 
 	protected Site testPostFormDataSite_addSite(
 			Site site, Map<String, File> multipartFiles)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSiteByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Site site = testDeleteSiteByExternalReferenceCode_addSite();
-
-		assertHttpResponseStatusCode(
-			204,
-			siteResource.deleteSiteByExternalReferenceCodeHttpResponse(
-				site.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			siteResource.getSiteByExternalReferenceCodeHttpResponse(
-				site.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Site testDeleteSiteByExternalReferenceCode_addSite()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSiteByExternalReferenceCode() throws Exception {
-		Site postSite = testGetSiteByExternalReferenceCode_addSite();
-
-		Site getSite = siteResource.getSiteByExternalReferenceCode(
-			postSite.getExternalReferenceCode());
-
-		assertEquals(postSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected Site testGetSiteByExternalReferenceCode_addSite()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -341,13 +348,6 @@ public abstract class BaseSiteResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSiteByExternalReferenceCodeSiteInitializer()
-		throws Exception {
-
-		Assert.assertTrue(false);
 	}
 
 	protected Site testGraphQLSite_addSite() throws Exception {

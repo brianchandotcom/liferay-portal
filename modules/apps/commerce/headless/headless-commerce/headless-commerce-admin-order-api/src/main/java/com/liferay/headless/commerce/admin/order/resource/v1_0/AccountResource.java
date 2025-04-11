@@ -41,14 +41,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountResource {
 
-	public Account getOrderRuleAccountAccount(Long orderRuleAccountId)
-		throws Exception;
-
 	public Account getOrderByExternalReferenceCodeAccount(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Account getOrderIdAccount(Long id) throws Exception;
+
+	public Account getOrderRuleAccountAccount(Long orderRuleAccountId)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

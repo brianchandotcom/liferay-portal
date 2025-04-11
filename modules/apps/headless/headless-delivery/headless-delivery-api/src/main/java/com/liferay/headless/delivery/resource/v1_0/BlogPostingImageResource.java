@@ -56,7 +56,15 @@ public interface BlogPostingImageResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
+		throws Exception;
+
+	public BlogPostingImage getSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
@@ -65,13 +73,6 @@ public interface BlogPostingImageResource {
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteBlogPostingImagesPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
 		throws Exception;
 
 	public BlogPostingImage postSiteBlogPostingImage(
@@ -83,12 +84,11 @@ public interface BlogPostingImageResource {
 			Object object)
 		throws Exception;
 
-	public void deleteSiteBlogPostingImageByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public BlogPostingImage getSiteBlogPostingImageByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteBlogPostingImagesPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

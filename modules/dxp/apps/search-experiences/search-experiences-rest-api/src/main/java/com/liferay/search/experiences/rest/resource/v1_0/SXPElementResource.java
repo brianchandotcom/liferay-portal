@@ -46,12 +46,40 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SXPElementResource {
 
+	public void deleteSXPElement(Long sxpElementId) throws Exception;
+
+	public Response deleteSXPElementBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public SXPElement getSXPElement(Long sxpElementId) throws Exception;
+
+	public SXPElement getSXPElementByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response getSXPElementExport(Long sxpElementId) throws Exception;
+
 	public Page<SXPElement> getSXPElementsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
+		throws Exception;
+
+	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
+
+	public Response postSXPElementBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception;
+
+	public SXPElement postSXPElementPreview(SXPElement sxpElement)
+		throws Exception;
+
+	public SXPElement postSXPElementValidate(String string) throws Exception;
 
 	public Response postSXPElementsPageExportBatch(
 			String search,
@@ -60,43 +88,15 @@ public interface SXPElementResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
-
-	public Response postSXPElementBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public SXPElement getSXPElementByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public SXPElement putSXPElementByExternalReferenceCode(
-			String externalReferenceCode, SXPElement sxpElement)
-		throws Exception;
-
-	public SXPElement postSXPElementPreview(SXPElement sxpElement)
-		throws Exception;
-
-	public SXPElement postSXPElementValidate(String string) throws Exception;
-
-	public void deleteSXPElement(Long sxpElementId) throws Exception;
-
-	public Response deleteSXPElementBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public SXPElement getSXPElement(Long sxpElementId) throws Exception;
-
-	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
-		throws Exception;
-
 	public SXPElement putSXPElement(Long sxpElementId, SXPElement sxpElement)
 		throws Exception;
 
 	public Response putSXPElementBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception;
-
-	public Response getSXPElementExport(Long sxpElementId) throws Exception;
+	public SXPElement putSXPElementByExternalReferenceCode(
+			String externalReferenceCode, SXPElement sxpElement)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

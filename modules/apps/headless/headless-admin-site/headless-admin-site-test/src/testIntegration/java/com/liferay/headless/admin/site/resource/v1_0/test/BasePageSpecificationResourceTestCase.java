@@ -182,6 +182,13 @@ public abstract class BasePageSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationsPage()
 		throws Exception {
 
@@ -439,13 +446,6 @@ public abstract class BasePageSpecificationResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteSiteByExternalReferenceCodePageSpecification()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
@@ -464,75 +464,6 @@ public abstract class BasePageSpecificationResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageSpecification()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageSpecification()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPostSiteSiteByExternalReferenceCodePageSpecificationPublish()
-		throws Exception {
-
-		PageSpecification randomPageSpecification = randomPageSpecification();
-
-		PageSpecification postPageSpecification =
-			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
-				randomPageSpecification);
-
-		assertEquals(randomPageSpecification, postPageSpecification);
-		assertValid(postPageSpecification);
-
-		ContentPageSpecification contentPageSpecification =
-			new ContentPageSpecification() {
-				{
-					externalReferenceCode = StringUtil.toLowerCase(
-						RandomTestUtil.randomString());
-					draftContentPageSpecificationExternalReferenceCode =
-						StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-					type = Type.create("ContentPageSpecification");
-				}
-			};
-
-		assertEquals(
-			contentPageSpecification,
-			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
-				contentPageSpecification));
-
-		WidgetPageSpecification widgetPageSpecification =
-			new WidgetPageSpecification() {
-				{
-					externalReferenceCode = StringUtil.toLowerCase(
-						RandomTestUtil.randomString());
-
-					type = Type.create("WidgetPageSpecification");
-				}
-			};
-
-		assertEquals(
-			widgetPageSpecification,
-			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
-				widgetPageSpecification));
-	}
-
-	protected PageSpecification
-			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
-				PageSpecification pageSpecification)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -915,6 +846,75 @@ public abstract class BasePageSpecificationResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageSpecificationPublish()
+		throws Exception {
+
+		PageSpecification randomPageSpecification = randomPageSpecification();
+
+		PageSpecification postPageSpecification =
+			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
+				randomPageSpecification);
+
+		assertEquals(randomPageSpecification, postPageSpecification);
+		assertValid(postPageSpecification);
+
+		ContentPageSpecification contentPageSpecification =
+			new ContentPageSpecification() {
+				{
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					draftContentPageSpecificationExternalReferenceCode =
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+					type = Type.create("ContentPageSpecification");
+				}
+			};
+
+		assertEquals(
+			contentPageSpecification,
+			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
+				contentPageSpecification));
+
+		WidgetPageSpecification widgetPageSpecification =
+			new WidgetPageSpecification() {
+				{
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+
+					type = Type.create("WidgetPageSpecification");
+				}
+			};
+
+		assertEquals(
+			widgetPageSpecification,
+			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
+				widgetPageSpecification));
+	}
+
+	protected PageSpecification
+			testPostSiteSiteByExternalReferenceCodePageSpecificationPublish_addPageSpecification(
+				PageSpecification pageSpecification)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodePageSpecification()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(

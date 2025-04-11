@@ -56,19 +56,19 @@ public interface ProductOptionValueResource {
 		throws Exception;
 
 	public Page<ProductOptionValue>
+			getChannelProductProductOptionProductOptionValuesPage(
+				Long channelId, Long productId, Long productOptionId,
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination)
+		throws Exception;
+
+	public Page<ProductOptionValue>
 			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
 				String currencyCode, Long productOptionValueId, Long skuId,
 				Pagination pagination, SkuOption[] skuOptions)
-		throws Exception;
-
-	public Page<ProductOptionValue>
-			getChannelProductProductOptionProductOptionValuesPage(
-				Long channelId, Long productId, Long productOptionId,
-				Long accountId, String currencyCode, Long productOptionValueId,
-				Long skuId, Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOptionValue>

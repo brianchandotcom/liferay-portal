@@ -278,176 +278,6 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	@Test
-	public void testPostCompanyTestEntity() throws Exception {
-		CompanyTestEntity randomCompanyTestEntity = randomCompanyTestEntity();
-
-		CompanyTestEntity postCompanyTestEntity =
-			testPostCompanyTestEntity_addCompanyTestEntity(
-				randomCompanyTestEntity);
-
-		assertEquals(randomCompanyTestEntity, postCompanyTestEntity);
-		assertValid(postCompanyTestEntity);
-
-		CompanyTestEntity randomPermissionsCompanyTestEntity1 =
-			randomPermissionsCompanyTestEntity();
-
-		CompanyTestEntity postPermissionsCompanyTestEntity1 =
-			testPostCompanyTestEntity_addCompanyTestEntity(
-				randomPermissionsCompanyTestEntity1);
-
-		Assert.assertNull(postPermissionsCompanyTestEntity1.getPermissions());
-
-		CompanyTestEntity randomPermissionsCompanyTestEntity2 =
-			randomPermissionsCompanyTestEntity();
-
-		CompanyTestEntity postPermissionsCompanyTestEntity2 =
-			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
-				randomPermissionsCompanyTestEntity2);
-
-		Assert.assertNotNull(
-			postPermissionsCompanyTestEntity2.getPermissions());
-	}
-
-	protected CompanyTestEntity testPostCompanyTestEntity_addCompanyTestEntity(
-			CompanyTestEntity companyTestEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected CompanyTestEntity
-			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
-				CompanyTestEntity companyTestEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetCompanyTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		CompanyTestEntity postCompanyTestEntity =
-			testGetCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
-
-		CompanyTestEntity getCompanyTestEntity =
-			companyTestEntityResource.
-				getCompanyTestEntityByExternalReferenceCode(
-					postCompanyTestEntity.getExternalReferenceCode());
-
-		assertEquals(postCompanyTestEntity, getCompanyTestEntity);
-		assertValid(getCompanyTestEntity);
-
-		Assert.assertNull(getCompanyTestEntity.getPermissions());
-
-		getCompanyTestEntity =
-			permissionsCompanyTestEntityResource.
-				getCompanyTestEntityByExternalReferenceCode(
-					postCompanyTestEntity.getExternalReferenceCode());
-
-		Assert.assertNotNull(getCompanyTestEntity.getPermissions());
-	}
-
-	protected CompanyTestEntity
-			testGetCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutCompanyTestEntityByExternalReferenceCode()
-		throws Exception {
-
-		CompanyTestEntity postCompanyTestEntity =
-			testPutCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
-
-		CompanyTestEntity randomCompanyTestEntity = randomCompanyTestEntity();
-
-		CompanyTestEntity putCompanyTestEntity =
-			companyTestEntityResource.
-				putCompanyTestEntityByExternalReferenceCode(
-					postCompanyTestEntity.getExternalReferenceCode(),
-					randomCompanyTestEntity);
-
-		assertEquals(randomCompanyTestEntity, putCompanyTestEntity);
-		assertValid(putCompanyTestEntity);
-
-		Assert.assertNull(putCompanyTestEntity.getPermissions());
-
-		CompanyTestEntity getCompanyTestEntity =
-			companyTestEntityResource.
-				getCompanyTestEntityByExternalReferenceCode(
-					putCompanyTestEntity.getExternalReferenceCode());
-
-		assertEquals(randomCompanyTestEntity, getCompanyTestEntity);
-		assertValid(getCompanyTestEntity);
-
-		CompanyTestEntity randomPermissionsCompanyTestEntity =
-			randomPermissionsCompanyTestEntity();
-
-		putCompanyTestEntity =
-			companyTestEntityResource.
-				putCompanyTestEntityByExternalReferenceCode(
-					postCompanyTestEntity.getExternalReferenceCode(),
-					randomPermissionsCompanyTestEntity);
-
-		assertEquals(randomPermissionsCompanyTestEntity, putCompanyTestEntity);
-		assertValid(putCompanyTestEntity);
-
-		Assert.assertNull(putCompanyTestEntity.getPermissions());
-
-		putCompanyTestEntity =
-			permissionsCompanyTestEntityResource.
-				putCompanyTestEntityByExternalReferenceCode(
-					postCompanyTestEntity.getExternalReferenceCode(),
-					randomPermissionsCompanyTestEntity);
-
-		Assert.assertNotNull(putCompanyTestEntity.getPermissions());
-
-		CompanyTestEntity newCompanyTestEntity =
-			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity();
-
-		putCompanyTestEntity =
-			companyTestEntityResource.
-				putCompanyTestEntityByExternalReferenceCode(
-					newCompanyTestEntity.getExternalReferenceCode(),
-					newCompanyTestEntity);
-
-		assertEquals(newCompanyTestEntity, putCompanyTestEntity);
-		assertValid(putCompanyTestEntity);
-
-		getCompanyTestEntity =
-			companyTestEntityResource.
-				getCompanyTestEntityByExternalReferenceCode(
-					putCompanyTestEntity.getExternalReferenceCode());
-
-		assertEquals(newCompanyTestEntity, getCompanyTestEntity);
-
-		Assert.assertEquals(
-			newCompanyTestEntity.getExternalReferenceCode(),
-			putCompanyTestEntity.getExternalReferenceCode());
-	}
-
-	protected CompanyTestEntity
-			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity()
-		throws Exception {
-
-		return randomCompanyTestEntity();
-	}
-
-	protected CompanyTestEntity
-			testPutCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetCompanyTestEntity() throws Exception {
 		CompanyTestEntity postCompanyTestEntity =
 			testGetCompanyTestEntity_addCompanyTestEntity();
@@ -669,6 +499,59 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGetCompanyTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		CompanyTestEntity postCompanyTestEntity =
+			testGetCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
+
+		CompanyTestEntity getCompanyTestEntity =
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode());
+
+		assertEquals(postCompanyTestEntity, getCompanyTestEntity);
+		assertValid(getCompanyTestEntity);
+
+		Assert.assertNull(getCompanyTestEntity.getPermissions());
+
+		getCompanyTestEntity =
+			permissionsCompanyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getCompanyTestEntity.getPermissions());
+	}
+
+	protected CompanyTestEntity
+			testGetCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCompanyTestEntityPermissionsPage() throws Exception {
+		CompanyTestEntity postCompanyTestEntity =
+			testGetCompanyTestEntityPermissionsPage_addCompanyTestEntity();
+
+		Page<Permission> page =
+			companyTestEntityResource.getCompanyTestEntityPermissionsPage(
+				postCompanyTestEntity.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected CompanyTestEntity
+			testGetCompanyTestEntityPermissionsPage_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPatchCompanyTestEntity() throws Exception {
 		CompanyTestEntity postCompanyTestEntity =
 			testPatchCompanyTestEntity_addCompanyTestEntity();
@@ -697,6 +580,54 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 	protected CompanyTestEntity
 			testPatchCompanyTestEntity_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCompanyTestEntity() throws Exception {
+		CompanyTestEntity randomCompanyTestEntity = randomCompanyTestEntity();
+
+		CompanyTestEntity postCompanyTestEntity =
+			testPostCompanyTestEntity_addCompanyTestEntity(
+				randomCompanyTestEntity);
+
+		assertEquals(randomCompanyTestEntity, postCompanyTestEntity);
+		assertValid(postCompanyTestEntity);
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity1 =
+			randomPermissionsCompanyTestEntity();
+
+		CompanyTestEntity postPermissionsCompanyTestEntity1 =
+			testPostCompanyTestEntity_addCompanyTestEntity(
+				randomPermissionsCompanyTestEntity1);
+
+		Assert.assertNull(postPermissionsCompanyTestEntity1.getPermissions());
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity2 =
+			randomPermissionsCompanyTestEntity();
+
+		CompanyTestEntity postPermissionsCompanyTestEntity2 =
+			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
+				randomPermissionsCompanyTestEntity2);
+
+		Assert.assertNotNull(
+			postPermissionsCompanyTestEntity2.getPermissions());
+	}
+
+	protected CompanyTestEntity testPostCompanyTestEntity_addCompanyTestEntity(
+			CompanyTestEntity companyTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected CompanyTestEntity
+			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
+				CompanyTestEntity companyTestEntity)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -753,19 +684,88 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	@Test
-	public void testGetCompanyTestEntityPermissionsPage() throws Exception {
+	public void testPutCompanyTestEntityByExternalReferenceCode()
+		throws Exception {
+
 		CompanyTestEntity postCompanyTestEntity =
-			testGetCompanyTestEntityPermissionsPage_addCompanyTestEntity();
+			testPutCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
 
-		Page<Permission> page =
-			companyTestEntityResource.getCompanyTestEntityPermissionsPage(
-				postCompanyTestEntity.getId(), RoleConstants.GUEST);
+		CompanyTestEntity randomCompanyTestEntity = randomCompanyTestEntity();
 
-		Assert.assertNotNull(page);
+		CompanyTestEntity putCompanyTestEntity =
+			companyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode(),
+					randomCompanyTestEntity);
+
+		assertEquals(randomCompanyTestEntity, putCompanyTestEntity);
+		assertValid(putCompanyTestEntity);
+
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
+		CompanyTestEntity getCompanyTestEntity =
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCode(
+					putCompanyTestEntity.getExternalReferenceCode());
+
+		assertEquals(randomCompanyTestEntity, getCompanyTestEntity);
+		assertValid(getCompanyTestEntity);
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity =
+			randomPermissionsCompanyTestEntity();
+
+		putCompanyTestEntity =
+			companyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode(),
+					randomPermissionsCompanyTestEntity);
+
+		assertEquals(randomPermissionsCompanyTestEntity, putCompanyTestEntity);
+		assertValid(putCompanyTestEntity);
+
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
+		putCompanyTestEntity =
+			permissionsCompanyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode(),
+					randomPermissionsCompanyTestEntity);
+
+		Assert.assertNotNull(putCompanyTestEntity.getPermissions());
+
+		CompanyTestEntity newCompanyTestEntity =
+			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity();
+
+		putCompanyTestEntity =
+			companyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					newCompanyTestEntity.getExternalReferenceCode(),
+					newCompanyTestEntity);
+
+		assertEquals(newCompanyTestEntity, putCompanyTestEntity);
+		assertValid(putCompanyTestEntity);
+
+		getCompanyTestEntity =
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCode(
+					putCompanyTestEntity.getExternalReferenceCode());
+
+		assertEquals(newCompanyTestEntity, getCompanyTestEntity);
+
+		Assert.assertEquals(
+			newCompanyTestEntity.getExternalReferenceCode(),
+			putCompanyTestEntity.getExternalReferenceCode());
 	}
 
 	protected CompanyTestEntity
-			testGetCompanyTestEntityPermissionsPage_addCompanyTestEntity()
+			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity()
+		throws Exception {
+
+		return randomCompanyTestEntity();
+	}
+
+	protected CompanyTestEntity
+			testPutCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

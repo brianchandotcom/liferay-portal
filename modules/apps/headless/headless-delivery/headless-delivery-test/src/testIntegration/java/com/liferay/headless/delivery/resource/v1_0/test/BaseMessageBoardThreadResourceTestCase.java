@@ -237,6 +237,194 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardThread() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testDeleteMessageBoardThread_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.deleteMessageBoardThreadHttpResponse(
+				messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
+				messageBoardThread.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.getMessageBoardThreadHttpResponse(0L));
+	}
+
+	protected MessageBoardThread
+			testDeleteMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testGraphQLDeleteMessageBoardThread() throws Exception {
+
+		// No namespace
+
+		MessageBoardThread messageBoardThread1 =
+			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMessageBoardThread",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									messageBoardThread1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMessageBoardThread"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"messageBoardThread",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"messageBoardThreadId",
+								messageBoardThread1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		MessageBoardThread messageBoardThread2 =
+			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteMessageBoardThread",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardThreadId",
+										messageBoardThread2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteMessageBoardThread"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"messageBoardThread",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									messageBoardThread2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected MessageBoardThread
+			testGraphQLDeleteMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
+	}
+
+	@Test
+	public void testDeleteMessageBoardThreadBatch() throws Exception {
+		MessageBoardThread messageBoardThread1 =
+			testDeleteMessageBoardThreadBatch_addMessageBoardThread();
+
+		testDeleteMessageBoardThreadBatch_deleteMessageBoardThread(
+			"COMPLETED", null, messageBoardThread1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
+				messageBoardThread1.getId()));
+	}
+
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadBatch_addMessageBoardThread()
+		throws Exception {
+
+		return testDeleteMessageBoardThread_addMessageBoardThread();
+	}
+
+	protected void testDeleteMessageBoardThreadBatch_deleteMessageBoardThread(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			messageBoardThreadResource.
+				deleteMessageBoardThreadBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteMessageBoardThreadMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				deleteMessageBoardThreadMyRatingHttpResponse(
+					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				getMessageBoardThreadMyRatingHttpResponse(
+					messageBoardThread.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				getMessageBoardThreadMyRatingHttpResponse(0L));
+	}
+
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardThreadsPage()
 		throws Exception {
 
@@ -742,29 +930,338 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardSectionMessageBoardThread()
-		throws Exception {
-
-		MessageBoardThread randomMessageBoardThread =
-			randomMessageBoardThread();
-
+	public void testGetMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
-			testPostMessageBoardSectionMessageBoardThread_addMessageBoardThread(
-				randomMessageBoardThread);
+			testGetMessageBoardThread_addMessageBoardThread();
 
-		assertEquals(randomMessageBoardThread, postMessageBoardThread);
-		assertValid(postMessageBoardThread);
+		MessageBoardThread getMessageBoardThread =
+			messageBoardThreadResource.getMessageBoardThread(
+				postMessageBoardThread.getId());
+
+		assertEquals(postMessageBoardThread, getMessageBoardThread);
+		assertValid(getMessageBoardThread);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		MessageBoardThread postMessageBoardThread =
+			testGetMessageBoardThread_addMessageBoardThread();
+
+		MessageBoardThread getMessageBoardThread =
+			messageBoardThreadResource.getMessageBoardThread(
+				postMessageBoardThread.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.delivery.dto.v1_0.MessageBoardThread"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postMessageBoardThread.getId());
+
+		assertEquals(
+			getMessageBoardThread,
+			MessageBoardThreadSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
 	}
 
 	protected MessageBoardThread
-			testPostMessageBoardSectionMessageBoardThread_addMessageBoardThread(
-				MessageBoardThread messageBoardThread)
+			testGetMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
-		return messageBoardThreadResource.
-			postMessageBoardSectionMessageBoardThread(
-				testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
-				messageBoardThread);
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardThread() throws Exception {
+		MessageBoardThread messageBoardThread =
+			testGraphQLGetMessageBoardThread_addMessageBoardThread();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				messageBoardThread,
+				MessageBoardThreadSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"messageBoardThread",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"messageBoardThreadId",
+											messageBoardThread.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/messageBoardThread"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				messageBoardThread,
+				MessageBoardThreadSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"messageBoardThread",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"messageBoardThreadId",
+												messageBoardThread.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/messageBoardThread"))));
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardThreadNotFound() throws Exception {
+		Long irrelevantMessageBoardThreadId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"messageBoardThread",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									irrelevantMessageBoardThreadId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"messageBoardThread",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"messageBoardThreadId",
+										irrelevantMessageBoardThreadId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected MessageBoardThread
+			testGraphQLGetMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
+	}
+
+	@Test
+	public void testGetMessageBoardThreadPermissionsPage() throws Exception {
+		MessageBoardThread postMessageBoardThread =
+			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread();
+
+		Page<Permission> page =
+			messageBoardThreadResource.getMessageBoardThreadPermissionsPage(
+				postMessageBoardThread.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected MessageBoardThread
+			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread()
+		throws Exception {
+
+		return testPostSiteMessageBoardThread_addMessageBoardThread(
+			randomMessageBoardThread());
 	}
 
 	@Test
@@ -1086,370 +1583,32 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteMessageBoardThread() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread messageBoardThread =
-			testDeleteMessageBoardThread_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.deleteMessageBoardThreadHttpResponse(
-				messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
-				messageBoardThread.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.getMessageBoardThreadHttpResponse(0L));
-	}
-
-	protected MessageBoardThread
-			testDeleteMessageBoardThread_addMessageBoardThread()
+	public void testGetSiteMessageBoardThreadByFriendlyUrlPath()
 		throws Exception {
 
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testGraphQLDeleteMessageBoardThread() throws Exception {
-
-		// No namespace
-
-		MessageBoardThread messageBoardThread1 =
-			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteMessageBoardThread",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"messageBoardThreadId",
-									messageBoardThread1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteMessageBoardThread"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"messageBoardThread",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"messageBoardThreadId",
-								messageBoardThread1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessDelivery_v1_0
-
-		MessageBoardThread messageBoardThread2 =
-			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"deleteMessageBoardThread",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"messageBoardThreadId",
-										messageBoardThread2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-				"Object/deleteMessageBoardThread"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessDelivery_v1_0",
-					new GraphQLField(
-						"messageBoardThread",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"messageBoardThreadId",
-									messageBoardThread2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected MessageBoardThread
-			testGraphQLDeleteMessageBoardThread_addMessageBoardThread()
-		throws Exception {
-
-		return testGraphQLMessageBoardThread_addMessageBoardThread();
-	}
-
-	@Test
-	public void testDeleteMessageBoardThreadBatch() throws Exception {
-		MessageBoardThread messageBoardThread1 =
-			testDeleteMessageBoardThreadBatch_addMessageBoardThread();
-
-		testDeleteMessageBoardThreadBatch_deleteMessageBoardThread(
-			"COMPLETED", null, messageBoardThread1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
-				messageBoardThread1.getId()));
-	}
-
-	protected MessageBoardThread
-			testDeleteMessageBoardThreadBatch_addMessageBoardThread()
-		throws Exception {
-
-		return testDeleteMessageBoardThread_addMessageBoardThread();
-	}
-
-	protected void testDeleteMessageBoardThreadBatch_deleteMessageBoardThread(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			messageBoardThreadResource.
-				deleteMessageBoardThreadBatchHttpResponse(
-					null,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"externalReferenceCode", () -> externalReferenceCode
-						).put(
-							"id", () -> id
-						)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
-			testGetMessageBoardThread_addMessageBoardThread();
+			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
 
 		MessageBoardThread getMessageBoardThread =
-			messageBoardThreadResource.getMessageBoardThread(
-				postMessageBoardThread.getId());
+			messageBoardThreadResource.
+				getSiteMessageBoardThreadByFriendlyUrlPath(
+					testGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
+						postMessageBoardThread),
+					postMessageBoardThread.getFriendlyUrlPath());
 
 		assertEquals(postMessageBoardThread, getMessageBoardThread);
 		assertValid(getMessageBoardThread);
 	}
 
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		MessageBoardThread postMessageBoardThread =
-			testGetMessageBoardThread_addMessageBoardThread();
+	protected Long testGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
+			MessageBoardThread messageBoardThread)
+		throws Exception {
 
-		MessageBoardThread getMessageBoardThread =
-			messageBoardThreadResource.getMessageBoardThread(
-				postMessageBoardThread.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.delivery.dto.v1_0.MessageBoardThread"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(
-			postMessageBoardThread.getId());
-
-		assertEquals(
-			getMessageBoardThread,
-			MessageBoardThreadSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
+		return messageBoardThread.getSiteId();
 	}
 
 	protected MessageBoardThread
-			testGetMessageBoardThread_addMessageBoardThread()
+			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
 		throws Exception {
 
 		return messageBoardThreadResource.postSiteMessageBoardThread(
@@ -1457,9 +1616,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetMessageBoardThread() throws Exception {
+	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath()
+		throws Exception {
+
 		MessageBoardThread messageBoardThread =
-			testGraphQLGetMessageBoardThread_addMessageBoardThread();
+			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
 
 		// No namespace
 
@@ -1470,16 +1631,26 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"messageBoardThread",
+								"messageBoardThreadByFriendlyUrlPath",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"messageBoardThreadId",
-											messageBoardThread.getId());
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
+													messageBoardThread) + "\"");
+
+										put(
+											"friendlyUrlPath",
+											"\"" +
+												messageBoardThread.
+													getFriendlyUrlPath() +
+														"\"");
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/messageBoardThread"))));
+						"JSONObject/data",
+						"Object/messageBoardThreadByFriendlyUrlPath"))));
 
 		// Using the namespace headlessDelivery_v1_0
 
@@ -1492,22 +1663,43 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 							new GraphQLField(
 								"headlessDelivery_v1_0",
 								new GraphQLField(
-									"messageBoardThread",
+									"messageBoardThreadByFriendlyUrlPath",
 									new HashMap<String, Object>() {
 										{
 											put(
-												"messageBoardThreadId",
-												messageBoardThread.getId());
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
+														messageBoardThread) +
+															"\"");
+
+											put(
+												"friendlyUrlPath",
+												"\"" +
+													messageBoardThread.
+														getFriendlyUrlPath() +
+															"\"");
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/messageBoardThread"))));
+						"Object/messageBoardThreadByFriendlyUrlPath"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return messageBoardThread.getSiteId();
 	}
 
 	@Test
-	public void testGraphQLGetMessageBoardThreadNotFound() throws Exception {
-		Long irrelevantMessageBoardThreadId = RandomTestUtil.randomLong();
+	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPathNotFound()
+		throws Exception {
+
+		String irrelevantFriendlyUrlPath =
+			"\"" + RandomTestUtil.randomString() + "\"";
 
 		// No namespace
 
@@ -1516,12 +1708,15 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"messageBoardThread",
+						"messageBoardThreadByFriendlyUrlPath",
 						new HashMap<String, Object>() {
 							{
 								put(
-									"messageBoardThreadId",
-									irrelevantMessageBoardThreadId);
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"friendlyUrlPath",
+									irrelevantFriendlyUrlPath);
 							}
 						},
 						getGraphQLFields())),
@@ -1537,12 +1732,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 					new GraphQLField(
 						"headlessDelivery_v1_0",
 						new GraphQLField(
-							"messageBoardThread",
+							"messageBoardThreadByFriendlyUrlPath",
 							new HashMap<String, Object>() {
 								{
 									put(
-										"messageBoardThreadId",
-										irrelevantMessageBoardThreadId);
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"friendlyUrlPath",
+										irrelevantFriendlyUrlPath);
 								}
 							},
 							getGraphQLFields()))),
@@ -1551,226 +1750,29 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	protected MessageBoardThread
-			testGraphQLGetMessageBoardThread_addMessageBoardThread()
+			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
 		throws Exception {
 
 		return testGraphQLMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test
-	public void testPatchMessageBoardThread() throws Exception {
-		MessageBoardThread postMessageBoardThread =
-			testPatchMessageBoardThread_addMessageBoardThread();
-
-		MessageBoardThread randomPatchMessageBoardThread =
-			randomPatchMessageBoardThread();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread patchMessageBoardThread =
-			messageBoardThreadResource.patchMessageBoardThread(
-				postMessageBoardThread.getId(), randomPatchMessageBoardThread);
-
-		MessageBoardThread expectedPatchMessageBoardThread =
-			postMessageBoardThread.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchMessageBoardThread, expectedPatchMessageBoardThread);
-
-		MessageBoardThread getMessageBoardThread =
-			messageBoardThreadResource.getMessageBoardThread(
-				patchMessageBoardThread.getId());
-
-		assertEquals(expectedPatchMessageBoardThread, getMessageBoardThread);
-		assertValid(getMessageBoardThread);
-	}
-
-	protected MessageBoardThread
-			testPatchMessageBoardThread_addMessageBoardThread()
+	public void testGetSiteMessageBoardThreadPermissionsPage()
 		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testPutMessageBoardThread() throws Exception {
-		MessageBoardThread postMessageBoardThread =
-			testPutMessageBoardThread_addMessageBoardThread();
-
-		MessageBoardThread randomMessageBoardThread =
-			randomMessageBoardThread();
-
-		MessageBoardThread putMessageBoardThread =
-			messageBoardThreadResource.putMessageBoardThread(
-				postMessageBoardThread.getId(), randomMessageBoardThread);
-
-		assertEquals(randomMessageBoardThread, putMessageBoardThread);
-		assertValid(putMessageBoardThread);
-
-		MessageBoardThread getMessageBoardThread =
-			messageBoardThreadResource.getMessageBoardThread(
-				putMessageBoardThread.getId());
-
-		assertEquals(randomMessageBoardThread, getMessageBoardThread);
-		assertValid(getMessageBoardThread);
-	}
-
-	protected MessageBoardThread
-			testPutMessageBoardThread_addMessageBoardThread()
-		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testDeleteMessageBoardThreadMyRating() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread messageBoardThread =
-			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.
-				deleteMessageBoardThreadMyRatingHttpResponse(
-					messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				getMessageBoardThreadMyRatingHttpResponse(
-					messageBoardThread.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				getMessageBoardThreadMyRatingHttpResponse(0L));
-	}
-
-	protected MessageBoardThread
-			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
-		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testGetMessageBoardThreadPermissionsPage() throws Exception {
-		MessageBoardThread postMessageBoardThread =
-			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread();
 
 		Page<Permission> page =
-			messageBoardThreadResource.getMessageBoardThreadPermissionsPage(
-				postMessageBoardThread.getId(), RoleConstants.GUEST);
+			messageBoardThreadResource.getSiteMessageBoardThreadPermissionsPage(
+				testGroup.getGroupId(), RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
 	}
 
 	protected MessageBoardThread
-			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread()
+			testGetSiteMessageBoardThreadPermissionsPage_addMessageBoardThread()
 		throws Exception {
 
 		return testPostSiteMessageBoardThread_addMessageBoardThread(
 			randomMessageBoardThread());
-	}
-
-	@Test
-	public void testPutMessageBoardThreadPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread messageBoardThread =
-			testPutMessageBoardThreadPermissionsPage_addMessageBoardThread();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			messageBoardThreadResource.
-				putMessageBoardThreadPermissionsPageHttpResponse(
-					messageBoardThread.getId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				putMessageBoardThreadPermissionsPageHttpResponse(
-					0L,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected MessageBoardThread
-			testPutMessageBoardThreadPermissionsPage_addMessageBoardThread()
-		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testPutMessageBoardThreadSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread messageBoardThread =
-			testPutMessageBoardThreadSubscribe_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.
-				putMessageBoardThreadSubscribeHttpResponse(
-					messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				putMessageBoardThreadSubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardThread
-			testPutMessageBoardThreadSubscribe_addMessageBoardThread()
-		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardThread messageBoardThread =
-			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.
-				putMessageBoardThreadUnsubscribeHttpResponse(
-					messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				putMessageBoardThreadUnsubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardThread
-			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread()
-		throws Exception {
-
-		return messageBoardThreadResource.postSiteMessageBoardThread(
-			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	@Test
@@ -2323,6 +2325,67 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testPatchMessageBoardThread() throws Exception {
+		MessageBoardThread postMessageBoardThread =
+			testPatchMessageBoardThread_addMessageBoardThread();
+
+		MessageBoardThread randomPatchMessageBoardThread =
+			randomPatchMessageBoardThread();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread patchMessageBoardThread =
+			messageBoardThreadResource.patchMessageBoardThread(
+				postMessageBoardThread.getId(), randomPatchMessageBoardThread);
+
+		MessageBoardThread expectedPatchMessageBoardThread =
+			postMessageBoardThread.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchMessageBoardThread, expectedPatchMessageBoardThread);
+
+		MessageBoardThread getMessageBoardThread =
+			messageBoardThreadResource.getMessageBoardThread(
+				patchMessageBoardThread.getId());
+
+		assertEquals(expectedPatchMessageBoardThread, getMessageBoardThread);
+		assertValid(getMessageBoardThread);
+	}
+
+	protected MessageBoardThread
+			testPatchMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testPostMessageBoardSectionMessageBoardThread()
+		throws Exception {
+
+		MessageBoardThread randomMessageBoardThread =
+			randomMessageBoardThread();
+
+		MessageBoardThread postMessageBoardThread =
+			testPostMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				randomMessageBoardThread);
+
+		assertEquals(randomMessageBoardThread, postMessageBoardThread);
+		assertValid(postMessageBoardThread);
+	}
+
+	protected MessageBoardThread
+			testPostMessageBoardSectionMessageBoardThread_addMessageBoardThread(
+				MessageBoardThread messageBoardThread)
+		throws Exception {
+
+		return messageBoardThreadResource.
+			postMessageBoardSectionMessageBoardThread(
+				testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
+				messageBoardThread);
+	}
+
+	@Test
 	public void testPostSiteMessageBoardThread() throws Exception {
 		MessageBoardThread randomMessageBoardThread =
 			randomMessageBoardThread();
@@ -2357,32 +2420,30 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteMessageBoardThreadByFriendlyUrlPath()
-		throws Exception {
-
+	public void testPutMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
-			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
+			testPutMessageBoardThread_addMessageBoardThread();
+
+		MessageBoardThread randomMessageBoardThread =
+			randomMessageBoardThread();
+
+		MessageBoardThread putMessageBoardThread =
+			messageBoardThreadResource.putMessageBoardThread(
+				postMessageBoardThread.getId(), randomMessageBoardThread);
+
+		assertEquals(randomMessageBoardThread, putMessageBoardThread);
+		assertValid(putMessageBoardThread);
 
 		MessageBoardThread getMessageBoardThread =
-			messageBoardThreadResource.
-				getSiteMessageBoardThreadByFriendlyUrlPath(
-					testGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
-						postMessageBoardThread),
-					postMessageBoardThread.getFriendlyUrlPath());
+			messageBoardThreadResource.getMessageBoardThread(
+				putMessageBoardThread.getId());
 
-		assertEquals(postMessageBoardThread, getMessageBoardThread);
+		assertEquals(randomMessageBoardThread, getMessageBoardThread);
 		assertValid(getMessageBoardThread);
 	}
 
-	protected Long testGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
-			MessageBoardThread messageBoardThread)
-		throws Exception {
-
-		return messageBoardThread.getSiteId();
-	}
-
 	protected MessageBoardThread
-			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
+			testPutMessageBoardThread_addMessageBoardThread()
 		throws Exception {
 
 		return messageBoardThreadResource.postSiteMessageBoardThread(
@@ -2390,163 +2451,102 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath()
-		throws Exception {
-
+	public void testPutMessageBoardThreadPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread messageBoardThread =
-			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
+			testPutMessageBoardThreadPermissionsPage_addMessageBoardThread();
 
-		// No namespace
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
-		Assert.assertTrue(
-			equals(
-				messageBoardThread,
-				MessageBoardThreadSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"messageBoardThreadByFriendlyUrlPath",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
-													messageBoardThread) + "\"");
-
-										put(
-											"friendlyUrlPath",
-											"\"" +
-												messageBoardThread.
-													getFriendlyUrlPath() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/messageBoardThreadByFriendlyUrlPath"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertTrue(
-			equals(
-				messageBoardThread,
-				MessageBoardThreadSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessDelivery_v1_0",
-								new GraphQLField(
-									"messageBoardThreadByFriendlyUrlPath",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteKey",
-												"\"" +
-													testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
-														messageBoardThread) +
-															"\"");
-
-											put(
-												"friendlyUrlPath",
-												"\"" +
-													messageBoardThread.
-														getFriendlyUrlPath() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/messageBoardThreadByFriendlyUrlPath"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_getSiteId(
-				MessageBoardThread messageBoardThread)
-		throws Exception {
-
-		return messageBoardThread.getSiteId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPathNotFound()
-		throws Exception {
-
-		String irrelevantFriendlyUrlPath =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"messageBoardThreadByFriendlyUrlPath",
-						new HashMap<String, Object>() {
+		assertHttpResponseStatusCode(
+			200,
+			messageBoardThreadResource.
+				putMessageBoardThreadPermissionsPageHttpResponse(
+					messageBoardThread.getId(),
+					new Permission[] {
+						new Permission() {
 							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"friendlyUrlPath",
-									irrelevantFriendlyUrlPath);
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
 							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+						}
+					}));
 
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"messageBoardThreadByFriendlyUrlPath",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteKey",
-										"\"" + irrelevantGroup.getGroupId() +
-											"\"");
-									put(
-										"friendlyUrlPath",
-										irrelevantFriendlyUrlPath);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				putMessageBoardThreadPermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected MessageBoardThread
-			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
+			testPutMessageBoardThreadPermissionsPage_addMessageBoardThread()
 		throws Exception {
 
-		return testGraphQLMessageBoardThread_addMessageBoardThread();
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	@Test
-	public void testGetSiteMessageBoardThreadPermissionsPage()
-		throws Exception {
+	public void testPutMessageBoardThreadSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testPutMessageBoardThreadSubscribe_addMessageBoardThread();
 
-		Page<Permission> page =
-			messageBoardThreadResource.getSiteMessageBoardThreadPermissionsPage(
-				testGroup.getGroupId(), RoleConstants.GUEST);
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				putMessageBoardThreadSubscribeHttpResponse(
+					messageBoardThread.getId()));
 
-		Assert.assertNotNull(page);
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				putMessageBoardThreadSubscribeHttpResponse(0L));
 	}
 
 	protected MessageBoardThread
-			testGetSiteMessageBoardThreadPermissionsPage_addMessageBoardThread()
+			testPutMessageBoardThreadSubscribe_addMessageBoardThread()
 		throws Exception {
 
-		return testPostSiteMessageBoardThread_addMessageBoardThread(
-			randomMessageBoardThread());
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				putMessageBoardThreadUnsubscribeHttpResponse(
+					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				putMessageBoardThreadUnsubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardThread
+			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	@Test

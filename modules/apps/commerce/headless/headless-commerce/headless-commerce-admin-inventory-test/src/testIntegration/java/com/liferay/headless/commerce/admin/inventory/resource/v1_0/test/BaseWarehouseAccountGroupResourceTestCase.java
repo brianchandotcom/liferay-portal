@@ -475,30 +475,6 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup()
-		throws Exception {
-
-		WarehouseAccountGroup randomWarehouseAccountGroup =
-			randomWarehouseAccountGroup();
-
-		WarehouseAccountGroup postWarehouseAccountGroup =
-			testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup_addWarehouseAccountGroup(
-				randomWarehouseAccountGroup);
-
-		assertEquals(randomWarehouseAccountGroup, postWarehouseAccountGroup);
-		assertValid(postWarehouseAccountGroup);
-	}
-
-	protected WarehouseAccountGroup
-			testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup_addWarehouseAccountGroup(
-				WarehouseAccountGroup warehouseAccountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehouseIdWarehouseAccountGroupsPage()
 		throws Exception {
 
@@ -976,6 +952,30 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup()
+		throws Exception {
+
+		WarehouseAccountGroup randomWarehouseAccountGroup =
+			randomWarehouseAccountGroup();
+
+		WarehouseAccountGroup postWarehouseAccountGroup =
+			testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup_addWarehouseAccountGroup(
+				randomWarehouseAccountGroup);
+
+		assertEquals(randomWarehouseAccountGroup, postWarehouseAccountGroup);
+		assertValid(postWarehouseAccountGroup);
+	}
+
+	protected WarehouseAccountGroup
+			testPostWarehouseByExternalReferenceCodeWarehouseAccountGroup_addWarehouseAccountGroup(
+				WarehouseAccountGroup warehouseAccountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

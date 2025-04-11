@@ -46,17 +46,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectValidationRuleResource {
 
+	public void deleteObjectValidationRule(Long objectValidationRuleId)
+		throws Exception;
+
+	public Response deleteObjectValidationRuleBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectValidationRule>
 			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 				String externalReferenceCode, String search,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ObjectValidationRule
-			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-				String externalReferenceCode,
-				ObjectValidationRule objectValidationRule)
 		throws Exception;
 
 	public Page<ObjectValidationRule>
@@ -65,10 +66,19 @@ public interface ObjectValidationRuleResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectValidationRulesPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectValidationRule getObjectValidationRule(
+			Long objectValidationRuleId)
+		throws Exception;
+
+	public ObjectValidationRule patchObjectValidationRule(
+			Long objectValidationRuleId,
+			ObjectValidationRule objectValidationRule)
+		throws Exception;
+
+	public ObjectValidationRule
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				String externalReferenceCode,
+				ObjectValidationRule objectValidationRule)
 		throws Exception;
 
 	public ObjectValidationRule postObjectDefinitionObjectValidationRule(
@@ -79,20 +89,10 @@ public interface ObjectValidationRuleResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectValidationRule(Long objectValidationRuleId)
-		throws Exception;
-
-	public Response deleteObjectValidationRuleBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectValidationRule getObjectValidationRule(
-			Long objectValidationRuleId)
-		throws Exception;
-
-	public ObjectValidationRule patchObjectValidationRule(
-			Long objectValidationRuleId,
-			ObjectValidationRule objectValidationRule)
+	public Response postObjectDefinitionObjectValidationRulesPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectValidationRule putObjectValidationRule(

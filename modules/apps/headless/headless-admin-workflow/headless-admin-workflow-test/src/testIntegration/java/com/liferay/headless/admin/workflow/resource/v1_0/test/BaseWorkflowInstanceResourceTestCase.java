@@ -222,248 +222,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowInstancesPage() throws Exception {
-		Page<WorkflowInstance> page =
-			workflowInstanceResource.getWorkflowInstancesPage(
-				RandomTestUtil.randomString(), null, null,
-				Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		WorkflowInstance workflowInstance1 =
-			testGetWorkflowInstancesPage_addWorkflowInstance(
-				randomWorkflowInstance());
-
-		WorkflowInstance workflowInstance2 =
-			testGetWorkflowInstancesPage_addWorkflowInstance(
-				randomWorkflowInstance());
-
-		page = workflowInstanceResource.getWorkflowInstancesPage(
-			null, null, null, Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(
-			workflowInstance1, (List<WorkflowInstance>)page.getItems());
-		assertContains(
-			workflowInstance2, (List<WorkflowInstance>)page.getItems());
-		assertValid(page, testGetWorkflowInstancesPage_getExpectedActions());
-
-		workflowInstanceResource.deleteWorkflowInstance(
-			workflowInstance1.getId());
-
-		workflowInstanceResource.deleteWorkflowInstance(
-			workflowInstance2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetWorkflowInstancesPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	@Test
-	public void testGetWorkflowInstancesPageWithPagination() throws Exception {
-		Page<WorkflowInstance> workflowInstancePage =
-			workflowInstanceResource.getWorkflowInstancesPage(
-				null, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			workflowInstancePage.getTotalCount());
-
-		WorkflowInstance workflowInstance1 =
-			testGetWorkflowInstancesPage_addWorkflowInstance(
-				randomWorkflowInstance());
-
-		WorkflowInstance workflowInstance2 =
-			testGetWorkflowInstancesPage_addWorkflowInstance(
-				randomWorkflowInstance());
-
-		WorkflowInstance workflowInstance3 =
-			testGetWorkflowInstancesPage_addWorkflowInstance(
-				randomWorkflowInstance());
-
-		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<WorkflowInstance> page1 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				workflowInstance1, (List<WorkflowInstance>)page1.getItems());
-
-			Page<WorkflowInstance> page2 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(
-				workflowInstance2, (List<WorkflowInstance>)page2.getItems());
-
-			Page<WorkflowInstance> page3 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
-
-			assertContains(
-				workflowInstance3, (List<WorkflowInstance>)page3.getItems());
-		}
-		else {
-			Page<WorkflowInstance> page1 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null, Pagination.of(1, totalCount + 2));
-
-			List<WorkflowInstance> workflowInstances1 =
-				(List<WorkflowInstance>)page1.getItems();
-
-			Assert.assertEquals(
-				workflowInstances1.toString(), totalCount + 2,
-				workflowInstances1.size());
-
-			Page<WorkflowInstance> page2 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null, Pagination.of(2, totalCount + 2));
-
-			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-			List<WorkflowInstance> workflowInstances2 =
-				(List<WorkflowInstance>)page2.getItems();
-
-			Assert.assertEquals(
-				workflowInstances2.toString(), 1, workflowInstances2.size());
-
-			Page<WorkflowInstance> page3 =
-				workflowInstanceResource.getWorkflowInstancesPage(
-					null, null, null, Pagination.of(1, (int)totalCount + 3));
-
-			assertContains(
-				workflowInstance1, (List<WorkflowInstance>)page3.getItems());
-			assertContains(
-				workflowInstance2, (List<WorkflowInstance>)page3.getItems());
-			assertContains(
-				workflowInstance3, (List<WorkflowInstance>)page3.getItems());
-		}
-	}
-
-	protected WorkflowInstance testGetWorkflowInstancesPage_addWorkflowInstance(
-			WorkflowInstance workflowInstance)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowInstancesPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"workflowInstances",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/workflowInstances");
-
-		long totalCount = workflowInstancesJSONObject.getLong("totalCount");
-
-		WorkflowInstance workflowInstance1 =
-			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance();
-		WorkflowInstance workflowInstance2 =
-			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance();
-
-		workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/workflowInstances");
-
-		Assert.assertEquals(
-			totalCount + 2, workflowInstancesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			workflowInstance1,
-			Arrays.asList(
-				WorkflowInstanceSerDes.toDTOs(
-					workflowInstancesJSONObject.getString("items"))));
-		assertContains(
-			workflowInstance2,
-			Arrays.asList(
-				WorkflowInstanceSerDes.toDTOs(
-					workflowInstancesJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminWorkflow_v1_0
-
-		workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminWorkflow_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
-			"JSONObject/workflowInstances");
-
-		Assert.assertEquals(
-			totalCount + 2, workflowInstancesJSONObject.getLong("totalCount"));
-
-		assertContains(
-			workflowInstance1,
-			Arrays.asList(
-				WorkflowInstanceSerDes.toDTOs(
-					workflowInstancesJSONObject.getString("items"))));
-		assertContains(
-			workflowInstance2,
-			Arrays.asList(
-				WorkflowInstanceSerDes.toDTOs(
-					workflowInstancesJSONObject.getString("items"))));
-	}
-
-	protected WorkflowInstance
-			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance()
-		throws Exception {
-
-		return testGraphQLWorkflowInstance_addWorkflowInstance();
-	}
-
-	@Test
-	public void testPostWorkflowInstanceSubmit() throws Exception {
-		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
-
-		WorkflowInstance postWorkflowInstance =
-			testPostWorkflowInstanceSubmit_addWorkflowInstance(
-				randomWorkflowInstance);
-
-		assertEquals(randomWorkflowInstance, postWorkflowInstance);
-		assertValid(postWorkflowInstance);
-	}
-
-	protected WorkflowInstance
-			testPostWorkflowInstanceSubmit_addWorkflowInstance(
-				WorkflowInstance workflowInstance)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteWorkflowInstance() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WorkflowInstance workflowInstance =
@@ -932,6 +690,227 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowInstancesPage() throws Exception {
+		Page<WorkflowInstance> page =
+			workflowInstanceResource.getWorkflowInstancesPage(
+				RandomTestUtil.randomString(), null, null,
+				Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		WorkflowInstance workflowInstance1 =
+			testGetWorkflowInstancesPage_addWorkflowInstance(
+				randomWorkflowInstance());
+
+		WorkflowInstance workflowInstance2 =
+			testGetWorkflowInstancesPage_addWorkflowInstance(
+				randomWorkflowInstance());
+
+		page = workflowInstanceResource.getWorkflowInstancesPage(
+			null, null, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			workflowInstance1, (List<WorkflowInstance>)page.getItems());
+		assertContains(
+			workflowInstance2, (List<WorkflowInstance>)page.getItems());
+		assertValid(page, testGetWorkflowInstancesPage_getExpectedActions());
+
+		workflowInstanceResource.deleteWorkflowInstance(
+			workflowInstance1.getId());
+
+		workflowInstanceResource.deleteWorkflowInstance(
+			workflowInstance2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetWorkflowInstancesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetWorkflowInstancesPageWithPagination() throws Exception {
+		Page<WorkflowInstance> workflowInstancePage =
+			workflowInstanceResource.getWorkflowInstancesPage(
+				null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			workflowInstancePage.getTotalCount());
+
+		WorkflowInstance workflowInstance1 =
+			testGetWorkflowInstancesPage_addWorkflowInstance(
+				randomWorkflowInstance());
+
+		WorkflowInstance workflowInstance2 =
+			testGetWorkflowInstancesPage_addWorkflowInstance(
+				randomWorkflowInstance());
+
+		WorkflowInstance workflowInstance3 =
+			testGetWorkflowInstancesPage_addWorkflowInstance(
+				randomWorkflowInstance());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<WorkflowInstance> page1 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				workflowInstance1, (List<WorkflowInstance>)page1.getItems());
+
+			Page<WorkflowInstance> page2 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				workflowInstance2, (List<WorkflowInstance>)page2.getItems());
+
+			Page<WorkflowInstance> page3 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				workflowInstance3, (List<WorkflowInstance>)page3.getItems());
+		}
+		else {
+			Page<WorkflowInstance> page1 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null, Pagination.of(1, totalCount + 2));
+
+			List<WorkflowInstance> workflowInstances1 =
+				(List<WorkflowInstance>)page1.getItems();
+
+			Assert.assertEquals(
+				workflowInstances1.toString(), totalCount + 2,
+				workflowInstances1.size());
+
+			Page<WorkflowInstance> page2 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WorkflowInstance> workflowInstances2 =
+				(List<WorkflowInstance>)page2.getItems();
+
+			Assert.assertEquals(
+				workflowInstances2.toString(), 1, workflowInstances2.size());
+
+			Page<WorkflowInstance> page3 =
+				workflowInstanceResource.getWorkflowInstancesPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				workflowInstance1, (List<WorkflowInstance>)page3.getItems());
+			assertContains(
+				workflowInstance2, (List<WorkflowInstance>)page3.getItems());
+			assertContains(
+				workflowInstance3, (List<WorkflowInstance>)page3.getItems());
+		}
+	}
+
+	protected WorkflowInstance testGetWorkflowInstancesPage_addWorkflowInstance(
+			WorkflowInstance workflowInstance)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowInstancesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"workflowInstances",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/workflowInstances");
+
+		long totalCount = workflowInstancesJSONObject.getLong("totalCount");
+
+		WorkflowInstance workflowInstance1 =
+			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance();
+		WorkflowInstance workflowInstance2 =
+			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance();
+
+		workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/workflowInstances");
+
+		Assert.assertEquals(
+			totalCount + 2, workflowInstancesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			workflowInstance1,
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
+		assertContains(
+			workflowInstance2,
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminWorkflow_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
+			"JSONObject/workflowInstances");
+
+		Assert.assertEquals(
+			totalCount + 2, workflowInstancesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			workflowInstance1,
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
+		assertContains(
+			workflowInstance2,
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
+	}
+
+	protected WorkflowInstance
+			testGraphQLGetWorkflowInstancesPage_addWorkflowInstance()
+		throws Exception {
+
+		return testGraphQLWorkflowInstance_addWorkflowInstance();
+	}
+
+	@Test
 	public void testPostWorkflowInstanceChangeTransition() throws Exception {
 		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
 
@@ -945,6 +924,27 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	protected WorkflowInstance
 			testPostWorkflowInstanceChangeTransition_addWorkflowInstance(
+				WorkflowInstance workflowInstance)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostWorkflowInstanceSubmit() throws Exception {
+		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
+
+		WorkflowInstance postWorkflowInstance =
+			testPostWorkflowInstanceSubmit_addWorkflowInstance(
+				randomWorkflowInstance);
+
+		assertEquals(randomWorkflowInstance, postWorkflowInstance);
+		assertValid(postWorkflowInstance);
+	}
+
+	protected WorkflowInstance
+			testPostWorkflowInstanceSubmit_addWorkflowInstance(
 				WorkflowInstance workflowInstance)
 		throws Exception {
 

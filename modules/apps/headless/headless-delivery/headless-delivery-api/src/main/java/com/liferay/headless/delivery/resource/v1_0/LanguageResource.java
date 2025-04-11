@@ -50,12 +50,12 @@ public interface LanguageResource {
 	public Page<Language> getAssetLibraryLanguagesPage(Long assetLibraryId)
 		throws Exception;
 
+	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception;
+
 	public Response postAssetLibraryLanguagesPageExportBatch(
 			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
-
-	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception;
 
 	public Response postSiteLanguagesPageExportBatch(
 			Long siteId, String callbackURL, String contentType,

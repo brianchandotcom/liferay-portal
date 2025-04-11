@@ -454,29 +454,6 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderRuleByExternalReferenceCodeOrderRuleChannel()
-		throws Exception {
-
-		OrderRuleChannel randomOrderRuleChannel = randomOrderRuleChannel();
-
-		OrderRuleChannel postOrderRuleChannel =
-			testPostOrderRuleByExternalReferenceCodeOrderRuleChannel_addOrderRuleChannel(
-				randomOrderRuleChannel);
-
-		assertEquals(randomOrderRuleChannel, postOrderRuleChannel);
-		assertValid(postOrderRuleChannel);
-	}
-
-	protected OrderRuleChannel
-			testPostOrderRuleByExternalReferenceCodeOrderRuleChannel_addOrderRuleChannel(
-				OrderRuleChannel orderRuleChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrderRuleIdOrderRuleChannelsPage() throws Exception {
 		Long id = testGetOrderRuleIdOrderRuleChannelsPage_getId();
 		Long irrelevantId =
@@ -914,6 +891,29 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostOrderRuleByExternalReferenceCodeOrderRuleChannel()
+		throws Exception {
+
+		OrderRuleChannel randomOrderRuleChannel = randomOrderRuleChannel();
+
+		OrderRuleChannel postOrderRuleChannel =
+			testPostOrderRuleByExternalReferenceCodeOrderRuleChannel_addOrderRuleChannel(
+				randomOrderRuleChannel);
+
+		assertEquals(randomOrderRuleChannel, postOrderRuleChannel);
+		assertValid(postOrderRuleChannel);
+	}
+
+	protected OrderRuleChannel
+			testPostOrderRuleByExternalReferenceCodeOrderRuleChannel_addOrderRuleChannel(
+				OrderRuleChannel orderRuleChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

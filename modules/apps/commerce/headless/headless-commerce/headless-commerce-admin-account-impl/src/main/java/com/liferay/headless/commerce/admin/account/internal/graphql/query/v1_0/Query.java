@@ -110,6 +110,37 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(id: ___){accountAddresses, accountMembers, accountOrganizations, active, customFields, dateCreated, dateModified, defaultBillingAccountAddressId, defaultShippingAccountAddressId, emailAddresses, externalReferenceCode, id, logoId, logoURL, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Account account(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.getAccount(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCode(externalReferenceCode: ___){accountAddresses, accountMembers, accountOrganizations, active, customFields, dateCreated, dateModified, defaultBillingAccountAddressId, defaultShippingAccountAddressId, emailAddresses, externalReferenceCode, id, logoId, logoURL, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Account accountByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.getAccountByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accounts(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -135,32 +166,17 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCode(externalReferenceCode: ___){accountAddresses, accountMembers, accountOrganizations, active, customFields, dateCreated, dateModified, defaultBillingAccountAddressId, defaultShippingAccountAddressId, emailAddresses, externalReferenceCode, id, logoId, logoURL, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountAddress(id: ___){city, countryISOCode, defaultBilling, defaultShipping, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, type, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Account accountByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+	public AccountAddress accountAddress(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
+			_accountAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountResource ->
-				accountResource.getAccountByExternalReferenceCode(
-					externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(id: ___){accountAddresses, accountMembers, accountOrganizations, active, customFields, dateCreated, dateModified, defaultBillingAccountAddressId, defaultShippingAccountAddressId, emailAddresses, externalReferenceCode, id, logoId, logoURL, name, root, taxId, type}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Account account(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountResource -> accountResource.getAccount(id));
+			accountAddressResource -> accountAddressResource.getAccountAddress(
+				id));
 	}
 
 	/**
@@ -179,22 +195,6 @@ public class Query {
 			accountAddressResource ->
 				accountAddressResource.getAccountAddressByExternalReferenceCode(
 					externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountAddress(id: ___){city, countryISOCode, defaultBilling, defaultShipping, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, type, zip}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountAddress accountAddress(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountAddressResource -> accountAddressResource.getAccountAddress(
-				id));
 	}
 
 	/**
@@ -235,162 +235,6 @@ public class Query {
 			accountAddressResource -> new AccountAddressPage(
 				accountAddressResource.getAccountIdAccountAddressesPage(
 					id, Pagination.of(page, pageSize))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelBillingAddressId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelBillingAddressId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelBillingAddressId(
-					id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelCurrencyId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelCurrencyId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelCurrencyId(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelDeliveryTermId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelDeliveryTermId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelDeliveryTermId(
-					id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelDiscountId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelDiscountId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelDiscountId(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPaymentMethodId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelPaymentMethodId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelPaymentMethodId(
-					id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPaymentTermId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelPaymentTermId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelPaymentTermId(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPriceListId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelPriceListId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelPriceListId(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelShippingAddressId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelShippingAddressId(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelShippingAddressId(
-					id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelUserId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelEntry accountChannelUserId(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelEntryResource ->
-				accountChannelEntryResource.getAccountChannelUserId(id));
 	}
 
 	/**
@@ -603,6 +447,162 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelBillingAddressId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelBillingAddressId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelBillingAddressId(
+					id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelCurrencyId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelCurrencyId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelCurrencyId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelDeliveryTermId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelDeliveryTermId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelDeliveryTermId(
+					id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelDiscountId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelDiscountId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelDiscountId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPaymentMethodId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelPaymentMethodId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelPaymentMethodId(
+					id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPaymentTermId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelPaymentTermId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelPaymentTermId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelPriceListId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelPriceListId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelPriceListId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelShippingAddressId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelShippingAddressId(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelShippingAddressId(
+					id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelUserId(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, classExternalReferenceCode, classPK, id, overrideEligibility, priority}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelEntry accountChannelUserId(@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelEntryResource ->
+				accountChannelEntryResource.getAccountChannelUserId(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountIdAccountChannelBillingAddresses(id: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -782,24 +782,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelShippingOption(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, id, shippingMethodId, shippingMethodKey, shippingOptionId, shippingOptionKey}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AccountChannelShippingOption accountChannelShippingOption(
-			@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountChannelShippingOptionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountChannelShippingOptionResource ->
-				accountChannelShippingOptionResource.
-					getAccountChannelShippingOption(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountChannelShippingOption(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -820,6 +802,24 @@ public class Query {
 						getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 							externalReferenceCode,
 							Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountChannelShippingOption(id: ___){accountExternalReferenceCode, accountId, actions, channelExternalReferenceCode, channelId, id, shippingMethodId, shippingMethodKey, shippingOptionId, shippingOptionKey}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountChannelShippingOption accountChannelShippingOption(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountChannelShippingOptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountChannelShippingOptionResource ->
+				accountChannelShippingOptionResource.
+					getAccountChannelShippingOption(id));
 	}
 
 	/**
@@ -848,6 +848,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountMember(externalReferenceCode: ___, userId: ___){accountId, accountRoles, email, externalReferenceCode, name, userExternalReferenceCode, userId}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AccountMember accountByExternalReferenceCodeAccountMember(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("userId") Long userId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountMemberResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountMemberResource ->
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMember(
+						externalReferenceCode, userId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountMembers(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -869,21 +889,18 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountMember(externalReferenceCode: ___, userId: ___){accountId, accountRoles, email, externalReferenceCode, name, userExternalReferenceCode, userId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountIdAccountMember(id: ___, userId: ___){accountId, accountRoles, email, externalReferenceCode, name, userExternalReferenceCode, userId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AccountMember accountByExternalReferenceCodeAccountMember(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("userId") Long userId)
+	public AccountMember accountIdAccountMember(
+			@GraphQLName("id") Long id, @GraphQLName("userId") Long userId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_accountMemberResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountMemberResource ->
-				accountMemberResource.
-					getAccountByExternalReferenceCodeAccountMember(
-						externalReferenceCode, userId));
+				accountMemberResource.getAccountIdAccountMember(id, userId));
 	}
 
 	/**
@@ -908,18 +925,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountIdAccountMember(id: ___, userId: ___){accountId, accountRoles, email, externalReferenceCode, name, userExternalReferenceCode, userId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountOrganization(externalReferenceCode: ___, organizationId: ___){accountId, name, organizationExternalReferenceCode, organizationId, treePath}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AccountMember accountIdAccountMember(
-			@GraphQLName("id") Long id, @GraphQLName("userId") Long userId)
+	public AccountOrganization
+			accountByExternalReferenceCodeAccountOrganization(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_accountMemberResourceComponentServiceObjects,
+			_accountOrganizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountMemberResource ->
-				accountMemberResource.getAccountIdAccountMember(id, userId));
+			accountOrganizationResource ->
+				accountOrganizationResource.
+					getAccountByExternalReferenceCodeAccountOrganization(
+						externalReferenceCode, organizationId));
 	}
 
 	/**
@@ -948,23 +970,20 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountOrganization(externalReferenceCode: ___, organizationId: ___){accountId, name, organizationExternalReferenceCode, organizationId, treePath}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountIdAccountOrganization(id: ___, organizationId: ___){accountId, name, organizationExternalReferenceCode, organizationId, treePath}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AccountOrganization
-			accountByExternalReferenceCodeAccountOrganization(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("organizationId") Long organizationId)
+	public AccountOrganization accountIdAccountOrganization(
+			@GraphQLName("id") Long id,
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_accountOrganizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountOrganizationResource ->
-				accountOrganizationResource.
-					getAccountByExternalReferenceCodeAccountOrganization(
-						externalReferenceCode, organizationId));
+				accountOrganizationResource.getAccountIdAccountOrganization(
+					id, organizationId));
 	}
 
 	/**
@@ -990,20 +1009,57 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountIdAccountOrganization(id: ___, organizationId: ___){accountId, name, organizationExternalReferenceCode, organizationId, treePath}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountGroups(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AccountOrganization accountIdAccountOrganization(
-			@GraphQLName("id") Long id,
-			@GraphQLName("organizationId") Long organizationId)
+	public AdminAccountGroupPage accountByExternalReferenceCodeAccountGroups(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_accountOrganizationResourceComponentServiceObjects,
+			_adminAccountGroupResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			accountOrganizationResource ->
-				accountOrganizationResource.getAccountIdAccountOrganization(
-					id, organizationId));
+			adminAccountGroupResource -> new AdminAccountGroupPage(
+				adminAccountGroupResource.
+					getAccountByExternalReferenceCodeAccountGroupsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroup(id: ___){customFields, description, externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AdminAccountGroup accountGroup(@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_adminAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			adminAccountGroupResource ->
+				adminAccountGroupResource.getAccountGroup(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroupByExternalReferenceCode(externalReferenceCode: ___){customFields, description, externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AdminAccountGroup accountGroupByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_adminAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			adminAccountGroupResource ->
+				adminAccountGroupResource.
+					getAccountGroupByExternalReferenceCode(
+						externalReferenceCode));
 	}
 
 	/**
@@ -1031,62 +1087,6 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						adminAccountGroupResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroupByExternalReferenceCode(externalReferenceCode: ___){customFields, description, externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AdminAccountGroup accountGroupByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_adminAccountGroupResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			adminAccountGroupResource ->
-				adminAccountGroupResource.
-					getAccountGroupByExternalReferenceCode(
-						externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroup(id: ___){customFields, description, externalReferenceCode, id, name}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AdminAccountGroup accountGroup(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_adminAccountGroupResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			adminAccountGroupResource ->
-				adminAccountGroupResource.getAccountGroup(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountGroups(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AdminAccountGroupPage accountByExternalReferenceCodeAccountGroups(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_adminAccountGroupResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			adminAccountGroupResource -> new AdminAccountGroupPage(
-				adminAccountGroupResource.
-					getAccountByExternalReferenceCodeAccountGroupsPage(
-						externalReferenceCode, Pagination.of(page, pageSize))));
 	}
 
 	/**

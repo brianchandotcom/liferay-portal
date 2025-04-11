@@ -58,18 +58,18 @@ public interface PriceModifierCategoryResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public PriceModifierCategory
-			postPriceModifierByExternalReferenceCodePriceModifierCategory(
-				String externalReferenceCode,
-				PriceModifierCategory priceModifierCategory)
-		throws Exception;
-
 	public Page<PriceModifierCategory>
 			getPriceModifierIdPriceModifierCategoriesPage(
 				Long id, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public PriceModifierCategory
+			postPriceModifierByExternalReferenceCodePriceModifierCategory(
+				String externalReferenceCode,
+				PriceModifierCategory priceModifierCategory)
 		throws Exception;
 
 	public PriceModifierCategory postPriceModifierIdPriceModifierCategory(

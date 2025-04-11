@@ -46,21 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTRemoteResource {
 
-	public Page<CTRemote> getCTRemotesPage(
-			String search, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postCTRemotesPageExportBatch(
-			String search, com.liferay.portal.kernel.search.Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public CTRemote postCTRemote(CTRemote ctRemote) throws Exception;
-
-	public Response postCTRemoteBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteCTRemote(Long id) throws Exception;
 
 	public Response deleteCTRemoteBatch(String callbackURL, Object object)
@@ -68,7 +53,22 @@ public interface CTRemoteResource {
 
 	public CTRemote getCTRemote(Long id) throws Exception;
 
+	public Page<CTRemote> getCTRemotesPage(
+			String search, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public CTRemote patchCTRemote(Long id, CTRemote ctRemote) throws Exception;
+
+	public CTRemote postCTRemote(CTRemote ctRemote) throws Exception;
+
+	public Response postCTRemoteBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response postCTRemotesPageExportBatch(
+			String search, com.liferay.portal.kernel.search.Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
 
 	public CTRemote putCTRemote(Long id, CTRemote ctRemote) throws Exception;
 

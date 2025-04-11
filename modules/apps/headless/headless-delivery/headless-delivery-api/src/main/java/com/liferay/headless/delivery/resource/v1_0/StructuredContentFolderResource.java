@@ -48,6 +48,32 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentFolderResource {
 
+	public void
+			deleteAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public void deleteSiteStructuredContentFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public void deleteStructuredContentFolder(Long structuredContentFolderId)
+		throws Exception;
+
+	public Response deleteStructuredContentFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public StructuredContentFolder
+			getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryStructuredContentFolderPermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
 	public Page<StructuredContentFolder>
 			getAssetLibraryStructuredContentFoldersPage(
 				Long assetLibraryId, Boolean flatten, String search,
@@ -57,11 +83,45 @@ public interface StructuredContentFolderResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryStructuredContentFoldersPageExportBatch(
-			Long assetLibraryId, String search,
+	public StructuredContentFolder
+			getSiteStructuredContentFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteStructuredContentFolderPermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public StructuredContentFolder getStructuredContentFolder(
+			Long structuredContentFolderId)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getStructuredContentFolderPermissionsPage(
+				Long structuredContentFolderId, String roleNames)
+		throws Exception;
+
+	public Page<StructuredContentFolder>
+			getStructuredContentFolderStructuredContentFoldersPage(
+				Long parentStructuredContentFolderId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public StructuredContentFolder patchStructuredContentFolder(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public StructuredContentFolder postAssetLibraryStructuredContentFolder(
@@ -73,43 +133,8 @@ public interface StructuredContentFolderResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public void
-			deleteAssetLibraryStructuredContentFolderByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public StructuredContentFolder
-			getAssetLibraryStructuredContentFolderByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode)
-		throws Exception;
-
-	public StructuredContentFolder
-			putAssetLibraryStructuredContentFolderByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode,
-				StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getAssetLibraryStructuredContentFolderPermissionsPage(
-				Long assetLibraryId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryStructuredContentFolderPermissionsPage(
-				Long assetLibraryId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteStructuredContentFoldersPageExportBatch(
-			Long siteId, String search,
+	public Response postAssetLibraryStructuredContentFoldersPageExportBatch(
+			Long assetLibraryId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
@@ -123,13 +148,29 @@ public interface StructuredContentFolderResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSiteStructuredContentFolderByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteStructuredContentFoldersPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public StructuredContentFolder
-			getSiteStructuredContentFolderByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
+			postStructuredContentFolderStructuredContentFolder(
+				Long parentStructuredContentFolderId,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public StructuredContentFolder
+			putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryStructuredContentFolderPermissionsPage(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public StructuredContentFolder
@@ -139,56 +180,9 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteStructuredContentFolderPermissionsPage(
-				Long siteId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putSiteStructuredContentFolderPermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getStructuredContentFolderPermissionsPage(
-				Long structuredContentFolderId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putStructuredContentFolderPermissionsPage(
-				Long structuredContentFolderId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<StructuredContentFolder>
-			getStructuredContentFolderStructuredContentFoldersPage(
-				Long parentStructuredContentFolderId, String search,
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public StructuredContentFolder
-			postStructuredContentFolderStructuredContentFolder(
-				Long parentStructuredContentFolderId,
-				StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public void deleteStructuredContentFolder(Long structuredContentFolderId)
-		throws Exception;
-
-	public Response deleteStructuredContentFolderBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public StructuredContentFolder getStructuredContentFolder(
-			Long structuredContentFolderId)
-		throws Exception;
-
-	public StructuredContentFolder patchStructuredContentFolder(
-			Long structuredContentFolderId,
-			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public StructuredContentFolder putStructuredContentFolder(
@@ -198,6 +192,12 @@ public interface StructuredContentFolderResource {
 
 	public Response putStructuredContentFolderBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putStructuredContentFolderPermissionsPage(
+				Long structuredContentFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putStructuredContentFolderSubscribe(

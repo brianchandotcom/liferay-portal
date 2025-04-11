@@ -56,6 +56,14 @@ public interface TermOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<TermOrderType> getTermIdTermOrderTypesPage(
+			Long id, String search, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getTermIdTermOrderTypesPageHttpResponse(
+			Long id, String search, Pagination pagination)
+		throws Exception;
+
 	public TermOrderType postTermByExternalReferenceCodeTermOrderType(
 			String externalReferenceCode, TermOrderType termOrderType)
 		throws Exception;
@@ -63,14 +71,6 @@ public interface TermOrderTypeResource {
 	public HttpInvoker.HttpResponse
 			postTermByExternalReferenceCodeTermOrderTypeHttpResponse(
 				String externalReferenceCode, TermOrderType termOrderType)
-		throws Exception;
-
-	public Page<TermOrderType> getTermIdTermOrderTypesPage(
-			Long id, String search, Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getTermIdTermOrderTypesPageHttpResponse(
-			Long id, String search, Pagination pagination)
 		throws Exception;
 
 	public TermOrderType postTermIdTermOrderType(
@@ -515,116 +515,6 @@ public interface TermOrderTypeResource {
 			return httpInvoker.invoke();
 		}
 
-		public TermOrderType postTermByExternalReferenceCodeTermOrderType(
-				String externalReferenceCode, TermOrderType termOrderType)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postTermByExternalReferenceCodeTermOrderTypeHttpResponse(
-					externalReferenceCode, termOrderType);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return TermOrderTypeSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postTermByExternalReferenceCodeTermOrderTypeHttpResponse(
-					String externalReferenceCode, TermOrderType termOrderType)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(termOrderType.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<TermOrderType> getTermIdTermOrderTypesPage(
 				Long id, String search, Pagination pagination)
 			throws Exception {
@@ -733,6 +623,116 @@ public interface TermOrderTypeResource {
 						"/o/headless-commerce-admin-order/v1.0/terms/{id}/term-order-types");
 
 			httpInvoker.path("id", id);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public TermOrderType postTermByExternalReferenceCodeTermOrderType(
+				String externalReferenceCode, TermOrderType termOrderType)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postTermByExternalReferenceCodeTermOrderTypeHttpResponse(
+					externalReferenceCode, termOrderType);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return TermOrderTypeSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postTermByExternalReferenceCodeTermOrderTypeHttpResponse(
+					String externalReferenceCode, TermOrderType termOrderType)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(termOrderType.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-order/v1.0/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

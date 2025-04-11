@@ -201,45 +201,6 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "order": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ProductConfigurationListChannel"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels"
-	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ProductConfigurationListChannel
-			postProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				ProductConfigurationListChannel productConfigurationListChannel)
-		throws Exception {
-
-		return new ProductConfigurationListChannel();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configuration-list-channels'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -300,6 +261,45 @@ public abstract class BaseProductConfigurationListChannelResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "order": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ProductConfigurationListChannel"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ProductConfigurationListChannel
+			postProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				ProductConfigurationListChannel productConfigurationListChannel)
+		throws Exception {
+
+		return new ProductConfigurationListChannel();
 	}
 
 	/**

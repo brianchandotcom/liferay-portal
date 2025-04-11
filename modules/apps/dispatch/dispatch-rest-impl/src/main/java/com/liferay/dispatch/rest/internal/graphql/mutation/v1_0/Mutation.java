@@ -45,21 +45,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDispatchTriggersPageExportBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dispatchTriggerResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dispatchTriggerResource ->
-				dispatchTriggerResource.postDispatchTriggersPageExportBatch(
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
 	public DispatchTrigger createDispatchTrigger(
 			@GraphQLName("dispatchTrigger") DispatchTrigger dispatchTrigger)
 		throws Exception {
@@ -98,6 +83,21 @@ public class Mutation {
 					dispatchTriggerId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response createDispatchTriggersPageExportBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dispatchTriggerResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dispatchTriggerResource ->
+				dispatchTriggerResource.postDispatchTriggersPageExportBatch(
+					callbackURL, contentType, fieldNames));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

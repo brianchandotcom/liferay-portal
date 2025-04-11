@@ -51,20 +51,20 @@ public interface PinResource {
 	public Response deletePinBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Pin patchPin(Long pinId, Pin pin) throws Exception;
-
 	public Page<Pin> getProductByExternalReferenceCodePinsPage(
 			String externalReferenceCode, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Pin postProductByExternalReferenceCodePin(
-			String externalReferenceCode, Pin pin)
-		throws Exception;
-
 	public Page<Pin> getProductIdPinsPage(
 			Long id, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Pin patchPin(Long pinId, Pin pin) throws Exception;
+
+	public Pin postProductByExternalReferenceCodePin(
+			String externalReferenceCode, Pin pin)
 		throws Exception;
 
 	public Pin postProductIdPin(Long id, Pin pin) throws Exception;

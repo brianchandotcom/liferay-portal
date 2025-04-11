@@ -45,22 +45,62 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createPaymentsPageExportBatch(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
+	public Response deletePayment(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource -> paymentResource.deletePayment(id));
+	}
+
+	@GraphQLField
+	public Response deletePaymentBatch(
 			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
+			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_paymentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			paymentResource -> paymentResource.postPaymentsPageExportBatch(
-				search, _filterBiFunction.apply(paymentResource, filterString),
-				_sortsBiFunction.apply(paymentResource, sortsString),
-				callbackURL, contentType, fieldNames));
+			paymentResource -> paymentResource.deletePaymentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response deletePaymentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource ->
+				paymentResource.deletePaymentByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	@GraphQLField
+	public Payment patchPayment(
+			@GraphQLName("id") Long id, @GraphQLName("payment") Payment payment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource -> paymentResource.patchPayment(id, payment));
+	}
+
+	@GraphQLField
+	public Payment patchPaymentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("payment") Payment payment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource ->
+				paymentResource.patchPaymentByExternalReferenceCode(
+					externalReferenceCode, payment));
 	}
 
 	@GraphQLField
@@ -87,7 +127,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deletePaymentByExternalReferenceCode(
+	public Payment createPaymentByExternalReferenceCodeRefund(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
@@ -95,22 +135,37 @@ public class Mutation {
 			_paymentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			paymentResource ->
-				paymentResource.deletePaymentByExternalReferenceCode(
+				paymentResource.postPaymentByExternalReferenceCodeRefund(
 					externalReferenceCode));
 	}
 
 	@GraphQLField
-	public Payment patchPaymentByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("payment") Payment payment)
+	public Payment createPaymentRefund(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_paymentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			paymentResource ->
-				paymentResource.patchPaymentByExternalReferenceCode(
-					externalReferenceCode, payment));
+			paymentResource -> paymentResource.postPaymentRefund(id));
+	}
+
+	@GraphQLField
+	public Response createPaymentsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_paymentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			paymentResource -> paymentResource.postPaymentsPageExportBatch(
+				search, _filterBiFunction.apply(paymentResource, filterString),
+				_sortsBiFunction.apply(paymentResource, sortsString),
+				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -125,61 +180,6 @@ public class Mutation {
 			paymentResource ->
 				paymentResource.putPaymentByExternalReferenceCode(
 					externalReferenceCode, payment));
-	}
-
-	@GraphQLField
-	public Payment createPaymentByExternalReferenceCodeRefund(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentResource ->
-				paymentResource.postPaymentByExternalReferenceCodeRefund(
-					externalReferenceCode));
-	}
-
-	@GraphQLField
-	public Response deletePayment(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_paymentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentResource -> paymentResource.deletePayment(id));
-	}
-
-	@GraphQLField
-	public Response deletePaymentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentResource -> paymentResource.deletePaymentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
-	public Payment patchPayment(
-			@GraphQLName("id") Long id, @GraphQLName("payment") Payment payment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentResource -> paymentResource.patchPayment(id, payment));
-	}
-
-	@GraphQLField
-	public Payment createPaymentRefund(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_paymentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			paymentResource -> paymentResource.postPaymentRefund(id));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

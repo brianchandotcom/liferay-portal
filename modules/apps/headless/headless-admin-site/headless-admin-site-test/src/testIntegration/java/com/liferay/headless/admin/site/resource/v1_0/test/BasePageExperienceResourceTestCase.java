@@ -213,20 +213,6 @@ public abstract class BasePageExperienceResourceTestCase {
 	}
 
 	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageExperience()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageExperience()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage()
 		throws Exception {
 
@@ -354,6 +340,13 @@ public abstract class BasePageExperienceResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageExperience()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageSpecificationPageExperience()
 		throws Exception {
 
@@ -374,6 +367,13 @@ public abstract class BasePageExperienceResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodePageExperience()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(

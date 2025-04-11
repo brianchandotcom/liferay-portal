@@ -52,23 +52,23 @@ public interface SkuUnitOfMeasureResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<SkuUnitOfMeasure>
+			getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<SkuUnitOfMeasure> getSkuIdSkuUnitOfMeasuresPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public SkuUnitOfMeasure getSkuUnitOfMeasure(Long id) throws Exception;
 
 	public SkuUnitOfMeasure patchSkuUnitOfMeasure(
 			Long id, SkuUnitOfMeasure skuUnitOfMeasure)
 		throws Exception;
 
-	public Page<SkuUnitOfMeasure>
-			getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
 	public SkuUnitOfMeasure postSkuByExternalReferenceCodeSkuUnitOfMeasure(
 			String externalReferenceCode, SkuUnitOfMeasure skuUnitOfMeasure)
-		throws Exception;
-
-	public Page<SkuUnitOfMeasure> getSkuIdSkuUnitOfMeasuresPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public SkuUnitOfMeasure postSkuIdSkuUnitOfMeasure(

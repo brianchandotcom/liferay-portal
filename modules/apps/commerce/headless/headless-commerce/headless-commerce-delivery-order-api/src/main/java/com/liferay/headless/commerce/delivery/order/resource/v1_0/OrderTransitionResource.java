@@ -49,17 +49,17 @@ public interface OrderTransitionResource {
 			Long placedOrderId)
 		throws Exception;
 
-	public Response postPlacedOrderOrderTransitionsPageExportBatch(
-			Long placedOrderId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public OrderTransition postPlacedOrderOrderTransition(
 			Long placedOrderId, OrderTransition orderTransition)
 		throws Exception;
 
 	public Response postPlacedOrderOrderTransitionBatch(
 			Long placedOrderId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postPlacedOrderOrderTransitionsPageExportBatch(
+			Long placedOrderId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

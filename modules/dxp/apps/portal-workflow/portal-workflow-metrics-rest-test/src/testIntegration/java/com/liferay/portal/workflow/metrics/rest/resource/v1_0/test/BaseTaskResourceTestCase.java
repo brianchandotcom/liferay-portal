@@ -188,95 +188,6 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessTasksPage() throws Exception {
-		Long processId = testGetProcessTasksPage_getProcessId();
-		Long irrelevantProcessId =
-			testGetProcessTasksPage_getIrrelevantProcessId();
-
-		Page<Task> page = taskResource.getProcessTasksPage(processId);
-
-		long totalCount = page.getTotalCount();
-
-		if (irrelevantProcessId != null) {
-			Task irrelevantTask = testGetProcessTasksPage_addTask(
-				irrelevantProcessId, randomIrrelevantTask());
-
-			page = taskResource.getProcessTasksPage(irrelevantProcessId);
-
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(irrelevantTask, (List<Task>)page.getItems());
-			assertValid(
-				page,
-				testGetProcessTasksPage_getExpectedActions(
-					irrelevantProcessId));
-		}
-
-		Task task1 = testGetProcessTasksPage_addTask(processId, randomTask());
-
-		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
-
-		page = taskResource.getProcessTasksPage(processId);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(task1, (List<Task>)page.getItems());
-		assertContains(task2, (List<Task>)page.getItems());
-		assertValid(
-			page, testGetProcessTasksPage_getExpectedActions(processId));
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetProcessTasksPage_getExpectedActions(Long processId)
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/batch".
-				replace("{processId}", String.valueOf(processId)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
-		return expectedActions;
-	}
-
-	protected Task testGetProcessTasksPage_addTask(Long processId, Task task)
-		throws Exception {
-
-		return taskResource.postProcessTask(processId, task);
-	}
-
-	protected Long testGetProcessTasksPage_getProcessId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetProcessTasksPage_getIrrelevantProcessId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testPostProcessTask() throws Exception {
-		Task randomTask = randomTask();
-
-		Task postTask = testPostProcessTask_addTask(randomTask);
-
-		assertEquals(randomTask, postTask);
-		assertValid(postTask);
-	}
-
-	protected Task testPostProcessTask_addTask(Task task) throws Exception {
-		return taskResource.postProcessTask(
-			testGetProcessTasksPage_getProcessId(), task);
-	}
-
-	@Test
 	public void testDeleteProcessTask() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Task task = testDeleteProcessTask_addTask();
@@ -437,6 +348,80 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessTasksPage() throws Exception {
+		Long processId = testGetProcessTasksPage_getProcessId();
+		Long irrelevantProcessId =
+			testGetProcessTasksPage_getIrrelevantProcessId();
+
+		Page<Task> page = taskResource.getProcessTasksPage(processId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantProcessId != null) {
+			Task irrelevantTask = testGetProcessTasksPage_addTask(
+				irrelevantProcessId, randomIrrelevantTask());
+
+			page = taskResource.getProcessTasksPage(irrelevantProcessId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantTask, (List<Task>)page.getItems());
+			assertValid(
+				page,
+				testGetProcessTasksPage_getExpectedActions(
+					irrelevantProcessId));
+		}
+
+		Task task1 = testGetProcessTasksPage_addTask(processId, randomTask());
+
+		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
+
+		page = taskResource.getProcessTasksPage(processId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(task1, (List<Task>)page.getItems());
+		assertContains(task2, (List<Task>)page.getItems());
+		assertValid(
+			page, testGetProcessTasksPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProcessTasksPage_getExpectedActions(Long processId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/batch".
+				replace("{processId}", String.valueOf(processId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
+	}
+
+	protected Task testGetProcessTasksPage_addTask(Long processId, Task task)
+		throws Exception {
+
+		return taskResource.postProcessTask(processId, task);
+	}
+
+	protected Long testGetProcessTasksPage_getProcessId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProcessTasksPage_getIrrelevantProcessId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPatchProcessTask() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Task task = testPatchProcessTask_addTask();
@@ -476,6 +461,21 @@ public abstract class BaseTaskResourceTestCase {
 	protected Task testPatchProcessTaskComplete_addTask() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProcessTask() throws Exception {
+		Task randomTask = randomTask();
+
+		Task postTask = testPostProcessTask_addTask(randomTask);
+
+		assertEquals(randomTask, postTask);
+		assertValid(postTask);
+	}
+
+	protected Task testPostProcessTask_addTask(Task task) throws Exception {
+		return taskResource.postProcessTask(
+			testGetProcessTasksPage_getProcessId(), task);
 	}
 
 	@Test

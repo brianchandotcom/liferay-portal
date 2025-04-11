@@ -49,18 +49,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteTestEntityResource {
 
+	public Page<SiteTestEntity> getSiteSiteTestEntitiesPage(Long siteId)
+		throws Exception;
+
+	public SiteTestEntity getSiteSiteTestEntityByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception;
+
 	public SiteTestEntity getSiteTestEntity(Long siteTestEntityId)
-		throws Exception;
-
-	public SiteTestEntity patchSiteTestEntity(
-			Long siteTestEntityId, SiteTestEntity siteTestEntity)
-		throws Exception;
-
-	public SiteTestEntity putSiteTestEntity(
-			Long siteTestEntityId, SiteTestEntity siteTestEntity)
-		throws Exception;
-
-	public Response putSiteTestEntityBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -68,13 +64,8 @@ public interface SiteTestEntityResource {
 				Long siteTestEntityId, String roleNames)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteTestEntityPermissionsPage(
-				Long siteTestEntityId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<SiteTestEntity> getSiteSiteTestEntitiesPage(Long siteId)
+	public SiteTestEntity patchSiteTestEntity(
+			Long siteTestEntityId, SiteTestEntity siteTestEntity)
 		throws Exception;
 
 	public Response postSiteSiteTestEntitiesPageExportBatch(
@@ -90,13 +81,22 @@ public interface SiteTestEntityResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public SiteTestEntity getSiteSiteTestEntityByExternalReferenceCode(
-			String externalReferenceCode, Long siteId)
-		throws Exception;
-
 	public SiteTestEntity putSiteSiteTestEntityByExternalReferenceCode(
 			String externalReferenceCode, Long siteId,
 			SiteTestEntity siteTestEntity)
+		throws Exception;
+
+	public SiteTestEntity putSiteTestEntity(
+			Long siteTestEntityId, SiteTestEntity siteTestEntity)
+		throws Exception;
+
+	public Response putSiteTestEntityBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteTestEntityPermissionsPage(
+				Long siteTestEntityId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -48,8 +48,34 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ContentStructureResource {
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryContentStructurePermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
 	public Page<ContentStructure> getAssetLibraryContentStructuresPage(
 			Long assetLibraryId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ContentStructure getContentStructure(Long contentStructureId)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getContentStructurePermissionsPage(
+				Long contentStructureId, String roleNames)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteContentStructurePermissionsPage(
+				Long siteId, String roleNames)
+		throws Exception;
+
+	public Page<ContentStructure> getSiteContentStructuresPage(
+			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
@@ -63,39 +89,6 @@ public interface ContentStructureResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getAssetLibraryContentStructurePermissionsPage(
-				Long assetLibraryId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryContentStructurePermissionsPage(
-				Long assetLibraryId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public ContentStructure getContentStructure(Long contentStructureId)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getContentStructurePermissionsPage(
-				Long contentStructureId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putContentStructurePermissionsPage(
-				Long contentStructureId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<ContentStructure> getSiteContentStructuresPage(
-			Long siteId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Response postSiteContentStructuresPageExportBatch(
 			Long siteId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -104,8 +97,15 @@ public interface ContentStructureResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteContentStructurePermissionsPage(
-				Long siteId, String roleNames)
+			putAssetLibraryContentStructurePermissionsPage(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putContentStructurePermissionsPage(
+				Long contentStructureId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

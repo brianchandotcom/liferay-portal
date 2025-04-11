@@ -687,42 +687,6 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCategoryDisplayPage() throws Exception {
-		CategoryDisplayPage postCategoryDisplayPage =
-			testPatchCategoryDisplayPage_addCategoryDisplayPage();
-
-		CategoryDisplayPage randomPatchCategoryDisplayPage =
-			randomPatchCategoryDisplayPage();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CategoryDisplayPage patchCategoryDisplayPage =
-			categoryDisplayPageResource.patchCategoryDisplayPage(
-				postCategoryDisplayPage.getId(),
-				randomPatchCategoryDisplayPage);
-
-		CategoryDisplayPage expectedPatchCategoryDisplayPage =
-			postCategoryDisplayPage.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchCategoryDisplayPage, expectedPatchCategoryDisplayPage);
-
-		CategoryDisplayPage getCategoryDisplayPage =
-			categoryDisplayPageResource.getCategoryDisplayPage(
-				patchCategoryDisplayPage.getId());
-
-		assertEquals(expectedPatchCategoryDisplayPage, getCategoryDisplayPage);
-		assertValid(getCategoryDisplayPage);
-	}
-
-	protected CategoryDisplayPage
-			testPatchCategoryDisplayPage_addCategoryDisplayPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetChannelByExternalReferenceCodeCategoryDisplayPagesPage()
 		throws Exception {
 
@@ -1218,30 +1182,6 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelByExternalReferenceCodeCategoryDisplayPage()
-		throws Exception {
-
-		CategoryDisplayPage randomCategoryDisplayPage =
-			randomCategoryDisplayPage();
-
-		CategoryDisplayPage postCategoryDisplayPage =
-			testPostChannelByExternalReferenceCodeCategoryDisplayPage_addCategoryDisplayPage(
-				randomCategoryDisplayPage);
-
-		assertEquals(randomCategoryDisplayPage, postCategoryDisplayPage);
-		assertValid(postCategoryDisplayPage);
-	}
-
-	protected CategoryDisplayPage
-			testPostChannelByExternalReferenceCodeCategoryDisplayPage_addCategoryDisplayPage(
-				CategoryDisplayPage categoryDisplayPage)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetChannelIdCategoryDisplayPagesPage() throws Exception {
 		Long id = testGetChannelIdCategoryDisplayPagesPage_getId();
 		Long irrelevantId =
@@ -1710,6 +1650,66 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchCategoryDisplayPage() throws Exception {
+		CategoryDisplayPage postCategoryDisplayPage =
+			testPatchCategoryDisplayPage_addCategoryDisplayPage();
+
+		CategoryDisplayPage randomPatchCategoryDisplayPage =
+			randomPatchCategoryDisplayPage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CategoryDisplayPage patchCategoryDisplayPage =
+			categoryDisplayPageResource.patchCategoryDisplayPage(
+				postCategoryDisplayPage.getId(),
+				randomPatchCategoryDisplayPage);
+
+		CategoryDisplayPage expectedPatchCategoryDisplayPage =
+			postCategoryDisplayPage.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchCategoryDisplayPage, expectedPatchCategoryDisplayPage);
+
+		CategoryDisplayPage getCategoryDisplayPage =
+			categoryDisplayPageResource.getCategoryDisplayPage(
+				patchCategoryDisplayPage.getId());
+
+		assertEquals(expectedPatchCategoryDisplayPage, getCategoryDisplayPage);
+		assertValid(getCategoryDisplayPage);
+	}
+
+	protected CategoryDisplayPage
+			testPatchCategoryDisplayPage_addCategoryDisplayPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostChannelByExternalReferenceCodeCategoryDisplayPage()
+		throws Exception {
+
+		CategoryDisplayPage randomCategoryDisplayPage =
+			randomCategoryDisplayPage();
+
+		CategoryDisplayPage postCategoryDisplayPage =
+			testPostChannelByExternalReferenceCodeCategoryDisplayPage_addCategoryDisplayPage(
+				randomCategoryDisplayPage);
+
+		assertEquals(randomCategoryDisplayPage, postCategoryDisplayPage);
+		assertValid(postCategoryDisplayPage);
+	}
+
+	protected CategoryDisplayPage
+			testPostChannelByExternalReferenceCodeCategoryDisplayPage_addCategoryDisplayPage(
+				CategoryDisplayPage categoryDisplayPage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

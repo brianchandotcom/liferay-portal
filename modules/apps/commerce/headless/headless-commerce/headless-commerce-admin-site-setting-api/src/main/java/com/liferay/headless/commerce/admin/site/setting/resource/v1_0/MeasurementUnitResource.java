@@ -46,16 +46,47 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MeasurementUnitResource {
 
+	public void deleteMeasurementUnit(Long id) throws Exception;
+
+	public Response deleteMeasurementUnitBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteMeasurementUnitByKey(String key) throws Exception;
+
+	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
+
+	public MeasurementUnit getMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public MeasurementUnit getMeasurementUnitByKey(String key) throws Exception;
+
+	public Page<MeasurementUnit> getMeasurementUnitsByType(
+			String measurementUnitType, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public Page<MeasurementUnit> getMeasurementUnitsPage(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postMeasurementUnitsPageExportBatch(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Response patchMeasurementUnit(
+			Long id, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public Response patchMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public Response patchMeasurementUnitByKey(
+			String key, MeasurementUnit measurementUnit)
 		throws Exception;
 
 	public MeasurementUnit postMeasurementUnit(MeasurementUnit measurementUnit)
@@ -64,45 +95,14 @@ public interface MeasurementUnitResource {
 	public Response postMeasurementUnitBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteMeasurementUnitByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public MeasurementUnit getMeasurementUnitByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchMeasurementUnitByExternalReferenceCode(
-			String externalReferenceCode, MeasurementUnit measurementUnit)
+	public Response postMeasurementUnitsPageExportBatch(
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public MeasurementUnit putMeasurementUnitByExternalReferenceCode(
 			String externalReferenceCode, MeasurementUnit measurementUnit)
-		throws Exception;
-
-	public void deleteMeasurementUnitByKey(String key) throws Exception;
-
-	public MeasurementUnit getMeasurementUnitByKey(String key) throws Exception;
-
-	public Response patchMeasurementUnitByKey(
-			String key, MeasurementUnit measurementUnit)
-		throws Exception;
-
-	public Page<MeasurementUnit> getMeasurementUnitsByType(
-			String measurementUnitType, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public void deleteMeasurementUnit(Long id) throws Exception;
-
-	public Response deleteMeasurementUnitBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
-
-	public Response patchMeasurementUnit(
-			Long id, MeasurementUnit measurementUnit)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

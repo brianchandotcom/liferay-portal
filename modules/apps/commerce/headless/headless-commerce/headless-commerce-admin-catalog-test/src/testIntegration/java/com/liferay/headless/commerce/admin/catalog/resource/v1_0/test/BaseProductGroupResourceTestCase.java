@@ -220,6 +220,654 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			productGroupResource.deleteProductGroupHttpResponse(
+				productGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup.getId()));
+		assertHttpResponseStatusCode(
+			404, productGroupResource.getProductGroupHttpResponse(0L));
+	}
+
+	protected ProductGroup testDeleteProductGroup_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductGroup() throws Exception {
+
+		// No namespace
+
+		ProductGroup productGroup1 =
+			testGraphQLDeleteProductGroup_addProductGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", productGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductGroup"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productGroup",
+					new HashMap<String, Object>() {
+						{
+							put("id", productGroup1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		ProductGroup productGroup2 =
+			testGraphQLDeleteProductGroup_addProductGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductGroup",
+							new HashMap<String, Object>() {
+								{
+									put("id", productGroup2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductGroup"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"productGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", productGroup2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
+	public void testDeleteProductGroupBatch() throws Exception {
+		ProductGroup productGroup1 =
+			testDeleteProductGroupBatch_addProductGroup();
+
+		testDeleteProductGroupBatch_deleteProductGroup(
+			"COMPLETED", null, productGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup1.getId()));
+
+		ProductGroup productGroup2 =
+			testDeleteProductGroupBatch_addProductGroup();
+
+		testDeleteProductGroupBatch_deleteProductGroup(
+			"COMPLETED", productGroup2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup2.getId()));
+
+		productGroup1 = testDeleteProductGroupBatch_addProductGroup();
+		productGroup2 = testDeleteProductGroupBatch_addProductGroup();
+
+		testDeleteProductGroupBatch_deleteProductGroup(
+			"COMPLETED", productGroup2.getExternalReferenceCode(),
+			productGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup2.getId()));
+
+		testDeleteProductGroupBatch_deleteProductGroup(
+			"COMPLETED", productGroup2.getExternalReferenceCode(),
+			productGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup2.getId()));
+	}
+
+	protected ProductGroup testDeleteProductGroupBatch_addProductGroup()
+		throws Exception {
+
+		return testDeleteProductGroup_addProductGroup();
+	}
+
+	protected void testDeleteProductGroupBatch_deleteProductGroup(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productGroupResource.deleteProductGroupBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
+	public void testDeleteProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductGroup productGroup =
+			testDeleteProductGroupByExternalReferenceCode_addProductGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			productGroupResource.
+				deleteProductGroupByExternalReferenceCodeHttpResponse(
+					productGroup.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.
+				getProductGroupByExternalReferenceCodeHttpResponse(
+					productGroup.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.
+				getProductGroupByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected ProductGroup
+			testDeleteProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductGroup() throws Exception {
+		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
+
+		ProductGroup getProductGroup = productGroupResource.getProductGroup(
+			postProductGroup.getId());
+
+		assertEquals(postProductGroup, getProductGroup);
+		assertValid(getProductGroup);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
+
+		ProductGroup getProductGroup = productGroupResource.getProductGroup(
+			postProductGroup.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(postProductGroup.getId());
+
+		assertEquals(
+			getProductGroup, ProductGroupSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected ProductGroup testGetProductGroup_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductGroup() throws Exception {
+		ProductGroup productGroup =
+			testGraphQLGetProductGroup_addProductGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productGroup",
+								new HashMap<String, Object>() {
+									{
+										put("id", productGroup.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productGroup"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productGroup",
+									new HashMap<String, Object>() {
+										{
+											put("id", productGroup.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productGroup"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productGroup",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductGroup testGraphQLGetProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
+	public void testGetProductGroupByExternalReferenceCode() throws Exception {
+		ProductGroup postProductGroup =
+			testGetProductGroupByExternalReferenceCode_addProductGroup();
+
+		ProductGroup getProductGroup =
+			productGroupResource.getProductGroupByExternalReferenceCode(
+				postProductGroup.getExternalReferenceCode());
+
+		assertEquals(postProductGroup, getProductGroup);
+		assertValid(getProductGroup);
+	}
+
+	protected ProductGroup
+			testGetProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		ProductGroup productGroup =
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productGroupByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												productGroup.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productGroupByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productGroupByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													productGroup.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productGroupByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productGroupByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductGroup
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
 	public void testGetProductGroupsPage() throws Exception {
 		Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -645,6 +1293,18 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchProductGroup() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostProductGroup() throws Exception {
 		ProductGroup randomProductGroup = randomProductGroup();
 
@@ -661,181 +1321,6 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductGroup productGroup =
-			testDeleteProductGroupByExternalReferenceCode_addProductGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.
-				deleteProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected ProductGroup
-			testDeleteProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProductGroupByExternalReferenceCode() throws Exception {
-		ProductGroup postProductGroup =
-			testGetProductGroupByExternalReferenceCode_addProductGroup();
-
-		ProductGroup getProductGroup =
-			productGroupResource.getProductGroupByExternalReferenceCode(
-				postProductGroup.getExternalReferenceCode());
-
-		assertEquals(postProductGroup, getProductGroup);
-		assertValid(getProductGroup);
-	}
-
-	protected ProductGroup
-			testGetProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		ProductGroup productGroup =
-			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productGroupByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												productGroup.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/productGroupByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"productGroupByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													productGroup.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/productGroupByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productGroupByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"productGroupByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductGroup
-			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testPatchProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -894,491 +1379,6 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProductGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.deleteProductGroupHttpResponse(
-				productGroup.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup.getId()));
-		assertHttpResponseStatusCode(
-			404, productGroupResource.getProductGroupHttpResponse(0L));
-	}
-
-	protected ProductGroup testDeleteProductGroup_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteProductGroup() throws Exception {
-
-		// No namespace
-
-		ProductGroup productGroup1 =
-			testGraphQLDeleteProductGroup_addProductGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", productGroup1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductGroup"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"productGroup",
-					new HashMap<String, Object>() {
-						{
-							put("id", productGroup1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		ProductGroup productGroup2 =
-			testGraphQLDeleteProductGroup_addProductGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"deleteProductGroup",
-							new HashMap<String, Object>() {
-								{
-									put("id", productGroup2.getId());
-								}
-							}))),
-				"JSONObject/data",
-				"JSONObject/headlessCommerceAdminCatalog_v1_0",
-				"Object/deleteProductGroup"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"headlessCommerceAdminCatalog_v1_0",
-					new GraphQLField(
-						"productGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", productGroup2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testDeleteProductGroupBatch() throws Exception {
-		ProductGroup productGroup1 =
-			testDeleteProductGroupBatch_addProductGroup();
-
-		testDeleteProductGroupBatch_deleteProductGroup(
-			"COMPLETED", null, productGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup1.getId()));
-
-		ProductGroup productGroup2 =
-			testDeleteProductGroupBatch_addProductGroup();
-
-		testDeleteProductGroupBatch_deleteProductGroup(
-			"COMPLETED", productGroup2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup2.getId()));
-
-		productGroup1 = testDeleteProductGroupBatch_addProductGroup();
-		productGroup2 = testDeleteProductGroupBatch_addProductGroup();
-
-		testDeleteProductGroupBatch_deleteProductGroup(
-			"COMPLETED", productGroup2.getExternalReferenceCode(),
-			productGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup2.getId()));
-
-		testDeleteProductGroupBatch_deleteProductGroup(
-			"COMPLETED", productGroup2.getExternalReferenceCode(),
-			productGroup1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup2.getId()));
-	}
-
-	protected ProductGroup testDeleteProductGroupBatch_addProductGroup()
-		throws Exception {
-
-		return testDeleteProductGroup_addProductGroup();
-	}
-
-	protected void testDeleteProductGroupBatch_deleteProductGroup(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			productGroupResource.deleteProductGroupBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetProductGroup() throws Exception {
-		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
-
-		ProductGroup getProductGroup = productGroupResource.getProductGroup(
-			postProductGroup.getId());
-
-		assertEquals(postProductGroup, getProductGroup);
-		assertValid(getProductGroup);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
-
-		ProductGroup getProductGroup = productGroupResource.getProductGroup(
-			postProductGroup.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postProductGroup.getId());
-
-		assertEquals(
-			getProductGroup, ProductGroupSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected ProductGroup testGetProductGroup_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductGroup() throws Exception {
-		ProductGroup productGroup =
-			testGraphQLGetProductGroup_addProductGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productGroup",
-								new HashMap<String, Object>() {
-									{
-										put("id", productGroup.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/productGroup"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"productGroup",
-									new HashMap<String, Object>() {
-										{
-											put("id", productGroup.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/productGroup"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminCatalog_v1_0",
-						new GraphQLField(
-							"productGroup",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductGroup testGraphQLGetProductGroup_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testPatchProductGroup() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

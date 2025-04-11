@@ -46,6 +46,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ListTypeEntryResource {
 
+	public void deleteListTypeEntry(Long listTypeEntryId) throws Exception;
+
+	public Response deleteListTypeEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ListTypeEntry>
 			getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 				String externalReferenceCode, String search,
@@ -55,17 +60,20 @@ public interface ListTypeEntryResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ListTypeEntry
-			postListTypeDefinitionByExternalReferenceCodeListTypeEntry(
-				String externalReferenceCode, ListTypeEntry listTypeEntry)
-		throws Exception;
-
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
 			Long listTypeDefinitionId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
+		throws Exception;
+
+	public ListTypeEntry
+			postListTypeDefinitionByExternalReferenceCodeListTypeEntry(
+				String externalReferenceCode, ListTypeEntry listTypeEntry)
 		throws Exception;
 
 	public Response postListTypeDefinitionListTypeEntriesPageExportBatch(
@@ -81,14 +89,6 @@ public interface ListTypeEntryResource {
 
 	public Response postListTypeDefinitionListTypeEntryBatch(
 			Long listTypeDefinitionId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteListTypeEntry(Long listTypeEntryId) throws Exception;
-
-	public Response deleteListTypeEntryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
 		throws Exception;
 
 	public ListTypeEntry putListTypeEntry(

@@ -44,11 +44,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProcessResource {
 
-	public Process postProcess(Process process) throws Exception;
-
-	public Response postProcessBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteProcess(Long processId) throws Exception;
 
 	public Response deleteProcessBatch(String callbackURL, Object object)
@@ -56,12 +51,17 @@ public interface ProcessResource {
 
 	public Process getProcess(Long processId) throws Exception;
 
+	public String getProcessTitle(Long processId) throws Exception;
+
+	public Process postProcess(Process process) throws Exception;
+
+	public Response postProcessBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void putProcess(Long processId, Process process) throws Exception;
 
 	public Response putProcessBatch(String callbackURL, Object object)
 		throws Exception;
-
-	public String getProcessTitle(Long processId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

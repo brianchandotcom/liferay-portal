@@ -58,16 +58,16 @@ public interface OrderRuleChannelResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderRuleChannel
-			postOrderRuleByExternalReferenceCodeOrderRuleChannel(
-				String externalReferenceCode, OrderRuleChannel orderRuleChannel)
-		throws Exception;
-
 	public Page<OrderRuleChannel> getOrderRuleIdOrderRuleChannelsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OrderRuleChannel
+			postOrderRuleByExternalReferenceCodeOrderRuleChannel(
+				String externalReferenceCode, OrderRuleChannel orderRuleChannel)
 		throws Exception;
 
 	public OrderRuleChannel postOrderRuleIdOrderRuleChannel(

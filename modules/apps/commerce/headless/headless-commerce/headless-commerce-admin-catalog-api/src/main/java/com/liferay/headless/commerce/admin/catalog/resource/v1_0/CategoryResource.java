@@ -50,12 +50,12 @@ public interface CategoryResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Response patchProductByExternalReferenceCodeCategory(
-			String externalReferenceCode, Category[] categories)
-		throws Exception;
-
 	public Page<Category> getProductIdCategoriesPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public Response patchProductByExternalReferenceCodeCategory(
+			String externalReferenceCode, Category[] categories)
 		throws Exception;
 
 	public Response patchProductIdCategory(Long id, Category[] categories)

@@ -47,27 +47,6 @@ public abstract class BaseResourceTypesResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/ResourceTypes'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "To discover the types of resources available on a SCIM service provider."
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ResourceTypes")
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/v2/ResourceTypes")
-	@javax.ws.rs.Produces("application/scim+json")
-	@Override
-	public Object getV2ResourceTypes() throws Exception {
-		return null;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/ResourceTypes/{id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -93,6 +72,27 @@ public abstract class BaseResourceTypesResourceImpl
 			String id)
 		throws Exception {
 
+		return null;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/ResourceTypes'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "To discover the types of resources available on a SCIM service provider."
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ResourceTypes")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/v2/ResourceTypes")
+	@javax.ws.rs.Produces("application/scim+json")
+	@Override
+	public Object getV2ResourceTypes() throws Exception {
 		return null;
 	}
 

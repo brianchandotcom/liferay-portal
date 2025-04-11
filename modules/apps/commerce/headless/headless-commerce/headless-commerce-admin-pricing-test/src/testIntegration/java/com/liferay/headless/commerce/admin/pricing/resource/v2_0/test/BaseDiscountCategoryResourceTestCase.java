@@ -454,29 +454,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountCategory()
-		throws Exception {
-
-		DiscountCategory randomDiscountCategory = randomDiscountCategory();
-
-		DiscountCategory postDiscountCategory =
-			testPostDiscountByExternalReferenceCodeDiscountCategory_addDiscountCategory(
-				randomDiscountCategory);
-
-		assertEquals(randomDiscountCategory, postDiscountCategory);
-		assertValid(postDiscountCategory);
-	}
-
-	protected DiscountCategory
-			testPostDiscountByExternalReferenceCodeDiscountCategory_addDiscountCategory(
-				DiscountCategory discountCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountCategoriesPage() throws Exception {
 		Long id = testGetDiscountIdDiscountCategoriesPage_getId();
 		Long irrelevantId =
@@ -914,6 +891,29 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountCategory()
+		throws Exception {
+
+		DiscountCategory randomDiscountCategory = randomDiscountCategory();
+
+		DiscountCategory postDiscountCategory =
+			testPostDiscountByExternalReferenceCodeDiscountCategory_addDiscountCategory(
+				randomDiscountCategory);
+
+		assertEquals(randomDiscountCategory, postDiscountCategory);
+		assertValid(postDiscountCategory);
+	}
+
+	protected DiscountCategory
+			testPostDiscountByExternalReferenceCodeDiscountCategory_addDiscountCategory(
+				DiscountCategory discountCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

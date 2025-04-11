@@ -47,11 +47,11 @@ public interface KeywordResource {
 	public void patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
-	public void putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
-		throws Exception;
-
 	public Page<Keyword> postKeywordsCommonPage(
 			DocumentBulkSelection documentBulkSelection)
+		throws Exception;
+
+	public void putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

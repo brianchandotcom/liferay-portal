@@ -230,456 +230,6 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlacedOrderItemByExternalReferenceCode()
-		throws Exception {
-
-		PlacedOrderItem postPlacedOrderItem =
-			testGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem();
-
-		PlacedOrderItem getPlacedOrderItem =
-			placedOrderItemResource.getPlacedOrderItemByExternalReferenceCode(
-				postPlacedOrderItem.getExternalReferenceCode());
-
-		assertEquals(postPlacedOrderItem, getPlacedOrderItem);
-		assertValid(getPlacedOrderItem);
-	}
-
-	protected PlacedOrderItem
-			testGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderItemByExternalReferenceCode()
-		throws Exception {
-
-		PlacedOrderItem placedOrderItem =
-			testGraphQLGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				placedOrderItem,
-				PlacedOrderItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"placedOrderItemByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												placedOrderItem.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/placedOrderItemByExternalReferenceCode"))));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				placedOrderItem,
-				PlacedOrderItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceDeliveryOrder_v1_0",
-								new GraphQLField(
-									"placedOrderItemByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													placedOrderItem.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderItemByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderItemByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"placedOrderItemByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceDeliveryOrder_v1_0",
-						new GraphQLField(
-							"placedOrderItemByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PlacedOrderItem
-			testGraphQLGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem()
-		throws Exception {
-
-		return testGraphQLPlacedOrderItem_addPlacedOrderItem();
-	}
-
-	@Test
-	public void testGetPlacedOrderItem() throws Exception {
-		PlacedOrderItem postPlacedOrderItem =
-			testGetPlacedOrderItem_addPlacedOrderItem();
-
-		PlacedOrderItem getPlacedOrderItem =
-			placedOrderItemResource.getPlacedOrderItem(
-				postPlacedOrderItem.getId());
-
-		assertEquals(postPlacedOrderItem, getPlacedOrderItem);
-		assertValid(getPlacedOrderItem);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		PlacedOrderItem postPlacedOrderItem =
-			testGetPlacedOrderItem_addPlacedOrderItem();
-
-		PlacedOrderItem getPlacedOrderItem =
-			placedOrderItemResource.getPlacedOrderItem(
-				postPlacedOrderItem.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany,
-				"com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(
-			postPlacedOrderItem.getId());
-
-		assertEquals(
-			getPlacedOrderItem, PlacedOrderItemSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
-	}
-
-	protected PlacedOrderItem testGetPlacedOrderItem_addPlacedOrderItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderItem() throws Exception {
-		PlacedOrderItem placedOrderItem =
-			testGraphQLGetPlacedOrderItem_addPlacedOrderItem();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				placedOrderItem,
-				PlacedOrderItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"placedOrderItem",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"placedOrderItemId",
-											placedOrderItem.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/placedOrderItem"))));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				placedOrderItem,
-				PlacedOrderItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceDeliveryOrder_v1_0",
-								new GraphQLField(
-									"placedOrderItem",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"placedOrderItemId",
-												placedOrderItem.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
-						"Object/placedOrderItem"))));
-	}
-
-	@Test
-	public void testGraphQLGetPlacedOrderItemNotFound() throws Exception {
-		Long irrelevantPlacedOrderItemId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"placedOrderItem",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"placedOrderItemId",
-									irrelevantPlacedOrderItemId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceDeliveryOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceDeliveryOrder_v1_0",
-						new GraphQLField(
-							"placedOrderItem",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"placedOrderItemId",
-										irrelevantPlacedOrderItemId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PlacedOrderItem testGraphQLGetPlacedOrderItem_addPlacedOrderItem()
-		throws Exception {
-
-		return testGraphQLPlacedOrderItem_addPlacedOrderItem();
-	}
-
-	@Test
 	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage()
 		throws Exception {
 
@@ -1049,6 +599,456 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetPlacedOrderItem() throws Exception {
+		PlacedOrderItem postPlacedOrderItem =
+			testGetPlacedOrderItem_addPlacedOrderItem();
+
+		PlacedOrderItem getPlacedOrderItem =
+			placedOrderItemResource.getPlacedOrderItem(
+				postPlacedOrderItem.getId());
+
+		assertEquals(postPlacedOrderItem, getPlacedOrderItem);
+		assertValid(getPlacedOrderItem);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		PlacedOrderItem postPlacedOrderItem =
+			testGetPlacedOrderItem_addPlacedOrderItem();
+
+		PlacedOrderItem getPlacedOrderItem =
+			placedOrderItemResource.getPlacedOrderItem(
+				postPlacedOrderItem.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postPlacedOrderItem.getId());
+
+		assertEquals(
+			getPlacedOrderItem, PlacedOrderItemSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected PlacedOrderItem testGetPlacedOrderItem_addPlacedOrderItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderItem() throws Exception {
+		PlacedOrderItem placedOrderItem =
+			testGraphQLGetPlacedOrderItem_addPlacedOrderItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				placedOrderItem,
+				PlacedOrderItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderItem",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"placedOrderItemId",
+											placedOrderItem.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/placedOrderItem"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				placedOrderItem,
+				PlacedOrderItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderItem",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"placedOrderItemId",
+												placedOrderItem.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderItem"))));
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderItemNotFound() throws Exception {
+		Long irrelevantPlacedOrderItemId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderItem",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"placedOrderItemId",
+									irrelevantPlacedOrderItemId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderItem",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"placedOrderItemId",
+										irrelevantPlacedOrderItemId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PlacedOrderItem testGraphQLGetPlacedOrderItem_addPlacedOrderItem()
+		throws Exception {
+
+		return testGraphQLPlacedOrderItem_addPlacedOrderItem();
+	}
+
+	@Test
+	public void testGetPlacedOrderItemByExternalReferenceCode()
+		throws Exception {
+
+		PlacedOrderItem postPlacedOrderItem =
+			testGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem();
+
+		PlacedOrderItem getPlacedOrderItem =
+			placedOrderItemResource.getPlacedOrderItemByExternalReferenceCode(
+				postPlacedOrderItem.getExternalReferenceCode());
+
+		assertEquals(postPlacedOrderItem, getPlacedOrderItem);
+		assertValid(getPlacedOrderItem);
+	}
+
+	protected PlacedOrderItem
+			testGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderItemByExternalReferenceCode()
+		throws Exception {
+
+		PlacedOrderItem placedOrderItem =
+			testGraphQLGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				placedOrderItem,
+				PlacedOrderItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"placedOrderItemByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												placedOrderItem.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/placedOrderItemByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				placedOrderItem,
+				PlacedOrderItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderItemByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													placedOrderItem.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderItemByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetPlacedOrderItemByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"placedOrderItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderItemByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PlacedOrderItem
+			testGraphQLGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem()
+		throws Exception {
+
+		return testGraphQLPlacedOrderItem_addPlacedOrderItem();
 	}
 
 	@Test

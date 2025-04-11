@@ -80,25 +80,18 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollections(page: ___, pageSize: ___, search: ___, sorts: ___, status: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollection(ctCollectionId: ___){actions, dateCreated, dateModified, dateScheduled, description, externalReferenceCode, id, name, ownerName, status, statusMessage}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public CTCollectionPage cTCollections(
-			@GraphQLName("search") String search,
-			@GraphQLName("status") Integer[] status,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+	public CTCollection cTCollection(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctCollectionResource -> new CTCollectionPage(
-				ctCollectionResource.getCTCollectionsPage(
-					search, status, Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						ctCollectionResource, sortsString))));
+			ctCollectionResource -> ctCollectionResource.getCTCollection(
+				ctCollectionId));
 	}
 
 	/**
@@ -158,18 +151,68 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollection(ctCollectionId: ___){actions, dateCreated, dateModified, dateScheduled, description, externalReferenceCode, id, name, ownerName, status, statusMessage}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollections(page: ___, pageSize: ___, search: ___, sorts: ___, status: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public CTCollection cTCollection(
-			@GraphQLName("ctCollectionId") Long ctCollectionId)
+	public CTCollectionPage cTCollections(
+			@GraphQLName("search") String search,
+			@GraphQLName("status") Integer[] status,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctCollectionResource -> ctCollectionResource.getCTCollection(
-				ctCollectionId));
+			ctCollectionResource -> new CTCollectionPage(
+				ctCollectionResource.getCTCollectionsPage(
+					search, status, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						ctCollectionResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntriesHistory(classNameId: ___, classPK: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTEntryPage cTEntriesHistory(
+			@GraphQLName("classNameId") Long classNameId,
+			@GraphQLName("classPK") Long classPK,
+			@GraphQLName("search") String search,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctEntryResource -> new CTEntryPage(
+				ctEntryResource.getCTEntriesHistoryPage(
+					classNameId, classPK, search, Long.valueOf(siteKey),
+					_filterBiFunction.apply(ctEntryResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(ctEntryResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(ctEntryId: ___){actions, changeType, ctCollectionId, ctCollectionName, ctCollectionStatus, ctCollectionStatusDate, ctCollectionStatusUserName, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, statusMessage, title, typeName}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTEntry cTEntry(@GraphQLName("ctEntryId") Long ctEntryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctEntryResource -> ctEntryResource.getCTEntry(ctEntryId));
 	}
 
 	/**
@@ -224,44 +267,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntriesHistory(classNameId: ___, classPK: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcess(ctProcessId: ___){actions, ctCollectionId, datePublished, description, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public CTEntryPage cTEntriesHistory(
-			@GraphQLName("classNameId") Long classNameId,
-			@GraphQLName("classPK") Long classPK,
-			@GraphQLName("search") String search,
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+	public CTProcess cTProcess(@GraphQLName("ctProcessId") Long ctProcessId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_ctEntryResourceComponentServiceObjects,
+			_ctProcessResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctEntryResource -> new CTEntryPage(
-				ctEntryResource.getCTEntriesHistoryPage(
-					classNameId, classPK, search, Long.valueOf(siteKey),
-					_filterBiFunction.apply(ctEntryResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(ctEntryResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(ctEntryId: ___){actions, changeType, ctCollectionId, ctCollectionName, ctCollectionStatus, ctCollectionStatusDate, ctCollectionStatusUserName, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, statusMessage, title, typeName}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public CTEntry cTEntry(@GraphQLName("ctEntryId") Long ctEntryId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctEntryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctEntryResource -> ctEntryResource.getCTEntry(ctEntryId));
+			ctProcessResource -> ctProcessResource.getCTProcess(ctProcessId));
 	}
 
 	/**
@@ -293,16 +308,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcess(ctProcessId: ___){actions, ctCollectionId, datePublished, description, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemote(id: ___){actions, clientId, clientSecret, dateCreated, dateModified, description, id, name, ownerName, url}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public CTProcess cTProcess(@GraphQLName("ctProcessId") Long ctProcessId)
-		throws Exception {
-
+	public CTRemote cTRemote(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
-			_ctProcessResourceComponentServiceObjects,
+			_ctRemoteResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			ctProcessResource -> ctProcessResource.getCTProcess(ctProcessId));
+			ctRemoteResource -> ctRemoteResource.getCTRemote(id));
 	}
 
 	/**
@@ -325,19 +338,6 @@ public class Query {
 				ctRemoteResource.getCTRemotesPage(
 					search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(ctRemoteResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemote(id: ___){actions, clientId, clientSecret, dateCreated, dateModified, description, id, name, ownerName, url}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public CTRemote cTRemote(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_ctRemoteResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctRemoteResource -> ctRemoteResource.getCTRemote(id));
 	}
 
 	@GraphQLTypeExtension(CTCollection.class)

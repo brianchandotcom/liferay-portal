@@ -47,12 +47,12 @@ public interface ProductTaxConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public ProductTaxConfiguration getProductIdTaxConfiguration(Long id)
+		throws Exception;
+
 	public Response patchProductByExternalReferenceCodeTaxConfiguration(
 			String externalReferenceCode,
 			ProductTaxConfiguration productTaxConfiguration)
-		throws Exception;
-
-	public ProductTaxConfiguration getProductIdTaxConfiguration(Long id)
 		throws Exception;
 
 	public Response patchProductIdTaxConfiguration(

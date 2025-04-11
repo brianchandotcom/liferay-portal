@@ -44,24 +44,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WidgetPageWidgetInstanceResource {
 
-	public Page<WidgetPageWidgetInstance>
-			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
-		throws Exception;
-
-	public WidgetPageWidgetInstance
-			postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
-				WidgetPageWidgetInstance widgetPageWidgetInstance)
-		throws Exception;
-
 	public void
 			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
+		throws Exception;
+
+	public Page<WidgetPageWidgetInstance>
+			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode)
 		throws Exception;
 
 	public WidgetPageWidgetInstance
@@ -76,6 +69,13 @@ public interface WidgetPageWidgetInstanceResource {
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
+				WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception;
+
+	public WidgetPageWidgetInstance
+			postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
 

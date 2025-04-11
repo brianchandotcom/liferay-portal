@@ -46,36 +46,44 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CatalogResource {
 
-	public Response deleteCatalogByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Catalog getCatalogByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchCatalogByExternalReferenceCode(
-			String externalReferenceCode, Catalog catalog)
-		throws Exception;
-
-	public Catalog putCatalogByExternalReferenceCode(
-			String externalReferenceCode, Catalog catalog)
-		throws Exception;
-
 	public Response deleteCatalog(Long id) throws Exception;
 
 	public Response deleteCatalogBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Response deleteCatalogByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Catalog getCatalog(Long id) throws Exception;
 
-	public Response patchCatalog(Long id, Catalog catalog) throws Exception;
+	public Catalog getCatalogByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
 
 	public Page<Catalog> getCatalogsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Catalog getProductByExternalReferenceCodeCatalog(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Catalog getProductIdCatalog(Long id, Pagination pagination)
+		throws Exception;
+
+	public Response patchCatalog(Long id, Catalog catalog) throws Exception;
+
+	public Response patchCatalogByExternalReferenceCode(
+			String externalReferenceCode, Catalog catalog)
+		throws Exception;
+
+	public Catalog postCatalog(Catalog catalog) throws Exception;
+
+	public Response postCatalogBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postCatalogsPageExportBatch(
@@ -85,16 +93,8 @@ public interface CatalogResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Catalog postCatalog(Catalog catalog) throws Exception;
-
-	public Response postCatalogBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Catalog getProductByExternalReferenceCodeCatalog(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Catalog getProductIdCatalog(Long id, Pagination pagination)
+	public Catalog putCatalogByExternalReferenceCode(
+			String externalReferenceCode, Catalog catalog)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

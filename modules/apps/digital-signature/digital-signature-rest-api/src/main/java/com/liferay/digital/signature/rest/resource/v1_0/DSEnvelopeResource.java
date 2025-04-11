@@ -46,15 +46,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DSEnvelopeResource {
 
+	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
+		throws Exception;
+
 	public Page<DSEnvelope> getSiteDSEnvelopesPage(
 			Long siteId, String fromDate, String keywords, String order,
 			String status, Pagination pagination)
-		throws Exception;
-
-	public Response postSiteDSEnvelopesPageExportBatch(
-			Long siteId, String fromDate, String keywords, String order,
-			String status, String callbackURL, String contentType,
-			String fieldNames)
 		throws Exception;
 
 	public DSEnvelope postSiteDSEnvelope(Long siteId, DSEnvelope dsEnvelope)
@@ -64,7 +61,10 @@ public interface DSEnvelopeResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
+	public Response postSiteDSEnvelopesPageExportBatch(
+			Long siteId, String fromDate, String keywords, String order,
+			String status, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

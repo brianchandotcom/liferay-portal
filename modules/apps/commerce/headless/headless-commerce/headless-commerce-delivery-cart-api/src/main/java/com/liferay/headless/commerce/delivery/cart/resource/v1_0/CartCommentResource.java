@@ -46,31 +46,42 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartCommentResource {
 
+	public void deleteCartComment(Long cartCommentId) throws Exception;
+
+	public Response deleteCartCommentBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteCartCommentByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<CartComment> getCartByExternalReferenceCodeCommentsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public CartComment getCartComment(Long cartCommentId) throws Exception;
+
 	public CartComment getCartCommentByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Page<CartComment> getCartCommentsPage(
+			Long cartId, Pagination pagination)
+		throws Exception;
+
+	public CartComment patchCartComment(
+			Long cartCommentId, CartComment cartComment)
 		throws Exception;
 
 	public CartComment patchCartCommentByExternalReferenceCode(
 			String externalReferenceCode, CartComment cartComment)
 		throws Exception;
 
-	public CartComment putCartCommentByExternalReferenceCode(
+	public CartComment postCartByExternalReferenceCodeComment(
 			String externalReferenceCode, CartComment cartComment)
 		throws Exception;
 
-	public void deleteCartComment(Long cartCommentId) throws Exception;
-
-	public Response deleteCartCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public CartComment getCartComment(Long cartCommentId) throws Exception;
-
-	public CartComment patchCartComment(
-			Long cartCommentId, CartComment cartComment)
+	public CartComment postCartComment(Long cartId, CartComment cartComment)
 		throws Exception;
 
 	public CartComment putCartComment(
@@ -80,19 +91,8 @@ public interface CartCommentResource {
 	public Response putCartCommentBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CartComment> getCartByExternalReferenceCodeCommentsPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public CartComment postCartByExternalReferenceCodeComment(
+	public CartComment putCartCommentByExternalReferenceCode(
 			String externalReferenceCode, CartComment cartComment)
-		throws Exception;
-
-	public Page<CartComment> getCartCommentsPage(
-			Long cartId, Pagination pagination)
-		throws Exception;
-
-	public CartComment postCartComment(Long cartId, CartComment cartComment)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -107,6 +107,47 @@ public abstract class BaseFormResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/sites/{siteId}/forms'  -u 'test@liferay.com:test'
+	 */
+	@Deprecated
+	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Form")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/sites/{siteId}/forms")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Form> getSiteFormsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-form/v1.0/forms/{formId}/evaluate-context' -d $'{"formFieldValues": ___, "formPageContexts": ___, "readOnly": ___, "showRequiredFieldsWarning": ___, "showSubmitButton": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
@@ -170,47 +211,6 @@ public abstract class BaseFormResourceImpl
 		throws Exception {
 
 		return new FormDocument();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/sites/{siteId}/forms'  -u 'test@liferay.com:test'
-	 */
-	@Deprecated
-	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Form")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/sites/{siteId}/forms")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Form> getSiteFormsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
-			Long siteId,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	/**

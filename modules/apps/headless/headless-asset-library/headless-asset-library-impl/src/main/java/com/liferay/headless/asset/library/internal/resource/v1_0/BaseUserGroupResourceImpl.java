@@ -93,6 +93,47 @@ public abstract class BaseUserGroupResourceImpl implements UserGroupResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Removes a user group from the asset library."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "assetLibraryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "userGroupId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteAssetLibraryUserGroup(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("assetLibraryId")
+			Long assetLibraryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("userGroupId")
+			Long userGroupId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -121,50 +162,6 @@ public abstract class BaseUserGroupResourceImpl implements UserGroupResource {
 	@Override
 	public UserGroup
 			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-				String assetLibraryExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("userGroupExternalReferenceCode")
-				String userGroupExternalReferenceCode)
-		throws Exception {
-
-		return new UserGroup();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Associates the user group with the given external reference code to the asset library."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryExternalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userGroupExternalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
-	)
-	@javax.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public UserGroup
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
@@ -249,6 +246,49 @@ public abstract class BaseUserGroupResourceImpl implements UserGroupResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Gets a user group from the asset library."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "assetLibraryId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "userGroupId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserGroup getAssetLibraryUserGroup(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("assetLibraryId")
+			Long assetLibraryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("userGroupId")
+			Long userGroupId)
+		throws Exception {
+
+		return new UserGroup();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -315,82 +355,42 @@ public abstract class BaseUserGroupResourceImpl implements UserGroupResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Removes a user group from the asset library."
+		description = "Associates the user group with the given external reference code to the asset library."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userGroupId"
+				name = "userGroupExternalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
 	)
-	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}"
+		"/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
 	@Override
-	public void deleteAssetLibraryUserGroup(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("userGroupId")
-			Long userGroupId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Gets a user group from the asset library."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userGroupId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public UserGroup getAssetLibraryUserGroup(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("userGroupId")
-			Long userGroupId)
+	public UserGroup
+			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("userGroupExternalReferenceCode")
+				String userGroupExternalReferenceCode)
 		throws Exception {
 
 		return new UserGroup();

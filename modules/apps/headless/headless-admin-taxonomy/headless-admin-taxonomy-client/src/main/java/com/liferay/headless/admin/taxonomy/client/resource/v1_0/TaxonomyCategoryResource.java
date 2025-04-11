@@ -37,12 +37,51 @@ public interface TaxonomyCategoryResource {
 		return new Builder();
 	}
 
+	public void deleteTaxonomyCategory(String taxonomyCategoryId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteTaxonomyCategoryHttpResponse(
+			String taxonomyCategoryId)
+		throws Exception;
+
+	public void deleteTaxonomyCategoryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteTaxonomyCategoryBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+			Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+				Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
 	public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getTaxonomyCategoriesRankedPageHttpResponse(
 			Long siteId, Pagination pagination)
+		throws Exception;
+
+	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getTaxonomyCategoryHttpResponse(
+			String taxonomyCategoryId)
+		throws Exception;
+
+	public Page<Permission> getTaxonomyCategoryPermissionsPage(
+			String taxonomyCategoryId, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getTaxonomyCategoryPermissionsPageHttpResponse(
+				String taxonomyCategoryId, String roleNames)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
@@ -58,78 +97,6 @@ public interface TaxonomyCategoryResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postTaxonomyCategoryTaxonomyCategoryHttpResponse(
-				String parentTaxonomyCategoryId,
-				TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public void deleteTaxonomyCategory(String taxonomyCategoryId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteTaxonomyCategoryHttpResponse(
-			String taxonomyCategoryId)
-		throws Exception;
-
-	public void deleteTaxonomyCategoryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteTaxonomyCategoryBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getTaxonomyCategoryHttpResponse(
-			String taxonomyCategoryId)
-		throws Exception;
-
-	public TaxonomyCategory patchTaxonomyCategory(
-			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
-			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public TaxonomyCategory putTaxonomyCategory(
-			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
-			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public void putTaxonomyCategoryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<Permission> getTaxonomyCategoryPermissionsPage(
-			String taxonomyCategoryId, String roleNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getTaxonomyCategoryPermissionsPageHttpResponse(
-				String taxonomyCategoryId, String roleNames)
-		throws Exception;
-
-	public Page<Permission> putTaxonomyCategoryPermissionsPage(
-			String taxonomyCategoryId, Permission[] permissions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putTaxonomyCategoryPermissionsPageHttpResponse(
-				String taxonomyCategoryId, Permission[] permissions)
-		throws Exception;
-
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
 			Long taxonomyVocabularyId, Boolean flatten, String search,
 			List<String> aggregations, String filterString,
@@ -141,6 +108,34 @@ public interface TaxonomyCategoryResource {
 				Long taxonomyVocabularyId, Boolean flatten, String search,
 				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
+		throws Exception;
+
+	public TaxonomyCategory
+			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+				Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+				Long taxonomyVocabularyId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyCategory patchTaxonomyCategory(
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+				String parentTaxonomyCategoryId,
+				TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public void postTaxonomyVocabularyTaxonomyCategoriesPageExportBatch(
@@ -174,23 +169,28 @@ public interface TaxonomyCategoryResource {
 				Long taxonomyVocabularyId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-			Long taxonomyVocabularyId, String externalReferenceCode)
+	public TaxonomyCategory putTaxonomyCategory(
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public void putTaxonomyCategoryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Page<Permission> putTaxonomyCategoryPermissionsPage(
+			String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-				Long taxonomyVocabularyId, String externalReferenceCode)
-		throws Exception;
-
-	public TaxonomyCategory
-			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-				Long taxonomyVocabularyId, String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-				Long taxonomyVocabularyId, String externalReferenceCode)
+			putTaxonomyCategoryPermissionsPageHttpResponse(
+				String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
 	public TaxonomyCategory
@@ -313,368 +313,6 @@ public interface TaxonomyCategoryResource {
 
 	public static class TaxonomyCategoryResourceImpl
 		implements TaxonomyCategoryResource {
-
-		public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
-				Long siteId, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getTaxonomyCategoriesRankedPageHttpResponse(siteId, pagination);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, TaxonomyCategorySerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getTaxonomyCategoriesRankedPageHttpResponse(
-					Long siteId, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (siteId != null) {
-				httpInvoker.parameter("siteId", String.valueOf(siteId));
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-				String parentTaxonomyCategoryId, String search,
-				List<String> aggregations, String filterString,
-				Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
-					parentTaxonomyCategoryId, search, aggregations,
-					filterString, pagination, sortString);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, TaxonomyCategorySerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
-					String parentTaxonomyCategoryId, String search,
-					List<String> aggregations, String filterString,
-					Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
-
-			httpInvoker.path(
-				"parentTaxonomyCategoryId", parentTaxonomyCategoryId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-				String parentTaxonomyCategoryId,
-				TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
-					parentTaxonomyCategoryId, taxonomyCategory);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return TaxonomyCategorySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
-					String parentTaxonomyCategoryId,
-					TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(taxonomyCategory.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
-
-			httpInvoker.path(
-				"parentTaxonomyCategoryId", parentTaxonomyCategoryId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
 
 		public void deleteTaxonomyCategory(String taxonomyCategoryId)
 			throws Exception {
@@ -881,6 +519,232 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
+		public void
+				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					Long taxonomyVocabularyId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					taxonomyVocabularyId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					Long taxonomyVocabularyId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
+				Long siteId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getTaxonomyCategoriesRankedPageHttpResponse(siteId, pagination);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, TaxonomyCategorySerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getTaxonomyCategoriesRankedPageHttpResponse(
+					Long siteId, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (siteId != null) {
+				httpInvoker.parameter("siteId", String.valueOf(siteId));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
 			throws Exception {
 
@@ -977,323 +841,6 @@ public interface TaxonomyCategoryResource {
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
 			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public TaxonomyCategory patchTaxonomyCategory(
-				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchTaxonomyCategoryHttpResponse(
-					taxonomyCategoryId, taxonomyCategory);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return TaxonomyCategorySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
-				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(taxonomyCategory.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
-
-			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public TaxonomyCategory putTaxonomyCategory(
-				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putTaxonomyCategoryHttpResponse(
-					taxonomyCategoryId, taxonomyCategory);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return TaxonomyCategorySerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
-				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(taxonomyCategory.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
-
-			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void putTaxonomyCategoryBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putTaxonomyCategoryBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1415,13 +962,16 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putTaxonomyCategoryPermissionsPage(
-				String taxonomyCategoryId, Permission[] permissions)
+		public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
+				String parentTaxonomyCategoryId, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putTaxonomyCategoryPermissionsPageHttpResponse(
-					taxonomyCategoryId, permissions);
+				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
+					parentTaxonomyCategoryId, search, aggregations,
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1471,7 +1021,7 @@ public interface TaxonomyCategoryResource {
 			}
 
 			try {
-				return Page.of(content, Permission::toDTO);
+				return Page.of(content, TaxonomyCategorySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1483,19 +1033,13 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putTaxonomyCategoryPermissionsPageHttpResponse(
-					String taxonomyCategoryId, Permission[] permissions)
+				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
+					String parentTaxonomyCategoryId, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Permission permissionValue : permissions) {
-				values.add(String.valueOf(permissionValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1514,14 +1058,34 @@ public interface TaxonomyCategoryResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
 
-			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
+			httpInvoker.path(
+				"parentTaxonomyCategoryId", parentTaxonomyCategoryId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1659,6 +1223,338 @@ public interface TaxonomyCategoryResource {
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories");
 
 			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public TaxonomyCategory
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					Long taxonomyVocabularyId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					taxonomyVocabularyId, externalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return TaxonomyCategorySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
+					Long taxonomyVocabularyId, String externalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
+
+			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public TaxonomyCategory patchTaxonomyCategory(
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchTaxonomyCategoryHttpResponse(
+					taxonomyCategoryId, taxonomyCategory);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return TaxonomyCategorySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(taxonomyCategory.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
+
+			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+				String parentTaxonomyCategoryId,
+				TaxonomyCategory taxonomyCategory)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+					parentTaxonomyCategoryId, taxonomyCategory);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return TaxonomyCategorySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
+					String parentTaxonomyCategoryId,
+					TaxonomyCategory taxonomyCategory)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(taxonomyCategory.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories");
+
+			httpInvoker.path(
+				"parentTaxonomyCategoryId", parentTaxonomyCategoryId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2014,124 +1910,13 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public void
-				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-					Long taxonomyVocabularyId, String externalReferenceCode)
+		public TaxonomyCategory putTaxonomyCategory(
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					taxonomyVocabularyId, externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					Long taxonomyVocabularyId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public TaxonomyCategory
-				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-					Long taxonomyVocabularyId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					taxonomyVocabularyId, externalReferenceCode);
+				putTaxonomyCategoryHttpResponse(
+					taxonomyCategoryId, taxonomyCategory);
 
 			String content = httpResponse.getContent();
 
@@ -2192,12 +1977,13 @@ public interface TaxonomyCategoryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
-					Long taxonomyVocabularyId, String externalReferenceCode)
+		public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(taxonomyCategory.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2216,15 +2002,229 @@ public interface TaxonomyCategoryResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}");
 
-			httpInvoker.path("taxonomyVocabularyId", taxonomyVocabularyId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void putTaxonomyCategoryBatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putTaxonomyCategoryBatchHttpResponse(callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission> putTaxonomyCategoryPermissionsPage(
+				String taxonomyCategoryId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					taxonomyCategoryId, permissions);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, Permission::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					String taxonomyCategoryId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}/permissions");
+
+			httpInvoker.path("taxonomyCategoryId", taxonomyCategoryId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

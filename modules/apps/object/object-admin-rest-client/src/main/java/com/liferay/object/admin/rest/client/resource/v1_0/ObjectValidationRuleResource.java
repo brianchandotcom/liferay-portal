@@ -34,6 +34,21 @@ public interface ObjectValidationRuleResource {
 		return new Builder();
 	}
 
+	public void deleteObjectValidationRule(Long objectValidationRuleId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteObjectValidationRuleHttpResponse(
+			Long objectValidationRuleId)
+		throws Exception;
+
+	public void deleteObjectValidationRuleBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteObjectValidationRuleBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectValidationRule>
 			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 				String externalReferenceCode, String search,
@@ -44,18 +59,6 @@ public interface ObjectValidationRuleResource {
 			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageHttpResponse(
 				String externalReferenceCode, String search,
 				Pagination pagination, String sortString)
-		throws Exception;
-
-	public ObjectValidationRule
-			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-				String externalReferenceCode,
-				ObjectValidationRule objectValidationRule)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
-				String externalReferenceCode,
-				ObjectValidationRule objectValidationRule)
 		throws Exception;
 
 	public Page<ObjectValidationRule>
@@ -70,15 +73,34 @@ public interface ObjectValidationRuleResource {
 				String sortString)
 		throws Exception;
 
-	public void postObjectDefinitionObjectValidationRulesPageExportBatch(
-			Long objectDefinitionId, String search, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+	public ObjectValidationRule getObjectValidationRule(
+			Long objectValidationRuleId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getObjectValidationRuleHttpResponse(
+			Long objectValidationRuleId)
+		throws Exception;
+
+	public ObjectValidationRule patchObjectValidationRule(
+			Long objectValidationRuleId,
+			ObjectValidationRule objectValidationRule)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchObjectValidationRuleHttpResponse(
+			Long objectValidationRuleId,
+			ObjectValidationRule objectValidationRule)
+		throws Exception;
+
+	public ObjectValidationRule
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				String externalReferenceCode,
+				ObjectValidationRule objectValidationRule)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
-				Long objectDefinitionId, String search, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
+				String externalReferenceCode,
+				ObjectValidationRule objectValidationRule)
 		throws Exception;
 
 	public ObjectValidationRule postObjectDefinitionObjectValidationRule(
@@ -100,37 +122,15 @@ public interface ObjectValidationRuleResource {
 				Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectValidationRule(Long objectValidationRuleId)
+	public void postObjectDefinitionObjectValidationRulesPageExportBatch(
+			Long objectDefinitionId, String search, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteObjectValidationRuleHttpResponse(
-			Long objectValidationRuleId)
-		throws Exception;
-
-	public void deleteObjectValidationRuleBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteObjectValidationRuleBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectValidationRule getObjectValidationRule(
-			Long objectValidationRuleId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getObjectValidationRuleHttpResponse(
-			Long objectValidationRuleId)
-		throws Exception;
-
-	public ObjectValidationRule patchObjectValidationRule(
-			Long objectValidationRuleId,
-			ObjectValidationRule objectValidationRule)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse patchObjectValidationRuleHttpResponse(
-			Long objectValidationRuleId,
-			ObjectValidationRule objectValidationRule)
+	public HttpInvoker.HttpResponse
+			postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
+				Long objectDefinitionId, String search, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectValidationRule putObjectValidationRule(
@@ -259,6 +259,213 @@ public interface ObjectValidationRuleResource {
 	public static class ObjectValidationRuleResourceImpl
 		implements ObjectValidationRuleResource {
 
+		public void deleteObjectValidationRule(Long objectValidationRuleId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteObjectValidationRuleHttpResponse(objectValidationRuleId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteObjectValidationRuleHttpResponse(
+				Long objectValidationRuleId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
+
+			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteObjectValidationRuleBatch(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteObjectValidationRuleBatchHttpResponse(
+					callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteObjectValidationRuleBatchHttpResponse(
+					String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/object-admin/v1.0/object-validation-rules/batch");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<ObjectValidationRule>
 				getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 					String externalReferenceCode, String search,
@@ -369,120 +576,6 @@ public interface ObjectValidationRuleResource {
 			if (sortString != null) {
 				httpInvoker.parameter("sort", sortString);
 			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ObjectValidationRule
-				postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
-					String externalReferenceCode,
-					ObjectValidationRule objectValidationRule)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
-					externalReferenceCode, objectValidationRule);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ObjectValidationRuleSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
-					String externalReferenceCode,
-					ObjectValidationRule objectValidationRule)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				objectValidationRule.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -625,15 +718,12 @@ public interface ObjectValidationRuleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postObjectDefinitionObjectValidationRulesPageExportBatch(
-				Long objectDefinitionId, String search, String sortString,
-				String callbackURL, String contentType, String fieldNames)
+		public ObjectValidationRule getObjectValidationRule(
+				Long objectValidationRuleId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
-					objectDefinitionId, search, sortString, callbackURL,
-					contentType, fieldNames);
+				getObjectValidationRuleHttpResponse(objectValidationRuleId);
 
 			String content = httpResponse.getContent();
 
@@ -681,17 +771,250 @@ public interface ObjectValidationRuleResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return ObjectValidationRuleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
-		public HttpInvoker.HttpResponse
-				postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
-					Long objectDefinitionId, String search, String sortString,
-					String callbackURL, String contentType, String fieldNames)
+		public HttpInvoker.HttpResponse getObjectValidationRuleHttpResponse(
+				Long objectValidationRuleId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
+
+			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public ObjectValidationRule patchObjectValidationRule(
+				Long objectValidationRuleId,
+				ObjectValidationRule objectValidationRule)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchObjectValidationRuleHttpResponse(
+					objectValidationRuleId, objectValidationRule);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ObjectValidationRuleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchObjectValidationRuleHttpResponse(
+				Long objectValidationRuleId,
+				ObjectValidationRule objectValidationRule)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				objectValidationRule.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
+
+			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public ObjectValidationRule
+				postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					String externalReferenceCode,
+					ObjectValidationRule objectValidationRule)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
+					externalReferenceCode, objectValidationRule);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ObjectValidationRuleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postObjectDefinitionByExternalReferenceCodeObjectValidationRuleHttpResponse(
+					String externalReferenceCode,
+					ObjectValidationRule objectValidationRule)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				objectValidationRule.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -712,34 +1035,12 @@ public interface ObjectValidationRuleResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/export-batch");
+						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules");
 
-			httpInvoker.path("objectDefinitionId", objectDefinitionId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -966,118 +1267,15 @@ public interface ObjectValidationRuleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteObjectValidationRule(Long objectValidationRuleId)
+		public void postObjectDefinitionObjectValidationRulesPageExportBatch(
+				Long objectDefinitionId, String search, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteObjectValidationRuleHttpResponse(objectValidationRuleId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteObjectValidationRuleHttpResponse(
-				Long objectValidationRuleId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
-
-			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteObjectValidationRuleBatch(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteObjectValidationRuleBatchHttpResponse(
-					callbackURL, object);
+				postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
+					objectDefinitionId, search, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1128,13 +1326,14 @@ public interface ObjectValidationRuleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteObjectValidationRuleBatchHttpResponse(
-					String callbackURL, Object object)
+				postObjectDefinitionObjectValidationRulesPageExportBatchHttpResponse(
+					Long objectDefinitionId, String search, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(object.toString(), "application/json");
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1153,235 +1352,36 @@ public interface ObjectValidationRuleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
 					"callbackURL", String.valueOf(callbackURL));
 			}
 
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-validation-rules/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
 			}
 
-			return httpInvoker.invoke();
-		}
-
-		public ObjectValidationRule getObjectValidationRule(
-				Long objectValidationRuleId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getObjectValidationRuleHttpResponse(objectValidationRuleId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
 			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ObjectValidationRuleSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getObjectValidationRuleHttpResponse(
-				Long objectValidationRuleId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
+						"/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/export-batch");
 
-			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public ObjectValidationRule patchObjectValidationRule(
-				Long objectValidationRuleId,
-				ObjectValidationRule objectValidationRule)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchObjectValidationRuleHttpResponse(
-					objectValidationRuleId, objectValidationRule);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return ObjectValidationRuleSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse patchObjectValidationRuleHttpResponse(
-				Long objectValidationRuleId,
-				ObjectValidationRule objectValidationRule)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				objectValidationRule.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-validation-rules/{objectValidationRuleId}");
-
-			httpInvoker.path("objectValidationRuleId", objectValidationRuleId);
+			httpInvoker.path("objectDefinitionId", objectDefinitionId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

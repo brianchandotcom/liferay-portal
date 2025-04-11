@@ -191,6 +191,233 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode()
+		throws Exception {
+
+		Sku postSku =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku();
+
+		Sku getSku =
+			skuResource.
+				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
+					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode(),
+					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode(),
+					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode(),
+					null, null);
+
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Sku
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode()
+		throws Exception {
+
+		Sku sku =
+			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"channelExternalReferenceCode",
+											"\"" +
+												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode() +
+													"\"");
+
+										put(
+											"productExternalReferenceCode",
+											"\"" +
+												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode() +
+													"\"");
+
+										put(
+											"skuExternalReferenceCode",
+											"\"" +
+												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCatalog_v1_0",
+								new GraphQLField(
+									"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"channelExternalReferenceCode",
+												"\"" +
+													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode() +
+														"\"");
+
+											put(
+												"productExternalReferenceCode",
+												"\"" +
+													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode() +
+														"\"");
+
+											put(
+												"skuExternalReferenceCode",
+												"\"" +
+													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
+						"Object/channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantChannelExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantProductExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantSkuExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"channelExternalReferenceCode",
+									irrelevantChannelExternalReferenceCode);
+								put(
+									"productExternalReferenceCode",
+									irrelevantProductExternalReferenceCode);
+								put(
+									"skuExternalReferenceCode",
+									irrelevantSkuExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCatalog_v1_0",
+						new GraphQLField(
+							"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"channelExternalReferenceCode",
+										irrelevantChannelExternalReferenceCode);
+									put(
+										"productExternalReferenceCode",
+										irrelevantProductExternalReferenceCode);
+									put(
+										"skuExternalReferenceCode",
+										irrelevantSkuExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku
+			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku()
+		throws Exception {
+
+		return testGraphQLSku_addSku();
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage()
 		throws Exception {
 
@@ -425,85 +652,37 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku()
-		throws Exception {
+	public void testGetChannelProductSku() throws Exception {
+		Sku postSku = testGetChannelProductSku_addSku();
 
-		Sku randomSku = randomSku();
-
-		Sku postSku =
-			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku_addSku(
-				randomSku);
-
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
-	}
-
-	protected Sku
-			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku_addSku(
-				Sku sku)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode()
-		throws Exception {
-
-		Sku postSku =
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku();
-
-		Sku getSku =
-			skuResource.
-				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
-					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode(),
-					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode(),
-					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode(),
-					null, null);
+		Sku getSku = skuResource.getChannelProductSku(
+			testGetChannelProductSku_getChannelId(),
+			testGetChannelProductSku_getProductId(postSku), postSku.getId(),
+			null, null);
 
 		assertEquals(postSku, getSku);
 		assertValid(getSku);
 	}
 
-	protected String
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode()
-		throws Exception {
-
+	protected Long testGetChannelProductSku_getChannelId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode()
+	protected Long testGetChannelProductSku_getProductId(Sku sku)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return sku.getProductId();
 	}
 
-	protected String
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Sku
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku()
-		throws Exception {
-
+	protected Sku testGetChannelProductSku_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode()
-		throws Exception {
-
-		Sku sku =
-			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku();
+	public void testGraphQLGetChannelProductSku() throws Exception {
+		Sku sku = testGraphQLGetChannelProductSku_addSku();
 
 		// No namespace
 
@@ -514,31 +693,23 @@ public abstract class BaseSkuResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+								"channelProductSku",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"channelExternalReferenceCode",
-											"\"" +
-												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode() +
-													"\"");
+											"channelId",
+											testGraphQLGetChannelProductSku_getChannelId());
 
 										put(
-											"productExternalReferenceCode",
-											"\"" +
-												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode() +
-													"\"");
+											"productId",
+											testGraphQLGetChannelProductSku_getProductId(
+												sku));
 
-										put(
-											"skuExternalReferenceCode",
-											"\"" +
-												testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode() +
-													"\"");
+										put("skuId", sku.getId());
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode"))));
+						"JSONObject/data", "Object/channelProductSku"))));
 
 		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
 
@@ -551,68 +722,45 @@ public abstract class BaseSkuResourceTestCase {
 							new GraphQLField(
 								"headlessCommerceDeliveryCatalog_v1_0",
 								new GraphQLField(
-									"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+									"channelProductSku",
 									new HashMap<String, Object>() {
 										{
 											put(
-												"channelExternalReferenceCode",
-												"\"" +
-													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode() +
-														"\"");
+												"channelId",
+												testGraphQLGetChannelProductSku_getChannelId());
 
 											put(
-												"productExternalReferenceCode",
-												"\"" +
-													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode() +
-														"\"");
+												"productId",
+												testGraphQLGetChannelProductSku_getProductId(
+													sku));
 
-											put(
-												"skuExternalReferenceCode",
-												"\"" +
-													testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode() +
-														"\"");
+											put("skuId", sku.getId());
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
-						"Object/channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode"))));
+						"Object/channelProductSku"))));
 	}
 
-	protected String
-			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode()
+	protected Long testGraphQLGetChannelProductSku_getChannelId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode()
+	protected Long testGraphQLGetChannelProductSku_getProductId(Sku sku)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return sku.getProductId();
 	}
 
 	@Test
-	public void testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantChannelExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-		String irrelevantProductExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-		String irrelevantSkuExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
+	public void testGraphQLGetChannelProductSkuNotFound() throws Exception {
+		Long irrelevantChannelId = RandomTestUtil.randomLong();
+		Long irrelevantProductId = RandomTestUtil.randomLong();
+		Long irrelevantSkuId = RandomTestUtil.randomLong();
 
 		// No namespace
 
@@ -621,18 +769,12 @@ public abstract class BaseSkuResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+						"channelProductSku",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"channelExternalReferenceCode",
-									irrelevantChannelExternalReferenceCode);
-								put(
-									"productExternalReferenceCode",
-									irrelevantProductExternalReferenceCode);
-								put(
-									"skuExternalReferenceCode",
-									irrelevantSkuExternalReferenceCode);
+								put("channelId", irrelevantChannelId);
+								put("productId", irrelevantProductId);
+								put("skuId", irrelevantSkuId);
 							}
 						},
 						getGraphQLFields())),
@@ -648,18 +790,12 @@ public abstract class BaseSkuResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceDeliveryCatalog_v1_0",
 						new GraphQLField(
-							"channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+							"channelProductSku",
 							new HashMap<String, Object>() {
 								{
-									put(
-										"channelExternalReferenceCode",
-										irrelevantChannelExternalReferenceCode);
-									put(
-										"productExternalReferenceCode",
-										irrelevantProductExternalReferenceCode);
-									put(
-										"skuExternalReferenceCode",
-										irrelevantSkuExternalReferenceCode);
+									put("channelId", irrelevantChannelId);
+									put("productId", irrelevantProductId);
+									put("skuId", irrelevantSkuId);
 								}
 							},
 							getGraphQLFields()))),
@@ -667,34 +803,8 @@ public abstract class BaseSkuResourceTestCase {
 				"Object/code"));
 	}
 
-	protected Sku
-			testGraphQLGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_addSku()
-		throws Exception {
-
+	protected Sku testGraphQLGetChannelProductSku_addSku() throws Exception {
 		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption()
-		throws Exception {
-
-		Sku randomSku = randomSku();
-
-		Sku postSku =
-			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption_addSku(
-				randomSku);
-
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
-	}
-
-	protected Sku
-			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption_addSku(
-				Sku sku)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -873,6 +983,52 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku()
+		throws Exception {
+
+		Sku randomSku = randomSku();
+
+		Sku postSku =
+			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku_addSku(
+				randomSku);
+
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
+	}
+
+	protected Sku
+			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku_addSku(
+				Sku sku)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption()
+		throws Exception {
+
+		Sku randomSku = randomSku();
+
+		Sku postSku =
+			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption_addSku(
+				randomSku);
+
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
+	}
+
+	protected Sku
+			testPostChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption_addSku(
+				Sku sku)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostChannelProductSku() throws Exception {
 		Sku randomSku = randomSku();
 
@@ -902,162 +1058,6 @@ public abstract class BaseSkuResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetChannelProductSku() throws Exception {
-		Sku postSku = testGetChannelProductSku_addSku();
-
-		Sku getSku = skuResource.getChannelProductSku(
-			testGetChannelProductSku_getChannelId(),
-			testGetChannelProductSku_getProductId(postSku), postSku.getId(),
-			null, null);
-
-		assertEquals(postSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Long testGetChannelProductSku_getChannelId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetChannelProductSku_getProductId(Sku sku)
-		throws Exception {
-
-		return sku.getProductId();
-	}
-
-	protected Sku testGetChannelProductSku_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetChannelProductSku() throws Exception {
-		Sku sku = testGraphQLGetChannelProductSku_addSku();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"channelProductSku",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"channelId",
-											testGraphQLGetChannelProductSku_getChannelId());
-
-										put(
-											"productId",
-											testGraphQLGetChannelProductSku_getProductId(
-												sku));
-
-										put("skuId", sku.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/channelProductSku"))));
-
-		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceDeliveryCatalog_v1_0",
-								new GraphQLField(
-									"channelProductSku",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"channelId",
-												testGraphQLGetChannelProductSku_getChannelId());
-
-											put(
-												"productId",
-												testGraphQLGetChannelProductSku_getProductId(
-													sku));
-
-											put("skuId", sku.getId());
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
-						"Object/channelProductSku"))));
-	}
-
-	protected Long testGraphQLGetChannelProductSku_getChannelId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGraphQLGetChannelProductSku_getProductId(Sku sku)
-		throws Exception {
-
-		return sku.getProductId();
-	}
-
-	@Test
-	public void testGraphQLGetChannelProductSkuNotFound() throws Exception {
-		Long irrelevantChannelId = RandomTestUtil.randomLong();
-		Long irrelevantProductId = RandomTestUtil.randomLong();
-		Long irrelevantSkuId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"channelProductSku",
-						new HashMap<String, Object>() {
-							{
-								put("channelId", irrelevantChannelId);
-								put("productId", irrelevantProductId);
-								put("skuId", irrelevantSkuId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceDeliveryCatalog_v1_0",
-						new GraphQLField(
-							"channelProductSku",
-							new HashMap<String, Object>() {
-								{
-									put("channelId", irrelevantChannelId);
-									put("productId", irrelevantProductId);
-									put("skuId", irrelevantSkuId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Sku testGraphQLGetChannelProductSku_addSku() throws Exception {
-		return testGraphQLSku_addSku();
 	}
 
 	protected Sku testGraphQLSku_addSku() throws Exception {

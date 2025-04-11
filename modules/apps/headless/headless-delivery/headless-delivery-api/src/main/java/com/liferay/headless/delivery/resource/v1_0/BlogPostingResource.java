@@ -54,41 +54,30 @@ public interface BlogPostingResource {
 	public Response deleteBlogPostingBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
-
-	public BlogPosting patchBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception;
-
-	public BlogPosting putBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception;
-
-	public Response putBlogPostingBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception;
 
+	public void deleteSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
+
 	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception;
-
-	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
-		throws Exception;
-
-	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
-		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getBlogPostingPermissionsPage(Long blogPostingId, String roleNames)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putBlogPostingPermissionsPage(
-				Long blogPostingId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
 	public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
 			Long blogPostingId, String displayPageKey)
+		throws Exception;
+
+	public BlogPosting getSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
 	public Page<BlogPosting> getSiteBlogPostingsPage(
@@ -99,11 +88,11 @@ public interface BlogPostingResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postSiteBlogPostingsPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public BlogPosting patchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
@@ -113,20 +102,31 @@ public interface BlogPostingResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSiteBlogPostingByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Response postSiteBlogPostingsPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public BlogPosting getSiteBlogPostingByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public BlogPosting putBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response putBlogPostingBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putBlogPostingPermissionsPage(
+				Long blogPostingId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public BlogPosting putSiteBlogPostingByExternalReferenceCode(
 			Long siteId, String externalReferenceCode, BlogPosting blogPosting)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

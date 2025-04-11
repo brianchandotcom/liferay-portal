@@ -45,30 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageTemplateSetResource {
 
-	public Page<PageTemplateSet>
-			getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
-				String siteExternalReferenceCode, String search,
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-				com.liferay.portal.kernel.search.filter.Filter filter,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public PageTemplateSet postSiteSiteByExternalReferenceCodePageTemplateSet(
-			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
-				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
 	public void deleteSiteSiteByExternalReferenceCodePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode)
@@ -79,10 +55,34 @@ public interface PageTemplateSetResource {
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
+				String siteExternalReferenceCode, String roleNames)
+		throws Exception;
+
+	public Page<PageTemplateSet>
+			getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+				String siteExternalReferenceCode, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
+				String siteExternalReferenceCode,
+				String pageTemplateSetExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public PageTemplateSet patchSiteSiteByExternalReferenceCodePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
 			PageTemplateSet pageTemplateSet)
+		throws Exception;
+
+	public PageTemplateSet postSiteSiteByExternalReferenceCodePageTemplateSet(
+			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception;
 
 	public PageTemplateSet putSiteSiteByExternalReferenceCodePageTemplateSet(
@@ -92,9 +92,9 @@ public interface PageTemplateSetResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
+			putSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
 				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode, String roleNames)
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

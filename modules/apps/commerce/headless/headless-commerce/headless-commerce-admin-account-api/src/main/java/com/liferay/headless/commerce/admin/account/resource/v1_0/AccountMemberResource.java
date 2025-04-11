@@ -47,21 +47,27 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountMemberResource {
 
+	public Response deleteAccountByExternalReferenceCodeAccountMember(
+			String externalReferenceCode, Long userId)
+		throws Exception;
+
+	public Response deleteAccountIdAccountMember(Long id, Long userId)
+		throws Exception;
+
+	public AccountMember getAccountByExternalReferenceCodeAccountMember(
+			String externalReferenceCode, Long userId)
+		throws Exception;
+
 	public Page<AccountMember>
 			getAccountByExternalReferenceCodeAccountMembersPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public AccountMember postAccountByExternalReferenceCodeAccountMember(
-			String externalReferenceCode, AccountMember accountMember)
+	public AccountMember getAccountIdAccountMember(Long id, Long userId)
 		throws Exception;
 
-	public Response deleteAccountByExternalReferenceCodeAccountMember(
-			String externalReferenceCode, Long userId)
-		throws Exception;
-
-	public AccountMember getAccountByExternalReferenceCodeAccountMember(
-			String externalReferenceCode, Long userId)
+	public Page<AccountMember> getAccountIdAccountMembersPage(
+			Long id, Pagination pagination)
 		throws Exception;
 
 	public Response patchAccountByExternalReferenceCodeAccountMember(
@@ -69,8 +75,12 @@ public interface AccountMemberResource {
 			AccountMember accountMember)
 		throws Exception;
 
-	public Page<AccountMember> getAccountIdAccountMembersPage(
-			Long id, Pagination pagination)
+	public Response patchAccountIdAccountMember(
+			Long id, Long userId, AccountMember accountMember)
+		throws Exception;
+
+	public AccountMember postAccountByExternalReferenceCodeAccountMember(
+			String externalReferenceCode, AccountMember accountMember)
 		throws Exception;
 
 	public AccountMember postAccountIdAccountMember(
@@ -79,16 +89,6 @@ public interface AccountMemberResource {
 
 	public Response postAccountIdAccountMemberBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteAccountIdAccountMember(Long id, Long userId)
-		throws Exception;
-
-	public AccountMember getAccountIdAccountMember(Long id, Long userId)
-		throws Exception;
-
-	public Response patchAccountIdAccountMember(
-			Long id, Long userId, AccountMember accountMember)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -183,6 +183,16 @@ public abstract class BasePortalInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePortalInstance() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetPortalInstance() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetPortalInstancesPage() throws Exception {
 		Page<PortalInstance> page =
 			portalInstanceResource.getPortalInstancesPage(null);
@@ -224,6 +234,11 @@ public abstract class BasePortalInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testPatchPortalInstance() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostPortalInstance() throws Exception {
 		PortalInstance randomPortalInstance = randomPortalInstance();
 
@@ -240,21 +255,6 @@ public abstract class BasePortalInstanceResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeletePortalInstance() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetPortalInstance() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPatchPortalInstance() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test

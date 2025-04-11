@@ -317,125 +317,6 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteByFriendlyUrlPath() throws Exception {
-		Site postSite = testGetSiteByFriendlyUrlPath_addSite();
-
-		Site getSite = siteResource.getSiteByFriendlyUrlPath(
-			postSite.getFriendlyUrlPath());
-
-		assertEquals(postSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected Site testGetSiteByFriendlyUrlPath_addSite() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
-		Site site = testGraphQLGetSiteByFriendlyUrlPath_addSite();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				site,
-				SiteSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"byFriendlyUrlPath",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"friendlyUrlPath",
-											"\"" + site.getFriendlyUrlPath() +
-												"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/byFriendlyUrlPath"))));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertTrue(
-			equals(
-				site,
-				SiteSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessAdminUser_v1_0",
-								new GraphQLField(
-									"byFriendlyUrlPath",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"friendlyUrlPath",
-												"\"" +
-													site.getFriendlyUrlPath() +
-														"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
-						"Object/byFriendlyUrlPath"))));
-	}
-
-	@Test
-	public void testGraphQLGetSiteByFriendlyUrlPathNotFound() throws Exception {
-		String irrelevantFriendlyUrlPath =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"byFriendlyUrlPath",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"friendlyUrlPath",
-									irrelevantFriendlyUrlPath);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessAdminUser_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessAdminUser_v1_0",
-						new GraphQLField(
-							"byFriendlyUrlPath",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"friendlyUrlPath",
-										irrelevantFriendlyUrlPath);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Site testGraphQLGetSiteByFriendlyUrlPath_addSite()
-		throws Exception {
-
-		return testGraphQLSite_addSite();
-	}
-
-	@Test
 	public void testGetSite() throws Exception {
 		Site postSite = testGetSite_addSite();
 
@@ -726,6 +607,125 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	protected Site testGraphQLGetSite_addSite() throws Exception {
+		return testGraphQLSite_addSite();
+	}
+
+	@Test
+	public void testGetSiteByFriendlyUrlPath() throws Exception {
+		Site postSite = testGetSiteByFriendlyUrlPath_addSite();
+
+		Site getSite = siteResource.getSiteByFriendlyUrlPath(
+			postSite.getFriendlyUrlPath());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSiteByFriendlyUrlPath_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
+		Site site = testGraphQLGetSiteByFriendlyUrlPath_addSite();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				site,
+				SiteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"byFriendlyUrlPath",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"friendlyUrlPath",
+											"\"" + site.getFriendlyUrlPath() +
+												"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/byFriendlyUrlPath"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				site,
+				SiteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"byFriendlyUrlPath",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"friendlyUrlPath",
+												"\"" +
+													site.getFriendlyUrlPath() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/byFriendlyUrlPath"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteByFriendlyUrlPathNotFound() throws Exception {
+		String irrelevantFriendlyUrlPath =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"byFriendlyUrlPath",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"friendlyUrlPath",
+									irrelevantFriendlyUrlPath);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"byFriendlyUrlPath",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"friendlyUrlPath",
+										irrelevantFriendlyUrlPath);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Site testGraphQLGetSiteByFriendlyUrlPath_addSite()
+		throws Exception {
+
 		return testGraphQLSite_addSite();
 	}
 

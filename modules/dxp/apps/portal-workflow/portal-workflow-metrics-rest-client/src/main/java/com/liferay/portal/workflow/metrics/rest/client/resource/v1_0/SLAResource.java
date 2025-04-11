@@ -34,6 +34,18 @@ public interface SLAResource {
 		return new Builder();
 	}
 
+	public void deleteSLA(Long slaId) throws Exception;
+
+	public HttpInvoker.HttpResponse deleteSLAHttpResponse(Long slaId)
+		throws Exception;
+
+	public void deleteSLABatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteSLABatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<SLA> getProcessSLAsPage(
 			Long processId, Integer status, Pagination pagination)
 		throws Exception;
@@ -42,14 +54,9 @@ public interface SLAResource {
 			Long processId, Integer status, Pagination pagination)
 		throws Exception;
 
-	public void postProcessSLAsPageExportBatch(
-			Long processId, Integer status, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
+	public SLA getSLA(Long slaId) throws Exception;
 
-	public HttpInvoker.HttpResponse postProcessSLAsPageExportBatchHttpResponse(
-			Long processId, Integer status, String callbackURL,
-			String contentType, String fieldNames)
+	public HttpInvoker.HttpResponse getSLAHttpResponse(Long slaId)
 		throws Exception;
 
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
@@ -66,21 +73,14 @@ public interface SLAResource {
 			Long processId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSLA(Long slaId) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteSLAHttpResponse(Long slaId)
+	public void postProcessSLAsPageExportBatch(
+			Long processId, Integer status, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
-	public void deleteSLABatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteSLABatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public SLA getSLA(Long slaId) throws Exception;
-
-	public HttpInvoker.HttpResponse getSLAHttpResponse(Long slaId)
+	public HttpInvoker.HttpResponse postProcessSLAsPageExportBatchHttpResponse(
+			Long processId, Integer status, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public SLA putSLA(Long slaId, SLA sla) throws Exception;
@@ -202,6 +202,207 @@ public interface SLAResource {
 
 	public static class SLAResourceImpl implements SLAResource {
 
+		public void deleteSLA(Long slaId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = deleteSLAHttpResponse(
+				slaId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteSLAHttpResponse(Long slaId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
+
+			httpInvoker.path("slaId", slaId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteSLABatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = deleteSLABatchHttpResponse(
+				callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse deleteSLABatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/portal-workflow-metrics/v1.0/slas/batch");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<SLA> getProcessSLAsPage(
 				Long processId, Integer status, Pagination pagination)
 			throws Exception {
@@ -319,14 +520,8 @@ public interface SLAResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postProcessSLAsPageExportBatch(
-				Long processId, Integer status, String callbackURL,
-				String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postProcessSLAsPageExportBatchHttpResponse(
-					processId, status, callbackURL, contentType, fieldNames);
+		public SLA getSLA(Long slaId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getSLAHttpResponse(slaId);
 
 			String content = httpResponse.getContent();
 
@@ -374,17 +569,23 @@ public interface SLAResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
+
+			try {
+				return SLASerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
-		public HttpInvoker.HttpResponse
-				postProcessSLAsPageExportBatchHttpResponse(
-					Long processId, Integer status, String callbackURL,
-					String contentType, String fieldNames)
+		public HttpInvoker.HttpResponse getSLAHttpResponse(Long slaId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -403,32 +604,14 @@ public interface SLAResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (status != null) {
-				httpInvoker.parameter("status", String.valueOf(status));
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/export-batch");
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
 
-			httpInvoker.path("processId", processId);
+			httpInvoker.path("slaId", slaId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -645,113 +828,14 @@ public interface SLAResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteSLA(Long slaId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = deleteSLAHttpResponse(
-				slaId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteSLAHttpResponse(Long slaId)
+		public void postProcessSLAsPageExportBatch(
+				Long processId, Integer status, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
-
-			httpInvoker.path("slaId", slaId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteSLABatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse = deleteSLABatchHttpResponse(
-				callbackURL, object);
+			HttpInvoker.HttpResponse httpResponse =
+				postProcessSLAsPageExportBatchHttpResponse(
+					processId, status, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -801,13 +885,15 @@ public interface SLAResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteSLABatchHttpResponse(
-				String callbackURL, Object object)
+		public HttpInvoker.HttpResponse
+				postProcessSLAsPageExportBatchHttpResponse(
+					Long processId, Integer status, String callbackURL,
+					String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(object.toString(), "application/json");
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -826,118 +912,32 @@ public interface SLAResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (status != null) {
+				httpInvoker.parameter("status", String.valueOf(status));
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
 					"callbackURL", String.valueOf(callbackURL));
 			}
 
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/portal-workflow-metrics/v1.0/slas/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
 			}
 
-			return httpInvoker.invoke();
-		}
-
-		public SLA getSLA(Long slaId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getSLAHttpResponse(slaId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
 			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return SLASerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getSLAHttpResponse(Long slaId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/export-batch");
 
-			httpInvoker.path("slaId", slaId);
+			httpInvoker.path("processId", processId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

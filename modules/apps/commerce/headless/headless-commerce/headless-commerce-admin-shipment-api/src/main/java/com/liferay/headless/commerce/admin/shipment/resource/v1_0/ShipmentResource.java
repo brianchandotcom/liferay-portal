@@ -46,6 +46,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ShipmentResource {
 
+	public void deleteShipment(Long shipmentId) throws Exception;
+
+	public Response deleteShipmentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Shipment getShipment(Long shipmentId) throws Exception;
+
+	public Shipment getShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Shipment> getShipmentsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -53,32 +68,16 @@ public interface ShipmentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postShipmentsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public Shipment postShipment(Shipment shipment) throws Exception;
-
-	public Response postShipmentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteShipmentByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Shipment getShipmentByExternalReferenceCode(
-			String externalReferenceCode)
+	public Shipment patchShipment(Long shipmentId, Shipment shipment)
 		throws Exception;
 
 	public Shipment patchShipmentByExternalReferenceCode(
 			String externalReferenceCode, Shipment shipment)
 		throws Exception;
 
-	public Shipment putShipmentByExternalReferenceCode(
-			String externalReferenceCode, Shipment shipment)
+	public Shipment postShipment(Shipment shipment) throws Exception;
+
+	public Response postShipmentBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Shipment postShipmentByExternalReferenceCodeStatusDelivered(
@@ -93,16 +92,6 @@ public interface ShipmentResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public void deleteShipment(Long shipmentId) throws Exception;
-
-	public Response deleteShipmentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Shipment getShipment(Long shipmentId) throws Exception;
-
-	public Shipment patchShipment(Long shipmentId, Shipment shipment)
-		throws Exception;
-
 	public Shipment postShipmentStatusDelivered(Long shipmentId)
 		throws Exception;
 
@@ -110,6 +99,17 @@ public interface ShipmentResource {
 		throws Exception;
 
 	public Shipment postShipmentStatusShipped(Long shipmentId) throws Exception;
+
+	public Response postShipmentsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public Shipment putShipmentByExternalReferenceCode(
+			String externalReferenceCode, Shipment shipment)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

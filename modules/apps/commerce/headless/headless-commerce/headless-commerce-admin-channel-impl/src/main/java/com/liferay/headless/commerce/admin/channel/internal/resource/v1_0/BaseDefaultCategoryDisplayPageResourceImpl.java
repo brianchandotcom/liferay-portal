@@ -79,6 +79,37 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "DefaultCategoryDisplayPage"
+			)
+		}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/channels/{id}/default-category-display-pages")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteChannelIdDefaultCategoryDisplayPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/by-externalReferenceCode/{externalReferenceCode}/default-category-display-pages'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -108,6 +139,39 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode)
+		throws Exception {
+
+		return new DefaultCategoryDisplayPage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "DefaultCategoryDisplayPage"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/channels/{id}/default-category-display-pages")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public DefaultCategoryDisplayPage getChannelIdDefaultCategoryDisplayPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id)
 		throws Exception {
 
 		return new DefaultCategoryDisplayPage();
@@ -147,70 +211,6 @@ public abstract class BaseDefaultCategoryDisplayPageResourceImpl
 				@javax.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode,
 				DefaultCategoryDisplayPage defaultCategoryDisplayPage)
-		throws Exception {
-
-		return new DefaultCategoryDisplayPage();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "DefaultCategoryDisplayPage"
-			)
-		}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/channels/{id}/default-category-display-pages")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteChannelIdDefaultCategoryDisplayPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{id}/default-category-display-pages'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "DefaultCategoryDisplayPage"
-			)
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/channels/{id}/default-category-display-pages")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public DefaultCategoryDisplayPage getChannelIdDefaultCategoryDisplayPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
 		throws Exception {
 
 		return new DefaultCategoryDisplayPage();

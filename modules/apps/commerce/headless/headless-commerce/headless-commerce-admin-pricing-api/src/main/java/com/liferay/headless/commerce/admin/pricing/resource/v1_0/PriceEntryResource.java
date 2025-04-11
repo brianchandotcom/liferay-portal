@@ -46,38 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PriceEntryResource {
 
-	public Response deletePriceEntryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public PriceEntry getPriceEntryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchPriceEntryByExternalReferenceCode(
-			String externalReferenceCode, PriceEntry priceEntry)
-		throws Exception;
-
 	public Response deletePriceEntry(Long id) throws Exception;
 
 	public Response deletePriceEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Response deletePriceEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public PriceEntry getPriceEntry(Long id) throws Exception;
 
-	public Response patchPriceEntry(Long id, PriceEntry priceEntry)
+	public PriceEntry getPriceEntryByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<PriceEntry> getPriceListByExternalReferenceCodePriceEntriesPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public PriceEntry postPriceListByExternalReferenceCodePriceEntry(
+	public Page<PriceEntry> getPriceListIdPriceEntriesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public Response patchPriceEntry(Long id, PriceEntry priceEntry)
+		throws Exception;
+
+	public Response patchPriceEntryByExternalReferenceCode(
 			String externalReferenceCode, PriceEntry priceEntry)
 		throws Exception;
 
-	public Page<PriceEntry> getPriceListIdPriceEntriesPage(
-			Long id, Pagination pagination)
+	public PriceEntry postPriceListByExternalReferenceCodePriceEntry(
+			String externalReferenceCode, PriceEntry priceEntry)
 		throws Exception;
 
 	public PriceEntry postPriceListIdPriceEntry(Long id, PriceEntry priceEntry)

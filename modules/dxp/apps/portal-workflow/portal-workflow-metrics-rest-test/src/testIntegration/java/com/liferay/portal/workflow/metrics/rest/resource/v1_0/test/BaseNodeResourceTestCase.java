@@ -184,6 +184,28 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProcessNode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Node node = testDeleteProcessNode_addNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			nodeResource.deleteProcessNodeHttpResponse(
+				testDeleteProcessNode_getProcessId(node), node.getId()));
+	}
+
+	protected Long testDeleteProcessNode_getProcessId(Node node)
+		throws Exception {
+
+		return node.getProcessId();
+	}
+
+	protected Node testDeleteProcessNode_addNode() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetProcessNodesPage() throws Exception {
 		Long processId = testGetProcessNodesPage_getProcessId();
 		Long irrelevantProcessId =
@@ -270,28 +292,6 @@ public abstract class BaseNodeResourceTestCase {
 	protected Node testPostProcessNode_addNode(Node node) throws Exception {
 		return nodeResource.postProcessNode(
 			testGetProcessNodesPage_getProcessId(), node);
-	}
-
-	@Test
-	public void testDeleteProcessNode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Node node = testDeleteProcessNode_addNode();
-
-		assertHttpResponseStatusCode(
-			204,
-			nodeResource.deleteProcessNodeHttpResponse(
-				testDeleteProcessNode_getProcessId(node), node.getId()));
-	}
-
-	protected Long testDeleteProcessNode_getProcessId(Node node)
-		throws Exception {
-
-		return node.getProcessId();
-	}
-
-	protected Node testDeleteProcessNode_addNode() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Node testGraphQLNode_addNode() throws Exception {

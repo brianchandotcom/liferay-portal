@@ -74,6 +74,176 @@ public abstract class BaseOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/orders/{id}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Response deleteOrder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/orders/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteOrderBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				Order.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/orders/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Response deleteOrderByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/orders/{id}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Order getOrder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id)
+		throws Exception {
+
+		return new Order();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/orders/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Order getOrderByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new Order();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -124,204 +294,29 @@ public abstract class BaseOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "advanceStatus": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "couponCode": ___, "createDate": ___, "creatorEmailAddress": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermExternalReferenceCode": ___, "deliveryTermId": ___, "externalReferenceCode": ___, "id": ___, "lastPriceUpdateDate": ___, "modifiedDate": ___, "name": ___, "orderDate": ___, "orderItems": ___, "orderStatus": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentStatus": ___, "paymentTermExternalReferenceCode": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingAmount": ___, "shippingAmountFormatted": ___, "shippingAmountValue": ___, "shippingDiscountAmount": ___, "shippingDiscountAmountFormatted": ___, "shippingDiscountAmountValue": ___, "shippingDiscountPercentageLevel1": ___, "shippingDiscountPercentageLevel1WithTaxAmount": ___, "shippingDiscountPercentageLevel2": ___, "shippingDiscountPercentageLevel2WithTaxAmount": ___, "shippingDiscountPercentageLevel3": ___, "shippingDiscountPercentageLevel3WithTaxAmount": ___, "shippingDiscountPercentageLevel4": ___, "shippingDiscountPercentageLevel4WithTaxAmount": ___, "shippingDiscountWithTaxAmount": ___, "shippingDiscountWithTaxAmountFormatted": ___, "shippingMethod": ___, "shippingOption": ___, "shippingWithTaxAmount": ___, "shippingWithTaxAmountFormatted": ___, "shippingWithTaxAmountValue": ___, "subtotal": ___, "subtotalDiscountAmount": ___, "subtotalDiscountAmountFormatted": ___, "subtotalDiscountPercentageLevel1": ___, "subtotalDiscountPercentageLevel1WithTaxAmount": ___, "subtotalDiscountPercentageLevel2": ___, "subtotalDiscountPercentageLevel2WithTaxAmount": ___, "subtotalDiscountPercentageLevel3": ___, "subtotalDiscountPercentageLevel3WithTaxAmount": ___, "subtotalDiscountPercentageLevel4": ___, "subtotalDiscountPercentageLevel4WithTaxAmount": ___, "subtotalDiscountWithTaxAmount": ___, "subtotalDiscountWithTaxAmountFormatted": ___, "subtotalFormatted": ___, "subtotalWithTaxAmount": ___, "subtotalWithTaxAmountFormatted": ___, "taxAmount": ___, "taxAmountFormatted": ___, "taxAmountValue": ___, "total": ___, "totalDiscountAmount": ___, "totalDiscountAmountFormatted": ___, "totalDiscountAmountValue": ___, "totalDiscountPercentageLevel1": ___, "totalDiscountPercentageLevel1WithTaxAmount": ___, "totalDiscountPercentageLevel2": ___, "totalDiscountPercentageLevel2WithTaxAmount": ___, "totalDiscountPercentageLevel3": ___, "totalDiscountPercentageLevel3WithTaxAmount": ___, "totalDiscountPercentageLevel4": ___, "totalDiscountPercentageLevel4WithTaxAmount": ___, "totalDiscountWithTaxAmount": ___, "totalDiscountWithTaxAmountFormatted": ___, "totalDiscountWithTaxAmountValue": ___, "totalFormatted": ___, "totalWithTaxAmount": ___, "totalWithTaxAmountFormatted": ___, "transactionId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "contentType"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fieldNames"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/orders/export-batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postOrdersPageExportBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
-				sorts,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.DefaultValue("JSON")
-			@javax.ws.rs.QueryParam("contentType")
-			String contentType,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("fieldNames")
-			String fieldNames)
-		throws Exception {
-
-		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
-		vulcanBatchEngineExportTaskResource.setGroupLocalService(
-			groupLocalService);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineExportTaskResource.postExportTask(
-				Order.class.getName(), callbackURL, contentType, fieldNames)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "advanceStatus": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "couponCode": ___, "createDate": ___, "creatorEmailAddress": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermExternalReferenceCode": ___, "deliveryTermId": ___, "externalReferenceCode": ___, "id": ___, "lastPriceUpdateDate": ___, "modifiedDate": ___, "name": ___, "orderDate": ___, "orderItems": ___, "orderStatus": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentStatus": ___, "paymentTermExternalReferenceCode": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingAmount": ___, "shippingAmountFormatted": ___, "shippingAmountValue": ___, "shippingDiscountAmount": ___, "shippingDiscountAmountFormatted": ___, "shippingDiscountAmountValue": ___, "shippingDiscountPercentageLevel1": ___, "shippingDiscountPercentageLevel1WithTaxAmount": ___, "shippingDiscountPercentageLevel2": ___, "shippingDiscountPercentageLevel2WithTaxAmount": ___, "shippingDiscountPercentageLevel3": ___, "shippingDiscountPercentageLevel3WithTaxAmount": ___, "shippingDiscountPercentageLevel4": ___, "shippingDiscountPercentageLevel4WithTaxAmount": ___, "shippingDiscountWithTaxAmount": ___, "shippingDiscountWithTaxAmountFormatted": ___, "shippingMethod": ___, "shippingOption": ___, "shippingWithTaxAmount": ___, "shippingWithTaxAmountFormatted": ___, "shippingWithTaxAmountValue": ___, "subtotal": ___, "subtotalDiscountAmount": ___, "subtotalDiscountAmountFormatted": ___, "subtotalDiscountPercentageLevel1": ___, "subtotalDiscountPercentageLevel1WithTaxAmount": ___, "subtotalDiscountPercentageLevel2": ___, "subtotalDiscountPercentageLevel2WithTaxAmount": ___, "subtotalDiscountPercentageLevel3": ___, "subtotalDiscountPercentageLevel3WithTaxAmount": ___, "subtotalDiscountPercentageLevel4": ___, "subtotalDiscountPercentageLevel4WithTaxAmount": ___, "subtotalDiscountWithTaxAmount": ___, "subtotalDiscountWithTaxAmountFormatted": ___, "subtotalFormatted": ___, "subtotalWithTaxAmount": ___, "subtotalWithTaxAmountFormatted": ___, "taxAmount": ___, "taxAmountFormatted": ___, "taxAmountValue": ___, "total": ___, "totalDiscountAmount": ___, "totalDiscountAmountFormatted": ___, "totalDiscountAmountValue": ___, "totalDiscountPercentageLevel1": ___, "totalDiscountPercentageLevel1WithTaxAmount": ___, "totalDiscountPercentageLevel2": ___, "totalDiscountPercentageLevel2WithTaxAmount": ___, "totalDiscountPercentageLevel3": ___, "totalDiscountPercentageLevel3WithTaxAmount": ___, "totalDiscountPercentageLevel4": ___, "totalDiscountPercentageLevel4WithTaxAmount": ___, "totalDiscountWithTaxAmount": ___, "totalDiscountWithTaxAmountFormatted": ___, "totalDiscountWithTaxAmountValue": ___, "totalFormatted": ___, "totalWithTaxAmount": ___, "totalWithTaxAmountFormatted": ___, "transactionId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/orders")
-	@javax.ws.rs.POST
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/orders/{id}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Order postOrder(Order order) throws Exception {
-		return new Order();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/orders/batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postOrderBatch(
+	public Order patchOrder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				Order.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Response deleteOrderByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Order getOrderByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id,
+			Order order)
 		throws Exception {
 
 		return new Order();
@@ -798,6 +793,146 @@ public abstract class BaseOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "advanceStatus": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "couponCode": ___, "createDate": ___, "creatorEmailAddress": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermExternalReferenceCode": ___, "deliveryTermId": ___, "externalReferenceCode": ___, "id": ___, "lastPriceUpdateDate": ___, "modifiedDate": ___, "name": ___, "orderDate": ___, "orderItems": ___, "orderStatus": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentStatus": ___, "paymentTermExternalReferenceCode": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingAmount": ___, "shippingAmountFormatted": ___, "shippingAmountValue": ___, "shippingDiscountAmount": ___, "shippingDiscountAmountFormatted": ___, "shippingDiscountAmountValue": ___, "shippingDiscountPercentageLevel1": ___, "shippingDiscountPercentageLevel1WithTaxAmount": ___, "shippingDiscountPercentageLevel2": ___, "shippingDiscountPercentageLevel2WithTaxAmount": ___, "shippingDiscountPercentageLevel3": ___, "shippingDiscountPercentageLevel3WithTaxAmount": ___, "shippingDiscountPercentageLevel4": ___, "shippingDiscountPercentageLevel4WithTaxAmount": ___, "shippingDiscountWithTaxAmount": ___, "shippingDiscountWithTaxAmountFormatted": ___, "shippingMethod": ___, "shippingOption": ___, "shippingWithTaxAmount": ___, "shippingWithTaxAmountFormatted": ___, "shippingWithTaxAmountValue": ___, "subtotal": ___, "subtotalDiscountAmount": ___, "subtotalDiscountAmountFormatted": ___, "subtotalDiscountPercentageLevel1": ___, "subtotalDiscountPercentageLevel1WithTaxAmount": ___, "subtotalDiscountPercentageLevel2": ___, "subtotalDiscountPercentageLevel2WithTaxAmount": ___, "subtotalDiscountPercentageLevel3": ___, "subtotalDiscountPercentageLevel3WithTaxAmount": ___, "subtotalDiscountPercentageLevel4": ___, "subtotalDiscountPercentageLevel4WithTaxAmount": ___, "subtotalDiscountWithTaxAmount": ___, "subtotalDiscountWithTaxAmountFormatted": ___, "subtotalFormatted": ___, "subtotalWithTaxAmount": ___, "subtotalWithTaxAmountFormatted": ___, "taxAmount": ___, "taxAmountFormatted": ___, "taxAmountValue": ___, "total": ___, "totalDiscountAmount": ___, "totalDiscountAmountFormatted": ___, "totalDiscountAmountValue": ___, "totalDiscountPercentageLevel1": ___, "totalDiscountPercentageLevel1WithTaxAmount": ___, "totalDiscountPercentageLevel2": ___, "totalDiscountPercentageLevel2WithTaxAmount": ___, "totalDiscountPercentageLevel3": ___, "totalDiscountPercentageLevel3WithTaxAmount": ___, "totalDiscountPercentageLevel4": ___, "totalDiscountPercentageLevel4WithTaxAmount": ___, "totalDiscountWithTaxAmount": ___, "totalDiscountWithTaxAmountFormatted": ___, "totalDiscountWithTaxAmountValue": ___, "totalFormatted": ___, "totalWithTaxAmount": ___, "totalWithTaxAmountFormatted": ___, "transactionId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/orders")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Order postOrder(Order order) throws Exception {
+		return new Order();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/orders/batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postOrderBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				Order.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/export-batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "contentType"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fieldNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/orders/export-batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postOrdersPageExportBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
+			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+				sorts,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.DefaultValue("JSON")
+			@javax.ws.rs.QueryParam("contentType")
+			String contentType,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fieldNames")
+			String fieldNames)
+		throws Exception {
+
+		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
+		vulcanBatchEngineExportTaskResource.setGroupLocalService(
+			groupLocalService);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineExportTaskResource.postExportTask(
+				Order.class.getName(), callbackURL, contentType, fieldNames)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "advanceStatus": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "couponCode": ___, "createDate": ___, "creatorEmailAddress": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermExternalReferenceCode": ___, "deliveryTermId": ___, "externalReferenceCode": ___, "id": ___, "lastPriceUpdateDate": ___, "modifiedDate": ___, "name": ___, "orderDate": ___, "orderItems": ___, "orderStatus": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentStatus": ___, "paymentTermExternalReferenceCode": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingAmount": ___, "shippingAmountFormatted": ___, "shippingAmountValue": ___, "shippingDiscountAmount": ___, "shippingDiscountAmountFormatted": ___, "shippingDiscountAmountValue": ___, "shippingDiscountPercentageLevel1": ___, "shippingDiscountPercentageLevel1WithTaxAmount": ___, "shippingDiscountPercentageLevel2": ___, "shippingDiscountPercentageLevel2WithTaxAmount": ___, "shippingDiscountPercentageLevel3": ___, "shippingDiscountPercentageLevel3WithTaxAmount": ___, "shippingDiscountPercentageLevel4": ___, "shippingDiscountPercentageLevel4WithTaxAmount": ___, "shippingDiscountWithTaxAmount": ___, "shippingDiscountWithTaxAmountFormatted": ___, "shippingMethod": ___, "shippingOption": ___, "shippingWithTaxAmount": ___, "shippingWithTaxAmountFormatted": ___, "shippingWithTaxAmountValue": ___, "subtotal": ___, "subtotalDiscountAmount": ___, "subtotalDiscountAmountFormatted": ___, "subtotalDiscountPercentageLevel1": ___, "subtotalDiscountPercentageLevel1WithTaxAmount": ___, "subtotalDiscountPercentageLevel2": ___, "subtotalDiscountPercentageLevel2WithTaxAmount": ___, "subtotalDiscountPercentageLevel3": ___, "subtotalDiscountPercentageLevel3WithTaxAmount": ___, "subtotalDiscountPercentageLevel4": ___, "subtotalDiscountPercentageLevel4WithTaxAmount": ___, "subtotalDiscountWithTaxAmount": ___, "subtotalDiscountWithTaxAmountFormatted": ___, "subtotalFormatted": ___, "subtotalWithTaxAmount": ___, "subtotalWithTaxAmountFormatted": ___, "taxAmount": ___, "taxAmountFormatted": ___, "taxAmountValue": ___, "total": ___, "totalDiscountAmount": ___, "totalDiscountAmountFormatted": ___, "totalDiscountAmountValue": ___, "totalDiscountPercentageLevel1": ___, "totalDiscountPercentageLevel1WithTaxAmount": ___, "totalDiscountPercentageLevel2": ___, "totalDiscountPercentageLevel2WithTaxAmount": ___, "totalDiscountPercentageLevel3": ___, "totalDiscountPercentageLevel3WithTaxAmount": ___, "totalDiscountPercentageLevel4": ___, "totalDiscountPercentageLevel4WithTaxAmount": ___, "totalDiscountWithTaxAmount": ___, "totalDiscountWithTaxAmountFormatted": ___, "totalDiscountWithTaxAmountValue": ___, "totalFormatted": ___, "totalWithTaxAmount": ___, "totalWithTaxAmountFormatted": ___, "transactionId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -823,141 +958,6 @@ public abstract class BaseOrderResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			Order order)
-		throws Exception {
-
-		return new Order();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/orders/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Response deleteOrder(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/orders/batch")
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteOrderBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				Order.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/orders/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Order getOrder(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
-		throws Exception {
-
-		return new Order();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "advanceStatus": ___, "billingAddress": ___, "billingAddressExternalReferenceCode": ___, "billingAddressId": ___, "channelExternalReferenceCode": ___, "channelId": ___, "couponCode": ___, "createDate": ___, "creatorEmailAddress": ___, "currencyCode": ___, "currencyExternalReferenceCode": ___, "currencyId": ___, "customFields": ___, "deliveryTermExternalReferenceCode": ___, "deliveryTermId": ___, "externalReferenceCode": ___, "id": ___, "lastPriceUpdateDate": ___, "modifiedDate": ___, "name": ___, "orderDate": ___, "orderItems": ___, "orderStatus": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "paymentMethod": ___, "paymentStatus": ___, "paymentTermExternalReferenceCode": ___, "paymentTermId": ___, "printedNote": ___, "purchaseOrderNumber": ___, "requestedDeliveryDate": ___, "shippingAddress": ___, "shippingAddressExternalReferenceCode": ___, "shippingAddressId": ___, "shippingAmount": ___, "shippingAmountFormatted": ___, "shippingAmountValue": ___, "shippingDiscountAmount": ___, "shippingDiscountAmountFormatted": ___, "shippingDiscountAmountValue": ___, "shippingDiscountPercentageLevel1": ___, "shippingDiscountPercentageLevel1WithTaxAmount": ___, "shippingDiscountPercentageLevel2": ___, "shippingDiscountPercentageLevel2WithTaxAmount": ___, "shippingDiscountPercentageLevel3": ___, "shippingDiscountPercentageLevel3WithTaxAmount": ___, "shippingDiscountPercentageLevel4": ___, "shippingDiscountPercentageLevel4WithTaxAmount": ___, "shippingDiscountWithTaxAmount": ___, "shippingDiscountWithTaxAmountFormatted": ___, "shippingMethod": ___, "shippingOption": ___, "shippingWithTaxAmount": ___, "shippingWithTaxAmountFormatted": ___, "shippingWithTaxAmountValue": ___, "subtotal": ___, "subtotalDiscountAmount": ___, "subtotalDiscountAmountFormatted": ___, "subtotalDiscountPercentageLevel1": ___, "subtotalDiscountPercentageLevel1WithTaxAmount": ___, "subtotalDiscountPercentageLevel2": ___, "subtotalDiscountPercentageLevel2WithTaxAmount": ___, "subtotalDiscountPercentageLevel3": ___, "subtotalDiscountPercentageLevel3WithTaxAmount": ___, "subtotalDiscountPercentageLevel4": ___, "subtotalDiscountPercentageLevel4WithTaxAmount": ___, "subtotalDiscountWithTaxAmount": ___, "subtotalDiscountWithTaxAmountFormatted": ___, "subtotalFormatted": ___, "subtotalWithTaxAmount": ___, "subtotalWithTaxAmountFormatted": ___, "taxAmount": ___, "taxAmountFormatted": ___, "taxAmountValue": ___, "total": ___, "totalDiscountAmount": ___, "totalDiscountAmountFormatted": ___, "totalDiscountAmountValue": ___, "totalDiscountPercentageLevel1": ___, "totalDiscountPercentageLevel1WithTaxAmount": ___, "totalDiscountPercentageLevel2": ___, "totalDiscountPercentageLevel2WithTaxAmount": ___, "totalDiscountPercentageLevel3": ___, "totalDiscountPercentageLevel3WithTaxAmount": ___, "totalDiscountPercentageLevel4": ___, "totalDiscountPercentageLevel4WithTaxAmount": ___, "totalDiscountWithTaxAmount": ___, "totalDiscountWithTaxAmountFormatted": ___, "totalDiscountWithTaxAmountValue": ___, "totalFormatted": ___, "totalWithTaxAmount": ___, "totalWithTaxAmountFormatted": ___, "transactionId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Order")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/orders/{id}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Order patchOrder(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id,
 			Order order)
 		throws Exception {
 

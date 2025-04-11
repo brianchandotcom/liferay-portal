@@ -46,36 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectDefinitionResource {
 
-	public Page<ObjectDefinition> getObjectDefinitionsPage(
-			String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postObjectDefinitionsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public ObjectDefinition postObjectDefinition(
-			ObjectDefinition objectDefinition)
-		throws Exception;
-
-	public Response postObjectDefinitionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
-			String externalReferenceCode, ObjectDefinition objectDefinition)
-		throws Exception;
-
 	public void deleteObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 
@@ -86,8 +56,37 @@ public interface ObjectDefinitionResource {
 	public ObjectDefinition getObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 
+	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<ObjectDefinition> getObjectDefinitionsPage(
+			String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public ObjectDefinition patchObjectDefinition(
 			Long objectDefinitionId, ObjectDefinition objectDefinition)
+		throws Exception;
+
+	public ObjectDefinition postObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception;
+
+	public Response postObjectDefinitionBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectDefinition postObjectDefinitionPublish(Long objectDefinitionId)
+		throws Exception;
+
+	public Response postObjectDefinitionsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectDefinition putObjectDefinition(
@@ -97,7 +96,8 @@ public interface ObjectDefinitionResource {
 	public Response putObjectDefinitionBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public ObjectDefinition postObjectDefinitionPublish(Long objectDefinitionId)
+	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode, ObjectDefinition objectDefinition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

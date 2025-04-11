@@ -201,45 +201,6 @@ public abstract class BaseProductConfigurationListAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-accounts' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ProductConfigurationListAccount"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-accounts"
-	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ProductConfigurationListAccount
-			postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				ProductConfigurationListAccount productConfigurationListAccount)
-		throws Exception {
-
-		return new ProductConfigurationListAccount();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/{id}/product-configuration-list-accounts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -300,6 +261,45 @@ public abstract class BaseProductConfigurationListAccountResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-accounts' -d $'{"accountExternalReferenceCode": ___, "accountId": ___, "productConfigurationListExternalReferenceCode": ___, "productConfigurationListId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ProductConfigurationListAccount"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-accounts"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ProductConfigurationListAccount
+			postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				ProductConfigurationListAccount productConfigurationListAccount)
+		throws Exception {
+
+		return new ProductConfigurationListAccount();
 	}
 
 	/**

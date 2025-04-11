@@ -46,12 +46,44 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PaymentResource {
 
+	public Response deletePayment(Long id) throws Exception;
+
+	public Response deletePaymentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deletePaymentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Payment getPayment(Long id) throws Exception;
+
+	public Payment getPaymentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Payment> getPaymentsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public Payment patchPayment(Long id, Payment payment) throws Exception;
+
+	public Payment patchPaymentByExternalReferenceCode(
+			String externalReferenceCode, Payment payment)
+		throws Exception;
+
+	public Payment postPayment(Payment payment) throws Exception;
+
+	public Response postPaymentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Payment postPaymentByExternalReferenceCodeRefund(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Payment postPaymentRefund(Long id) throws Exception;
 
 	public Response postPaymentsPageExportBatch(
 			String search,
@@ -60,41 +92,9 @@ public interface PaymentResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Payment postPayment(Payment payment) throws Exception;
-
-	public Response postPaymentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deletePaymentByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Payment getPaymentByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Payment patchPaymentByExternalReferenceCode(
-			String externalReferenceCode, Payment payment)
-		throws Exception;
-
 	public Payment putPaymentByExternalReferenceCode(
 			String externalReferenceCode, Payment payment)
 		throws Exception;
-
-	public Payment postPaymentByExternalReferenceCodeRefund(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response deletePayment(Long id) throws Exception;
-
-	public Response deletePaymentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Payment getPayment(Long id) throws Exception;
-
-	public Payment patchPayment(Long id, Payment payment) throws Exception;
-
-	public Payment postPaymentRefund(Long id) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

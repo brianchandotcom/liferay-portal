@@ -222,6 +222,132 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSLA() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SLA sla = testDeleteSLA_addSLA();
+
+		assertHttpResponseStatusCode(
+			204, slaResource.deleteSLAHttpResponse(sla.getId()));
+
+		assertHttpResponseStatusCode(
+			404, slaResource.getSLAHttpResponse(sla.getId()));
+		assertHttpResponseStatusCode(404, slaResource.getSLAHttpResponse(0L));
+	}
+
+	protected SLA testDeleteSLA_addSLA() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSLA() throws Exception {
+
+		// No namespace
+
+		SLA sla1 = testGraphQLDeleteSLA_addSLA();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSLA",
+						new HashMap<String, Object>() {
+							{
+								put("slaId", sla1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSLA"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"sLA",
+					new HashMap<String, Object>() {
+						{
+							put("slaId", sla1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		SLA sla2 = testGraphQLDeleteSLA_addSLA();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"deleteSLA",
+							new HashMap<String, Object>() {
+								{
+									put("slaId", sla2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
+				"Object/deleteSLA"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"portalWorkflowMetrics_v1_0",
+					new GraphQLField(
+						"sLA",
+						new HashMap<String, Object>() {
+							{
+								put("slaId", sla2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected SLA testGraphQLDeleteSLA_addSLA() throws Exception {
+		return testGraphQLSLA_addSLA();
+	}
+
+	@Test
+	public void testDeleteSLABatch() throws Exception {
+		SLA sla1 = testDeleteSLABatch_addSLA();
+
+		testDeleteSLABatch_deleteSLA("COMPLETED", null, sla1.getId());
+
+		assertHttpResponseStatusCode(
+			404, slaResource.getSLAHttpResponse(sla1.getId()));
+	}
+
+	protected SLA testDeleteSLABatch_addSLA() throws Exception {
+		return testDeleteSLA_addSLA();
+	}
+
+	protected void testDeleteSLABatch_deleteSLA(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			slaResource.deleteSLABatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetProcessSLAsPage() throws Exception {
 		Long processId = testGetProcessSLAsPage_getProcessId();
 		Long irrelevantProcessId =
@@ -371,147 +497,6 @@ public abstract class BaseSLAResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostProcessSLA() throws Exception {
-		SLA randomSLA = randomSLA();
-
-		SLA postSLA = testPostProcessSLA_addSLA(randomSLA);
-
-		assertEquals(randomSLA, postSLA);
-		assertValid(postSLA);
-	}
-
-	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
-		return slaResource.postProcessSLA(
-			testGetProcessSLAsPage_getProcessId(), sla);
-	}
-
-	@Test
-	public void testDeleteSLA() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		SLA sla = testDeleteSLA_addSLA();
-
-		assertHttpResponseStatusCode(
-			204, slaResource.deleteSLAHttpResponse(sla.getId()));
-
-		assertHttpResponseStatusCode(
-			404, slaResource.getSLAHttpResponse(sla.getId()));
-		assertHttpResponseStatusCode(404, slaResource.getSLAHttpResponse(0L));
-	}
-
-	protected SLA testDeleteSLA_addSLA() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteSLA() throws Exception {
-
-		// No namespace
-
-		SLA sla1 = testGraphQLDeleteSLA_addSLA();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSLA",
-						new HashMap<String, Object>() {
-							{
-								put("slaId", sla1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSLA"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"sLA",
-					new HashMap<String, Object>() {
-						{
-							put("slaId", sla1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace portalWorkflowMetrics_v1_0
-
-		SLA sla2 = testGraphQLDeleteSLA_addSLA();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"portalWorkflowMetrics_v1_0",
-						new GraphQLField(
-							"deleteSLA",
-							new HashMap<String, Object>() {
-								{
-									put("slaId", sla2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/portalWorkflowMetrics_v1_0",
-				"Object/deleteSLA"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"portalWorkflowMetrics_v1_0",
-					new GraphQLField(
-						"sLA",
-						new HashMap<String, Object>() {
-							{
-								put("slaId", sla2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected SLA testGraphQLDeleteSLA_addSLA() throws Exception {
-		return testGraphQLSLA_addSLA();
-	}
-
-	@Test
-	public void testDeleteSLABatch() throws Exception {
-		SLA sla1 = testDeleteSLABatch_addSLA();
-
-		testDeleteSLABatch_deleteSLA("COMPLETED", null, sla1.getId());
-
-		assertHttpResponseStatusCode(
-			404, slaResource.getSLAHttpResponse(sla1.getId()));
-	}
-
-	protected SLA testDeleteSLABatch_addSLA() throws Exception {
-		return testDeleteSLA_addSLA();
-	}
-
-	protected void testDeleteSLABatch_deleteSLA(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			slaResource.deleteSLABatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -804,6 +789,21 @@ public abstract class BaseSLAResourceTestCase {
 
 	protected SLA testGraphQLGetSLA_addSLA() throws Exception {
 		return testGraphQLSLA_addSLA();
+	}
+
+	@Test
+	public void testPostProcessSLA() throws Exception {
+		SLA randomSLA = randomSLA();
+
+		SLA postSLA = testPostProcessSLA_addSLA(randomSLA);
+
+		assertEquals(randomSLA, postSLA);
+		assertValid(postSLA);
+	}
+
+	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
+		return slaResource.postProcessSLA(
+			testGetProcessSLAsPage_getProcessId(), sla);
 	}
 
 	@Test

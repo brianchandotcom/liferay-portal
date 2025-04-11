@@ -55,12 +55,12 @@ public interface TermOrderTypeResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public TermOrderType postTermByExternalReferenceCodeTermOrderType(
-			String externalReferenceCode, TermOrderType termOrderType)
-		throws Exception;
-
 	public Page<TermOrderType> getTermIdTermOrderTypesPage(
 			Long id, String search, Pagination pagination)
+		throws Exception;
+
+	public TermOrderType postTermByExternalReferenceCodeTermOrderType(
+			String externalReferenceCode, TermOrderType termOrderType)
 		throws Exception;
 
 	public TermOrderType postTermIdTermOrderType(

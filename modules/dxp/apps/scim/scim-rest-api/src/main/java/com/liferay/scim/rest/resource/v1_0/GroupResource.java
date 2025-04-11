@@ -47,22 +47,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GroupResource {
 
-	public Object getV2Groups(
-			Integer count, String excludedAttributes, Integer startIndex,
-			com.liferay.portal.kernel.search.filter.Filter filter)
-		throws Exception;
-
-	public Response postV2Group(Group group) throws Exception;
-
-	public Response postV2GroupSearch(QueryAttributes queryAttributes)
-		throws Exception;
-
 	public Response deleteV2Group(String id) throws Exception;
 
 	public Object getV2GroupById(String id, String excludedAttributes)
 		throws Exception;
 
+	public Object getV2Groups(
+			Integer count, String excludedAttributes, Integer startIndex,
+			com.liferay.portal.kernel.search.filter.Filter filter)
+		throws Exception;
+
 	public Response patchV2Group(String id, PatchOp patchOp) throws Exception;
+
+	public Response postV2Group(Group group) throws Exception;
+
+	public Response postV2GroupSearch(QueryAttributes queryAttributes)
+		throws Exception;
 
 	public Response putV2Group(String id, Group group) throws Exception;
 

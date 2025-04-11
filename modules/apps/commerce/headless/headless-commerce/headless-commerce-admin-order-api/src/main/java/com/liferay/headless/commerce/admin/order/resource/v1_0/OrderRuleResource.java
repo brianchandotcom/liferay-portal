@@ -46,11 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderRuleResource {
 
+	public void deleteOrderRule(Long id) throws Exception;
+
+	public Response deleteOrderRuleBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteOrderRuleByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public OrderRule getOrderRule(Long id) throws Exception;
+
+	public OrderRule getOrderRuleByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<OrderRule> getOrderRulesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OrderRule patchOrderRule(Long id, OrderRule orderRule)
+		throws Exception;
+
+	public OrderRule patchOrderRuleByExternalReferenceCode(
+			String externalReferenceCode, OrderRule orderRule)
+		throws Exception;
+
+	public OrderRule postOrderRule(OrderRule orderRule) throws Exception;
+
+	public Response postOrderRuleBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postOrderRulesPageExportBatch(
@@ -60,35 +87,8 @@ public interface OrderRuleResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public OrderRule postOrderRule(OrderRule orderRule) throws Exception;
-
-	public Response postOrderRuleBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteOrderRuleByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderRule getOrderRuleByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderRule patchOrderRuleByExternalReferenceCode(
-			String externalReferenceCode, OrderRule orderRule)
-		throws Exception;
-
 	public OrderRule putOrderRuleByExternalReferenceCode(
 			String externalReferenceCode, OrderRule orderRule)
-		throws Exception;
-
-	public void deleteOrderRule(Long id) throws Exception;
-
-	public Response deleteOrderRuleBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public OrderRule getOrderRule(Long id) throws Exception;
-
-	public OrderRule patchOrderRule(Long id, OrderRule orderRule)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

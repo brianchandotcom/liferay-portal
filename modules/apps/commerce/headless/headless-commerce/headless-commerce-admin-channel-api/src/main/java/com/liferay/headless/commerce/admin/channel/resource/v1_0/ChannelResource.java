@@ -46,7 +46,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ChannelResource {
 
+	public void deleteChannel(Long channelId) throws Exception;
+
+	public Response deleteChannelBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteChannelByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Channel getAccountAddressChannelChannel(Long accountAddressChannelId)
+		throws Exception;
+
+	public Channel getChannel(Long channelId) throws Exception;
+
+	public Channel getChannelByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<Channel> getChannelsPage(
@@ -56,11 +71,11 @@ public interface ChannelResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postChannelsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Channel patchChannel(Long channelId, Channel channel)
+		throws Exception;
+
+	public Channel patchChannelByExternalReferenceCode(
+			String externalReferenceCode, Channel channel)
 		throws Exception;
 
 	public Channel postChannel(Channel channel) throws Exception;
@@ -68,35 +83,20 @@ public interface ChannelResource {
 	public Response postChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteChannelByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Channel getChannelByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Channel patchChannelByExternalReferenceCode(
-			String externalReferenceCode, Channel channel)
-		throws Exception;
-
-	public Channel putChannelByExternalReferenceCode(
-			String externalReferenceCode, Channel channel)
-		throws Exception;
-
-	public void deleteChannel(Long channelId) throws Exception;
-
-	public Response deleteChannelBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Channel getChannel(Long channelId) throws Exception;
-
-	public Channel patchChannel(Long channelId, Channel channel)
+	public Response postChannelsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Channel putChannel(Long channelId, Channel channel) throws Exception;
 
 	public Response putChannelBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Channel putChannelByExternalReferenceCode(
+			String externalReferenceCode, Channel channel)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

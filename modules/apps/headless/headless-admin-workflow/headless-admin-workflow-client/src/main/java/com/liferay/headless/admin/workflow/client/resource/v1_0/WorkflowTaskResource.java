@@ -41,27 +41,6 @@ public interface WorkflowTaskResource {
 		return new Builder();
 	}
 
-	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			Long workflowInstanceId, Boolean completed, Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getWorkflowInstanceWorkflowTasksPageHttpResponse(
-				Long workflowInstanceId, Boolean completed,
-				Pagination pagination)
-		throws Exception;
-
-	public void postWorkflowInstanceWorkflowTasksPageExportBatch(
-			Long workflowInstanceId, Boolean completed, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
-				Long workflowInstanceId, Boolean completed, String callbackURL,
-				String contentType, String fieldNames)
-		throws Exception;
-
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksAssignedToMePage(
 			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
@@ -84,22 +63,27 @@ public interface WorkflowTaskResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> postWorkflowTasksPage(
-			Pagination pagination, String sortString,
-			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
-			Pagination pagination, String sortString,
-			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+	public HttpInvoker.HttpResponse
+			getWorkflowInstanceWorkflowTasksPageHttpResponse(
+				Long workflowInstanceId, Boolean completed,
+				Pagination pagination)
 		throws Exception;
 
-	public void patchWorkflowTaskAssignToUser(
-			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+
+	public HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
+			Long workflowTaskId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchWorkflowTaskAssignToUserHttpResponse(
-			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getWorkflowTaskHasAssignableUsersHttpResponse(Long workflowTaskId)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
@@ -146,15 +130,6 @@ public interface WorkflowTaskResource {
 				Long assigneeId, Pagination pagination)
 		throws Exception;
 
-	public void patchWorkflowTaskChangeTransition(
-			ChangeTransition[] changeTransitions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			patchWorkflowTaskChangeTransitionHttpResponse(
-				ChangeTransition[] changeTransitions)
-		throws Exception;
-
 	public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
 			Long creatorId, Pagination pagination)
 		throws Exception;
@@ -162,6 +137,23 @@ public interface WorkflowTaskResource {
 	public HttpInvoker.HttpResponse
 			getWorkflowTasksSubmittingUserPageHttpResponse(
 				Long creatorId, Pagination pagination)
+		throws Exception;
+
+	public void patchWorkflowTaskAssignToUser(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchWorkflowTaskAssignToUserHttpResponse(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception;
+
+	public void patchWorkflowTaskChangeTransition(
+			ChangeTransition[] changeTransitions)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			patchWorkflowTaskChangeTransitionHttpResponse(
+				ChangeTransition[] changeTransitions)
 		throws Exception;
 
 	public void patchWorkflowTaskUpdateDueDate(
@@ -172,10 +164,15 @@ public interface WorkflowTaskResource {
 			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 		throws Exception;
 
-	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+	public void postWorkflowInstanceWorkflowTasksPageExportBatch(
+			Long workflowInstanceId, Boolean completed, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
-			Long workflowTaskId)
+	public HttpInvoker.HttpResponse
+			postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
+				Long workflowInstanceId, Boolean completed, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
@@ -215,19 +212,22 @@ public interface WorkflowTaskResource {
 				Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
-	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getWorkflowTaskHasAssignableUsersHttpResponse(Long workflowTaskId)
-		throws Exception;
-
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskUpdateDueDateHttpResponse(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
+		throws Exception;
+
+	public Page<WorkflowTask> postWorkflowTasksPage(
+			Pagination pagination, String sortString,
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
+			Pagination pagination, String sortString,
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -338,247 +338,6 @@ public interface WorkflowTaskResource {
 
 	public static class WorkflowTaskResourceImpl
 		implements WorkflowTaskResource {
-
-		public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-				Long workflowInstanceId, Boolean completed,
-				Pagination pagination)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowInstanceWorkflowTasksPageHttpResponse(
-					workflowInstanceId, completed, pagination);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, WorkflowTaskSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getWorkflowInstanceWorkflowTasksPageHttpResponse(
-					Long workflowInstanceId, Boolean completed,
-					Pagination pagination)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks");
-
-			httpInvoker.path("workflowInstanceId", workflowInstanceId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void postWorkflowInstanceWorkflowTasksPageExportBatch(
-				Long workflowInstanceId, Boolean completed, String callbackURL,
-				String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
-					workflowInstanceId, completed, callbackURL, contentType,
-					fieldNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
-					Long workflowInstanceId, Boolean completed,
-					String callbackURL, String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch");
-
-			httpInvoker.path("workflowInstanceId", workflowInstanceId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
 
 		public Page<WorkflowTask>
 				getWorkflowInstanceWorkflowTasksAssignedToMePage(
@@ -828,14 +587,14 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<WorkflowTask> postWorkflowTasksPage(
-				Pagination pagination, String sortString,
-				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+		public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+				Long workflowInstanceId, Boolean completed,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postWorkflowTasksPageHttpResponse(
-					pagination, sortString, workflowTasksBulkSelection);
+				getWorkflowInstanceWorkflowTasksPageHttpResponse(
+					workflowInstanceId, completed, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -896,15 +655,13 @@ public interface WorkflowTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
-				Pagination pagination, String sortString,
-				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+		public HttpInvoker.HttpResponse
+				getWorkflowInstanceWorkflowTasksPageHttpResponse(
+					Long workflowInstanceId, Boolean completed,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				workflowTasksBulkSelection.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -923,7 +680,11 @@ public interface WorkflowTaskResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(
@@ -932,14 +693,12 @@ public interface WorkflowTaskResource {
 					"pageSize", String.valueOf(pagination.getPageSize()));
 			}
 
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks");
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks");
+
+			httpInvoker.path("workflowInstanceId", workflowInstanceId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -949,13 +708,11 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchWorkflowTaskAssignToUser(
-				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		public WorkflowTask getWorkflowTask(Long workflowTaskId)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse =
-				patchWorkflowTaskAssignToUserHttpResponse(
-					workflowTaskAssignToUsers);
+			HttpInvoker.HttpResponse httpResponse = getWorkflowTaskHttpResponse(
+				workflowTaskId);
 
 			String content = httpResponse.getContent();
 
@@ -1005,7 +762,7 @@ public interface WorkflowTaskResource {
 			}
 
 			try {
-				return;
+				return WorkflowTaskSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1016,22 +773,11 @@ public interface WorkflowTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				patchWorkflowTaskAssignToUserHttpResponse(
-					WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		public HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
+				Long workflowTaskId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (WorkflowTaskAssignToUser workflowTaskAssignToUserValue :
-					workflowTaskAssignToUsers) {
-
-				values.add(String.valueOf(workflowTaskAssignToUserValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1050,12 +796,120 @@ public interface WorkflowTaskResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user");
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}");
+
+			httpInvoker.path("workflowTaskId", workflowTaskId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowTaskHasAssignableUsersHttpResponse(workflowTaskId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Boolean.valueOf(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getWorkflowTaskHasAssignableUsersHttpResponse(
+					Long workflowTaskId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users");
+
+			httpInvoker.path("workflowTaskId", workflowTaskId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1640,120 +1494,6 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchWorkflowTaskChangeTransition(
-				ChangeTransition[] changeTransitions)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchWorkflowTaskChangeTransitionHttpResponse(
-					changeTransitions);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				patchWorkflowTaskChangeTransitionHttpResponse(
-					ChangeTransition[] changeTransitions)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (ChangeTransition changeTransitionValue : changeTransitions) {
-				values.add(String.valueOf(changeTransitionValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/change-transition");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
 				Long creatorId, Pagination pagination)
 			throws Exception {
@@ -1862,6 +1602,236 @@ public interface WorkflowTaskResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/submitting-user");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchWorkflowTaskAssignToUser(
+				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchWorkflowTaskAssignToUserHttpResponse(
+					workflowTaskAssignToUsers);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				patchWorkflowTaskAssignToUserHttpResponse(
+					WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			for (WorkflowTaskAssignToUser workflowTaskAssignToUserValue :
+					workflowTaskAssignToUsers) {
+
+				values.add(String.valueOf(workflowTaskAssignToUserValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchWorkflowTaskChangeTransition(
+				ChangeTransition[] changeTransitions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchWorkflowTaskChangeTransitionHttpResponse(
+					changeTransitions);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				patchWorkflowTaskChangeTransitionHttpResponse(
+					ChangeTransition[] changeTransitions)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			List<String> values = new ArrayList<>();
+
+			for (ChangeTransition changeTransitionValue : changeTransitions) {
+				values.add(String.valueOf(changeTransitionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/change-transition");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1987,11 +1957,15 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public WorkflowTask getWorkflowTask(Long workflowTaskId)
+		public void postWorkflowInstanceWorkflowTasksPageExportBatch(
+				Long workflowInstanceId, Boolean completed, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = getWorkflowTaskHttpResponse(
-				workflowTaskId);
+			HttpInvoker.HttpResponse httpResponse =
+				postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
+					workflowInstanceId, completed, callbackURL, contentType,
+					fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -2039,24 +2013,17 @@ public interface WorkflowTaskResource {
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
 			}
-
-			try {
-				return WorkflowTaskSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
 		}
 
-		public HttpInvoker.HttpResponse getWorkflowTaskHttpResponse(
-				Long workflowTaskId)
+		public HttpInvoker.HttpResponse
+				postWorkflowInstanceWorkflowTasksPageExportBatchHttpResponse(
+					Long workflowInstanceId, Boolean completed,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2075,14 +2042,32 @@ public interface WorkflowTaskResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}");
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/export-batch");
 
-			httpInvoker.path("workflowTaskId", workflowTaskId);
+			httpInvoker.path("workflowInstanceId", workflowInstanceId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2540,112 +2525,6 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTaskHasAssignableUsersHttpResponse(workflowTaskId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Boolean.valueOf(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getWorkflowTaskHasAssignableUsersHttpResponse(
-					Long workflowTaskId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users");
-
-			httpInvoker.path("workflowTaskId", workflowTaskId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public WorkflowTask postWorkflowTaskUpdateDueDate(
 				Long workflowTaskId,
 				WorkflowTaskAssignToMe workflowTaskAssignToMe)
@@ -2750,6 +2629,127 @@ public interface WorkflowTaskResource {
 						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/update-due-date");
 
 			httpInvoker.path("workflowTaskId", workflowTaskId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WorkflowTask> postWorkflowTasksPage(
+				Pagination pagination, String sortString,
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWorkflowTasksPageHttpResponse(
+					pagination, sortString, workflowTasksBulkSelection);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, WorkflowTaskSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
+				Pagination pagination, String sortString,
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				workflowTasksBulkSelection.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

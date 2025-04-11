@@ -86,30 +86,30 @@ public class ServletDataImpl implements ServletData {
 							ObjectEntryFolderResourceImpl.class,
 							"deleteObjectEntryFolderBatch"));
 					put(
-						"mutation#patchObjectEntryFolder",
-						new ObjectValuePair<>(
-							ObjectEntryFolderResourceImpl.class,
-							"patchObjectEntryFolder"));
-					put(
 						"mutation#deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
 							"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
+					put(
+						"mutation#patchObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"patchObjectEntryFolder"));
 					put(
 						"mutation#patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
 							"patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 					put(
-						"mutation#updateScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ObjectEntryFolderResourceImpl.class,
-							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
-					put(
 						"mutation#createScopeScopeKeyObjectEntryFolder",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
 							"postScopeScopeKeyObjectEntryFolder"));
+					put(
+						"mutation#updateScopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 
 					put(
 						"query#objectEntryFolder",

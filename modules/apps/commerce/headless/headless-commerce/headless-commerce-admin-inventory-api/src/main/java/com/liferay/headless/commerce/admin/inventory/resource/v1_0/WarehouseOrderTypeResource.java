@@ -58,17 +58,17 @@ public interface WarehouseOrderTypeResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public WarehouseOrderType
-			postWarehouseByExternalReferenceCodeWarehouseOrderType(
-				String externalReferenceCode,
-				WarehouseOrderType warehouseOrderType)
-		throws Exception;
-
 	public Page<WarehouseOrderType> getWarehouseIdWarehouseOrderTypesPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public WarehouseOrderType
+			postWarehouseByExternalReferenceCodeWarehouseOrderType(
+				String externalReferenceCode,
+				WarehouseOrderType warehouseOrderType)
 		throws Exception;
 
 	public WarehouseOrderType postWarehouseIdWarehouseOrderType(

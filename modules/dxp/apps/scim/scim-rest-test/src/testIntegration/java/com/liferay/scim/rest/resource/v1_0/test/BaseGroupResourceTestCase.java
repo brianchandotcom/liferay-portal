@@ -182,21 +182,6 @@ public abstract class BaseGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetV2Groups() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPostV2Group() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPostV2GroupSearch() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteV2Group() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Group group = testDeleteV2Group_addGroup();
@@ -216,7 +201,22 @@ public abstract class BaseGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetV2Groups() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPatchV2Group() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostV2Group() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostV2GroupSearch() throws Exception {
 		Assert.assertTrue(false);
 	}
 

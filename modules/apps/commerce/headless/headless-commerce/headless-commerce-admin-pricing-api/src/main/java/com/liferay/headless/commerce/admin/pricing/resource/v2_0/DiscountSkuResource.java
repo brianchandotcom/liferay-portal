@@ -55,15 +55,15 @@ public interface DiscountSkuResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountSku postDiscountByExternalReferenceCodeDiscountSku(
-			String externalReferenceCode, DiscountSku discountSku)
-		throws Exception;
-
 	public Page<DiscountSku> getDiscountIdDiscountSkusPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DiscountSku postDiscountByExternalReferenceCodeDiscountSku(
+			String externalReferenceCode, DiscountSku discountSku)
 		throws Exception;
 
 	public DiscountSku postDiscountIdDiscountSku(

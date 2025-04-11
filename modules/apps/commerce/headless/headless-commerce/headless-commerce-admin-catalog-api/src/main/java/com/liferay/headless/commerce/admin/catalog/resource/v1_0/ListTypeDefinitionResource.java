@@ -45,6 +45,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ListTypeDefinitionResource {
 
+	public void deleteSpecificationListTypeDefinition(
+			Long specificationId, Long listTypeDefinitionId)
+		throws Exception;
+
 	public Page<ListTypeDefinition> getSpecificationIdListTypeDefinitionsPage(
 			Long id)
 		throws Exception;
@@ -55,10 +59,6 @@ public interface ListTypeDefinitionResource {
 
 	public Response postSpecificationIdListTypeDefinitionBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteSpecificationListTypeDefinition(
-			Long specificationId, Long listTypeDefinitionId)
 		throws Exception;
 
 	public void postSpecificationListTypeDefinition(

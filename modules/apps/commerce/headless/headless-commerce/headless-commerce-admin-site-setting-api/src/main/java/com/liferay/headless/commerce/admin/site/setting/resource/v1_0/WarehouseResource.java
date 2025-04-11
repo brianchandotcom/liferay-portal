@@ -46,20 +46,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WarehouseResource {
 
-	public Page<Warehouse> getCommerceAdminSiteSettingGroupWarehousePage(
-			Long groupId, Boolean active, Pagination pagination)
-		throws Exception;
-
-	public Warehouse postCommerceAdminSiteSettingGroupWarehouse(
-			Long groupId, Warehouse warehouse)
-		throws Exception;
-
 	public Response deleteWarehouse(Long id) throws Exception;
 
 	public Response deleteWarehouseBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<Warehouse> getCommerceAdminSiteSettingGroupWarehousePage(
+			Long groupId, Boolean active, Pagination pagination)
+		throws Exception;
+
 	public Warehouse getWarehouse(Long id) throws Exception;
+
+	public Warehouse postCommerceAdminSiteSettingGroupWarehouse(
+			Long groupId, Warehouse warehouse)
+		throws Exception;
 
 	public Response putWarehouse(Long id, Warehouse warehouse) throws Exception;
 

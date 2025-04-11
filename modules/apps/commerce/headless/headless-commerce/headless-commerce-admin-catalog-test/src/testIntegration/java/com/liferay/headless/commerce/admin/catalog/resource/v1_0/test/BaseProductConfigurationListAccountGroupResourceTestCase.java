@@ -517,35 +517,6 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup()
-		throws Exception {
-
-		ProductConfigurationListAccountGroup
-			randomProductConfigurationListAccountGroup =
-				randomProductConfigurationListAccountGroup();
-
-		ProductConfigurationListAccountGroup
-			postProductConfigurationListAccountGroup =
-				testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
-					randomProductConfigurationListAccountGroup);
-
-		assertEquals(
-			randomProductConfigurationListAccountGroup,
-			postProductConfigurationListAccountGroup);
-		assertValid(postProductConfigurationListAccountGroup);
-	}
-
-	protected ProductConfigurationListAccountGroup
-			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
-				ProductConfigurationListAccountGroup
-					productConfigurationListAccountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductConfigurationListIdProductConfigurationListAccountGroupsPage()
 		throws Exception {
 
@@ -1072,6 +1043,35 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup()
+		throws Exception {
+
+		ProductConfigurationListAccountGroup
+			randomProductConfigurationListAccountGroup =
+				randomProductConfigurationListAccountGroup();
+
+		ProductConfigurationListAccountGroup
+			postProductConfigurationListAccountGroup =
+				testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
+					randomProductConfigurationListAccountGroup);
+
+		assertEquals(
+			randomProductConfigurationListAccountGroup,
+			postProductConfigurationListAccountGroup);
+		assertValid(postProductConfigurationListAccountGroup);
+	}
+
+	protected ProductConfigurationListAccountGroup
+			testPostProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup(
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -447,29 +447,6 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostTermByExternalReferenceCodeTermOrderType()
-		throws Exception {
-
-		TermOrderType randomTermOrderType = randomTermOrderType();
-
-		TermOrderType postTermOrderType =
-			testPostTermByExternalReferenceCodeTermOrderType_addTermOrderType(
-				randomTermOrderType);
-
-		assertEquals(randomTermOrderType, postTermOrderType);
-		assertValid(postTermOrderType);
-	}
-
-	protected TermOrderType
-			testPostTermByExternalReferenceCodeTermOrderType_addTermOrderType(
-				TermOrderType termOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetTermIdTermOrderTypesPage() throws Exception {
 		Long id = testGetTermIdTermOrderTypesPage_getId();
 		Long irrelevantId = testGetTermIdTermOrderTypesPage_getIrrelevantId();
@@ -641,6 +618,29 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostTermByExternalReferenceCodeTermOrderType()
+		throws Exception {
+
+		TermOrderType randomTermOrderType = randomTermOrderType();
+
+		TermOrderType postTermOrderType =
+			testPostTermByExternalReferenceCodeTermOrderType_addTermOrderType(
+				randomTermOrderType);
+
+		assertEquals(randomTermOrderType, postTermOrderType);
+		assertValid(postTermOrderType);
+	}
+
+	protected TermOrderType
+			testPostTermByExternalReferenceCodeTermOrderType_addTermOrderType(
+				TermOrderType termOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

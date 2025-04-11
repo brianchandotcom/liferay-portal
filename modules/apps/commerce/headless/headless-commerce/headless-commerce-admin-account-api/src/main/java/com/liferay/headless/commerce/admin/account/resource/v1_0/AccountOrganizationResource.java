@@ -47,9 +47,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountOrganizationResource {
 
+	public Response deleteAccountByExternalReferenceCodeAccountOrganization(
+			String externalReferenceCode, Long organizationId)
+		throws Exception;
+
+	public Response deleteAccountIdAccountOrganization(
+			Long id, Long organizationId)
+		throws Exception;
+
+	public AccountOrganization
+			getAccountByExternalReferenceCodeAccountOrganization(
+				String externalReferenceCode, Long organizationId)
+		throws Exception;
+
 	public Page<AccountOrganization>
 			getAccountByExternalReferenceCodeAccountOrganizationsPage(
 				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public AccountOrganization getAccountIdAccountOrganization(
+			Long id, Long organizationId)
+		throws Exception;
+
+	public Page<AccountOrganization> getAccountIdAccountOrganizationsPage(
+			Long id, Pagination pagination)
 		throws Exception;
 
 	public AccountOrganization
@@ -58,33 +79,12 @@ public interface AccountOrganizationResource {
 				AccountOrganization accountOrganization)
 		throws Exception;
 
-	public Response deleteAccountByExternalReferenceCodeAccountOrganization(
-			String externalReferenceCode, Long organizationId)
-		throws Exception;
-
-	public AccountOrganization
-			getAccountByExternalReferenceCodeAccountOrganization(
-				String externalReferenceCode, Long organizationId)
-		throws Exception;
-
-	public Page<AccountOrganization> getAccountIdAccountOrganizationsPage(
-			Long id, Pagination pagination)
-		throws Exception;
-
 	public AccountOrganization postAccountIdAccountOrganization(
 			Long id, AccountOrganization accountOrganization)
 		throws Exception;
 
 	public Response postAccountIdAccountOrganizationBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteAccountIdAccountOrganization(
-			Long id, Long organizationId)
-		throws Exception;
-
-	public AccountOrganization getAccountIdAccountOrganization(
-			Long id, Long organizationId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

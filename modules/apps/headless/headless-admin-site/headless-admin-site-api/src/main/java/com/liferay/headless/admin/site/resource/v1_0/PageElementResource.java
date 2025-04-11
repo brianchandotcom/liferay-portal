@@ -45,21 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageElementResource {
 
-	public Page<PageElement>
-			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				String pageExperienceExternalReferenceCode, Boolean flatten)
-		throws Exception;
-
-	public PageElement
-			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				String pageExperienceExternalReferenceCode,
-				PageElement pageElement)
-		throws Exception;
-
 	public void deleteSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode,
@@ -74,14 +59,22 @@ public interface PageElementResource {
 			String pageElementExternalReferenceCode)
 		throws Exception;
 
-	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
-			String siteExternalReferenceCode,
-			String pageSpecificationExternalReferenceCode,
-			String pageExperienceExternalReferenceCode,
-			String pageElementExternalReferenceCode, PageElement pageElement)
+	public Page<PageElement>
+			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode,
+				String pageElementExternalReferenceCode, Boolean flatten)
 		throws Exception;
 
-	public PageElement putSiteSiteByExternalReferenceCodePageElement(
+	public Page<PageElement>
+			getSiteSiteByExternalReferenceCodePageExperiencePageElementsPage(
+				String siteExternalReferenceCode,
+				String pageSpecificationExternalReferenceCode,
+				String pageExperienceExternalReferenceCode, Boolean flatten)
+		throws Exception;
+
+	public PageElement patchSiteSiteByExternalReferenceCodePageElement(
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode,
 			String pageExperienceExternalReferenceCode,
@@ -97,12 +90,19 @@ public interface PageElementResource {
 				FragmentComposition fragmentComposition)
 		throws Exception;
 
-	public Page<PageElement>
-			getSiteSiteByExternalReferenceCodePageElementPageElementsPage(
+	public PageElement
+			postSiteSiteByExternalReferenceCodePageExperiencePageElement(
 				String siteExternalReferenceCode,
 				String pageSpecificationExternalReferenceCode,
 				String pageExperienceExternalReferenceCode,
-				String pageElementExternalReferenceCode, Boolean flatten)
+				PageElement pageElement)
+		throws Exception;
+
+	public PageElement putSiteSiteByExternalReferenceCodePageElement(
+			String siteExternalReferenceCode,
+			String pageSpecificationExternalReferenceCode,
+			String pageExperienceExternalReferenceCode,
+			String pageElementExternalReferenceCode, PageElement pageElement)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

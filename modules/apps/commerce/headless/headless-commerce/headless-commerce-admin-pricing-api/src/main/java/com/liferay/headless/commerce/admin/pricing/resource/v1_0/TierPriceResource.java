@@ -46,16 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TierPriceResource {
 
+	public Response deleteTierPrice(Long id) throws Exception;
+
+	public Response deleteTierPriceBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteTierPriceByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<TierPrice> getPriceEntryByExternalReferenceCodeTierPricesPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public TierPrice postPriceEntryByExternalReferenceCodeTierPrice(
+	public Page<TierPrice> getPriceEntryIdTierPricesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public TierPrice getTierPrice(Long id) throws Exception;
+
+	public TierPrice getTierPriceByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchTierPrice(Long id, TierPrice tierPrice)
+		throws Exception;
+
+	public Response patchTierPriceByExternalReferenceCode(
 			String externalReferenceCode, TierPrice tierPrice)
 		throws Exception;
 
-	public Page<TierPrice> getPriceEntryIdTierPricesPage(
-			Long id, Pagination pagination)
+	public TierPrice postPriceEntryByExternalReferenceCodeTierPrice(
+			String externalReferenceCode, TierPrice tierPrice)
 		throws Exception;
 
 	public TierPrice postPriceEntryIdTierPrice(Long id, TierPrice tierPrice)
@@ -63,28 +85,6 @@ public interface TierPriceResource {
 
 	public Response postPriceEntryIdTierPriceBatch(
 			String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteTierPriceByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public TierPrice getTierPriceByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchTierPriceByExternalReferenceCode(
-			String externalReferenceCode, TierPrice tierPrice)
-		throws Exception;
-
-	public Response deleteTierPrice(Long id) throws Exception;
-
-	public Response deleteTierPriceBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public TierPrice getTierPrice(Long id) throws Exception;
-
-	public Response patchTierPrice(Long id, TierPrice tierPrice)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

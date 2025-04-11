@@ -285,35 +285,6 @@ public class Mutation {
 				skuUnitOfMeasureKey, skuOptions));
 	}
 
-	@GraphQLField
-	public WishList createChannelByExternalReferenceCodeWishList(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("wishList") WishList wishList)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wishListResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wishListResource ->
-				wishListResource.postChannelByExternalReferenceCodeWishList(
-					externalReferenceCode, accountId, wishList));
-	}
-
-	@GraphQLField
-	public WishList createChannelWishList(
-			@GraphQLName("channelId") Long channelId,
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("wishList") WishList wishList)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wishListResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wishListResource -> wishListResource.postChannelWishList(
-				channelId, accountId, wishList));
-	}
-
 	@GraphQLField(description = "Deletes a wishlist by wishListId.")
 	public boolean deleteWishList(@GraphQLName("wishListId") Long wishListId)
 		throws Exception {
@@ -351,6 +322,35 @@ public class Mutation {
 			this::_populateResourceContext,
 			wishListResource -> wishListResource.patchWishList(
 				wishListId, accountId, wishList));
+	}
+
+	@GraphQLField
+	public WishList createChannelByExternalReferenceCodeWishList(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("wishList") WishList wishList)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wishListResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wishListResource ->
+				wishListResource.postChannelByExternalReferenceCodeWishList(
+					externalReferenceCode, accountId, wishList));
+	}
+
+	@GraphQLField
+	public WishList createChannelWishList(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("wishList") WishList wishList)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wishListResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wishListResource -> wishListResource.postChannelWishList(
+				channelId, accountId, wishList));
 	}
 
 	@GraphQLField(description = "Deletes a wishlist item by wishListItemId.")

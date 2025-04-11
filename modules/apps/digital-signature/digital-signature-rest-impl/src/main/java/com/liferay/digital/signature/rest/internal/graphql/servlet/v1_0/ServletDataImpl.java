@@ -80,11 +80,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createSiteDSEnvelopesPageExportBatch",
-						new ObjectValuePair<>(
-							DSEnvelopeResourceImpl.class,
-							"postSiteDSEnvelopesPageExportBatch"));
-					put(
 						"mutation#createSiteDSEnvelope",
 						new ObjectValuePair<>(
 							DSEnvelopeResourceImpl.class,
@@ -95,20 +90,25 @@ public class ServletDataImpl implements ServletData {
 							DSEnvelopeResourceImpl.class,
 							"postSiteDSEnvelopeBatch"));
 					put(
+						"mutation#createSiteDSEnvelopesPageExportBatch",
+						new ObjectValuePair<>(
+							DSEnvelopeResourceImpl.class,
+							"postSiteDSEnvelopesPageExportBatch"));
+					put(
 						"mutation#createSiteDSRecipientViewDefinition",
 						new ObjectValuePair<>(
 							DSRecipientViewDefinitionResourceImpl.class,
 							"postSiteDSRecipientViewDefinition"));
 
 					put(
+						"query#dSEnvelope",
+						new ObjectValuePair<>(
+							DSEnvelopeResourceImpl.class, "getSiteDSEnvelope"));
+					put(
 						"query#dSEnvelopes",
 						new ObjectValuePair<>(
 							DSEnvelopeResourceImpl.class,
 							"getSiteDSEnvelopesPage"));
-					put(
-						"query#dSEnvelope",
-						new ObjectValuePair<>(
-							DSEnvelopeResourceImpl.class, "getSiteDSEnvelope"));
 				}
 			};
 

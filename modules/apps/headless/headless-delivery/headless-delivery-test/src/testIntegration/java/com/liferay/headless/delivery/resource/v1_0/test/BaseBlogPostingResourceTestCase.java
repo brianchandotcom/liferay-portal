@@ -380,6 +380,79 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteBlogPostingMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting =
+			testDeleteBlogPostingMyRating_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
+				blogPosting.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.getBlogPostingMyRatingHttpResponse(
+				blogPosting.getId()));
+		assertHttpResponseStatusCode(
+			404, blogPostingResource.getBlogPostingMyRatingHttpResponse(0L));
+	}
+
+	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
+	public void testDeleteSiteBlogPostingByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting =
+			testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.
+				deleteSiteBlogPostingByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
+						blogPosting),
+					blogPosting.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.
+				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
+						blogPosting),
+					blogPosting.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.
+				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
+						blogPosting),
+					"-"));
+	}
+
+	protected Long testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
+			BlogPosting blogPosting)
+		throws Exception {
+
+		return blogPosting.getSiteId();
+	}
+
+	protected BlogPosting
+			testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testGetBlogPosting() throws Exception {
 		BlogPosting postBlogPosting = testGetBlogPosting_addBlogPosting();
 
@@ -681,85 +754,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPatchBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
-
-		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
-			postBlogPosting.getId(), randomPatchBlogPosting);
-
-		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchBlogPosting, expectedPatchBlogPosting);
-
-		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
-			patchBlogPosting.getId());
-
-		assertEquals(expectedPatchBlogPosting, getBlogPosting);
-		assertValid(getBlogPosting);
-	}
-
-	protected BlogPosting testPatchBlogPosting_addBlogPosting()
-		throws Exception {
-
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testPutBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
-
-		BlogPosting randomBlogPosting = randomBlogPosting();
-
-		BlogPosting putBlogPosting = blogPostingResource.putBlogPosting(
-			postBlogPosting.getId(), randomBlogPosting);
-
-		assertEquals(randomBlogPosting, putBlogPosting);
-		assertValid(putBlogPosting);
-
-		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
-			putBlogPosting.getId());
-
-		assertEquals(randomBlogPosting, getBlogPosting);
-		assertValid(getBlogPosting);
-	}
-
-	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testDeleteBlogPostingMyRating() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting blogPosting =
-			testDeleteBlogPostingMyRating_addBlogPosting();
-
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
-				blogPosting.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingMyRatingHttpResponse(
-				blogPosting.getId()));
-		assertHttpResponseStatusCode(
-			404, blogPostingResource.getBlogPostingMyRatingHttpResponse(0L));
-	}
-
-	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
-		throws Exception {
-
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
 	public void testGetBlogPostingPermissionsPage() throws Exception {
 		BlogPosting postBlogPosting =
 			testGetBlogPostingPermissionsPage_addBlogPosting();
@@ -778,43 +772,38 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testPutBlogPostingPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting blogPosting =
-			testPutBlogPostingPermissionsPage_addBlogPosting();
+	public void testGetBlogPostingRenderedContentByDisplayPageDisplayPageKey()
+		throws Exception {
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
-				blogPosting.getId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"VIEW"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
-				0L,
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
+		Assert.assertTrue(false);
 	}
 
-	protected BlogPosting testPutBlogPostingPermissionsPage_addBlogPosting()
+	@Test
+	public void testGetSiteBlogPostingByExternalReferenceCode()
+		throws Exception {
+
+		BlogPosting postBlogPosting =
+			testGetSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+
+		BlogPosting getBlogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+					postBlogPosting),
+				postBlogPosting.getExternalReferenceCode());
+
+		assertEquals(postBlogPosting, getBlogPosting);
+		assertValid(getBlogPosting);
+	}
+
+	protected Long testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+			BlogPosting blogPosting)
+		throws Exception {
+
+		return blogPosting.getSiteId();
+	}
+
+	protected BlogPosting
+			testGetSiteBlogPostingByExternalReferenceCode_addBlogPosting()
 		throws Exception {
 
 		return blogPostingResource.postSiteBlogPosting(
@@ -822,10 +811,158 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testGetBlogPostingRenderedContentByDisplayPageDisplayPageKey()
+	public void testGraphQLGetSiteBlogPostingByExternalReferenceCode()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		BlogPosting blogPosting =
+			testGraphQLGetSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				blogPosting,
+				BlogPostingSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"blogPostingByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+													blogPosting) + "\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												blogPosting.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/blogPostingByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				blogPosting,
+				BlogPostingSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"blogPostingByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+														blogPosting) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													blogPosting.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/blogPostingByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+				BlogPosting blogPosting)
+		throws Exception {
+
+		return blogPosting.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteBlogPostingByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"blogPostingByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"blogPostingByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BlogPosting
+			testGraphQLGetSiteBlogPostingByExternalReferenceCode_addBlogPosting()
+		throws Exception {
+
+		return testGraphQLBlogPosting_addBlogPosting();
+	}
+
+	@Test
+	public void testGetSiteBlogPostingPermissionsPage() throws Exception {
+		Page<Permission> page =
+			blogPostingResource.getSiteBlogPostingPermissionsPage(
+				testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected BlogPosting testGetSiteBlogPostingPermissionsPage_addBlogPosting()
+		throws Exception {
+
+		return testPostSiteBlogPosting_addBlogPosting(randomBlogPosting());
 	}
 
 	@Test
@@ -1316,6 +1453,35 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testPatchBlogPosting() throws Exception {
+		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
+
+		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
+			postBlogPosting.getId(), randomPatchBlogPosting);
+
+		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchBlogPosting, expectedPatchBlogPosting);
+
+		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
+			patchBlogPosting.getId());
+
+		assertEquals(expectedPatchBlogPosting, getBlogPosting);
+		assertValid(getBlogPosting);
+	}
+
+	protected BlogPosting testPatchBlogPosting_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testPostSiteBlogPosting() throws Exception {
 		BlogPosting randomBlogPosting = randomBlogPosting();
 
@@ -1345,222 +1511,71 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteBlogPostingByExternalReferenceCode()
-		throws Exception {
+	public void testPutBlogPosting() throws Exception {
+		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting blogPosting =
-			testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+		BlogPosting randomBlogPosting = randomBlogPosting();
 
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.
-				deleteSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
-					blogPosting.getExternalReferenceCode()));
+		BlogPosting putBlogPosting = blogPostingResource.putBlogPosting(
+			postBlogPosting.getId(), randomBlogPosting);
 
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.
-				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
-					blogPosting.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.
-				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
-					"-"));
-	}
+		assertEquals(randomBlogPosting, putBlogPosting);
+		assertValid(putBlogPosting);
 
-	protected Long testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-			BlogPosting blogPosting)
-		throws Exception {
+		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
+			putBlogPosting.getId());
 
-		return blogPosting.getSiteId();
-	}
-
-	protected BlogPosting
-			testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting()
-		throws Exception {
-
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testGetSiteBlogPostingByExternalReferenceCode()
-		throws Exception {
-
-		BlogPosting postBlogPosting =
-			testGetSiteBlogPostingByExternalReferenceCode_addBlogPosting();
-
-		BlogPosting getBlogPosting =
-			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
-				testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-					postBlogPosting),
-				postBlogPosting.getExternalReferenceCode());
-
-		assertEquals(postBlogPosting, getBlogPosting);
+		assertEquals(randomBlogPosting, getBlogPosting);
 		assertValid(getBlogPosting);
 	}
 
-	protected Long testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-			BlogPosting blogPosting)
-		throws Exception {
-
-		return blogPosting.getSiteId();
-	}
-
-	protected BlogPosting
-			testGetSiteBlogPostingByExternalReferenceCode_addBlogPosting()
-		throws Exception {
-
+	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
 		return blogPostingResource.postSiteBlogPosting(
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
-	public void testGraphQLGetSiteBlogPostingByExternalReferenceCode()
-		throws Exception {
-
+	public void testPutBlogPostingPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting =
-			testGraphQLGetSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+			testPutBlogPostingPermissionsPage_addBlogPosting();
 
-		// No namespace
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
-		Assert.assertTrue(
-			equals(
-				blogPosting,
-				BlogPostingSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"blogPostingByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-													blogPosting) + "\"");
+		assertHttpResponseStatusCode(
+			200,
+			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
+				blogPosting.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
 
-										put(
-											"externalReferenceCode",
-											"\"" +
-												blogPosting.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/blogPostingByExternalReferenceCode"))));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertTrue(
-			equals(
-				blogPosting,
-				BlogPostingSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessDelivery_v1_0",
-								new GraphQLField(
-									"blogPostingByExternalReferenceCode",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"siteKey",
-												"\"" +
-													testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-														blogPosting) + "\"");
-
-											put(
-												"externalReferenceCode",
-												"\"" +
-													blogPosting.
-														getExternalReferenceCode() +
-															"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
-						"Object/blogPostingByExternalReferenceCode"))));
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.putBlogPostingPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
 	}
 
-	protected Long
-			testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-				BlogPosting blogPosting)
+	protected BlogPosting testPutBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
-		return blogPosting.getSiteId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteBlogPostingByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"blogPostingByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessDelivery_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessDelivery_v1_0",
-						new GraphQLField(
-							"blogPostingByExternalReferenceCode",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"siteKey",
-										"\"" + irrelevantGroup.getGroupId() +
-											"\"");
-									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected BlogPosting
-			testGraphQLGetSiteBlogPostingByExternalReferenceCode_addBlogPosting()
-		throws Exception {
-
-		return testGraphQLBlogPosting_addBlogPosting();
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -1635,21 +1650,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		return blogPostingResource.postSiteBlogPosting(
 			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testGetSiteBlogPostingPermissionsPage() throws Exception {
-		Page<Permission> page =
-			blogPostingResource.getSiteBlogPostingPermissionsPage(
-				testGroup.getGroupId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected BlogPosting testGetSiteBlogPostingPermissionsPage_addBlogPosting()
-		throws Exception {
-
-		return testPostSiteBlogPosting_addBlogPosting(randomBlogPosting());
 	}
 
 	@Test

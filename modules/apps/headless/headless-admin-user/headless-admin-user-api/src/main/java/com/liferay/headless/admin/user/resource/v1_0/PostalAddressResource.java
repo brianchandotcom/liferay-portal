@@ -45,25 +45,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PostalAddressResource {
 
+	public void deletePostalAddress(Long postalAddressId) throws Exception;
+
+	public Response deletePostalAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deletePostalAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<PostalAddress>
 			getAccountByExternalReferenceCodePostalAddressesPage(
 				String externalReferenceCode)
 		throws Exception;
 
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
-		throws Exception;
-
-	public Response postAccountPostalAddressesPageExportBatch(
-			Long accountId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public PostalAddress postAccountPostalAddress(
-			Long accountId, PostalAddress postalAddress)
-		throws Exception;
-
-	public Response postAccountPostalAddressBatch(
-			Long accountId, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PostalAddress>
@@ -75,44 +71,11 @@ public interface PostalAddressResource {
 			String organizationId)
 		throws Exception;
 
-	public Response postOrganizationPostalAddressesPageExportBatch(
-			String organizationId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public void deletePostalAddressByExternalReferenceCode(
-			String externalReferenceCode)
+	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception;
 
 	public PostalAddress getPostalAddressByExternalReferenceCode(
 			String externalReferenceCode)
-		throws Exception;
-
-	public PostalAddress patchPostalAddressByExternalReferenceCode(
-			String externalReferenceCode, PostalAddress postalAddress)
-		throws Exception;
-
-	public PostalAddress putPostalAddressByExternalReferenceCode(
-			String externalReferenceCode, PostalAddress postalAddress)
-		throws Exception;
-
-	public void deletePostalAddress(Long postalAddressId) throws Exception;
-
-	public Response deletePostalAddressBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public PostalAddress getPostalAddress(Long postalAddressId)
-		throws Exception;
-
-	public PostalAddress patchPostalAddress(
-			Long postalAddressId, PostalAddress postalAddress)
-		throws Exception;
-
-	public PostalAddress putPostalAddress(
-			Long postalAddressId, PostalAddress postalAddress)
-		throws Exception;
-
-	public Response putPostalAddressBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<PostalAddress>
@@ -124,9 +87,46 @@ public interface PostalAddressResource {
 			Long userAccountId)
 		throws Exception;
 
+	public PostalAddress patchPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
+		throws Exception;
+
+	public PostalAddress patchPostalAddressByExternalReferenceCode(
+			String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception;
+
+	public PostalAddress postAccountPostalAddress(
+			Long accountId, PostalAddress postalAddress)
+		throws Exception;
+
+	public Response postAccountPostalAddressBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postAccountPostalAddressesPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public Response postOrganizationPostalAddressesPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Response postUserAccountPostalAddressesPageExportBatch(
 			Long userAccountId, String callbackURL, String contentType,
 			String fieldNames)
+		throws Exception;
+
+	public PostalAddress putPostalAddress(
+			Long postalAddressId, PostalAddress postalAddress)
+		throws Exception;
+
+	public Response putPostalAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public PostalAddress putPostalAddressByExternalReferenceCode(
+			String externalReferenceCode, PostalAddress postalAddress)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

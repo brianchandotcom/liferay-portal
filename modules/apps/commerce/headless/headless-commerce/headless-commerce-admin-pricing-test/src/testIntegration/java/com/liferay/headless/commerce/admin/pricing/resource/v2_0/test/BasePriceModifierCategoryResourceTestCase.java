@@ -475,30 +475,6 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceModifierByExternalReferenceCodePriceModifierCategory()
-		throws Exception {
-
-		PriceModifierCategory randomPriceModifierCategory =
-			randomPriceModifierCategory();
-
-		PriceModifierCategory postPriceModifierCategory =
-			testPostPriceModifierByExternalReferenceCodePriceModifierCategory_addPriceModifierCategory(
-				randomPriceModifierCategory);
-
-		assertEquals(randomPriceModifierCategory, postPriceModifierCategory);
-		assertValid(postPriceModifierCategory);
-	}
-
-	protected PriceModifierCategory
-			testPostPriceModifierByExternalReferenceCodePriceModifierCategory_addPriceModifierCategory(
-				PriceModifierCategory priceModifierCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceModifierIdPriceModifierCategoriesPage()
 		throws Exception {
 
@@ -976,6 +952,30 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceModifierByExternalReferenceCodePriceModifierCategory()
+		throws Exception {
+
+		PriceModifierCategory randomPriceModifierCategory =
+			randomPriceModifierCategory();
+
+		PriceModifierCategory postPriceModifierCategory =
+			testPostPriceModifierByExternalReferenceCodePriceModifierCategory_addPriceModifierCategory(
+				randomPriceModifierCategory);
+
+		assertEquals(randomPriceModifierCategory, postPriceModifierCategory);
+		assertValid(postPriceModifierCategory);
+	}
+
+	protected PriceModifierCategory
+			testPostPriceModifierByExternalReferenceCodePriceModifierCategory_addPriceModifierCategory(
+				PriceModifierCategory priceModifierCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

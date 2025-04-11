@@ -57,14 +57,14 @@ public interface DiscountAccountGroupResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<DiscountAccountGroup> getDiscountIdDiscountAccountGroupsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public DiscountAccountGroup
 			postDiscountByExternalReferenceCodeDiscountAccountGroup(
 				String externalReferenceCode,
 				DiscountAccountGroup discountAccountGroup)
-		throws Exception;
-
-	public Page<DiscountAccountGroup> getDiscountIdDiscountAccountGroupsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public DiscountAccountGroup postDiscountIdDiscountAccountGroup(

@@ -46,18 +46,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductDisplayPageResource {
 
+	public void deleteProductDisplayPage(Long id) throws Exception;
+
+	public Response deleteProductDisplayPageBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ProductDisplayPage>
 			getChannelByExternalReferenceCodeProductDisplayPagesPage(
 				String externalReferenceCode, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ProductDisplayPage
-			postChannelByExternalReferenceCodeProductDisplayPage(
-				String externalReferenceCode,
-				ProductDisplayPage productDisplayPage)
 		throws Exception;
 
 	public Page<ProductDisplayPage> getChannelIdProductDisplayPagesPage(
@@ -67,19 +67,19 @@ public interface ProductDisplayPageResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ProductDisplayPage postChannelIdProductDisplayPage(
-			Long id, ProductDisplayPage productDisplayPage)
-		throws Exception;
-
-	public void deleteProductDisplayPage(Long id) throws Exception;
-
-	public Response deleteProductDisplayPageBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public ProductDisplayPage getProductDisplayPage(Long id) throws Exception;
 
 	public ProductDisplayPage patchProductDisplayPage(
+			Long id, ProductDisplayPage productDisplayPage)
+		throws Exception;
+
+	public ProductDisplayPage
+			postChannelByExternalReferenceCodeProductDisplayPage(
+				String externalReferenceCode,
+				ProductDisplayPage productDisplayPage)
+		throws Exception;
+
+	public ProductDisplayPage postChannelIdProductDisplayPage(
 			Long id, ProductDisplayPage productDisplayPage)
 		throws Exception;
 

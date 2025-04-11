@@ -91,22 +91,6 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/accounts'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/accounts")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchFieldAccount(Field[] fields) throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/orders'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -146,22 +130,6 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/orders'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/orders")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchFieldOrder(Field[] fields) throws Exception {
 	}
 
 	/**
@@ -211,22 +179,6 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/people'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/people")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchFieldPeople(Field[] fields) throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/products'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -266,6 +218,54 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/accounts'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/fields/accounts")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchFieldAccount(Field[] fields) throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/orders'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/fields/orders")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchFieldOrder(Field[] fields) throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/analytics-settings-rest/v1.0/fields/people'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/fields/people")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void patchFieldPeople(Field[] fields) throws Exception {
 	}
 
 	/**

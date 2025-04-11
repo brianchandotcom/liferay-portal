@@ -337,13 +337,6 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testPatchProductByExternalReferenceCodeTaxConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdTaxConfiguration() throws Exception {
 		ProductTaxConfiguration postProductTaxConfiguration =
 			testGetProductIdTaxConfiguration_addProductTaxConfiguration();
@@ -480,6 +473,13 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProductTaxConfiguration_addProductTaxConfiguration();
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCodeTaxConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

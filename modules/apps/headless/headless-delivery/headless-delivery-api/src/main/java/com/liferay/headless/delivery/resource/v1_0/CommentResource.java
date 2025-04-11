@@ -48,6 +48,35 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommentResource {
 
+	public void deleteComment(Long commentId) throws Exception;
+
+	public Response deleteCommentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void
+			deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String blogPostingExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String parentCommentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String documentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String structuredContentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<Comment> getBlogPostingCommentsPage(
 			Long blogPostingId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -56,31 +85,7 @@ public interface CommentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postBlogPostingCommentsPageExportBatch(
-			Long blogPostingId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
-		throws Exception;
-
-	public Response postBlogPostingCommentBatch(
-			Long blogPostingId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteComment(Long commentId) throws Exception;
-
-	public Response deleteCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Comment getComment(Long commentId) throws Exception;
-
-	public Comment putComment(Long commentId, Comment comment) throws Exception;
-
-	public Response putCommentBatch(String callbackURL, Object object)
-		throws Exception;
 
 	public Page<Comment> getCommentCommentsPage(
 			Long parentCommentId, String search,
@@ -88,9 +93,6 @@ public interface CommentResource {
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getDocumentCommentsPage(
@@ -101,41 +103,9 @@ public interface CommentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postDocumentCommentsPageExportBatch(
-			Long documentId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public Comment postDocumentComment(Long documentId, Comment comment)
-		throws Exception;
-
-	public Response postDocumentCommentBatch(
-			Long documentId, String callbackURL, Object object)
-		throws Exception;
-
-	public void
-			deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String blogPostingExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
 	public Comment
 			getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
 				Long siteId, String blogPostingExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public Comment
-			putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String blogPostingExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
-		throws Exception;
-
-	public void
-			deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String parentCommentExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
@@ -146,32 +116,8 @@ public interface CommentResource {
 		throws Exception;
 
 	public Comment
-			putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String parentCommentExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
-		throws Exception;
-
-	public void
-			deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String documentExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public Comment
 			getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
 				Long siteId, String documentExternalReferenceCode,
-				String externalReferenceCode)
-		throws Exception;
-
-	public Comment
-			putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String documentExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
-		throws Exception;
-
-	public void
-			deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String structuredContentExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
@@ -179,12 +125,6 @@ public interface CommentResource {
 			getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
 				Long siteId, String structuredContentExternalReferenceCode,
 				String externalReferenceCode)
-		throws Exception;
-
-	public Comment
-			putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
-				Long siteId, String structuredContentExternalReferenceCode,
-				String externalReferenceCode, Comment comment)
 		throws Exception;
 
 	public Page<Comment> getStructuredContentCommentsPage(
@@ -195,8 +135,32 @@ public interface CommentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postStructuredContentCommentsPageExportBatch(
-			Long structuredContentId, String search,
+	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+		throws Exception;
+
+	public Response postBlogPostingCommentBatch(
+			Long blogPostingId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postBlogPostingCommentsPageExportBatch(
+			Long blogPostingId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public Comment postCommentComment(Long parentCommentId, Comment comment)
+		throws Exception;
+
+	public Comment postDocumentComment(Long documentId, Comment comment)
+		throws Exception;
+
+	public Response postDocumentCommentBatch(
+			Long documentId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postDocumentCommentsPageExportBatch(
+			Long documentId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
@@ -208,6 +172,42 @@ public interface CommentResource {
 
 	public Response postStructuredContentCommentBatch(
 			Long structuredContentId, String callbackURL, Object object)
+		throws Exception;
+
+	public Response postStructuredContentCommentsPageExportBatch(
+			Long structuredContentId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public Comment putComment(Long commentId, Comment comment) throws Exception;
+
+	public Response putCommentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Comment
+			putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String blogPostingExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public Comment
+			putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String parentCommentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public Comment
+			putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String documentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public Comment
+			putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String structuredContentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

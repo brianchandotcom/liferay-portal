@@ -45,27 +45,26 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WebUrlResource {
 
+	public void deleteWebUrl(Long webUrlId) throws Exception;
+
+	public Response deleteWebUrlBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteWebUrlByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<WebUrl> getAccountByExternalReferenceCodeWebUrlsPage(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Page<WebUrl> getAccountWebUrlsPage(Long accountId) throws Exception;
 
-	public Response postAccountWebUrlsPageExportBatch(
-			Long accountId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public Page<WebUrl> getOrganizationByExternalReferenceCodeWebUrlsPage(
 			String externalReferenceCode)
 		throws Exception;
 
 	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
-		throws Exception;
-
-	public Response postOrganizationWebUrlsPageExportBatch(
-			String organizationId, String callbackURL, String contentType,
-			String fieldNames)
 		throws Exception;
 
 	public Page<WebUrl> getUserAccountByExternalReferenceCodeWebUrlsPage(
@@ -75,30 +74,31 @@ public interface WebUrlResource {
 	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)
 		throws Exception;
 
-	public Response postUserAccountWebUrlsPageExportBatch(
-			Long userAccountId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public void deleteWebUrlByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public WebUrl getWebUrl(Long webUrlId) throws Exception;
 
 	public WebUrl getWebUrlByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
+
+	public WebUrl patchWebUrl(Long webUrlId, WebUrl webUrl) throws Exception;
 
 	public WebUrl patchWebUrlByExternalReferenceCode(
 			String externalReferenceCode, WebUrl webUrl)
 		throws Exception;
 
-	public void deleteWebUrl(Long webUrlId) throws Exception;
-
-	public Response deleteWebUrlBatch(String callbackURL, Object object)
+	public Response postAccountWebUrlsPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
-	public WebUrl getWebUrl(Long webUrlId) throws Exception;
+	public Response postOrganizationWebUrlsPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
 
-	public WebUrl patchWebUrl(Long webUrlId, WebUrl webUrl) throws Exception;
+	public Response postUserAccountWebUrlsPageExportBatch(
+			Long userAccountId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

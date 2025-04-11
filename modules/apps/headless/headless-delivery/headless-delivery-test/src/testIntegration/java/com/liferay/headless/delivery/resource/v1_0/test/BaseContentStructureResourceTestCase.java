@@ -230,6 +230,26 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryContentStructurePermissionsPage()
+		throws Exception {
+
+		Page<Permission> page =
+			contentStructureResource.
+				getAssetLibraryContentStructurePermissionsPage(
+					testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ContentStructure
+			testGetAssetLibraryContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryContentStructuresPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryContentStructuresPage_getAssetLibraryId();
@@ -681,75 +701,6 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryContentStructurePermissionsPage()
-		throws Exception {
-
-		Page<Permission> page =
-			contentStructureResource.
-				getAssetLibraryContentStructurePermissionsPage(
-					testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected ContentStructure
-			testGetAssetLibraryContentStructurePermissionsPage_addContentStructure()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAssetLibraryContentStructurePermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContentStructure contentStructure =
-			testPutAssetLibraryContentStructurePermissionsPage_addContentStructure();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			contentStructureResource.
-				putAssetLibraryContentStructurePermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			contentStructureResource.
-				putAssetLibraryContentStructurePermissionsPageHttpResponse(
-					testDepotEntry.getDepotEntryId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected ContentStructure
-			testPutAssetLibraryContentStructurePermissionsPage_addContentStructure()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetContentStructure() throws Exception {
 		ContentStructure postContentStructure =
 			testGetContentStructure_addContentStructure();
@@ -1083,46 +1034,16 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
-	public void testPutContentStructurePermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContentStructure contentStructure =
-			testPutContentStructurePermissionsPage_addContentStructure();
+	public void testGetSiteContentStructurePermissionsPage() throws Exception {
+		Page<Permission> page =
+			contentStructureResource.getSiteContentStructurePermissionsPage(
+				testGroup.getGroupId(), RoleConstants.GUEST);
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			contentStructureResource.
-				putContentStructurePermissionsPageHttpResponse(
-					contentStructure.getId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			contentStructureResource.
-				putContentStructurePermissionsPageHttpResponse(
-					0L,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
+		Assert.assertNotNull(page);
 	}
 
 	protected ContentStructure
-			testPutContentStructurePermissionsPage_addContentStructure()
+			testGetSiteContentStructurePermissionsPage_addContentStructure()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1648,16 +1569,95 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteContentStructurePermissionsPage() throws Exception {
-		Page<Permission> page =
-			contentStructureResource.getSiteContentStructurePermissionsPage(
-				testGroup.getGroupId(), RoleConstants.GUEST);
+	public void testPutAssetLibraryContentStructurePermissionsPage()
+		throws Exception {
 
-		Assert.assertNotNull(page);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure =
+			testPutAssetLibraryContentStructurePermissionsPage_addContentStructure();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			contentStructureResource.
+				putAssetLibraryContentStructurePermissionsPageHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			contentStructureResource.
+				putAssetLibraryContentStructurePermissionsPageHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected ContentStructure
-			testGetSiteContentStructurePermissionsPage_addContentStructure()
+			testPutAssetLibraryContentStructurePermissionsPage_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutContentStructurePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure =
+			testPutContentStructurePermissionsPage_addContentStructure();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			contentStructureResource.
+				putContentStructurePermissionsPageHttpResponse(
+					contentStructure.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			contentStructureResource.
+				putContentStructurePermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ContentStructure
+			testPutContentStructurePermissionsPage_addContentStructure()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

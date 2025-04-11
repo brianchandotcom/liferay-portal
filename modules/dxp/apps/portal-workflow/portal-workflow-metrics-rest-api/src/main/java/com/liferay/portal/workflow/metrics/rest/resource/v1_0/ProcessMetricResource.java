@@ -47,6 +47,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProcessMetricResource {
 
+	public ProcessMetric getProcessMetric(
+			Long processId, Boolean completed, Date dateEnd, Date dateStart)
+		throws Exception;
+
 	public Page<ProcessMetric> getProcessMetricsPage(
 			String title, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -55,10 +59,6 @@ public interface ProcessMetricResource {
 	public Response postProcessMetricsPageExportBatch(
 			String title, com.liferay.portal.kernel.search.Sort[] sorts,
 			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public ProcessMetric getProcessMetric(
-			Long processId, Boolean completed, Date dateEnd, Date dateStart)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

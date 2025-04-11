@@ -46,20 +46,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SkuResource {
 
-	public Page<Sku> getProductByExternalReferenceCodeSkusPage(
-			String externalReferenceCode, Pagination pagination)
+	public Response deleteSku(Long id) throws Exception;
+
+	public Response deleteSkuBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Sku postProductByExternalReferenceCodeSku(
-			String externalReferenceCode, Sku sku)
+	public Response deleteSkuByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<Sku> getProductByExternalReferenceCodeSkusPage(
+			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public Page<Sku> getProductIdSkusPage(Long id, Pagination pagination)
 		throws Exception;
 
-	public Sku postProductIdSku(Long id, Sku sku) throws Exception;
+	public Sku getSku(Long id) throws Exception;
 
-	public Response postProductIdSkuBatch(String callbackURL, Object object)
+	public Sku getSkuByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
 	public Page<Sku> getSkusPage(
@@ -69,6 +74,28 @@ public interface SkuResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public Page<Sku> getUnitOfMeasureSkusPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Sku patchSku(Long id, Sku sku) throws Exception;
+
+	public Sku patchSkuByExternalReferenceCode(
+			String externalReferenceCode, Sku sku)
+		throws Exception;
+
+	public Sku postProductByExternalReferenceCodeSku(
+			String externalReferenceCode, Sku sku)
+		throws Exception;
+
+	public Sku postProductIdSku(Long id, Sku sku) throws Exception;
+
+	public Response postProductIdSkuBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Response postSkusPageExportBatch(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -76,35 +103,8 @@ public interface SkuResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Response deleteSkuByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Sku getSkuByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Sku patchSkuByExternalReferenceCode(
-			String externalReferenceCode, Sku sku)
-		throws Exception;
-
 	public Sku putSkuByExternalReferenceCode(
 			String externalReferenceCode, Sku sku)
-		throws Exception;
-
-	public Response deleteSku(Long id) throws Exception;
-
-	public Response deleteSkuBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Sku getSku(Long id) throws Exception;
-
-	public Sku patchSku(Long id, Sku sku) throws Exception;
-
-	public Page<Sku> getUnitOfMeasureSkusPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

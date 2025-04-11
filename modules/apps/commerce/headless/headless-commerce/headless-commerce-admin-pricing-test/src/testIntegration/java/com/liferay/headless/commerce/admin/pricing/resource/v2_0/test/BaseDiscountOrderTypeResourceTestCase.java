@@ -456,29 +456,6 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountOrderType()
-		throws Exception {
-
-		DiscountOrderType randomDiscountOrderType = randomDiscountOrderType();
-
-		DiscountOrderType postDiscountOrderType =
-			testPostDiscountByExternalReferenceCodeDiscountOrderType_addDiscountOrderType(
-				randomDiscountOrderType);
-
-		assertEquals(randomDiscountOrderType, postDiscountOrderType);
-		assertValid(postDiscountOrderType);
-	}
-
-	protected DiscountOrderType
-			testPostDiscountByExternalReferenceCodeDiscountOrderType_addDiscountOrderType(
-				DiscountOrderType discountOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountOrderTypesPage() throws Exception {
 		Long id = testGetDiscountIdDiscountOrderTypesPage_getId();
 		Long irrelevantId =
@@ -921,6 +898,29 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountOrderType()
+		throws Exception {
+
+		DiscountOrderType randomDiscountOrderType = randomDiscountOrderType();
+
+		DiscountOrderType postDiscountOrderType =
+			testPostDiscountByExternalReferenceCodeDiscountOrderType_addDiscountOrderType(
+				randomDiscountOrderType);
+
+		assertEquals(randomDiscountOrderType, postDiscountOrderType);
+		assertValid(postDiscountOrderType);
+	}
+
+	protected DiscountOrderType
+			testPostDiscountByExternalReferenceCodeDiscountOrderType_addDiscountOrderType(
+				DiscountOrderType discountOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

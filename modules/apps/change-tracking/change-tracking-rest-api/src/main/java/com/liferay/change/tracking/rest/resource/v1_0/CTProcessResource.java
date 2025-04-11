@@ -46,20 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTProcessResource {
 
-	public Page<CTProcess> getCTProcessesPage(
-			String search, Integer[] status,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postCTProcessesPageExportBatch(
-			String search, Integer[] status,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
 	public void deleteCTProcess(Long ctProcessId) throws Exception;
 
 	public Response deleteCTProcessBatch(String callbackURL, Object object)
@@ -67,8 +53,22 @@ public interface CTProcessResource {
 
 	public CTProcess getCTProcess(Long ctProcessId) throws Exception;
 
+	public Page<CTProcess> getCTProcessesPage(
+			String search, Integer[] status,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public void postCTProcessRevert(
 			Long ctProcessId, String description, String name)
+		throws Exception;
+
+	public Response postCTProcessesPageExportBatch(
+			String search, Integer[] status,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

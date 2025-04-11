@@ -73,102 +73,6 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteShipmentItemByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ShipmentItem getShipmentByExternalReferenceCodeItem(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new ShipmentItem();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ShipmentItem patchShipmentItemByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			ShipmentItem shipmentItem)
-		throws Exception {
-
-		return new ShipmentItem();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -241,13 +145,43 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "shipmentItemId"
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteShipmentItemByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -255,46 +189,16 @@ public abstract class BaseShipmentItemResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/shipment-items/{shipmentItemId}")
+	@javax.ws.rs.Path(
+		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ShipmentItem getShipmentItem(
+	public ShipmentItem getShipmentByExternalReferenceCodeItem(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("shipmentItemId")
-			Long shipmentItemId)
-		throws Exception {
-
-		return new ShipmentItem();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "shipmentItemId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/shipment-items/{shipmentItemId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ShipmentItem patchShipmentItem(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("shipmentItemId")
-			Long shipmentItemId,
-			ShipmentItem shipmentItem)
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 
 		return new ShipmentItem();
@@ -339,6 +243,173 @@ public abstract class BaseShipmentItemResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "shipmentItemId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/shipment-items/{shipmentItemId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShipmentItem getShipmentItem(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("shipmentItemId")
+			Long shipmentItemId)
+		throws Exception {
+
+		return new ShipmentItem();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "shipmentId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/shipments/{shipmentId}/items")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ShipmentItem> getShipmentItemsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("shipmentId")
+			Long shipmentId,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "shipmentItemId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/shipment-items/{shipmentItemId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShipmentItem patchShipmentItem(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("shipmentItemId")
+			Long shipmentItemId,
+			ShipmentItem shipmentItem)
+		throws Exception {
+
+		return new ShipmentItem();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/shipment-items/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShipmentItem patchShipmentItemByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ShipmentItem shipmentItem)
+		throws Exception {
+
+		return new ShipmentItem();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "shipmentId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/shipments/{shipmentId}/items")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShipmentItem postShipmentItem(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("shipmentId")
+			Long shipmentId,
+			ShipmentItem shipmentItem)
+		throws Exception {
+
+		return new ShipmentItem();
 	}
 
 	/**
@@ -403,77 +474,6 @@ public abstract class BaseShipmentItemResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			ShipmentItem shipmentItem)
-		throws Exception {
-
-		return new ShipmentItem();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "shipmentId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/shipments/{shipmentId}/items")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ShipmentItem> getShipmentItemsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("shipmentId")
-			Long shipmentId,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "shipmentId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/shipments/{shipmentId}/items")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ShipmentItem postShipmentItem(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("shipmentId")
-			Long shipmentId,
 			ShipmentItem shipmentItem)
 		throws Exception {
 

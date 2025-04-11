@@ -240,6 +240,169 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteNotificationQueueEntry() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NotificationQueueEntry notificationQueueEntry =
+			testDeleteNotificationQueueEntry_addNotificationQueueEntry();
+
+		assertHttpResponseStatusCode(
+			204,
+			notificationQueueEntryResource.
+				deleteNotificationQueueEntryHttpResponse(
+					notificationQueueEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			notificationQueueEntryResource.
+				getNotificationQueueEntryHttpResponse(
+					notificationQueueEntry.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			notificationQueueEntryResource.
+				getNotificationQueueEntryHttpResponse(0L));
+	}
+
+	protected NotificationQueueEntry
+			testDeleteNotificationQueueEntry_addNotificationQueueEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteNotificationQueueEntry() throws Exception {
+
+		// No namespace
+
+		NotificationQueueEntry notificationQueueEntry1 =
+			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteNotificationQueueEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationQueueEntryId",
+									notificationQueueEntry1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteNotificationQueueEntry"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"notificationQueueEntry",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"notificationQueueEntryId",
+								notificationQueueEntry1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace notification_v1_0
+
+		NotificationQueueEntry notificationQueueEntry2 =
+			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"deleteNotificationQueueEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationQueueEntryId",
+										notificationQueueEntry2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/notification_v1_0",
+				"Object/deleteNotificationQueueEntry"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"notification_v1_0",
+					new GraphQLField(
+						"notificationQueueEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationQueueEntryId",
+									notificationQueueEntry2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected NotificationQueueEntry
+			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry()
+		throws Exception {
+
+		return testGraphQLNotificationQueueEntry_addNotificationQueueEntry();
+	}
+
+	@Test
+	public void testDeleteNotificationQueueEntryBatch() throws Exception {
+		NotificationQueueEntry notificationQueueEntry1 =
+			testDeleteNotificationQueueEntryBatch_addNotificationQueueEntry();
+
+		testDeleteNotificationQueueEntryBatch_deleteNotificationQueueEntry(
+			"COMPLETED", null, notificationQueueEntry1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			notificationQueueEntryResource.
+				getNotificationQueueEntryHttpResponse(
+					notificationQueueEntry1.getId()));
+	}
+
+	protected NotificationQueueEntry
+			testDeleteNotificationQueueEntryBatch_addNotificationQueueEntry()
+		throws Exception {
+
+		return testDeleteNotificationQueueEntry_addNotificationQueueEntry();
+	}
+
+	protected void
+			testDeleteNotificationQueueEntryBatch_deleteNotificationQueueEntry(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			notificationQueueEntryResource.
+				deleteNotificationQueueEntryBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetNotificationQueueEntriesPage() throws Exception {
 		Page<NotificationQueueEntry> page =
 			notificationQueueEntryResource.getNotificationQueueEntriesPage(
@@ -733,191 +896,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 	}
 
 	@Test
-	public void testPostNotificationQueueEntry() throws Exception {
-		NotificationQueueEntry randomNotificationQueueEntry =
-			randomNotificationQueueEntry();
-
-		NotificationQueueEntry postNotificationQueueEntry =
-			testPostNotificationQueueEntry_addNotificationQueueEntry(
-				randomNotificationQueueEntry);
-
-		assertEquals(randomNotificationQueueEntry, postNotificationQueueEntry);
-		assertValid(postNotificationQueueEntry);
-	}
-
-	protected NotificationQueueEntry
-			testPostNotificationQueueEntry_addNotificationQueueEntry(
-				NotificationQueueEntry notificationQueueEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteNotificationQueueEntry() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		NotificationQueueEntry notificationQueueEntry =
-			testDeleteNotificationQueueEntry_addNotificationQueueEntry();
-
-		assertHttpResponseStatusCode(
-			204,
-			notificationQueueEntryResource.
-				deleteNotificationQueueEntryHttpResponse(
-					notificationQueueEntry.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			notificationQueueEntryResource.
-				getNotificationQueueEntryHttpResponse(
-					notificationQueueEntry.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			notificationQueueEntryResource.
-				getNotificationQueueEntryHttpResponse(0L));
-	}
-
-	protected NotificationQueueEntry
-			testDeleteNotificationQueueEntry_addNotificationQueueEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteNotificationQueueEntry() throws Exception {
-
-		// No namespace
-
-		NotificationQueueEntry notificationQueueEntry1 =
-			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteNotificationQueueEntry",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationQueueEntryId",
-									notificationQueueEntry1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteNotificationQueueEntry"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"notificationQueueEntry",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"notificationQueueEntryId",
-								notificationQueueEntry1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace notification_v1_0
-
-		NotificationQueueEntry notificationQueueEntry2 =
-			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"notification_v1_0",
-						new GraphQLField(
-							"deleteNotificationQueueEntry",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"notificationQueueEntryId",
-										notificationQueueEntry2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/notification_v1_0",
-				"Object/deleteNotificationQueueEntry"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"notification_v1_0",
-					new GraphQLField(
-						"notificationQueueEntry",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationQueueEntryId",
-									notificationQueueEntry2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected NotificationQueueEntry
-			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry()
-		throws Exception {
-
-		return testGraphQLNotificationQueueEntry_addNotificationQueueEntry();
-	}
-
-	@Test
-	public void testDeleteNotificationQueueEntryBatch() throws Exception {
-		NotificationQueueEntry notificationQueueEntry1 =
-			testDeleteNotificationQueueEntryBatch_addNotificationQueueEntry();
-
-		testDeleteNotificationQueueEntryBatch_deleteNotificationQueueEntry(
-			"COMPLETED", null, notificationQueueEntry1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			notificationQueueEntryResource.
-				getNotificationQueueEntryHttpResponse(
-					notificationQueueEntry1.getId()));
-	}
-
-	protected NotificationQueueEntry
-			testDeleteNotificationQueueEntryBatch_addNotificationQueueEntry()
-		throws Exception {
-
-		return testDeleteNotificationQueueEntry_addNotificationQueueEntry();
-	}
-
-	protected void
-			testDeleteNotificationQueueEntryBatch_deleteNotificationQueueEntry(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			notificationQueueEntryResource.
-				deleteNotificationQueueEntryBatchHttpResponse(
-					null,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"externalReferenceCode", () -> externalReferenceCode
-						).put(
-							"id", () -> id
-						)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetNotificationQueueEntry() throws Exception {
 		NotificationQueueEntry postNotificationQueueEntry =
 			testGetNotificationQueueEntry_addNotificationQueueEntry();
@@ -1232,6 +1210,28 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLNotificationQueueEntry_addNotificationQueueEntry();
+	}
+
+	@Test
+	public void testPostNotificationQueueEntry() throws Exception {
+		NotificationQueueEntry randomNotificationQueueEntry =
+			randomNotificationQueueEntry();
+
+		NotificationQueueEntry postNotificationQueueEntry =
+			testPostNotificationQueueEntry_addNotificationQueueEntry(
+				randomNotificationQueueEntry);
+
+		assertEquals(randomNotificationQueueEntry, postNotificationQueueEntry);
+		assertValid(postNotificationQueueEntry);
+	}
+
+	protected NotificationQueueEntry
+			testPostNotificationQueueEntry_addNotificationQueueEntry(
+				NotificationQueueEntry notificationQueueEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

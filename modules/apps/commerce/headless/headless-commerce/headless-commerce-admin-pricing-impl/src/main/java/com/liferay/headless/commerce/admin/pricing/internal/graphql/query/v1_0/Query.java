@@ -128,20 +128,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discounts(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discount(id: ___){active, couponCode, customFields, discountAccountGroups, discountCategories, discountProducts, discountRules, displayDate, expirationDate, externalReferenceCode, id, limitationTimes, limitationType, maximumDiscountAmount, neverExpire, numberOfUse, percentageLevel1, percentageLevel2, percentageLevel3, percentageLevel4, target, title, useCouponCode, usePercentage}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DiscountPage discounts(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
+	public Discount discount(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_discountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discountResource -> new DiscountPage(
-				discountResource.getDiscountsPage(
-					Pagination.of(page, pageSize))));
+			discountResource -> discountResource.getDiscount(id));
 	}
 
 	/**
@@ -165,14 +159,20 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discount(id: ___){active, couponCode, customFields, discountAccountGroups, discountCategories, discountProducts, discountRules, displayDate, expirationDate, externalReferenceCode, id, limitationTimes, limitationType, maximumDiscountAmount, neverExpire, numberOfUse, percentageLevel1, percentageLevel2, percentageLevel3, percentageLevel4, target, title, useCouponCode, usePercentage}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discounts(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Discount discount(@GraphQLName("id") Long id) throws Exception {
+	public DiscountPage discounts(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_discountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			discountResource -> discountResource.getDiscount(id));
+			discountResource -> new DiscountPage(
+				discountResource.getDiscountsPage(
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -324,21 +324,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discountRule(id: ___){discountId, id, type, typeSettings}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public DiscountRule discountRule(@GraphQLName("id") Long id)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_discountRuleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			discountRuleResource -> discountRuleResource.getDiscountRule(id));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discountIdDiscountRules(id: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -358,19 +343,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryByExternalReferenceCode(externalReferenceCode: ___){customFields, externalReferenceCode, hasTierPrice, id, price, priceListExternalReferenceCode, priceListId, promoPrice, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {discountRule(id: ___){discountId, id, type, typeSettings}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public PriceEntry priceEntryByExternalReferenceCode(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+	public DiscountRule discountRule(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_priceEntryResourceComponentServiceObjects,
+			_discountRuleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			priceEntryResource ->
-				priceEntryResource.getPriceEntryByExternalReferenceCode(
-					externalReferenceCode));
+			discountRuleResource -> discountRuleResource.getDiscountRule(id));
 	}
 
 	/**
@@ -384,6 +366,24 @@ public class Query {
 			_priceEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			priceEntryResource -> priceEntryResource.getPriceEntry(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryByExternalReferenceCode(externalReferenceCode: ___){customFields, externalReferenceCode, hasTierPrice, id, price, priceListExternalReferenceCode, priceListId, promoPrice, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public PriceEntry priceEntryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_priceEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			priceEntryResource ->
+				priceEntryResource.getPriceEntryByExternalReferenceCode(
+					externalReferenceCode));
 	}
 
 	/**
@@ -429,24 +429,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceLists(filter: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceList(id: ___){active, catalogId, currencyCode, customFields, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, priceEntries, priceListAccountGroups, priority}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public PriceListPage priceLists(
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
+	public PriceList priceList(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_priceListResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			priceListResource -> new PriceListPage(
-				priceListResource.getPriceListsPage(
-					_filterBiFunction.apply(priceListResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(priceListResource, sortsString))));
+			priceListResource -> priceListResource.getPriceList(id));
 	}
 
 	/**
@@ -470,14 +460,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceList(id: ___){active, catalogId, currencyCode, customFields, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, priceEntries, priceListAccountGroups, priority}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceLists(filter: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public PriceList priceList(@GraphQLName("id") Long id) throws Exception {
+	public PriceListPage priceLists(
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_priceListResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			priceListResource -> priceListResource.getPriceList(id));
+			priceListResource -> new PriceListPage(
+				priceListResource.getPriceListsPage(
+					_filterBiFunction.apply(priceListResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(priceListResource, sortsString))));
 	}
 
 	/**
@@ -566,6 +566,19 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {tierPrice(id: ___){customFields, externalReferenceCode, id, minimumQuantity, price, priceEntryExternalReferenceCode, priceEntryId, promoPrice}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TierPrice tierPrice(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_tierPriceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			tierPriceResource -> tierPriceResource.getTierPrice(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {tierPriceByExternalReferenceCode(externalReferenceCode: ___){customFields, externalReferenceCode, id, minimumQuantity, price, priceEntryExternalReferenceCode, priceEntryId, promoPrice}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -579,19 +592,6 @@ public class Query {
 			tierPriceResource ->
 				tierPriceResource.getTierPriceByExternalReferenceCode(
 					externalReferenceCode));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {tierPrice(id: ___){customFields, externalReferenceCode, id, minimumQuantity, price, priceEntryExternalReferenceCode, priceEntryId, promoPrice}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public TierPrice tierPrice(@GraphQLName("id") Long id) throws Exception {
-		return _applyComponentServiceObjects(
-			_tierPriceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			tierPriceResource -> tierPriceResource.getTierPrice(id));
 	}
 
 	@GraphQLTypeExtension(Discount.class)

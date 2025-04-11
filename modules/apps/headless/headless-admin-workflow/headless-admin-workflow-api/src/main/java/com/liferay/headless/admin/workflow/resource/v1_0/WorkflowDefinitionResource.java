@@ -46,14 +46,26 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowDefinitionResource {
 
+	public void deleteWorkflowDefinition(Long workflowDefinitionId)
+		throws Exception;
+
+	public Response deleteWorkflowDefinitionBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteWorkflowDefinitionUndeploy(String name, String version)
+		throws Exception;
+
+	public WorkflowDefinition getWorkflowDefinition(Long workflowDefinitionId)
+		throws Exception;
+
+	public WorkflowDefinition getWorkflowDefinitionByName(
+			String name, String contentFormat, Integer version)
+		throws Exception;
+
 	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
 			Boolean active, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postWorkflowDefinitionsPageExportBatch(
-			Boolean active, com.liferay.portal.kernel.search.Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinition(
@@ -64,10 +76,6 @@ public interface WorkflowDefinitionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public WorkflowDefinition getWorkflowDefinitionByName(
-			String name, String contentFormat, Integer version)
-		throws Exception;
-
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
 			WorkflowDefinition workflowDefinition)
 		throws Exception;
@@ -76,21 +84,13 @@ public interface WorkflowDefinitionResource {
 			WorkflowDefinition workflowDefinition)
 		throws Exception;
 
-	public void deleteWorkflowDefinitionUndeploy(String name, String version)
-		throws Exception;
-
 	public WorkflowDefinition postWorkflowDefinitionUpdateActive(
 			Boolean active, String name, String version)
 		throws Exception;
 
-	public void deleteWorkflowDefinition(Long workflowDefinitionId)
-		throws Exception;
-
-	public Response deleteWorkflowDefinitionBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public WorkflowDefinition getWorkflowDefinition(Long workflowDefinitionId)
+	public Response postWorkflowDefinitionsPageExportBatch(
+			Boolean active, com.liferay.portal.kernel.search.Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public WorkflowDefinition putWorkflowDefinition(

@@ -464,30 +464,6 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehouseByExternalReferenceCodeWarehouseOrderType()
-		throws Exception {
-
-		WarehouseOrderType randomWarehouseOrderType =
-			randomWarehouseOrderType();
-
-		WarehouseOrderType postWarehouseOrderType =
-			testPostWarehouseByExternalReferenceCodeWarehouseOrderType_addWarehouseOrderType(
-				randomWarehouseOrderType);
-
-		assertEquals(randomWarehouseOrderType, postWarehouseOrderType);
-		assertValid(postWarehouseOrderType);
-	}
-
-	protected WarehouseOrderType
-			testPostWarehouseByExternalReferenceCodeWarehouseOrderType_addWarehouseOrderType(
-				WarehouseOrderType warehouseOrderType)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehouseIdWarehouseOrderTypesPage() throws Exception {
 		Long id = testGetWarehouseIdWarehouseOrderTypesPage_getId();
 		Long irrelevantId =
@@ -951,6 +927,30 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostWarehouseByExternalReferenceCodeWarehouseOrderType()
+		throws Exception {
+
+		WarehouseOrderType randomWarehouseOrderType =
+			randomWarehouseOrderType();
+
+		WarehouseOrderType postWarehouseOrderType =
+			testPostWarehouseByExternalReferenceCodeWarehouseOrderType_addWarehouseOrderType(
+				randomWarehouseOrderType);
+
+		assertEquals(randomWarehouseOrderType, postWarehouseOrderType);
+		assertValid(postWarehouseOrderType);
+	}
+
+	protected WarehouseOrderType
+			testPostWarehouseByExternalReferenceCodeWarehouseOrderType_addWarehouseOrderType(
+				WarehouseOrderType warehouseOrderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

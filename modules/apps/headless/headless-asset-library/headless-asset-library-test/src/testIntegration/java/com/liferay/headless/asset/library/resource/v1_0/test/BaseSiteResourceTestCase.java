@@ -251,6 +251,38 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibrarySite() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site site = testDeleteAssetLibrarySite_addSite();
+
+		assertHttpResponseStatusCode(
+			204,
+			siteResource.deleteAssetLibrarySiteHttpResponse(
+				testDeleteAssetLibrarySite_getAssetLibraryId(), site.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.getAssetLibrarySiteHttpResponse(
+				testDeleteAssetLibrarySite_getAssetLibraryId(), site.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.getAssetLibrarySiteHttpResponse(
+				testDeleteAssetLibrarySite_getAssetLibraryId(), 0L));
+	}
+
+	protected Long testDeleteAssetLibrarySite_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site testDeleteAssetLibrarySite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode()
 		throws Exception {
 
@@ -285,58 +317,6 @@ public abstract class BaseSiteResourceTestCase {
 
 	protected Site
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_addSite()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode()
-		throws Exception {
-
-		Site postSite =
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_addSite();
-
-		Site randomSite = randomSite();
-
-		Site putSite =
-			siteResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode());
-
-		assertEquals(randomSite, putSite);
-		assertValid(putSite);
-
-		Site getSite =
-			siteResource.
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode());
-
-		assertEquals(randomSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Site
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_addSite()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -521,6 +501,29 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibrarySite() throws Exception {
+		Site postSite = testGetAssetLibrarySite_addSite();
+
+		Site getSite = siteResource.getAssetLibrarySite(
+			testGetAssetLibrarySite_getAssetLibraryId(), postSite.getId());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Long testGetAssetLibrarySite_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site testGetAssetLibrarySite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibrarySitesPage() throws Exception {
 		Long assetLibraryId = testGetAssetLibrarySitesPage_getAssetLibraryId();
 		Long irrelevantAssetLibraryId =
@@ -672,56 +675,53 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAssetLibrarySite() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Site site = testDeleteAssetLibrarySite_addSite();
-
-		assertHttpResponseStatusCode(
-			204,
-			siteResource.deleteAssetLibrarySiteHttpResponse(
-				testDeleteAssetLibrarySite_getAssetLibraryId(), site.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			siteResource.getAssetLibrarySiteHttpResponse(
-				testDeleteAssetLibrarySite_getAssetLibraryId(), site.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			siteResource.getAssetLibrarySiteHttpResponse(
-				testDeleteAssetLibrarySite_getAssetLibraryId(), 0L));
-	}
-
-	protected Long testDeleteAssetLibrarySite_getAssetLibraryId()
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		Site postSite =
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_addSite();
 
-	protected Site testDeleteAssetLibrarySite_addSite() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+		Site randomSite = randomSite();
 
-	@Test
-	public void testGetAssetLibrarySite() throws Exception {
-		Site postSite = testGetAssetLibrarySite_addSite();
+		Site putSite =
+			siteResource.
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode());
 
-		Site getSite = siteResource.getAssetLibrarySite(
-			testGetAssetLibrarySite_getAssetLibraryId(), postSite.getId());
+		assertEquals(randomSite, putSite);
+		assertValid(putSite);
 
-		assertEquals(postSite, getSite);
+		Site getSite =
+			siteResource.
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode());
+
+		assertEquals(randomSite, getSite);
 		assertValid(getSite);
 	}
 
-	protected Long testGetAssetLibrarySite_getAssetLibraryId()
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Site testGetAssetLibrarySite_addSite() throws Exception {
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeSiteByExternalReferenceCodeSiteExternalReferenceCode_addSite()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

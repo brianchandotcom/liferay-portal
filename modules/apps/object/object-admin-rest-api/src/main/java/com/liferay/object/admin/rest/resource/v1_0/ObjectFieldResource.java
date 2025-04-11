@@ -46,16 +46,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectFieldResource {
 
+	public void deleteObjectField(Long objectFieldId) throws Exception;
+
+	public Response deleteObjectFieldBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<ObjectField>
 			getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 				String externalReferenceCode, String search,
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ObjectField postObjectDefinitionByExternalReferenceCodeObjectField(
-			String externalReferenceCode, ObjectField objectField)
 		throws Exception;
 
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
@@ -65,11 +66,14 @@ public interface ObjectFieldResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postObjectDefinitionObjectFieldsPageExportBatch(
-			Long objectDefinitionId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public ObjectField getObjectField(Long objectFieldId) throws Exception;
+
+	public ObjectField patchObjectField(
+			Long objectFieldId, ObjectField objectField)
+		throws Exception;
+
+	public ObjectField postObjectDefinitionByExternalReferenceCodeObjectField(
+			String externalReferenceCode, ObjectField objectField)
 		throws Exception;
 
 	public ObjectField postObjectDefinitionObjectField(
@@ -80,15 +84,11 @@ public interface ObjectFieldResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectField(Long objectFieldId) throws Exception;
-
-	public Response deleteObjectFieldBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectField getObjectField(Long objectFieldId) throws Exception;
-
-	public ObjectField patchObjectField(
-			Long objectFieldId, ObjectField objectField)
+	public Response postObjectDefinitionObjectFieldsPageExportBatch(
+			Long objectDefinitionId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectField putObjectField(

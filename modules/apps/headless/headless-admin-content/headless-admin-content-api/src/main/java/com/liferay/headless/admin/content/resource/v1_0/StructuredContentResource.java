@@ -44,6 +44,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentResource {
 
+	public void deleteStructuredContentByVersion(
+			Long structuredContentId, Double version)
+		throws Exception;
+
 	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
 			getSiteStructuredContentsPage(
 				Long siteId, Boolean flatten, String search,
@@ -54,23 +58,19 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
-			postSiteStructuredContentDraft(
-				Long siteId,
-				com.liferay.headless.delivery.dto.v1_0.StructuredContent
-					structuredContent)
-		throws Exception;
-
-	public void deleteStructuredContentByVersion(
-			Long structuredContentId, Double version)
-		throws Exception;
-
-	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
 			getStructuredContentByVersion(
 				Long structuredContentId, Double version)
 		throws Exception;
 
 	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
 			getStructuredContentsVersionsPage(Long structuredContentId)
+		throws Exception;
+
+	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
+			postSiteStructuredContentDraft(
+				Long siteId,
+				com.liferay.headless.delivery.dto.v1_0.StructuredContent
+					structuredContent)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

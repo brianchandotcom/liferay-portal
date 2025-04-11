@@ -58,16 +58,16 @@ public interface WarehouseChannelResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public WarehouseChannel
-			postWarehouseByExternalReferenceCodeWarehouseChannel(
-				String externalReferenceCode, WarehouseChannel warehouseChannel)
-		throws Exception;
-
 	public Page<WarehouseChannel> getWarehouseIdWarehouseChannelsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public WarehouseChannel
+			postWarehouseByExternalReferenceCodeWarehouseChannel(
+				String externalReferenceCode, WarehouseChannel warehouseChannel)
 		throws Exception;
 
 	public WarehouseChannel postWarehouseIdWarehouseChannel(

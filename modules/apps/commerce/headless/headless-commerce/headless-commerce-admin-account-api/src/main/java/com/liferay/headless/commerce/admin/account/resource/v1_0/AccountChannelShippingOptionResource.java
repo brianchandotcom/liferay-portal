@@ -53,27 +53,27 @@ public interface AccountChannelShippingOptionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<AccountChannelShippingOption>
+			getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
 	public AccountChannelShippingOption getAccountChannelShippingOption(Long id)
+		throws Exception;
+
+	public Page<AccountChannelShippingOption>
+			getAccountIdAccountChannelShippingOptionPage(
+				Long id, Pagination pagination)
 		throws Exception;
 
 	public AccountChannelShippingOption patchAccountChannelShippingOption(
 			Long id, AccountChannelShippingOption accountChannelShippingOption)
 		throws Exception;
 
-	public Page<AccountChannelShippingOption>
-			getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
 	public AccountChannelShippingOption
 			postAccountByExternalReferenceCodeAccountChannelShippingOption(
 				String externalReferenceCode,
 				AccountChannelShippingOption accountChannelShippingOption)
-		throws Exception;
-
-	public Page<AccountChannelShippingOption>
-			getAccountIdAccountChannelShippingOptionPage(
-				Long id, Pagination pagination)
 		throws Exception;
 
 	public AccountChannelShippingOption

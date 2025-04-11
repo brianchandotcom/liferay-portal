@@ -45,12 +45,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NodeResource {
 
-	public Page<Node> getProcessNodesPage(Long processId) throws Exception;
+	public void deleteProcessNode(Long processId, Long nodeId) throws Exception;
 
-	public Response postProcessNodesPageExportBatch(
-			Long processId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
+	public Page<Node> getProcessNodesPage(Long processId) throws Exception;
 
 	public Node postProcessNode(Long processId, Node node) throws Exception;
 
@@ -58,7 +55,10 @@ public interface NodeResource {
 			Long processId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteProcessNode(Long processId, Long nodeId) throws Exception;
+	public Response postProcessNodesPageExportBatch(
+			Long processId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

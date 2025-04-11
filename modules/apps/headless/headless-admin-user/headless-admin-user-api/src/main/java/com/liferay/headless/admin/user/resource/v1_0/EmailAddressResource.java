@@ -45,6 +45,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface EmailAddressResource {
 
+	public void deleteEmailAddress(Long emailAddressId) throws Exception;
+
+	public Response deleteEmailAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteEmailAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<EmailAddress>
 			getAccountByExternalReferenceCodeEmailAddressesPage(
 				String externalReferenceCode)
@@ -53,32 +62,10 @@ public interface EmailAddressResource {
 	public Page<EmailAddress> getAccountEmailAddressesPage(Long accountId)
 		throws Exception;
 
-	public Response postAccountEmailAddressesPageExportBatch(
-			Long accountId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public void deleteEmailAddressByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception;
 
 	public EmailAddress getEmailAddressByExternalReferenceCode(
 			String externalReferenceCode)
-		throws Exception;
-
-	public EmailAddress patchEmailAddressByExternalReferenceCode(
-			String externalReferenceCode, EmailAddress emailAddress)
-		throws Exception;
-
-	public void deleteEmailAddress(Long emailAddressId) throws Exception;
-
-	public Response deleteEmailAddressBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception;
-
-	public EmailAddress patchEmailAddress(
-			Long emailAddressId, EmailAddress emailAddress)
 		throws Exception;
 
 	public Page<EmailAddress>
@@ -90,11 +77,6 @@ public interface EmailAddressResource {
 			String organizationId)
 		throws Exception;
 
-	public Response postOrganizationEmailAddressesPageExportBatch(
-			String organizationId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public Page<EmailAddress>
 			getUserAccountByExternalReferenceCodeEmailAddressesPage(
 				String externalReferenceCode)
@@ -102,6 +84,24 @@ public interface EmailAddressResource {
 
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
 			Long userAccountId)
+		throws Exception;
+
+	public EmailAddress patchEmailAddress(
+			Long emailAddressId, EmailAddress emailAddress)
+		throws Exception;
+
+	public EmailAddress patchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception;
+
+	public Response postAccountEmailAddressesPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public Response postOrganizationEmailAddressesPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public Response postUserAccountEmailAddressesPageExportBatch(

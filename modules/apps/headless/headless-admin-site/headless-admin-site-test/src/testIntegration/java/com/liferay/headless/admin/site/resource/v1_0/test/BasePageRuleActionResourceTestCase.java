@@ -211,20 +211,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 	}
 
 	@Test
-	public void testPatchSiteSiteByExternalReferenceCodePageRuleAction()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageRuleAction()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageRulePageRuleActionsPage()
 		throws Exception {
 
@@ -351,6 +337,13 @@ public abstract class BasePageRuleActionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteSiteByExternalReferenceCodePageRuleAction()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageRulePageRuleAction()
 		throws Exception {
 
@@ -371,6 +364,13 @@ public abstract class BasePageRuleActionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodePageRuleAction()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(

@@ -390,6 +390,54 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					"-"));
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	protected ObjectEntryFolder
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetObjectEntryFolder() throws Exception {
 		ObjectEntryFolder postObjectEntryFolder =
 			testGetObjectEntryFolder_addObjectEntryFolder();
@@ -704,89 +752,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPatchObjectEntryFolder() throws Exception {
-		ObjectEntryFolder postObjectEntryFolder =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		ObjectEntryFolder randomPatchObjectEntryFolder =
-			randomPatchObjectEntryFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectEntryFolder patchObjectEntryFolder =
-			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder.getId(), randomPatchObjectEntryFolder);
-
-		ObjectEntryFolder expectedPatchObjectEntryFolder =
-			postObjectEntryFolder.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
-
-		ObjectEntryFolder getObjectEntryFolder =
-			objectEntryFolderResource.getObjectEntryFolder(
-				patchObjectEntryFolder.getId());
-
-		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
-		assertValid(getObjectEntryFolder);
-	}
-
-	protected ObjectEntryFolder
-			testPatchObjectEntryFolder_addObjectEntryFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectEntryFolder objectEntryFolder =
-			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			objectEntryFolderResource.
-				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
-					objectEntryFolder.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			objectEntryFolderResource.
-				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
-					objectEntryFolder.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			objectEntryFolderResource.
-				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
-					"-"));
-	}
-
-	protected String
-			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		return objectEntryFolder.getScopeKey();
-	}
-
-	protected ObjectEntryFolder
-			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
 		throws Exception {
 
@@ -955,129 +920,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		throws Exception {
 
 		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
-	}
-
-	@Test
-	public void testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
-		throws Exception {
-
-		ObjectEntryFolder postObjectEntryFolder =
-			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
-
-		ObjectEntryFolder randomPatchObjectEntryFolder =
-			randomPatchObjectEntryFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectEntryFolder patchObjectEntryFolder =
-			objectEntryFolderResource.
-				patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					postObjectEntryFolder.getScopeKey(),
-					postObjectEntryFolder.getExternalReferenceCode(),
-					randomPatchObjectEntryFolder);
-
-		ObjectEntryFolder expectedPatchObjectEntryFolder =
-			postObjectEntryFolder.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
-
-		ObjectEntryFolder getObjectEntryFolder =
-			objectEntryFolderResource.
-				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					patchObjectEntryFolder.getScopeKey(),
-					patchObjectEntryFolder.getExternalReferenceCode());
-
-		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
-		assertValid(getObjectEntryFolder);
-	}
-
-	protected ObjectEntryFolder
-			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
-		throws Exception {
-
-		ObjectEntryFolder postObjectEntryFolder =
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
-
-		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
-
-		ObjectEntryFolder putObjectEntryFolder =
-			objectEntryFolderResource.
-				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						postObjectEntryFolder),
-					postObjectEntryFolder.getExternalReferenceCode(),
-					randomObjectEntryFolder);
-
-		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
-		assertValid(putObjectEntryFolder);
-
-		ObjectEntryFolder getObjectEntryFolder =
-			objectEntryFolderResource.
-				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						putObjectEntryFolder),
-					putObjectEntryFolder.getExternalReferenceCode());
-
-		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
-		assertValid(getObjectEntryFolder);
-
-		ObjectEntryFolder newObjectEntryFolder =
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder();
-
-		putObjectEntryFolder =
-			objectEntryFolderResource.
-				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						newObjectEntryFolder),
-					newObjectEntryFolder.getExternalReferenceCode(),
-					newObjectEntryFolder);
-
-		assertEquals(newObjectEntryFolder, putObjectEntryFolder);
-		assertValid(putObjectEntryFolder);
-
-		getObjectEntryFolder =
-			objectEntryFolderResource.
-				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						putObjectEntryFolder),
-					putObjectEntryFolder.getExternalReferenceCode());
-
-		assertEquals(newObjectEntryFolder, getObjectEntryFolder);
-
-		Assert.assertEquals(
-			newObjectEntryFolder.getExternalReferenceCode(),
-			putObjectEntryFolder.getExternalReferenceCode());
-	}
-
-	protected String
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		return objectEntryFolder.getScopeKey();
-	}
-
-	protected ObjectEntryFolder
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder()
-		throws Exception {
-
-		return randomObjectEntryFolder();
-	}
-
-	protected ObjectEntryFolder
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1555,6 +1397,83 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder.getId(), randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				patchObjectEntryFolder.getId());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder
+			testPatchObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.
+				patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					postObjectEntryFolder.getScopeKey(),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					patchObjectEntryFolder.getScopeKey(),
+					patchObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder
+			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostScopeScopeKeyObjectEntryFolder() throws Exception {
 		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
 
@@ -1569,6 +1488,87 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	protected ObjectEntryFolder
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						putObjectEntryFolder),
+					putObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+
+		ObjectEntryFolder newObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder();
+
+		putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						newObjectEntryFolder),
+					newObjectEntryFolder.getExternalReferenceCode(),
+					newObjectEntryFolder);
+
+		assertEquals(newObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						putObjectEntryFolder),
+					putObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(newObjectEntryFolder, getObjectEntryFolder);
+
+		Assert.assertEquals(
+			newObjectEntryFolder.getExternalReferenceCode(),
+			putObjectEntryFolder.getExternalReferenceCode());
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	protected ObjectEntryFolder
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder()
+		throws Exception {
+
+		return randomObjectEntryFolder();
+	}
+
+	protected ObjectEntryFolder
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

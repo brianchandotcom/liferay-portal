@@ -47,34 +47,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountAddressResource {
 
-	public Response deleteAccountAddressByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AccountAddress getAccountAddressByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchAccountAddressByExternalReferenceCode(
-			String externalReferenceCode, AccountAddress accountAddress)
-		throws Exception;
-
 	public Response deleteAccountAddress(Long id) throws Exception;
 
 	public Response deleteAccountAddressBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Response deleteAccountAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public AccountAddress getAccountAddress(Long id) throws Exception;
 
-	public AccountAddress patchAccountAddress(
-			Long id, AccountAddress accountAddress)
-		throws Exception;
-
-	public AccountAddress putAccountAddress(
-			Long id, AccountAddress accountAddress)
-		throws Exception;
-
-	public Response putAccountAddressBatch(String callbackURL, Object object)
+	public AccountAddress getAccountAddressByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<AccountAddress>
@@ -82,12 +67,20 @@ public interface AccountAddressResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public AccountAddress postAccountByExternalReferenceCodeAccountAddress(
+	public Page<AccountAddress> getAccountIdAccountAddressesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public AccountAddress patchAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception;
+
+	public Response patchAccountAddressByExternalReferenceCode(
 			String externalReferenceCode, AccountAddress accountAddress)
 		throws Exception;
 
-	public Page<AccountAddress> getAccountIdAccountAddressesPage(
-			Long id, Pagination pagination)
+	public AccountAddress postAccountByExternalReferenceCodeAccountAddress(
+			String externalReferenceCode, AccountAddress accountAddress)
 		throws Exception;
 
 	public AccountAddress postAccountIdAccountAddress(
@@ -96,6 +89,13 @@ public interface AccountAddressResource {
 
 	public Response postAccountIdAccountAddressBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public AccountAddress putAccountAddress(
+			Long id, AccountAddress accountAddress)
+		throws Exception;
+
+	public Response putAccountAddressBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -47,10 +47,6 @@ public interface DispatchTriggerResource {
 
 	public Page<DispatchTrigger> getDispatchTriggersPage() throws Exception;
 
-	public Response postDispatchTriggersPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception;
 
@@ -58,6 +54,10 @@ public interface DispatchTriggerResource {
 		throws Exception;
 
 	public void postDispatchTriggerRun(Long dispatchTriggerId) throws Exception;
+
+	public Response postDispatchTriggersPageExportBatch(
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

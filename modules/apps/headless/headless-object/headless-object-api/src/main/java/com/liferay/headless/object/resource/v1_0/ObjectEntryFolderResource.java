@@ -55,32 +55,16 @@ public interface ObjectEntryFolderResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
-		throws Exception;
-
-	public ObjectEntryFolder patchObjectEntryFolder(
-			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
-		throws Exception;
-
 	public void deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
 		throws Exception;
 
 	public ObjectEntryFolder
 			getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 				String scopeKey, String externalReferenceCode)
-		throws Exception;
-
-	public ObjectEntryFolder
-			patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-				String scopeKey, String externalReferenceCode,
-				ObjectEntryFolder objectEntryFolder)
-		throws Exception;
-
-	public ObjectEntryFolder
-			putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-				String scopeKey, String externalReferenceCode,
-				ObjectEntryFolder objectEntryFolder)
 		throws Exception;
 
 	public Page<ObjectEntryFolder> getScopeScopeKeyObjectEntryFoldersPage(
@@ -91,8 +75,24 @@ public interface ObjectEntryFolderResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public ObjectEntryFolder patchObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public ObjectEntryFolder
+			patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String scopeKey, String externalReferenceCode,
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
 	public ObjectEntryFolder postScopeScopeKeyObjectEntryFolder(
 			String scopeKey, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public ObjectEntryFolder
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String scopeKey, String externalReferenceCode,
+				ObjectEntryFolder objectEntryFolder)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

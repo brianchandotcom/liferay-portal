@@ -45,14 +45,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SubscriptionResource {
 
-	public Page<Subscription> getMyUserAccountSubscriptionsPage(
-			String contentType, Pagination pagination)
-		throws Exception;
-
 	public void deleteMyUserAccountSubscription(Long subscriptionId)
 		throws Exception;
 
 	public Subscription getMyUserAccountSubscription(Long subscriptionId)
+		throws Exception;
+
+	public Page<Subscription> getMyUserAccountSubscriptionsPage(
+			String contentType, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

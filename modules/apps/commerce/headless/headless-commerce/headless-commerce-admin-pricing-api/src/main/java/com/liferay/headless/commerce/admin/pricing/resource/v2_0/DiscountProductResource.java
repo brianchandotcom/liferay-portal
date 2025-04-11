@@ -57,15 +57,15 @@ public interface DiscountProductResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountProduct postDiscountByExternalReferenceCodeDiscountProduct(
-			String externalReferenceCode, DiscountProduct discountProduct)
-		throws Exception;
-
 	public Page<DiscountProduct> getDiscountIdDiscountProductsPage(
 			Long id, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DiscountProduct postDiscountByExternalReferenceCodeDiscountProduct(
+			String externalReferenceCode, DiscountProduct discountProduct)
 		throws Exception;
 
 	public DiscountProduct postDiscountIdDiscountProduct(

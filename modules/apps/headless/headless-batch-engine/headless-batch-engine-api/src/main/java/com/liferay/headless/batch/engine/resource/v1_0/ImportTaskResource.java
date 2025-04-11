@@ -43,6 +43,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ImportTaskResource {
 
+	public ImportTask deleteImportTask(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
+		throws Exception;
+
+	public ImportTask deleteImportTask(
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			MultipartBody multipartBody)
+		throws Exception;
+
+	public ImportTask getImportTask(Long importTaskId) throws Exception;
+
 	public ImportTask getImportTaskByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -55,15 +68,9 @@ public interface ImportTaskResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public ImportTask deleteImportTask(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName, Object object)
-		throws Exception;
+	public Response getImportTaskContent(Long importTaskId) throws Exception;
 
-	public ImportTask deleteImportTask(
-			String className, String callbackURL, String externalReferenceCode,
-			String importStrategy, String taskItemDelegateName,
-			MultipartBody multipartBody)
+	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception;
 
 	public ImportTask postImportTask(
@@ -92,13 +99,6 @@ public interface ImportTaskResource {
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName,
 			String updateStrategy, MultipartBody multipartBody)
-		throws Exception;
-
-	public ImportTask getImportTask(Long importTaskId) throws Exception;
-
-	public Response getImportTaskContent(Long importTaskId) throws Exception;
-
-	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

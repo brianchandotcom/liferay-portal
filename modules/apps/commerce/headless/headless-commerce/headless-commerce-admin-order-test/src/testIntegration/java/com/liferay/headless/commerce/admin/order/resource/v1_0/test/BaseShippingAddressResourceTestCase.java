@@ -199,144 +199,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrderItemShippingAddress() throws Exception {
-		ShippingAddress postShippingAddress =
-			testGetOrderItemShippingAddress_addShippingAddress();
-
-		ShippingAddress getShippingAddress =
-			shippingAddressResource.getOrderItemShippingAddress(
-				testGetOrderItemShippingAddress_getId(postShippingAddress));
-
-		assertEquals(postShippingAddress, getShippingAddress);
-		assertValid(getShippingAddress);
-	}
-
-	protected Long testGetOrderItemShippingAddress_getId(
-			ShippingAddress shippingAddress)
-		throws Exception {
-
-		return shippingAddress.getId();
-	}
-
-	protected ShippingAddress
-			testGetOrderItemShippingAddress_addShippingAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderItemShippingAddress() throws Exception {
-		ShippingAddress shippingAddress =
-			testGraphQLGetOrderItemShippingAddress_addShippingAddress();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				shippingAddress,
-				ShippingAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderItemShippingAddress",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"id",
-											testGraphQLGetOrderItemShippingAddress_getId(
-												shippingAddress));
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderItemShippingAddress"))));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertTrue(
-			equals(
-				shippingAddress,
-				ShippingAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminOrder_v1_0",
-								new GraphQLField(
-									"orderItemShippingAddress",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"id",
-												testGraphQLGetOrderItemShippingAddress_getId(
-													shippingAddress));
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminOrder_v1_0",
-						"Object/orderItemShippingAddress"))));
-	}
-
-	protected Long testGraphQLGetOrderItemShippingAddress_getId(
-			ShippingAddress shippingAddress)
-		throws Exception {
-
-		return shippingAddress.getId();
-	}
-
-	@Test
-	public void testGraphQLGetOrderItemShippingAddressNotFound()
-		throws Exception {
-
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderItemShippingAddress",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessCommerceAdminOrder_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"headlessCommerceAdminOrder_v1_0",
-						new GraphQLField(
-							"orderItemShippingAddress",
-							new HashMap<String, Object>() {
-								{
-									put("id", irrelevantId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ShippingAddress
-			testGraphQLGetOrderItemShippingAddress_addShippingAddress()
-		throws Exception {
-
-		return testGraphQLShippingAddress_addShippingAddress();
-	}
-
-	@Test
 	public void testGetOrderByExternalReferenceCodeShippingAddress()
 		throws Exception {
 
@@ -491,13 +353,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchOrderByExternalReferenceCodeShippingAddress()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetOrderIdShippingAddress() throws Exception {
 		ShippingAddress postShippingAddress =
 			testGetOrderIdShippingAddress_addShippingAddress();
@@ -631,6 +486,151 @@ public abstract class BaseShippingAddressResourceTestCase {
 		throws Exception {
 
 		return testGraphQLShippingAddress_addShippingAddress();
+	}
+
+	@Test
+	public void testGetOrderItemShippingAddress() throws Exception {
+		ShippingAddress postShippingAddress =
+			testGetOrderItemShippingAddress_addShippingAddress();
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.getOrderItemShippingAddress(
+				testGetOrderItemShippingAddress_getId(postShippingAddress));
+
+		assertEquals(postShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+	}
+
+	protected Long testGetOrderItemShippingAddress_getId(
+			ShippingAddress shippingAddress)
+		throws Exception {
+
+		return shippingAddress.getId();
+	}
+
+	protected ShippingAddress
+			testGetOrderItemShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderItemShippingAddress() throws Exception {
+		ShippingAddress shippingAddress =
+			testGraphQLGetOrderItemShippingAddress_addShippingAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderItemShippingAddress",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetOrderItemShippingAddress_getId(
+												shippingAddress));
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderItemShippingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderItemShippingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetOrderItemShippingAddress_getId(
+													shippingAddress));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderItemShippingAddress"))));
+	}
+
+	protected Long testGraphQLGetOrderItemShippingAddress_getId(
+			ShippingAddress shippingAddress)
+		throws Exception {
+
+		return shippingAddress.getId();
+	}
+
+	@Test
+	public void testGraphQLGetOrderItemShippingAddressNotFound()
+		throws Exception {
+
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderItemShippingAddress",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderItemShippingAddress",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ShippingAddress
+			testGraphQLGetOrderItemShippingAddress_addShippingAddress()
+		throws Exception {
+
+		return testGraphQLShippingAddress_addShippingAddress();
+	}
+
+	@Test
+	public void testPatchOrderByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

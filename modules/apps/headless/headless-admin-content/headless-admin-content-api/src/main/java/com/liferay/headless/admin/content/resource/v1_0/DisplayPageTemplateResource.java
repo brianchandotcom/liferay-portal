@@ -45,13 +45,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DisplayPageTemplateResource {
 
+	public DisplayPageTemplate getSiteDisplayPageTemplate(
+			Long siteId, String displayPageTemplateKey)
+		throws Exception;
+
 	public Page<DisplayPageTemplate> getSiteDisplayPageTemplatesPage(
 			Long siteId, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public DisplayPageTemplate getSiteDisplayPageTemplate(
-			Long siteId, String displayPageTemplateKey)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -47,11 +47,29 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SkuResource {
 
+	public Sku
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String skuExternalReferenceCode, Long accountId,
+				String currencyCode)
+		throws Exception;
+
 	public Page<Sku>
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
 				String currencyCode, Pagination pagination)
+		throws Exception;
+
+	public Sku getChannelProductSku(
+			Long channelId, Long productId, Long skuId, Long accountId,
+			String currencyCode)
+		throws Exception;
+
+	public Page<Sku> getChannelProductSkusPage(
+			Long channelId, Long productId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public Sku
@@ -62,24 +80,11 @@ public interface SkuResource {
 		throws Exception;
 
 	public Sku
-			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
-				String channelExternalReferenceCode,
-				String productExternalReferenceCode,
-				String skuExternalReferenceCode, Long accountId,
-				String currencyCode)
-		throws Exception;
-
-	public Sku
 			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
 				String currencyCode, java.math.BigDecimal quantity,
 				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
-		throws Exception;
-
-	public Page<Sku> getChannelProductSkusPage(
-			Long channelId, Long productId, Long accountId, String currencyCode,
-			Pagination pagination)
 		throws Exception;
 
 	public Sku postChannelProductSku(
@@ -91,11 +96,6 @@ public interface SkuResource {
 			Long channelId, Long productId, Long accountId, String currencyCode,
 			java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
-		throws Exception;
-
-	public Sku getChannelProductSku(
-			Long channelId, Long productId, Long skuId, Long accountId,
-			String currencyCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

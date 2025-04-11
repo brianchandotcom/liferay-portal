@@ -52,12 +52,13 @@ public interface WikiPageResource {
 			Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public WikiPage getSiteWikiPageByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public void deleteWikiPage(Long wikiPageId) throws Exception;
+
+	public Response deleteWikiPageBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public WikiPage putSiteWikiPageByExternalReferenceCode(
-			Long siteId, String externalReferenceCode, WikiPage wikiPage)
+	public WikiPage getSiteWikiPageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public Page<WikiPage> getWikiNodeWikiPagesPage(
@@ -68,11 +69,13 @@ public interface WikiPageResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postWikiNodeWikiPagesPageExportBatch(
-			Long wikiNodeId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getWikiPagePermissionsPage(Long wikiPageId, String roleNames)
+		throws Exception;
+
+	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
 		throws Exception;
 
 	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
@@ -82,28 +85,25 @@ public interface WikiPageResource {
 			Long wikiNodeId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
+	public Response postWikiNodeWikiPagesPageExportBatch(
+			Long wikiNodeId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public WikiPage postWikiPageWikiPage(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception;
 
-	public void deleteWikiPage(Long wikiPageId) throws Exception;
-
-	public Response deleteWikiPageBatch(String callbackURL, Object object)
+	public WikiPage putSiteWikiPageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, WikiPage wikiPage)
 		throws Exception;
-
-	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
 
 	public WikiPage putWikiPage(Long wikiPageId, WikiPage wikiPage)
 		throws Exception;
 
 	public Response putWikiPageBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getWikiPagePermissionsPage(Long wikiPageId, String roleNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

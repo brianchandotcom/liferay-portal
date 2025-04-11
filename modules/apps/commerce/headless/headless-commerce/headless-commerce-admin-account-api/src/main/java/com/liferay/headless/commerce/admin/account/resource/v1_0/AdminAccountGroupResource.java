@@ -47,35 +47,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AdminAccountGroupResource {
 
-	public Page<AdminAccountGroup> getAccountGroupsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public AdminAccountGroup postAccountGroup(
-			AdminAccountGroup adminAccountGroup)
-		throws Exception;
+	public Response deleteAccountGroup(Long id) throws Exception;
 
 	public Response deleteAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
-		throws Exception;
-
-	public AdminAccountGroup getAccountGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchAccountGroupByExternalReferenceCode(
-			String externalReferenceCode, AdminAccountGroup adminAccountGroup)
-		throws Exception;
-
-	public Response deleteAccountGroup(Long id) throws Exception;
-
-	public AdminAccountGroup getAccountGroup(Long id) throws Exception;
-
-	public Response patchAccountGroup(
-			Long id, AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public Page<AdminAccountGroup>
@@ -83,8 +58,33 @@ public interface AdminAccountGroupResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public AdminAccountGroup getAccountGroup(Long id) throws Exception;
+
+	public AdminAccountGroup getAccountGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<AdminAccountGroup> getAccountGroupsPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public Response patchAccountGroup(
+			Long id, AdminAccountGroup adminAccountGroup)
+		throws Exception;
+
+	public Response patchAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AdminAccountGroup adminAccountGroup)
+		throws Exception;
+
+	public AdminAccountGroup postAccountGroup(
+			AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

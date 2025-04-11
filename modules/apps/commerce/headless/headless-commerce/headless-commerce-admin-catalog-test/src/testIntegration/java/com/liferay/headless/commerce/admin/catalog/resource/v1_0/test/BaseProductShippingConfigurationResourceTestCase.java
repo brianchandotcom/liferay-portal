@@ -206,13 +206,6 @@ public abstract class BaseProductShippingConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testPatchProductByExternalReferenceCodeShippingConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdShippingConfiguration() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -229,6 +222,13 @@ public abstract class BaseProductShippingConfigurationResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCodeShippingConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

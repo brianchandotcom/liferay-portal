@@ -51,18 +51,9 @@ public interface DiscountRuleResource {
 	public Response deleteDiscountRuleBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public DiscountRule getDiscountRule(Long id) throws Exception;
-
-	public DiscountRule patchDiscountRule(Long id, DiscountRule discountRule)
-		throws Exception;
-
 	public Page<DiscountRule>
 			getDiscountByExternalReferenceCodeDiscountRulesPage(
 				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public DiscountRule postDiscountByExternalReferenceCodeDiscountRule(
-			String externalReferenceCode, DiscountRule discountRule)
 		throws Exception;
 
 	public Page<DiscountRule> getDiscountIdDiscountRulesPage(
@@ -70,6 +61,15 @@ public interface DiscountRuleResource {
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DiscountRule getDiscountRule(Long id) throws Exception;
+
+	public DiscountRule patchDiscountRule(Long id, DiscountRule discountRule)
+		throws Exception;
+
+	public DiscountRule postDiscountByExternalReferenceCodeDiscountRule(
+			String externalReferenceCode, DiscountRule discountRule)
 		throws Exception;
 
 	public DiscountRule postDiscountIdDiscountRule(

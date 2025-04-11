@@ -46,13 +46,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PriceModifierResource {
 
+	public void deletePriceModifier(Long id) throws Exception;
+
+	public Response deletePriceModifierBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deletePriceModifierByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<PriceModifier>
 			getPriceListByExternalReferenceCodePriceModifiersPage(
 				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public PriceModifier postPriceListByExternalReferenceCodePriceModifier(
-			String externalReferenceCode, PriceModifier priceModifier)
 		throws Exception;
 
 	public Page<PriceModifier> getPriceListIdPriceModifiersPage(
@@ -62,34 +67,29 @@ public interface PriceModifierResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public PriceModifier postPriceListIdPriceModifier(
-			Long id, PriceModifier priceModifier)
-		throws Exception;
-
-	public Response postPriceListIdPriceModifierBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public void deletePriceModifierByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public PriceModifier getPriceModifier(Long id) throws Exception;
 
 	public PriceModifier getPriceModifierByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchPriceModifier(Long id, PriceModifier priceModifier)
 		throws Exception;
 
 	public Response patchPriceModifierByExternalReferenceCode(
 			String externalReferenceCode, PriceModifier priceModifier)
 		throws Exception;
 
-	public void deletePriceModifier(Long id) throws Exception;
-
-	public Response deletePriceModifierBatch(String callbackURL, Object object)
+	public PriceModifier postPriceListByExternalReferenceCodePriceModifier(
+			String externalReferenceCode, PriceModifier priceModifier)
 		throws Exception;
 
-	public PriceModifier getPriceModifier(Long id) throws Exception;
+	public PriceModifier postPriceListIdPriceModifier(
+			Long id, PriceModifier priceModifier)
+		throws Exception;
 
-	public Response patchPriceModifier(Long id, PriceModifier priceModifier)
+	public Response postPriceListIdPriceModifierBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -92,21 +92,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateKeywordBatch(
-			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
-				keywordBulkSelection)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.putKeywordBatch(
-				keywordBulkSelection));
-
-		return true;
-	}
-
-	@GraphQLField
 	public java.util.Collection<Keyword> createKeywordsCommonPage(
 			@GraphQLName("documentBulkSelection") DocumentBulkSelection
 				documentBulkSelection)
@@ -121,6 +106,21 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	public boolean updateKeywordBatch(
+			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
+				keywordBulkSelection)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordBatch(
+				keywordBulkSelection));
+
+		return true;
 	}
 
 	@GraphQLField

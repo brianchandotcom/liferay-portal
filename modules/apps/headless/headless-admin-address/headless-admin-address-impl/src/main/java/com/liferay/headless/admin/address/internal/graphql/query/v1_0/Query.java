@@ -81,6 +81,21 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {country(countryId: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Country country(@GraphQLName("countryId") Long countryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.getCountry(countryId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByA2(a2: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -137,16 +152,19 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {country(countryId: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryRegionByRegionCode(countryId: ___, regionCode: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Country country(@GraphQLName("countryId") Long countryId)
+	public Region countryRegionByRegionCode(
+			@GraphQLName("countryId") Long countryId,
+			@GraphQLName("regionCode") String regionCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_countryResourceComponentServiceObjects,
+			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			countryResource -> countryResource.getCountry(countryId));
+			regionResource -> regionResource.getCountryRegionByRegionCode(
+				countryId, regionCode));
 	}
 
 	/**
@@ -176,19 +194,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryRegionByRegionCode(countryId: ___, regionCode: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {region(regionId: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Region countryRegionByRegionCode(
-			@GraphQLName("countryId") Long countryId,
-			@GraphQLName("regionCode") String regionCode)
+	public Region region(@GraphQLName("regionId") Long regionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			regionResource -> regionResource.getCountryRegionByRegionCode(
-				countryId, regionCode));
+			regionResource -> regionResource.getRegion(regionId));
 	}
 
 	/**
@@ -212,21 +227,6 @@ public class Query {
 				regionResource.getRegionsPage(
 					active, search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(regionResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {region(regionId: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Region region(@GraphQLName("regionId") Long regionId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_regionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			regionResource -> regionResource.getRegion(regionId));
 	}
 
 	@GraphQLTypeExtension(Region.class)

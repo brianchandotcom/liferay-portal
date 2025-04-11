@@ -45,11 +45,11 @@ public interface ShippingAddressResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public ShippingAddress patchShipmentByExternalReferenceCodeShippingAddress(
-			String externalReferenceCode, ShippingAddress shippingAddress)
+	public ShippingAddress getShipmentShippingAddress(Long shipmentId)
 		throws Exception;
 
-	public ShippingAddress getShipmentShippingAddress(Long shipmentId)
+	public ShippingAddress patchShipmentByExternalReferenceCodeShippingAddress(
+			String externalReferenceCode, ShippingAddress shippingAddress)
 		throws Exception;
 
 	public ShippingAddress patchShipmentShippingAddress(

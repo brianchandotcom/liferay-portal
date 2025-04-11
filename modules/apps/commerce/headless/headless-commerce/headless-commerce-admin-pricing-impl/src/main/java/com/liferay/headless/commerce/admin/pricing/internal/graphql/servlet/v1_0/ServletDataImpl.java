@@ -124,10 +124,27 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createDiscountsPageExportBatch",
+						"mutation#deleteDiscount",
+						new ObjectValuePair<>(
+							DiscountResourceImpl.class, "deleteDiscount"));
+					put(
+						"mutation#deleteDiscountBatch",
+						new ObjectValuePair<>(
+							DiscountResourceImpl.class, "deleteDiscountBatch"));
+					put(
+						"mutation#deleteDiscountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class,
-							"postDiscountsPageExportBatch"));
+							"deleteDiscountByExternalReferenceCode"));
+					put(
+						"mutation#patchDiscount",
+						new ObjectValuePair<>(
+							DiscountResourceImpl.class, "patchDiscount"));
+					put(
+						"mutation#patchDiscountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DiscountResourceImpl.class,
+							"patchDiscountByExternalReferenceCode"));
 					put(
 						"mutation#createDiscount",
 						new ObjectValuePair<>(
@@ -137,32 +154,15 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class, "postDiscountBatch"));
 					put(
-						"mutation#deleteDiscountByExternalReferenceCode",
+						"mutation#createDiscountsPageExportBatch",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class,
-							"deleteDiscountByExternalReferenceCode"));
-					put(
-						"mutation#patchDiscountByExternalReferenceCode",
-						new ObjectValuePair<>(
-							DiscountResourceImpl.class,
-							"patchDiscountByExternalReferenceCode"));
+							"postDiscountsPageExportBatch"));
 					put(
 						"mutation#updateDiscountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class,
 							"putDiscountByExternalReferenceCode"));
-					put(
-						"mutation#deleteDiscount",
-						new ObjectValuePair<>(
-							DiscountResourceImpl.class, "deleteDiscount"));
-					put(
-						"mutation#deleteDiscountBatch",
-						new ObjectValuePair<>(
-							DiscountResourceImpl.class, "deleteDiscountBatch"));
-					put(
-						"mutation#patchDiscount",
-						new ObjectValuePair<>(
-							DiscountResourceImpl.class, "patchDiscount"));
 					put(
 						"mutation#deleteDiscountAccountGroup",
 						new ObjectValuePair<>(
@@ -239,11 +239,6 @@ public class ServletDataImpl implements ServletData {
 							DiscountProductResourceImpl.class,
 							"postDiscountIdDiscountProductBatch"));
 					put(
-						"mutation#createDiscountByExternalReferenceCodeDiscountRule",
-						new ObjectValuePair<>(
-							DiscountRuleResourceImpl.class,
-							"postDiscountByExternalReferenceCodeDiscountRule"));
-					put(
 						"mutation#deleteDiscountRule",
 						new ObjectValuePair<>(
 							DiscountRuleResourceImpl.class,
@@ -259,6 +254,11 @@ public class ServletDataImpl implements ServletData {
 							DiscountRuleResourceImpl.class,
 							"patchDiscountRule"));
 					put(
+						"mutation#createDiscountByExternalReferenceCodeDiscountRule",
+						new ObjectValuePair<>(
+							DiscountRuleResourceImpl.class,
+							"postDiscountByExternalReferenceCodeDiscountRule"));
+					put(
 						"mutation#createDiscountIdDiscountRule",
 						new ObjectValuePair<>(
 							DiscountRuleResourceImpl.class,
@@ -269,16 +269,6 @@ public class ServletDataImpl implements ServletData {
 							DiscountRuleResourceImpl.class,
 							"postDiscountIdDiscountRuleBatch"));
 					put(
-						"mutation#deletePriceEntryByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PriceEntryResourceImpl.class,
-							"deletePriceEntryByExternalReferenceCode"));
-					put(
-						"mutation#patchPriceEntryByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PriceEntryResourceImpl.class,
-							"patchPriceEntryByExternalReferenceCode"));
-					put(
 						"mutation#deletePriceEntry",
 						new ObjectValuePair<>(
 							PriceEntryResourceImpl.class, "deletePriceEntry"));
@@ -288,9 +278,19 @@ public class ServletDataImpl implements ServletData {
 							PriceEntryResourceImpl.class,
 							"deletePriceEntryBatch"));
 					put(
+						"mutation#deletePriceEntryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceEntryResourceImpl.class,
+							"deletePriceEntryByExternalReferenceCode"));
+					put(
 						"mutation#patchPriceEntry",
 						new ObjectValuePair<>(
 							PriceEntryResourceImpl.class, "patchPriceEntry"));
+					put(
+						"mutation#patchPriceEntryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceEntryResourceImpl.class,
+							"patchPriceEntryByExternalReferenceCode"));
 					put(
 						"mutation#createPriceListByExternalReferenceCodePriceEntry",
 						new ObjectValuePair<>(
@@ -307,34 +307,6 @@ public class ServletDataImpl implements ServletData {
 							PriceEntryResourceImpl.class,
 							"postPriceListIdPriceEntryBatch"));
 					put(
-						"mutation#createPriceListsPageExportBatch",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class,
-							"postPriceListsPageExportBatch"));
-					put(
-						"mutation#createPriceList",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class, "postPriceList"));
-					put(
-						"mutation#createPriceListBatch",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class, "postPriceListBatch"));
-					put(
-						"mutation#deletePriceListByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class,
-							"deletePriceListByExternalReferenceCode"));
-					put(
-						"mutation#patchPriceListByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class,
-							"patchPriceListByExternalReferenceCode"));
-					put(
-						"mutation#updatePriceListByExternalReferenceCode",
-						new ObjectValuePair<>(
-							PriceListResourceImpl.class,
-							"putPriceListByExternalReferenceCode"));
-					put(
 						"mutation#deletePriceList",
 						new ObjectValuePair<>(
 							PriceListResourceImpl.class, "deletePriceList"));
@@ -344,9 +316,37 @@ public class ServletDataImpl implements ServletData {
 							PriceListResourceImpl.class,
 							"deletePriceListBatch"));
 					put(
+						"mutation#deletePriceListByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class,
+							"deletePriceListByExternalReferenceCode"));
+					put(
 						"mutation#patchPriceList",
 						new ObjectValuePair<>(
 							PriceListResourceImpl.class, "patchPriceList"));
+					put(
+						"mutation#patchPriceListByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class,
+							"patchPriceListByExternalReferenceCode"));
+					put(
+						"mutation#createPriceList",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class, "postPriceList"));
+					put(
+						"mutation#createPriceListBatch",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class, "postPriceListBatch"));
+					put(
+						"mutation#createPriceListsPageExportBatch",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class,
+							"postPriceListsPageExportBatch"));
+					put(
+						"mutation#updatePriceListByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceListResourceImpl.class,
+							"putPriceListByExternalReferenceCode"));
 					put(
 						"mutation#deletePriceListAccountGroup",
 						new ObjectValuePair<>(
@@ -373,6 +373,29 @@ public class ServletDataImpl implements ServletData {
 							PriceListAccountGroupResourceImpl.class,
 							"postPriceListIdPriceListAccountGroupBatch"));
 					put(
+						"mutation#deleteTierPrice",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class, "deleteTierPrice"));
+					put(
+						"mutation#deleteTierPriceBatch",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"deleteTierPriceBatch"));
+					put(
+						"mutation#deleteTierPriceByExternalReferenceCode",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"deleteTierPriceByExternalReferenceCode"));
+					put(
+						"mutation#patchTierPrice",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class, "patchTierPrice"));
+					put(
+						"mutation#patchTierPriceByExternalReferenceCode",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"patchTierPriceByExternalReferenceCode"));
+					put(
 						"mutation#createPriceEntryByExternalReferenceCodeTierPrice",
 						new ObjectValuePair<>(
 							TierPriceResourceImpl.class,
@@ -387,43 +410,20 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TierPriceResourceImpl.class,
 							"postPriceEntryIdTierPriceBatch"));
-					put(
-						"mutation#deleteTierPriceByExternalReferenceCode",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class,
-							"deleteTierPriceByExternalReferenceCode"));
-					put(
-						"mutation#patchTierPriceByExternalReferenceCode",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class,
-							"patchTierPriceByExternalReferenceCode"));
-					put(
-						"mutation#deleteTierPrice",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class, "deleteTierPrice"));
-					put(
-						"mutation#deleteTierPriceBatch",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class,
-							"deleteTierPriceBatch"));
-					put(
-						"mutation#patchTierPrice",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class, "patchTierPrice"));
 
 					put(
-						"query#discounts",
+						"query#discount",
 						new ObjectValuePair<>(
-							DiscountResourceImpl.class, "getDiscountsPage"));
+							DiscountResourceImpl.class, "getDiscount"));
 					put(
 						"query#discountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							DiscountResourceImpl.class,
 							"getDiscountByExternalReferenceCode"));
 					put(
-						"query#discount",
+						"query#discounts",
 						new ObjectValuePair<>(
-							DiscountResourceImpl.class, "getDiscount"));
+							DiscountResourceImpl.class, "getDiscountsPage"));
 					put(
 						"query#discountByExternalReferenceCodeDiscountAccountGroups",
 						new ObjectValuePair<>(
@@ -460,23 +460,23 @@ public class ServletDataImpl implements ServletData {
 							DiscountRuleResourceImpl.class,
 							"getDiscountByExternalReferenceCodeDiscountRulesPage"));
 					put(
-						"query#discountRule",
-						new ObjectValuePair<>(
-							DiscountRuleResourceImpl.class, "getDiscountRule"));
-					put(
 						"query#discountIdDiscountRules",
 						new ObjectValuePair<>(
 							DiscountRuleResourceImpl.class,
 							"getDiscountIdDiscountRulesPage"));
 					put(
-						"query#priceEntryByExternalReferenceCode",
+						"query#discountRule",
 						new ObjectValuePair<>(
-							PriceEntryResourceImpl.class,
-							"getPriceEntryByExternalReferenceCode"));
+							DiscountRuleResourceImpl.class, "getDiscountRule"));
 					put(
 						"query#priceEntry",
 						new ObjectValuePair<>(
 							PriceEntryResourceImpl.class, "getPriceEntry"));
+					put(
+						"query#priceEntryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PriceEntryResourceImpl.class,
+							"getPriceEntryByExternalReferenceCode"));
 					put(
 						"query#priceListByExternalReferenceCodePriceEntries",
 						new ObjectValuePair<>(
@@ -488,18 +488,18 @@ public class ServletDataImpl implements ServletData {
 							PriceEntryResourceImpl.class,
 							"getPriceListIdPriceEntriesPage"));
 					put(
-						"query#priceLists",
+						"query#priceList",
 						new ObjectValuePair<>(
-							PriceListResourceImpl.class, "getPriceListsPage"));
+							PriceListResourceImpl.class, "getPriceList"));
 					put(
 						"query#priceListByExternalReferenceCode",
 						new ObjectValuePair<>(
 							PriceListResourceImpl.class,
 							"getPriceListByExternalReferenceCode"));
 					put(
-						"query#priceList",
+						"query#priceLists",
 						new ObjectValuePair<>(
-							PriceListResourceImpl.class, "getPriceList"));
+							PriceListResourceImpl.class, "getPriceListsPage"));
 					put(
 						"query#priceListByExternalReferenceCodePriceListAccountGroup",
 						new ObjectValuePair<>(
@@ -521,14 +521,14 @@ public class ServletDataImpl implements ServletData {
 							TierPriceResourceImpl.class,
 							"getPriceEntryIdTierPricesPage"));
 					put(
+						"query#tierPrice",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class, "getTierPrice"));
+					put(
 						"query#tierPriceByExternalReferenceCode",
 						new ObjectValuePair<>(
 							TierPriceResourceImpl.class,
 							"getTierPriceByExternalReferenceCode"));
-					put(
-						"query#tierPrice",
-						new ObjectValuePair<>(
-							TierPriceResourceImpl.class, "getTierPrice"));
 
 					put(
 						"query#Discount.byExternalReferenceCodeDiscountAccountGroups",

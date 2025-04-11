@@ -46,11 +46,36 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderResource {
 
+	public Response deleteOrder(Long id) throws Exception;
+
+	public Response deleteOrderBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteOrderByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Order getOrder(Long id) throws Exception;
+
+	public Order getOrderByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
 	public Page<Order> getOrdersPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Order patchOrder(Long id, Order order) throws Exception;
+
+	public Order patchOrderByExternalReferenceCode(
+			String externalReferenceCode, Order order)
+		throws Exception;
+
+	public Order postOrder(Order order) throws Exception;
+
+	public Response postOrderBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postOrdersPageExportBatch(
@@ -60,34 +85,9 @@ public interface OrderResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Order postOrder(Order order) throws Exception;
-
-	public Response postOrderBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteOrderByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Order getOrderByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public Order patchOrderByExternalReferenceCode(
-			String externalReferenceCode, Order order)
-		throws Exception;
-
 	public Order putOrderByExternalReferenceCode(
 			String externalReferenceCode, Order order)
 		throws Exception;
-
-	public Response deleteOrder(Long id) throws Exception;
-
-	public Response deleteOrderBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Order getOrder(Long id) throws Exception;
-
-	public Order patchOrder(Long id, Order order) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

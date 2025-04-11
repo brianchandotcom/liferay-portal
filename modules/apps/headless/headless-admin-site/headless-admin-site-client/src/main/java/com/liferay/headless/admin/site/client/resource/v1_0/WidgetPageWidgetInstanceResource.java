@@ -33,32 +33,6 @@ public interface WidgetPageWidgetInstanceResource {
 		return new Builder();
 	}
 
-	public Page<WidgetPageWidgetInstance>
-			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
-		throws Exception;
-
-	public WidgetPageWidgetInstance
-			postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
-				WidgetPageWidgetInstance widgetPageWidgetInstance)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
-				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode,
-				WidgetPageWidgetInstance widgetPageWidgetInstance)
-		throws Exception;
-
 	public void
 			deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 				String siteExternalReferenceCode,
@@ -71,6 +45,18 @@ public interface WidgetPageWidgetInstanceResource {
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode)
+		throws Exception;
+
+	public Page<WidgetPageWidgetInstance>
+			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode)
 		throws Exception;
 
 	public WidgetPageWidgetInstance
@@ -100,6 +86,20 @@ public interface WidgetPageWidgetInstanceResource {
 				String siteExternalReferenceCode,
 				String sitePageExternalReferenceCode,
 				String widgetInstanceExternalReferenceCode,
+				WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception;
+
+	public WidgetPageWidgetInstance
+			postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				WidgetPageWidgetInstance widgetPageWidgetInstance)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
 				WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception;
 
@@ -228,240 +228,6 @@ public interface WidgetPageWidgetInstanceResource {
 	public static class WidgetPageWidgetInstanceResourceImpl
 		implements WidgetPageWidgetInstanceResource {
 
-		public Page<WidgetPageWidgetInstance>
-				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
-					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
-					siteExternalReferenceCode, sitePageExternalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, WidgetPageWidgetInstanceSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
-					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public WidgetPageWidgetInstance
-				postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
-					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode,
-					WidgetPageWidgetInstance widgetPageWidgetInstance)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
-					siteExternalReferenceCode, sitePageExternalReferenceCode,
-					widgetPageWidgetInstance);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return WidgetPageWidgetInstanceSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
-					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode,
-					WidgetPageWidgetInstance widgetPageWidgetInstance)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				widgetPageWidgetInstance.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-			httpInvoker.path(
-				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public void
 				deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode(
 					String siteExternalReferenceCode,
@@ -573,6 +339,120 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WidgetPageWidgetInstance>
+				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage(
+					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
+					siteExternalReferenceCode, sitePageExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, WidgetPageWidgetInstanceSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPageHttpResponse(
+					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -819,6 +699,126 @@ public interface WidgetPageWidgetInstanceResource {
 			httpInvoker.path(
 				"widgetInstanceExternalReferenceCode",
 				widgetInstanceExternalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public WidgetPageWidgetInstance
+				postSiteSiteByExternalReferenceCodeSitePageWidgetInstance(
+					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
+					WidgetPageWidgetInstance widgetPageWidgetInstance)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
+					widgetPageWidgetInstance);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return WidgetPageWidgetInstanceSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteSiteByExternalReferenceCodeSitePageWidgetInstanceHttpResponse(
+					String siteExternalReferenceCode,
+					String sitePageExternalReferenceCode,
+					WidgetPageWidgetInstance widgetPageWidgetInstance)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				widgetPageWidgetInstance.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"sitePageExternalReferenceCode", sitePageExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

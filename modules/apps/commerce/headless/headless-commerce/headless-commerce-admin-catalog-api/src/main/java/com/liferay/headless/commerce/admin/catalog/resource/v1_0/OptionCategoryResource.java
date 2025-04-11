@@ -46,10 +46,32 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OptionCategoryResource {
 
+	public Response deleteOptionCategory(Long id) throws Exception;
+
+	public Response deleteOptionCategoryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<OptionCategory> getOptionCategoriesPage(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public OptionCategory getOptionCategory(Long id) throws Exception;
+
+	public OptionCategory getOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchOptionCategory(Long id, OptionCategory optionCategory)
+		throws Exception;
+
+	public OptionCategory patchOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, OptionCategory optionCategory)
 		throws Exception;
 
 	public Response postOptionCategoriesPageExportBatch(
@@ -64,30 +86,8 @@ public interface OptionCategoryResource {
 	public Response postOptionCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteOptionCategoryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OptionCategory getOptionCategoryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OptionCategory patchOptionCategoryByExternalReferenceCode(
-			String externalReferenceCode, OptionCategory optionCategory)
-		throws Exception;
-
 	public OptionCategory putOptionCategoryByExternalReferenceCode(
 			String externalReferenceCode, OptionCategory optionCategory)
-		throws Exception;
-
-	public Response deleteOptionCategory(Long id) throws Exception;
-
-	public Response deleteOptionCategoryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public OptionCategory getOptionCategory(Long id) throws Exception;
-
-	public Response patchOptionCategory(Long id, OptionCategory optionCategory)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -53,16 +53,41 @@ public interface UserAccountResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public void deleteAccountUserAccount(Long accountId, Long userAccountId)
+		throws Exception;
+
+	public void deleteAccountUserAccountByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception;
+
+	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public void deleteAccountUserAccountsByEmailAddress(
+			Long accountId, String[] strings)
+		throws Exception;
+
+	public void deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] strings)
+		throws Exception;
+
+	public void deleteUserAccount(Long userAccountId) throws Exception;
+
+	public Response deleteUserAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteUserAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public UserAccount
 			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
-	public void
-			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
-				String accountExternalReferenceCode,
-				String externalReferenceCode)
+	public UserAccount getAccountUserAccount(Long accountId, Long userAccountId)
 		throws Exception;
 
 	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
@@ -72,71 +97,11 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUserAccountByExternalReferenceCode(
-			String externalReferenceCode, UserAccount userAccount)
-		throws Exception;
-
-	public void deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
-		throws Exception;
-
-	public Page<UserAccount>
-			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
-				String externalReferenceCode, String accountRoleIds,
-				String[] strings)
-		throws Exception;
-
-	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
-		throws Exception;
-
-	public UserAccount
-			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-				String externalReferenceCode, String emailAddress)
-		throws Exception;
-
 	public Page<UserAccount> getAccountUserAccountsPage(
 			Long accountId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postAccountUserAccountsPageExportBatch(
-			Long accountId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public UserAccount postAccountUserAccount(
-			Long accountId, UserAccount userAccount)
-		throws Exception;
-
-	public Response postAccountUserAccountBatch(
-			Long accountId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteAccountUserAccountsByEmailAddress(
-			Long accountId, String[] strings)
-		throws Exception;
-
-	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
-			Long accountId, String accountRoleIds, String[] strings)
-		throws Exception;
-
-	public void deleteAccountUserAccountByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public UserAccount postAccountUserAccountByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public void deleteAccountUserAccount(Long accountId, Long userAccountId)
-		throws Exception;
-
-	public UserAccount getAccountUserAccount(Long accountId, Long userAccountId)
 		throws Exception;
 
 	public UserAccount getMyUserAccount() throws Exception;
@@ -156,31 +121,14 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postOrganizationUserAccountsPageExportBatch(
-			String organizationId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Boolean getSiteAccountUserAccountSelected(
+			Long siteId, Long accountId, Long userAccountId)
 		throws Exception;
 
 	public Boolean
 			getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
 				String friendlyUrlPath, String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public void
-			patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
-				String friendlyUrlPath, String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public Boolean getSiteAccountUserAccountSelected(
-			Long siteId, Long accountId, Long userAccountId)
-		throws Exception;
-
-	public void patchSiteAccountUserAccountSelected(
-			Long siteId, Long accountId, Long userAccountId)
 		throws Exception;
 
 	public Page<UserAccount> getSiteUserAccountsPage(
@@ -190,50 +138,13 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response postSiteUserAccountsPageExportBatch(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public Page<UserAccount> getUserAccountsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Response postUserAccountsPageExportBatch(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception;
-
-	public Response postUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
+	public UserAccount getUserAccount(Long userAccountId) throws Exception;
 
 	public UserAccount getUserAccountByEmailAddress(String emailAddress)
 		throws Exception;
 
-	public void deleteUserAccountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
 	public UserAccount getUserAccountByExternalReferenceCode(
 			String externalReferenceCode)
-		throws Exception;
-
-	public UserAccount patchUserAccountByExternalReferenceCode(
-			String externalReferenceCode, UserAccount userAccount)
-		throws Exception;
-
-	public UserAccount putUserAccountByExternalReferenceCode(
-			String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
 	public Page<UserAccount> getUserAccountsByStatusPage(
@@ -243,26 +154,11 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public void deleteUserAccount(Long userAccountId) throws Exception;
-
-	public Response deleteUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public UserAccount getUserAccount(Long userAccountId) throws Exception;
-
-	public UserAccount patchUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public UserAccount putUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public Response putUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response postUserAccountImage(
-			Long userAccountId, MultipartBody multipartBody)
+	public Page<UserAccount> getUserAccountsPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<UserAccount> getUserGroupByExternalReferenceCodeUsersPage(
@@ -277,6 +173,110 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public void patchSiteAccountUserAccountSelected(
+			Long siteId, Long accountId, Long userAccountId)
+		throws Exception;
+
+	public void
+			patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+				String friendlyUrlPath, String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public UserAccount patchUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
+	public UserAccount patchUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public UserAccount postAccountUserAccount(
+			Long accountId, UserAccount userAccount)
+		throws Exception;
+
+	public Response postAccountUserAccountBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public UserAccount postAccountUserAccountByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception;
+
+	public UserAccount postAccountUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception;
+
+	public UserAccount
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
+			Long accountId, String accountRoleIds, String[] strings)
+		throws Exception;
+
+	public Page<UserAccount>
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				String externalReferenceCode, String accountRoleIds,
+				String[] strings)
+		throws Exception;
+
+	public Response postAccountUserAccountsPageExportBatch(
+			Long accountId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public Response postOrganizationUserAccountsPageExportBatch(
+			String organizationId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public Response postSiteUserAccountsPageExportBatch(
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception;
+
+	public Response postUserAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response postUserAccountImage(
+			Long userAccountId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response postUserAccountsPageExportBatch(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
+	public UserAccount putUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
+	public Response putUserAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public UserAccount putUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

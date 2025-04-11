@@ -453,29 +453,6 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderTypeByExternalReferenceCodeOrderTypeChannel()
-		throws Exception {
-
-		OrderTypeChannel randomOrderTypeChannel = randomOrderTypeChannel();
-
-		OrderTypeChannel postOrderTypeChannel =
-			testPostOrderTypeByExternalReferenceCodeOrderTypeChannel_addOrderTypeChannel(
-				randomOrderTypeChannel);
-
-		assertEquals(randomOrderTypeChannel, postOrderTypeChannel);
-		assertValid(postOrderTypeChannel);
-	}
-
-	protected OrderTypeChannel
-			testPostOrderTypeByExternalReferenceCodeOrderTypeChannel_addOrderTypeChannel(
-				OrderTypeChannel orderTypeChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrderTypeIdOrderTypeChannelsPage() throws Exception {
 		Long id = testGetOrderTypeIdOrderTypeChannelsPage_getId();
 		Long irrelevantId =
@@ -812,6 +789,29 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostOrderTypeByExternalReferenceCodeOrderTypeChannel()
+		throws Exception {
+
+		OrderTypeChannel randomOrderTypeChannel = randomOrderTypeChannel();
+
+		OrderTypeChannel postOrderTypeChannel =
+			testPostOrderTypeByExternalReferenceCodeOrderTypeChannel_addOrderTypeChannel(
+				randomOrderTypeChannel);
+
+		assertEquals(randomOrderTypeChannel, postOrderTypeChannel);
+		assertValid(postOrderTypeChannel);
+	}
+
+	protected OrderTypeChannel
+			testPostOrderTypeByExternalReferenceCodeOrderTypeChannel_addOrderTypeChannel(
+				OrderTypeChannel orderTypeChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

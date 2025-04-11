@@ -44,12 +44,74 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectEntryResource {
 
+	public void deleteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public void deleteObjectEntry(Long objectEntryId) throws Exception;
+
+	public Response deleteObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry getByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
+	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
 	public Page<ObjectEntry> getObjectEntriesPage(
 			Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<ObjectEntry> getObjectEntriesVersionsPage(
+			Long objectEntryId, Pagination pagination)
+		throws Exception;
+
+	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception;
+
+	public ObjectEntry getObjectEntryByVersion(
+			Long objectEntryId, Integer version)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getObjectEntryPermissionsPage(Long objectEntryId, String roleNames)
+		throws Exception;
+
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			String scopeKey, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public ObjectEntry patchByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception;
+
+	public ObjectEntry patchObjectEntry(
+			Long objectEntryId, ObjectEntry objectEntry)
+		throws Exception;
+
+	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
+			ObjectEntry objectEntry)
 		throws Exception;
 
 	public Response postObjectEntriesPageExportBatch(
@@ -65,67 +127,8 @@ public interface ObjectEntryResource {
 	public Response postObjectEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public ObjectEntry
-			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-				String currentExternalReferenceCode,
-				String objectRelationshipName,
-				String relatedExternalReferenceCode)
-		throws Exception;
-
-	public void deleteByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public ObjectEntry patchByExternalReferenceCode(
-			String externalReferenceCode, ObjectEntry objectEntry)
-		throws Exception;
-
-	public ObjectEntry putByExternalReferenceCode(
-			String externalReferenceCode, ObjectEntry objectEntry)
-		throws Exception;
-
-	public ObjectEntry getByExternalReferenceCodeByVersion(
-			String externalReferenceCode, Integer version)
-		throws Exception;
-
-	public ObjectEntry putByExternalReferenceCodeByVersionRestore(
-			String externalReferenceCode, Integer version)
-		throws Exception;
-
-	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public void
-			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
-				String objectEntryExternalReferenceCode,
-				String objectActionName)
-		throws Exception;
-
-	public void deleteScopeScopeKeyByExternalReferenceCode(
-			String scopeKey, String externalReferenceCode)
-		throws Exception;
-
-	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
-			String scopeKey, String externalReferenceCode)
-		throws Exception;
-
-	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
-			String scopeKey, String externalReferenceCode,
-			ObjectEntry objectEntry)
-		throws Exception;
-
-	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
-			String scopeKey, String externalReferenceCode,
-			ObjectEntry objectEntry)
-		throws Exception;
-
-	public void
-			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
-				String scopeKey, String externalReferenceCode,
-				String objectActionName)
+	public ObjectEntry postScopeScopeKey(
+			String scopeKey, ObjectEntry objectEntry)
 		throws Exception;
 
 	public ValidationResponse postScopeScopeKeyValidate(
@@ -135,15 +138,25 @@ public interface ObjectEntryResource {
 	public ValidationResponse postValidate(ValidationRequest validationRequest)
 		throws Exception;
 
-	public void deleteObjectEntry(Long objectEntryId) throws Exception;
-
-	public Response deleteObjectEntryBatch(String callbackURL, Object object)
+	public ObjectEntry putByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
-	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception;
+	public ObjectEntry putByExternalReferenceCodeByVersionRestore(
+			String externalReferenceCode, Integer version)
+		throws Exception;
 
-	public ObjectEntry patchObjectEntry(
-			Long objectEntryId, ObjectEntry objectEntry)
+	public ObjectEntry
+			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception;
+
+	public void
+			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+				String objectEntryExternalReferenceCode,
+				String objectActionName)
 		throws Exception;
 
 	public ObjectEntry putObjectEntry(
@@ -151,10 +164,6 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response putObjectEntryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectEntry getObjectEntryByVersion(
-			Long objectEntryId, Integer version)
 		throws Exception;
 
 	public ObjectEntry putObjectEntryByVersionRestore(
@@ -166,29 +175,20 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getObjectEntryPermissionsPage(Long objectEntryId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putObjectEntryPermissionsPage(
 				Long objectEntryId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
-	public Page<ObjectEntry> getObjectEntriesVersionsPage(
-			Long objectEntryId, Pagination pagination)
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
+			ObjectEntry objectEntry)
 		throws Exception;
 
-	public Page<ObjectEntry> getScopeScopeKeyPage(
-			String scopeKey, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ObjectEntry postScopeScopeKey(
-			String scopeKey, ObjectEntry objectEntry)
+	public void
+			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
+				String scopeKey, String externalReferenceCode,
+				String objectActionName)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -59,17 +59,17 @@ public interface MessageResource {
 	public Response postMessageBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Message putMessage(Message message) throws Exception;
-
-	public Response putMessageBatch(String callbackURL, Object object)
+	public void postMessageImport(
+			String languageId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Page<Message> postMessagesExportPage(
 			String languageId, String[] strings)
 		throws Exception;
 
-	public void postMessageImport(
-			String languageId, MultipartBody multipartBody)
+	public Message putMessage(Message message) throws Exception;
+
+	public Response putMessageBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

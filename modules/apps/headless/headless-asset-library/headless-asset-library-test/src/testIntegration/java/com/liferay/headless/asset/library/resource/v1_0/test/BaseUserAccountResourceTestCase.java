@@ -253,6 +253,51 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryUserAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAssetLibraryUserAccount_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.deleteAssetLibraryUserAccountHttpResponse(
+				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
+				testDeleteAssetLibraryUserAccount_getUserId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAssetLibraryUserAccountHttpResponse(
+				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
+				testDeleteAssetLibraryUserAccount_getUserId()));
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAssetLibraryUserAccountHttpResponse(
+				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
+				testDeleteAssetLibraryUserAccount_getUserId()));
+	}
+
+	protected Long testDeleteAssetLibraryUserAccount_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testDeleteAssetLibraryUserAccount_getUserId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testDeleteAssetLibraryUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode()
 		throws Exception {
 
@@ -287,58 +332,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	protected UserAccount
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode()
-		throws Exception {
-
-		UserAccount postUserAccount =
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_addUserAccount();
-
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount putUserAccount =
-			userAccountResource.
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode());
-
-		assertEquals(randomUserAccount, putUserAccount);
-		assertValid(putUserAccount);
-
-		UserAccount getUserAccount =
-			userAccountResource.
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
-					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode());
-
-		assertEquals(randomUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -704,6 +697,39 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryUserAccount() throws Exception {
+		UserAccount postUserAccount =
+			testGetAssetLibraryUserAccount_addUserAccount();
+
+		UserAccount getUserAccount =
+			userAccountResource.getAssetLibraryUserAccount(
+				testGetAssetLibraryUserAccount_getAssetLibraryId(),
+				testGetAssetLibraryUserAccount_getUserId());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected Long testGetAssetLibraryUserAccount_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAssetLibraryUserAccount_getUserId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetAssetLibraryUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibraryUserAccountsPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryUserAccountsPage_getAssetLibraryId();
@@ -1035,77 +1061,51 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAssetLibraryUserAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount =
-			testDeleteAssetLibraryUserAccount_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.deleteAssetLibraryUserAccountHttpResponse(
-				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
-				testDeleteAssetLibraryUserAccount_getUserId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getAssetLibraryUserAccountHttpResponse(
-				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
-				testDeleteAssetLibraryUserAccount_getUserId()));
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getAssetLibraryUserAccountHttpResponse(
-				testDeleteAssetLibraryUserAccount_getAssetLibraryId(),
-				testDeleteAssetLibraryUserAccount_getUserId()));
-	}
-
-	protected Long testDeleteAssetLibraryUserAccount_getAssetLibraryId()
+	public void testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testDeleteAssetLibraryUserAccount_getUserId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected UserAccount testDeleteAssetLibraryUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAssetLibraryUserAccount() throws Exception {
 		UserAccount postUserAccount =
-			testGetAssetLibraryUserAccount_addUserAccount();
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_addUserAccount();
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount putUserAccount =
+			userAccountResource.
+				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode());
+
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
 
 		UserAccount getUserAccount =
-			userAccountResource.getAssetLibraryUserAccount(
-				testGetAssetLibraryUserAccount_getAssetLibraryId(),
-				testGetAssetLibraryUserAccount_getUserId());
+			userAccountResource.
+				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode());
 
-		assertEquals(postUserAccount, getUserAccount);
+		assertEquals(randomUserAccount, getUserAccount);
 		assertValid(getUserAccount);
 	}
 
-	protected Long testGetAssetLibraryUserAccount_getAssetLibraryId()
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetAssetLibraryUserAccount_getUserId() throws Exception {
+	protected String
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_getUserExternalReferenceCode()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected UserAccount testGetAssetLibraryUserAccount_addUserAccount()
+	protected UserAccount
+			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -48,26 +48,26 @@ public interface FieldResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public void patchFieldAccount(Field[] fields) throws Exception;
-
 	public Page<Field> getFieldsOrdersPage(
 			String keyword, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
-
-	public void patchFieldOrder(Field[] fields) throws Exception;
 
 	public Page<Field> getFieldsPeoplePage(
 			String keyword, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public void patchFieldPeople(Field[] fields) throws Exception;
-
 	public Page<Field> getFieldsProductsPage(
 			String keyword, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public void patchFieldAccount(Field[] fields) throws Exception;
+
+	public void patchFieldOrder(Field[] fields) throws Exception;
+
+	public void patchFieldPeople(Field[] fields) throws Exception;
 
 	public void patchFieldProduct(Field[] fields) throws Exception;
 

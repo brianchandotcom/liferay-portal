@@ -216,35 +216,6 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	@Test
-	public void testDeletePriceEntryByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetPriceEntryByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetPriceEntryByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetPriceEntryByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchPriceEntryByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeletePriceEntry() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -331,6 +302,11 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePriceEntryByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetPriceEntry() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -346,8 +322,22 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	@Test
-	public void testPatchPriceEntry() throws Exception {
+	public void testGetPriceEntryByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetPriceEntryByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetPriceEntryByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -806,29 +796,6 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceEntry()
-		throws Exception {
-
-		PriceEntry randomPriceEntry = randomPriceEntry();
-
-		PriceEntry postPriceEntry =
-			testPostPriceListByExternalReferenceCodePriceEntry_addPriceEntry(
-				randomPriceEntry);
-
-		assertEquals(randomPriceEntry, postPriceEntry);
-		assertValid(postPriceEntry);
-	}
-
-	protected PriceEntry
-			testPostPriceListByExternalReferenceCodePriceEntry_addPriceEntry(
-				PriceEntry priceEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceEntriesPage() throws Exception {
 		Long id = testGetPriceListIdPriceEntriesPage_getId();
 		Long irrelevantId =
@@ -1238,6 +1205,39 @@ public abstract class BasePriceEntryResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPatchPriceEntry() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchPriceEntryByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceEntry()
+		throws Exception {
+
+		PriceEntry randomPriceEntry = randomPriceEntry();
+
+		PriceEntry postPriceEntry =
+			testPostPriceListByExternalReferenceCodePriceEntry_addPriceEntry(
+				randomPriceEntry);
+
+		assertEquals(randomPriceEntry, postPriceEntry);
+		assertValid(postPriceEntry);
+	}
+
+	protected PriceEntry
+			testPostPriceListByExternalReferenceCodePriceEntry_addPriceEntry(
+				PriceEntry priceEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

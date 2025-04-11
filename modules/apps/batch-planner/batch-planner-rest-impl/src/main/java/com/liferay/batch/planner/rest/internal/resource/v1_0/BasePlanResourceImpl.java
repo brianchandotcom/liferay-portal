@@ -50,86 +50,6 @@ public abstract class BasePlanResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Plan> getPlansPage(
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "size": ___, "status": ___, "taskItemDelegateName": ___, "template": ___, "total": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/plans")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Plan postPlan(Plan plan) throws Exception {
-		return new Plan();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassNameKey}/template'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "internalClassNameKey"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans/{internalClassNameKey}/template")
-	@javax.ws.rs.Produces("application/octet-stream")
-	@Override
-	public Response getPlanTemplate(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("internalClassNameKey")
-			String internalClassNameKey)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -188,6 +108,69 @@ public abstract class BasePlanResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassNameKey}/template'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "internalClassNameKey"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/plans/{internalClassNameKey}/template")
+	@javax.ws.rs.Produces("application/octet-stream")
+	@Override
+	public Response getPlanTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("internalClassNameKey")
+			String internalClassNameKey)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/plans")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Plan> getPlansPage(
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "size": ___, "status": ___, "taskItemDelegateName": ___, "template": ___, "total": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -214,6 +197,23 @@ public abstract class BasePlanResourceImpl
 			Plan plan)
 		throws Exception {
 
+		return new Plan();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "size": ___, "status": ___, "taskItemDelegateName": ___, "template": ___, "total": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/plans")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Plan postPlan(Plan plan) throws Exception {
 		return new Plan();
 	}
 

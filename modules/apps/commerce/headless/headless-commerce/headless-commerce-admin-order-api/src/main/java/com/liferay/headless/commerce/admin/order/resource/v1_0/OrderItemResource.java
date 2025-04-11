@@ -46,11 +46,51 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderItemResource {
 
+	public Response deleteOrderItem(Long id) throws Exception;
+
+	public Response deleteOrderItemBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<OrderItem> getOrderIdOrderItemsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public OrderItem getOrderItem(Long id) throws Exception;
+
+	public OrderItem getOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<OrderItem> getOrderItemsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Response patchOrderItem(Long id, OrderItem orderItem)
+		throws Exception;
+
+	public Response patchOrderItemByExternalReferenceCode(
+			String externalReferenceCode, OrderItem orderItem)
+		throws Exception;
+
+	public OrderItem postOrderByExternalReferenceCodeOrderItem(
+			String externalReferenceCode, OrderItem orderItem)
+		throws Exception;
+
+	public OrderItem postOrderIdOrderItem(Long id, OrderItem orderItem)
+		throws Exception;
+
+	public Response postOrderIdOrderItemBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postOrderItemsPageExportBatch(
@@ -60,54 +100,14 @@ public interface OrderItemResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Response deleteOrderItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderItem getOrderItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchOrderItemByExternalReferenceCode(
-			String externalReferenceCode, OrderItem orderItem)
-		throws Exception;
-
-	public OrderItem putOrderItemByExternalReferenceCode(
-			String externalReferenceCode, OrderItem orderItem)
-		throws Exception;
-
-	public Response deleteOrderItem(Long id) throws Exception;
-
-	public Response deleteOrderItemBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public OrderItem getOrderItem(Long id) throws Exception;
-
-	public Response patchOrderItem(Long id, OrderItem orderItem)
-		throws Exception;
-
 	public OrderItem putOrderItem(Long id, OrderItem orderItem)
 		throws Exception;
 
 	public Response putOrderItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public OrderItem postOrderByExternalReferenceCodeOrderItem(
+	public OrderItem putOrderItemByExternalReferenceCode(
 			String externalReferenceCode, OrderItem orderItem)
-		throws Exception;
-
-	public Page<OrderItem> getOrderIdOrderItemsPage(
-			Long id, Pagination pagination)
-		throws Exception;
-
-	public OrderItem postOrderIdOrderItem(Long id, OrderItem orderItem)
-		throws Exception;
-
-	public Response postOrderIdOrderItemBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

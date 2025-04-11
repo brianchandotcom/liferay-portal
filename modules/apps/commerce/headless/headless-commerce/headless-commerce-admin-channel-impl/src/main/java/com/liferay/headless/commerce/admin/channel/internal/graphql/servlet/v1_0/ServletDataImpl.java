@@ -206,10 +206,27 @@ public class ServletDataImpl implements ServletData {
 							CategoryDisplayPageResourceImpl.class,
 							"postChannelIdCategoryDisplayPage"));
 					put(
-						"mutation#createChannelsPageExportBatch",
+						"mutation#deleteChannel",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "deleteChannel"));
+					put(
+						"mutation#deleteChannelBatch",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "deleteChannelBatch"));
+					put(
+						"mutation#deleteChannelByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class,
-							"postChannelsPageExportBatch"));
+							"deleteChannelByExternalReferenceCode"));
+					put(
+						"mutation#patchChannel",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "patchChannel"));
+					put(
+						"mutation#patchChannelByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"patchChannelByExternalReferenceCode"));
 					put(
 						"mutation#createChannel",
 						new ObjectValuePair<>(
@@ -219,32 +236,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "postChannelBatch"));
 					put(
-						"mutation#deleteChannelByExternalReferenceCode",
+						"mutation#createChannelsPageExportBatch",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class,
-							"deleteChannelByExternalReferenceCode"));
-					put(
-						"mutation#patchChannelByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class,
-							"patchChannelByExternalReferenceCode"));
-					put(
-						"mutation#updateChannelByExternalReferenceCode",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class,
-							"putChannelByExternalReferenceCode"));
-					put(
-						"mutation#deleteChannel",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "deleteChannel"));
-					put(
-						"mutation#deleteChannelBatch",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "deleteChannelBatch"));
-					put(
-						"mutation#patchChannel",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "patchChannel"));
+							"postChannelsPageExportBatch"));
 					put(
 						"mutation#updateChannel",
 						new ObjectValuePair<>(
@@ -253,6 +248,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateChannelBatch",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "putChannelBatch"));
+					put(
+						"mutation#updateChannelByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"putChannelByExternalReferenceCode"));
 					put(
 						"mutation#deleteChannelAccount",
 						new ObjectValuePair<>(
@@ -279,15 +279,15 @@ public class ServletDataImpl implements ServletData {
 							DefaultCategoryDisplayPageResourceImpl.class,
 							"deleteChannelByExternalReferenceCodeDefaultCategoryDisplayPage"));
 					put(
-						"mutation#createChannelByExternalReferenceCodeDefaultCategoryDisplayPage",
-						new ObjectValuePair<>(
-							DefaultCategoryDisplayPageResourceImpl.class,
-							"postChannelByExternalReferenceCodeDefaultCategoryDisplayPage"));
-					put(
 						"mutation#deleteChannelIdDefaultCategoryDisplayPage",
 						new ObjectValuePair<>(
 							DefaultCategoryDisplayPageResourceImpl.class,
 							"deleteChannelIdDefaultCategoryDisplayPage"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeDefaultCategoryDisplayPage",
+						new ObjectValuePair<>(
+							DefaultCategoryDisplayPageResourceImpl.class,
+							"postChannelByExternalReferenceCodeDefaultCategoryDisplayPage"));
 					put(
 						"mutation#createChannelIdDefaultCategoryDisplayPage",
 						new ObjectValuePair<>(
@@ -299,15 +299,15 @@ public class ServletDataImpl implements ServletData {
 							DefaultProductDisplayPageResourceImpl.class,
 							"deleteChannelByExternalReferenceCodeDefaultProductDisplayPage"));
 					put(
-						"mutation#createChannelByExternalReferenceCodeDefaultProductDisplayPage",
-						new ObjectValuePair<>(
-							DefaultProductDisplayPageResourceImpl.class,
-							"postChannelByExternalReferenceCodeDefaultProductDisplayPage"));
-					put(
 						"mutation#deleteChannelIdDefaultProductDisplayPage",
 						new ObjectValuePair<>(
 							DefaultProductDisplayPageResourceImpl.class,
 							"deleteChannelIdDefaultProductDisplayPage"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeDefaultProductDisplayPage",
+						new ObjectValuePair<>(
+							DefaultProductDisplayPageResourceImpl.class,
+							"postChannelByExternalReferenceCodeDefaultProductDisplayPage"));
 					put(
 						"mutation#createChannelIdDefaultProductDisplayPage",
 						new ObjectValuePair<>(
@@ -344,16 +344,6 @@ public class ServletDataImpl implements ServletData {
 							PaymentMethodGroupRelTermResourceImpl.class,
 							"postPaymentMethodGroupRelIdPaymentMethodGroupRelTerm"));
 					put(
-						"mutation#createChannelByExternalReferenceCodeProductDisplayPage",
-						new ObjectValuePair<>(
-							ProductDisplayPageResourceImpl.class,
-							"postChannelByExternalReferenceCodeProductDisplayPage"));
-					put(
-						"mutation#createChannelIdProductDisplayPage",
-						new ObjectValuePair<>(
-							ProductDisplayPageResourceImpl.class,
-							"postChannelIdProductDisplayPage"));
-					put(
 						"mutation#deleteProductDisplayPage",
 						new ObjectValuePair<>(
 							ProductDisplayPageResourceImpl.class,
@@ -368,6 +358,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductDisplayPageResourceImpl.class,
 							"patchProductDisplayPage"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeProductDisplayPage",
+						new ObjectValuePair<>(
+							ProductDisplayPageResourceImpl.class,
+							"postChannelByExternalReferenceCodeProductDisplayPage"));
+					put(
+						"mutation#createChannelIdProductDisplayPage",
+						new ObjectValuePair<>(
+							ProductDisplayPageResourceImpl.class,
+							"postChannelIdProductDisplayPage"));
 					put(
 						"mutation#deleteShippingFixedOptionOrderType",
 						new ObjectValuePair<>(
@@ -445,18 +445,18 @@ public class ServletDataImpl implements ServletData {
 							ChannelResourceImpl.class,
 							"getAccountAddressChannelChannel"));
 					put(
-						"query#channels",
+						"query#channel",
 						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "getChannelsPage"));
+							ChannelResourceImpl.class, "getChannel"));
 					put(
 						"query#channelByExternalReferenceCode",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class,
 							"getChannelByExternalReferenceCode"));
 					put(
-						"query#channel",
+						"query#channels",
 						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "getChannel"));
+							ChannelResourceImpl.class, "getChannelsPage"));
 					put(
 						"query#channelByExternalReferenceCodeChannelAccounts",
 						new ObjectValuePair<>(

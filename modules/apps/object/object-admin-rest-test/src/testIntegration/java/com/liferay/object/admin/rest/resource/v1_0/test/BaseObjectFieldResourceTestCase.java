@@ -238,6 +238,148 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteObjectField() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectField objectField = testDeleteObjectField_addObjectField();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectFieldResource.deleteObjectFieldHttpResponse(
+				objectField.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectFieldResource.getObjectFieldHttpResponse(
+				objectField.getId()));
+		assertHttpResponseStatusCode(
+			404, objectFieldResource.getObjectFieldHttpResponse(0L));
+	}
+
+	protected ObjectField testDeleteObjectField_addObjectField()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectField() throws Exception {
+
+		// No namespace
+
+		ObjectField objectField1 =
+			testGraphQLDeleteObjectField_addObjectField();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectField",
+						new HashMap<String, Object>() {
+							{
+								put("objectFieldId", objectField1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectField"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectField",
+					new HashMap<String, Object>() {
+						{
+							put("objectFieldId", objectField1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectField objectField2 =
+			testGraphQLDeleteObjectField_addObjectField();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectField",
+							new HashMap<String, Object>() {
+								{
+									put("objectFieldId", objectField2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectField"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectField",
+						new HashMap<String, Object>() {
+							{
+								put("objectFieldId", objectField2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ObjectField testGraphQLDeleteObjectField_addObjectField()
+		throws Exception {
+
+		return testGraphQLObjectField_addObjectField();
+	}
+
+	@Test
+	public void testDeleteObjectFieldBatch() throws Exception {
+		ObjectField objectField1 = testDeleteObjectFieldBatch_addObjectField();
+
+		testDeleteObjectFieldBatch_deleteObjectField(
+			"COMPLETED", null, objectField1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			objectFieldResource.getObjectFieldHttpResponse(
+				objectField1.getId()));
+	}
+
+	protected ObjectField testDeleteObjectFieldBatch_addObjectField()
+		throws Exception {
+
+		return testDeleteObjectField_addObjectField();
+	}
+
+	protected void testDeleteObjectFieldBatch_deleteObjectField(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectFieldResource.deleteObjectFieldBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage()
 		throws Exception {
 
@@ -703,29 +845,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionByExternalReferenceCodeObjectField()
-		throws Exception {
-
-		ObjectField randomObjectField = randomObjectField();
-
-		ObjectField postObjectField =
-			testPostObjectDefinitionByExternalReferenceCodeObjectField_addObjectField(
-				randomObjectField);
-
-		assertEquals(randomObjectField, postObjectField);
-		assertValid(postObjectField);
-	}
-
-	protected ObjectField
-			testPostObjectDefinitionByExternalReferenceCodeObjectField_addObjectField(
-				ObjectField objectField)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
@@ -1175,169 +1294,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectDefinitionObjectField() throws Exception {
-		ObjectField randomObjectField = randomObjectField();
-
-		ObjectField postObjectField =
-			testPostObjectDefinitionObjectField_addObjectField(
-				randomObjectField);
-
-		assertEquals(randomObjectField, postObjectField);
-		assertValid(postObjectField);
-	}
-
-	protected ObjectField testPostObjectDefinitionObjectField_addObjectField(
-			ObjectField objectField)
-		throws Exception {
-
-		return objectFieldResource.postObjectDefinitionObjectField(
-			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
-			objectField);
-	}
-
-	@Test
-	public void testDeleteObjectField() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectField objectField = testDeleteObjectField_addObjectField();
-
-		assertHttpResponseStatusCode(
-			204,
-			objectFieldResource.deleteObjectFieldHttpResponse(
-				objectField.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			objectFieldResource.getObjectFieldHttpResponse(
-				objectField.getId()));
-		assertHttpResponseStatusCode(
-			404, objectFieldResource.getObjectFieldHttpResponse(0L));
-	}
-
-	protected ObjectField testDeleteObjectField_addObjectField()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteObjectField() throws Exception {
-
-		// No namespace
-
-		ObjectField objectField1 =
-			testGraphQLDeleteObjectField_addObjectField();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectField",
-						new HashMap<String, Object>() {
-							{
-								put("objectFieldId", objectField1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectField"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectField",
-					new HashMap<String, Object>() {
-						{
-							put("objectFieldId", objectField1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-
-		// Using the namespace objectAdmin_v1_0
-
-		ObjectField objectField2 =
-			testGraphQLDeleteObjectField_addObjectField();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"objectAdmin_v1_0",
-						new GraphQLField(
-							"deleteObjectField",
-							new HashMap<String, Object>() {
-								{
-									put("objectFieldId", objectField2.getId());
-								}
-							}))),
-				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
-				"Object/deleteObjectField"));
-
-		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectAdmin_v1_0",
-					new GraphQLField(
-						"objectField",
-						new HashMap<String, Object>() {
-							{
-								put("objectFieldId", objectField2.getId());
-							}
-						},
-						new GraphQLField("id")))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray2.length() > 0);
-	}
-
-	protected ObjectField testGraphQLDeleteObjectField_addObjectField()
-		throws Exception {
-
-		return testGraphQLObjectField_addObjectField();
-	}
-
-	@Test
-	public void testDeleteObjectFieldBatch() throws Exception {
-		ObjectField objectField1 = testDeleteObjectFieldBatch_addObjectField();
-
-		testDeleteObjectFieldBatch_deleteObjectField(
-			"COMPLETED", null, objectField1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			objectFieldResource.getObjectFieldHttpResponse(
-				objectField1.getId()));
-	}
-
-	protected ObjectField testDeleteObjectFieldBatch_addObjectField()
-		throws Exception {
-
-		return testDeleteObjectField_addObjectField();
-	}
-
-	protected void testDeleteObjectFieldBatch_deleteObjectField(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			objectFieldResource.deleteObjectFieldBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(202, httpResponse.getStatusCode());
-
-		waitForFinish(
-			expectedExecuteStatus,
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
 	public void testGetObjectField() throws Exception {
 		ObjectField postObjectField = testGetObjectField_addObjectField();
 
@@ -1665,6 +1621,50 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectField()
+		throws Exception {
+
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectField postObjectField =
+			testPostObjectDefinitionByExternalReferenceCodeObjectField_addObjectField(
+				randomObjectField);
+
+		assertEquals(randomObjectField, postObjectField);
+		assertValid(postObjectField);
+	}
+
+	protected ObjectField
+			testPostObjectDefinitionByExternalReferenceCodeObjectField_addObjectField(
+				ObjectField objectField)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostObjectDefinitionObjectField() throws Exception {
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectField postObjectField =
+			testPostObjectDefinitionObjectField_addObjectField(
+				randomObjectField);
+
+		assertEquals(randomObjectField, postObjectField);
+		assertValid(postObjectField);
+	}
+
+	protected ObjectField testPostObjectDefinitionObjectField_addObjectField(
+			ObjectField objectField)
+		throws Exception {
+
+		return objectFieldResource.postObjectDefinitionObjectField(
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
+			objectField);
 	}
 
 	@Test

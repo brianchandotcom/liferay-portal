@@ -7,10 +7,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {Liferay} from '~/services/liferay';
 import {ITicket} from '~/utils/types';
 
-const useAccountTickets = (
-	externalReferenceCode?: string,
-	skip?: boolean
-) => {
+const useAccountTickets = (externalReferenceCode?: string, skip?: boolean) => {
 	const [loading, setLoading] = useState(true);
 	const [tickets, setTickets] = useState<ITicket[] | undefined>(undefined);
 
@@ -24,9 +21,7 @@ const useAccountTickets = (
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
-					.fetch(
-						`/accounts/${externalReferenceCode}/tickets`
-					)
+					.fetch(`/accounts/${externalReferenceCode}/tickets`)
 					.then((response: {json: () => any}) => response.json());
 
 			setTickets(response);

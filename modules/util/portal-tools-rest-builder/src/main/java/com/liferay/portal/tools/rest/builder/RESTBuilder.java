@@ -618,24 +618,24 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_aggregation", "aggregation", "Aggregation");
+			context, "", "aggregation", "Aggregation", "client_aggregation");
 	}
 
 	private void _createClientBaseJSONParserFile(Map<String, Object> context)
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_base_json_parser", "json", "BaseJSONParser");
+			context, "", "json", "BaseJSONParser", "client_base_json_parser");
 	}
 
 	private void _createClientCustomFieldFiles(Map<String, Object> context)
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_custom_field", "custom/field", "CustomField");
+			context, "", "custom/field", "CustomField", "client_custom_field");
 		_createClientFile(
-			context, "", "client_custom_value", "custom/field", "CustomValue");
-		_createClientFile(context, "", "client_geo", "custom/field", "Geo");
+			context, "", "custom/field", "CustomValue", "client_custom_value");
+		_createClientFile(context, "", "custom/field", "Geo", "client_geo");
 	}
 
 	private void _createClientDTOFile(
@@ -644,7 +644,7 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, escapedVersion, "client_dto", "dto", schemaName);
+			context, escapedVersion, "dto", schemaName, "client_dto");
 	}
 
 	private void _createClientEnumFile(
@@ -653,13 +653,13 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, escapedVersion, "client_enum", "constant", schemaName);
+			context, escapedVersion, "constant", schemaName, "client_enum");
 	}
 
 	private void _createClientFacetFile(Map<String, Object> context)
 		throws Exception {
 
-		_createClientFile(context, "", "client_facet", "aggregation", "Facet");
+		_createClientFile(context, "", "aggregation", "Facet", "client_facet");
 	}
 
 	private void _createClientFile(
@@ -687,33 +687,33 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_http_invoker", "http", "HttpInvoker");
+			context, "", "http", "HttpInvoker", "client_http_invoker");
 	}
 
 	private void _createClientPageFile(Map<String, Object> context)
 		throws Exception {
 
-		_createClientFile(context, "", "client_page", "pagination", "Page");
+		_createClientFile(context, "", "pagination", "Page", "client_page");
 	}
 
 	private void _createClientPaginationFile(Map<String, Object> context)
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_pagination", "pagination", "Pagination");
+			context, "", "pagination", "Pagination", "client_pagination");
 	}
 
 	private void _createClientPermissionFile(Map<String, Object> context)
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_permission", "permission", "Permission");
+			context, "", "permission", "Permission", "client_permission");
 	}
 
 	private void _createClientProblemFile(Map<String, Object> context)
 		throws Exception {
 
-		_createClientFile(context, "", "client_problem", "problem", "Problem");
+		_createClientFile(context, "", "problem", "Problem", "client_problem");
 	}
 
 	private void _createClientResourceFile(
@@ -722,8 +722,8 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, escapedVersion, "client_resource", "resource",
-			schemaName + "Resource");
+			context, escapedVersion, "resource", schemaName + "Resource",
+			"client_resource");
 	}
 
 	private void _createClientSerDesFile(
@@ -732,16 +732,16 @@ public class RESTBuilder {
 		throws Exception {
 
 		_createClientFile(
-			context, escapedVersion, "client_serdes", "serdes",
-			schemaName + "SerDes");
+			context, escapedVersion, "serdes", schemaName + "SerDes",
+			"client_serdes");
 	}
 
 	private void _createClientUnsafeSupplierFile(Map<String, Object> context)
 		throws Exception {
 
 		_createClientFile(
-			context, "", "client_unsafe_supplier", "function",
-			"UnsafeSupplier");
+			context, "", "function", "UnsafeSupplier",
+			"client_unsafe_supplier");
 	}
 
 	private void _createDTOActionMetadataProviderFile(

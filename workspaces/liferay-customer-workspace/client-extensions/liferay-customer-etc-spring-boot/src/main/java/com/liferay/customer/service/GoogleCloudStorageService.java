@@ -84,7 +84,7 @@ public class GoogleCloudStorageService extends BaseService {
 		).post(
 		).uri(
 			StringBundler.concat(
-				"/upload/storage/v1/b/", bucketName,
+				getWebClientBaseURL(), "/upload/storage/v1/b/", bucketName,
 				"/o?uploadType=resumable&name=", objectName)
 		).accept(
 			MediaType.APPLICATION_JSON

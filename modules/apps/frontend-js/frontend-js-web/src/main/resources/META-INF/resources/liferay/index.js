@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Session from '../legacy/session';
+import {Session} from '../legacy/session';
 import DefaultEventHandler from './DefaultEventHandler.es';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
 import DynamicSelect from './DynamicSelect';
@@ -201,9 +201,11 @@ Liferay.Util.debounce = debounce;
 Liferay.Util.delegate = delegate;
 Liferay.Util.DynamicInlineScroll = DynamicInlineScroll;
 Liferay.Util.checkAll = (...args) => {
-	import('frontend-js-web/legacy').then(({checkAll}) => {
-		checkAll(...args);
-	});
+	import('frontend-js-web/legacy')
+		.then(({checkAll}) => {
+			checkAll(...args);
+		})
+		.catch(() => {});
 };
 Liferay.Util.runScriptsInElement = runScriptsInElement;
 

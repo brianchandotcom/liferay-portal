@@ -109,7 +109,6 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			_renderLiferayPropsValues(httpServletRequest, sb);
 			_renderLiferayThemeDisplay(httpServletRequest, sb);
 			_renderLiferayUtil(sb);
-			_renderLiferayWindow(sb);
 
 			_renderValue(
 				"authToken", sb, _authToken.getToken(httpServletRequest));
@@ -664,15 +663,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			"openSimpleInputModal");
 		_renderStub("frontend-js-components-web", "openToast", sb, "openToast");
 
-		sb.append("},\n");
-	}
-
-	private void _renderLiferayWindow(StringBuilder sb) {
 		sb.append("Window: {\n");
 		sb.append("_map: {},\n");
 		sb.append("getById(id) {\n");
 		sb.append("return this._map[id];\n");
 		sb.append("},\n");
+		sb.append("},\n");
+
 		sb.append("},\n");
 	}
 

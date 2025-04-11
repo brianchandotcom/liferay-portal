@@ -190,7 +190,7 @@ currentURLEncoded: '\x252F',
 						return;
 					}
 
-					console.error("Global variable 'Liferay' is read-only");
+					console.warn("Global variable 'Liferay' is read-only");
 				}
 			}
 		);
@@ -210,7 +210,7 @@ currentURLEncoded: '\x252F',
 						}
 
 						if (!themeDisplayLocations.has(location)) {
-							console.error("Global variable 'themeDisplay' is deprecated. Use 'Liferay.ThemeDisplay' instead.");
+							console.warn("Global variable 'themeDisplay' is deprecated. Use 'Liferay.ThemeDisplay' instead.");
 
 							themeDisplayLocations.add(location);
 						}
@@ -219,7 +219,7 @@ currentURLEncoded: '\x252F',
 					return window.Liferay.ThemeDisplay;
 				},
 				set: () => {
-					console.error("Global variable 'themeDisplay' is read-only");
+					console.warn("Global variable 'themeDisplay' is read-only");
 				}
 			}
 		);

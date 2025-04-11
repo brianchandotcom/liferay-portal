@@ -6,7 +6,7 @@
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
-import {useUpdateCache} from '../../contexts/CacheContext';
+import {useStaleCache} from '../../contexts/CacheContext';
 import {
 	useErc,
 	useId,
@@ -23,7 +23,7 @@ export default function PicklistBuilderManagementBar() {
 	const id = useId();
 	const name = useName();
 	const setId = useSetId();
-	const updateCache = useUpdateCache();
+	const staleCache = useStaleCache();
 
 	const localizedName = useMemo(
 		() => name[Liferay.ThemeDisplay.getDefaultLanguageId()],
@@ -50,7 +50,7 @@ export default function PicklistBuilderManagementBar() {
 				await PicklistService.updatePicklist({erc, id, name});
 			}
 
-			updateCache('picklists');
+			staleCache('picklists');
 
 			openToast({
 				message: Liferay.Util.sub(

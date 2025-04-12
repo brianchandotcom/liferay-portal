@@ -73,10 +73,15 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 			boolean showDescription)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(commerceAddress.getName());
 		sb.append(StringPool.NEW_LINE);
+
+		if (Validator.isNotNull(commerceAddress.getSubtype())) {
+			sb.append(commerceAddress.getSubtype(locale));
+			sb.append(StringPool.NEW_LINE);
+		}
 
 		if (Validator.isNotNull(commerceAddress.getPhoneNumber())) {
 			sb.append(commerceAddress.getPhoneNumber());

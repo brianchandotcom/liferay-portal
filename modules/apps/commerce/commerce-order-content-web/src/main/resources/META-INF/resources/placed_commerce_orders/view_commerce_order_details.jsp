@@ -202,6 +202,10 @@ if (commerceOrder != null) {
 				<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) && (billingCommerceAddress != null) %>">
 					<p><%= HtmlUtil.escape(billingCommerceAddress.getName()) %></p>
 
+					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getSubtype()) %>">
+						<p><%= HtmlUtil.escape(billingCommerceAddress.getSubtype(locale)) %></p>
+					</c:if>
+
 					<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
 
 					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
@@ -247,6 +251,10 @@ if (commerceOrder != null) {
 			<div class="commerce-panel__content" data-qa-id="commerceShippingAddress">
 				<c:if test="<%= shippingCommerceAddress != null %>">
 					<p><%= HtmlUtil.escape(shippingCommerceAddress.getName()) %></p>
+
+					<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getSubtype()) %>">
+						<p><%= HtmlUtil.escape(shippingCommerceAddress.getSubtype(locale)) %></p>
+					</c:if>
 
 					<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %></p>
 

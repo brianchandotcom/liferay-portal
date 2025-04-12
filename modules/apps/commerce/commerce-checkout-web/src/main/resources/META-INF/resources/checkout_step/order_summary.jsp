@@ -201,6 +201,11 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 					%>
 
 					<%= HtmlUtil.escape(shippingAddress.getName()) %> <br />
+
+					<c:if test="<%= Validator.isNotNull(shippingAddress.getSubtype()) %>">
+						<%= HtmlUtil.escape(shippingAddress.getSubtype(locale)) %> <br />
+					</c:if>
+
 					<%= HtmlUtil.escape(shippingAddress.getStreet1()) %> <br />
 
 					<c:if test="<%= Validator.isNotNull(shippingAddress.getStreet2()) %>">
@@ -291,6 +296,11 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 					%>
 
 					<%= HtmlUtil.escape(commerceBillingAddress.getName()) %> <br />
+
+					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getSubtype()) %>">
+						<%= HtmlUtil.escape(commerceBillingAddress.getSubtype(locale)) %> <br />
+					</c:if>
+
 					<%= HtmlUtil.escape(commerceBillingAddress.getStreet1()) %> <br />
 
 					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getStreet2()) %>">

@@ -420,6 +420,8 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		).put(
 			"street1", commerceAddress.getStreet1()
 		).put(
+			"subtype", commerceAddress.getSubtype(locale)
+		).put(
 			"zip", commerceAddress.getZip()
 		);
 

@@ -189,6 +189,12 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 								</span>
 							</c:when>
 							<c:otherwise>
+								<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getSubtype()) %>">
+									<p class="mb-0">
+										<%= HtmlUtil.escape(billingCommerceAddress.getSubtype(locale)) %>
+									</p>
+								</c:if>
+
 								<p class="mb-0">
 									<%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %>
 								</p>
@@ -265,6 +271,12 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 								</span>
 							</c:when>
 							<c:otherwise>
+								<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getSubtype()) %>">
+									<p class="mb-0">
+										<%= HtmlUtil.escape(shippingCommerceAddress.getSubtype(locale)) %>
+									</p>
+								</c:if>
+
 								<p class="mb-0">
 									<%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %>
 								</p>

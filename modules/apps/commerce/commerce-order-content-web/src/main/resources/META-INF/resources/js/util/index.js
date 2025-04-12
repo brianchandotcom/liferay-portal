@@ -28,6 +28,10 @@ export function formatValue(value, type) {
 				<>
 					<p className="mb-1">{address.name}</p>
 
+					{address.subtype ? (
+						<p className="mb-1">{address.subtype}</p>
+					) : null}
+
 					<p className="mb-1">{`${address.street1}, ${address.zip}, ${address.city}`}</p>
 
 					<p>{`${address.region ? `${address.region}, ` : ''}${address.country}`}</p>

@@ -22,4 +22,4 @@ cd "$(dirname "${DB_SCHEMA_IMPORTER_PATH}")"
 # Run database schema importer tool.
 #
 
-java -jar com.liferay.portal.tools.db.schema.importer.jar "$@"
+java -cp com.liferay.portal.tools.db.schema.importer.jar:lib/* com.liferay.portal.tools.db.schema.importer.DBSchemaImporter "$@"

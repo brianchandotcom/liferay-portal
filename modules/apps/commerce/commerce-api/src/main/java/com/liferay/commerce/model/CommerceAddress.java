@@ -62,4 +62,6 @@ public interface CommerceAddress extends CommerceAddressModel {
 
 	public boolean isSameAddress(CommerceAddress commerceAddress);
 
+	public String getSubtype(java.util.Locale locale);
+
 }

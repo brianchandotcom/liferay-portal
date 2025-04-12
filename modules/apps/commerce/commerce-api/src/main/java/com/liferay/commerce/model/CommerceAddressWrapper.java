@@ -512,6 +512,11 @@ public class CommerceAddressWrapper
 		return model.getSubtype();
 	}
 
+	@Override
+	public String getSubtype(java.util.Locale locale) {
+		return model.getSubtype(locale);
+	}
+
 	/**
 	 * Returns the type of this commerce address.
 	 *

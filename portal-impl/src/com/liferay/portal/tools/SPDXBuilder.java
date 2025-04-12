@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -131,8 +131,6 @@ public class SPDXBuilder {
 	private List<Element> _createLibraryElements(
 		Element packageElement, Properties licenseOverrideProperties) {
 
-		List<Element> libraryElements = new ArrayList<>();
-
 		String downloadLocation = packageElement.elementText(
 			_getQName("downloadLocation"));
 		String name = packageElement.elementText(_getQName("name"));
@@ -143,64 +141,71 @@ public class SPDXBuilder {
 
 		List<Element> fileElements = hasFileElement.elements(_getQName("File"));
 
-		for (Element fileElement : fileElements) {
-			String fileName = fileElement.elementText(_getQName("fileName"));
+		return TransformUtil.transform(
+			fileElements,
+			fileElement -> {
+				String fileName = fileElement.elementText(
+					_getQName("fileName"));
 
-			String dirName = fileName.substring(0, fileName.indexOf('/') + 1);
+				String dirName = fileName.substring(
+					0, fileName.indexOf('/') + 1);
 
-			if (dirName.endsWith("portal/") || dirName.endsWith("portal-ee/")) {
-				fileName = fileName.substring(dirName.length());
-			}
+				if (dirName.endsWith("portal/") ||
+					dirName.endsWith("portal-ee/")) {
 
-			Element libraryElement = SAXReaderUtil.createElement("library");
+					fileName = fileName.substring(dirName.length());
+				}
 
-			Element fileNameElement = libraryElement.addElement("file-name");
+				Element libraryElement = SAXReaderUtil.createElement("library");
 
-			fileNameElement.addText(fileName);
+				Element fileNameElement = libraryElement.addElement(
+					"file-name");
 
-			Element versionElement = libraryElement.addElement("version");
+				fileNameElement.addText(fileName);
 
-			versionElement.addText(versionInfo);
+				Element versionElement = libraryElement.addElement("version");
 
-			Element projectNameElement = libraryElement.addElement(
-				"project-name");
+				versionElement.addText(versionInfo);
 
-			projectNameElement.addText(name);
+				Element projectNameElement = libraryElement.addElement(
+					"project-name");
 
-			if ((downloadLocation != null) &&
-				downloadLocation.startsWith("http")) {
+				projectNameElement.addText(name);
 
-				Element element = libraryElement.addElement("project-url");
+				if ((downloadLocation != null) &&
+					downloadLocation.startsWith("http")) {
 
-				element.addText(downloadLocation);
-			}
+					Element element = libraryElement.addElement("project-url");
 
-			String licenseName = _getLicenseName(
-				packageElement, fileName, licenseOverrideProperties);
+					element.addText(downloadLocation);
+				}
 
-			if (licenseName != null) {
-				Element licensesElement = libraryElement.addElement("licenses");
-
-				Element licenseElement = licensesElement.addElement("license");
-
-				Element element = licenseElement.addElement("license-name");
-
-				element.addText(licenseName);
-
-				String licenseURL = _getLicenseURL(
+				String licenseName = _getLicenseName(
 					packageElement, fileName, licenseOverrideProperties);
 
-				if (licenseURL != null) {
-					element = licenseElement.addElement("license-url");
+				if (licenseName != null) {
+					Element licensesElement = libraryElement.addElement(
+						"licenses");
 
-					element.addText(licenseURL);
+					Element licenseElement = licensesElement.addElement(
+						"license");
+
+					Element element = licenseElement.addElement("license-name");
+
+					element.addText(licenseName);
+
+					String licenseURL = _getLicenseURL(
+						packageElement, fileName, licenseOverrideProperties);
+
+					if (licenseURL != null) {
+						element = licenseElement.addElement("license-url");
+
+						element.addText(licenseURL);
+					}
 				}
-			}
 
-			libraryElements.add(libraryElement);
-		}
-
-		return libraryElements;
+				return libraryElement;
+			});
 	}
 
 	private String _encode(Node node) {

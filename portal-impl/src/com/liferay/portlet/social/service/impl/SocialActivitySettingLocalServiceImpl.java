@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -29,7 +30,6 @@ import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.model.SocialActivitySettingConstants;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,21 +92,11 @@ public class SocialActivitySettingLocalServiceImpl
 	public List<SocialActivityDefinition> getActivityDefinitions(
 		long groupId, String className) {
 
-		List<SocialActivityDefinition> activityDefinitions = new ArrayList<>();
-
-		List<SocialActivityDefinition> defaultActivityDefinitions =
-			SocialConfigurationUtil.getActivityDefinitions(className);
-
-		for (SocialActivityDefinition defaultActivityDefinition :
-				defaultActivityDefinitions) {
-
-			activityDefinitions.add(
-				getActivityDefinition(
-					groupId, className,
-					defaultActivityDefinition.getActivityType()));
-		}
-
-		return activityDefinitions;
+		return TransformUtil.transform(
+			SocialConfigurationUtil.getActivityDefinitions(className),
+			defaultActivityDefinition -> getActivityDefinition(
+				groupId, className,
+				defaultActivityDefinition.getActivityType()));
 	}
 
 	@Override

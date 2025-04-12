@@ -23,22 +23,28 @@ DeliveryGroupDisplayContext deliveryGroupDisplayContext = (DeliveryGroupDisplayC
 
 		<c:if test="<%= commerceAddress != null %>">
 			<p>
-				<span><%= commerceAddress.getName() %></span>
+				<span><%= HtmlUtil.escape(commerceAddress.getName()) %></span>
 			</p>
 
+			<c:if test="<%= Validator.isNotNull(commerceAddress.getSubtype()) %>">
+				<p>
+					<span><%= HtmlUtil.escape(commerceAddress.getSubtype(locale)) %></span>
+				</p>
+			</c:if>
+
 			<p>
-				<span><%= commerceAddress.getStreet1() %></span>
+				<span><%= HtmlUtil.escape(commerceAddress.getStreet1()) %></span>
 			</p>
 
 			<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
 				<p>
-					<span><%= commerceAddress.getStreet2() %></span>
+					<span><%= HtmlUtil.escape(commerceAddress.getStreet2()) %></span>
 				</p>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
 				<p>
-					<span><%= commerceAddress.getStreet3() %></span>
+					<span><%= HtmlUtil.escape(commerceAddress.getStreet3()) %></span>
 				</p>
 			</c:if>
 
@@ -51,7 +57,7 @@ DeliveryGroupDisplayContext deliveryGroupDisplayContext = (DeliveryGroupDisplayC
 
 				<c:if test="<%= region != null %>">
 					<span><%= StringPool.COMMA_AND_SPACE %></span>
-					<span><%= region.getName() %></span>
+					<span><%= HtmlUtil.escape(region.getName()) %></span>
 				</c:if>
 			</p>
 
@@ -64,7 +70,7 @@ DeliveryGroupDisplayContext deliveryGroupDisplayContext = (DeliveryGroupDisplayC
 
 				<c:if test="<%= country != null %>">
 					<span><%= StringPool.COMMA_AND_SPACE %></span>
-					<span><%= country.getName(locale) %></span>
+					<span><%= HtmlUtil.escape(country.getName(locale)) %></span>
 				</c:if>
 			</p>
 		</c:if>

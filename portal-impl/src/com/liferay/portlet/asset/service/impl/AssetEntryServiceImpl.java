@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
@@ -59,27 +60,24 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public List<AssetEntry> getCompanyEntries(
 		long companyId, int start, int end) {
 
-		List<AssetEntry> entries = new ArrayList<>();
+		return TransformUtil.transform(
+			assetEntryLocalService.getCompanyEntries(companyId, start, end),
+			entry -> {
+				try {
+					if (AssetEntryPermission.contains(
+							getPermissionChecker(), entry, ActionKeys.VIEW)) {
 
-		List<AssetEntry> companyEntries =
-			assetEntryLocalService.getCompanyEntries(companyId, start, end);
-
-		for (AssetEntry entry : companyEntries) {
-			try {
-				if (AssetEntryPermission.contains(
-						getPermissionChecker(), entry, ActionKeys.VIEW)) {
-
-					entries.add(entry);
+						return entry;
+					}
 				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
+					}
 				}
-			}
-		}
 
-		return entries;
+				return null;
+			});
 	}
 
 	@Override

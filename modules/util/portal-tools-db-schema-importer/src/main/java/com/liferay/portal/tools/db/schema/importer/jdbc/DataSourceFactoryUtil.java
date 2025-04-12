@@ -10,17 +10,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.util.Iterator;
-
 import javax.sql.DataSource;
 
 /**
@@ -42,8 +31,6 @@ public class DataSourceFactoryUtil {
 
 		String driverClassName = "com.mysql.cj.jdbc.Driver";
 
-		ClassLoader classLoader = DataSourceFactoryUtil.class.getClassLoader();
-
 		if (jdbcURL.contains("mariadb")) {
 			driverClassName = "org.mariadb.jdbc.Driver";
 		}
@@ -52,75 +39,33 @@ public class DataSourceFactoryUtil {
 		}
 		else if (jdbcURL.contains("sqlserver")) {
 			driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		}
 
-			try (DirectoryStream<Path> directoryStream =
-					Files.newDirectoryStream(Paths.get(""), "*.jar")) {
+		Class.forName(driverClassName);
 
-				Iterator<Path> iterator = directoryStream.iterator();
+		HikariConfig hikariConfig = new HikariConfig();
 
-				while (iterator.hasNext()) {
-					Path path = iterator.next();
+		hikariConfig.setConnectionTimeout(30000);
+		hikariConfig.setDriverClassName(driverClassName);
+		hikariConfig.setIdleTimeout(600000);
+		hikariConfig.setJdbcUrl(jdbcURL);
+		hikariConfig.setMaxLifetime(0);
+		hikariConfig.setMaximumPoolSize(10);
+		hikariConfig.setMinimumIdle(10);
+		hikariConfig.setPassword(password);
+		hikariConfig.setTransactionIsolation("TRANSACTION_READ_UNCOMMITTED");
+		hikariConfig.setUsername(userName);
 
-					if (StringUtil.equals(
-							"com.liferay.portal.tools.db.schema.importer.jar",
-							path.toString())) {
-
-						continue;
-					}
-
-					URI uri = path.toUri();
-
-					classLoader = new URLClassLoader(new URL[] {uri.toURL()});
-
-					break;
-				}
+		if (partitionName != null) {
+			if (StringUtil.equals(driverClassName, "org.postgresql.Driver")) {
+				hikariConfig.setSchema(partitionName);
+			}
+			else {
+				hikariConfig.setCatalog(partitionName);
 			}
 		}
 
-		ClassLoader contextClassLoader = Thread.currentThread(
-		).getContextClassLoader();
-
-		try {
-			Thread.currentThread(
-			).setContextClassLoader(
-				classLoader
-			);
-
-			Class.forName(driverClassName, true, classLoader);
-
-			HikariConfig hikariConfig = new HikariConfig();
-
-			hikariConfig.setConnectionTimeout(30000);
-			hikariConfig.setDriverClassName(driverClassName);
-			hikariConfig.setIdleTimeout(600000);
-			hikariConfig.setJdbcUrl(jdbcURL);
-			hikariConfig.setMaxLifetime(0);
-			hikariConfig.setMaximumPoolSize(10);
-			hikariConfig.setMinimumIdle(10);
-			hikariConfig.setPassword(password);
-			hikariConfig.setTransactionIsolation(
-				"TRANSACTION_READ_UNCOMMITTED");
-			hikariConfig.setUsername(userName);
-
-			if (partitionName != null) {
-				if (StringUtil.equals(
-						driverClassName, "org.postgresql.Driver")) {
-
-					hikariConfig.setSchema(partitionName);
-				}
-				else {
-					hikariConfig.setCatalog(partitionName);
-				}
-			}
-
-			return new HikariDataSource(hikariConfig);
-		}
-		finally {
-			Thread.currentThread(
-			).setContextClassLoader(
-				contextClassLoader
-			);
-		}
+		return new HikariDataSource(hikariConfig);
 	}
 
 	public static boolean isValidSourceDatabase(String jdbcURL) {

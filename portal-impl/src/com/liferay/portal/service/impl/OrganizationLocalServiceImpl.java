@@ -7,6 +7,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -1064,15 +1065,15 @@ public class OrganizationLocalServiceImpl
 		List<Organization> allOrganizations,
 		List<Organization> availableOrganizations) {
 
-		List<Organization> subsetOrganizations = new ArrayList<>();
+		return TransformUtil.transform(
+			allOrganizations,
+			organization -> {
+				if (availableOrganizations.contains(organization)) {
+					return organization;
+				}
 
-		for (Organization organization : allOrganizations) {
-			if (availableOrganizations.contains(organization)) {
-				subsetOrganizations.add(organization);
-			}
-		}
-
-		return subsetOrganizations;
+				return null;
+			});
 	}
 
 	@Override

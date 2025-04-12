@@ -6,6 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -243,27 +244,17 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	protected List<String> getModelNames(String xml) throws DocumentException {
-		List<String> modelNames = new ArrayList<>();
-
 		Document document = UnsecureSAXReaderUtil.read(xml);
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> modelElements = rootElement.elements("model");
-
-		for (Element modelElement : modelElements) {
-			String name = modelElement.attributeValue("name");
-
-			modelNames.add(name);
-		}
-
-		return modelNames;
+		return TransformUtil.transform(
+			rootElement.elements("model"),
+			modelElement -> modelElement.attributeValue("name"));
 	}
 
 	protected List<String> getModifiedTableNames(
 		String previousTablesSQL, String tablesSQL) {
-
-		List<String> modifiedTableNames = new ArrayList<>();
 
 		List<String> previousTablesSQLParts = ListUtil.fromArray(
 			StringUtil.split(previousTablesSQL, StringPool.SEMICOLON));
@@ -272,14 +263,14 @@ public class ServiceComponentLocalServiceImpl
 
 		tablesSQLParts.removeAll(previousTablesSQLParts);
 
-		for (String tablesSQLPart : tablesSQLParts) {
-			int x = tablesSQLPart.indexOf("create table ");
-			int y = tablesSQLPart.indexOf(" (");
+		return TransformUtil.transform(
+			tablesSQLParts,
+			tablesSQLPart -> {
+				int x = tablesSQLPart.indexOf("create table ");
+				int y = tablesSQLPart.indexOf(" (");
 
-			modifiedTableNames.add(tablesSQLPart.substring(x + 13, y));
-		}
-
-		return modifiedTableNames;
+				return tablesSQLPart.substring(x + 13, y);
+			});
 	}
 
 	protected UpgradeTableListener getUpgradeTableListener(

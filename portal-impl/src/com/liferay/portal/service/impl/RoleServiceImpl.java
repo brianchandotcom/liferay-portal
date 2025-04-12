@@ -6,6 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -24,7 +25,6 @@ import com.liferay.portal.service.base.RoleServiceBaseImpl;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -493,18 +493,18 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	protected List<Role> filterRoles(List<Role> roles) throws PortalException {
-		List<Role> filteredRoles = new ArrayList<>();
+		return TransformUtil.transform(
+			roles,
+			role -> {
+				if (RolePermissionUtil.contains(
+						getPermissionChecker(), role.getRoleId(),
+						ActionKeys.VIEW)) {
 
-		for (Role role : roles) {
-			if (RolePermissionUtil.contains(
-					getPermissionChecker(), role.getRoleId(),
-					ActionKeys.VIEW)) {
+					return role;
+				}
 
-				filteredRoles.add(role);
-			}
-		}
-
-		return filteredRoles;
+				return null;
+			});
 	}
 
 }

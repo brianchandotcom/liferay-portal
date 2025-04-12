@@ -16,7 +16,13 @@ type SpacesNavigationProps = {
 const renderComponent = ({
 	showAddButton = false,
 }: SpacesNavigationProps = {}) => {
-	return render(<SpacesNavigation showAddButton={showAddButton} />);
+	return render(
+		<SpacesNavigation
+			assetLibraries={[]}
+			assetLibrariesCount={0}
+			showAddButton={showAddButton}
+		/>
+	);
 };
 
 describe('SpacesNavigation', () => {

@@ -1169,11 +1169,9 @@ app.server.type=@{app.server.type}]]></echo>
 			</chmod>
 
 			<execute>
-				<![CDATA[
-					tar --format=posix -czf liferay-portal-bundle-@{app.server.type}.tar.gz bundles/
+				tar --create --format=${app.server.tar.gz.format} --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip bundles/
 
-					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
-				]]>
+				tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 			</execute>
 
 			<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.compress" />
@@ -1194,11 +1192,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="setup-yarn" />
 
-			<untar
-				compression="gzip"
-				dest="."
-				src="liferay-portal-source.tar.gz"
-			/>
+			<execute>
+				tar --extract --verbose --gzip --file=liferay-portal-source.tar.gz
+			</execute>
 
 			<local name="bundle.src.file.name" />
 
@@ -1209,11 +1205,9 @@ app.server.type=@{app.server.type}]]></echo>
 			<if>
 				<available file="${bundle.src.file.name}" />
 				<then>
-					<untar
-						compression="gzip"
-						dest="."
-						src="${bundle.src.file.name}"
-					/>
+					<execute>
+						tar --extract --verbose --gzip --file=${bundle.src.file.name}
+					</execute>
 
 					<chmod
 						perm="a+x"
@@ -7842,11 +7836,9 @@ information. Make sure to commit in all format-javadoc results.
 							<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
 						</condition>
 
-						<untar
-							compression="gzip"
-							dest="."
-							src="${bundle.src.file.name}"
-						/>
+						<execute>
+							tar --extract --verbose --gzip --file=${bundle.src.file.name}
+						</execute>
 
 						<antcall inheritAll="false" target="compile" />
 
@@ -8410,13 +8402,9 @@ ${output.content}</echo>
 			<test-set-up>
 				<ant antfile="build-test.xml" target="prepare-release-bundle" />
 
-				<tar
-					basedir="."
-					compression="gzip"
-					destfile="liferay-portal-bundle-tomcat.tar.gz"
-					includes="bundles/**"
-					longfile="posix"
-				/>
+				<execute>
+					tar --create --format=${app.server.tar.gz.format} --file=liferay-portal-bundle-tomcat.tar.gz --gzip bundles/
+				</execute>
 
 				<prepare-test-environment />
 			</test-set-up>
@@ -8460,13 +8448,9 @@ ${output.content}</echo>
 			<test-set-up>
 				<ant antfile="build-test.xml" target="prepare-release-bundle" />
 
-				<tar
-					basedir="."
-					compression="gzip"
-					destfile="liferay-portal-bundle-tomcat.tar.gz"
-					includes="bundles/**"
-					longfile="posix"
-				/>
+				<execute>
+					tar --create --format=${app.server.tar.gz.format} --file=liferay-portal-bundle-tomcat.tar.gz --gzip bundles/
+				</execute>
 
 				<prepare-test-environment />
 			</test-set-up>

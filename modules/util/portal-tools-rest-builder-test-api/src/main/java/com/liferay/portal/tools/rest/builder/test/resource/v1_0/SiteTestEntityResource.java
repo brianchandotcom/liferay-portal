@@ -52,6 +52,10 @@ public interface SiteTestEntityResource {
 	public SiteTestEntity getSiteTestEntity(Long siteTestEntityId)
 		throws Exception;
 
+	public SiteTestEntity patchSiteTestEntity(
+			Long siteTestEntityId, SiteTestEntity siteTestEntity)
+		throws Exception;
+
 	public SiteTestEntity putSiteTestEntity(
 			Long siteTestEntityId, SiteTestEntity siteTestEntity)
 		throws Exception;

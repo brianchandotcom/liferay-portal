@@ -79,6 +79,7 @@ export {
 	isProductPurchasable,
 } from './utilities/index';
 export {default as CommerceFrontendUtils} from './utilities/interface/index';
+export * as CommerceConstants from './utilities/constants';
 export * as CurrencyUtils from './components/currency_selector/util';
 export * as modalUtils from './utilities/modals/index';
 

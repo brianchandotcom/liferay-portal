@@ -8,6 +8,10 @@ export const ACCOUNT_ENTRY_ID_DEFAULT = 0;
 export const ACCOUNT_ENTRY_TYPE_BUSINESS = 'business';
 export const ACCOUNT_ENTRY_TYPE_PERSON = 'person';
 
+export const ADDRESS_TYPE_BILLING = 1;
+export const ADDRESS_TYPE_BILLING_AND_SHIPPING = 2;
+export const ADDRESS_TYPE_SHIPPING = 3;
+
 export const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
 

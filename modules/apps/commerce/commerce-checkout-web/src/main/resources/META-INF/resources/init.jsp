@@ -33,6 +33,7 @@ page import="com.liferay.commerce.checkout.web.internal.display.context.PaymentM
 page import="com.liferay.commerce.checkout.web.internal.display.context.PaymentProcessCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.ShippingMethodCheckoutStepDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.TermCommerceCheckoutStepDisplayContext" %><%@
+page import="com.liferay.commerce.constants.CommerceAddressConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceCheckoutWebKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderPaymentConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@

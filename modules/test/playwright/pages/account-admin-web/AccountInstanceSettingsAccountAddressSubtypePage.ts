@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {DataApiHelpers} from '../../helpers/ApiHelpers';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
@@ -42,6 +43,59 @@ export class AccountInstanceSettingsAccountAddressSubtypePage {
 			'Accounts',
 			'Account Address Subtype'
 		);
+	}
+
+	async initAddressSubtypePicklists(apiHelpers: DataApiHelpers) {
+		const billingListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: billingListTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const billingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				billingListTypeDefinition.externalReferenceCode,
+				'Billing1'
+			);
+
+		const billingAndShippingListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: billingAndShippingListTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const billingAndShippingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				billingAndShippingListTypeDefinition.externalReferenceCode,
+				'BillingAndShipping1'
+			);
+
+		const shippingListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: shippingListTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const shippingListTypeEntry =
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				shippingListTypeDefinition.externalReferenceCode,
+				'Shipping1'
+			);
+
+		return {
+			billingAndShippingListTypeDefinition,
+			billingAndShippingListTypeEntry,
+			billingListTypeDefinition,
+			billingListTypeEntry,
+			shippingListTypeDefinition,
+			shippingListTypeEntry,
+		};
 	}
 
 	async setAddressSubtypeExternalReferenceCodes(

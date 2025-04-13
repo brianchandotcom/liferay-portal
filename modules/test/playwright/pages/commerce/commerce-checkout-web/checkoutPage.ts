@@ -50,8 +50,14 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly phoneNumberInput: Locator;
 	readonly previousButton: Locator;
 	readonly regionInput: Locator;
+	readonly saveButton: Locator;
 	readonly shippingAddressSelect: Locator;
 	readonly shippingCost: Locator;
+	readonly subtypeErrorMessage: Locator;
+	readonly subtypeInput: Locator;
+	readonly subtypeMenuItem: (name: string) => Locator;
+	readonly subtypeResetModalTitle: Locator;
+	readonly subtypeResetSubtypeInput: Locator;
 	readonly orderSummaryShippingMethod: Locator;
 	readonly useAsBillingCheckbox: Locator;
 	readonly viewDeliveryGroupTableButton: Locator;
@@ -137,8 +143,21 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		this.commerceShippingAddress = page.getByTestId(
 			'commerceShippingAddress'
 		);
+		this.saveButton = page.getByLabel('Save');
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
 		this.shippingCost = page.locator('.shipping-cost');
+		this.subtypeErrorMessage = page.getByText(
+			'previous selection is not valid anymore'
+		);
+		this.subtypeInput = page.getByPlaceholder('Subtype');
+		this.subtypeMenuItem = (name: string) =>
+			page.getByRole('option', {name});
+		this.subtypeResetModalTitle = page.getByRole('heading', {
+			name: 'Reset Subtype',
+		});
+		this.subtypeResetSubtypeInput = page
+			.getByLabel('Reset Subtype')
+			.getByPlaceholder('Subtype');
 		this.orderSummaryShippingMethod = page.locator('div.shipping-method');
 		this.useAsBillingCheckbox = page.getByLabel(
 			'Use shipping address as billing address'

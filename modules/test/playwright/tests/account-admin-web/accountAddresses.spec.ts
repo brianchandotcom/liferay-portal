@@ -1049,7 +1049,6 @@ testWithAddressSubtypeEnabled(
 		apiHelpers,
 		editAccountAddressPage,
 		editAccountPage,
-		listTypeDefinitionPage,
 		page,
 	}) => {
 		const account = await apiHelpers.headlessAdminUser.postAccount({
@@ -1059,49 +1058,17 @@ testWithAddressSubtypeEnabled(
 
 		apiHelpers.data.push({id: account.id, type: 'account'});
 
-		const billingListTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		apiHelpers.data.push({
-			id: billingListTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const billingListTypeEntry =
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				billingListTypeDefinition.externalReferenceCode,
-				'Billing1'
+		const {
+			billingAndShippingListTypeDefinition,
+			billingAndShippingListTypeEntry,
+			billingListTypeDefinition,
+			billingListTypeEntry,
+			shippingListTypeDefinition,
+			shippingListTypeEntry,
+		} =
+			await accountInstanceSettingsAccountAddressSubtypePage.initAddressSubtypePicklists(
+				apiHelpers
 			);
-
-		const billingAndShippingListTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		apiHelpers.data.push({
-			id: billingAndShippingListTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const billingAndShippingListTypeEntry =
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				billingAndShippingListTypeDefinition.externalReferenceCode,
-				'BillingAndShipping1'
-			);
-
-		const shippingListTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		apiHelpers.data.push({
-			id: shippingListTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const shippingListTypeEntry =
-			await apiHelpers.listTypeAdmin.postListTypeEntry(
-				shippingListTypeDefinition.externalReferenceCode,
-				'Shipping1'
-			);
-
-		await listTypeDefinitionPage.goto();
 
 		await accountInstanceSettingsAccountAddressSubtypePage.setAddressSubtypeExternalReferenceCodes(
 			billingListTypeDefinition.name,

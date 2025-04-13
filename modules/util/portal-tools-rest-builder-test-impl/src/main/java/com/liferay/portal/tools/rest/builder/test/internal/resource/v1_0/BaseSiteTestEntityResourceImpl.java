@@ -9,6 +9,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -139,6 +140,73 @@ public abstract class BaseSiteTestEntityResourceImpl
 				}));
 
 		return getSiteTestEntity;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/site-test-entities/{siteTestEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteTestEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "SiteTestEntity")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/site-test-entities/{siteTestEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public SiteTestEntity patchSiteTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteTestEntityId")
+			Long siteTestEntityId,
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		SiteTestEntity existingSiteTestEntity = getSiteTestEntity(
+			siteTestEntityId);
+
+		if (siteTestEntity.getDateCreated() != null) {
+			existingSiteTestEntity.setDateCreated(
+				siteTestEntity.getDateCreated());
+		}
+
+		if (siteTestEntity.getDateModified() != null) {
+			existingSiteTestEntity.setDateModified(
+				siteTestEntity.getDateModified());
+		}
+
+		if (siteTestEntity.getDescription() != null) {
+			existingSiteTestEntity.setDescription(
+				siteTestEntity.getDescription());
+		}
+
+		if (siteTestEntity.getExternalReferenceCode() != null) {
+			existingSiteTestEntity.setExternalReferenceCode(
+				siteTestEntity.getExternalReferenceCode());
+		}
+
+		if (siteTestEntity.getPermissions() != null) {
+			existingSiteTestEntity.setPermissions(
+				siteTestEntity.getPermissions());
+		}
+
+		preparePatch(siteTestEntity, existingSiteTestEntity);
+
+		return putSiteTestEntity(siteTestEntityId, existingSiteTestEntity);
 	}
 
 	protected abstract SiteTestEntity doPutSiteTestEntity(
@@ -814,6 +882,37 @@ public abstract class BaseSiteTestEntityResourceImpl
 									(Long)parameters.get("siteId"),
 							siteTestEntity);
 			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				siteTestEntityUnsafeFunction = siteTestEntity -> {
+					SiteTestEntity persistedSiteTestEntity = null;
+
+					try {
+						SiteTestEntity getSiteTestEntity =
+							getSiteSiteTestEntityByExternalReferenceCode(
+								siteTestEntity.getExternalReferenceCode(),
+								siteTestEntity.getSiteId() != null ?
+									siteTestEntity.getSiteId() :
+										(Long)parameters.get("siteId"));
+
+						persistedSiteTestEntity = patchSiteTestEntity(
+							getSiteTestEntity.getId() != null ?
+								getSiteTestEntity.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"siteTestEntityId")),
+							siteTestEntity);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("siteId")) {
+							persistedSiteTestEntity = postSiteSiteTestEntity(
+								(Long)parameters.get("siteId"), siteTestEntity);
+						}
+					}
+
+					return persistedSiteTestEntity;
+				};
+			}
 		}
 
 		if (siteTestEntityUnsafeFunction == null) {
@@ -852,7 +951,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -928,6 +1027,14 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			siteTestEntityUnsafeFunction =
+				siteTestEntity -> patchSiteTestEntity(
+					siteTestEntity.getId() != null ? siteTestEntity.getId() :
+						_parseLong((String)parameters.get("siteTestEntityId")),
+					siteTestEntity);
+		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			siteTestEntityUnsafeFunction = siteTestEntity -> putSiteTestEntity(
@@ -1343,6 +1450,10 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		SiteTestEntity siteTestEntity, SiteTestEntity existingSiteTestEntity) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

@@ -440,6 +440,38 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSiteTestEntity() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testPatchSiteTestEntity_addSiteTestEntity();
+
+		SiteTestEntity randomPatchSiteTestEntity = randomPatchSiteTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SiteTestEntity patchSiteTestEntity =
+			siteTestEntityResource.patchSiteTestEntity(
+				postSiteTestEntity.getId(), randomPatchSiteTestEntity);
+
+		SiteTestEntity expectedPatchSiteTestEntity = postSiteTestEntity.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchSiteTestEntity, expectedPatchSiteTestEntity);
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteTestEntity(
+				patchSiteTestEntity.getId());
+
+		assertEquals(expectedPatchSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+	}
+
+	protected SiteTestEntity testPatchSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
 	public void testPutSiteTestEntity() throws Exception {
 		SiteTestEntity postSiteTestEntity =
 			testPutSiteTestEntity_addSiteTestEntity();

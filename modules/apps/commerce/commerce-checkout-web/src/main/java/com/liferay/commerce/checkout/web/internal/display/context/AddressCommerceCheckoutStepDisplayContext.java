@@ -119,7 +119,9 @@ public class AddressCommerceCheckoutStepDisplayContext {
 					commerceAddress.getDescription(), commerceAddress.getName(),
 					commerceAddress.getPhoneNumber(),
 					commerceAddress.getStreet1(), commerceAddress.getStreet2(),
-					commerceAddress.getStreet3(), commerceAddress.getSubtype(),
+					commerceAddress.getStreet3(),
+					ParamUtil.getString(
+						actionRequest, "subtype", commerceAddress.getSubtype()),
 					_commerceAddressType, commerceAddress.getZip(), null);
 
 				commerceOrder.setBillingAddressId(commerceAddressId);
@@ -236,9 +238,9 @@ public class AddressCommerceCheckoutStepDisplayContext {
 			ParamUtil.getString(actionRequest, "phoneNumber"),
 			ParamUtil.getString(actionRequest, "street1"),
 			ParamUtil.getString(actionRequest, "street2"),
-			ParamUtil.getString(actionRequest, "street3"), StringPool.BLANK,
-			_commerceAddressType, ParamUtil.getString(actionRequest, "zip"),
-			serviceContext);
+			ParamUtil.getString(actionRequest, "street3"),
+			ParamUtil.getString(actionRequest, "subtype"), _commerceAddressType,
+			ParamUtil.getString(actionRequest, "zip"), serviceContext);
 	}
 
 	private CommerceOrder _getCommerceOrder(

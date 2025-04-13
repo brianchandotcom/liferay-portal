@@ -32,6 +32,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.ActionRequest;
@@ -136,7 +137,7 @@ public class ShippingAddressCommerceCheckoutStep
 					_accountRoleLocalService, _commerceAddressService,
 					_commerceChannelAccountEntryRelLocalService,
 					_commerceChannelLocalService, httpServletRequest,
-					_portletResourcePermission);
+					_listTypeLocalService, _portletResourcePermission);
 
 		CommerceOrder commerceOrder =
 			shippingAddressCheckoutStepDisplayContext.getCommerceOrder();
@@ -218,6 +219,9 @@ public class ShippingAddressCommerceCheckoutStep
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference(
 		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"

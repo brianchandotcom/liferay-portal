@@ -50,8 +50,13 @@ public class SiteTestEntityResourceTest
 	@Test
 	public void testPatchSiteTestEntity() throws Exception {
 		super.testPatchSiteTestEntity();
-
 		_testPatchSiteTestEntityBatch();
+	}
+	@Override
+	@Test
+	public void testPostSiteSiteTestEntity() throws Exception {
+		super.testPostSiteSiteTestEntity();
+		_testPostSiteTestEntityBatch();
 	}
 
 	private void _testPatchSiteTestEntityBatch() throws Exception {
@@ -105,6 +110,35 @@ public class SiteTestEntityResourceTest
 		Assert.assertEquals(
 			postSiteTestEntity.getDescription(),
 			siteTestEntity.getDescription());
+	}
+
+	private void _testPostSiteTestEntityBatch() throws Exception {
+
+
+		SiteTestEntity siteTestEntity = siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), 
+			new SiteTestEntity() {{
+				externalReferenceCode = RandomTestUtil.randomString();
+			}}
+		);
+
+		siteTestEntity.setId(siteTestEntity.getId() + 1);
+
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_waitForFinish(
+				"FAILED", true,
+				JSONFactoryUtil.createJSONObject(
+					siteTestEntityResource.postSiteSiteTestEntityBatchHttpResponse(
+						testGroup.getGroupId(),
+						null,
+						JSONUtil.putAll(
+							JSONFactoryUtil.createJSONObject(String.valueOf(siteTestEntity)))
+					).getContent()));
+		}
 	}
 
 	private JSONObject _waitForFinish(

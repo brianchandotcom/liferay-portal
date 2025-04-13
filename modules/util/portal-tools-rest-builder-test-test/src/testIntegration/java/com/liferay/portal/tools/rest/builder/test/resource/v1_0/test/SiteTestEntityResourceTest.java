@@ -7,32 +7,27 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SiteTestEntityResource;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.util.PropsValues;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.liferay.portal.util.PropsValues;
-
 
 /**
  * @author Alejandro Tardín
@@ -42,21 +37,49 @@ public class SiteTestEntityResourceTest
 	extends BaseSiteTestEntityResourceTestCase {
 
 	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"description"};
+	@Test
+	public void testPatchSiteTestEntity() throws Exception {
+		super.testPatchSiteTestEntity();
+
+		_testPatchSiteTestEntityBatch();
 	}
 
 	@Override
 	@Test
-	public void testPatchSiteTestEntity() throws Exception {
-		super.testPatchSiteTestEntity();
-		_testPatchSiteTestEntityBatch();
-	}
-	@Override
-	@Test
 	public void testPostSiteSiteTestEntity() throws Exception {
 		super.testPostSiteSiteTestEntity();
+
 		_testPostSiteTestEntityBatch();
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"description"};
+	}
+
+	private SiteTestEntityResource _createSiteTestEntityResourceWithParameters(
+			String[] parameters)
+		throws Exception {
+
+		testGroup = GroupTestUtil.addGroup();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
+
+		return SiteTestEntityResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			parameters
+		).build();
 	}
 
 	private void _testPatchSiteTestEntityBatch() throws Exception {
@@ -87,13 +110,13 @@ public class SiteTestEntityResourceTest
 			_waitForFinish(
 				"COMPLETED", true,
 				JSONFactoryUtil.createJSONObject(
-					createSiteTestEntityResourceWithParameters(
+					_createSiteTestEntityResourceWithParameters(
 						new String[] {
 							"updateStrategy", "UPDATE", "importStrategy",
 							"ON_ERROR_CONTINUE"
 						}
 					).putSiteTestEntityBatchHttpResponse(
-						null, 
+						null,
 						JSONUtil.putAll(
 							JSONFactoryUtil.createJSONObject(
 								String.valueOf(postSiteTestEntity)),
@@ -105,39 +128,39 @@ public class SiteTestEntityResourceTest
 		siteTestEntity = siteTestEntityResource.getSiteTestEntity(
 			siteTestEntity.getId());
 
-		Assert.assertEquals(
-			postSiteTestEntity.getId(), siteTestEntity.getId());
+		Assert.assertEquals(postSiteTestEntity.getId(), siteTestEntity.getId());
 		Assert.assertEquals(
 			postSiteTestEntity.getDescription(),
 			siteTestEntity.getDescription());
 	}
 
 	private void _testPostSiteTestEntityBatch() throws Exception {
-
-
-		SiteTestEntity siteTestEntity = siteTestEntityResource.postSiteSiteTestEntity(
-			testGroup.getGroupId(), 
-			new SiteTestEntity() {{
-				externalReferenceCode = RandomTestUtil.randomString();
-			}}
-		);
+		SiteTestEntity siteTestEntity =
+			siteTestEntityResource.postSiteSiteTestEntity(
+				testGroup.getGroupId(),
+				new SiteTestEntity() {
+					{
+						externalReferenceCode = RandomTestUtil.randomString();
+					}
+				});
 
 		siteTestEntity.setId(siteTestEntity.getId() + 1);
 
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal.BatchEngineImportTaskExecutorImpl",
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
 			_waitForFinish(
 				"FAILED", true,
 				JSONFactoryUtil.createJSONObject(
-					siteTestEntityResource.postSiteSiteTestEntityBatchHttpResponse(
-						testGroup.getGroupId(),
-						null,
-						JSONUtil.putAll(
-							JSONFactoryUtil.createJSONObject(String.valueOf(siteTestEntity)))
-					).getContent()));
+					siteTestEntityResource.
+						postSiteSiteTestEntityBatchHttpResponse(
+							testGroup.getGroupId(), null,
+							JSONUtil.putAll(
+								JSONFactoryUtil.createJSONObject(
+									String.valueOf(siteTestEntity)))
+						).getContent()));
 		}
 	}
 
@@ -168,30 +191,4 @@ public class SiteTestEntityResourceTest
 		}
 	}
 
-	private SiteTestEntityResource createSiteTestEntityResourceWithParameters(
-			String[] parameters)
-		throws Exception {
-
-		testGroup = GroupTestUtil.addGroup();
-
-		testCompany = CompanyLocalServiceUtil.getCompany(
-			testGroup.getCompanyId());
-
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
-
-		SiteTestEntityResource siteTestEntityResource = SiteTestEntityResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameters(
-			parameters
-		).build();
-
-		return siteTestEntityResource;
-	}
 }

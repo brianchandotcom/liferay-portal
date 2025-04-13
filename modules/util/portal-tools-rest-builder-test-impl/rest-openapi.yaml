@@ -392,6 +392,35 @@ paths:
                     description:
                         "OK"
             tags: ["CompanyTestEntity"]
+        patch:
+            operationId: patchCompanyTestEntity
+            parameters:
+                -   in: path
+                    name: companyTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CompanyTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CompanyTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/CompanyTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/CompanyTestEntity"
+                    description:
+                        "OK"
+            tags: ["CompanyTestEntity"]
     /company-test-entities/{companyTestEntityId}/permissions:
         get:
             operationId: getCompanyTestEntityPermissionsPage

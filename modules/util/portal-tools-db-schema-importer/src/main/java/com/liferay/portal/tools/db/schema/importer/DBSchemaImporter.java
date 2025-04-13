@@ -54,7 +54,7 @@ public class DBSchemaImporter {
 				commandLine.getOptionValue("source-jdbc-url"))) {
 
 			System.err.println(
-				"Source database must be MariaDB, MySQL or SQL Server.");
+				"Source database must be MariaDB, MySQL, or SQL Server.");
 
 			_printHelpAndExit(options);
 		}

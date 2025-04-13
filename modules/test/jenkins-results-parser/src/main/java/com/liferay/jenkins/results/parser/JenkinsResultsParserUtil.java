@@ -5354,7 +5354,7 @@ public class JenkinsResultsParserUtil {
 			return retryable.executeWithRetries();
 		}
 		catch (Exception exception) {
-			throw new RuntimeException("Unable to create JSONObject");
+			throw new RuntimeException("Unable to create JSON object");
 		}
 	}
 

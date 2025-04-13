@@ -5914,9 +5914,9 @@ public class ObjectEntryLocalServiceImpl
 
 	private void _validateValues(
 			Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap,
-			Map<String, Serializable> existingValues, boolean guestUser,
-			long groupId, ObjectDefinition objectDefinition, Long objectEntryId,
-			ObjectField objectField, long userId,
+			Map<String, Serializable> existingValues, long groupId,
+			boolean guestUser, ObjectDefinition objectDefinition,
+			Long objectEntryId, ObjectField objectField, long userId,
 			List<ValidationError> validationErrors, Serializable value,
 			String valueLanguageId)
 		throws PortalException {
@@ -6136,7 +6136,7 @@ public class ObjectEntryLocalServiceImpl
 				values.containsKey(objectField.getName())) {
 
 				_validateValues(
-					dlFileEntriesMap, existingValues, guestUser, groupId,
+					dlFileEntriesMap, existingValues, groupId, guestUser,
 					objectDefinition, objectEntryId, objectField, userId,
 					validationErrors, values.get(objectField.getName()),
 					StringPool.BLANK);
@@ -6154,7 +6154,7 @@ public class ObjectEntryLocalServiceImpl
 					localizedValues.entrySet()) {
 
 				_validateValues(
-					dlFileEntriesMap, existingValues, guestUser, groupId,
+					dlFileEntriesMap, existingValues, groupId, guestUser,
 					objectDefinition, objectEntryId, objectField, userId,
 					validationErrors, entry.getValue(), entry.getKey());
 			}

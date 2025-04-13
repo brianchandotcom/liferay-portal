@@ -363,8 +363,8 @@ paths:
                     description:
                         "OK"
             tags: ["CompanyTestEntity"]
-        put:
-            operationId: putCompanyTestEntity
+        patch:
+            operationId: patchCompanyTestEntity
             parameters:
                 -   in: path
                     name: companyTestEntityId
@@ -392,8 +392,8 @@ paths:
                     description:
                         "OK"
             tags: ["CompanyTestEntity"]
-        patch:
-            operationId: patchCompanyTestEntity
+        put:
+            operationId: putCompanyTestEntity
             parameters:
                 -   in: path
                     name: companyTestEntityId

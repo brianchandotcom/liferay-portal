@@ -10,23 +10,23 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.CompanyTestEntityResource;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.util.PropsValues;
 
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Alejandro Tardín
@@ -34,6 +34,22 @@ import com.liferay.portal.util.PropsValues;
 @RunWith(Arquillian.class)
 public class CompanyTestEntityResourceTest
 	extends BaseCompanyTestEntityResourceTestCase {
+
+	@Override
+	@Test
+	public void testPatchCompanyTestEntity() throws Exception {
+		super.testPatchCompanyTestEntity();
+
+		_testPatchCompanyTestEntityBatch();
+	}
+
+	@Override
+	@Test
+	public void testPostCompanyTestEntity() throws Exception {
+		super.testPostCompanyTestEntity();
+
+		_testPostCompanyTestEntityBatch();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -86,19 +102,12 @@ public class CompanyTestEntityResourceTest
 	}
 
 	@Override
-	@Test
-	public void testPatchCompanyTestEntity() throws Exception {
-		super.testPatchCompanyTestEntity();
+	protected CompanyTestEntity
+			testPatchCompanyTestEntity_addCompanyTestEntity()
+		throws Exception {
 
-		_testPatchCompanyTestEntityBatch();
-	}
-
-	@Override
-	@Test
-	public void testPostCompanyTestEntity() throws Exception {
-		super.testPostCompanyTestEntity();
-
-		_testPostCompanyTestEntityBatch();
+		return companyTestEntityResource.postCompanyTestEntity(
+			randomCompanyTestEntity());
 	}
 
 	@Override
@@ -146,18 +155,38 @@ public class CompanyTestEntityResourceTest
 			randomCompanyTestEntity());
 	}
 
-	@Override
-	protected CompanyTestEntity testPatchCompanyTestEntity_addCompanyTestEntity()
+	private CompanyTestEntityResource
+			_createCompanyTestEntityResourceWithParameters(String[] parameters)
 		throws Exception {
 
-		return companyTestEntityResource.postCompanyTestEntity(
-			randomCompanyTestEntity());
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
+
+		return companyTestEntityResource = CompanyTestEntityResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			parameters
+		).build();
 	}
 
 	private void _testPatchCompanyTestEntityBatch() throws Exception {
-		CompanyTestEntity postCompanyTestEntity = new CompanyTestEntity(){{externalReferenceCode = RandomTestUtil.randomString();}};
+		CompanyTestEntity postCompanyTestEntity = new CompanyTestEntity() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+			}
+		};
 
-		CompanyTestEntity notExistingPostCompanyTestEntity = new CompanyTestEntity();
+		CompanyTestEntity notExistingPostCompanyTestEntity =
+			new CompanyTestEntity();
 
 		postCompanyTestEntity.setDescription(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -182,18 +211,19 @@ public class CompanyTestEntityResourceTest
 			_waitForFinish(
 				"COMPLETED", true,
 				JSONFactoryUtil.createJSONObject(
-					createCompanyTestEntityResourceWithParameters(
+					_createCompanyTestEntityResourceWithParameters(
 						new String[] {
 							"updateStrategy", "UPDATE", "importStrategy",
 							"ON_ERROR_CONTINUE"
 						}
 					).putCompanyTestEntityBatchHttpResponse(
-						null, 
+						null,
 						JSONUtil.putAll(
 							JSONFactoryUtil.createJSONObject(
 								String.valueOf(postCompanyTestEntity)),
 							JSONFactoryUtil.createJSONObject(
-								String.valueOf(notExistingPostCompanyTestEntity)))
+								String.valueOf(
+									notExistingPostCompanyTestEntity)))
 					).getContent()));
 		}
 
@@ -208,26 +238,31 @@ public class CompanyTestEntityResourceTest
 	}
 
 	private void _testPostCompanyTestEntityBatch() throws Exception {
-		CompanyTestEntity companyTestEntity = companyTestEntityResource.postCompanyTestEntity(
-			new CompanyTestEntity() {{
-				externalReferenceCode = RandomTestUtil.randomString();
-			}}
-		);
+		CompanyTestEntity companyTestEntity =
+			companyTestEntityResource.postCompanyTestEntity(
+				new CompanyTestEntity() {
+					{
+						externalReferenceCode = RandomTestUtil.randomString();
+					}
+				});
 
 		companyTestEntity.setId(companyTestEntity.getId() + 1);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal.BatchEngineImportTaskExecutorImpl",
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
 			_waitForFinish(
 				"FAILED", true,
 				JSONFactoryUtil.createJSONObject(
-					companyTestEntityResource.postCompanyTestEntityBatchHttpResponse(
-						null,
-						JSONUtil.putAll(
-							JSONFactoryUtil.createJSONObject(String.valueOf(companyTestEntity)))
-					).getContent()));
+					companyTestEntityResource.
+						postCompanyTestEntityBatchHttpResponse(
+							null,
+							JSONUtil.putAll(
+								JSONFactoryUtil.createJSONObject(
+									String.valueOf(companyTestEntity)))
+						).getContent()));
 		}
 	}
 
@@ -258,28 +293,4 @@ public class CompanyTestEntityResourceTest
 		}
 	}
 
-	private CompanyTestEntityResource createCompanyTestEntityResourceWithParameters(
-			String[] parameters)
-		throws Exception {
-
-		testCompany = CompanyLocalServiceUtil.getCompany(
-			testGroup.getCompanyId());
-
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
-
-		CompanyTestEntityResource companyTestEntityResource = CompanyTestEntityResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameters(
-			parameters
-		).build();
-
-		return companyTestEntityResource;
-	}
 }

@@ -1200,7 +1200,7 @@ public class ObjectEntryDTOConverter
 	}
 
 	private SystemProperties _toSystemProperties(
-		ObjectDefinition objectDefinition, int versionNumber) {
+		ObjectDefinition objectDefinition, int versionInt) {
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			return null;
@@ -1211,7 +1211,7 @@ public class ObjectEntryDTOConverter
 				setVersion(
 					() -> new Version() {
 						{
-							setNumber(() -> versionNumber);
+							setNumber(() -> versionInt);
 						}
 					});
 			}

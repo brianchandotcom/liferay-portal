@@ -9,6 +9,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -467,6 +468,71 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		return getCompanyTestEntity;
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/company-test-entities/{companyTestEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "companyTestEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public CompanyTestEntity patchCompanyTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("companyTestEntityId")
+			Long companyTestEntityId,
+			CompanyTestEntity companyTestEntity)
+		throws Exception {
+
+		CompanyTestEntity existingCompanyTestEntity = getCompanyTestEntity(
+			companyTestEntityId);
+
+		if (companyTestEntity.getDateCreated() != null) {
+			existingCompanyTestEntity.setDateCreated(
+				companyTestEntity.getDateCreated());
+		}
+
+		if (companyTestEntity.getDateModified() != null) {
+			existingCompanyTestEntity.setDateModified(
+				companyTestEntity.getDateModified());
+		}
+
+		if (companyTestEntity.getDescription() != null) {
+			existingCompanyTestEntity.setDescription(
+				companyTestEntity.getDescription());
+		}
+
+		if (companyTestEntity.getExternalReferenceCode() != null) {
+			existingCompanyTestEntity.setExternalReferenceCode(
+				companyTestEntity.getExternalReferenceCode());
+		}
+
+		if (companyTestEntity.getPermissions() != null) {
+			existingCompanyTestEntity.setPermissions(
+				companyTestEntity.getPermissions());
+		}
+
+		preparePatch(companyTestEntity, existingCompanyTestEntity);
+
+		return putCompanyTestEntity(
+			companyTestEntityId, existingCompanyTestEntity);
+	}
+
 	protected abstract CompanyTestEntity doPutCompanyTestEntity(
 			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
 		throws Exception;
@@ -760,6 +826,32 @@ public abstract class BaseCompanyTestEntityResourceImpl
 						companyTestEntity.getExternalReferenceCode(),
 						companyTestEntity);
 			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				companyTestEntityUnsafeFunction = companyTestEntity -> {
+					CompanyTestEntity persistedCompanyTestEntity = null;
+
+					try {
+						CompanyTestEntity getCompanyTestEntity =
+							getCompanyTestEntityByExternalReferenceCode(
+								companyTestEntity.getExternalReferenceCode());
+
+						persistedCompanyTestEntity = patchCompanyTestEntity(
+							getCompanyTestEntity.getId() != null ?
+								getCompanyTestEntity.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"companyTestEntityId")),
+							companyTestEntity);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedCompanyTestEntity = postCompanyTestEntity(
+							companyTestEntity);
+					}
+
+					return persistedCompanyTestEntity;
+				};
+			}
 		}
 
 		if (companyTestEntityUnsafeFunction == null) {
@@ -798,7 +890,7 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -868,6 +960,16 @@ public abstract class BaseCompanyTestEntityResourceImpl
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			companyTestEntityUnsafeFunction =
+				companyTestEntity -> patchCompanyTestEntity(
+					companyTestEntity.getId() != null ?
+						companyTestEntity.getId() :
+							_parseLong(
+								(String)parameters.get("companyTestEntityId")),
+					companyTestEntity);
+		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			companyTestEntityUnsafeFunction =
@@ -1286,6 +1388,11 @@ public abstract class BaseCompanyTestEntityResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		CompanyTestEntity companyTestEntity,
+		CompanyTestEntity existingCompanyTestEntity) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

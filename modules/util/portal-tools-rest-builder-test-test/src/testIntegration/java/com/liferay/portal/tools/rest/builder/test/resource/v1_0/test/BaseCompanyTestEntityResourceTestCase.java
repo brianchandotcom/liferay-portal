@@ -669,6 +669,41 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testPatchCompanyTestEntity() throws Exception {
+		CompanyTestEntity postCompanyTestEntity =
+			testPatchCompanyTestEntity_addCompanyTestEntity();
+
+		CompanyTestEntity randomPatchCompanyTestEntity =
+			randomPatchCompanyTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CompanyTestEntity patchCompanyTestEntity =
+			companyTestEntityResource.patchCompanyTestEntity(
+				postCompanyTestEntity.getId(), randomPatchCompanyTestEntity);
+
+		CompanyTestEntity expectedPatchCompanyTestEntity =
+			postCompanyTestEntity.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchCompanyTestEntity, expectedPatchCompanyTestEntity);
+
+		CompanyTestEntity getCompanyTestEntity =
+			companyTestEntityResource.getCompanyTestEntity(
+				patchCompanyTestEntity.getId());
+
+		assertEquals(expectedPatchCompanyTestEntity, getCompanyTestEntity);
+		assertValid(getCompanyTestEntity);
+	}
+
+	protected CompanyTestEntity
+			testPatchCompanyTestEntity_addCompanyTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutCompanyTestEntity() throws Exception {
 		CompanyTestEntity postCompanyTestEntity =
 			testPutCompanyTestEntity_addCompanyTestEntity();

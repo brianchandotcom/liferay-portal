@@ -554,6 +554,37 @@ paths:
                     description:
                         "OK"
             tags: ["SiteTestEntity"]
+        patch:
+            description: 
+                Updates only the fields received in the request body, leaving any other fields untouched.
+            operationId: patchSiteTestEntity
+            parameters:
+                -   in: path
+                    name: siteTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SiteTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SiteTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/SiteTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/SiteTestEntity"
+                    description:
+                        "OK"
+            tags: ["SiteTestEntity"]
         put:
             operationId: putSiteTestEntity
             parameters:

@@ -75,6 +75,10 @@ public interface CompanyTestEntityResource {
 	public CompanyTestEntity getCompanyTestEntity(Long companyTestEntityId)
 		throws Exception;
 
+	public CompanyTestEntity patchCompanyTestEntity(
+			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
+		throws Exception;
+
 	public CompanyTestEntity putCompanyTestEntity(
 			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
 		throws Exception;

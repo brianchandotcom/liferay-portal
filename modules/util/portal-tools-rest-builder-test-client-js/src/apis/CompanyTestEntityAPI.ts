@@ -240,6 +240,108 @@ export class CompanyTestEntityAPI {
 
 		/**
 		 * 
+				 * @param companyTestEntityId
+		 		* @param requestBody Request body that can be one of multiple content types
+		 * @param headers Optional custom request headers
+		 */
+		public async patchCompanyTestEntityWithContentType(
+						companyTestEntityId: number,
+					requestBody:
+							{
+								parameters: {
+										companyTestEntity?: CompanyTestEntity
+								},
+								type: "application/json"
+							}
+								|
+							{
+								parameters: {
+										companyTestEntity?: CompanyTestEntity
+								},
+								type: "application/xml"
+							}
+								,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: CompanyTestEntity;
+			response: Response;
+		}> {
+				let body;
+						if (requestBody.type === "application/json") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
+						}
+						if (requestBody.type === "application/xml") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.companyTestEntity, "CompanyTestEntity"));
+						}
+
+			const path = this._basePath + "/test/v1.0/company-test-entities/{companyTestEntityId}"
+						.replace("{companyTestEntityId}",encodeURIComponent(companyTestEntityId))
+				;
+
+			const queryParameters: any = {};
+
+						if (companyTestEntityId === null || companyTestEntityId === undefined) {
+							throw new Error("Required parameter companyTestEntityId was null or undefined when calling patchCompanyTestEntity.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+								,{"Content-Type": requestBody.type}
+					,headers || {}
+					),
+				method: "PATCH",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "CompanyTestEntity"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+					/**
+					 *  - Default method for JSON body
+							 * @param companyTestEntityId
+						 * @param companyTestEntity
+					 */
+					public async patchCompanyTestEntity(
+									companyTestEntityId: number,
+							companyTestEntity?: CompanyTestEntity,
+						headers?: {[name: string]: string}
+					): Promise<{
+							body: CompanyTestEntity;
+						response: Response;
+					}> {
+						return this.patchCompanyTestEntityWithContentType(
+										companyTestEntityId,
+							{
+								parameters: {
+										companyTestEntity: companyTestEntity
+								},
+								type: "application/json"
+							},
+							headers
+						);
+					}
+		/**
+		 * 
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */

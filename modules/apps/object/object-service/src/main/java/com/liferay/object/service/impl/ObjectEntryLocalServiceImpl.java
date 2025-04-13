@@ -483,9 +483,6 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap = new HashMap<>();
-		User user = _userLocalService.getUser(userId);
-
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
 				objectDefinition.getObjectDefinitionId());
@@ -496,6 +493,8 @@ public class ObjectEntryLocalServiceImpl
 		String defaultLanguageId = _language.getLanguageId(
 			_portal.getSiteDefaultLocale(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID));
+		Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap = new HashMap<>();
+		User user = _userLocalService.getUser(userId);
 
 		if (count > 0) {
 			_validateValues(
@@ -1570,11 +1569,9 @@ public class ObjectEntryLocalServiceImpl
 		String defaultLanguageId = _language.getLanguageId(
 			_portal.getSiteDefaultLocale(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID));
-
-		User user = _userLocalService.getUser(userId);
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+		User user = _userLocalService.getUser(userId);
 
 		if (count > 0) {
 			_validateValues(

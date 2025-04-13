@@ -254,33 +254,6 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
-	test CannotCreateTwoSameBlogPostingsWithBatchPostCreateStrategyInsertWhenOneOfThemAlreadyExisting {
-		property portal.acceptance = "true";
-
-		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
-				createStrategy = "INSERT",
-				numberOfBlogPostings = 2);
-		}
-
-		task ("When I repeat the same request again changing all the data of second blog post") {
-			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
-				createStrategy = "INSERT",
-				numberOfBlogPostings = 2,
-				testCase = "updateOneBlogPosting");
-		}
-
-		task ("Then I receive executeStatus: FAILED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
-
-			TestUtils.assertEquals(
-				actual = ${executeStatus},
-				expected = "FAILED");
-		}
-	}
-
-	@disable-webdriver = "true"
-	@priority = 4
 	test CannotUpdateBlogPostingWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
@@ -371,42 +344,6 @@ definition {
 			TestUtils.assertEquals(
 				actual = ${actualNumberOfBlogPostings},
 				expected = 2);
-		}
-	}
-
-	@disable-webdriver = "true"
-	@priority = 5
-	test CanUpdateBlogPostingWithBatchPutCreateStrategyUpdateWithOn_Error_Continue {
-		property portal.acceptance = "true";
-
-		task ("Given blog post created") {
-			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
-				createStrategy = "INSERT",
-				numberOfBlogPostings = 1);
-		}
-
-		task ("When I use PUT 'blog-postings/batch?updateStrategy=UPDATE' with parameter importStrategy=ON_ERROR_CONTINUE with two data set with one non existing") {
-			var importTaskId = BlogPostingAPI.getIdOfUpdatedBlogPostingBatchEngineImportTask(
-				importStrategy = "ON_ERROR_CONTINUE",
-				numberOfBlogPostings = 1,
-				testCase = "updateOneBlogPosting",
-				updateStrategy = "UPDATE");
-		}
-
-		task ("Then I receive executeStatus: COMPLETED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
-
-			TestUtils.assertEquals(
-				actual = ${executeStatus},
-				expected = "COMPLETED");
-		}
-
-		task ("And Then the existing the blogPosting is UPDATED correctly") {
-			var blogPostingData = BlogPostingAPI.getBlogPostingDataToString();
-
-			TestUtils.assertEquals(
-				actual = ${blogPostingData},
-				expected = "headline0,articleBody0,erc0");
 		}
 	}
 

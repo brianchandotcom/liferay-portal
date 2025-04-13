@@ -253,6 +253,108 @@ export class SiteTestEntityAPI {
 		}
 
 		/**
+		 * Updates only the fields received in the request body, leaving any other fields untouched.
+				 * @param siteTestEntityId
+		 		* @param requestBody Request body that can be one of multiple content types
+		 * @param headers Optional custom request headers
+		 */
+		public async patchSiteTestEntityWithContentType(
+						siteTestEntityId: number,
+					requestBody:
+							{
+								parameters: {
+										siteTestEntity?: SiteTestEntity
+								},
+								type: "application/json"
+							}
+								|
+							{
+								parameters: {
+										siteTestEntity?: SiteTestEntity
+								},
+								type: "application/xml"
+							}
+								,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: SiteTestEntity;
+			response: Response;
+		}> {
+				let body;
+						if (requestBody.type === "application/json") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
+						}
+						if (requestBody.type === "application/xml") {
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.siteTestEntity, "SiteTestEntity"));
+						}
+
+			const path = this._basePath + "/test/v1.0/site-test-entities/{siteTestEntityId}"
+						.replace("{siteTestEntityId}",encodeURIComponent(siteTestEntityId))
+				;
+
+			const queryParameters: any = {};
+
+						if (siteTestEntityId === null || siteTestEntityId === undefined) {
+							throw new Error("Required parameter siteTestEntityId was null or undefined when calling patchSiteTestEntity.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+								,{"Content-Type": requestBody.type}
+					,headers || {}
+					),
+				method: "PATCH",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "SiteTestEntity"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+					/**
+					 * Updates only the fields received in the request body, leaving any other fields untouched. - Default method for JSON body
+							 * @param siteTestEntityId
+						 * @param siteTestEntity
+					 */
+					public async patchSiteTestEntity(
+									siteTestEntityId: number,
+							siteTestEntity?: SiteTestEntity,
+						headers?: {[name: string]: string}
+					): Promise<{
+							body: SiteTestEntity;
+						response: Response;
+					}> {
+						return this.patchSiteTestEntityWithContentType(
+										siteTestEntityId,
+							{
+								parameters: {
+										siteTestEntity: siteTestEntity
+								},
+								type: "application/json"
+							},
+							headers
+						);
+					}
+		/**
 		 * 
 				 * @param siteId
 		 		* @param requestBody Request body that can be one of multiple content types

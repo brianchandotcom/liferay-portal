@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class BillingAddressCheckoutStepDisplayContext
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		HttpServletRequest httpServletRequest,
+		ListTypeLocalService listTypeLocalService,
 		PortletResourcePermission portletResourcePermission) {
 
 		super(
@@ -50,7 +52,7 @@ public class BillingAddressCheckoutStepDisplayContext
 			accountRoleLocalService, commerceAddressService,
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, httpServletRequest,
-			portletResourcePermission);
+			listTypeLocalService, portletResourcePermission);
 	}
 
 	@Override

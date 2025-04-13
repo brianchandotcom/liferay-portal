@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -245,7 +246,7 @@ public class BillingAddressCommerceCheckoutStep
 					_commerceAddressService,
 					_commerceChannelAccountEntryRelLocalService,
 					_commerceChannelLocalService, httpServletRequest,
-					_portletResourcePermission);
+					_listTypeLocalService, _portletResourcePermission);
 
 		CommerceOrder commerceOrder =
 			billingAddressCheckoutStepDisplayContext.getCommerceOrder();
@@ -467,6 +468,9 @@ public class BillingAddressCommerceCheckoutStep
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private Portal _portal;

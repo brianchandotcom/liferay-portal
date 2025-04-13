@@ -81,7 +81,7 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 			<div>
 				<react:component
 					module="{AddressSubtypeAutocomplete} from commerce-checkout-web"
-					props="<%= baseAddressCheckoutStepDisplayContext.getContext(currentCommerceAddress, Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) ? (shippingUsedAsBilling || (commerceAddressId == 0) ? 2 : 3) : 1) %>"
+					props="<%= baseAddressCheckoutStepDisplayContext.getContext(currentCommerceAddress, Objects.equals(CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME, paramName) ? (shippingUsedAsBilling || (commerceAddressId == 0) ? CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING : CommerceAddressConstants.ADDRESS_TYPE_SHIPPING) : CommerceAddressConstants.ADDRESS_TYPE_BILLING) %>"
 				/>
 			</div>
 		</c:if>
@@ -396,7 +396,8 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 
 						if (useAsBillingField) {
 							useAsBillingField.checked =
-								selectedOption.dataset.type == 2;
+								selectedOption.dataset.type ==
+								<%= CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING %>;
 						}
 					}
 				}

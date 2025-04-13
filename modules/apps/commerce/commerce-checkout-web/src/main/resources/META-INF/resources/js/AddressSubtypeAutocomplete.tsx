@@ -12,7 +12,7 @@ import classnames from 'classnames';
 
 // @ts-ignore
 
-import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {CommerceConstants, CommerceServiceProvider} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -190,16 +190,20 @@ function AddressSubtypeAutocomplete({
 
 	useEffect(() => {
 		if (
-			['billing', '1'].includes(String(addressType || initialAddressType))
+			[
+				String(CommerceConstants.ADDRESS_TYPE_BILLING),
+				'billing',
+			].includes(String(addressType || initialAddressType))
 		) {
 			setExternalReferenceCode(addressSubtypeConfiguration.billing);
 
 			return;
 		}
 		else if (
-			['shipping', '3'].includes(
-				String(addressType || initialAddressType)
-			)
+			[
+				String(CommerceConstants.ADDRESS_TYPE_SHIPPING),
+				'shipping',
+			].includes(String(addressType || initialAddressType))
 		) {
 			setExternalReferenceCode(addressSubtypeConfiguration.shipping);
 
@@ -255,7 +259,10 @@ function AddressSubtypeAutocomplete({
 
 			if (
 				Number(addressId) &&
-				['shipping', '3'].includes(String(addressType)) &&
+				[
+					String(CommerceConstants.ADDRESS_TYPE_SHIPPING),
+					'shipping',
+				].includes(String(addressType)) &&
 				currentValue &&
 				(event.target as HTMLInputElement).checked
 			) {

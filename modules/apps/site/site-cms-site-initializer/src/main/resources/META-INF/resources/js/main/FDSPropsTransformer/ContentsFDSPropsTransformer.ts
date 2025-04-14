@@ -19,9 +19,11 @@ const ACTIONS = {
 };
 
 export default function ContentFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	...otherProps
 }: {
+	additionalProps: any;
 	creationMenu: any;
 	otherProps: any;
 }) {
@@ -31,7 +33,8 @@ export default function ContentFDSPropsTransformer({
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(
 				creationMenu.primaryItems,
-				ACTIONS
+				ACTIONS,
+				additionalProps
 			),
 		},
 		customRenderers: {

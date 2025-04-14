@@ -6,7 +6,6 @@
 package com.liferay.object.internal.entry.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -128,8 +128,9 @@ public class ObjectEntryUtil {
 						false, modelClass.getName(),
 						GetterUtil.getLong(
 							originalBaseModel.getPrimaryKeyObj()),
-						objectDefinition.getCompanyId(), user.getLocale(),
-						ObjectEntryThreadLocal.getExpandoBridgeAttributes()));
+						objectDefinition.getCompanyId(),
+						ObjectEntryThreadLocal.getExpandoBridgeAttributes(),
+						user.getLocale()));
 
 				return originalDTOMap;
 			}

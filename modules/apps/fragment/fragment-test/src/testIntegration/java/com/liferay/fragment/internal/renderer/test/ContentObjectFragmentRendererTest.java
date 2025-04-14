@@ -275,6 +275,22 @@ public class ContentObjectFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPD-53199")
+	public void testRenderMappedContentInViewMode() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			journalArticle);
+
+		String content = _render(fragmentEntryLink, _journalArticle);
+
+		Assert.assertTrue(
+			content.contains(
+				journalArticle.getTitle(LocaleUtil.getSiteDefault())));
+	}
+
+	@Test
 	public void testRenderRestoredContentInEditMode() throws Exception {
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
 
@@ -335,9 +351,16 @@ public class ContentObjectFragmentRendererTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {
+		return _addFragmentEntryLink(_journalArticle);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLink(
+			JournalArticle journalArticle)
+		throws Exception {
+
 		TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
-			String.valueOf(_journalArticle.getDDMStructureId()),
+			String.valueOf(journalArticle.getDDMStructureId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			TemplateTestUtil.getSampleScriptFTL("JournalArticle_title"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -357,10 +380,10 @@ public class ContentObjectFragmentRendererTest {
 								JournalArticle.class.getName()))
 					).put(
 						"classPK",
-						String.valueOf(_journalArticle.getResourcePrimKey())
+						String.valueOf(journalArticle.getResourcePrimKey())
 					).put(
 						"classTypeId",
-						String.valueOf(_journalArticle.getDDMStructureId())
+						String.valueOf(journalArticle.getDDMStructureId())
 					).put(
 						"template",
 						JSONUtil.put(

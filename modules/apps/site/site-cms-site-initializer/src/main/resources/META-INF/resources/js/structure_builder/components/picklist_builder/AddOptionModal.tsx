@@ -18,7 +18,7 @@ import Input from '../Input';
 
 export default function AddOptionModal({
 	onCloseModal,
-	option,
+	option = null,
 }: {
 	onCloseModal: () => void;
 	option: Option | null;
@@ -110,7 +110,9 @@ export default function AddOptionModal({
 }
 
 function getRandomKey() {
-	const digits = Math.floor(Math.random() * 9 * Math.pow(10, 5));
+	const digits = Math.floor(
+		Math.pow(10, 5) + Math.random() * 9 * Math.pow(10, 5)
+	);
 
 	return `${Liferay.Language.get('option')}${digits}`;
 }

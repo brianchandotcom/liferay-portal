@@ -58,7 +58,7 @@ export async function resetTokenBasedSSOConfiguration(
 	) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: tokenBasedSSOPage.getByRole('link', {
+			target: tokenBasedSSOPage.getByRole('menuitem', {
 				name: 'Reset Default Values',
 			}),
 			trigger: tokenBasedSSOPage.getByRole('button', {

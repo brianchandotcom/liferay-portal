@@ -39,7 +39,7 @@ export class OpenIdSystemSettingsPage {
 			.click();
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('link', {
+			target: this.page.getByRole('menuitem', {
 				name: 'Reset Default Values',
 			}),
 			trigger: this.page.getByRole('button', {

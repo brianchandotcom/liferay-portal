@@ -28,6 +28,14 @@
 							'plugin',
 						],
 					},
+					'liferay-fullscreen-source-editor': {
+						path: 'fullscreen_source_editor.js',
+						requires: ['liferay-source-editor'],
+					},
+					'liferay-source-editor': {
+						path: 'source_editor.js',
+						requires: ['aui-ace-editor'],
+					},
 				},
 				root: MODULE_PATH + '/js/legacy/',
 			},

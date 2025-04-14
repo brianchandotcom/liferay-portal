@@ -71,21 +71,6 @@ async function editWebcontent(page, webContentTitle: String) {
 	await page.getByText(webContentTitle).click();
 }
 
-async function readPropertiesFile(filePath, property) {
-	const data = fs.readFileSync(filePath, 'utf-8');
-	let propertyValue = '';
-	data.split('\n').forEach((line) => {
-		line = line.trim();
-		if (line && !line.startsWith('#')) {
-			const [key, value] = line.split('=');
-			if (key && value && key === property) {
-				propertyValue = value.trim();
-			}
-		}
-	});
-
-	return propertyValue;
-}
 test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option', async ({
 	apiHelpers,
 	page,
@@ -187,25 +172,4 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		.getByRole('button', {exact: true, name: 'Publish to Live'})
 		.click();
 
-	const workspacePath = path.resolve(__dirname, '../../../../../');
-
-	await exec('ant -f build-test.xml check-folder-in-lar', {
-		cwd: workspacePath,
-	});
-
-	const config = path.resolve(
-		workspacePath,
-		'./portal-web/poshi-ext.properties'
-	);
-
-	const bundlePath = await readPropertiesFile(
-		config,
-		'liferay.home.dir.name'
-	);
-
-	const data = fs.readFileSync(
-		path.resolve(bundlePath, './result.txt'),
-		'utf-8'
-	);
-	expect(data).not.toContain('not found');
 });

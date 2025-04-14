@@ -8,7 +8,6 @@ import {
 	Marketplace,
 	MarketplaceRest,
 	MarketplaceView,
-	PlacedOrder,
 	Product,
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
@@ -30,10 +29,21 @@ async function fetchFragmentBlob(
 	return response.blob();
 }
 
-function getProductVirtualEntryBlob(
+async function getProductVirtualEntryBlob(
 	marketplaceRest: MarketplaceRest,
-	placedOrder: PlacedOrder
+	product: Product
 ): Promise<Blob> {
+	const cart = await marketplaceRest.createCart(product as Product, {
+		orderTypeExternalReferenceCode: 'LOW_CODE_CONFIGURATION',
+	});
+
+	await marketplaceRest.checkoutCart(cart);
+
+	const placedOrder = await marketplaceRest.getPlacedOrder(
+		cart.id,
+		new URLSearchParams({nestedFields: 'placedOrderItems'})
+	);
+
 	const hasPlacedOrderItems = placedOrder.placedOrderItems.some(
 		(placedOrderItem) => placedOrderItem?.virtualItems?.length
 	);
@@ -108,43 +118,30 @@ export default function MarketplaceViews({
 			setProduct(product);
 
 			try {
-				const cart = await marketplaceRest.createCart(
-					product as Product,
-					{
-						orderTypeExternalReferenceCode:
-							'LOW_CODE_CONFIGURATION',
-					}
-				);
-
-				await marketplaceRest.checkoutCart(cart);
-
-				const placedOrder = await marketplaceRest.getPlacedOrder(
-					cart.id,
-					new URLSearchParams({nestedFields: 'placedOrderItems'})
-				);
-
 				const blob = await getProductVirtualEntryBlob(
 					marketplaceRest,
-					placedOrder
+					product
 				);
 
-				if (blob) {
-					const file = new File(
-						[blob],
-						`${product.name.replace(' ', '-').toLowerCase()}.zip`,
-						{type: 'application/zip'}
-					);
-
-					await handleImportFile(file);
-
-					openToast({
-						message: Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-						title: Liferay.Language.get('success'),
-						type: 'success',
-					});
+				if (!blob) {
+					return;
 				}
+
+				const file = new File(
+					[blob],
+					`${product.name.replace(' ', '-').toLowerCase()}.zip`,
+					{type: 'application/zip'}
+				);
+
+				await handleImportFile(file);
+
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					title: Liferay.Language.get('success'),
+					type: 'success',
+				});
 			}
 			catch (error) {
 				console.error('Installation failed:', error);

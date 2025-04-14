@@ -11,7 +11,7 @@ import React from 'react';
 import PicklistBuilderManagementBar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderManagementBar';
 import {State} from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 import PicklistService from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService';
-import {MockCacheProvider} from '../../mocks/MockCacheProvider';
+import {MockCacheProvider, broadcastMock} from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 const renderComponent = (state?: Partial<State>) => {
@@ -56,6 +56,21 @@ describe('PicklistBuilderManagementBar', () => {
 		expect(
 			screen.getByText('Picklist Name-was-saved-successfully')
 		).toBeInTheDocument();
+
+		await closeToast();
+	});
+
+	it('sends a message via broadcast to update the cache state', async () => {
+		renderComponent({id: null});
+
+		const saveButton = screen.getByRole('button', {name: 'save'});
+
+		await userEvent.click(saveButton);
+
+		expect(broadcastMock.postMessage).toHaveBeenCalledWith({
+			key: 'picklists',
+			type: 'staleCache',
+		});
 
 		await closeToast();
 	});

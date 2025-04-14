@@ -154,8 +154,8 @@ public class CompanyTestEntityResourceTest
 			randomCompanyTestEntity());
 	}
 
-	private CompanyTestEntityResource
-			_createCompanyTestEntityResourceWithParameters(String[] parameters)
+	private CompanyTestEntityResource _createCompanyTestEntityResource(
+			String[] parameters)
 		throws Exception {
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
@@ -175,62 +175,48 @@ public class CompanyTestEntityResourceTest
 	}
 
 	private void _testPatchCompanyTestEntityBatch() throws Exception {
-		CompanyTestEntity postCompanyTestEntity = new CompanyTestEntity() {
-			{
-				externalReferenceCode = RandomTestUtil.randomString();
-			}
-		};
-
-		CompanyTestEntity notExistingPostCompanyTestEntity =
-			new CompanyTestEntity();
-
-		postCompanyTestEntity.setDescription(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-		CompanyTestEntity companyTestEntity =
+		CompanyTestEntity postCompanyTestEntity =
 			companyTestEntityResource.postCompanyTestEntity(
-				postCompanyTestEntity);
+				randomCompanyTestEntity());
 
-		postCompanyTestEntity.setId(companyTestEntity.getId());
+		String description = RandomTestUtil.randomString();
 
-		postCompanyTestEntity.setDescription(RandomTestUtil.randomString());
+		postCompanyTestEntity.setDescription(description);
 
-		notExistingPostCompanyTestEntity.setDescription(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-		notExistingPostCompanyTestEntity.setId(companyTestEntity.getId() + 1);
+		CompanyTestEntity randomCompanyTestEntity = randomCompanyTestEntity();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",
 				LoggerTestUtil.ERROR)) {
 
+			CompanyTestEntityResource companyTestEntityResource =
+				_createCompanyTestEntityResource(
+					new String[] {
+						"importStrategy", "ON_ERROR_CONTINUE", "updateStrategy",
+						"UPDATE"
+					});
+
 			_waitForFinish(
 				"COMPLETED", true,
 				JSONFactoryUtil.createJSONObject(
-					_createCompanyTestEntityResourceWithParameters(
-						new String[] {
-							"updateStrategy", "UPDATE", "importStrategy",
-							"ON_ERROR_CONTINUE"
-						}
-					).putCompanyTestEntityBatchHttpResponse(
-						null,
-						JSONUtil.putAll(
-							JSONFactoryUtil.createJSONObject(
-								String.valueOf(postCompanyTestEntity)),
-							JSONFactoryUtil.createJSONObject(
-								String.valueOf(
-									notExistingPostCompanyTestEntity)))
-					).getContent()));
+					companyTestEntityResource.
+						putCompanyTestEntityBatchHttpResponse(
+							null,
+							JSONUtil.putAll(
+								JSONFactoryUtil.createJSONObject(
+									postCompanyTestEntity.toString()),
+								JSONFactoryUtil.createJSONObject(
+									randomCompanyTestEntity.toString()))
+						).getContent()));
 		}
 
-		companyTestEntity = companyTestEntityResource.getCompanyTestEntity(
-			companyTestEntity.getId());
+		CompanyTestEntity actualCompanyTestEntity =
+			companyTestEntityResource.getCompanyTestEntity(
+				postCompanyTestEntity.getId());
 
 		Assert.assertEquals(
-			postCompanyTestEntity.getId(), companyTestEntity.getId());
-		Assert.assertEquals(
-			postCompanyTestEntity.getDescription(),
-			companyTestEntity.getDescription());
+			description, actualCompanyTestEntity.getDescription());
 	}
 
 	private void _testPostCompanyTestEntityBatch() throws Exception {
@@ -257,7 +243,7 @@ public class CompanyTestEntityResourceTest
 							null,
 							JSONUtil.putAll(
 								JSONFactoryUtil.createJSONObject(
-									String.valueOf(companyTestEntity)))
+									companyTestEntity.toString()))
 						).getContent()));
 		}
 	}

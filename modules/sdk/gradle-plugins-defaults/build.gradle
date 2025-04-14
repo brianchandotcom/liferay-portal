@@ -32,7 +32,7 @@ dependencies {
 	api group: "gradle.plugin.com.github.spotbugs.snom", name: "spotbugs-gradle-plugin", version: "4.0.0"
 	api group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-	implementation group: "jakarta.xml.bind", name: "jakarta.xml.bind-api", version: "2.3.2"
+	implementation group: "javax.xml.bind", name: "jaxb-api", version: "2.3.0"
 }
 
 processResources {

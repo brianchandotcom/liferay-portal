@@ -63,10 +63,6 @@
 						path: 'form.js',
 						requires: ['aui-base', 'aui-form-validator'],
 					},
-					'liferay-fullscreen-source-editor': {
-						path: 'fullscreen_source_editor.js',
-						requires: ['liferay-source-editor'],
-					},
 					'liferay-inline-editor-base': {
 						path: 'inline_editor_base.js',
 						requires: ['aui-base', 'aui-overlay-base-deprecated'],
@@ -191,10 +187,6 @@
 					'liferay-search-container-select': {
 						path: 'search_container_select.js',
 						requires: ['aui-component', 'aui-url', 'plugin'],
-					},
-					'liferay-source-editor': {
-						path: 'source_editor.js',
-						requires: ['aui-ace-editor'],
 					},
 					'liferay-translation-manager': {
 						path: 'translation_manager.js',

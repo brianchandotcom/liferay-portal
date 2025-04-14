@@ -263,7 +263,9 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 			'<portlet:namespace />toggleAddressFields',
 			function <portlet:namespace />toggleAddressFields(state) {
 				Liferay.Util.toggleDisabled(
-					document.querySelectorAll('.address-fields input'),
+					document.querySelectorAll(
+						'.address-fields input:not([type=hidden]'
+					),
 					state
 				);
 				Liferay.Util.toggleDisabled(

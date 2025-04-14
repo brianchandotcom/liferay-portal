@@ -37,6 +37,82 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 
 	@Override
+	public void
+			deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolderId);
+
+		CollaboratorUtil.deleteCollaborator(
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
+			CollaboratorUtil.getCollaboratorType(collaboratorType),
+			_sharingEntryService);
+	}
+
+	@Override
+	public void
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode,
+					CollaboratorUtil.getGroupId(
+						contextCompany.getCompanyId(), _groupLocalService,
+						scopeKey),
+					contextCompany.getCompanyId());
+
+		CollaboratorUtil.deleteCollaborator(
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
+			CollaboratorUtil.getCollaboratorType(collaboratorType),
+			_sharingEntryService);
+	}
+
+	@Override
+	public Collaborator
+			getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolderId);
+
+		return CollaboratorUtil.getCollaborator(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
+			CollaboratorUtil.getCollaboratorType(collaboratorType),
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			_sharingEntryService, contextUriInfo, contextUser);
+	}
+
+	@Override
 	public Page<Collaborator> getObjectEntryFolderCollaboratorsPage(
 			Long objectEntryFolderId, Pagination pagination)
 		throws Exception {
@@ -45,10 +121,49 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _getObjectEntryFolderCollaboratorsPage(
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.getObjectEntryFolder(
-				objectEntryFolderId),
-			pagination);
+				objectEntryFolderId);
+
+		return CollaboratorUtil.getCollaborators(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(),
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			objectEntryFolder.getGroupId(), pagination,
+			_sharingEntryLocalService, _sharingEntryService, contextUriInfo,
+			contextUser);
+	}
+
+	@Override
+	public Collaborator
+			getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode,
+					CollaboratorUtil.getGroupId(
+						contextCompany.getCompanyId(), _groupLocalService,
+						scopeKey),
+					contextCompany.getCompanyId());
+
+		return CollaboratorUtil.getCollaborator(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
+			CollaboratorUtil.getCollaboratorType(collaboratorType),
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			_sharingEntryService, contextUriInfo, contextUser);
 	}
 
 	@Override
@@ -62,15 +177,24 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _getObjectEntryFolderCollaboratorsPage(
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
 					externalReferenceCode,
 					CollaboratorUtil.getGroupId(
 						contextCompany.getCompanyId(), _groupLocalService,
 						scopeKey),
-					contextCompany.getCompanyId()),
-			pagination);
+					contextCompany.getCompanyId());
+
+		return CollaboratorUtil.getCollaborators(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(),
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			objectEntryFolder.getGroupId(), pagination,
+			_sharingEntryLocalService, _sharingEntryService, contextUriInfo,
+			contextUser);
 	}
 
 	@Override
@@ -82,10 +206,19 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _postObjectEntryFolderCollaboratorsPage(
-			collaborators,
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.getObjectEntryFolder(
-				objectEntryFolderId));
+				objectEntryFolderId);
+
+		return CollaboratorUtil.addOrUpdateCollaborators(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaborators,
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			objectEntryFolder.getGroupId(), _sharingEntryService,
+			contextUriInfo, contextUser, _userGroupLocalService,
+			_userLocalService);
 	}
 
 	@Override
@@ -99,52 +232,82 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _postObjectEntryFolderCollaboratorsPage(
-			collaborators,
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
 					externalReferenceCode,
 					CollaboratorUtil.getGroupId(
 						contextCompany.getCompanyId(), _groupLocalService,
 						scopeKey),
-					contextCompany.getCompanyId()));
-	}
-
-	private Page<Collaborator> _getObjectEntryFolderCollaboratorsPage(
-			ObjectEntryFolder objectEntryFolder, Pagination pagination)
-		throws Exception {
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			ObjectEntryFolder.class.getName());
-
-		return Page.of(
-			transform(
-				_sharingEntryService.getSharingEntries(
-					classNameId, objectEntryFolder.getObjectEntryFolderId(),
-					objectEntryFolder.getGroupId(),
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				sharingEntry -> CollaboratorUtil.toCollaborator(
-					contextAcceptLanguage, _collaboratorDTOConverter,
-					_dtoConverterRegistry, sharingEntry, contextUriInfo,
-					contextUser)),
-			pagination,
-			_sharingEntryLocalService.getSharingEntriesCount(
-				classNameId, objectEntryFolder.getObjectEntryFolderId()));
-	}
-
-	private Page<Collaborator> _postObjectEntryFolderCollaboratorsPage(
-			Collaborator[] collaborators, ObjectEntryFolder objectEntryFolder)
-		throws Exception {
+					contextCompany.getCompanyId());
 
 		return CollaboratorUtil.addOrUpdateCollaborators(
 			contextAcceptLanguage,
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaborators,
-			contextCompany.getCompanyId(), _collaboratorDTOConverter,
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			objectEntryFolder.getGroupId(), _sharingEntryService,
+			contextUriInfo, contextUser, _userGroupLocalService,
+			_userLocalService);
+	}
+
+	@Override
+	public Collaborator
+			putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId, Collaborator collaborator)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolderId);
+
+		return CollaboratorUtil.addOrUpdateCollaborator(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaborator,
+			collaboratorId, collaboratorType, _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
-			_sharingEntryService, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+			_sharingEntryService, _userGroupLocalService, contextUriInfo,
+			contextUser, _userLocalService);
+	}
+
+	@Override
+	public Collaborator
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId,
+				Collaborator collaborator)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode,
+					CollaboratorUtil.getGroupId(
+						contextCompany.getCompanyId(), _groupLocalService,
+						scopeKey),
+					contextCompany.getCompanyId());
+
+		return CollaboratorUtil.addOrUpdateCollaborator(
+			contextAcceptLanguage,
+			_classNameLocalService.getClassNameId(
+				ObjectEntryFolder.class.getName()),
+			objectEntryFolder.getObjectEntryFolderId(), collaborator,
+			collaboratorId, collaboratorType, _collaboratorDTOConverter,
+			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
+			_sharingEntryService, _userGroupLocalService, contextUriInfo,
+			contextUser, _userLocalService);
 	}
 
 	@Reference

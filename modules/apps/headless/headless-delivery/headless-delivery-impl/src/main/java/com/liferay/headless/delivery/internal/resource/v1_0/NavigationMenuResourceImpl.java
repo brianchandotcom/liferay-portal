@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,8 +35,11 @@ import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
@@ -47,6 +52,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -566,6 +572,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						return NavigationType.values()
 							[siteNavigationMenu.getType() - 1];
 					});
+				setPermissions(() -> _toPermissions(siteNavigationMenu));
 				setSiteId(siteNavigationMenu::getGroupId);
 			}
 		};
@@ -734,6 +741,29 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		};
 	}
 
+	private Permission[] _toPermissions(SiteNavigationMenu siteNavigationMenu)
+		throws Exception {
+
+		return NestedFieldsSupplier.supply(
+			"permissions",
+			nestedFieldNames -> {
+				_permissionService.checkPermission(
+					siteNavigationMenu.getGroupId(),
+					siteNavigationMenu.getModelClassName(),
+					siteNavigationMenu.getSiteNavigationMenuId());
+
+				Collection<Permission> permissions =
+					PermissionUtil.getPermissions(
+						siteNavigationMenu.getCompanyId(),
+						_resourceActionLocalService.getResourceActions(
+							siteNavigationMenu.getModelClassName()),
+						siteNavigationMenu.getSiteNavigationMenuId(),
+						siteNavigationMenu.getModelClassName(), null);
+
+				return permissions.toArray(new Permission[0]);
+			});
+	}
+
 	private String _toType(String type) {
 		if (type.equals("layout")) {
 			return "page";
@@ -863,7 +893,13 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

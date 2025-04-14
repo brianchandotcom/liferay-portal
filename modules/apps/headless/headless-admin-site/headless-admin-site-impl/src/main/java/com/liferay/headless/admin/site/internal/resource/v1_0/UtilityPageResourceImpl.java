@@ -197,12 +197,12 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
-		UtilityPageSettings utilityPageSettings =
-			utilityPage.getUtilityPageSettings();
-
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 		Map<Locale, String> descriptionMap = Collections.emptyMap();
+
+		UtilityPageSettings utilityPageSettings =
+			utilityPage.getUtilityPageSettings();
 
 		if ((utilityPageSettings != null) &&
 			(utilityPageSettings.getSeoSettings() != null)) {

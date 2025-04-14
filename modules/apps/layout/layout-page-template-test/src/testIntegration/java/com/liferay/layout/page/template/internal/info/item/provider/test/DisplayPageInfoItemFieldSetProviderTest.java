@@ -10,7 +10,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
+import com.liferay.friendly.url.test.util.FriendlyURLSeparatorConfigurationManagerTemporarySwapper;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
@@ -24,13 +24,11 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -47,7 +45,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -137,23 +134,16 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 
 		String customAssetFriendlyURLSeparator = "/custom-asset-test1";
 
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
+		try (FriendlyURLSeparatorConfigurationManagerTemporarySwapper
+				friendlyURLSeparatorConfigurationManagerTemporarySwapper =
+					new FriendlyURLSeparatorConfigurationManagerTemporarySwapper(
 						_group.getCompanyId(),
-						FriendlyURLSeparatorCompanyConfiguration.class.
-							getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"friendlyURLSeparatorsJSON",
-							JSONUtil.put(
-								JournalArticle.class.getName(),
-								"/journal-test1/"
-							).put(
-								"custom-asset-display-page",
-								customAssetFriendlyURLSeparator +
-									StringPool.SLASH
-							)
-						).build())) {
+						JSONUtil.put(
+							JournalArticle.class.getName(), "/journal-test1/"
+						).put(
+							"custom-asset-display-page",
+							customAssetFriendlyURLSeparator + StringPool.SLASH
+						).toString())) {
 
 			_assertInfoFieldValues(customAssetFriendlyURLSeparator);
 		}
@@ -348,10 +338,6 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 	private LayoutLocalService _layoutLocalService;
 
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

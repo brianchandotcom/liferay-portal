@@ -99,13 +99,19 @@ definition {
 
 	@summary = "Default summary"
 	macro openWorkspace(workspaceName = null) {
-		if (isSet(workspaceName)) {
+		var faroWorkspaceName = PropsUtil.get("analytics.cloud.faro.workspace.name");
+
+		if (${faroWorkspaceName} != "null") {
+			var key_workspaceName = ${faroWorkspaceName};
+
+			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
+		}
+		else if (isSet(workspaceName)) {
 			var key_workspaceName = ${workspaceName};
 
 			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
 		}
-
-		if (!(isSet(workspaceName))) {
+		else if (!(isSet(workspaceName))) {
 			Click(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE");
 		}
 

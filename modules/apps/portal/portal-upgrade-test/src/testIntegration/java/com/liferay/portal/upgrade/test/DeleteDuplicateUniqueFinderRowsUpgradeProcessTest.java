@@ -271,22 +271,15 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	private void _runUpgrade(
 			String tableName, String[] columns, String orderByClause)
-		throws Exception {
+			throws Exception {
 
-		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess = null;
-
-		if (orderByClause != null) {
-			upgradeProcess = new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-				tableName, columns, orderByClause);
-		}
-		else {
-			upgradeProcess = new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-				tableName, columns);
-		}
+		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess =
+				new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
+						tableName, columns, orderByClause);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DeleteDuplicateUniqueFinderRowsUpgradeProcess",
+						"DeleteDuplicateUniqueFinderRowsUpgradeProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();

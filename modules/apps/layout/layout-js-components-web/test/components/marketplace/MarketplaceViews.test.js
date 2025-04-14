@@ -19,6 +19,17 @@ const mockUseMarketplaceContext = {
 		fetchMarketplace: jest.fn(() =>
 			Promise.resolve({blob: () => new Blob(['test'])})
 		),
+		getPlacedOrder: jest.fn(() =>
+			Promise.resolve({
+				id: 'test-cart-id',
+				placedOrderItems: [
+					{
+						virtualItemURLs: ['/o/marketplace/file.lpkg'],
+						virtualItems: [{url: '/o/marketplace/file.lpkg'}],
+					},
+				],
+			})
+		),
 	},
 	modal: {onOpenChange: jest.fn()},
 	product: {

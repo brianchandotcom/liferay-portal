@@ -112,7 +112,8 @@ import {config as scimConfiguraitonWebConfig} from './tests/scim-configuration-w
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/config';
 import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/config';
 import {config as segmentsWebConfig} from './tests/segments-web/config';
-import {config as setAdminPassword} from './tests/set-admin-password/config';
+import {config as setAdminPasswordBlankPasswordPolicy} from './tests/set-admin-password/set-admin-password-blank-password-policy/config';
+import {config as setAdminPasswordBlank} from './tests/set-admin-password/set-admin-password-blank/config';
 import {
 	pageManagementSiteSetup,
 	pageManagementSiteTeardown,
@@ -255,7 +256,8 @@ export default defineConfig({
 		searchExperiencesWebConfig,
 		segmentExperimentWebConfig,
 		segmentsWebConfig,
-		setAdminPassword,
+		setAdminPasswordBlank,
+		setAdminPasswordBlankPasswordPolicy,
 		siteAdminWebConfig,
 		siteCmsSiteInitializerConfig,
 		siteNavigationAdminWebConfig,

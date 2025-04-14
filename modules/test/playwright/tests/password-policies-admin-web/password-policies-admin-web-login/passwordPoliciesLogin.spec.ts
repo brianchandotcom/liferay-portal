@@ -8,7 +8,7 @@ import {expect, test} from '@playwright/test';
 import {liferayConfig} from '../../../liferay.config';
 import {userData} from '../../../utils/performLogin';
 
-test('LPD-4254 Checking what is the first page load if the property is blank', async ({
+test('LPD-38816 Checking the user has to change the password if the password policy is enabled', async ({
 	page,
 }) => {
 	await page.goto(liferayConfig.environment.baseUrl);

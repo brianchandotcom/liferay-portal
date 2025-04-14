@@ -4,6 +4,7 @@
  */
 
 export const config = {
-	name: 'set-admin-password',
-	testDir: 'tests/set-admin-password',
+	name: 'set-admin-password-blank-password-policy',
+	testDir:
+		'tests/set-admin-password/set-admin-password-blank-password-policy',
 };

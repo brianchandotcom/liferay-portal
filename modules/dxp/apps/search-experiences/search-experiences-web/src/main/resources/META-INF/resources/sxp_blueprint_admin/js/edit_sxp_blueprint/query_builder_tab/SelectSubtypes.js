@@ -38,7 +38,7 @@ export function SearchableSubtypesModal({
 	selectedSubtypes,
 }) {
 	const [selected, setSelected] = useState(selectedSubtypes);
-	const [subtypes, setSubtypes] = useState({ddmStructures: []});
+	const [subtypes, setSubtypes] = useState({subtypeClasses: []});
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
@@ -68,22 +68,22 @@ export function SearchableSubtypesModal({
 		[selected]
 	);
 
-	const isInDDMStructures = useCallback(
+	const isInSubtypeClasses = useCallback(
 		(item) =>
-			subtypes.ddmStructures?.some(
+			subtypes.subtypeClasses?.some(
 				(subtypeItem) => subtypeItem.value === item.value
 			),
-		[subtypes.ddmStructures]
+		[subtypes.subtypeClasses]
 	);
 
 	const allSubtypesSelected = useMemo(
-		() => subtypes.ddmStructures?.every((item) => isSelected(item)),
-		[subtypes.ddmStructures, isSelected]
+		() => subtypes.subtypeClasses?.every((item) => isSelected(item)),
+		[subtypes.subtypeClasses, isSelected]
 	);
 
 	const indeterminateSelected = useMemo(
-		() => !allSubtypesSelected && subtypes.ddmStructures?.some(isSelected),
-		[allSubtypesSelected, isSelected, subtypes.ddmStructures]
+		() => !allSubtypesSelected && subtypes.subtypeClasses?.some(isSelected),
+		[allSubtypesSelected, isSelected, subtypes.subtypeClasses]
 	);
 
 	const _handleSelect = (item) => () => {
@@ -102,14 +102,16 @@ export function SearchableSubtypesModal({
 	const _handleSelectAll = () => {
 		setSelected(
 			allSubtypesSelected
-				? selected.filter((item) => !isInDDMStructures(item))
+				? selected.filter((item) => !isInSubtypeClasses(item))
 				: removeDuplicates(
 						[
 							...selected,
-							...subtypes.ddmStructures.map(({label, value}) => ({
-								label,
-								value,
-							})),
+							...subtypes.subtypeClasses.map(
+								({label, value}) => ({
+									label,
+									value,
+								})
+							),
 						],
 						'value'
 					)
@@ -140,7 +142,7 @@ export function SearchableSubtypesModal({
 					.then((items) => {
 						setSubtypes({
 							...items,
-							ddmStructures: items.subtypeClasses?.map(
+							subtypeClasses: items.subtypeClasses?.map(
 								(subtype) => ({
 									...subtype,
 									label: getLabel(subtype),
@@ -316,7 +318,7 @@ export function SearchableSubtypesModal({
 						</Head>
 
 						<Body>
-							{subtypes.ddmStructures.map((item) => {
+							{subtypes.subtypeClasses.map((item) => {
 								return (
 									<Row
 										key={item.value}
@@ -369,7 +371,8 @@ export function SearchableSubtypesModal({
 						onActiveChange={_handlePageChange}
 						onDeltaChange={_handlePageSizeChange}
 						totalItems={
-							subtypes.totalCount || subtypes.ddmStructures.length
+							subtypes.totalCount ||
+							subtypes.subtypeClasses.length
 						}
 					/>
 				</ClayModal.Body>

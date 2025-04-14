@@ -29,10 +29,10 @@ const getSelectedSubtypes = (selected, className) => {
  * state and allows for easier manipulation of the data.
  *
  * @param {*} initialSelectedTypes
- * @param {*} ddmStructureMap
+ * @param {*} subtypeClassesMap
  * @returns {array}
  */
-const setupSelected = (initialSelectedTypes, ddmStructureMap = {}) => {
+const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
 	const selected = [];
 
 	initialSelectedTypes.forEach((item) => {
@@ -52,7 +52,7 @@ const setupSelected = (initialSelectedTypes, ddmStructureMap = {}) => {
 				const subtypesArray = selected[itemIndex].subtypes || [];
 
 				subtypesArray.push({
-					label: ddmStructureMap[item] || item,
+					label: subtypeClassesMap[item] || item,
 					value: item,
 				});
 
@@ -64,7 +64,7 @@ const setupSelected = (initialSelectedTypes, ddmStructureMap = {}) => {
 			else {
 				selected.push({
 					subtypes: [
-						{label: ddmStructureMap[item] || item, value: item},
+						{label: subtypeClassesMap[item] || item, value: item},
 					],
 					type: typeClassName,
 				});
@@ -98,17 +98,17 @@ const transformSelected = (newSelected) => {
 };
 
 function SelectTypes({
-	onDDMStructureMapChange,
+	onSubtypeClassesMapChange,
 	onFrameworkConfigChange,
 	onFetchSearchableTypes,
 	searchableTypes = [],
 	initialSelectedTypes = [],
-	ddmStructureMap,
+	subtypeClassesMap,
 }) {
 	const {locale} = useContext(ThemeContext);
 
 	const [selected, setSelected] = useState(
-		setupSelected(initialSelectedTypes, ddmStructureMap)
+		setupSelected(initialSelectedTypes, subtypeClassesMap)
 	);
 
 	const mainSearchableTypesSorted = searchableTypes.sort((a, b) =>
@@ -148,9 +148,9 @@ function SelectTypes({
 		_handleChangeSelected(newSelected);
 
 		// If any new subtypes are in this array, they should be
-		// added to the ddmStructure map.
+		// added to the subtypeClassesMap.
 
-		onDDMStructureMapChange(subtypes);
+		onSubtypeClassesMapChange(subtypes);
 	};
 
 	const _handleChangeTypes = (types) => {

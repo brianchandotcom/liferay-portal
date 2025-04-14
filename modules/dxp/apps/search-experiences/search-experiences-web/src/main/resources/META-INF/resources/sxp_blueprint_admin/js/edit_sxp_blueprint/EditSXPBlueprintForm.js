@@ -32,7 +32,7 @@ import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
-import mapDDMStructures from '../utils/functions/map_ddm_structures';
+import mapSubtypeClasses from '../utils/functions/map_subtype_classes';
 import traverseAndEncodeJSONStrings from '../utils/functions/traverse_and_encode_json_strings';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
@@ -122,10 +122,10 @@ function EditSXPBlueprintForm({
 			resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
 		});
 
-	const {data: ddmStructureMap, onChangeData: setDDMStructureMap} =
+	const {data: subtypeClassesMap, onChangeData: setSubtypeClassesMap} =
 		useFetchData({
 			defaultValue: {},
-			getData: (response) => mapDDMStructures(response?.subtypeClasses),
+			getData: (response) => mapSubtypeClasses(response?.subtypeClasses),
 			resource: addParams(fetchSubtypeClassesURL, {
 				[`${namespace}cmd`]: 'getSubtypeClassesInfo',
 				[`${namespace}subTypeIdentifiers`]: (
@@ -864,19 +864,19 @@ function EditSXPBlueprintForm({
 	};
 
 	/**
-	 * Adds new ddmStructures to the ddmStructure map in order to easily find
+	 * Adds new subtypeClasses to the subtypeClasses map in order to easily find
 	 * their label. This is called when updating searchableAssetTypes
 	 * selection.
 	 * @param {array} subtypes
 	 */
-	const _handleDDMStructureMapChange = (subtypes) => {
-		const newDDMStructureMap = {};
+	const _handleSubtypeClassesMapChange = (subtypes) => {
+		const newSubtypeClassesMap = {};
 
 		subtypes.forEach(({label, value}) => {
-			newDDMStructureMap[value] = label;
+			newSubtypeClassesMap[value] = label;
 		});
 
-		setDDMStructureMap({...ddmStructureMap, ...newDDMStructureMap});
+		setSubtypeClassesMap({...subtypeClassesMap, ...newSubtypeClassesMap});
 	};
 
 	const _handleTabChange = (tab) => {
@@ -1025,7 +1025,6 @@ function EditSXPBlueprintForm({
 									...modelPrefilterContributors,
 									...queryPrefilterContributors,
 								]}
-								ddmStructureMap={ddmStructureMap}
 								elementInstances={
 									formik.values.elementInstances
 								}
@@ -1042,19 +1041,20 @@ function EditSXPBlueprintForm({
 								}
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
-								onDDMStructureMapChange={
-									_handleDDMStructureMapChange
-								}
 								onDeleteSXPElement={_handleDeleteSXPElement}
 								onFetchSearchableTypes={refetchSearchableTypes}
 								onFrameworkConfigChange={
 									_handleFrameworkConfigChange
+								}
+								onSubtypeClassesMapChange={
+									_handleSubtypeClassesMapChange
 								}
 								openSidebar={openSidebar}
 								searchableTypes={searchableTypes?.items}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								setOpenSidebar={setOpenSidebar}
+								subtypeClassesMap={subtypeClassesMap}
 								touched={formik.touched.elementInstances}
 							/>
 						</div>

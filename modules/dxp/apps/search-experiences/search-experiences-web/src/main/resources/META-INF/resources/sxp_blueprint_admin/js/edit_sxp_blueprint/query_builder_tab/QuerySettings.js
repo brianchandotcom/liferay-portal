@@ -22,16 +22,16 @@ const QUERY_CONTRIBUTORS_OPTIONS = {
 function QuerySettings({
 	applyIndexerClauses,
 	clauseContributorsList,
-	ddmStructureMap,
 	frameworkConfig,
 	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
 	onChangeIndexerClausesHelpVisibility,
 	onChangeQueryContributorsHelpVisibility,
-	onDDMStructureMapChange,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
+	onSubtypeClassesMapChange,
 	searchableTypes,
+	subtypeClassesMap,
 }) {
 	const [selectAllTypes, setSelectAllTypes] = useState(
 		frameworkConfig.searchableAssetTypes?.length === 0
@@ -132,12 +132,8 @@ function QuerySettings({
 									</div>
 
 									<SelectTypes
-										ddmStructureMap={ddmStructureMap}
 										initialSelectedTypes={
 											frameworkConfig.searchableAssetTypes
-										}
-										onDDMStructureMapChange={
-											onDDMStructureMapChange
 										}
 										onFetchSearchableTypes={
 											onFetchSearchableTypes
@@ -145,7 +141,11 @@ function QuerySettings({
 										onFrameworkConfigChange={
 											onFrameworkConfigChange
 										}
+										onSubtypeClassesMapChange={
+											onSubtypeClassesMapChange
+										}
 										searchableTypes={searchableTypes}
+										subtypeClassesMap={subtypeClassesMap}
 									/>
 								</>
 							)}

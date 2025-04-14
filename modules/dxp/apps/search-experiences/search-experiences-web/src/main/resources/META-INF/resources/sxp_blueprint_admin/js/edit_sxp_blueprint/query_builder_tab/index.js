@@ -34,16 +34,16 @@ function QueryBuilderTab({
 	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
-	onDDMStructureMapChange,
 	onDeleteSXPElement,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
+	onSubtypeClassesMapChange,
 	searchableTypes = [],
 	setFieldTouched,
 	setFieldValue,
-	ddmStructureMap,
 	openSidebar,
 	setOpenSidebar,
+	subtypeClassesMap,
 	touched = [],
 }) {
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
@@ -169,7 +169,6 @@ function QueryBuilderTab({
 									clauseContributorsList={
 										clauseContributorsList
 									}
-									ddmStructureMap={ddmStructureMap}
 									frameworkConfig={frameworkConfig}
 									onApplyIndexerClausesChange={
 										onApplyIndexerClausesChange
@@ -183,16 +182,17 @@ function QueryBuilderTab({
 									onChangeQueryContributorsHelpVisibility={_handleChangeSidebarVisibility(
 										SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP
 									)}
-									onDDMStructureMapChange={
-										onDDMStructureMapChange
-									}
 									onFetchSearchableTypes={
 										onFetchSearchableTypes
 									}
 									onFrameworkConfigChange={
 										onFrameworkConfigChange
 									}
+									onSubtypeClassesMapChange={
+										onSubtypeClassesMapChange
+									}
 									searchableTypes={searchableTypes}
+									subtypeClassesMap={subtypeClassesMap}
 								/>
 							)}
 						</div>
@@ -206,7 +206,6 @@ function QueryBuilderTab({
 QueryBuilderTab.propTypes = {
 	applyIndexerClauses: PropTypes.bool,
 	clauseContributorsList: PropTypes.arrayOf(PropTypes.string),
-	ddmStructureMap: PropTypes.object,
 	elementInstances: PropTypes.arrayOf(PropTypes.object),
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
@@ -217,15 +216,16 @@ QueryBuilderTab.propTypes = {
 	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,
-	onDDMStructureMapChange: PropTypes.func,
 	onDeleteSXPElement: PropTypes.func,
 	onFetchSearchableTypes: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
+	onSubtypeClassesMapChange: PropTypes.func,
 	openSidebar: PropTypes.string,
 	searchableTypes: PropTypes.arrayOf(PropTypes.object),
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	setOpenSidebar: PropTypes.func,
+	subtypeClassesMap: PropTypes.object,
 	touched: PropTypes.arrayOf(PropTypes.object),
 };
 

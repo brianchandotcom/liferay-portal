@@ -58,3 +58,84 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'Currency changes based on price lists',
+	{tag: '@LPD-52938'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const currencies =
+			await apiHelpers.headlessCommerceAdminCatalog.getCurrenciesPage('');
+
+		const currencyEUR = currencies.items.find(
+			(item) => item.name['en_US'] === 'Euro'
+		);
+		const currencyUSD = currencies.items.find(
+			(item) => item.name['en_US'] === 'US Dollar'
+		);
+
+		const priceListEUR =
+			await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+				catalogId: catalog.id,
+				currencyCode: currencyEUR.code,
+				name: 'EUR-pl',
+				type: 'price-list',
+			});
+		const priceListUSD =
+			await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+				catalogId: catalog.id,
+				currencyCode: currencyUSD.code,
+				name: 'USD-pl',
+				type: 'price-list',
+			});
+
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+		await commerceAdminProductDetailsPage.goToProductSkus();
+
+		await commerceAdminProductDetailsSkusPage
+			.skusTableRowLink(`${productSkus[0].sku}`)
+			.click();
+		await commerceAdminProductDetailsSkusPage.goToSkuPrice();
+		await commerceAdminProductDetailsSkusPage.skuPriceAddButton.click();
+		await commerceAdminProductDetailsSkusPage.skuPriceListSelect.selectOption(
+			priceListEUR.name
+		);
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.skuPriceAddModal.getByText(
+				'EUR',
+				{exact: true}
+			)
+		).toBeVisible();
+
+		await commerceAdminProductDetailsSkusPage.skuPriceListSelect.selectOption(
+			priceListUSD.name
+		);
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.skuPriceAddModal.getByText(
+				'USD',
+				{exact: true}
+			)
+		).toBeVisible();
+	}
+);

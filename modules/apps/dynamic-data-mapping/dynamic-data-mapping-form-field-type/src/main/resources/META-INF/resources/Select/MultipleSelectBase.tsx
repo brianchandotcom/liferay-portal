@@ -38,6 +38,18 @@ const MultipleSelectBase = ({
 		'aria-required': required,
 	};
 
+	const messages = {
+		hotkeys: Liferay.Language.get(
+			'press-backspace-to-delete-the-current-row'
+		),
+		labelAdded: Liferay.Language.get('label-x-added-to-the-list'),
+		labelRemoved: Liferay.Language.get('label-x-removed-to-the-list'),
+		listCount: Liferay.Language.get('x-option-available'),
+		listCountPlural: Liferay.Language.get('x-options-available'),
+		loading: `${Liferay.Language.get('loading')}...`,
+		notFound: `${Liferay.Language.get('no-results-found')}.`,
+	};
+
 	useEffect(() => {
 		const newItems = options.filter((option) => {
 			if (values?.includes(option.value)) {
@@ -56,6 +68,7 @@ const MultipleSelectBase = ({
 					clearAllTitle={Liferay.Language.get('clear-all')}
 					disabled={readOnly}
 					items={items}
+					messages={messages}
 					onItemsChange={(itemsChanged: MultiSelectItem[]) => {
 						const uniqueItems = [
 							...new Set(itemsChanged.map((item) => item.value)),

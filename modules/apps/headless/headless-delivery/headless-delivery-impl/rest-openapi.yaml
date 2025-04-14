@@ -3457,6 +3457,10 @@ components:
                         The navigation menu's type (primary, secondary, social).
                     enum: [Primary, Secondary, Social]
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 siteId:
                     # @review
                     description:

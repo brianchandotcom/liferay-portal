@@ -658,13 +658,17 @@ test(
 			surname: userAccount.familyName,
 		};
 
-		for (let i = 1; i < 7; i++) {
+		const accounts = [];
+
+		for (let i = 1; i <= 21; i++) {
 			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: `Account ${i}`,
+				name: `Account ${String(i).padStart(2, '0')}`,
 				type: 'business',
 			});
 
 			apiHelpers.data.push({id: account.id, type: 'account'});
+
+			accounts.push(account);
 
 			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 				account.id,
@@ -696,53 +700,41 @@ test(
 
 		await page.waitForLoadState('domcontentloaded');
 
-		await setItemsPerPage(page, '4');
+		await setItemsPerPage(page, 20);
 
-		await expect(
-			page.getByText('Showing 1 to 4 of 6 entries.', {exact: true})
-		).toBeVisible();
-
-		for (let i = 1; i < 7; i++) {
-			if (i < 5) {
+		for (const [index, account] of accounts.entries()) {
+			if (index < 20) {
 				await expect(
-					accountManagementWidgetPage.accountCell(`Account ${i}`)
+					accountManagementWidgetPage.accountCell(account.name)
 				).toBeVisible();
 			}
 			else {
 				await expect(
-					accountManagementWidgetPage.accountCell(`Account ${i}`)
-				).not.toBeVisible();
+					accountManagementWidgetPage.accountCell(account.name)
+				).toHaveCount(0);
 			}
 		}
 
 		await nextPage(page);
 
-		await expect(
-			page.getByText('Showing 5 to 6 of 6 entries.')
-		).toBeVisible();
-
-		for (let i = 1; i < 7; i++) {
-			if (i < 5) {
+		for (const [index, account] of accounts.entries()) {
+			if (index < 20) {
 				await expect(
-					accountManagementWidgetPage.accountCell(`Account ${i}`)
-				).not.toBeVisible();
+					accountManagementWidgetPage.accountCell(account.name)
+				).toHaveCount(0);
 			}
 			else {
 				await expect(
-					accountManagementWidgetPage.accountCell(`Account ${i}`)
+					accountManagementWidgetPage.accountCell(account.name)
 				).toBeVisible();
 			}
 		}
 
-		await setItemsPerPage(page, '8');
+		await setItemsPerPage(page, '40');
 
-		await expect(
-			page.getByText('Showing 1 to 6 of 6 entries.')
-		).toBeVisible();
-
-		for (let i = 1; i < 7; i++) {
+		for (const account of accounts) {
 			await expect(
-				accountManagementWidgetPage.accountCell(`Account ${i}`)
+				accountManagementWidgetPage.accountCell(account.name)
 			).toBeVisible();
 		}
 	}

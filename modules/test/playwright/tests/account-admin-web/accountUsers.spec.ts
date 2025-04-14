@@ -351,10 +351,10 @@ test(
 
 		const users = [];
 
-		for (let i = 1; i <= 5; i++) {
+		for (let i = 1; i <= 21; i++) {
 			users.push(
 				await apiHelpers.headlessAdminUser.postUserAccount({
-					familyName: `A User ${i}`,
+					familyName: `A User ${String(i).padStart(2, '0')}`,
 				})
 			);
 		}
@@ -367,10 +367,10 @@ test(
 		await accountUsersPage.usersTable.newButton.click();
 		await accountUsersPage.assignUserMenuItem.click();
 
-		await setItemsPerPage(accountUserSelectorPage.frame, 4);
+		await setItemsPerPage(accountUserSelectorPage.frame, 20);
 
 		for (const [index, user] of users.entries()) {
-			if (index < 4) {
+			if (index < 20) {
 				await expect(
 					accountUserSelectorPage.usersTable.cell(user.name)
 				).toBeVisible();
@@ -385,7 +385,7 @@ test(
 		await nextPage(accountUserSelectorPage.frame);
 
 		for (const [index, user] of users.entries()) {
-			if (index < 4) {
+			if (index < 20) {
 				await expect(
 					accountUserSelectorPage.usersTable.cell(user.name)
 				).toHaveCount(0);
@@ -1778,9 +1778,9 @@ test(
 
 		const users: Array<TUserAccount> = [];
 
-		for (let i = 1; i < 6; i++) {
+		for (let i = 1; i <= 21; i++) {
 			const user = await apiHelpers.headlessAdminUser.postUserAccount({
-				familyName: `${i} ${getRandomString()}`,
+				familyName: `${String(i).padStart(2, '0')} ${getRandomString()}`,
 			});
 
 			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
@@ -1793,10 +1793,10 @@ test(
 
 		await accountUsersPage.goto();
 
-		await setItemsPerPage(page, 4);
+		await setItemsPerPage(page, 20);
 
 		for (const [index, user] of users.entries()) {
-			if (index < 4) {
+			if (index < 20) {
 				await expect(
 					accountUsersPage.usersTable.cell(user.emailAddress)
 				).toBeVisible();
@@ -1811,7 +1811,7 @@ test(
 		await nextPage(page);
 
 		for (const [index, user] of users.entries()) {
-			if (index < 4) {
+			if (index < 20) {
 				await expect(
 					accountUsersPage.usersTable.cell(user.emailAddress)
 				).toHaveCount(0);
@@ -1823,7 +1823,7 @@ test(
 			}
 		}
 
-		await setItemsPerPage(page, 20);
+		await setItemsPerPage(page, 40);
 
 		for (const user of users) {
 			await expect(

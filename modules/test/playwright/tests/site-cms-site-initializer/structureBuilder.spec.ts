@@ -10,6 +10,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
@@ -440,3 +441,56 @@ test.describe('Frontend validations', () => {
 		}
 	);
 });
+
+test(
+	'Create a picklist from the structure builder by opening other tab',
+	{tag: '@LPD-52544'},
+	async ({context, page, picklistBuilderPage, structureBuilderPage}) => {
+
+		// Go to the Structure Builder
+
+		await structureBuilderPage.goto();
+
+		// Add a Single Select field and select it
+
+		await structureBuilderPage.addField('Single Select');
+
+		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+
+		// Create new picklist from the button "New Picklist"
+
+		const pagePromise = context.waitForEvent('page');
+
+		await page.getByText('New Picklist').click();
+
+		const newPage = await pagePromise;
+
+		// The picklist builder opens in a new tab
+
+		await expect(
+			newPage.getByRole('heading', {name: 'New Picklist'})
+		).toBeAttached();
+
+		// Change the picklist name
+
+		await newPage.getByLabel('Picklist Name').fill('Plants');
+
+		// Save the picklist
+
+		await newPage.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(newPage, 'Success:Plants was saved successfully.');
+
+		// Try to select the new picklist in the structure builder
+
+		await structureBuilderPage.changeFieldSettings({
+			picklist: 'Plants',
+		});
+
+		// Delete picklist
+
+		const picklist = await picklistBuilderPage.getPicklist('Plants');
+
+		await picklistBuilderPage.deletePicklist(picklist.id);
+	}
+);

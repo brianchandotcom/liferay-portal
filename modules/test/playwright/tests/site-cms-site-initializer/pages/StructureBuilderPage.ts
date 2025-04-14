@@ -120,7 +120,12 @@ export class StructureBuilderPage {
 			const labelInput = this.page.getByLabel('Picklist');
 
 			await labelInput.click();
-			await this.page.getByRole('option', {name: picklist}).click();
+
+			const option = this.page.getByRole('option', {name: picklist});
+
+			await option.waitFor();
+
+			await option.click();
 		}
 
 		const localizableToggle = this.page.getByLabel('Localizable');

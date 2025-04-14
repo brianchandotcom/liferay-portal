@@ -564,7 +564,7 @@
 	"the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria": "要求された検索はデータベースに存在しません。 別の条件でもう一度お試しください。",
 	"the-start-date-must-be-less-than": "The start date must be less than 30 days ago.",
 	"the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets": "サポートシート数の上限には管理者または申請者ロールを持つユーザーの合計数が考慮されます。管理者と申請者はサポートチケットを開く権限があります。 ",
-	"the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details": "目標のGo Live日 {0} が過ぎました。このビジネスイベントをクローズするか、イベントの詳細を更新してください。",
+	"the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details": "目標のGo Live日 {0} が過ぎました。{1}このビジネスイベントをクローズする{2}か、{3}イベントの詳細を更新してください{4}。",
 	"the-workspace-host-most-not-have-spaces": "ワークスペースのホストにはスペースを含めないでください。",
 	"the-workspace-host-must-not-have-spaces": "ワークスペースのホストにはスペースを含めないでください。",
 	"the-workspace-url-most-not-have-spaces": "ワークスペースの URL にはスペースを含めないでください。",

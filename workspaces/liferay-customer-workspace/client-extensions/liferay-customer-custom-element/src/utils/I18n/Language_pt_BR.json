@@ -564,7 +564,7 @@
 	"the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria": "A busca solicitada não existe em nosso banco de dados. Por favor, tente novamente com critérios diferentes.",
 	"the-start-date-must-be-less-than": "The start date must be less than 30 days ago.",
 	"the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets": "O limite de Cargos de suporte conta o total de usuários com a função de Administradores ou Requerentes. Os Administradores e Requerentes possuem permissões para abrir tíquetes de suporte. ",
-	"the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details": "A data alvo de Go Live de {0} já passou. Por favor, encerre este Evento de Negócio ou atualize os Detalhes do Evento.",
+	"the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details": "A data alvo de Go Live de {0} já passou. Por favor, {1}encerre este Evento de Negócio{2} ou {3}atualize os Detalhes do Evento{4}.",
 	"the-workspace-host-most-not-have-spaces": "O Host do ambiente de trabalho não deve ter espaços.",
 	"the-workspace-host-must-not-have-spaces": "O Host do ambiente de trabalho não deve ter espaços.",
 	"the-workspace-url-most-not-have-spaces": "O URL do ambiente de trabalho não deve ter espaços.",

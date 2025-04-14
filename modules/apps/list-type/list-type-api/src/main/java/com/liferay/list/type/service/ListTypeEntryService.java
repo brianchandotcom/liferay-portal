@@ -46,7 +46,7 @@ public interface ListTypeEntryService extends BaseService {
 	 */
 	public ListTypeEntry addListTypeEntry(
 			String externalReferenceCode, long listTypeDefinitionId, String key,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, boolean system)
 		throws PortalException;
 
 	public ListTypeEntry deleteListTypeEntry(long listTypeEntryId)

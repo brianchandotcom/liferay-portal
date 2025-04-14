@@ -33,11 +33,11 @@ public class ListTypeEntryServiceUtil {
 	 */
 	public static ListTypeEntry addListTypeEntry(
 			String externalReferenceCode, long listTypeDefinitionId, String key,
-			Map<java.util.Locale, String> nameMap)
+			Map<java.util.Locale, String> nameMap, boolean system)
 		throws PortalException {
 
 		return getService().addListTypeEntry(
-			externalReferenceCode, listTypeDefinitionId, key, nameMap);
+			externalReferenceCode, listTypeDefinitionId, key, nameMap, system);
 	}
 
 	public static ListTypeEntry deleteListTypeEntry(long listTypeEntryId)

@@ -47,6 +47,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),

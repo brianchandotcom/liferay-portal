@@ -9,6 +9,8 @@ import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -20,9 +22,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 
 import java.util.ArrayList;
@@ -37,9 +41,29 @@ import javax.ws.rs.core.UriInfo;
  */
 public class CollaboratorUtil {
 
+	public static Collaborator addOrUpdateCollaborator(
+			AcceptLanguage acceptLanguage, long classNameId, long classPK,
+			Collaborator collaborator, long collaboratorId,
+			String collaboratorType,
+			DTOConverter<SharingEntry, Collaborator> dtoConverter,
+			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			SharingEntryService sharingEntryService,
+			UserGroupLocalService userGroupLocalService, UriInfo uriInfo,
+			User user, UserLocalService userLocalService)
+		throws Exception {
+
+		return toCollaborator(
+			acceptLanguage, dtoConverter, dtoConverterRegistry,
+			_addOrUpdateSharingEntry(
+				classNameId, classPK, collaborator, collaboratorId,
+				getCollaboratorType(collaboratorType), groupId,
+				sharingEntryService, userGroupLocalService, userLocalService),
+			uriInfo, user);
+	}
+
 	public static Page<Collaborator> addOrUpdateCollaborators(
 			AcceptLanguage acceptLanguage, long classNameId, long classPK,
-			Collaborator[] collaborators, long companyId,
+			Collaborator[] collaborators,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry, long groupId,
 			SharingEntryService sharingEntryService, UriInfo uriInfo, User user,
@@ -58,8 +82,9 @@ public class CollaboratorUtil {
 
 		for (Collaborator collaborator : collaborators) {
 			SharingEntry sharingEntry = _addOrUpdateSharingEntry(
-				classNameId, classPK, collaborator, companyId, groupId,
-				sharingEntryService, userGroupLocalService, userLocalService);
+				classNameId, classPK, collaborator, collaborator.getId(),
+				collaborator.getType(), groupId, sharingEntryService,
+				userGroupLocalService, userLocalService);
 
 			newSharingEntries.add(sharingEntry);
 			sharingEntriesIds.add(sharingEntry.getSharingEntryId());
@@ -77,6 +102,89 @@ public class CollaboratorUtil {
 				sharingEntry -> toCollaborator(
 					acceptLanguage, dtoConverter, dtoConverterRegistry,
 					sharingEntry, uriInfo, user)));
+	}
+
+	public static void deleteCollaborator(
+			long classNameId, long classPK, Long collaboratorId,
+			Collaborator.Type collaboratorType,
+			SharingEntryService sharingEntryService)
+		throws Exception {
+
+		if (Objects.equals(Collaborator.Type.USER, collaboratorType)) {
+			sharingEntryService.deleteSharingEntry(
+				0, collaboratorId, classNameId, classPK);
+		}
+		else {
+			sharingEntryService.deleteSharingEntry(
+				collaboratorId, 0, classNameId, classPK);
+		}
+	}
+
+	public static Collaborator getCollaborator(
+			AcceptLanguage acceptLanguage, long classNameId, long classPK,
+			Long collaboratorId, Collaborator.Type collaboratorType,
+			DTOConverter<SharingEntry, Collaborator> dtoConverter,
+			DTOConverterRegistry dtoConverterRegistry,
+			SharingEntryService sharingEntryService, UriInfo uriInfo, User user)
+		throws Exception {
+
+		if (Objects.equals(Collaborator.Type.USER, collaboratorType)) {
+			return toCollaborator(
+				acceptLanguage, dtoConverter, dtoConverterRegistry,
+				sharingEntryService.getSharingEntry(
+					0, collaboratorId, classNameId, classPK),
+				uriInfo, user);
+		}
+
+		return toCollaborator(
+			acceptLanguage, dtoConverter, dtoConverterRegistry,
+			sharingEntryService.getSharingEntry(
+				collaboratorId, 0, classNameId, classPK),
+			uriInfo, user);
+	}
+
+	public static Page<Collaborator> getCollaborators(
+			AcceptLanguage acceptLanguage, long classNameId, long classPK,
+			DTOConverter<SharingEntry, Collaborator> dtoConverter,
+			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			Pagination pagination,
+			SharingEntryLocalService sharingEntryLocalService,
+			SharingEntryService sharingEntryService, UriInfo uriInfo, User user)
+		throws Exception {
+
+		return Page.of(
+			TransformUtil.transform(
+				sharingEntryService.getSharingEntries(
+					classNameId, classPK, groupId,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				sharingEntry -> toCollaborator(
+					acceptLanguage, dtoConverter, dtoConverterRegistry,
+					sharingEntry, uriInfo, user)),
+			pagination,
+			sharingEntryLocalService.getSharingEntriesCount(
+				classNameId, classPK));
+	}
+
+	public static Collaborator.Type getCollaboratorType(
+		String collaboratorType) {
+
+		Collaborator.Type collaboratorTypeEnum = null;
+
+		try {
+			collaboratorTypeEnum = Collaborator.Type.create(collaboratorType);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalArgumentException);
+			}
+		}
+
+		if (collaboratorTypeEnum == null) {
+			throw new IllegalArgumentException(
+				"CollaboratorType parameter must be 'User' or 'UserGroup'");
+		}
+
+		return collaboratorTypeEnum;
 	}
 
 	public static long getGroupId(
@@ -115,8 +223,8 @@ public class CollaboratorUtil {
 
 	private static SharingEntry _addOrUpdateSharingEntry(
 			long classNameId, long classPK, Collaborator collaborator,
-			long companyId, long groupId,
-			SharingEntryService sharingEntryService,
+			long collaboratorId, Collaborator.Type collaboratorType,
+			long groupId, SharingEntryService sharingEntryService,
 			UserGroupLocalService userGroupLocalService,
 			UserLocalService userLocalService)
 		throws Exception {
@@ -124,18 +232,14 @@ public class CollaboratorUtil {
 		long toUserGroupId = 0;
 		long toUserId = 0;
 
-		if (Objects.equals(
-				Collaborator.Type.USER_GROUP, collaborator.getType())) {
-
-			UserGroup userGroup =
-				userGroupLocalService.getUserGroupByExternalReferenceCode(
-					collaborator.getExternalReferenceCode(), companyId);
+		if (Objects.equals(Collaborator.Type.USER_GROUP, collaboratorType)) {
+			UserGroup userGroup = userGroupLocalService.getUserGroup(
+				collaboratorId);
 
 			toUserGroupId = userGroup.getUserGroupId();
 		}
 		else {
-			User user = userLocalService.getUserByExternalReferenceCode(
-				collaborator.getExternalReferenceCode(), companyId);
+			User user = userLocalService.getUser(collaboratorId);
 
 			toUserId = user.getUserId();
 		}
@@ -154,5 +258,8 @@ public class CollaboratorUtil {
 				SharingEntryAction::parseFromActionId),
 			collaborator.getDateExpired(), new ServiceContext());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CollaboratorUtil.class.getName());
 
 }

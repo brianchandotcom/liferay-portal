@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <Configuration strict="true">
-    <Loggers>
-        <Logger level="ERROR" name="com.amazonaws.util.Base64" />
-        <Logger level="ERROR" name="com.ibm.cloud.objectstorage.util.Base64" />
-    </Loggers>
+	<Loggers>
+		<Logger level="ERROR" name="com.amazonaws.util.Base64" />
+		<Logger level="ERROR" name="com.ibm.cloud.objectstorage.util.Base64" />
+	</Loggers>
 </Configuration>

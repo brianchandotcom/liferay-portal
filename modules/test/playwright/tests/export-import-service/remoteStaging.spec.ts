@@ -19,6 +19,7 @@ import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTes
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
+import { pageViewModePagesTest } from '../../fixtures/pageViewModePagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -32,6 +33,7 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	pagesPagesTest,
+	pageViewModePagesTest,
 	productMenuPageTest,
 	remoteStagingPagesTest,
 	uiElementsPageTest,
@@ -49,6 +51,7 @@ test(
 		remoteStagingPage,
 		uiElementsPage,
 		webContentDisplayPage,
+		widgetPagePage,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site Name',
@@ -93,9 +96,9 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 		await uiElementsPage.addButton.click();
-		await pageEditorPage.addWidgetToWidgetPageTemplate(
-			'Content Management',
-			'Web Content Display'
+		await widgetPagePage.addPortlet(
+			'Web Content Display',
+			'Content Management'
 		);
 		await webContentDisplayPage.addWebContentWithDisplay({
 			pageType: 'widget',

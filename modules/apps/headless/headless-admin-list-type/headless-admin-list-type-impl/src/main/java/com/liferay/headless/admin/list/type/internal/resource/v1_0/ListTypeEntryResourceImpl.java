@@ -14,6 +14,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -176,7 +177,8 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 				listTypeEntry.getKey(),
 				LocalizedMapUtil.populateLocalizedMap(
 					serviceBuilderListTypeDefinition.getDefaultLanguageId(),
-					listTypeEntry.getName_i18n(), listTypeEntry.getName())));
+					listTypeEntry.getName_i18n(), listTypeEntry.getName()),
+				GetterUtil.getBoolean(listTypeEntry.getSystem())));
 	}
 
 	@Override
@@ -207,13 +209,21 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			() -> {
-				com.liferay.list.type.model.ListTypeDefinition
-					serviceBuilderlistTypeDefinition =
-						_listTypeDefinitionService.getListTypeDefinition(
-							serviceBuilderListTypeEntry.
-								getListTypeDefinitionId());
+				if (!FeatureFlagManagerUtil.isEnabled(
+						serviceBuilderListTypeEntry.getCompanyId(),
+						"LPD-24055")) {
 
-				if (serviceBuilderlistTypeDefinition.isSystem()) {
+					com.liferay.list.type.model.ListTypeDefinition
+						serviceBuilderlistTypeDefinition =
+							_listTypeDefinitionService.getListTypeDefinition(
+								serviceBuilderListTypeEntry.
+									getListTypeDefinitionId());
+
+					if (serviceBuilderlistTypeDefinition.isSystem()) {
+						return null;
+					}
+				}
+				else if (serviceBuilderListTypeEntry.isSystem()) {
 					return null;
 				}
 

@@ -36,7 +36,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 	@Override
 	public ListTypeEntry addListTypeEntry(
 			String externalReferenceCode, long listTypeDefinitionId, String key,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, boolean system)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =

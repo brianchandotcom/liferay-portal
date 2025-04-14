@@ -154,13 +154,13 @@ public interface SitePageResource {
 	public Page<Permission>
 			putSiteSiteExternalReferenceCodeSitePagePermissionsPage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
+				String sitePageExternalReferenceCode, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteSiteExternalReferenceCodeSitePagePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode)
+				String sitePageExternalReferenceCode, Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -1447,12 +1447,14 @@ public interface SitePageResource {
 		public Page<Permission>
 				putSiteSiteExternalReferenceCodeSitePagePermissionsPage(
 					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode)
+					String sitePageExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteExternalReferenceCodeSitePagePermissionsPageHttpResponse(
-					siteExternalReferenceCode, sitePageExternalReferenceCode);
+					siteExternalReferenceCode, sitePageExternalReferenceCode,
+					permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1516,12 +1518,19 @@ public interface SitePageResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteExternalReferenceCodeSitePagePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
-					String sitePageExternalReferenceCode)
+					String sitePageExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

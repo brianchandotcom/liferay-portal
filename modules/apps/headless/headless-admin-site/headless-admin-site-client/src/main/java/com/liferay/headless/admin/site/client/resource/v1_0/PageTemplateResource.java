@@ -183,13 +183,15 @@ public interface PageTemplateResource {
 	public Page<Permission>
 			putSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode)
+				String pageTemplateExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode)
+				String pageTemplateExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -1733,13 +1735,14 @@ public interface PageTemplateResource {
 		public Page<Permission>
 				putSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
 					String siteExternalReferenceCode,
-					String pageTemplateExternalReferenceCode)
+					String pageTemplateExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
 					siteExternalReferenceCode,
-					pageTemplateExternalReferenceCode);
+					pageTemplateExternalReferenceCode, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1803,12 +1806,19 @@ public interface PageTemplateResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
-					String pageTemplateExternalReferenceCode)
+					String pageTemplateExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

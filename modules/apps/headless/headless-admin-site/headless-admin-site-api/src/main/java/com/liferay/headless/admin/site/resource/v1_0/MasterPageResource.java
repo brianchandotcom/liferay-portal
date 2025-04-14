@@ -105,7 +105,8 @@ public interface MasterPageResource {
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
 				String siteExternalReferenceCode,
-				String masterPageExternalReferenceCode)
+				String masterPageExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

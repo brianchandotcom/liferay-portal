@@ -827,13 +827,29 @@ public abstract class BaseMasterPageResourceTestCase {
 			200,
 			masterPageResource.
 				putSiteSiteExternalReferenceCodeMasterPagePermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			masterPageResource.
 				putSiteSiteExternalReferenceCodeMasterPagePermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected MasterPage

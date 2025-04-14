@@ -879,7 +879,8 @@ public abstract class BaseDisplayPageTemplateResourceImpl
 				@javax.ws.rs.PathParam(
 					"displayPageTemplateExternalReferenceCode"
 				)
-				String displayPageTemplateExternalReferenceCode)
+				String displayPageTemplateExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

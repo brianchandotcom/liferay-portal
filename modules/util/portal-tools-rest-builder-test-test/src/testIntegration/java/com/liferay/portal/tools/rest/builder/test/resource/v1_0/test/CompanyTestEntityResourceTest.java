@@ -228,13 +228,7 @@ public class CompanyTestEntityResourceTest
 	private void _testPostCompanyTestEntityBatch() throws Exception {
 		CompanyTestEntity companyTestEntity =
 			companyTestEntityResource.postCompanyTestEntity(
-				new CompanyTestEntity() {
-					{
-						externalReferenceCode = RandomTestUtil.randomString();
-					}
-				});
-
-		companyTestEntity.setId(companyTestEntity.getId() + 1);
+				randomCompanyTestEntity());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +

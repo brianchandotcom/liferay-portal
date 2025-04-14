@@ -39,7 +39,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -65,8 +64,7 @@ public class ResourceOpenAPIParser {
 
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
-		Map<String, List<JavaMethodSignature>> javaMethodSignaturesMap =
-			new HashMap<>();
+		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			String path = entry.getKey();
@@ -102,79 +100,22 @@ public class ResourceOpenAPIParser {
 								new JavaMethodSignature(
 									path, pathItem, operation, methodName,
 									requestBodyMediaTypes, schemaName,
-									javaMethodParameters, methodName,
+									javaMethodParameters,
+									_hasObjectParameter(javaMethodParameters) ?
+										methodName + "Object" : methodName,
 									returnType,
 									_getParentSchema(
 										path, pathItems, schemaName));
 
-							javaMethodSignaturesMap.compute(
-								methodName,
-								(key, list) -> {
-									if (list == null) {
-										list = new ArrayList<>();
-									}
-
-									list.add(javaMethodSignature);
-
-									return list;
-								});
+							javaMethodSignatures.add(javaMethodSignature);
 
 							if (configYAML.isGenerateBatch()) {
 								_addBatchJavaMethodSignature(
 									configYAML, javaMethodSignature,
-									javaMethodSignaturesMap);
+									javaMethodSignatures);
 							}
 						});
 				});
-		}
-
-		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
-
-		for (List<JavaMethodSignature> javaMethodSignatureList :
-				javaMethodSignaturesMap.values()) {
-
-			if (javaMethodSignatureList.size() == 1) {
-				javaMethodSignatures.add(javaMethodSignatureList.get(0));
-
-				continue;
-			}
-
-			for (JavaMethodSignature javaMethodSignature :
-					javaMethodSignatureList) {
-
-				boolean containsObjectParameter = false;
-
-				for (JavaMethodParameter javaMethodParameter :
-						javaMethodSignature.getJavaMethodParameters()) {
-
-					if (Objects.equals(
-							javaMethodParameter.getParameterName(), "object") &&
-						Objects.equals(
-							javaMethodParameter.getParameterType(),
-							"java.lang.Object")) {
-
-						containsObjectParameter = true;
-
-						break;
-					}
-				}
-
-				if (containsObjectParameter) {
-					javaMethodSignature = new JavaMethodSignature(
-						javaMethodSignature.getPath(),
-						javaMethodSignature.getPathItem(),
-						javaMethodSignature.getOperation(),
-						javaMethodSignature.getOperationId(),
-						javaMethodSignature.getRequestBodyMediaTypes(),
-						javaMethodSignature.getSchemaName(),
-						javaMethodSignature.getJavaMethodParameters(),
-						javaMethodSignature.getMethodName() + "Object",
-						javaMethodSignature.getReturnType(),
-						javaMethodSignature.getParentSchemaName());
-				}
-
-				javaMethodSignatures.add(javaMethodSignature);
-			}
 		}
 
 		javaMethodSignatures.sort(
@@ -535,7 +476,7 @@ public class ResourceOpenAPIParser {
 
 	private static void _addBatchJavaMethodSignature(
 		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
-		Map<String, List<JavaMethodSignature>> javaMethodSignaturesMap) {
+		List<JavaMethodSignature> javaMethodSignatures) {
 
 		BatchOperationType batchOperationType = null;
 
@@ -573,22 +514,18 @@ public class ResourceOpenAPIParser {
 			batchOperationType, configYAML, javaMethodSignature.getPath(),
 			schemaName);
 
-		for (List<JavaMethodSignature> existingJavaMethodSignatures :
-				javaMethodSignaturesMap.values()) {
+		for (JavaMethodSignature existingJavaMethodSignature :
+				javaMethodSignatures) {
 
-			for (JavaMethodSignature existingJavaMethodSignature :
-					existingJavaMethodSignatures) {
+			String httpMethod = OpenAPIParserUtil.getHTTPMethod(
+				existingJavaMethodSignature.getOperation());
 
-				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
-					existingJavaMethodSignature.getOperation());
+			if (Objects.equals(
+					existingJavaMethodSignature.getPath(), batchPath) &&
+				httpMethod.equals(
+					OpenAPIParserUtil.getHTTPMethod(batchOperation))) {
 
-				if (Objects.equals(
-						existingJavaMethodSignature.getPath(), batchPath) &&
-					httpMethod.equals(
-						OpenAPIParserUtil.getHTTPMethod(batchOperation))) {
-
-					return;
-				}
+				return;
 			}
 		}
 
@@ -622,23 +559,13 @@ public class ResourceOpenAPIParser {
 		String batchMethodName = _getBatchMethodName(
 			batchOperationType, methodName);
 
-		javaMethodSignaturesMap.compute(
-			batchMethodName,
-			(key, list) -> {
-				if (list == null) {
-					list = new ArrayList<>();
-				}
-
-				list.add(
-					new JavaMethodSignature(
-						batchPath, javaMethodSignature.getPathItem(),
-						batchOperation, batchMethodName,
-						Collections.singleton(ContentTypes.APPLICATION_JSON),
-						schemaName, javaMethodParameters, batchMethodName,
-						"javax.ws.rs.core.Response", parentSchemaName));
-
-				return list;
-			});
+		javaMethodSignatures.add(
+			new JavaMethodSignature(
+				batchPath, javaMethodSignature.getPathItem(), batchOperation,
+				batchMethodName,
+				Collections.singleton(ContentTypes.APPLICATION_JSON),
+				schemaName, javaMethodParameters, batchMethodName,
+				"javax.ws.rs.core.Response", parentSchemaName));
 	}
 
 	private static String _addParameter(Parameter parameter) {
@@ -1481,6 +1408,23 @@ public class ResourceOpenAPIParser {
 		}
 
 		return javax.ws.rs.core.Response.class.getName();
+	}
+
+	private static boolean _hasObjectParameter(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (Objects.equals(
+					javaMethodParameter.getParameterName(), "object") &&
+				Objects.equals(
+					javaMethodParameter.getParameterType(),
+					"java.lang.Object")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static boolean _isSchemaMethod(

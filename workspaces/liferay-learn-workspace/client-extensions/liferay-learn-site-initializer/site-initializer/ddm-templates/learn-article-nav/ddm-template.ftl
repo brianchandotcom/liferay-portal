@@ -1,7 +1,7 @@
 <#assign
 	groupFriendlyURL = themeDisplay.getScopeGroup().getFriendlyURL()
 	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + groupFriendlyURL
-	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
+	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
 	navigationMenuItems =
 		{
 			"Analytics Cloud": {

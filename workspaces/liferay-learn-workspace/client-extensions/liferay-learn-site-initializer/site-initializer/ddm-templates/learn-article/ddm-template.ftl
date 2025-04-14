@@ -32,7 +32,7 @@
 
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
-	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
+	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
 	taxonomyCategoriesMap = {}
 	taxonomyCategoryBriefs = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory").taxonomyCategoryBriefs
 	taxonomyVocabularies = []

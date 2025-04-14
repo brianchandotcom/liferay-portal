@@ -28,7 +28,10 @@ public class WorkflowLogUtil {
 			Function<Long, User> userFunction, WorkflowLog workflowLog)
 		throws PortalException {
 
-		if (workflowLog.getType() == WorkflowLog.TASK_COMPLETION) {
+		if (workflowLog.getType() == WorkflowLog.INSTANCE_FAIL) {
+			return language.get(locale, "the-workflow-instance-failed");
+		}
+		else if (workflowLog.getType() == WorkflowLog.TASK_COMPLETION) {
 			return language.format(
 				locale, "x-completed-the-task-x",
 				new Object[] {

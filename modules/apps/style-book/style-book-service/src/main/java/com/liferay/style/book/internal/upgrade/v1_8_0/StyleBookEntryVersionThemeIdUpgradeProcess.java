@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,18 +22,16 @@ import java.sql.ResultSet;
 public class StyleBookEntryVersionThemeIdUpgradeProcess extends UpgradeProcess {
 
 	public StyleBookEntryVersionThemeIdUpgradeProcess(
-		GroupLocalService groupLocalService,
-		StyleBookEntryLocalService styleBookEntryLocalService) {
+		GroupLocalService groupLocalService) {
 
 		_groupLocalService = groupLocalService;
-		_styleBookEntryLocalService = styleBookEntryLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select groupId, ctCollectionId, styleBookEntryId, themeId " +
-					"from StyleBookEntryVersion");
+					"from StyleBookEntry");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -78,12 +74,7 @@ public class StyleBookEntryVersionThemeIdUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				StyleBookEntry styleBookEntry =
-					_styleBookEntryLocalService.fetchStyleBookEntry(
-						styleBookEntryId);
-
-				preparedStatement2.setString(1, styleBookEntry.getThemeId());
-
+				preparedStatement2.setString(1, resultSet.getString("themeId"));
 				preparedStatement2.setLong(
 					2, resultSet.getLong("ctCollectionId"));
 				preparedStatement2.setLong(3, styleBookEntryId);
@@ -103,6 +94,5 @@ public class StyleBookEntryVersionThemeIdUpgradeProcess extends UpgradeProcess {
 		StyleBookEntryVersionThemeIdUpgradeProcess.class);
 
 	private final GroupLocalService _groupLocalService;
-	private final StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

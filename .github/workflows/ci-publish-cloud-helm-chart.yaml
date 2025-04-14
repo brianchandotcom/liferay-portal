@@ -34,23 +34,27 @@ jobs:
 
                     echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
                 working-directory: ./cloud/helm
-            -   name: Package Helm chart
+            -   name: Log in to GAR
+                run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
+            -   name: Package and Push Helm charts
                 run: |
                     mkdir "${{ runner.temp }}/dist"
 
-                    helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} .
-                working-directory: ./cloud/helm
-            -   name: Log in to GAR
-                run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
-            -   name: Push Helm chart to GAR
-                run: |
-                    for file_name in *.tgz
+                    helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} default
+
+                    sed -i "s/0\.0\.0/${CHART_VERSION}/g" aws/Chart.yaml
+
+                    helm dependency update aws
+
+                    helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} aws
+
+                    for file_name in ${{ runner.temp }}/dist/*.tgz
                     do
                         echo "Pushing ${file_name}."
 
                         helm push "${file_name}" "oci://${GAR_REPOSITORY}"
                     done
-                working-directory: ${{ runner.temp }}/dist
+                working-directory: ./cloud/helm/
 on:
     push:
         branches:

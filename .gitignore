@@ -46,6 +46,8 @@
 /build
 /build.*.properties
 /classes/Test.class
+/cloud/helm/**/*.tgz
+/cloud/helm/**/Chart.lock
 /dist
 /intellij
 /jacoco

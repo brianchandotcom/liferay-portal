@@ -338,9 +338,18 @@ public class ObjectFieldInfoFieldConverter {
 			return null;
 		}
 
-		return (LayoutDisplayPageObjectProvider<?>)
-			httpServletRequest.getAttribute(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		if ((layoutDisplayPageObjectProvider == null) ||
+			!(layoutDisplayPageObjectProvider.getDisplayObject() instanceof
+				ObjectEntry)) {
+
+			return null;
+		}
+
+		return layoutDisplayPageObjectProvider;
 	}
 
 	private long _getMaximumFileSize(ObjectField objectField) {

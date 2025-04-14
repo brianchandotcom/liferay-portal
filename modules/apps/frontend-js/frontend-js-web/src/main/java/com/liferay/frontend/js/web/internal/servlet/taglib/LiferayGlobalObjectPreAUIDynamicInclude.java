@@ -419,40 +419,31 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayLanguage(StringBuilder sb) {
-		sb.append("Language: {\n");
+		StringBuilder availableSB = new StringBuilder();
+		StringBuilder directionSB = new StringBuilder();
 
-		sb.append(_LANGUAGE_PROLOG);
+		for (Locale locale : _language.getAvailableLocales()) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			availableSB.append(StringPool.APOSTROPHE);
+			availableSB.append(languageId);
+			availableSB.append("':'");
+			availableSB.append(
+				HtmlUtil.escapeJS(locale.getDisplayName(locale)));
+			availableSB.append("',");
+
+			directionSB.append(StringPool.APOSTROPHE);
+			directionSB.append(languageId);
+			directionSB.append("':'");
+			directionSB.append(_language.get(locale, "lang.dir"));
+			directionSB.append("',");
+		}
+
+		sb.append(
+			StringUtil.replace(
+				_TPL_LANGUAGE, new String[] {"[$AVAILABLE$]", "[$DIRECTION$]"},
+				new Object[] {availableSB, directionSB}));
 		sb.append(StringPool.NEW_LINE);
-
-		sb.append("available: {");
-
-		for (Locale locale : _language.getAvailableLocales()) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(languageId);
-			sb.append("':'");
-			sb.append(HtmlUtil.escapeJS(locale.getDisplayName(locale)));
-			sb.append("',");
-		}
-
-		sb.append("},\n");
-
-		sb.append("direction: {");
-
-		for (Locale locale : _language.getAvailableLocales()) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(languageId);
-			sb.append("':'");
-			sb.append(_language.get(locale, "lang.dir"));
-			sb.append("',");
-		}
-
-		sb.append("},\n");
-
-		sb.append("},\n");
 	}
 
 	private void _renderLiferayPortlet(StringBuilder sb) {
@@ -736,9 +727,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		CharPool.DASH, CharPool.FORWARD_SLASH, CharPool.PERIOD
 	};
 
-	private static final String _LANGUAGE_PROLOG;
-
 	private static final String _LIFERAY_TPL;
+
+	private static final String _TPL_LANGUAGE;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayGlobalObjectPreAUIDynamicInclude.class);
@@ -747,8 +738,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		new ConcurrentHashMap<>();
 
 	static {
-		_LANGUAGE_PROLOG = _loadTemplate("Language.prolog.tpl");
-		_LIFERAY_TPL = _loadTemplate("Liferay.tpl");
+		_TPL_LANGUAGE = _loadTemplate("language.js.tpl");
+		_LIFERAY_TPL = _loadTemplate("liferay.js.tpl");
 	}
 
 	@Reference

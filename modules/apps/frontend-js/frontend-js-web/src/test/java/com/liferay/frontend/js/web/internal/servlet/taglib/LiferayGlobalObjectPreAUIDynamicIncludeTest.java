@@ -119,7 +119,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 			StringPool.BLANK);
 
 		Assert.assertEquals(
-			_loadTemplate("expectedContent.tpl"),
+			_loadTemplate("liferay_test.js.tpl"),
 			StringUtil.trim(mockHttpServletResponse.getContentAsString()));
 	}
 

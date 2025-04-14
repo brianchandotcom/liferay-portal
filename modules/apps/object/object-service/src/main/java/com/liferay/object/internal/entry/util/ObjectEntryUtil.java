@@ -115,7 +115,7 @@ public class ObjectEntryUtil {
 					Collections.emptyMap(), jsonFactory, modelClass, userId);
 
 				if (MapUtil.isEmpty(
-						ObjectEntryThreadLocal.getExpandoValues())) {
+						ObjectEntryThreadLocal.getExpandoBridgeAttributes())) {
 
 					return originalDTOMap;
 				}
@@ -125,11 +125,11 @@ public class ObjectEntryUtil {
 				originalDTOMap.put(
 					"customFields",
 					CustomFieldsUtil.toCustomFields(
-						false, ObjectEntryThreadLocal.getExpandoValues(),
-						modelClass.getName(),
+						false, modelClass.getName(),
 						GetterUtil.getLong(
 							originalBaseModel.getPrimaryKeyObj()),
-						objectDefinition.getCompanyId(), user.getLocale()));
+						objectDefinition.getCompanyId(), user.getLocale(),
+						ObjectEntryThreadLocal.getExpandoBridgeAttributes()));
 
 				return originalDTOMap;
 			}

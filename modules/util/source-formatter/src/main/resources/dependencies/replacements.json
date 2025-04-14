@@ -3943,7 +3943,8 @@
 	},
 	{
 		"classNames": [
-			"AccountEntry"
+			"AccountEntry",
+			"CommerceContext"
 		],
 		"from": "getCommerceAccountId",
 		"issueKey": "LPD-48402",

@@ -96,6 +96,15 @@ test(
 		dataSetERCs.push(dataSetERC1);
 		dataSetERCs.push(dataSetERC2);
 
+		const dataSetInput1 =
+			dataSetFragmentPage.selectDataSetModalFrame.locator(
+				`li:has-text("${dataSetLabel1}") input.custom-control-input`
+			);
+		const dataSetInput2 =
+			dataSetFragmentPage.selectDataSetModalFrame.locator(
+				`li:has-text("${dataSetLabel2}") input.custom-control-input`
+			);
+
 		await test.step('Create data sets', async () => {
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: dataSetERC1,
@@ -133,24 +142,13 @@ test(
 		});
 
 		await test.step('Check that only one data set can be selected', async () => {
-			const dataSetInput1 =
-				dataSetFragmentPage.selectDataSetModalFrame.locator(
-					`li:has-text("${dataSetLabel1}") input.custom-control-input`
-				);
-			const dataSetInput2 =
-				dataSetFragmentPage.selectDataSetModalFrame.locator(
-					`li:has-text("${dataSetLabel2}") input.custom-control-input`
-				);
-
 			await dataSetFragmentPage.selectDataSetButton.click();
 
 			await page.getByRole('dialog').isVisible();
 
 			await page.getByRole('heading', {name: 'Select'}).isVisible();
 
-			await dataSetFragmentPage.selectDataSetModalFrame
-				.locator('.fds-admin-item-selector')
-				.waitFor({state: 'visible'});
+			await dataSetFragmentPage.selectionListContainer.waitFor();
 
 			await dataSetInput1.setChecked(true);
 
@@ -176,21 +174,9 @@ test(
 		await test.step('Change assignment to second data set', async () => {
 			await dataSetFragmentPage.changeDataSetButton.click();
 
-			const selectionListContainer =
-				dataSetFragmentPage.selectDataSetModalFrame.locator(
-					'.fds-admin-item-selector'
-				);
+			await dataSetFragmentPage.selectionListContainer.waitFor();
 
-			await expect(selectionListContainer).toBeVisible();
-
-			await expect(
-				selectionListContainer
-					.locator('.selectable.list-group-item')
-					.filter({
-						has: page.getByText(dataSetLabel1, {exact: true}),
-					})
-					.getByRole('radio')
-			).toBeChecked();
+			await expect(dataSetInput1).toBeChecked();
 
 			await dataSetFragmentPage.selectDataSet(dataSetLabel2);
 		});
@@ -266,9 +252,7 @@ test('Data set selection modal shows a "No results found" message when there are
 	});
 
 	await test.step('Assert that there are no Data Sets available to select', async () => {
-		await dataSetFragmentPage.selectDataSetModalFrame
-			.locator('.fds-admin-item-selector')
-			.waitFor({state: 'visible'});
+		await dataSetFragmentPage.selectionListContainer.waitFor();
 
 		await expect(
 			dataSetFragmentPage.selectDataSetModalFrame.locator(
@@ -435,12 +419,7 @@ test(
 
 			await dataSetFragmentPage.changeDataSetButton.click();
 
-			const selectionListContainer =
-				dataSetFragmentPage.selectDataSetModalFrame.locator(
-					'.fds-admin-item-selector'
-				);
-
-			await expect(selectionListContainer).toBeVisible();
+			await dataSetFragmentPage.selectionListContainer.waitFor();
 
 			await dataSetFragmentPage.selectDataSetModalFrame
 				.locator('li')
@@ -493,12 +472,7 @@ test(
 
 			await dataSetFragmentPage.changeDataSetButton.click();
 
-			const selectionListContainer =
-				dataSetFragmentPage.selectDataSetModalFrame.locator(
-					'.fds-admin-item-selector'
-				);
-
-			await expect(selectionListContainer).toBeVisible();
+			await dataSetFragmentPage.selectionListContainer.waitFor();
 
 			await page
 				.frameLocator('iframe[title="Select"]')

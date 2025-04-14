@@ -36,18 +36,18 @@ public class CompanyTestEntityResourceTest
 
 	@Override
 	@Test
-	public void testPutCompanyTestEntity() throws Exception {
-		super.testPutCompanyTestEntity();
-
-		_testPutCompanyTestEntityBatch();
-	}
-
-	@Override
-	@Test
 	public void testPostCompanyTestEntity() throws Exception {
 		super.testPostCompanyTestEntity();
 
 		_testPostCompanyTestEntityBatch();
+	}
+
+	@Override
+	@Test
+	public void testPutCompanyTestEntity() throws Exception {
+		super.testPutCompanyTestEntity();
+
+		_testPutCompanyTestEntityBatch();
 	}
 
 	@Override
@@ -174,6 +174,29 @@ public class CompanyTestEntityResourceTest
 		).build();
 	}
 
+	private void _testPostCompanyTestEntityBatch() throws Exception {
+		CompanyTestEntity companyTestEntity =
+			companyTestEntityResource.postCompanyTestEntity(
+				randomCompanyTestEntity());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_waitForFinish(
+				"FAILED", true,
+				JSONFactoryUtil.createJSONObject(
+					companyTestEntityResource.
+						postCompanyTestEntityBatchHttpResponse(
+							null,
+							JSONUtil.putAll(
+								JSONFactoryUtil.createJSONObject(
+									companyTestEntity.toString()))
+						).getContent()));
+		}
+	}
+
 	private void _testPutCompanyTestEntityBatch() throws Exception {
 		CompanyTestEntity postCompanyTestEntity =
 			companyTestEntityResource.postCompanyTestEntity(
@@ -223,29 +246,6 @@ public class CompanyTestEntityResourceTest
 			companyTestEntityResource.
 				getCompanyTestEntityByExternalReferenceCodeHttpResponse(
 					randomCompanyTestEntity.getExternalReferenceCode()));
-	}
-
-	private void _testPostCompanyTestEntityBatch() throws Exception {
-		CompanyTestEntity companyTestEntity =
-			companyTestEntityResource.postCompanyTestEntity(
-				randomCompanyTestEntity());
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			_waitForFinish(
-				"FAILED", true,
-				JSONFactoryUtil.createJSONObject(
-					companyTestEntityResource.
-						postCompanyTestEntityBatchHttpResponse(
-							null,
-							JSONUtil.putAll(
-								JSONFactoryUtil.createJSONObject(
-									companyTestEntity.toString()))
-						).getContent()));
-		}
 	}
 
 	private JSONObject _waitForFinish(

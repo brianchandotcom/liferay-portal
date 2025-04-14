@@ -21,7 +21,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 </portlet:actionURL>
 
 <commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "notes") %>'
+	title='<%= LanguageUtil.get(request, "questions-and-answers") %>'
 >
 	<aui:form action="<%= editCommerceOrderNoteURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />

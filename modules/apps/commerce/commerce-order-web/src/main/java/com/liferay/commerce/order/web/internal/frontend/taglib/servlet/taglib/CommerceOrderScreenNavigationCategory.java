@@ -26,6 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceOrderScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
+	public static final String LABEL = "questions-and-answers";
+
 	@Override
 	public String getCategoryKey() {
 		return CommerceOrderScreenNavigationConstants.
@@ -37,7 +39,7 @@ public class CommerceOrderScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, getCategoryKey());
+		return _language.get(resourceBundle, LABEL);
 	}
 
 	@Override

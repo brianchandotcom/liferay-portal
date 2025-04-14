@@ -167,6 +167,8 @@ public class KaleoDesignerDisplayContextTest {
 	}
 
 	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
 		Portal portal = Mockito.mock(Portal.class);
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
@@ -176,8 +178,6 @@ public class KaleoDesignerDisplayContextTest {
 		).thenReturn(
 			Mockito.mock(HttpServletRequest.class)
 		);
-
-		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(portal);
 	}

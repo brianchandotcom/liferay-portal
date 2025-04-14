@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -108,6 +107,7 @@ public class BasicComponentFragmentCollectionContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-26242")
 	public void testSliderAccessibility() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -115,23 +115,23 @@ public class BasicComponentFragmentCollectionContributorTest {
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-slider");
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-				StringPool.BLANK, StringPool.BLANK, 0, null,
-				fragmentEntry.getType(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
 		Document document = Jsoup.parseBodyFragment(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
+				_fragmentEntryLinkService.addFragmentEntryLink(
+					null, _group.getGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, null,
+					fragmentEntry.getType(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId())),
 				_getFragmentEntryProcessorContext(
 					layout, LocaleUtil.getMostRelevantLocale())));
 
 		Elements elements = document.select("[aria-controls]");
+
+		Assert.assertFalse(elements.toString(), elements.isEmpty());
 
 		for (Element element : elements) {
 			Assert.assertNotNull(

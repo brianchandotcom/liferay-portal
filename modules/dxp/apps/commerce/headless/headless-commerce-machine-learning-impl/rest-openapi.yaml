@@ -377,14 +377,14 @@ components:
                     additionalProperties: true
                     type: object
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Product Description HU
-                        hr_HR: Product Description HR
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
+                    type: object
                 displayDate:
                     example: 2017-07-21
                     format: date

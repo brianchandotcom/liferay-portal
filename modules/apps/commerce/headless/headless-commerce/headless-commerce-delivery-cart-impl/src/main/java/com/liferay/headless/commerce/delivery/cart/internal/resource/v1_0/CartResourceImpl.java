@@ -220,22 +220,40 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
 	public Page<Cart> getChannelAccountCartsPage(
-			Long accountId, Long channelId, String search,
-			Pagination pagination)
+			Long accountId, Long channelId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		return Page.of(
-			transform(
-				_commerceOrderService.getPendingCommerceOrders(
-					commerceChannel.getGroupId(), accountId, search,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toCart),
-			pagination,
-			_commerceOrderService.getPendingCommerceOrdersCount(
-				commerceChannel.getGroupId(), accountId, search));
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			filter, CommerceOrder.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceAccountIds", new long[] {accountId});
+				searchContext.setAttribute(
+					"orderStatuses",
+					new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN});
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {commerceChannel.getGroupId()});
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setUserId(0);
+			},
+			sorts,
+			document -> _toCart(
+				_commerceOrderService.getCommerceOrder(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -243,7 +261,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 				String accountExternalReferenceCode,
 				String channelExternalReferenceCode, String search,
-				Pagination pagination)
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		AccountEntry accountEntry =
@@ -258,7 +276,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		return getChannelAccountCartsPage(
 			accountEntry.getAccountEntryId(),
-			commerceChannel.getCommerceChannelId(), search, pagination);
+			commerceChannel.getCommerceChannelId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override

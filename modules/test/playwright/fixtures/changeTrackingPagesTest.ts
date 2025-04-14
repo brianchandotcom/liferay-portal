@@ -39,12 +39,6 @@ const changeTrackingPages = test.extend<{
 						getRandomString()
 					);
 
-				// Checkout ctCollection
-
-				await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-					ctCollection.body.id
-				);
-
 				await use(ctCollection);
 			}
 			catch {

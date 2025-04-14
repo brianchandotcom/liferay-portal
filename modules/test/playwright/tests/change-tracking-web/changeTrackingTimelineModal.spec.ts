@@ -174,12 +174,9 @@ test('LPD-22768 Add options to interact with the same entity in other publicatio
 
 test('LPD-38392 Assert View Entity Modification History sorting', async ({
 	apiHelpers,
-	changeTrackingPage,
 	journalPage,
 	page,
 }) => {
-	await changeTrackingPage.workOnProduction();
-
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
 		ctCollections[0].body.id
 	);

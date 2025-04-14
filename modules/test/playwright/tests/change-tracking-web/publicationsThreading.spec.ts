@@ -39,8 +39,6 @@ test('LPD-33336 Buffered increment runnable processing occurs in the same thread
 	documentLibraryPage,
 	page,
 }) => {
-	await changeTrackingPage.workOnProduction();
-
 	await attachmentsPage.goToDocumentsAndMedia();
 
 	const site =
@@ -76,10 +74,14 @@ test('LPD-33336 Buffered increment runnable processing occurs in the same thread
 });
 
 test('LPS-117642 NoSuchTagException throws when adding a web content with tag within a Change List', async ({
+	changeTrackingPage,
+	ctCollection,
 	journalEditArticlePage,
 	journalPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await page.goto(`/group/guest${PORTLET_URLS.tagsAdmin}`);
 
 	await page.getByRole('link', {name: 'Add Tag'}).click();

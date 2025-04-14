@@ -28,8 +28,6 @@ test.beforeEach(
 		ctCollection,
 		workflowPage,
 	}) => {
-		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
-
 		await workflowPage.goto();
 		await workflowPage.changeWorkflow('Blogs Entry', 'Single Approver');
 

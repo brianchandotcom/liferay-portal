@@ -39,8 +39,6 @@ test.beforeEach(
 		journalEditArticlePage,
 		workflowPage,
 	}) => {
-		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
-
 		await workflowPage.goto();
 		await workflowPage.changeWorkflow(
 			'Web Content Article',

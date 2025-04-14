@@ -72,7 +72,11 @@ test.afterEach(async ({changeTrackingPage}) => {
 	await changeTrackingPage.toggleShowAllDataConfiguration(false);
 });
 
-test.beforeEach(async ({apiHelpers, site}) => {
+test.beforeEach(async ({apiHelpers, ctCollection, site}) => {
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+		ctCollection.body.id
+	);
+
 	const basicWebContentStructureId =
 		await getBasicWebContentStructureId(apiHelpers);
 

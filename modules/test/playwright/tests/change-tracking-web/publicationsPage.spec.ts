@@ -60,6 +60,7 @@ test('Add and apply content template', async ({
 	pagesAdminPage,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	// Create page template collection
 
@@ -140,6 +141,7 @@ test('Add and apply information template', async ({
 	site,
 	templatesPage,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	// Add a basic web content
 
@@ -231,6 +233,7 @@ test('Add and apply widget template', async ({
 	templatesPage,
 	widgetPagePage,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	// Create widget template
 
@@ -313,6 +316,7 @@ test('Add new page with master template', async ({
 	pageEditorPage,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	// Add a master page template
 
@@ -383,6 +387,8 @@ test('Apply style book layout', async ({
 	pageEditorPage,
 	styleBooksPage,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
 
@@ -456,6 +462,7 @@ test('Create custom fragments', async ({
 	pageEditorPage,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	// Create a custom fragment
 
@@ -533,8 +540,6 @@ test('Create page with existing page template', async ({
 }) => {
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
-
-	await changeTrackingPage.workOnProduction();
 
 	// Create page template collection
 
@@ -615,6 +620,8 @@ test(
 				'guest'
 			);
 
+		await changeTrackingPage.workOnPublication(ctCollection);
+
 		// Create a page with an asset publisher
 
 		const layoutTitle = getRandomString();
@@ -656,6 +663,7 @@ test(
 		pageEditorPage,
 		site,
 	}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
 
 		// Add a page with a fragment and a widget
 
@@ -734,8 +742,6 @@ test(
 
 		// Add a page with a fragment in production
 
-		await changeTrackingPage.workOnProduction();
-
 		const layoutTitle = getRandomString();
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -798,8 +804,6 @@ test(
 			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
 				'guest'
 			);
-
-		await changeTrackingPage.workOnProduction();
 
 		// Add 2 basic web contents
 
@@ -909,6 +913,7 @@ testWithPrivatePages(
 		pagesAdminPage,
 		site,
 	}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
 
 		// Create a custom fragment
 
@@ -989,8 +994,6 @@ test('Publish with asset publisher configuration', async ({
 }) => {
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
-
-	await changeTrackingPage.workOnProduction();
 
 	// Create a page with an asset publisher
 
@@ -1074,8 +1077,6 @@ test(
 				'guest'
 			);
 
-		await changeTrackingPage.workOnProduction();
-
 		// Add a page
 
 		const layoutTitle = getRandomString();
@@ -1096,6 +1097,8 @@ test(
 		await addCustomFieldPage.addCustomField(customField);
 
 		// Update the custom field in the page in production
+
+		await changeTrackingPage.workOnProduction();
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
@@ -1135,6 +1138,8 @@ test(
 
 		// Publish publication
 
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
 		await apiHelpers.headlessChangeTracking.publishCTCollection(
 			ctCollection.body.id
 		);
@@ -1145,8 +1150,6 @@ test(
 		);
 
 		// Assert custom field shows value from publication
-
-		await changeTrackingPage.workOnPublication(ctCollection);
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
@@ -1176,8 +1179,6 @@ test(
 			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
 				'guest'
 			);
-
-		await changeTrackingPage.workOnProduction();
 
 		// Create page
 

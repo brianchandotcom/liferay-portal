@@ -11,6 +11,7 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -22,7 +23,10 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -45,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -97,8 +102,14 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
+		_removePortalCache();
 		_setUpThemeDisplay(
 			_layoutLocalService.getLayout(assetDisplayPageEntry.getPlid()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_portalCache.put(TestPropsValues.getCompanyId(), _jsonObject);
 	}
 
 	@Test
@@ -146,6 +157,16 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 				LocaleUtil.getSiteDefault(), _themeDisplay));
 	}
 
+	private void _removePortalCache() throws Exception {
+		_portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+
+		_jsonObject = _portalCache.get(TestPropsValues.getCompanyId());
+
+		_portalCache.remove(TestPropsValues.getCompanyId());
+	}
+
 	private void _setUpThemeDisplay(Layout layout) throws Exception {
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
@@ -173,13 +194,18 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 	private Group _group;
 
 	private JournalArticle _journalArticle;
+	private JSONObject _jsonObject;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private MultiVMPool _multiVMPool;
+
+	@Inject
 	private Portal _portal;
 
+	private PortalCache<Long, JSONObject> _portalCache;
 	private ThemeDisplay _themeDisplay;
 
 }

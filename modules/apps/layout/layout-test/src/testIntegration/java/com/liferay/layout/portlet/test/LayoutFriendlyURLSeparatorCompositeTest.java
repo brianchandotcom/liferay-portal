@@ -7,10 +7,14 @@ package com.liferay.layout.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
@@ -19,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -55,10 +60,14 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_removePortalCache();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		_portalCache.put(TestPropsValues.getCompanyId(), _jsonObject);
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -125,10 +134,27 @@ public class LayoutFriendlyURLSeparatorCompositeTest {
 			layoutFriendlyURLSeparatorComposite.getURLSeparator());
 	}
 
+	private void _removePortalCache() throws Exception {
+		_portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+
+		_jsonObject = _portalCache.get(TestPropsValues.getCompanyId());
+
+		_portalCache.remove(TestPropsValues.getCompanyId());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private JSONObject _jsonObject;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
 	@Inject
 	private Portal _portal;
+
+	private PortalCache<Long, JSONObject> _portalCache;
 
 }

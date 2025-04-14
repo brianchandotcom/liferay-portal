@@ -11,6 +11,7 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
@@ -31,6 +32,9 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -117,11 +121,14 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		_layout = _layoutLocalService.getLayout(
 			assetDisplayPageEntry.getPlid());
 
+		_removePortalCache();
 		_setUpThemeDisplay();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		_portalCache.put(TestPropsValues.getCompanyId(), _jsonObject);
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -289,6 +296,16 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			});
 	}
 
+	private void _removePortalCache() throws Exception {
+		_portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+
+		_jsonObject = _portalCache.get(TestPropsValues.getCompanyId());
+
+		_portalCache.remove(TestPropsValues.getCompanyId());
+	}
+
 	private void _setUpThemeDisplay() throws Exception {
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
@@ -336,6 +353,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 	private Group _group;
 
 	private JournalArticle _journalArticle;
+	private JSONObject _jsonObject;
 	private Layout _layout;
 
 	@Inject(
@@ -354,8 +372,12 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
+	private MultiVMPool _multiVMPool;
+
+	@Inject
 	private Portal _portal;
 
+	private PortalCache<Long, JSONObject> _portalCache;
 	private ThemeDisplay _themeDisplay;
 
 }

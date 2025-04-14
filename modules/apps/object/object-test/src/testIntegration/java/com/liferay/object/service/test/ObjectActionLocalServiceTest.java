@@ -2165,8 +2165,8 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafterupdate.com"
 			).build());
 
-		String customFieldName = "A" + RandomTestUtil.randomString();
-		String customFieldValue1 = RandomTestUtil.randomString();
+		String expandoColumnName = "A" + RandomTestUtil.randomString();
+		String expandoValue1 = RandomTestUtil.randomString();
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -2177,11 +2177,11 @@ public class ObjectActionLocalServiceTest {
 						ExpandoTestUtil.addTable(
 							PortalUtil.getClassNameId(AccountEntry.class),
 							ExpandoTableConstants.DEFAULT_TABLE_NAME),
-						customFieldName, ExpandoColumnConstants.STRING);
+						expandoColumnName, ExpandoColumnConstants.STRING);
 
 					return expandoColumn.getName();
 				},
-				customFieldValue1
+				expandoValue1
 			).build());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
@@ -2191,12 +2191,12 @@ public class ObjectActionLocalServiceTest {
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		String customFieldValue2 = RandomTestUtil.randomString();
+		String expandoValue2 = RandomTestUtil.randomString();
 		serviceContext = ServiceContextTestUtil.getServiceContext();
 
 		serviceContext.setExpandoBridgeAttributes(
 			HashMapBuilder.<String, Serializable>put(
-				customFieldName, customFieldValue2
+				expandoColumnName, expandoValue2
 			).build());
 
 		_accountEntryLocalService.updateAccountEntry(
@@ -2217,13 +2217,13 @@ public class ObjectActionLocalServiceTest {
 			body.getContent());
 
 		Assert.assertEquals(
-			customFieldValue1,
+			expandoValue1,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/originalDTOAccount",
 				"JSONArray/customFields", "JSONObject/0",
 				"JSONObject/customValue", "Object/data"));
 		Assert.assertEquals(
-			customFieldValue2,
+			expandoValue2,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/modelDTOAccount",
 				"JSONArray/customFields", "JSONObject/0",

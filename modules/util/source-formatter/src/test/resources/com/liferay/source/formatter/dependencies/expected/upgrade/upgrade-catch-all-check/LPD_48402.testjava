@@ -10,8 +10,9 @@ package com.liferay.source.formatter.dependencies.upgrade;
  */
 public class LPD_48402 {
 
-	public void method(AccountEntry accountEntry) {
+	public void method(AccountEntry accountEntry, CommerceContext commerceContext) {
 		accountEntry.getAccountEntryId();
+		commerceContext.getAccountEntry().getAccountEntryId();
 	}
 
 }

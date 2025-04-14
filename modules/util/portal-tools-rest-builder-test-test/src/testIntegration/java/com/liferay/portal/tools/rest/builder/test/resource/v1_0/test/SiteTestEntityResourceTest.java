@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -22,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SiteTestEntity;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.CompanyTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SiteTestEntityResource;
 import com.liferay.portal.util.PropsValues;
 
@@ -39,18 +36,18 @@ public class SiteTestEntityResourceTest
 
 	@Override
 	@Test
-	public void testPutSiteTestEntity() throws Exception {
-		super.testPutSiteTestEntity();
-
-		_testPutSiteTestEntityBatch();
-	}
-
-	@Override
-	@Test
 	public void testPostSiteSiteTestEntity() throws Exception {
 		super.testPostSiteSiteTestEntity();
 
 		_testPostSiteTestEntityBatch();
+	}
+
+	@Override
+	@Test
+	public void testPutSiteTestEntity() throws Exception {
+		super.testPutSiteTestEntity();
+
+		_testPutSiteTestEntityBatch();
 	}
 
 	@Override
@@ -78,6 +75,29 @@ public class SiteTestEntityResourceTest
 		).build();
 	}
 
+	private void _testPostSiteTestEntityBatch() throws Exception {
+		SiteTestEntity siteTestEntity =
+			testPostSiteSiteTestEntity_addSiteTestEntity(
+				randomSiteTestEntity());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_waitForFinish(
+				"FAILED", true,
+				JSONFactoryUtil.createJSONObject(
+					siteTestEntityResource.
+						postSiteSiteTestEntityBatchHttpResponse(
+							testGroup.getGroupId(), null,
+							JSONUtil.putAll(
+								JSONFactoryUtil.createJSONObject(
+									siteTestEntity.toString()))
+						).getContent()));
+		}
+	}
+
 	private void _testPutSiteTestEntityBatch() throws Exception {
 		SiteTestEntity postSiteTestEntity =
 			siteTestEntityResource.postSiteSiteTestEntity(
@@ -96,10 +116,10 @@ public class SiteTestEntityResourceTest
 
 			SiteTestEntityResource siteTestEntityResource =
 				_createSiteTestEntityResource(
-				new String[] {
-					"importStrategy", "ON_ERROR_CONTINUE", "updateStrategy", "UPDATE"
-					}
-			);
+					new String[] {
+						"importStrategy", "ON_ERROR_CONTINUE", "updateStrategy",
+						"UPDATE"
+					});
 
 			_waitForFinish(
 				"COMPLETED", true,
@@ -114,40 +134,18 @@ public class SiteTestEntityResourceTest
 					).getContent()));
 		}
 
-		SiteTestEntity actualSiteTestEntity = siteTestEntityResource.getSiteTestEntity(
-			postSiteTestEntity.getId());
+		SiteTestEntity actualSiteTestEntity =
+			siteTestEntityResource.getSiteTestEntity(
+				postSiteTestEntity.getId());
 
-		Assert.assertEquals(
-			description, actualSiteTestEntity.getDescription());
+		Assert.assertEquals(description, actualSiteTestEntity.getDescription());
 
-	   assertHttpResponseStatusCode(
-		   404,
-		   siteTestEntityResource.
-			   getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
-				   randomSiteTestEntity.getExternalReferenceCode(),
-				   testGroup.getGroupId()));
-	}
-
-	private void _testPostSiteTestEntityBatch() throws Exception {
-		SiteTestEntity siteTestEntity = testPostSiteSiteTestEntity_addSiteTestEntity(
-			randomSiteTestEntity());
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			_waitForFinish(
-				"FAILED", true,
-				JSONFactoryUtil.createJSONObject(
-					siteTestEntityResource.
-						postSiteSiteTestEntityBatchHttpResponse(
-							testGroup.getGroupId(), null,
-							JSONUtil.putAll(
-								JSONFactoryUtil.createJSONObject(
-									siteTestEntity.toString()))
-						).getContent()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			siteTestEntityResource.
+				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
+					randomSiteTestEntity.getExternalReferenceCode(),
+					testGroup.getGroupId()));
 	}
 
 	private JSONObject _waitForFinish(

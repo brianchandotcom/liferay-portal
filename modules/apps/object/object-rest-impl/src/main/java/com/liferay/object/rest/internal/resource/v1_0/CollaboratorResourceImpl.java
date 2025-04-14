@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.headless.object.util.v1_0.CollaboratorUtil;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -143,12 +144,11 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		return CollaboratorUtil.addOrUpdateCollaborators(
 			contextAcceptLanguage,
 			_classNameLocalService.getClassNameId(
-				objectEntry.getModelClassName()),
-			objectEntry.getObjectEntryId(), collaborators,
-			contextCompany.getCompanyId(), _collaboratorDTOConverter,
-			_dtoConverterRegistry, objectEntry.getGroupId(),
-			_sharingEntryService, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+				ObjectEntryFolder.class.getName()),
+			objectEntry.getObjectEntryFolderId(), collaborators,
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			objectEntry.getGroupId(), _sharingEntryService, contextUriInfo,
+			contextUser, _userGroupLocalService, _userLocalService);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

@@ -14,9 +14,15 @@ import {useParams} from 'react-router-dom';
 
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
-import {ProductTags, ProductVocabulary} from '../enums/Product';
+import {
+	ProductSpecificationKey,
+	ProductTags,
+	ProductType,
+	ProductVocabulary,
+} from '../enums/Product';
 import {LicenseTier} from '../enums/licenseTier';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
+import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -49,7 +55,7 @@ export enum NewAppTypes {
 export type NewAppInitialState = {
 	_product?: Product;
 	build: {
-		cloudCompatible: boolean;
+		appType: ProductType;
 		compatibleOffering: string[];
 		liferayPackages: {
 			file: any[];
@@ -136,7 +142,7 @@ type NewAppPayload = {
 
 const newAppInitialState: NewAppInitialState = {
 	build: {
-		cloudCompatible: null as unknown as boolean,
+		appType: null as unknown as ProductType,
 		compatibleOffering: [],
 		liferayPackages: [],
 		resourceRequirements: {
@@ -204,6 +210,16 @@ const filterProductVocabularies = (product: Product, vocabulary: string) =>
 const reducer = (state: NewAppInitialState, action: AppActions) => {
 	switch (action.type) {
 		case NewAppTypes.SET_BUILD: {
+
+			// Reset the Liferay Packages if the App Type is changed
+
+			if (
+				action.payload.appType &&
+				action.payload.appType !== state.build.appType
+			) {
+				state.build.liferayPackages = [];
+			}
+
 			return {
 				...state,
 				build: {
@@ -251,6 +267,10 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				);
 			}
 
+			const storeFrontImages = (_product.images ?? []).filter(
+				({tags}) => !tags?.includes('app icon')
+			);
+
 			const appIcon = (_product.images ?? []).find(({tags}) =>
 				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
 			);
@@ -259,10 +279,30 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				...state,
 				...newState,
 				_product,
+				build: {
+					appType: specificationsMap.get(
+						ProductSpecificationKey.APP_TYPE
+					),
+					compatibleOffering: [],
+					liferayPackages: [],
+					resourceRequirements: {
+						cpu: specificationsMap.get(
+							ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS
+						),
+						ram: specificationsMap.get(
+							ProductSpecificationKey.APP_BUILD_RAM_IN_GBS
+						),
+					},
+				} as NewAppInitialState['build'],
+				pricing: {
+					priceModel: specificationsMap.get(
+						ProductSpecificationKey.APP_PRICING_MODEL
+					),
+				} as NewAppInitialState['pricing'],
 				profile: {
 					categories: filterProductVocabularies(
 						_product,
-						ProductVocabulary.SOLUTION_CATEGORY
+						ProductVocabulary.APP_CATEGORY
 					),
 					description: _product.description.en_US,
 					file: {
@@ -276,9 +316,53 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					name: _product.name.en_US,
 					tags: filterProductVocabularies(
 						_product,
-						ProductVocabulary.SOLUTION_TAGS
+						ProductVocabulary.APP_TAGS
 					),
 				} as NewAppInitialState['profile'],
+				storefront: {
+					images: storeFrontImages.map(
+						({externalReferenceCode, src, title}) => ({
+							changed: false,
+							fileName: title.en_US,
+							id: externalReferenceCode,
+							imageDescription: title.en_US,
+							preview: new URL(src).pathname,
+							progress: 100,
+							uploaded: true,
+						})
+					),
+				} as NewAppInitialState['storefront'],
+				support: {
+					appUsageTermsURL: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL
+					),
+					documentationURL: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL
+					),
+					email: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_EMAIL
+					),
+					installationGuideURL: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL
+					),
+					phone: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_PHONE
+					),
+					publisherWebsiteURL: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL
+					),
+					url: specificationsMap.get(
+						ProductSpecificationKey.APP_SUPPORT_URL
+					),
+				} as NewAppInitialState['support'],
+				version: {
+					notes: specificationsMap.get(
+						ProductSpecificationKey.APP_VERSION
+					),
+					version: specificationsMap.get(
+						ProductSpecificationKey.APP_VERSION_NOTES
+					),
+				} as NewAppInitialState['version'],
 			};
 		}
 
@@ -474,8 +558,17 @@ export default function NewAppContextProvider({
 			return;
 		}
 
-		// TO DO - GET PRODUCT
-
+		HeadlessCommerceAdminCatalogImpl.getProduct(
+			productId as string,
+			new URLSearchParams({
+				nestedFields:
+					'attachments,images,productSpecifications,productOptions',
+			})
+		)
+			.then((response) =>
+				dispatch({payload: response, type: NewAppTypes.SET_CONTEXT})
+			)
+			.catch(console.error);
 	}, [productId]);
 
 	if (isLoading) {

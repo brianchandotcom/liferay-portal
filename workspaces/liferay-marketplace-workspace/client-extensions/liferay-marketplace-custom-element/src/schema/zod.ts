@@ -102,8 +102,7 @@ const zodSchema = {
 	}),
 	appPublishing: {
 		build: z.object({
-			cloudCompatible: z.boolean(),
-			compatibleOffering: z.array(z.string()).min(1),
+			appType: z.string(),
 			liferayPackages: z.array(z.any()).min(1),
 		}),
 		profile: z.object({

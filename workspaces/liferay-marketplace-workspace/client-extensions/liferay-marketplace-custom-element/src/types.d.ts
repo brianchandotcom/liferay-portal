@@ -576,6 +576,7 @@ type Product = {
 	name: {[key: string]: string};
 	price?: number;
 	productId: number;
+	productOptions: ProductOption[];
 	productSpecifications: ProductSpecification[];
 	productStatus: number;
 	productType: string;
@@ -611,6 +612,27 @@ type ProductCategories = {
 };
 
 type ProductImages = ProductAttachment;
+
+type ProductOption = {
+	customFields: any[];
+	description: {[key: string]: string};
+	facetable: boolean;
+	fieldType: string;
+	id: number;
+	key: string;
+	name: {[key: string]: string};
+	optionExternalReferenceCode: string;
+	optionId: number;
+	priceType: string;
+	productOptionValues: {
+		id: number;
+		key: string;
+		name: {en_US: string};
+	}[];
+	required: boolean;
+	skuContributor: boolean;
+	typeSettings: string;
+};
 
 type ProductOptionItem = {
 	id: number;

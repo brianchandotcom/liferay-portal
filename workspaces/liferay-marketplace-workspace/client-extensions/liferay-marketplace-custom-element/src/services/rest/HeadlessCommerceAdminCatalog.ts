@@ -35,6 +35,20 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async createProductOption(body: unknown[], productId: number) {
+		return fetcher.post<APIResponse<ProductOption>>(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions?nestedFields=productOptionValues`,
+			body
+		);
+	}
+
+	async createProductOptionValue(body: unknown, optionId: number) {
+		return fetcher.post(
+			`/o/headless-commerce-admin-catalog/v1.0/productOptions/${optionId}/productOptionValues`,
+			body
+		);
+	}
+
 	async createVirtualProduct({
 		catalogId,
 		categories,
@@ -70,6 +84,13 @@ class HeadlessCommerceAdminCatalog {
 				productVirtualSettings: {},
 				workflowStatusInfo,
 			}
+		);
+	}
+
+	async createProductSKU(body: unknown, productId: string | number) {
+		return fetcher.post<SKU>(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`,
+			body
 		);
 	}
 
@@ -123,6 +144,12 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getOptions() {
+		return fetcher<APIResponse<CommerceOption>>(
+			'/o/headless-commerce-admin-catalog/v1.0/options'
+		);
+	}
+
 	async getProduct(
 		productId: string | number,
 		searchParams = new URLSearchParams()
@@ -144,6 +171,12 @@ class HeadlessCommerceAdminCatalog {
 	async getProducts(searchParams = new URLSearchParams()) {
 		return fetcher(
 			`/o/headless-commerce-admin-catalog/v1.0/products?${searchParams.toString()}`
+		);
+	}
+
+	async getProductOptions(productId: number) {
+		return fetcher<APIResponse<ProductOption>>(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions?nestedFields=productOptionValues`
 		);
 	}
 

@@ -35,7 +35,7 @@ const PublishAppOutlet = () => {
 		onClickPrevious,
 		onExit,
 		steps,
-	} = usePublishNavigation({exitLink: '/apps', flowItems: APP_FLOW_ITEMS});
+	} = usePublishNavigation({exitLink: '/', flowItems: APP_FLOW_ITEMS});
 
 	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
 
@@ -89,18 +89,34 @@ const PublishAppOutlet = () => {
 					disabled: isDisabled,
 					onClick: onSaveAsDraft,
 				}}
+				submitProps={{
+					onClick: onSave,
+				}}
 			/>
 
 			<AppPublish.Body>
 				<AppPublish.Sidebar activeIndex={activeIndex} items={steps} />
 
 				<AppPublish.Content>
-					<details>
-						<pre>{JSON.stringify(context, null, 2)}</pre>
-					</details>
-
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 					{activeRoute.description}
+
+					<details>
+						<pre>
+							{JSON.stringify(
+								(function () {
+									const _context = {...context};
+
+									delete _context.references;
+									delete _context._product;
+
+									return _context;
+								})(),
+								null,
+								4
+							)}
+						</pre>
+					</details>
 
 					<div className="mt-6 new-app-form">
 						<Outlet />

@@ -11,6 +11,7 @@ import {
 	useErc,
 	useId,
 	useName,
+	useOptions,
 	useSetId,
 } from '../../contexts/PicklistBuilderContext';
 import PicklistService from '../../services/PicklistService';
@@ -22,6 +23,7 @@ export default function PicklistBuilderManagementBar() {
 	const erc = useErc();
 	const id = useId();
 	const name = useName();
+	const options = useOptions();
 	const setId = useSetId();
 	const staleCache = useStaleCache();
 
@@ -38,16 +40,19 @@ export default function PicklistBuilderManagementBar() {
 				return;
 			}
 
+			const params = {
+				erc,
+				name,
+				options,
+			};
+
 			if (!id) {
-				const picklist = await PicklistService.createPicklist({
-					erc,
-					name,
-				});
+				const picklist = await PicklistService.createPicklist(params);
 
 				setId(picklist.id);
 			}
 			else {
-				await PicklistService.updatePicklist({erc, id, name});
+				await PicklistService.updatePicklist({...params, id});
 			}
 
 			staleCache('picklists');

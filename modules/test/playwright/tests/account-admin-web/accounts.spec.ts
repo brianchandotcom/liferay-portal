@@ -926,43 +926,46 @@ test('LPS-101893 Account list should be paginated', async ({
 	apiHelpers,
 	page,
 }) => {
-	for (let i = 1; i < 6; i++) {
+	const accounts = [];
+
+	for (let i = 1; i <= 21; i++) {
 		const account = await apiHelpers.headlessAdminUser.postAccount({
-			name: `Account ${i}`,
+			name: `Account ${String(i).padStart(2, '0')}`,
 			type: 'business',
 		});
 
 		apiHelpers.data.push({id: account.id, type: 'account'});
+		accounts.push(account);
 	}
 
 	await accountsPage.goto();
 
-	await setItemsPerPage(page, 4);
+	await setItemsPerPage(page, 20);
 
-	for (let i = 1; i < 6; i++) {
-		if (i < 5) {
+	for (const [index, account] of accounts.entries()) {
+		if (index < 20) {
 			await expect(
-				accountsPage.accountsTable.cell(`Account ${i}`)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountsTable.cell(`Account ${i}`)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 	}
 
 	await nextPage(page);
 
-	for (let i = 1; i < 6; i++) {
-		if (i < 5) {
+	for (const [index, account] of accounts.entries()) {
+		if (index < 20) {
 			await expect(
-				accountsPage.accountsTable.cell(`Account ${i}`)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 		else {
 			await expect(
-				accountsPage.accountsTable.cell(`Account ${i}`)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 	}

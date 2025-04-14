@@ -14,7 +14,6 @@ import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizatio
 import {TRole} from '../../helpers/HeadlessAdminUserApiHelper';
 import {RolesPage} from '../../pages/roles-admin-web/RolesPage';
 import getRandomString from '../../utils/getRandomString';
-import {setItemsPerPage} from '../../utils/pagination';
 import {
 	performLoginViaApi,
 	performLogout,
@@ -290,7 +289,7 @@ test(
 test(
 	'Can sort the roles',
 	{tag: ['@LPD-50065']},
-	async ({apiHelpers, page, rolesPage}) => {
+	async ({apiHelpers, rolesPage}) => {
 		const role1 = await apiHelpers.headlessAdminUser.postRole({
 			name: `A${getRandomString()}`,
 			roleType: 'regular',
@@ -305,27 +304,15 @@ test(
 
 		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
 
-		await expect(async () => {
-			await setItemsPerPage(page, 4);
-
-			await expect(page.getByText('Showing 1 to 4')).toBeVisible();
-		}).toPass();
-
-		await expect(async () => {
-			await rolesPage.rolesTable.orderButton.click();
-
-			await expect(rolesPage.rolesTable.cell(role1.name)).toBeVisible({
-				timeout: 300,
-			});
-			await expect(rolesPage.rolesTable.cell(role2.name)).toHaveCount(0, {
-				timeout: 300,
-			});
-		}).toPass();
+		await expect(await rolesPage.rolesTable.firstRow()).toContainText(
+			role1.name
+		);
 
 		await rolesPage.rolesTable.orderButton.click();
 
-		await expect(rolesPage.rolesTable.cell(role1.name)).toHaveCount(0);
-		await expect(rolesPage.rolesTable.cell(role2.name)).toBeVisible();
+		await expect(await rolesPage.rolesTable.firstRow()).toContainText(
+			role2.name
+		);
 
 		await rolesPage.rolesTable.orderButton.click();
 	}

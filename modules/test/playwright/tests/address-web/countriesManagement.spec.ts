@@ -82,22 +82,12 @@ test('LPD-41857 Can delete regions in bulk', async ({
 		await countriesManagementPage.countriesTableRowLink('Antarctica')
 	).click();
 
-	await (await countriesManagementPage.regionsLink).click();
-
-	await countriesManagementPage.selectPaginationItemsPerPage({
-		itemsPerPage: '4  Entries per Page',
-		page,
-	});
+	await countriesManagementPage.regionsLink.click();
 
 	for (let i = 0; i < regions.length; i++) {
 		const region = regions[i];
 
 		await (await countriesManagementPage.regionsCheckbox(region)).check();
-
-		if (i === 3) {
-			await countriesManagementPage.paginationLink('Page  2').click();
-			await waitForLoading(page);
-		}
 	}
 
 	page.on('dialog', async (dialog) => await dialog.accept());

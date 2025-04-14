@@ -54,7 +54,6 @@ export class CountriesManagementPage {
 	readonly filterStatus: (status: string) => Locator;
 	readonly noRegionsMessage: Locator;
 	readonly page: Page;
-	readonly paginationLink: (paginationPageNumber: string) => Locator;
 	readonly regionsCheckbox: (regionName: string) => Promise<Locator>;
 	readonly regionsLink: Locator;
 	readonly regionsTable: Locator;
@@ -124,12 +123,6 @@ export class CountriesManagementPage {
 		};
 		this.noRegionsMessage = page.getByText('There are no regions.');
 		this.page = page;
-		this.paginationLink = (paginationPageNumber: string) => {
-			return page.getByRole('link', {
-				exact: true,
-				name: paginationPageNumber,
-			});
-		};
 		this.regionsCheckbox = async (regionName: string) => {
 			const regionsTableRow = await this.regionsTableRow(1, regionName);
 			if (regionsTableRow && regionsTableRow.row) {

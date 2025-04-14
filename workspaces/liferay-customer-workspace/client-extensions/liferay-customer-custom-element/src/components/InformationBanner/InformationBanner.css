@@ -1,0 +1,12 @@
+.information-banner {
+	color: var(--color-state-info-darken-2);
+
+	a {
+		font-weight: 700;
+		text-decoration: underline;
+	}
+}
+
+.information-banner-title-icon {
+	color: var(--color-state-info-darken-1);
+}

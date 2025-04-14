@@ -6,12 +6,15 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
+import './InformationBanner.css';
+
 interface IProps {
 	alertType?: 'danger' | 'info' | 'success' | 'warning';
 	content: string;
 	dismissible?: boolean;
 	icon?: string;
 	onDismiss?: () => void;
+	title?: string;
 }
 
 const InformationBanner = ({
@@ -20,6 +23,7 @@ const InformationBanner = ({
 	dismissible = true,
 	icon,
 	onDismiss,
+	title,
 }: IProps) => {
 	return (
 		<div
@@ -30,19 +34,33 @@ const InformationBanner = ({
 				'd-flex',
 				'information-banner',
 				'justify-content-between',
-				'mb-4',
+				'mb-2',
+				'mx-4',
 				'px-4',
-				'py-3'
+				'py-3',
+				'rounded'
 			)}
 		>
-			<div className="align-items-center d-flex information-banner-content">
-				{icon && icon !== 'none' && (
-					<div className="alert-indicator information-banner-icon mr-2">
-						<ClayIcon symbol={icon} />
-					</div>
-				)}
+			<div>
+				<div className="align-items-center d-flex">
+					{icon && icon !== 'none' && title && (
+						<div className="alert-indicator information-banner-title-icon mr-2">
+							<ClayIcon symbol={icon} />
+						</div>
+					)}
 
-				<div dangerouslySetInnerHTML={{__html: content}} />
+					<div className="font-weight-bold">{title}</div>
+				</div>
+
+				<div className="align-items-center d-flex">
+					{icon && icon !== 'none' && !title && (
+						<div className="alert-indicator information-banner-icon mr-2">
+							<ClayIcon symbol={icon} />
+						</div>
+					)}
+
+					<div dangerouslySetInnerHTML={{__html: content}} />
+				</div>
 			</div>
 
 			{dismissible && (

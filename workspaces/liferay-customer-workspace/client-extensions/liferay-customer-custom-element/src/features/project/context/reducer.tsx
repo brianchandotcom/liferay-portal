@@ -6,11 +6,13 @@
 import {
 	IAccountSubscription,
 	IAccountSubscriptionGroup,
+	IBusinessEvent,
 	IProject,
 	IUserAccount,
 } from '~/utils/types';
 
 export const actionTypes = {
+	UPDATE_BUSINESS_EVENTS: 'UPDATE_BUSINESS_EVENTS',
 	UPDATE_PAGE: 'UPDATE_PAGE',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
 	UPDATE_QUICK_LINKS: 'UPDATE_QUICK_LINKS',
@@ -37,6 +39,7 @@ export interface IAction {
 }
 
 export interface IState {
+	businessEvents: IBusinessEvent | undefined;
 	isQuickLinksExpanded: boolean;
 	page: string | undefined;
 	project: IProject | undefined;
@@ -54,6 +57,11 @@ const reducer = (state: IState, action: IAction): IState => {
 			return {
 				...state,
 				userAccount: action.payload as IUserAccount,
+			};
+		case actionTypes.UPDATE_BUSINESS_EVENTS:
+			return {
+				...state,
+				businessEvents: action.payload as IBusinessEvent,
 			};
 		case actionTypes.UPDATE_PROJECT:
 			return {

@@ -217,6 +217,12 @@ public class CompanyTestEntityResourceTest
 
 		Assert.assertEquals(
 			description, actualCompanyTestEntity.getDescription());
+
+		assertHttpResponseStatusCode(
+			404,
+			companyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCodeHttpResponse(
+					randomCompanyTestEntity.getExternalReferenceCode()));
 	}
 
 	private void _testPostCompanyTestEntityBatch() throws Exception {

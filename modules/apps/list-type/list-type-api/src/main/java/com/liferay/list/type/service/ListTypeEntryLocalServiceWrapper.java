@@ -50,11 +50,12 @@ public class ListTypeEntryLocalServiceWrapper
 	public com.liferay.list.type.model.ListTypeEntry addListTypeEntry(
 			String externalReferenceCode, long userId,
 			long listTypeDefinitionId, String key,
-			java.util.Map<java.util.Locale, String> nameMap)
+			java.util.Map<java.util.Locale, String> nameMap, boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeEntryLocalService.addListTypeEntry(
-			externalReferenceCode, userId, listTypeDefinitionId, key, nameMap);
+			externalReferenceCode, userId, listTypeDefinitionId, key, nameMap,
+			system);
 	}
 
 	/**

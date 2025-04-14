@@ -8,6 +8,8 @@ export const LIST_TYPES = {
 	developerKeyPortalVersion: 'Developer Key Portal Version',
 	dxpMajorVersion: 'DXP Major Version',
 	dxpMinorVersion: 'DXP Minor Version',
+	dxpMinorVersionAndPortalMajorVersion:
+		'DXP Minor Version and Portal Major Version',
 	gmtTimeZones: 'GMT Time Zones',
 	lxcPrimaryRegion: 'LXC Primary Region',
 	portalMajorVersion: 'Portal Major Version',

@@ -28,6 +28,7 @@ import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesLi
 import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
+import {containsOption} from '../../utils/containsOption';
 import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
@@ -282,15 +283,19 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 			setNewLiferayVersionOptions([
 				...dxpMinorVersionsAndPortalMajorVersions.filter(
 					(version, index, versions) => {
-						return (
-							index <
-							versions.findIndex((version) => {
-								return (
-									version.value ===
-									businessEvent.currentLiferayVersion?.key
-								);
-							})
-						);
+						if (businessEvent.currentLiferayVersion?.key) {
+							return (
+								index <
+								versions.findIndex((version) => {
+									return (
+										version.value ===
+										businessEvent.currentLiferayVersion?.key
+									);
+								})
+							);
+						}
+
+						return true;
 					}
 				),
 			]);
@@ -308,10 +313,21 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	}, [isDescriptionRequired, setFieldValue]);
 
 	useEffect(() => {
-		if (!isNewLiferayVersionRequired) {
+		if (
+			!isNewLiferayVersionRequired ||
+			!containsOption(
+				newLiferayVersionOptions,
+				businessEvent.newLiferayVersion
+			)
+		) {
 			setFieldValue('businessEvent.newLiferayVersion.key', '');
 		}
-	}, [isNewLiferayVersionRequired, setFieldValue]);
+	}, [
+		businessEvent.newLiferayVersion,
+		isNewLiferayVersionRequired,
+		newLiferayVersionOptions,
+		setFieldValue,
+	]);
 
 	useEffect(() => {
 		setFieldValue(

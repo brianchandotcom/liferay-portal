@@ -99,7 +99,7 @@ const CancelEventPage: React.FC<IProps> = ({
 	return (
 		<BusinessEventsModal
 			handleSubmit={handleSubmit}
-			headerTitle={i18n.translate('cancel-business-event').toUpperCase()}
+			headerTitle={i18n.translate('cancel-business-event')}
 			isLoadingSubmitButton={isLoadingSubmitButton}
 			modalType={modalType}
 			observer={observer}

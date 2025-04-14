@@ -248,15 +248,16 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 					</span>
 				</Badge>
 
-				{!isValidRecordDate && (
-					<Badge>
-						<span className="pl-1">
-							{i18n.translate(
-								'please-select-an-actual-go-live-date-that-has-already-occurred-or-is-today'
-							)}
-						</span>
-					</Badge>
-				)}
+				{values.businessEvent?.actualGoLiveDate! &&
+					!isValidRecordDate && (
+						<Badge>
+							<span className="pl-1">
+								{i18n.translate(
+									'please-select-an-actual-go-live-date-that-has-already-occurred-or-is-today'
+								)}
+							</span>
+						</Badge>
+					)}
 			</div>
 		</BusinessEventsModal>
 	);

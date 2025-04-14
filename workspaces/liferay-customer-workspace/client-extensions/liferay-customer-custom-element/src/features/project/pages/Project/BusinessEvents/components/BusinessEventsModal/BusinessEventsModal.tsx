@@ -63,7 +63,7 @@ const BusinessEventsModal = ({
 			<div className="p-4">
 				<div className="pb-4">
 					<div className="font-weight-bold header-title mb-1">
-						{headerTitle}
+						{headerTitle.toUpperCase()}
 					</div>
 
 					<div className="d-flex justify-content-between">

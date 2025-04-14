@@ -54,7 +54,10 @@ export default function useGetLiferayVersions(): {
 		data: dxpMinorVersionsAndPortalMajorVersionsData,
 		loading: loadingDXPMinorVersionsAndPortalMajorVersions,
 	} = useGetListTypeDefinitions({
-		filter: SearchBuilder.eq('name', LIST_TYPES.dxpMinorVersion),
+		filter: SearchBuilder.eq(
+			'name',
+			LIST_TYPES.dxpMinorVersionAndPortalMajorVersion
+		),
 	});
 
 	const dxpMinorVersionsAndPortalMajorVersions = useMemo(

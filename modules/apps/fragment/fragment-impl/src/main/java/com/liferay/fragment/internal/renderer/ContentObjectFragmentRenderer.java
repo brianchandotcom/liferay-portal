@@ -351,7 +351,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			(InfoItemDetails)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
-		if ((infoItemReference != null) &&
+		if ((classPK <= 0) && (infoItemReference != null) &&
 			infoItemReference.equals(infoItemDetails.getInfoItemReference())) {
 
 			Object infoItem = httpServletRequest.getAttribute(

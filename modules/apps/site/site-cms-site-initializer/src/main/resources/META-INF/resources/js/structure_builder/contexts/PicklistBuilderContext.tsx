@@ -52,9 +52,9 @@ export type State = {
 	setOptions: Dispatch<SetStateAction<Options>>;
 };
 
-const StateContext = createContext<State>(INITIAL_STATE);
+const PicklistBuilderContext = createContext<State>(INITIAL_STATE);
 
-export default function StateContextProvider({
+export default function PicklistBuilderContextProvider({
 	children,
 	initialState,
 }: {
@@ -69,7 +69,7 @@ export default function StateContextProvider({
 	const [options, setOptions] = useState<Options>(new Map());
 
 	return (
-		<StateContext.Provider
+		<PicklistBuilderContext.Provider
 			value={{
 				erc,
 				id,
@@ -82,7 +82,7 @@ export default function StateContextProvider({
 			}}
 		>
 			{children}
-		</StateContext.Provider>
+		</PicklistBuilderContext.Provider>
 	);
 }
 
@@ -100,7 +100,7 @@ const buildState = (picklist: Picklist): State => {
 };
 
 const useAddOption = () => {
-	const {setOptions} = useContext(StateContext);
+	const {setOptions} = useContext(PicklistBuilderContext);
 
 	return ({erc, key, name}: Option) =>
 		setOptions((options) => {
@@ -110,22 +110,22 @@ const useAddOption = () => {
 		});
 };
 
-const useErc = () => useContext(StateContext).erc;
+const useErc = () => useContext(PicklistBuilderContext).erc;
 
-const useId = () => useContext(StateContext).id;
+const useId = () => useContext(PicklistBuilderContext).id;
 
-const useName = () => useContext(StateContext).name;
+const useName = () => useContext(PicklistBuilderContext).name;
 
-const useSetErc = () => useContext(StateContext).setErc;
+const useSetErc = () => useContext(PicklistBuilderContext).setErc;
 
-const useSetId = () => useContext(StateContext).setId;
+const useSetId = () => useContext(PicklistBuilderContext).setId;
 
-const useSetName = () => useContext(StateContext).setName;
+const useSetName = () => useContext(PicklistBuilderContext).setName;
 
-const useOptions = () => useContext(StateContext).options;
+const useOptions = () => useContext(PicklistBuilderContext).options;
 
 const useRemoveOptions = () => {
-	const {setOptions} = useContext(StateContext);
+	const {setOptions} = useContext(PicklistBuilderContext);
 
 	return (ercs: string[]) => {
 		setOptions((options) => {
@@ -139,17 +139,17 @@ const useRemoveOptions = () => {
 };
 
 export {
-	buildState,
 	INITIAL_STATE,
-	StateContext,
-	StateContextProvider,
+	PicklistBuilderContext,
+	PicklistBuilderContextProvider,
+	buildState,
 	useAddOption,
 	useErc,
-	useSetErc,
 	useId,
-	useOptions,
-	useSetId,
 	useName,
-	useSetName,
+	useOptions,
 	useRemoveOptions,
+	useSetErc,
+	useSetId,
+	useSetName,
 };

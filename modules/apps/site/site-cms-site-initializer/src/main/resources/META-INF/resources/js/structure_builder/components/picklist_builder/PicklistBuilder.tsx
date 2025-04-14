@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import React, {useEffect} from 'react';
 
 import CacheContextProvider from '../../contexts/CacheContext';
-import StateContextProvider, {
+import PicklistBuilderContextProvider, {
 	buildState,
 	useId,
 } from '../../contexts/PicklistBuilderContext';
@@ -22,7 +22,7 @@ export default function PicklistBuilder({
 	state: {listTypeDefinition: Picklist};
 }) {
 	return (
-		<StateContextProvider
+		<PicklistBuilderContextProvider
 			initialState={buildState(state.listTypeDefinition)}
 		>
 			<div className="d-flex flex-column">
@@ -38,7 +38,7 @@ export default function PicklistBuilder({
 					<PicklistOptions />
 				</ClayLayout.ContainerFluid>
 			</div>
-		</StateContextProvider>
+		</PicklistBuilderContextProvider>
 	);
 }
 

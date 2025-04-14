@@ -167,7 +167,8 @@ public class ListTypeEntryServiceTest {
 			_listTypeDefinition.getListTypeDefinitionId(),
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_listTypeDefinition.isSystem());
 	}
 
 	private void _setUser(User user) {
@@ -187,7 +188,8 @@ public class ListTypeEntryServiceTest {
 				null, _listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				_listTypeDefinition.isSystem());
 		}
 		finally {
 			if (listTypeEntry != null) {

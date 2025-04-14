@@ -71,6 +71,24 @@ public interface KaleoLogLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addInstanceEndKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addInstanceFailKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken, String comment,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addInstanceStartKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the kaleo log to the database. Also notifies the appropriate model listeners.
 	 *
@@ -139,18 +157,6 @@ public interface KaleoLogLocalService
 	public KaleoLog addTaskUpdateKaleoLog(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
 			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoLog addWorkflowInstanceEndKaleoLog(
-			KaleoInstanceToken kaleoInstanceToken,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoLog addWorkflowInstanceStartKaleoLog(
-			KaleoInstanceToken kaleoInstanceToken,
 			ServiceContext serviceContext)
 		throws PortalException;
 

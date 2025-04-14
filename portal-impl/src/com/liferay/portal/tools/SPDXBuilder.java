@@ -183,25 +183,25 @@ public class SPDXBuilder {
 				String licenseName = _getLicenseName(
 					packageElement, fileName, licenseOverrideProperties);
 
-				if (licenseName != null) {
-					Element licensesElement = libraryElement.addElement(
-						"licenses");
+				if (licenseName == null) {
+					return libraryElement;
+				}
 
-					Element licenseElement = licensesElement.addElement(
-						"license");
+				Element licensesElement = libraryElement.addElement("licenses");
 
-					Element element = licenseElement.addElement("license-name");
+				Element licenseElement = licensesElement.addElement("license");
 
-					element.addText(licenseName);
+				Element element = licenseElement.addElement("license-name");
 
-					String licenseURL = _getLicenseURL(
-						packageElement, fileName, licenseOverrideProperties);
+				element.addText(licenseName);
 
-					if (licenseURL != null) {
-						element = licenseElement.addElement("license-url");
+				String licenseURL = _getLicenseURL(
+					packageElement, fileName, licenseOverrideProperties);
 
-						element.addText(licenseURL);
-					}
+				if (licenseURL != null) {
+					element = licenseElement.addElement("license-url");
+
+					element.addText(licenseURL);
 				}
 
 				return libraryElement;

@@ -33,6 +33,7 @@ export class DataSetFragmentPage {
 	readonly selectDataSetModalFrame: FrameLocator;
 	readonly selectDataSetButton: Locator;
 	readonly selectedDataSetInput: Locator;
+	readonly selectionListContainer: Locator;
 	readonly sidePanel: Locator;
 	readonly sidePanelFrame: FrameLocator;
 	readonly table: {
@@ -88,6 +89,10 @@ export class DataSetFragmentPage {
 		this.selectedDataSetInput = page
 			.getByLabel('Configuration Panel')
 			.getByLabel('Data Set View', {exact: true});
+
+		this.selectionListContainer = this.selectDataSetModalFrame.locator(
+			'.fds-admin-item-selector'
+		);
 
 		this.sidePanel = page.locator('.fds-side-panel');
 		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');

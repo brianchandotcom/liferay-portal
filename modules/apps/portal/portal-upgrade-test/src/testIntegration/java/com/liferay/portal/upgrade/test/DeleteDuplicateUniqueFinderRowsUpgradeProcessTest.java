@@ -11,6 +11,7 @@ import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.PortalPreferences;
@@ -69,7 +70,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	public void testDuplicateRemovalProcessOnPortalPreferencesTable()
 		throws Exception {
 
-		_dropIndexes("PortalPreferences", "ownerType");
+		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
+			_connection, "PortalPreferences", "ownerType");
 
 		PortalPreferences portalPreferences =
 			PortalPreferencesLocalServiceUtil.createPortalPreferences(1);
@@ -94,7 +96,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
-		_assertIndex("PortalPreferences", "IX_D1846D13");
+		_assertIndexes("PortalPreferences", indexMetadatas);
 
 		portalPreferences.setPortalPreferencesId(1);
 
@@ -107,7 +109,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	public void testDuplicateRemovalProcessOnPortletItemTable()
 		throws Exception {
 
-		_dropIndexes("PortletItem", "groupId");
+		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
+			_connection, "PortletItem", "groupId");
 
 		PortletItem portletItem = PortletItemLocalServiceUtil.createPortletItem(
 			1);
@@ -136,7 +139,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
-		_assertIndex("PortletItem", "IX_C6246ECD");
+		_assertIndexes("PortletItem", indexMetadatas);
 
 		portletItem.setPortletItemId(1);
 
@@ -148,7 +151,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	public void testDuplicateRemovalProcessOnSocialActivitySettingTable()
 		throws Exception {
 
-		_dropIndexes("SocialActivitySetting", "groupId");
+		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
+			_connection, "SocialActivitySetting", "groupId");
 
 		SocialActivitySetting socialActivitySetting =
 			SocialActivitySettingLocalServiceUtil.createSocialActivitySetting(
@@ -186,7 +190,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
-		_assertIndex("SocialActivitySetting", "IX_4FC6CD18");
+		_assertIndexes("SocialActivitySetting", indexMetadatas);
 		socialActivitySetting.setActivitySettingId(1);
 
 		Assert.assertEquals(
@@ -196,19 +200,20 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testDuplicateRemovalProcessOnTicketTable() throws Exception {
-		_dropIndexes("Ticket", "key_");
+		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
+			_connection, "Ticket", "key_");
 
 		Ticket ticket = TicketLocalServiceUtil.createTicket(1);
 
 		ticket.setKey("key_");
 
-		List<Ticket> list = new ArrayList<>();
+		List<Ticket> tickets = new ArrayList<>();
 
-		list.add(TicketLocalServiceUtil.addTicket(ticket));
+		tickets.add(TicketLocalServiceUtil.addTicket(ticket));
 
 		ticket.setTicketId(2);
 
-		list.add(TicketLocalServiceUtil.addTicket(ticket));
+		tickets.add(TicketLocalServiceUtil.addTicket(ticket));
 
 		_assertCount("Ticket", false, "key_");
 
@@ -218,14 +223,14 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		// Simulate previous persistence implementation sort
 
-		Collections.sort(list, Collections.reverseOrder());
+		Collections.sort(tickets, Collections.reverseOrder());
 
 		Assert.assertEquals(
-			list.get(0), _ticketLocalService.fetchTicket("key_"));
+			tickets.get(0), _ticketLocalService.fetchTicket("key_"));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
-		_assertIndex("Ticket", "IX_B2468446");
+		_assertIndexes("Ticket", indexMetadatas);
 
 		Assert.assertEquals(ticket, TicketLocalServiceUtil.getTicket(2));
 	}
@@ -257,29 +262,27 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			});
 	}
 
-	private void _assertIndex(String tableName, String indexName)
+	private void _assertIndexes(
+			String tableName, List<IndexMetadata> indexMetadatas)
 		throws Exception {
 
-		Assert.assertTrue(_dbInspector.hasIndex(tableName, indexName));
-	}
-
-	private void _dropIndexes(String tableName, String columnName)
-		throws Exception {
-
-		_db.dropIndexes(_connection, tableName, columnName);
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			Assert.assertTrue(
+				_dbInspector.hasIndex(tableName, indexMetadata.getIndexName()));
+		}
 	}
 
 	private void _runUpgrade(
 			String tableName, String[] columns, String orderByClause)
-			throws Exception {
+		throws Exception {
 
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess =
-				new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-						tableName, columns, orderByClause);
+			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
+				tableName, columns, orderByClause);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-						"DeleteDuplicateUniqueFinderRowsUpgradeProcess",
+					"DeleteDuplicateUniqueFinderRowsUpgradeProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();

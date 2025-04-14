@@ -132,6 +132,41 @@ test(
 			await dataSetFragmentPage.addDataSetFragment(layout);
 		});
 
+		await test.step('Check that only one data set can be selected', async () => {
+			const dataSetInput1 =
+				dataSetFragmentPage.selectDataSetModalFrame.locator(
+					`li:has-text("${dataSetLabel1}") input.custom-control-input`
+				);
+			const dataSetInput2 =
+				dataSetFragmentPage.selectDataSetModalFrame.locator(
+					`li:has-text("${dataSetLabel2}") input.custom-control-input`
+				);
+
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await page.getByRole('dialog').isVisible();
+
+			await page.getByRole('heading', {name: 'Select'}).isVisible();
+
+			await dataSetFragmentPage.selectDataSetModalFrame
+				.locator('.fds-admin-item-selector')
+				.waitFor({state: 'visible'});
+
+			await dataSetInput1.setChecked(true);
+
+			await expect(dataSetInput1).toBeChecked();
+
+			await dataSetInput2.setChecked(true);
+
+			await expect(dataSetInput2).toBeChecked();
+
+			await expect(dataSetInput1).not.toBeChecked();
+
+			await dataSetFragmentPage.selectDataSetModalFrame
+				.getByRole('button', {name: 'Cancel'})
+				.click();
+		});
+
 		await test.step('Assign first data set to fragment', async () => {
 			await dataSetFragmentPage.selectDataSetButton.click();
 

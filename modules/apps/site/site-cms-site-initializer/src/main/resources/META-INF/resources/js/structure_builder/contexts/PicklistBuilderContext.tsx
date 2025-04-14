@@ -66,7 +66,7 @@ export default function PicklistBuilderContextProvider({
 	const [name, setName] = useState<Liferay.Language.LocalizedValue<string>>(
 		initialState.name
 	);
-	const [options, setOptions] = useState<Options>(new Map());
+	const [options, setOptions] = useState<Options>(initialState.options);
 
 	return (
 		<PicklistBuilderContext.Provider
@@ -96,6 +96,15 @@ const buildState = (picklist: Picklist): State => {
 		erc: picklist.externalReferenceCode,
 		id: picklist.id,
 		name: normalizeI18n(picklist.name_i18n),
+		options: new Map(
+			picklist.listTypeEntries.map((option) => [
+				option.externalReferenceCode,
+				{
+					key: option.key,
+					name: normalizeI18n(option.name_i18n),
+				},
+			])
+		),
 	};
 };
 

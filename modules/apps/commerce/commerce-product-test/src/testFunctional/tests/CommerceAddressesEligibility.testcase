@@ -541,10 +541,6 @@ definition {
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -564,6 +560,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "ValidShippingBilling Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 
@@ -732,10 +734,6 @@ definition {
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -755,6 +753,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "ValidShippingBilling Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 
@@ -897,10 +901,6 @@ definition {
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -920,6 +920,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 
@@ -998,10 +1004,6 @@ definition {
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -1021,6 +1023,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "InvalidShippingBilling Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 
@@ -1076,10 +1084,6 @@ definition {
 		}
 
 		task ("Then is not possible to use that address anymore") {
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -1099,6 +1103,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "ValidShippingBilling Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 
@@ -1192,10 +1202,6 @@ definition {
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Use shipping address as billing address",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			for (var typeList : list "Shipping,Billing") {
 				Click(
 					key_fieldLabel = "Choose ${typeList} Address",
@@ -1215,6 +1221,12 @@ definition {
 					key_fieldLabel = "Choose ${typeList} Address",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Test Address");
+
+				if (${typeList} == "Shipping") {
+					Uncheck.uncheckToggleSwitch(
+						checkboxName = "Use shipping address as billing address",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
 
 				Click(locator1 = "Button#CONTINUE");
 

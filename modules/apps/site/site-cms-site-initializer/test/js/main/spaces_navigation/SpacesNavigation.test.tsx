@@ -8,18 +8,23 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {SpacesNavigation} from '../../../../src/main/resources/META-INF/resources/js/';
+import {AssetLibrary} from '../../../../src/main/resources/META-INF/resources/js/main/spaces_navigation/SpacesNavigation';
 
 type SpacesNavigationProps = {
+	assetLibraries?: AssetLibrary[];
+	assetLibrariesCount?: number;
 	showAddButton?: boolean;
 };
 
 const renderComponent = ({
+	assetLibraries = [],
+	assetLibrariesCount = 0,
 	showAddButton = false,
 }: SpacesNavigationProps = {}) => {
 	return render(
 		<SpacesNavigation
-			assetLibraries={[]}
-			assetLibrariesCount={0}
+			assetLibraries={assetLibraries}
+			assetLibrariesCount={assetLibrariesCount}
 			showAddButton={showAddButton}
 		/>
 	);

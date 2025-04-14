@@ -36,10 +36,10 @@ public class CompanyTestEntityResourceTest
 
 	@Override
 	@Test
-	public void testPatchCompanyTestEntity() throws Exception {
-		super.testPatchCompanyTestEntity();
+	public void testPutCompanyTestEntity() throws Exception {
+		super.testPutCompanyTestEntity();
 
-		_testPatchCompanyTestEntityBatch();
+		_testPutCompanyTestEntityBatch();
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class CompanyTestEntityResourceTest
 		).build();
 	}
 
-	private void _testPatchCompanyTestEntityBatch() throws Exception {
+	private void _testPutCompanyTestEntityBatch() throws Exception {
 		CompanyTestEntity postCompanyTestEntity =
 			companyTestEntityResource.postCompanyTestEntity(
 				randomCompanyTestEntity());

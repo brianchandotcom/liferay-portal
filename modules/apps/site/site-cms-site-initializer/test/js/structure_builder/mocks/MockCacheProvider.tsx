@@ -11,6 +11,12 @@ import SpaceService from '../../../../src/main/resources/META-INF/resources/js/s
 import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Picklist';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Space';
 
+export const broadcastMock = {
+	addEventListener: jest.fn(),
+	postMessage: jest.fn(),
+	removeEventListener: jest.fn(),
+} as unknown as BroadcastChannel;
+
 function getCache({
 	picklists,
 	spaces,
@@ -43,7 +49,11 @@ export function MockCacheProvider({
 }) {
 	return (
 		<CacheContext.Provider
-			value={{cache: getCache({picklists, spaces}), update: () => {}}}
+			value={{
+				broadcast: broadcastMock,
+				cache: getCache({picklists, spaces}),
+				update: () => {},
+			}}
 		>
 			{children}
 		</CacheContext.Provider>

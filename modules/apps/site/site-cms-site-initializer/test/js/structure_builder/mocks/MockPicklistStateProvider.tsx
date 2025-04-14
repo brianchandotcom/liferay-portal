@@ -6,17 +6,21 @@
 import React, {ReactNode} from 'react';
 
 import {
+	PicklistBuilderContext,
 	State,
-	StateContext,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 
 export const DEFAULT_STATE: State = {
 	erc: 'picklistERC',
 	id: 1,
 	name: {en_US: 'Picklist Name'},
+	options: new Map([
+		['option1ERC', {key: 'option1', name: {en_US: 'Option 1'}}],
+	]),
 	setErc: jest.fn(),
 	setId: jest.fn(),
 	setName: jest.fn(),
+	setOptions: jest.fn(),
 };
 
 export function MockStateProvider({
@@ -27,8 +31,8 @@ export function MockStateProvider({
 	state?: Partial<State>;
 }) {
 	return (
-		<StateContext.Provider value={{...DEFAULT_STATE, ...state}}>
+		<PicklistBuilderContext.Provider value={{...DEFAULT_STATE, ...state}}>
 			{children}
-		</StateContext.Provider>
+		</PicklistBuilderContext.Provider>
 	);
 }

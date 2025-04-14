@@ -11,12 +11,15 @@ import React from 'react';
 import PicklistBuilderManagementBar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderManagementBar';
 import {State} from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 import PicklistService from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService';
+import {MockCacheProvider} from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 const renderComponent = (state?: Partial<State>) => {
 	return render(
 		<MockStateProvider state={state}>
-			<PicklistBuilderManagementBar />
+			<MockCacheProvider>
+				<PicklistBuilderManagementBar />
+			</MockCacheProvider>
 		</MockStateProvider>
 	);
 };
@@ -46,6 +49,9 @@ describe('PicklistBuilderManagementBar', () => {
 		expect(PicklistService.createPicklist).toBeCalledWith({
 			erc: 'picklistERC',
 			name: {en_US: 'Picklist Name'},
+			options: new Map([
+				['option1ERC', {key: 'option1', name: {en_US: 'Option 1'}}],
+			]),
 		});
 		expect(
 			screen.getByText('Picklist Name-was-saved-successfully')

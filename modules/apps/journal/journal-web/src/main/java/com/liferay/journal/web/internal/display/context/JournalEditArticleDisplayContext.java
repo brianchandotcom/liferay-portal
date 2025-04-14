@@ -496,8 +496,6 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"defaultLanguageId", getDefaultArticleLanguageId()
 		).put(
-			"displayDate", (_article == null) ? null : _article.getDisplayDate()
-		).put(
 			"hasSavePermission", hasSavePermission()
 		).build();
 	}

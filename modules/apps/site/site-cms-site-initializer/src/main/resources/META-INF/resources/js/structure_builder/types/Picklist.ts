@@ -6,6 +6,11 @@
 export type Picklist = {
 	externalReferenceCode: string;
 	id: number;
+	listTypeEntries: {
+		externalReferenceCode: string;
+		key: string;
+		name_i18n: Liferay.Language.LocalizedValue<string>;
+	}[];
 	name: string;
 	name_i18n: Liferay.Language.LocalizedValue<string>;
 };

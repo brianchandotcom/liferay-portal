@@ -3,22 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {State} from '../contexts/PicklistBuilderContext';
+import {Options, State} from '../contexts/PicklistBuilderContext';
 import {Picklist} from '../types/Picklist';
+import normalizeOptions from '../utils/normalizeOptions';
 import ApiHelper from './ApiHelper';
 
 async function createPicklist({
 	erc,
 	name: name_i18n,
+	options,
 }: {
 	erc: State['erc'];
 	name: State['name'];
+	options?: Options;
 }): Promise<Picklist> {
 	return await ApiHelper.post(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions`,
 		{
 			externalReferenceCode: erc,
 			name_i18n,
+			...(options && {
+				listTypeEntries: normalizeOptions(options),
+			}),
 		}
 	);
 }
@@ -35,16 +41,21 @@ async function updatePicklist({
 	erc,
 	id,
 	name: name_i18n,
+	options,
 }: {
 	erc?: State['erc'];
 	id: State['id'];
 	name?: State['name'];
+	options?: Options;
 }) {
 	await ApiHelper.put(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
 		{
 			externalReferenceCode: erc,
 			name_i18n,
+			...(options && {
+				listTypeEntries: normalizeOptions(options),
+			}),
 		}
 	);
 }

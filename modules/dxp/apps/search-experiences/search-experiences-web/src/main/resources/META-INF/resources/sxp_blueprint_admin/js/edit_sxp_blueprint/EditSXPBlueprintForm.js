@@ -87,7 +87,7 @@ function EditSXPBlueprintForm({
 	sxpBlueprintId,
 }) {
 	const {
-		fetchDDMStructuresURL = '',
+		fetchSubtypeClassesURL = '',
 		isCompanyAdmin,
 		locale,
 		namespace,
@@ -125,10 +125,10 @@ function EditSXPBlueprintForm({
 	const {data: ddmStructureMap, onChangeData: setDDMStructureMap} =
 		useFetchData({
 			defaultValue: {},
-			getData: (response) => mapDDMStructures(response?.ddmStructures),
-			resource: addParams(fetchDDMStructuresURL, {
-				[`${namespace}cmd`]: 'getDDMStructureInfo',
-				[`${namespace}ddmStructureIdentifiers`]: (
+			getData: (response) => mapDDMStructures(response?.subtypeClasses),
+			resource: addParams(fetchSubtypeClassesURL, {
+				[`${namespace}cmd`]: 'getSubtypeClassesInfo',
+				[`${namespace}subTypeIdentifiers`]: (
 					initialConfiguration.generalConfiguration
 						?.searchableAssetTypes || []
 				).join(','),

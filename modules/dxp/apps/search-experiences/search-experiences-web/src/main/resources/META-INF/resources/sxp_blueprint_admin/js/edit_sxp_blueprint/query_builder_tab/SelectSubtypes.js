@@ -46,18 +46,20 @@ export function SearchableSubtypesModal({
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const {fetchDDMStructuresURL = '', namespace} = useContext(ThemeContext);
+	const {fetchSubtypeClassesURL = '', namespace} = useContext(ThemeContext);
 
-	const getLabel = ({ddmStructureLocalizedName, groupLocalizedName}) => {
-		return `${ddmStructureLocalizedName} (${groupLocalizedName})`;
+	const getLabel = ({groupLocalizedName, subtypeClassLocalizedName}) => {
+		return groupLocalizedName
+			? `${subtypeClassLocalizedName} (${groupLocalizedName})`
+			: subtypeClassLocalizedName;
 	};
 
 	const getValue = ({
 		className,
-		ddmStructureExternalReferenceCode,
 		groupExternalReferenceCode,
+		subtypeClassExternalReferenceCode,
 	}) => {
-		return `${className}#${groupExternalReferenceCode}#${ddmStructureExternalReferenceCode}`;
+		return `${className}#${groupExternalReferenceCode}#${subtypeClassExternalReferenceCode}`;
 	};
 
 	const isSelected = useCallback(
@@ -126,19 +128,19 @@ export function SearchableSubtypesModal({
 				fetch(
 					addParams(
 						{
-							[`${namespace}cmd`]: 'getClassDDMStructures',
+							[`${namespace}cmd`]: 'getSubtypeClasses',
 							[`${namespace}className`]: className,
 							[`${namespace}page`]: page,
 							[`${namespace}pageSize`]: pageSize,
 						},
-						fetchDDMStructuresURL
+						fetchSubtypeClassesURL
 					)
 				)
 					.then((response) => response.json())
 					.then((items) => {
 						setSubtypes({
 							...items,
-							ddmStructures: items.ddmStructures?.map(
+							ddmStructures: items.subtypeClasses?.map(
 								(subtype) => ({
 									...subtype,
 									label: getLabel(subtype),
@@ -162,7 +164,7 @@ export function SearchableSubtypesModal({
 				setLoading(false);
 			}
 		},
-		[className, fetchDDMStructuresURL, namespace]
+		[className, fetchSubtypeClassesURL, namespace]
 	);
 
 	const _handlePageChange = (newPage) => {
@@ -328,7 +330,7 @@ export function SearchableSubtypesModal({
 															'select-x'
 														),
 														[
-															item.ddmStructureLocalizedName,
+															item.subtypeClassLocalizedName,
 														]
 													)}
 													checked={isSelected(item)}
@@ -339,7 +341,7 @@ export function SearchableSubtypesModal({
 
 												<span className="c-ml-2 table-list-title">
 													{
-														item.ddmStructureLocalizedName
+														item.subtypeClassLocalizedName
 													}
 												</span>
 											</div>

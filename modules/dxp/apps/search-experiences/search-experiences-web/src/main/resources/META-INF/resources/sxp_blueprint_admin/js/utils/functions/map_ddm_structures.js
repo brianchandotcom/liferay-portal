@@ -16,14 +16,14 @@ export default function mapDDMStructures(ddmStructures = []) {
 	ddmStructures.forEach((ddmStructure) => {
 		const {
 			className,
-			ddmStructureExternalReferenceCode,
-			ddmStructureLocalizedName,
 			groupExternalReferenceCode,
 			groupLocalizedName,
+			subtypeClassExternalReferenceCode,
+			subtypeClassLocalizedName,
 		} = ddmStructure;
 
-		const value = `${className}#${groupExternalReferenceCode}#${ddmStructureExternalReferenceCode}`;
-		const label = `${ddmStructureLocalizedName} (${groupLocalizedName})`;
+		const value = `${className}#${groupExternalReferenceCode}#${subtypeClassExternalReferenceCode}`;
+		const label = `${subtypeClassLocalizedName} (${groupLocalizedName})`;
 
 		ddmStructureMap[value] = label;
 	});

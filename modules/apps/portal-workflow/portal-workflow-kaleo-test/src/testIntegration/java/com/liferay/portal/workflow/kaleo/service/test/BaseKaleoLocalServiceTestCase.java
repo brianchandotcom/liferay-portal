@@ -240,7 +240,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			KaleoInstance kaleoInstance)
 		throws Exception, PortalException {
 
-		return kaleoLogLocalService.addWorkflowInstanceEndKaleoLog(
+		return kaleoLogLocalService.addInstanceEndKaleoLog(
 			addKaleoInstanceToken(kaleoInstance), serviceContext);
 	}
 

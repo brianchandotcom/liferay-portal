@@ -52,7 +52,7 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 			return;
 		}
 
-		_kaleoLogLocalService.addWorkflowInstanceEndKaleoLog(
+		_kaleoLogLocalService.addInstanceEndKaleoLog(
 			kaleoInstanceToken, executionContext.getServiceContext());
 	}
 

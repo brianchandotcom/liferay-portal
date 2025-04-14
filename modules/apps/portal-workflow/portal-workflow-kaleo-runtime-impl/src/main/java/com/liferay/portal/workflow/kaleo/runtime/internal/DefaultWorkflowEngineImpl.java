@@ -697,7 +697,7 @@ public class DefaultWorkflowEngineImpl
 
 			rootKaleoInstanceToken.setCurrentKaleoNode(kaleoStartNode);
 
-			kaleoLogLocalService.addWorkflowInstanceStartKaleoLog(
+			kaleoLogLocalService.addInstanceStartKaleoLog(
 				rootKaleoInstanceToken, serviceContext);
 
 			ExecutionContext executionContext = new ExecutionContext(

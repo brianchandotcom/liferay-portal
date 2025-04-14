@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
@@ -32,6 +33,10 @@ import com.liferay.social.kernel.service.SocialActivitySettingLocalServiceUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -197,17 +202,26 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		ticket.setKey("key_");
 
-		TicketLocalServiceUtil.addTicket(ticket);
+		List<Ticket> list = new ArrayList<>();
+
+		list.add(TicketLocalServiceUtil.addTicket(ticket));
 
 		ticket.setTicketId(2);
 
-		TicketLocalServiceUtil.addTicket(ticket);
+		list.add(TicketLocalServiceUtil.addTicket(ticket));
 
 		_assertCount("Ticket", false, "key_");
 
 		_runUpgrade("Ticket", new String[] {"key_"}, "ticketId asc");
 
 		_assertCount("Ticket", true, "key_");
+
+		// Simulate previous persistence implementation sort
+
+		Collections.sort(list, Collections.reverseOrder());
+
+		Assert.assertEquals(
+			list.get(0), _ticketLocalService.fetchTicket("key_"));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
@@ -288,5 +302,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
+
+	@Inject
+	private static TicketLocalService _ticketLocalService;
 
 }

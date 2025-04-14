@@ -107,7 +107,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		};
 		this.orderNotesLink = page.getByRole('link', {
 			exact: true,
-			name: 'Notes',
+			name: 'Questions and Answers',
 		});
 		this.orderNotesTextArea = page.getByPlaceholder('Type your note here.');
 		this.orderSummaryLink = page.locator('#order-summary-modal');

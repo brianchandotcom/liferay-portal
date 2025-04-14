@@ -5,10 +5,12 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import Icon from '@clayui/icon';
 
 type TableKebabButtonProps = {
 	items: {
 		disabled?: boolean;
+		icon?: string;
 		label?: string;
 		onClick?: () => void;
 	}[];
@@ -33,6 +35,9 @@ const TableKebabButton: React.FC<TableKebabButtonProps> = ({items}) => (
 						key={index}
 						onClick={item?.onClick}
 					>
+						{item.icon && (
+							<Icon className="mr-3" symbol={item.icon} />
+						)}
 						{item?.label}
 					</ClayDropDown.Item>
 				);

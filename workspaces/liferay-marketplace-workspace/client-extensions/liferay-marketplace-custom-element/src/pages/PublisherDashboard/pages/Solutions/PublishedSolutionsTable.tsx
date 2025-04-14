@@ -76,6 +76,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 								disabled:
 									row.workflowStatusInfo.code ===
 									ProductWorkflowStatusCode.PENDING,
+								icon: 'pencil',
 								label: i18n.translate('edit'),
 								onClick: () =>
 									navigate(

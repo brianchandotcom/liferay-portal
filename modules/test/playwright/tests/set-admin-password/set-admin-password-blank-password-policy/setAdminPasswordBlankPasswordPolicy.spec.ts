@@ -5,7 +5,7 @@
 
 import {expect, test} from '@playwright/test';
 
-import {liferayConfig} from '../../liferay.config';
+import {liferayConfig} from '../../../liferay.config';
 
 test('LPD-4254 Checking what is the first page load if the property is blank', async ({
 	page,

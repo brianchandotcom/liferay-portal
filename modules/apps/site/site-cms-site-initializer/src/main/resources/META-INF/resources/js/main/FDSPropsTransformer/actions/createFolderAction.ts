@@ -27,16 +27,17 @@ export default function createFolderAction(
 			CreationModalContent({
 				...data,
 				closeModal,
-				onSubmit: async ({name, groupId}) => {
-					const response = await postScopeScopeKeyObjectEntryFolder(
-						groupId,
-						name,
-						additionalProps.parentObjectEntryFolderExternalReferenceCode
-					);
+				onSubmit: async ({groupId, name}) => {
+					const {errorMessage, success} =
+						await postScopeScopeKeyObjectEntryFolder(
+							groupId,
+							name,
+							additionalProps.parentObjectEntryFolderExternalReferenceCode
+						);
 
-					if (response.ok) {
+					if (success) {
 						loadData?.();
-						
+
 						closeModal();
 
 						openToast({
@@ -50,18 +51,8 @@ export default function createFolderAction(
 						});
 					}
 					else {
-						const {
-							message,
-						}: {
-							message?: string;
-						} = await response.json();
-
 						openToast({
-							message:
-								message ||
-								Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
+							message: errorMessage,
 							type: 'danger',
 						});
 					}

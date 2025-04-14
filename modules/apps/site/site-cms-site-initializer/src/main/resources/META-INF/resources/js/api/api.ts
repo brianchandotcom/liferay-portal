@@ -17,6 +17,61 @@ type PostFormDataResult = {
 	success: boolean;
 };
 
+type RequestHandlerResult<T> = {
+	data?: T;
+	errorMessage?: string;
+	success: boolean;
+};
+
+export async function handleRequest<T>(
+	fetcher: () => Promise<Response>,
+	{returnValue = false}: {returnValue?: boolean} = {}
+): Promise<RequestHandlerResult<T>> {
+	try {
+		const response = await fetcher();
+
+		if (response.status === 401) {
+			window.location.reload();
+		}
+
+		if (!response.ok) {
+			let errorMessage = UNEXPECTED_ERROR_MESSAGE;
+
+			try {
+				const {message, title} = await response.json();
+
+				errorMessage = title ?? message ?? UNEXPECTED_ERROR_MESSAGE;
+
+				if (Array.isArray(errorMessage)) {
+					errorMessage = JSON.stringify(errorMessage);
+				}
+			}
+			catch (error) {
+				throw new Error(UNEXPECTED_ERROR_MESSAGE);
+			}
+
+			throw new Error(errorMessage);
+		}
+
+		let data: T | undefined;
+
+		if (returnValue) {
+			data = await response.json();
+		}
+
+		return {
+			data,
+			success: true,
+		};
+	}
+	catch (error) {
+		return {
+			errorMessage: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,
+			success: false,
+		};
+	}
+}
+
 export async function postFormData(
 	formData: FormData,
 	url: string
@@ -64,15 +119,17 @@ export async function postScopeScopeKeyObjectEntryFolder(
 	name: string,
 	parentObjectEntryFolderExternalReferenceCode: string
 ) {
-	return await fetch(
-		`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
-		{
-			body: JSON.stringify({
-				name,
-				parentObjectEntryFolderExternalReferenceCode,
-			}),
-			headers,
-			method: 'POST',
-		}
+	return await handleRequest(() =>
+		fetch(
+			`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
+			{
+				body: JSON.stringify({
+					name,
+					parentObjectEntryFolderExternalReferenceCode,
+				}),
+				headers,
+				method: 'POST',
+			}
+		)
 	);
 }

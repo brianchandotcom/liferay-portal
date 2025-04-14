@@ -79,7 +79,7 @@ public class UpdateArticleMVCActionCommandTest {
 	}
 
 	@Test
-	public void testServeResource() throws Exception {
+	public void testProcessAction() throws Exception {
 		_processAction(_getMockLiferayPortletActionRequest());
 
 		JournalArticle journalArticle =
@@ -106,7 +106,7 @@ public class UpdateArticleMVCActionCommandTest {
 	}
 
 	@Test
-	public void testServeResourceWithErrors() throws Exception {
+	public void testProcessActionWithErrors() throws Exception {
 		_processAction(_getMockLiferayPortletActionRequest());
 
 		JournalArticle journalArticle =

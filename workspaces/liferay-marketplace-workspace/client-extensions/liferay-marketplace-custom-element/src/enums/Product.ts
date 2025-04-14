@@ -29,8 +29,14 @@ export enum ProductImageFallbackCategories {
 }
 
 export enum ProductLicense {
+	BASE = 'base-license-usage-type',
 	CLOUD = 'cloud-license-usage-type',
 	DXP = 'dxp-license-usage-type',
+}
+
+export enum ProductLicenseType {
+	SUBSCRIPTION = 'Subscription',
+	PERPETUAL = 'Perpetual',
 }
 
 export enum ProductOfferingTypes {

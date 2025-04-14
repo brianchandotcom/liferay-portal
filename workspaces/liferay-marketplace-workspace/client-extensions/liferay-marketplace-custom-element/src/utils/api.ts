@@ -362,20 +362,6 @@ export async function getOptions() {
 	return items as CommerceOption[];
 }
 
-export async function getOrderTypes() {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-order/v1.0/order-types`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	const {items} = (await response.json()) as {items: OrderType[]};
-
-	return items;
-}
-
 export async function getProductById({
 	nestedFields,
 	productId,

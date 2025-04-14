@@ -18,6 +18,7 @@ const Licensing = () => {
 	const [
 		{
 			licensing: {licenseType, trial30Day},
+			pricing: {priceModel},
 		},
 		dispatch,
 	] = useNewAppContext();
@@ -30,22 +31,29 @@ const Licensing = () => {
 				tooltip="More Info"
 				tooltipText="More Info"
 			>
-				{LICENSING_OPTIONS.map(({value, ...licensingOption}, index) => (
-					<RadioCard
-						className="mb-5"
-						{...licensingOption}
-						key={index}
-						onChange={() => {
-							dispatch({
-								payload: {
-									licenseType: value,
-								},
-								type: NewAppTypes.SET_LICENSING,
-							});
-						}}
-						selected={licenseType === value}
-					/>
-				))}
+				{LICENSING_OPTIONS.map(({value, ...licensingOption}, index) => {
+					const disabled = licensingOption.disabled(
+						priceModel as any
+					);
+
+					return (
+						<RadioCard
+							{...licensingOption}
+							className="mb-5"
+							disabled={disabled}
+							key={index}
+							onChange={() => {
+								dispatch({
+									payload: {
+										licenseType: value,
+									},
+									type: NewAppTypes.SET_LICENSING,
+								});
+							}}
+							selected={licenseType === value}
+						/>
+					);
+				})}
 			</Section>
 
 			<Section
@@ -56,21 +64,28 @@ const Licensing = () => {
 			>
 				<div className="informing-licensing-terms-page-day-trial-container">
 					{LICENSING_30_DAYS_TRIAL_OPTIONS.map(
-						({value, ...licensingOption}, index) => (
-							<RadioCard
-								{...licensingOption}
-								key={index}
-								onChange={() => {
-									dispatch({
-										payload: {
-											trial30Day: value,
-										},
-										type: NewAppTypes.SET_LICENSING,
-									});
-								}}
-								selected={trial30Day === value}
-							/>
-						)
+						({value, ...licensingOption}, index) => {
+							const disabled = licensingOption.disabled(
+								priceModel as any
+							);
+
+							return (
+								<RadioCard
+									{...licensingOption}
+									disabled={disabled}
+									key={index}
+									onChange={() => {
+										dispatch({
+											payload: {
+												trial30Day: value,
+											},
+											type: NewAppTypes.SET_LICENSING,
+										});
+									}}
+									selected={trial30Day === value}
+								/>
+							);
+						}
 					)}
 				</div>
 			</Section>

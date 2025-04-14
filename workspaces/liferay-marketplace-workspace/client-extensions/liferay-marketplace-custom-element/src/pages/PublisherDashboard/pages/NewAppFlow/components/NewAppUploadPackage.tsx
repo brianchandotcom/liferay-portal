@@ -11,6 +11,11 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
+import {
+	ALLOWED_MIME_TYPES,
+	PUBLISH_APP_UPLOAD_MAX_FILES,
+	PUBLISH_APP_UPLOAD_MAX_SIZE,
+} from '../../../../../enums/File';
 import {ProductType} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
@@ -20,17 +25,15 @@ type NewAppUploadAppPackagesComponentProps = {
 	versionName: string;
 };
 
-const MAX_FILES = 10;
-export const UPLOAD_MAX_SIZE = 500_000_000;
-
 export const acceptFileTypes = {
-	[ProductType.CLOUD]: {
-		'application/java-archive': ['.zip'],
-	},
+	[ProductType.CLIENT_EXTENSION]: ALLOWED_MIME_TYPES.ZIP,
+	[ProductType.CLOUD]: ALLOWED_MIME_TYPES.ZIP,
+	[ProductType.COMPOSITE_APP]: ALLOWED_MIME_TYPES.ZIP,
 	[ProductType.DXP]: {
-		'application/java-archive': ['.jar'],
-		'application/octet-stream': ['.war'],
+		...ALLOWED_MIME_TYPES.JAR,
+		...ALLOWED_MIME_TYPES.WAR,
 	},
+	[ProductType.LOW_CODE_CONFIGURATION]: ALLOWED_MIME_TYPES.ZIP,
 };
 
 export function NewAppUploadAppPackagesComponent({
@@ -39,14 +42,15 @@ export function NewAppUploadAppPackagesComponent({
 }: NewAppUploadAppPackagesComponentProps) {
 	const [
 		{
-			build: {cloudCompatible, liferayPackages},
+			build: {appType, cloudCompatible, liferayPackages},
 		},
 		dispatch,
 	] = useNewAppContext();
 
 	const enableUploadFiles =
 		!isProcessing &&
-		(!liferayPackages?.length || liferayPackages?.length < MAX_FILES);
+		(!liferayPackages?.length ||
+			liferayPackages?.length < PUBLISH_APP_UPLOAD_MAX_FILES);
 
 	const handleRemoveAppPackages = (fileId: string) => {
 		const _liferayPackages = liferayPackages.map((liferayPackage) => {
@@ -119,13 +123,7 @@ export function NewAppUploadAppPackagesComponent({
 
 			{enableUploadFiles && (
 				<DropzoneUpload
-					acceptFileTypes={
-						acceptFileTypes[
-							cloudCompatible
-								? ProductType.CLOUD
-								: ProductType.DXP
-						]
-					}
+					acceptFileTypes={acceptFileTypes[appType]}
 					buttonText={i18n.translate('select-a-file')}
 					description={
 						cloudCompatible
@@ -136,8 +134,8 @@ export function NewAppUploadAppPackagesComponent({
 									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
 					}
-					maxFiles={MAX_FILES}
-					maxSize={UPLOAD_MAX_SIZE}
+					maxFiles={PUBLISH_APP_UPLOAD_MAX_FILES}
+					maxSize={PUBLISH_APP_UPLOAD_MAX_SIZE}
 					multiple={true}
 					onHandleUpload={handleUploadAppPackages}
 					title={i18n.translate('drag-and-drop-to-upload-or')}

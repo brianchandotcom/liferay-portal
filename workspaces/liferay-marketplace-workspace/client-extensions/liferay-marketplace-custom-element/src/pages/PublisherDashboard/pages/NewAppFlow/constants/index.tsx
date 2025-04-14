@@ -6,7 +6,10 @@
 import ReactDOMServer from 'react-dom/server';
 
 import {NewAppInitialState} from '../../../../../context/NewAppContext';
-import {ProductUploadType} from '../../../../../enums/Product';
+import {
+	ProductPriceModel,
+	ProductUploadType,
+} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 
@@ -220,6 +223,7 @@ export const BUILD_UPLOAD_OPTIONS = {
 export const LICENSING_OPTIONS = [
 	{
 		description: 'The app version is offered in perpetuity.',
+		disabled: () => false,
 		icon: 'time',
 		title: 'Perpetual License',
 		tooltip: 'A perpetual license requires no renewal and never expires.',
@@ -227,6 +231,8 @@ export const LICENSING_OPTIONS = [
 	},
 	{
 		description: 'App License must be renewed annually.',
+		disabled: (priceModel: ProductPriceModel) =>
+			priceModel === ProductPriceModel.FREE,
 		icon: 'document-pending',
 		title: 'Subscription License',
 		tooltip: 'A subscription license that must be renewed annually.',
@@ -237,6 +243,8 @@ export const LICENSING_OPTIONS = [
 export const LICENSING_30_DAYS_TRIAL_OPTIONS = [
 	{
 		description: 'Offer a 30-day free trial for this app.',
+		disabled: (priceModel: ProductPriceModel) =>
+			priceModel === ProductPriceModel.FREE,
 		icon: 'check-circle',
 		title: 'Yes',
 		tooltip: 'Offer a 30-day free trial for this app.',
@@ -244,6 +252,7 @@ export const LICENSING_30_DAYS_TRIAL_OPTIONS = [
 	},
 	{
 		description: 'Do not offer a 30-day free trial.',
+		disabled: () => false,
 		icon: 'times-circle',
 		title: 'No',
 		tooltip: 'Do not offer a 30-day trial for this app.',

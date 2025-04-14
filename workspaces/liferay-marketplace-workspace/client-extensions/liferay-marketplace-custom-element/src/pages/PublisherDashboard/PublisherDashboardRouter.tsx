@@ -26,6 +26,7 @@ import Licensing from './pages/NewAppFlow/pages/Licensing';
 import LicensePrices from './pages/NewAppFlow/pages/Licensing/LicensePrices';
 import Pricing from './pages/NewAppFlow/pages/Pricing';
 import Storefront from './pages/NewAppFlow/pages/Storefront';
+import SubmitApp from './pages/NewAppFlow/pages/Submit';
 import Support from './pages/NewAppFlow/pages/Support';
 import Version from './pages/NewAppFlow/pages/Version';
 import Solutions from './pages/Solutions';
@@ -91,6 +92,7 @@ const PublisherDashboardRouter = () => {
 							<Route element={<Pricing />} path="pricing" />
 							<Route element={<Storefront />} path="storefront" />
 							<Route element={<Version />} path="version" />
+							<Route element={<SubmitApp />} path="submit" />
 
 							<Route
 								element={<LicensePrices />}

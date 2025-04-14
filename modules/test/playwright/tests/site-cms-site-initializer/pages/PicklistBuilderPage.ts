@@ -44,6 +44,18 @@ export class PicklistBuilderPage {
 		return;
 	}
 
+	async getPicklist(name: string) {
+		const apiHelpers = new ApiHelpers(this.page);
+
+		const [picklist] =
+			await apiHelpers.listTypeAdmin.getFilteredListTypeDefinition(
+				'name',
+				name
+			);
+
+		return picklist;
+	}
+
 	async savePicklist() {
 		const save = async () => {
 			await this.saveButton.click();

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SiteTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.CompanyTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SiteTestEntityResource;
 import com.liferay.portal.util.PropsValues;
 
@@ -38,10 +39,10 @@ public class SiteTestEntityResourceTest
 
 	@Override
 	@Test
-	public void testPatchSiteTestEntity() throws Exception {
-		super.testPatchSiteTestEntity();
+	public void testPutSiteTestEntity() throws Exception {
+		super.testPutSiteTestEntity();
 
-		_testPatchSiteTestEntityBatch();
+		_testPutSiteTestEntityBatch();
 	}
 
 	@Override
@@ -57,14 +58,9 @@ public class SiteTestEntityResourceTest
 		return new String[] {"description"};
 	}
 
-	private SiteTestEntityResource _createSiteTestEntityResourceWithParameters(
+	private SiteTestEntityResource _createSiteTestEntityResource(
 			String[] parameters)
 		throws Exception {
-
-		testGroup = GroupTestUtil.addGroup();
-
-		testCompany = CompanyLocalServiceUtil.getCompany(
-			testGroup.getCompanyId());
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
@@ -82,69 +78,59 @@ public class SiteTestEntityResourceTest
 		).build();
 	}
 
-	private void _testPatchSiteTestEntityBatch() throws Exception {
-		SiteTestEntity postSiteTestEntity = new SiteTestEntity();
-
-		SiteTestEntity notExistingPostSiteTestEntity = new SiteTestEntity();
-
-		postSiteTestEntity.setDescription(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-		SiteTestEntity siteTestEntity =
+	private void _testPutSiteTestEntityBatch() throws Exception {
+		SiteTestEntity postSiteTestEntity =
 			siteTestEntityResource.postSiteSiteTestEntity(
-				testGroup.getGroupId(), postSiteTestEntity);
+				testGroup.getGroupId(), randomSiteTestEntity());
 
-		postSiteTestEntity.setId(siteTestEntity.getId());
+		String description = RandomTestUtil.randomString();
 
-		postSiteTestEntity.setDescription(RandomTestUtil.randomString());
+		postSiteTestEntity.setDescription(description);
 
-		notExistingPostSiteTestEntity.setDescription(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-		notExistingPostSiteTestEntity.setId(siteTestEntity.getId() + 1);
+		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
 					"OnErrorContinueBatchEngineImportStrategy",
 				LoggerTestUtil.ERROR)) {
 
+			SiteTestEntityResource siteTestEntityResource =
+				_createSiteTestEntityResource(
+				new String[] {
+					"importStrategy", "ON_ERROR_CONTINUE", "updateStrategy", "UPDATE"
+					}
+			);
+
 			_waitForFinish(
 				"COMPLETED", true,
 				JSONFactoryUtil.createJSONObject(
-					_createSiteTestEntityResourceWithParameters(
-						new String[] {
-							"updateStrategy", "UPDATE", "importStrategy",
-							"ON_ERROR_CONTINUE"
-						}
-					).putSiteTestEntityBatchHttpResponse(
+					siteTestEntityResource.putSiteTestEntityBatchHttpResponse(
 						null,
 						JSONUtil.putAll(
 							JSONFactoryUtil.createJSONObject(
-								String.valueOf(postSiteTestEntity)),
+								postSiteTestEntity.toString()),
 							JSONFactoryUtil.createJSONObject(
-								String.valueOf(notExistingPostSiteTestEntity)))
+								randomSiteTestEntity.toString()))
 					).getContent()));
 		}
 
-		siteTestEntity = siteTestEntityResource.getSiteTestEntity(
-			siteTestEntity.getId());
+		SiteTestEntity actualSiteTestEntity = siteTestEntityResource.getSiteTestEntity(
+			postSiteTestEntity.getId());
 
-		Assert.assertEquals(postSiteTestEntity.getId(), siteTestEntity.getId());
 		Assert.assertEquals(
-			postSiteTestEntity.getDescription(),
-			siteTestEntity.getDescription());
+			description, actualSiteTestEntity.getDescription());
+
+	   assertHttpResponseStatusCode(
+		   404,
+		   siteTestEntityResource.
+			   getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
+				   randomSiteTestEntity.getExternalReferenceCode(),
+				   testGroup.getGroupId()));
 	}
 
 	private void _testPostSiteTestEntityBatch() throws Exception {
-		SiteTestEntity siteTestEntity =
-			siteTestEntityResource.postSiteSiteTestEntity(
-				testGroup.getGroupId(),
-				new SiteTestEntity() {
-					{
-						externalReferenceCode = RandomTestUtil.randomString();
-					}
-				});
-
-		siteTestEntity.setId(siteTestEntity.getId() + 1);
+		SiteTestEntity siteTestEntity = testPostSiteSiteTestEntity_addSiteTestEntity(
+			randomSiteTestEntity());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
@@ -159,7 +145,7 @@ public class SiteTestEntityResourceTest
 							testGroup.getGroupId(), null,
 							JSONUtil.putAll(
 								JSONFactoryUtil.createJSONObject(
-									String.valueOf(siteTestEntity)))
+									siteTestEntity.toString()))
 						).getContent()));
 		}
 	}

@@ -96,6 +96,28 @@ public class GeneralConfiguration implements Cloneable, Serializable {
 
 	protected Boolean collectionProvider;
 
+	public String getCollectionProviderType() {
+		return collectionProviderType;
+	}
+
+	public void setCollectionProviderType(String collectionProviderType) {
+		this.collectionProviderType = collectionProviderType;
+	}
+
+	public void setCollectionProviderType(
+		UnsafeSupplier<String, Exception>
+			collectionProviderTypeUnsafeSupplier) {
+
+		try {
+			collectionProviderType = collectionProviderTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String collectionProviderType;
+
 	public Boolean getEmptySearchEnabled() {
 		return emptySearchEnabled;
 	}

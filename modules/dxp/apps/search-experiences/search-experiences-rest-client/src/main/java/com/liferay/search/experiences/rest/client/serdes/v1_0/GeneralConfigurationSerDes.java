@@ -116,6 +116,21 @@ public class GeneralConfigurationSerDes {
 			sb.append(generalConfiguration.getCollectionProvider());
 		}
 
+		if (generalConfiguration.getCollectionProviderType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProviderType\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(generalConfiguration.getCollectionProviderType()));
+
+			sb.append("\"");
+		}
+
 		if (generalConfiguration.getEmptySearchEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -264,6 +279,16 @@ public class GeneralConfigurationSerDes {
 				String.valueOf(generalConfiguration.getCollectionProvider()));
 		}
 
+		if (generalConfiguration.getCollectionProviderType() == null) {
+			map.put("collectionProviderType", null);
+		}
+		else {
+			map.put(
+				"collectionProviderType",
+				String.valueOf(
+					generalConfiguration.getCollectionProviderType()));
+		}
+
 		if (generalConfiguration.getEmptySearchEnabled() == null) {
 			map.put("emptySearchEnabled", null);
 		}
@@ -361,6 +386,11 @@ public class GeneralConfigurationSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderType")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "emptySearchEnabled")) {
 
 				return false;
@@ -418,6 +448,14 @@ public class GeneralConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					generalConfiguration.setCollectionProvider(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderType")) {
+
+				if (jsonParserFieldValue != null) {
+					generalConfiguration.setCollectionProviderType(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

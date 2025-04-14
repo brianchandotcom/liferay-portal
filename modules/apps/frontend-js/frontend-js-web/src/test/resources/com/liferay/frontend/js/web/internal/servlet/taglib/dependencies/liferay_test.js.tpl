@@ -54,28 +54,36 @@ isWebKit: () => false,
 isWindows: () => false,
 },
 Data: {
-ICONS_INLINE_SVG:true,
-NAV_SELECTOR:'#navigation',
-NAV_SELECTOR_MOBILE:'#navigationCollapse',
+ICONS_INLINE_SVG: true,
+NAV_SELECTOR: '#navigation',
+NAV_SELECTOR_MOBILE: '#navigationCollapse',
 isCustomizationView: () => false,
 notices: [
 {
-message:'the-portal-will-shutdown-for-maintenance-in-x-minutes',
-title:'maintenance-alert<span class="mx-2">2009/04/23, 00:00:00 UTC</span>',
+message: 'the-portal-will-shutdown-for-maintenance-in-x-minutes',
+title: 'maintenance-alert<span class="mx-2">2009/04/23, 00:00:00 UTC</span>',
 type: 'warning'
 },
 ],
 },
 FeatureFlags: {
-'LPD-00042':true,
+'LPD-00042': true,
 },
 Language: {
 	_cache:
 		window?.Liferay?.Language?._cache
 			? Liferay.Language._cache
 			: {},
-	available: {'fr_FR':'français\x20\x28France\x29','en_CA':'English\x20\x28Canada\x29',},
-	direction: {'fr_FR':'ltr','en_CA':'ltr',},
+	available: {
+'fr_FR': 'français\x20\x28France\x29',
+'en_CA': 'English\x20\x28Canada\x29',
+
+	},
+	direction: {
+'fr_FR': 'ltr',
+'en_CA': 'ltr',
+
+	},
 	get:
 		(key) => {
 			let value = Liferay.Language._cache[key];
@@ -92,14 +100,14 @@ openModal: buildESMStub('frontend-js-components-web', 'openPortletModal'),
 openWindow: buildESMStub('frontend-js-components-web', 'openPortletWindow'),
 },
 PortletKeys: {
-DOCUMENT_LIBRARY:'com_liferay_document_library_web_portlet_DLPortlet',
-DYNAMIC_DATA_MAPPING:'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
-INSTANCE_SETTINGS:'com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet',
-ITEM_SELECTOR:'com_liferay_item_selector_web_portlet_ItemSelectorPortlet',
+DOCUMENT_LIBRARY: 'com_liferay_document_library_web_portlet_DLPortlet',
+DYNAMIC_DATA_MAPPING: 'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
+INSTANCE_SETTINGS: 'com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet',
+ITEM_SELECTOR: 'com_liferay_item_selector_web_portlet_ItemSelectorPortlet',
 },
 PropsValues: {
-JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT:0,
-UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE:0,
+JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT: 0,
+UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE: 0,
 },
 ThemeDisplay: {
 getBCP47LanguageId: () => 'en-US',
@@ -151,9 +159,9 @@ openSelectionModal: buildESMStub('frontend-js-components-web', 'openSelectionMod
 openSimpleInputModal: buildESMStub('frontend-js-components-web', 'openSimpleInputModal'),
 openToast: buildESMStub('frontend-js-components-web', 'openToast'),
 },
-authToken:'LrPaVz44',
-currentURL:'/',
-currentURLEncoded:'\x252F',
+authToken: 'LrPaVz44',
+currentURL: '/',
+currentURLEncoded: '\x252F',
 
 	};
 

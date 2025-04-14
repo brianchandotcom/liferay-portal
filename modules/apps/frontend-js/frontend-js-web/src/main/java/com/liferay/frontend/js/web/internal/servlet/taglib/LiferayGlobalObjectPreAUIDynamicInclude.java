@@ -346,7 +346,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("notices: [\n");
 
 		if (ShutdownUtil.isInProcess()) {
-			sb.append("{\nmessage:'");
+			sb.append("{\nmessage: '");
 
 			Locale locale = themeDisplay.getLocale();
 
@@ -369,7 +369,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				sb.append("</span>");
 			}
 
-			sb.append("',\ntitle:'");
+			sb.append("',\ntitle: '");
 
 			sb.append(_language.get(locale, "maintenance-alert"));
 
@@ -410,7 +410,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 			sb.append(StringPool.APOSTROPHE);
 			sb.append(featureFlag.getKey());
-			sb.append("':");
+			sb.append("': ");
 			sb.append(featureFlag.isEnabled());
 			sb.append(",\n");
 		}
@@ -427,16 +427,16 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 			availableSB.append(StringPool.APOSTROPHE);
 			availableSB.append(languageId);
-			availableSB.append("':'");
+			availableSB.append("': '");
 			availableSB.append(
 				HtmlUtil.escapeJS(locale.getDisplayName(locale)));
-			availableSB.append("',");
+			availableSB.append("',\n");
 
 			directionSB.append(StringPool.APOSTROPHE);
 			directionSB.append(languageId);
-			directionSB.append("':'");
+			directionSB.append("': '");
 			directionSB.append(_language.get(locale, "lang.dir"));
-			directionSB.append("',");
+			directionSB.append("',\n");
 		}
 
 		sb.append(
@@ -706,7 +706,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		String fieldName, StringBuilder sb, Object value) {
 
 		sb.append(fieldName);
-		sb.append(StringPool.COLON);
+		sb.append(": ");
 
 		if (value == null) {
 			sb.append("null");

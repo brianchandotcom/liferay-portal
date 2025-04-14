@@ -3,19 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API as objectAPI} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
-
-export const {save: saveObject} = objectAPI;
 
 const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );
-
-type PostFormDataResult = {
-	errorMessage?: string | undefined;
-	success: boolean;
-};
 
 type RequestHandlerResult<T> = {
 	data?: T;
@@ -72,27 +64,13 @@ export async function handleRequest<T>(
 	}
 }
 
-export async function postFormData(
-	formData: FormData,
-	url: string
-): Promise<PostFormDataResult> {
-	try {
-		await saveObject({
-			item: formData,
+export async function postFormData(formData: FormData, url: string) {
+	return handleRequest(() =>
+		fetch(url, {
+			body: formData,
 			method: 'POST',
-			url,
-		});
-
-		return {
-			success: true,
-		};
-	}
-	catch (error) {
-		return {
-			errorMessage: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,
-			success: false,
-		};
-	}
+		})
+	);
 }
 
 const headers = new Headers({

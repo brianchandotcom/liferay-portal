@@ -4070,6 +4070,11 @@ paths:
                         type: string
                     style: simple
                 -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     required: false
                     schema:
@@ -4081,6 +4086,11 @@ paths:
                         type: integer
                 -   in: query
                     name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
                     required: false
                     schema:
                         type: string
@@ -4226,6 +4236,11 @@ paths:
                         type: integer
                     style: simple
                 -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
                     name: page
                     required: false
                     schema:
@@ -4237,6 +4252,11 @@ paths:
                         type: integer
                 -   in: query
                     name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
                     required: false
                     schema:
                         type: string

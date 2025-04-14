@@ -83,29 +83,48 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 
 	@Override
 	public Page<PlacedOrder> getChannelAccountPlacedOrdersPage(
-			Long accountId, Long channelId, Pagination pagination)
+			Long accountId, Long channelId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		return Page.of(
-			transform(
-				_commerceOrderService.getPlacedCommerceOrders(
-					commerceChannel.getGroupId(), accountId, null,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				commerceOrder -> _toPlacedOrder(
-					commerceOrder.getCommerceOrderId())),
-			pagination,
-			_commerceOrderService.getPlacedCommerceOrdersCount(
-				commerceChannel.getGroupId(), accountId, null));
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			filter, CommerceOrder.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceAccountIds", new long[] {accountId});
+				searchContext.setAttribute("negateOrderStatuses", Boolean.TRUE);
+				searchContext.setAttribute(
+					"orderStatuses",
+					new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN});
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {commerceChannel.getGroupId()});
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setUserId(0);
+			},
+			sorts,
+			document -> _toPlacedOrder(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
 	public Page<PlacedOrder>
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
 				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, Pagination pagination)
+				String channelExternalReferenceCode, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		AccountEntry accountEntry =
@@ -120,7 +139,8 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 
 		return getChannelAccountPlacedOrdersPage(
 			accountEntry.getAccountEntryId(),
-			commerceChannel.getCommerceChannelId(), pagination);
+			commerceChannel.getCommerceChannelId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override

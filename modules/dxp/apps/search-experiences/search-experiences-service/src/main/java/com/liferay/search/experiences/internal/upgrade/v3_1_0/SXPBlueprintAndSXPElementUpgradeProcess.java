@@ -179,11 +179,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setString(
 						1,
 						_getDefaultValue(
-							"Description", resultSet.getString("description")));
+							"description", resultSet.getString("description")));
 					preparedStatement2.setString(
 						2,
 						_getDefaultValue(
-							"Title", resultSet.getString("title")));
+							"title", resultSet.getString("title")));
 					preparedStatement2.setLong(
 						3, resultSet.getLong("sxpElementId"));
 

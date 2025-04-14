@@ -1733,6 +1733,7 @@ ckeditor5Test(
 
 		const articleContentAR = getRandomString();
 		const articleContentEN = getRandomString();
+		const articleContentSource = getRandomString();
 		const articleTitleAR = getRandomString();
 		const articleTitleEN = getRandomString();
 
@@ -1790,6 +1791,43 @@ ckeditor5Test(
 
 				await expect(
 					editable.getByText(articleContentAR)
+				).toBeVisible();
+			}
+		);
+
+		await ckeditor5Test.step('Reset to English', async () => {
+			await journalEditArticlePage.changeLanguage('en_US');
+		});
+
+		await ckeditor5Test.step(
+			'Change article in source editing',
+			async () => {
+				const toolbar =
+					journalEditArticlePage.page.getByLabel('Editor toolbar');
+
+				await toolbar.getByRole('button', {name: 'Source'}).click();
+
+				const textarea = journalEditArticlePage.page.getByLabel(
+					'Source code editing area'
+				);
+
+				await textarea.fill(articleContentSource);
+			}
+		);
+
+		await ckeditor5Test.step('Publish article again', async () => {
+			await journalEditArticlePage.publishArticle(true);
+
+			await expect(page.locator('.alert-success')).toBeVisible();
+		});
+
+		await ckeditor5Test.step(
+			'Open saved article and assert content is correct',
+			async () => {
+				await page.getByTitle(articleTitleEN).click();
+
+				await expect(
+					editable.getByText(articleContentSource)
 				).toBeVisible();
 			}
 		);

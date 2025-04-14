@@ -342,8 +342,6 @@ export class JournalEditArticlePage {
 				trigger: this.publishDropdown,
 			});
 
-			await this.page.locator('.alert-success').waitFor({timeout: 2000});
-
 			return;
 		}
 

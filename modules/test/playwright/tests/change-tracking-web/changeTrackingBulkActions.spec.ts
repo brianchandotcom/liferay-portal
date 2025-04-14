@@ -25,9 +25,13 @@ export const test = mergeTests(
 let file;
 let journalArticleTitle;
 
-test.beforeEach(async ({apiHelpers}) => {
+test.beforeEach(async ({apiHelpers, ctCollection}) => {
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+		ctCollection.body.id
+	);
 
 	file = await apiHelpers.headlessDelivery.postDocument(
 		site.id,

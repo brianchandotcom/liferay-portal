@@ -23,6 +23,8 @@ test('Can Review Change For Segments With Localization', async ({
 	ctCollection,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	const segmentsEntryName = getRandomString();
 
 	await createSegmentsEntry(apiHelpers, segmentsEntryName);
@@ -49,10 +51,13 @@ test('Can Review Change For Segments With Localization', async ({
 
 test('Can Publish With Segments And Page Experience', async ({
 	apiHelpers,
+	changeTrackingPage,
 	ctCollection,
 	page,
 	pageEditorPage,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
 

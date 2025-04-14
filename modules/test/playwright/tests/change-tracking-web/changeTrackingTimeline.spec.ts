@@ -43,8 +43,6 @@ test.beforeEach(
 		page,
 		site,
 	}) => {
-		await changeTrackingPage.workOnProduction();
-
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.goToCreateNewFile();
 
@@ -134,11 +132,14 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 });
 
 test('LPD-25853 Review Change is added in the timeline dropdown actions', async ({
+	changeTrackingPage,
 	ctCollection,
 	documentLibraryPage,
 	page,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.goToEditFileEntry(title2);
 
@@ -180,10 +181,14 @@ test('LPD-25853 Review Change is added in the timeline dropdown actions', async 
 });
 
 test('LPD-25853 Discard Change is added in the timeline dropdown actions', async ({
+	changeTrackingPage,
+	ctCollection,
 	documentLibraryPage,
 	page,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.goToEditFileEntry(title2);
 
@@ -216,10 +221,14 @@ test('LPD-25853 Discard Change is added in the timeline dropdown actions', async
 });
 
 test('LPD-25853 Move Change is added in the timeline dropdown actions', async ({
+	changeTrackingPage,
+	ctCollection,
 	documentLibraryPage,
 	page,
 	site,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 	await documentLibraryPage.goToEditFileEntry(title2);
 

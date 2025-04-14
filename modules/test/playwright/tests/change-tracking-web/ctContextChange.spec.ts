@@ -24,9 +24,13 @@ export const test = mergeTests(
 
 test('LPD-29562 Assert popover only appears when context is changed', async ({
 	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
 	journalPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await journalPage.goto();
 
 	await expect(
@@ -58,6 +62,8 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 	journalPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	const site1 = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});
@@ -111,9 +117,12 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 test('LPD-29693, LPD-29294 Assert silence context change popover behavior', async ({
 	apiHelpers,
 	changeTrackingPage,
+	ctCollection,
 	journalPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	const site1 = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});

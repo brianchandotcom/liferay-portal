@@ -21,11 +21,14 @@ export const test = mergeTests(
 );
 
 test('LPD-39428 Assert publication timeline history is enabled for forms', async ({
+	changeTrackingPage,
+	ctCollection,
 	formBuilderPage,
 	formBuilderSidePanelPage,
 	formsPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 	await formBuilderPage.goToNew();
 	const formTitle = 'Form' + getRandomInt();
 	await formBuilderPage.fillFormTitle(formTitle);
@@ -46,11 +49,13 @@ test('LPD-39428 Assert publication timeline history is enabled for forms', async
 
 test('LPD-39428 Assert publication timeline history is enabled for element sets', async ({
 	changeTrackingPage,
+	ctCollection,
 	formBuilderPage,
 	formBuilderSidePanelPage,
 	formsPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 	await formsPage.goTo();
 	await changeTrackingPage.selectTab('Element Sets');
 	await formsPage.clickManagementToolbarNewButton();
@@ -73,9 +78,11 @@ test('LPD-39428 Assert publication timeline history is enabled for element sets'
 
 test('LPD-39428 Assert publication timeline history is enabled for data providers', async ({
 	changeTrackingPage,
+	ctCollection,
 	formsPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
 	await formsPage.goTo();
 	await changeTrackingPage.selectTab('Data Providers');
 	await formsPage.clickManagementToolbarNewButton();

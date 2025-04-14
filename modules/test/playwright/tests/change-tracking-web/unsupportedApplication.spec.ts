@@ -19,8 +19,12 @@ export const test = mergeTests(
 
 test('LPD-24076 Popover is displayed on Data Migration Center page', async ({
 	applicationsMenuPage,
+	changeTrackingPage,
+	ctCollection,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await applicationsMenuPage.goToDataMigrationCenter();
 
 	await expect(
@@ -30,8 +34,12 @@ test('LPD-24076 Popover is displayed on Data Migration Center page', async ({
 
 test('LPD-24076 Popover button directs to Production', async ({
 	applicationsMenuPage,
+	changeTrackingPage,
+	ctCollection,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await applicationsMenuPage.goToDataMigrationCenter();
 
 	page.on('dialog', (dialog) => dialog.accept());

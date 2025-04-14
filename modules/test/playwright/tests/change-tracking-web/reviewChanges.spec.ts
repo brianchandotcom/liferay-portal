@@ -28,6 +28,8 @@ test('LPD-28276 Assert tag data persists in parent tab', async ({
 	ctCollection,
 	page,
 }) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
 	await page.goto(`/group/guest${PORTLET_URLS.tagsAdmin}`);
 
 	await page.getByRole('link', {name: 'Add Tag'}).click();
@@ -148,6 +150,8 @@ test('LPD-29089 Assert Publication Overview filter', async ({
 }) => {
 	const site =
 		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await changeTrackingPage.workOnPublication(ctCollection);
 
 	await apiHelpers.headlessDelivery.postBlog(site.id);
 

@@ -40,8 +40,6 @@ test(
 
 		// Add a page with a fragment in production
 
-		await changeTrackingPage.workOnProduction();
-
 		const layoutTitle = getRandomString();
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
@@ -121,8 +119,6 @@ test('Resolve deletion modification conflict publications by discarding', async 
 	journalPage,
 	page,
 }) => {
-	await changeTrackingPage.workOnProduction();
-
 	await journalEditArticlePage.goto();
 
 	const title = getRandomString();
@@ -237,8 +233,6 @@ test('Resolve deletion modification conflict publications by restoring from recy
 	journalPage,
 	page,
 }) => {
-	await changeTrackingPage.workOnProduction();
-
 	await journalEditArticlePage.goto();
 
 	const title = getRandomString();

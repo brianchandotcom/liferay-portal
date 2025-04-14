@@ -12,7 +12,7 @@ import React from 'react';
 
 import SpaceSticker from '../components/SpaceSticker';
 
-interface AssetLibrary {
+export interface AssetLibrary {
 	id: number;
 	name: string;
 	url: string;

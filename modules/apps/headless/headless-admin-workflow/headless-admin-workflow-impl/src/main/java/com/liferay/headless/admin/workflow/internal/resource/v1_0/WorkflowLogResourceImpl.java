@@ -192,7 +192,10 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private WorkflowLog.Type _toWorkflowLogType(String type) {
-		if (Objects.equals(type, LogType.NODE_ENTRY.name())) {
+		if (Objects.equals(type, LogType.INSTANCE_FAIL.name())) {
+			return WorkflowLog.Type.INSTANCE_FAIL;
+		}
+		else if (Objects.equals(type, LogType.NODE_ENTRY.name())) {
 			return WorkflowLog.Type.NODE_ENTRY;
 		}
 		else if (Objects.equals(type, LogType.NODE_EXIT.name())) {

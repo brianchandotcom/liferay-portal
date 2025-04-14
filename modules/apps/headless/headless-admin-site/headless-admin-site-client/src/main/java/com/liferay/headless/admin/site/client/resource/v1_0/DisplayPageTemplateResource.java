@@ -195,13 +195,15 @@ public interface DisplayPageTemplateResource {
 	public Page<Permission>
 			putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
 				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode)
+				String displayPageTemplateExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode)
+				String displayPageTemplateExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -1760,13 +1762,14 @@ public interface DisplayPageTemplateResource {
 		public Page<Permission>
 				putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
 					String siteExternalReferenceCode,
-					String displayPageTemplateExternalReferenceCode)
+					String displayPageTemplateExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPageHttpResponse(
 					siteExternalReferenceCode,
-					displayPageTemplateExternalReferenceCode);
+					displayPageTemplateExternalReferenceCode, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1830,12 +1833,19 @@ public interface DisplayPageTemplateResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
-					String displayPageTemplateExternalReferenceCode)
+					String displayPageTemplateExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

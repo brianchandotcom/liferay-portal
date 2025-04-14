@@ -144,13 +144,15 @@ public interface PageTemplateSetResource {
 	public Page<Permission>
 			putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
 				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode)
+				String pageTemplateSetExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
-				String pageTemplateSetExternalReferenceCode)
+				String pageTemplateSetExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -1338,13 +1340,14 @@ public interface PageTemplateSetResource {
 		public Page<Permission>
 				putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
 					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode)
+					String pageTemplateSetExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPageHttpResponse(
 					siteExternalReferenceCode,
-					pageTemplateSetExternalReferenceCode);
+					pageTemplateSetExternalReferenceCode, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1408,12 +1411,19 @@ public interface PageTemplateSetResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
-					String pageTemplateSetExternalReferenceCode)
+					String pageTemplateSetExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

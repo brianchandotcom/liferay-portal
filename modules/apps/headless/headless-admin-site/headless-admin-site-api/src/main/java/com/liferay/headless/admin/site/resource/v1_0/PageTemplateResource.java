@@ -119,7 +119,8 @@ public interface PageTemplateResource {
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
 				String siteExternalReferenceCode,
-				String pageTemplateExternalReferenceCode)
+				String pageTemplateExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

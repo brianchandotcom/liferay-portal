@@ -676,7 +676,8 @@ public abstract class BaseUtilityPageResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("utilityPageExternalReferenceCode")
-				String utilityPageExternalReferenceCode)
+				String utilityPageExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

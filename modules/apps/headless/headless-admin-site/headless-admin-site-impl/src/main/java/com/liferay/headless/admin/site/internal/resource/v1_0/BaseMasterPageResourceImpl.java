@@ -671,7 +671,8 @@ public abstract class BaseMasterPageResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("masterPageExternalReferenceCode")
-				String masterPageExternalReferenceCode)
+				String masterPageExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

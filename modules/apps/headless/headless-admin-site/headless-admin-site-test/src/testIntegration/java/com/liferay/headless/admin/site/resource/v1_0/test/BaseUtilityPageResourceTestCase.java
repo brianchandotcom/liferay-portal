@@ -831,13 +831,29 @@ public abstract class BaseUtilityPageResourceTestCase {
 			200,
 			utilityPageResource.
 				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			utilityPageResource.
 				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected UtilityPage

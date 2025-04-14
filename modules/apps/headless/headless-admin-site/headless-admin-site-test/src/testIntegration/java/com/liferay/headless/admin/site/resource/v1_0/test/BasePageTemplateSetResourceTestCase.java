@@ -851,13 +851,29 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			200,
 			pageTemplateSetResource.
 				putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			pageTemplateSetResource.
 				putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected PageTemplateSet

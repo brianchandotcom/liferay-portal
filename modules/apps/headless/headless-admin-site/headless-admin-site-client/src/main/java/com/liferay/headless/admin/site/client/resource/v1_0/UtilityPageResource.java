@@ -156,13 +156,15 @@ public interface UtilityPageResource {
 	public Page<Permission>
 			putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
 				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode)
+				String utilityPageExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode)
+				String utilityPageExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -1462,13 +1464,14 @@ public interface UtilityPageResource {
 		public Page<Permission>
 				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
 					String siteExternalReferenceCode,
-					String utilityPageExternalReferenceCode)
+					String utilityPageExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					siteExternalReferenceCode,
-					utilityPageExternalReferenceCode);
+					siteExternalReferenceCode, utilityPageExternalReferenceCode,
+					permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1532,12 +1535,19 @@ public interface UtilityPageResource {
 		public HttpInvoker.HttpResponse
 				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
-					String utilityPageExternalReferenceCode)
+					String utilityPageExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body("[]", "application/json");
+			List<String> values = new ArrayList<>();
+
+			for (Permission permissionValue : permissions) {
+				values.add(String.valueOf(permissionValue));
+			}
+
+			httpInvoker.body(values.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

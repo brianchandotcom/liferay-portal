@@ -895,13 +895,29 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			200,
 			displayPageTemplateFolderResource.
 				putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			displayPageTemplateFolderResource.
 				putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null));
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected DisplayPageTemplateFolder

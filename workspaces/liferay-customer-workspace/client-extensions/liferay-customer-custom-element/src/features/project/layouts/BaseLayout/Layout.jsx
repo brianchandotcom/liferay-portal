@@ -5,28 +5,44 @@
 
 import {useEffect, useRef, useState} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
-import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
-import ProjectErrorMessage from '../../components/ProjectErrorMessage';
-import SideMenu from '../../containers/SideMenu';
 import InformationBanner from '~/components/InformationBanner';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
 import i18n from '~/utils/I18n';
 
+import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
+import ProjectErrorMessage from '../../components/ProjectErrorMessage';
+import SideMenu from '../../containers/SideMenu';
+
 import './Layout.css';
+
+import {FORMAT_DATE_TYPES} from '~/utils/constants';
+import getDateCustomFormat from '~/utils/getDateCustomFormat';
+
+import useHasAllEventsPermissions from '../../pages/Project/BusinessEvents/hooks/useHasAllEventsPermissions';
 
 const Layout = () => {
 	const {featureFlags} = useAppPropertiesContext();
-	const [{subscriptions, userProjectAccess}] = useCustomerPortal();
+	const [{businessEvents, subscriptions, userProjectAccess}] =
+		useCustomerPortal();
 
 	const [hasSideMenu, setHasSideMenu] = useState(true);
 	const [showBanner, setShowBanner] = useState(true);
 
+	const [dismissedBanners, setDismissedBanners] = useState(() => {
+		const stored = sessionStorage.getItem(
+			'@liferayCP:dismissedOverdueBanners'
+		);
+
+		return stored ? JSON.parse(stored) : [];
+	});
 	const {accountKey} = useParams();
 	const firstAccountKeyRef = useRef(accountKey);
 
 	const location = useLocation();
 	const routeParams = location.pathname;
+
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const isRenewOrDeactivatePage =
 		routeParams?.endsWith('dxp-renew') ||
@@ -43,21 +59,36 @@ const Layout = () => {
 		(subscription) =>
 			subscription.accountSubscriptionGroupERC?.includes('saas') &&
 			(subscription.name?.includes('Business Plan') ||
-			subscription.name?.includes('Enterprise Plan') ||
-			subscription.name?.includes('Pro Plan'))
+				subscription.name?.includes('Enterprise Plan') ||
+				subscription.name?.includes('Pro Plan'))
 	);
 
-	useEffect(() => {
-		const bannerState = !sessionStorage.getItem('@liferayCP:showSaaSProjectBanner');
+	const handleOverdueBannerDismiss = (businessId) => {
+		setDismissedBanners((prev) => {
+			const updated = [...prev, businessId];
 
-		setShowBanner(bannerState);
-	}, []);
+			sessionStorage.setItem(
+				'@liferayCP:dismissedOverdueBanners',
+				JSON.stringify(updated)
+			);
+
+			return updated;
+		});
+	};
 
 	const handleBannerDismiss = () => {
 		sessionStorage.setItem('@liferayCP:showSaaSProjectBanner', 'false');
 
 		setShowBanner(false);
 	};
+
+	useEffect(() => {
+		const bannerState = !sessionStorage.getItem(
+			'@liferayCP:showSaaSProjectBanner'
+		);
+
+		setShowBanner(bannerState);
+	}, []);
 
 	if (userProjectAccess) {
 		if (
@@ -68,24 +99,62 @@ const Layout = () => {
 		}
 	}
 
+	const overdueBusinessEvents = businessEvents?.filter(
+		(businessEvent) => businessEvent.eventStatus.key === 'overdue'
+	);
+
 	return (
 		<div className="position-relative w-100">
-			{showBanner && featureFlags.includes('LRSD-8459') &&
-				hasBusinessEnterpriseOrProSubscription && (
-					<InformationBanner
-						content={i18n.sub(
-							'visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page',
-							[
-								`<a href="${Liferay.currentURL}#/${accountKey}/project-usage">`,
-								'</a>',
-								'<a href="https://help.liferay.com/hc/articles/13068602483853-Liferay-SaaS-Plans">',
-								'</a>',
-							]
-						)}
-						icon="exclamation-circle"
-						onDismiss={handleBannerDismiss}
-					/>
-				)}
+			<div className="mb-4">
+				{hasAllEventsPermissions &&
+					overdueBusinessEvents?.length > 0 &&
+					overdueBusinessEvents
+						.filter(
+							(businessEvent) =>
+								!dismissedBanners.includes(businessEvent.id)
+						)
+						?.map((businessEvent, businessEventIndex) => (
+							<InformationBanner
+								content={i18n.sub(
+									'the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details',
+									[
+										getDateCustomFormat(
+											FORMAT_DATE_TYPES.day2DMonthSYearN,
+											businessEvent.targetGoLiveDateTime
+										),
+										`<a href="${Liferay.currentURL}#/${accountKey}/business-events/${businessEvent.id}?openModal=goLiveEvent">`,
+										'</a>',
+										`<a href="${Liferay.currentURL}#/${accountKey}/business-events/${businessEvent.id}/edit">`,
+										'</a>',
+									]
+								)}
+								icon="exclamation-full"
+								key={businessEventIndex}
+								onDismiss={() =>
+									handleOverdueBannerDismiss(businessEvent.id)
+								}
+								title={`${i18n.translate('business-event')}: ${businessEvent.name}`}
+							/>
+						))}
+
+				{showBanner &&
+					featureFlags.includes('LRSD-8459') &&
+					hasBusinessEnterpriseOrProSubscription && (
+						<InformationBanner
+							content={i18n.sub(
+								'visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page',
+								[
+									`<a href="${Liferay.currentURL}#/${accountKey}/project-usage">`,
+									'</a>',
+									'<a href="https://help.liferay.com/hc/articles/13068602483853-Liferay-SaaS-Plans">',
+									'</a>',
+								]
+							)}
+							icon="exclamation-circle"
+							onDismiss={handleBannerDismiss}
+						/>
+					)}
+			</div>
 
 			<div className="d-flex">
 				{!isRenewOrDeactivatePage && (

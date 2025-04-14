@@ -6,6 +6,7 @@
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
+import {fetcher} from '~/services/liferay/fetcher';
 import {
 	getAccountByExternalReferenceCode,
 	getAccountSubscriptionGroups,
@@ -22,6 +23,7 @@ import {
 	IAccountBrief,
 	IAccountSubscription,
 	IAccountSubscriptionGroup,
+	IBusinessEvent,
 	IProject,
 	IUserAccount,
 } from '~/utils/types';
@@ -30,6 +32,7 @@ import reducer, {ActionPayload, IAction, IState, actionTypes} from './reducer';
 
 const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 	{
+		businessEvents: undefined,
 		isQuickLinksExpanded: true,
 		page: undefined,
 		project: undefined,
@@ -48,6 +51,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 	const [state, dispatch] = useReducer<React.Reducer<IState, IAction>>(
 		reducer,
 		{
+			businessEvents: undefined,
 			isQuickLinksExpanded: true,
 			page: undefined,
 			project: undefined,
@@ -63,6 +67,35 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 	const pageRoutes = useMemo(() => routerPath(), []);
 
 	useEffect(() => {
+		const getBusinessEvents = async (filterQuery: string) => {
+			const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
+
+			try {
+				const businessEventsResponse = await fetcher(
+					`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`,
+					{
+						headers: {
+							'Accept-Language':
+								Liferay.ThemeDisplay.getBCP47LanguageId(),
+							'Content-Type': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+						method: 'GET',
+					}
+				);
+
+				const items = businessEventsResponse.items as IBusinessEvent[];
+
+				dispatch({
+					payload: items,
+					type: actionTypes.UPDATE_BUSINESS_EVENTS as keyof typeof actionTypes,
+				});
+			}
+			catch (error) {
+				console.error('Error', error);
+			}
+		};
+
 		const getUser = async (
 			projectExternalReferenceCode: string
 		): Promise<IUserAccount | undefined> => {
@@ -324,6 +357,11 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 						}
 
 						getStructuredContents();
+
+						const businessEventsFilterQuery = accountBrief?.id
+							? `filter=r_accountEntryToBusinessEvents_accountEntryId eq '${accountBrief.id}'`
+							: '';
+						getBusinessEvents(businessEventsFilterQuery);
 					}
 				}
 			}

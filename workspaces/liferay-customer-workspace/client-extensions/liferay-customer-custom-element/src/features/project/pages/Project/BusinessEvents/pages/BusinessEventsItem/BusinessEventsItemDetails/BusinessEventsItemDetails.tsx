@@ -9,7 +9,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import NavigationBar from '@clayui/navigation-bar';
 import {useCallback, useEffect, useState} from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
@@ -42,6 +42,7 @@ const BusinessEventsItemDetails = () => {
 
 	const {loading: loadingTickets, tickets} = useAccountTickets(accountKey);
 
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const {observer, onOpenChange, open} = useModal();
@@ -109,7 +110,16 @@ const BusinessEventsItemDetails = () => {
 				) || []),
 			]);
 		}
-	}, [businessEvent, tickets]);
+
+		const params = new URLSearchParams(location.search);
+		const modalType = params.get('openModal');
+
+		if (modalType === 'goLiveEvent') {
+			setModalType('goLiveEvent');
+
+			onOpenChange(true);
+		}
+	}, [businessEvent, location.search, onOpenChange, tickets]);
 
 	if (loading) {
 		return (

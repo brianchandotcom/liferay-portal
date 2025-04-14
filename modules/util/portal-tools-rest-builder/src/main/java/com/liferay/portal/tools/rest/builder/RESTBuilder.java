@@ -1299,7 +1299,13 @@ public class RESTBuilder {
 			for (JavaMethodSignature javaMethodSignature :
 					javaMethodSignatures) {
 
-				String operationId = javaMethodSignature.getOperationId();
+				Operation operation = javaMethodSignature.getOperation();
+
+				String operationId = operation.getOperationId();
+
+				if (operationId == null) {
+					operationId = javaMethodSignature.getMethodName();
+				}
 
 				if (operationIds.contains(operationId) ||
 					operationId.endsWith("Batch")) {

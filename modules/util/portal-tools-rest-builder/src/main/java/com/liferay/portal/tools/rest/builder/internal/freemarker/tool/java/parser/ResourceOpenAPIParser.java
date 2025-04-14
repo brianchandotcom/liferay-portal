@@ -96,9 +96,13 @@ public class ResourceOpenAPIParser {
 								schemaName,
 								configYAML.isForcePredictableOperationId());
 
+							if (operation != null) {
+								operation.setOperationId(methodName);
+							}
+
 							JavaMethodSignature javaMethodSignature =
 								new JavaMethodSignature(
-									path, pathItem, operation, methodName,
+									path, pathItem, operation,
 									requestBodyMediaTypes, schemaName,
 									javaMethodParameters,
 									_hasObjectParameter(javaMethodParameters) ?
@@ -150,13 +154,12 @@ public class ResourceOpenAPIParser {
 				sb.append(operation.getDescription());
 				sb.append("\"");
 
-				if ((javaMethodSignature.getOperationId() != null) &&
-					!StringUtil.equals(
+				if (!StringUtil.equals(
 						javaMethodSignature.getMethodName(),
-						javaMethodSignature.getOperationId())) {
+						operation.getOperationId())) {
 
 					sb.append(", operationId=\"");
-					sb.append(javaMethodSignature.getOperationId());
+					sb.append(operation.getOperationId());
 					sb.append("\"");
 				}
 
@@ -556,15 +559,12 @@ public class ResourceOpenAPIParser {
 				new JavaMethodParameter("object", "Object"));
 		}
 
-		String batchMethodName = _getBatchMethodName(
-			batchOperationType, methodName);
-
 		javaMethodSignatures.add(
 			new JavaMethodSignature(
 				batchPath, javaMethodSignature.getPathItem(), batchOperation,
-				batchMethodName,
 				Collections.singleton(ContentTypes.APPLICATION_JSON),
-				schemaName, javaMethodParameters, batchMethodName,
+				schemaName, javaMethodParameters,
+				_getBatchMethodName(batchOperationType, methodName),
 				"javax.ws.rs.core.Response", parentSchemaName));
 	}
 

@@ -45,7 +45,6 @@ public class ResourceTestCaseOpenAPIParser {
 					resourceJavaMethodSignature.getPath(),
 					resourceJavaMethodSignature.getPathItem(),
 					resourceJavaMethodSignature.getOperation(),
-					resourceJavaMethodSignature.getOperationId(),
 					resourceJavaMethodSignature.getRequestBodyMediaTypes(),
 					resourceJavaMethodSignature.getSchemaName(),
 					resourceJavaMethodSignature.getJavaMethodParameters(),

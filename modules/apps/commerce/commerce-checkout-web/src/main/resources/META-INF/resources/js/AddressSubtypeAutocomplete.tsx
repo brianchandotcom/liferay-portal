@@ -388,7 +388,9 @@ function AddressSubtypeAutocomplete({
 										if (continueButton) {
 											setCurrentValue(modalCurrentValue);
 
-											continueButton.click();
+											setTimeout(() => {
+												continueButton.click();
+											}, 0);
 										}
 									}}
 								>

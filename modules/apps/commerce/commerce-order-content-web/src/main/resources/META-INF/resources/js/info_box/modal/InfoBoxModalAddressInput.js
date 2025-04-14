@@ -439,9 +439,11 @@ const InfoBoxModalAddressInput = ({
 								menuTrigger="focus"
 								name="infoBoxModalAddressSubtypeInput"
 								onChange={(value) => {
-									setCurrentAddress({
-										...currentAddress,
-										addressSubtype: value,
+									setCurrentAddress((prevState) => {
+										return {
+											...prevState,
+											addressSubtype: value,
+										};
 									});
 								}}
 								onItemsChange={() => {}}

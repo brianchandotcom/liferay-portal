@@ -70,22 +70,22 @@ FeatureFlags: {
 'LPD-00042':true,
 },
 Language: {
-_cache:
-	window?.Liferay?.Language?._cache
-		? Liferay.Language._cache
-		: {},
-get:
-	(key) => {
-		let value = Liferay.Language._cache[key];
+	_cache:
+		window?.Liferay?.Language?._cache
+			? Liferay.Language._cache
+			: {},
+	available: {'fr_FR':'français\x20\x28France\x29','en_CA':'English\x20\x28Canada\x29',},
+	direction: {'fr_FR':'ltr','en_CA':'ltr',},
+	get:
+		(key) => {
+			let value = Liferay.Language._cache[key];
 
-		if (value === undefined) {
-			value = key;
-		}
+			if (value === undefined) {
+				value = key;
+			}
 
-		return value;
-	},
-available: {'fr_FR':'français\x20\x28France\x29','en_CA':'English\x20\x28Canada\x29',},
-direction: {'fr_FR':'ltr','en_CA':'ltr',},
+			return value;
+		},
 },
 Portlet: {
 openModal: buildESMStub('frontend-js-components-web', 'openPortletModal'),

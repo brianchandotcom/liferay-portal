@@ -156,7 +156,7 @@
 								<div class="learn-article-category-tag mr-2">
 									<a
 										class="label tag-container"
-										href="/search?category=${taxonomyCategory.categoryId}"
+										href="/search?${vocabulary?lower_case?replace(" ", "-", "r")}=${taxonomyCategory.categoryId}"
 									>
 										<span>${taxonomyCategory.categoryName}</span>
 									</a>

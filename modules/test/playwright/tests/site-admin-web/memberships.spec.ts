@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {membershipsPagesTest} from './fixtures/membershipsPagesTest';
 
 export const test = mergeTests(
@@ -90,7 +91,15 @@ test(
 
 		await page.getByRole('link', {name: 'User Groups'}).click();
 
+		await expect(
+			page.getByText(
+				' No user group was found that is a member of this site.'
+			)
+		).toBeVisible();
+
 		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page.waitForTimeout(500);
 
 		await page
 			.frameLocator('iframe[title="Assign User Groups to This Site"]')
@@ -99,7 +108,7 @@ test(
 
 		await page.getByRole('button', {name: 'Done'}).click();
 
-		await page.waitForTimeout(500);
+		await waitForAlert(page);
 
 		await membershipsPage.assignSiteAdministratorRole();
 		await membershipsPage.filterBySiteAdministratorRole();

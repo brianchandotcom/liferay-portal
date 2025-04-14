@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export class MembershipsPage {
 	readonly page: Page;
@@ -28,6 +29,8 @@ export class MembershipsPage {
 			.check();
 
 		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForAlert(this.page);
 	}
 
 	async assignAllUsersSiteMembership() {
@@ -41,6 +44,8 @@ export class MembershipsPage {
 			.check();
 
 		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForAlert(this.page);
 	}
 
 	async assignSiteAdministratorRole() {
@@ -59,6 +64,8 @@ export class MembershipsPage {
 			.click();
 
 		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForAlert(this.page);
 	}
 
 	async filterBySiteAdministratorRole() {
@@ -73,6 +80,10 @@ export class MembershipsPage {
 			.frameLocator('iframe[title="Select Role"]')
 			.getByText('Site Administrator')
 			.click();
+
+		await expect(
+			this.page.getByRole('heading', {name: 'Search Results'})
+		).toBeVisible();
 	}
 
 	async goto() {
@@ -114,6 +125,8 @@ export class MembershipsPage {
 				)
 				.getByLabel('More actions'),
 		});
+
+		await waitForAlert(this.page);
 	}
 
 	async removeSiteAdministratorRole() {
@@ -129,6 +142,8 @@ export class MembershipsPage {
 			timeout: 500,
 			trigger: this.page.getByLabel('Select All Items on the Page'),
 		});
+
+		await waitForAlert(this.page);
 	}
 
 	async unassignAllRolesFromUser(userName: String) {
@@ -156,5 +171,7 @@ export class MembershipsPage {
 			.check();
 
 		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForAlert(this.page);
 	}
 }

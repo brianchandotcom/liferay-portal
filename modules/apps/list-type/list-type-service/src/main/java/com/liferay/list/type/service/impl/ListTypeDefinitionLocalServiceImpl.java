@@ -240,7 +240,7 @@ public class ListTypeDefinitionLocalServiceImpl
 				_listTypeEntryLocalService.addListTypeEntry(
 					listTypeEntry.getExternalReferenceCode(), userId,
 					listTypeDefinitionId, listTypeEntry.getKey(),
-					listTypeEntry.getNameMap());
+					listTypeEntry.getNameMap(), listTypeEntry.isSystem());
 
 				continue;
 			}

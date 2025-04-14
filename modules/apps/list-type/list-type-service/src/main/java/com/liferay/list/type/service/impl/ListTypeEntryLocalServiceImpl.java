@@ -9,7 +9,9 @@ import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.ListTypeEntryNameException;
+import com.liferay.list.type.exception.ListTypeEntrySystemException;
 import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
+import com.liferay.list.type.internal.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeEntryLocalServiceBaseImpl;
@@ -17,6 +19,7 @@ import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -46,16 +49,35 @@ public class ListTypeEntryLocalServiceImpl
 	@Override
 	public ListTypeEntry addListTypeEntry(
 			String externalReferenceCode, long userId,
-			long listTypeDefinitionId, String key, Map<Locale, String> nameMap, boolean system)
+			long listTypeDefinitionId, String key, Map<Locale, String> nameMap,
+			boolean system)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionPersistence.findByPrimaryKey(
 				listTypeDefinitionId);
 
-		ListTypeDefinitionUtil.validateInvokerBundle(
-			"Only allowed bundles can add system list type entries",
-			listTypeDefinition.isSystem());
+		if (FeatureFlagManagerUtil.isEnabled(
+				listTypeDefinition.getCompanyId(), "LPD-24055")) {
+
+			if (listTypeDefinition.isSystem()) {
+				ListTypeEntryUtil.validateInvokerBundle(
+					"Only allowed bundles can add system list type entries",
+					system);
+			}
+			else if (system) {
+				throw new ListTypeEntrySystemException(
+					"System list type entries cannot be added to custom list " +
+						"type definitions");
+			}
+		}
+		else {
+			ListTypeDefinitionUtil.validateInvokerBundle(
+				"Only allowed bundles can add system list type entries",
+				listTypeDefinition.isSystem());
+
+			system = listTypeDefinition.isSystem();
+		}
 
 		User user = _userLocalService.getUser(userId);
 
@@ -76,6 +98,7 @@ public class ListTypeEntryLocalServiceImpl
 		listTypeEntry.setListTypeDefinitionId(listTypeDefinitionId);
 		listTypeEntry.setKey(key);
 		listTypeEntry.setNameMap(nameMap);
+		listTypeEntry.setSystem(system);
 
 		return listTypeEntryPersistence.update(listTypeEntry);
 	}
@@ -85,13 +108,22 @@ public class ListTypeEntryLocalServiceImpl
 	public ListTypeEntry deleteListTypeEntry(ListTypeEntry listTypeEntry)
 		throws PortalException {
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionPersistence.findByPrimaryKey(
-				listTypeEntry.getListTypeDefinitionId());
+		if (FeatureFlagManagerUtil.isEnabled(
+				listTypeEntry.getCompanyId(), "LPD-24055")) {
 
-		ListTypeDefinitionUtil.validateInvokerBundle(
-			"Only allowed bundles can delete system list type entries",
-			listTypeDefinition.isSystem());
+			ListTypeEntryUtil.validateInvokerBundle(
+				"Only allowed bundles can delete system list type entries",
+				listTypeEntry.isSystem());
+		}
+		else {
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionPersistence.findByPrimaryKey(
+					listTypeEntry.getListTypeDefinitionId());
+
+			ListTypeDefinitionUtil.validateInvokerBundle(
+				"Only allowed bundles can delete system list type entries",
+				listTypeDefinition.isSystem());
+		}
 
 		return listTypeEntryPersistence.remove(listTypeEntry);
 	}
@@ -205,12 +237,21 @@ public class ListTypeEntryLocalServiceImpl
 
 		listTypeEntry.setNameMap(nameMap);
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionPersistence.findByPrimaryKey(
-				listTypeEntry.getListTypeDefinitionId());
+		if (!FeatureFlagManagerUtil.isEnabled(
+				listTypeEntry.getCompanyId(), "LPD-24055")) {
 
-		if (listTypeDefinition.isSystem() &&
-			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionPersistence.findByPrimaryKey(
+					listTypeEntry.getListTypeDefinitionId());
+
+			if (listTypeDefinition.isSystem() &&
+				!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+				return listTypeEntryPersistence.update(listTypeEntry);
+			}
+		}
+		else if (listTypeEntry.isSystem() &&
+				 !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			return listTypeEntryPersistence.update(listTypeEntry);
 		}

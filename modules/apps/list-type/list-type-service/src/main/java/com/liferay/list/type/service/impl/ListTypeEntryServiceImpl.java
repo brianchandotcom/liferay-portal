@@ -49,7 +49,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 
 		return listTypeEntryLocalService.addListTypeEntry(
 			externalReferenceCode, getUserId(), listTypeDefinitionId, key,
-			nameMap);
+			nameMap, system);
 	}
 
 	@Override

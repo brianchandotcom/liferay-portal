@@ -126,15 +126,6 @@
 							'autocomplete-highlighters',
 						],
 					},
-					'liferay-menu-toggle': {
-						path: 'menu_toggle.js',
-						requires: [
-							'aui-node',
-							'event-outside',
-							'event-tap',
-							'liferay-menu-filter',
-						],
-					},
 					'liferay-navigation-interaction': {
 						path: 'navigation_interaction.js',
 						plugins: {

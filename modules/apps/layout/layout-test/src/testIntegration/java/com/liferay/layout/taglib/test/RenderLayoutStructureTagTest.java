@@ -393,6 +393,11 @@ public class RenderLayoutStructureTagTest {
 				continue;
 			}
 
+			String expectedContent = StringBundler.concat(
+				"id=\"", fragmentEntryLink.getNamespace(),
+				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
+				"value=\"");
+
 			JSONObject editableValueJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
@@ -400,11 +405,6 @@ public class RenderLayoutStructureTagTest {
 				editableValueJSONObject.getJSONObject(
 					FragmentEntryProcessorConstants.
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			String expectedContent = StringBundler.concat(
-				"id=\"", fragmentEntryLink.getNamespace(),
-				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
-				"value=\"");
 
 			String namespace = StringBundler.concat(
 				ObjectRelationship.class.getName(), StringPool.POUND,
@@ -3123,8 +3123,7 @@ public class RenderLayoutStructureTagTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertFalse(
-			content.contains("<form action=\""));
+		Assert.assertFalse(content.contains("<form action=\""));
 		Assert.assertFalse(
 			content.contains("<p>InputName:" + infoField.getName() + "</p>"));
 		Assert.assertTrue(content, content.contains(expectedSuccessHTML));

@@ -139,7 +139,8 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 
 				_addSubtypeClassInfo(
 					subtypeClassInfoJSONArray, identifierArray[0],
-					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK,
+					basicDocumentDLFileEntryType.getExternalReferenceCode(),
 					basicDocumentDLFileEntryType.getName(locale));
 
 				return;

@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -16,6 +16,15 @@ import {
 	broadcastRefMock,
 } from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
+
+jest.mock('@liferay/layout-js-components-web', () => {
+	const actual = jest.requireActual('@liferay/layout-js-components-web');
+
+	return {
+		...actual,
+		openConfirmModal: jest.fn(),
+	};
+});
 
 const renderComponent = (state?: Partial<State>) => {
 	return render(
@@ -134,5 +143,27 @@ describe('PicklistBuilderManagementBar', () => {
 		expect(screen.getByText('Something was wrong')).toBeInTheDocument();
 
 		await closeToast();
+	});
+
+	it('Shows warning modal when an option has been deleted', async () => {
+		renderComponent({
+			deletedOptions: true,
+		});
+
+		const saveButton = screen.getByText('save');
+
+		await userEvent.click(saveButton);
+
+		await waitFor(() => {
+			expect(
+				require('@liferay/layout-js-components-web').openConfirmModal
+			).toBeCalledWith(
+				expect.objectContaining({
+					text: 'you-deleted-one-or-more-options-from-the-picklist',
+				})
+			);
+			expect(PicklistService.updatePicklist).not.toBeCalled();
+			expect(PicklistService.createPicklist).not.toBeCalled();
+		});
 	});
 });

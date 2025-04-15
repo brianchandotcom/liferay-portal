@@ -11,7 +11,7 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 
 export const DEFAULT_STATE: State = {
-	deletedOptions: new Set(),
+	deletedOptions: false,
 	erc: 'picklistERC',
 	id: 1,
 	name: {en_US: 'Picklist Name'},

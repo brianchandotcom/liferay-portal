@@ -255,6 +255,6 @@ volumeMounts:
         subPath: 000_jdk_java_options.sh
 volumes:
     -   configMap:
-            name: liferay
+            name: liferay-default
             optional: true
         name: liferay-configmap

@@ -42,7 +42,8 @@ export default function useTranslationProgress({
 				)
 					.filter(
 						(input) =>
-							input.value || input.getAttribute('data-translated')
+							input.value?.trim() ||
+							input.getAttribute('data-translated') === 'true'
 					)
 					.map(
 						(input) =>

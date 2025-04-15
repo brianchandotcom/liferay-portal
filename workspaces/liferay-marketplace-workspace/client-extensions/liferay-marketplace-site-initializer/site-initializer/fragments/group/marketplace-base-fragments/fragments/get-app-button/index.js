@@ -65,7 +65,7 @@ const getHelpModal = () => `
 	</div>
 `;
 
-const getProductPrice = (product) => {
+const getProductPrice = async (product) => {
 	const {productSpecifications = []} = product;
 
 	if (isFreeApp(productSpecifications)) {
@@ -93,12 +93,22 @@ const getProductPrice = (product) => {
 
 	const licenseTypeText =
 		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
+	const currency = await getCurrentCurrency();
 
-	const standardPrice = standardSku
-		? standardSku?.price?.priceFormatted?.replace(' ', '').replace(',', '.')
-		: '';
+	let displayPrice = '';
 
-	const price = `${hasTrialSku ? '30-day trial or' : ''} ${standardPrice}`;
+	if (currency) {
+		const convertedPrice = standardSku?.price?.price * currency.rate;
+
+		displayPrice = `${currency.symbol} ${convertedPrice?.toFixed(2)}`;
+	}
+	else {
+		displayPrice = standardSku?.price?.priceFormatted
+			?.replace(' ', '')
+			?.replace(',', '.');
+	}
+
+	const price = `${hasTrialSku ? '30-day trial or' : ''} ${displayPrice}`;
 
 	return `${price} ${licenseTypeText}`;
 };
@@ -112,7 +122,7 @@ const openLowCodeHelpModal = () => {
 	});
 };
 
-const customizeGetAppButton = (product) => {
+const customizeGetAppButton = async (product) => {
 	const isLowCodeApp = isLowCodeConfiguration(product.productSpecifications);
 
 	getAppButtonElement.onclick = () => {
@@ -130,7 +140,7 @@ const customizeGetAppButton = (product) => {
 		Liferay.Util.navigate(`${getSiteURL()}/get-app?productId=${productId}`);
 	};
 
-	getAppDescriptionElement.innerText = getProductPrice(product);
+	getAppDescriptionElement.innerText = await getProductPrice(product);
 };
 
 const getCommerceProduct = async (channelId) => {
@@ -145,6 +155,26 @@ const getCommerceProduct = async (channelId) => {
 	}
 	catch {
 		return {skus: []};
+	}
+};
+
+const getCurrentCurrency = async () => {
+	try {
+		const response = await Liferay.Util.fetch(
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/currencies`
+		);
+
+		const currencyResponse = await response.json();
+
+		return currencyResponse.items.find(
+			(currency) =>
+				currency.code === Liferay.CommerceContext.currency.currencyCode
+		);
+	}
+	catch (error) {
+		console.error('Error fetching currency:', error);
+
+		return null;
 	}
 };
 

@@ -10,6 +10,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -27,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -37,8 +39,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
@@ -632,6 +636,64 @@ public class CPDefinitionLocalServiceTest {
 		CProduct cProduct = cpDefinition.getCProduct();
 
 		Assert.assertEquals("ERC", cProduct.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testUpdateCPDefinitionWithVersioningEnabled() throws Exception {
+		frutillaRule.scenario(
+			"Update product definition with versioning enabled"
+		).given(
+			"I add a product definition"
+		).when(
+			"the product versioning is enabled"
+		).and(
+			"the product is updated"
+		).then(
+			"the product should have a new version with the product change"
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		long cpDefinitionId = cpDefinition.getCPDefinitionId();
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CProductVersionConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Date displayDate = cpDefinition.getDisplayDate();
+			Date expirationDate = cpDefinition.getExpirationDate();
+
+			cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+				cpDefinitionId, cpDefinition.getNameMap(),
+				cpDefinition.getShortDescriptionMap(),
+				cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
+				cpDefinition.getMetaTitleMap(),
+				cpDefinition.getMetaDescriptionMap(),
+				cpDefinition.getMetaKeywordsMap(),
+				cpDefinition.isIgnoreSKUCombinations(), true, true, true,
+				cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
+				cpDefinition.getHeight(), cpDefinition.getDepth(),
+				cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
+				cpDefinition.isTaxExempt(), cpDefinition.isTelcoOrElectronics(),
+				cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
+				displayDate.getMonth(), displayDate.getDate(),
+				displayDate.getYear(), displayDate.getHours(),
+				displayDate.getMinutes(), expirationDate.getMonth(),
+				expirationDate.getDate(), expirationDate.getYear(),
+				expirationDate.getHours(), expirationDate.getMinutes(), true,
+				ServiceContextTestUtil.getServiceContext());
+
+			CProduct cProduct = cpDefinition.getCProduct();
+
+			Assert.assertEquals(2, cProduct.getLatestVersion());
+		}
 	}
 
 	@Test

@@ -18,10 +18,9 @@ import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
@@ -29,7 +28,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.social.kernel.model.SocialActivitySetting;
-import com.liferay.social.kernel.service.SocialActivitySettingLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,19 +72,26 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "PortalPreferences", "ownerType");
 
-		PortalPreferences portalPreferences =
-			PortalPreferencesLocalServiceUtil.createPortalPreferences(1);
+		List<PortalPreferences> portalPreferencesList = new ArrayList<>();
 
-		portalPreferences.setOwnerId(1);
-		portalPreferences.setOwnerType(1);
+		PortalPreferences portalPreferences1 =
+			_portalPreferencesLocalService.createPortalPreferences(1);
 
-		PortalPreferencesLocalServiceUtil.addPortalPreferences(
-			portalPreferences);
+		portalPreferences1.setOwnerId(1);
+		portalPreferences1.setOwnerType(1);
 
-		portalPreferences.setPortalPreferencesId(2);
+		portalPreferencesList.add(
+			_portalPreferencesLocalService.addPortalPreferences(
+				portalPreferences1));
 
-		PortalPreferencesLocalServiceUtil.addPortalPreferences(
-			portalPreferences);
+		PortalPreferences portalPreferences2 =
+			portalPreferences1.cloneWithOriginalValues();
+
+		portalPreferences2.setPortalPreferencesId(2);
+
+		portalPreferencesList.add(
+			_portalPreferencesLocalService.addPortalPreferences(
+				portalPreferences2));
 
 		_assertCount("PortalPreferences", false, "ownerType", "ownerId");
 
@@ -94,15 +100,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount("PortalPreferences", true, "ownerType", "ownerId");
 
+		Assert.assertEquals(
+			portalPreferencesList.get(0),
+			_portalPreferencesLocalService.fetchPortalPreferences(1, 1));
+
 		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("PortalPreferences", indexMetadatas);
-
-		portalPreferences.setPortalPreferencesId(1);
-
-		Assert.assertEquals(
-			portalPreferences,
-			PortalPreferencesLocalServiceUtil.getPortalPreferences(1));
 	}
 
 	@Test
@@ -112,19 +116,23 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "PortletItem", "groupId");
 
-		PortletItem portletItem = PortletItemLocalServiceUtil.createPortletItem(
+		PortletItem portletItem1 = _portletItemLocalService.createPortletItem(
 			1);
 
-		portletItem.setGroupId(1);
-		portletItem.setName("1");
-		portletItem.setPortletId("1");
-		portletItem.setClassNameId(1);
+		portletItem1.setGroupId(1);
+		portletItem1.setName("1");
+		portletItem1.setPortletId("1");
+		portletItem1.setClassNameId(1);
 
-		PortletItemLocalServiceUtil.addPortletItem(portletItem);
+		List<PortletItem> portletItems = new ArrayList<>();
 
-		portletItem.setPortletItemId(2);
+		portletItems.add(_portletItemLocalService.addPortletItem(portletItem1));
 
-		PortletItemLocalServiceUtil.addPortletItem(portletItem);
+		PortletItem portletItem2 = portletItem1.cloneWithOriginalValues();
+
+		portletItem2.setPortletItemId(2);
+
+		portletItems.add(_portletItemLocalService.addPortletItem(portletItem2));
 
 		_assertCount(
 			"PortletItem", false, "groupId", "classNameId", "portletId",
@@ -137,14 +145,12 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_assertCount(
 			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
 
+		Assert.assertEquals(
+			portletItems.get(0), _portletItemLocalService.getPortletItem(1));
+
 		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("PortletItem", indexMetadatas);
-
-		portletItem.setPortletItemId(1);
-
-		Assert.assertEquals(
-			portletItem, PortletItemLocalServiceUtil.getPortletItem(1));
 	}
 
 	@Test
@@ -154,48 +160,49 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "SocialActivitySetting", "groupId");
 
-		SocialActivitySetting socialActivitySetting =
-			SocialActivitySettingLocalServiceUtil.createSocialActivitySetting(
-				1);
+		SocialActivitySetting socialActivitySetting1 =
+			_socialActivitySettingLocalService.createSocialActivitySetting(1);
 
-		socialActivitySetting.setCtCollectionId(1);
-		socialActivitySetting.setGroupId(1);
-		socialActivitySetting.setClassNameId(1);
-		socialActivitySetting.setActivityType(1);
-		socialActivitySetting.setName("1");
+		socialActivitySetting1.setGroupId(1);
+		socialActivitySetting1.setClassNameId(1);
+		socialActivitySetting1.setActivityType(1);
+		socialActivitySetting1.setName("1");
 
-		SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(
-			socialActivitySetting);
+		List<SocialActivitySetting> socialActivitySettings = new ArrayList<>();
 
-		socialActivitySetting.setActivitySettingId(2);
+		socialActivitySettings.add(
+			_socialActivitySettingLocalService.addSocialActivitySetting(
+				socialActivitySetting1));
 
-		SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(
-			socialActivitySetting);
+		SocialActivitySetting socialActivitySetting2 =
+			socialActivitySetting1.cloneWithOriginalValues();
+
+		socialActivitySetting2.setActivitySettingId(2);
+
+		socialActivitySettings.add(
+			_socialActivitySettingLocalService.addSocialActivitySetting(
+				socialActivitySetting2));
 
 		_assertCount(
 			"SocialActivitySetting", false, "groupId", "classNameId",
-			"activityType", "name", "ctCollectionId");
+			"activityType", "name");
 
 		_runUpgrade(
 			"SocialActivitySetting",
-			new String[] {
-				"groupId", "classNameId", "activityType", "name",
-				"ctCollectionId"
-			},
+			new String[] {"groupId", "classNameId", "activityType", "name"},
 			null);
 
 		_assertCount(
 			"SocialActivitySetting", true, "groupId", "classNameId",
-			"activityType", "name", "ctCollectionId");
+			"activityType", "name");
+
+		Assert.assertEquals(
+			socialActivitySettings.get(0),
+			_socialActivitySettingLocalService.getSocialActivitySetting(1));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("SocialActivitySetting", indexMetadatas);
-		socialActivitySetting.setActivitySettingId(1);
-
-		Assert.assertEquals(
-			socialActivitySetting,
-			SocialActivitySettingLocalServiceUtil.getSocialActivitySetting(1));
 	}
 
 	@Test
@@ -203,25 +210,25 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "Ticket", "key_");
 
-		Ticket ticket = TicketLocalServiceUtil.createTicket(1);
+		Ticket ticket1 = _ticketLocalService.createTicket(1);
 
-		ticket.setKey("key_");
+		ticket1.setKey("key_");
 
 		List<Ticket> tickets = new ArrayList<>();
 
-		tickets.add(TicketLocalServiceUtil.addTicket(ticket));
+		tickets.add(_ticketLocalService.addTicket(ticket1));
 
-		ticket.setTicketId(2);
+		Ticket ticket2 = ticket1.cloneWithOriginalValues();
 
-		tickets.add(TicketLocalServiceUtil.addTicket(ticket));
+		ticket2.setTicketId(2);
+
+		tickets.add(_ticketLocalService.addTicket(ticket2));
 
 		_assertCount("Ticket", false, "key_");
 
 		_runUpgrade("Ticket", new String[] {"key_"}, "ticketId asc");
 
 		_assertCount("Ticket", true, "key_");
-
-		// Simulate previous persistence implementation sort
 
 		Collections.sort(tickets, Collections.reverseOrder());
 
@@ -231,8 +238,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("Ticket", indexMetadatas);
-
-		Assert.assertEquals(ticket, TicketLocalServiceUtil.getTicket(2));
 	}
 
 	private void _assertCount(
@@ -298,6 +303,16 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
+
+	@Inject
+	private static PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private static PortletItemLocalService _portletItemLocalService;
+
+	@Inject
+	private static SocialActivitySettingLocalService
+		_socialActivitySettingLocalService;
 
 	@Inject
 	private static TicketLocalService _ticketLocalService;

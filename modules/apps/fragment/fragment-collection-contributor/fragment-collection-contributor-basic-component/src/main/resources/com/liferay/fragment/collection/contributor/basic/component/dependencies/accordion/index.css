@@ -2,3 +2,13 @@
 	max-height: 0;
 	transition: max-height 0.5s ease;
 }
+
+.c-prefers-reduced-motion .panel-collapse.collapsed {
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.panel-collapse.collapsed {
+		transition: none;
+	}
+}

@@ -54,9 +54,9 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 20 of 25 entries.");
 
-			Pagination.changePagination(itemsPerPage = 4);
+			Pagination.changePagination(itemsPerPage = 40);
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
+			Pagination.viewResults(results = "Showing 1 to 25 of 25 entries.");
 		}
 	}
 

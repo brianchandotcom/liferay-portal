@@ -726,6 +726,8 @@ definition {
 	@description = "View pagination in site memberships admin."
 	@priority = 3
 	test SiteMembershipsPagination {
+		property custom.properties = "search.container.page.delta.values=4,20,40,60";
+
 		task ("Add 10 users") {
 			for (var screenName : list "userfn1,userfn2,userfn3,userfn4,userfn5,userfn6,userfn7,userfn8,userfn9,userfn10") {
 				JSONUser.addUser(

@@ -5,9 +5,24 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -66,6 +81,8 @@ public class SXPBlueprintDTOConverter
 			{
 				setConfiguration(
 					() -> _toConfiguration(
+						sxpBlueprint.getCompanyId(),
+						dtoConverterContext.getLocale(),
 						sxpBlueprint.getConfigurationJSON()));
 				setCreateDate(sxpBlueprint::getCreateDate);
 				setDescription(
@@ -110,6 +127,9 @@ public class SXPBlueprintDTOConverter
 			{
 				setConfiguration(
 					() -> _toConfiguration(
+						sxpBlueprint.getCompanyId(),
+						LocaleUtil.fromLanguageId(
+							sxpBlueprint.getDefaultLanguageId()),
 						sxpBlueprint.getConfigurationJSON()));
 				setCreateDate(sxpBlueprint::getCreateDate);
 				setDescription(sxpBlueprint::getDescription);
@@ -147,9 +167,101 @@ public class SXPBlueprintDTOConverter
 				fallbackTitle, _language, locale, titleMap));
 	}
 
-	private Configuration _toConfiguration(String json) {
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	private Configuration _toConfiguration(
+		long companyId, Locale locale, String json) {
+
 		try {
-			return ConfigurationUtil.toConfiguration(json);
+			JSONObject configurationJSON =
+				_jsonFactory.createJSONObject(json);
+
+			if (configurationJSON == null) {
+				return ConfigurationUtil.toConfiguration(json);
+			}
+
+			JSONObject generalConfigurationJSON =
+				configurationJSON.getJSONObject("generalConfiguration");
+
+			if (generalConfigurationJSON == null) {
+				return ConfigurationUtil.toConfiguration(json);
+			}
+
+			String collectionProviderType =
+				generalConfigurationJSON.getString("collectionProviderType");
+
+			String[] searchableAssetTypeWithSubtype = StringUtil.split(
+				collectionProviderType, StringPool.POUND);
+
+			if (searchableAssetTypeWithSubtype.length == 1) {
+				generalConfigurationJSON.put(
+					"collectionProviderTypeName",
+					searchableAssetTypeWithSubtype[0]);
+			} else if (searchableAssetTypeWithSubtype.length == 3) {
+				if (searchableAssetTypeWithSubtype[0].equals(
+					DLFileEntry.class.getName())) {
+
+					DLFileEntryType dlFileEntryType;
+
+					if (searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
+						dlFileEntryType = _dlFileEntryTypeLocalService.
+							getBasicDocumentDLFileEntryType();
+
+					} else {
+
+						Group group =
+							_groupLocalService.getGroupByExternalReferenceCode(
+								searchableAssetTypeWithSubtype[1], companyId);
+
+						dlFileEntryType =
+							_dlFileEntryTypeLocalService.
+								getDLFileEntryTypeByExternalReferenceCode(
+									searchableAssetTypeWithSubtype[2],
+									group.getGroupId());
+					}
+
+					generalConfigurationJSON.put(
+						"collectionProviderTypeName",
+						searchableAssetTypeWithSubtype[0] + " - " +
+						dlFileEntryType.getName(locale));
+
+				} else if (searchableAssetTypeWithSubtype[0].equals(
+					JournalArticle.class.getName())) {
+
+					Group group =
+						_groupLocalService.getGroupByExternalReferenceCode(
+							searchableAssetTypeWithSubtype[1], companyId);
+
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.
+							fetchStructureByExternalReferenceCode(
+								searchableAssetTypeWithSubtype[2],
+								group.getGroupId(),
+								_classNameLocalService.getClassNameId(
+									JournalArticle.class));
+
+					generalConfigurationJSON.put(
+						"collectionProviderTypeName",
+						searchableAssetTypeWithSubtype[0] + " - " +
+						ddmStructure.getName(locale));
+				}
+			}
+
+			return ConfigurationUtil.toConfiguration(
+				configurationJSON.toString());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

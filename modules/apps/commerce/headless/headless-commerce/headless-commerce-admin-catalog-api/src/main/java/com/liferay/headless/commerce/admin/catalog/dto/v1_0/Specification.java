@@ -55,7 +55,7 @@ public class Specification implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{hu_HU=Horvatorszag, hr_HR=Hrvatska, en_US=Croatia}"
+		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
 	)
 	@Valid
 	public Map<String, String> getDescription() {

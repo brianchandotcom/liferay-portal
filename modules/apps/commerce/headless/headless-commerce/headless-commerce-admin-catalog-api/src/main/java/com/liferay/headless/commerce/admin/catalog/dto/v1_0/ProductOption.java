@@ -186,7 +186,7 @@ public class ProductOption implements Serializable {
 	private Supplier<Boolean> _definedExternallySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{hu_HU=Description HU, hr_HR=Description HR, en_US=Description}"
+		example = "{en_US=Description, hr_HR=Description HR, hu_HU=Description HU}"
 	)
 	@Valid
 	public Map<String, String> getDescription() {

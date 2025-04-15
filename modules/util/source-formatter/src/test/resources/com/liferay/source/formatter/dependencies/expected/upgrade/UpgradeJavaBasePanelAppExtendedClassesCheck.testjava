@@ -17,4 +17,8 @@ public class UpgradeJavaBasePanelAppExtendedClassesCheck extends BasePanelApp {
 		return _portlet;
 	}
 
+	public String getLabel(Locale locale) {
+		return "Test";
+	}
+
 }

@@ -404,29 +404,54 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		}
 
 		synchronized (_buildDatabaseFile) {
-			File tempBuildDatabaseFile = new File(
-				JenkinsResultsParserUtil.combine(
-					System.getProperty("java.io.tmpdir"), "/",
-					String.valueOf(_buildDatabaseFile.hashCode()), "/",
-					_buildDatabaseFile.getName()));
+			Retryable<JSONObject> retryable = new Retryable<JSONObject>(
+				true, 3, 5, true) {
+
+				@Override
+				public JSONObject execute() {
+					File tempBuildDatabaseFile = new File(
+						JenkinsResultsParserUtil.combine(
+							System.getProperty("java.io.tmpdir"), "/",
+							String.valueOf(_buildDatabaseFile.hashCode()), "/",
+							_buildDatabaseFile.getName()));
+
+					try {
+						JenkinsResultsParserUtil.write(
+							_buildDatabaseFile, _jsonObject.toString());
+
+						JenkinsResultsParserUtil.copy(
+							_buildDatabaseFile, tempBuildDatabaseFile);
+
+						CloudBucketUtil.copyS3File(
+							path, tempBuildDatabaseFile.toString());
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+					finally {
+						if (tempBuildDatabaseFile.exists()) {
+							JenkinsResultsParserUtil.delete(
+								tempBuildDatabaseFile);
+						}
+					}
+
+					return null;
+				}
+
+				@Override
+				protected String getRetryMessage(int retryCount) {
+					return JenkinsResultsParserUtil.combine(
+						"Unable to download ", path, ": ",
+						super.getRetryMessage(retryCount));
+				}
+
+			};
 
 			try {
-				JenkinsResultsParserUtil.write(
-					_buildDatabaseFile, _jsonObject.toString());
-
-				JenkinsResultsParserUtil.copy(
-					_buildDatabaseFile, tempBuildDatabaseFile);
-
-				CloudBucketUtil.copyS3File(
-					path, tempBuildDatabaseFile.toString());
+				retryable.executeWithRetries();
 			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-			finally {
-				if (tempBuildDatabaseFile.exists()) {
-					JenkinsResultsParserUtil.delete(tempBuildDatabaseFile);
-				}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}

@@ -341,35 +341,60 @@ public class BuildDatabaseUtil {
 
 		parentDir.mkdirs();
 
-		try {
-			CloudBucketUtil.copyS3File(
-				buildDatabaseFile.getCanonicalPath(),
-				path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+		Retryable<JSONObject> retryable = new Retryable<JSONObject>(
+			true, 3, 5, true) {
 
-			if (!_isValidBuildDatabaseFile(buildDatabaseFile)) {
-				JenkinsResultsParserUtil.delete(buildDatabaseFile);
+			@Override
+			public JSONObject execute() {
+				try {
+					CloudBucketUtil.copyS3File(
+						buildDatabaseFile.getCanonicalPath(),
+						path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Invalid ",
-						JenkinsResultsParserUtil.getCanonicalPath(
-							buildDatabaseFile),
-						" from ", path));
+					if (!_isValidBuildDatabaseFile(buildDatabaseFile)) {
+						JenkinsResultsParserUtil.delete(buildDatabaseFile);
+
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Invalid ",
+								JenkinsResultsParserUtil.getCanonicalPath(
+									buildDatabaseFile),
+								" from ", path));
+					}
+
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Downloaded ",
+							JenkinsResultsParserUtil.getCanonicalPath(
+								buildDatabaseFile),
+							" from ", path));
+				}
+				catch (IOException | RuntimeException exception) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to get ",
+							BuildDatabase.FILE_NAME_BUILD_DATABASE,
+							" file from ", path),
+						exception);
+				}
+
+				return null;
 			}
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Downloaded ",
-					JenkinsResultsParserUtil.getCanonicalPath(
-						buildDatabaseFile),
-					" from ", path));
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return JenkinsResultsParserUtil.combine(
+					"Unable to upload ", path, ": ",
+					super.getRetryMessage(retryCount));
+			}
+
+		};
+
+		try {
+			retryable.executeWithRetries();
 		}
-		catch (IOException | RuntimeException exception) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get ", BuildDatabase.FILE_NAME_BUILD_DATABASE,
-					" file from ", path),
-				exception);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

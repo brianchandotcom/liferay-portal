@@ -212,56 +212,15 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "site-search",
+																"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
-																"searchBlueprintId": 0
 															},
 															"fragmentFields": [
-																{
-																	"id": "searchSeeAllResultsButton",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"value": "/search"
-																				}
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "suggestionsPopularItem4",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																},
-																{
-																	"id": "suggestionsPopularItem3",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																},
-																{
-																	"id": "suggestionsPopularItem2",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																},
-																{
-																	"id": "suggestionsPopularItem1",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
 															],
 															"fragmentStyle": {
-																"marginRight": "3"
+																"marginTop": "1"
 															},
 															"indexed": true
 														},

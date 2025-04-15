@@ -5,6 +5,8 @@
 
 package com.liferay.captcha.taglib.servlet.taglib;
 
+import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -12,14 +14,38 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class CaptchaTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		callSetAttributes();
+
+		Captcha captcha = CaptchaUtil.getCaptcha();
+
+		try {
+			captcha.render(
+				getRequest(), (HttpServletResponse)pageContext.getResponse());
+
+			return EVAL_PAGE;
+		}
+		catch (IOException ioException) {
+			throw new JspException(ioException);
+		}
+		finally {
+			doClearTag();
+		}
+	}
 
 	public String getErrorMessage() {
 		return _errorMessage;
@@ -53,11 +79,6 @@ public class CaptchaTag extends IncludeTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-captcha:captcha:errorMessage", _errorMessage);
@@ -84,8 +105,6 @@ public class CaptchaTag extends IncludeTag {
 
 		return url;
 	}
-
-	private static final String _PAGE = "/captcha/page.jsp";
 
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(

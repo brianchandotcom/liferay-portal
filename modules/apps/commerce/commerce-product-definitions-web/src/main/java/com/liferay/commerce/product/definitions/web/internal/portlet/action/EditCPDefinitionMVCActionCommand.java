@@ -62,7 +62,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -362,7 +362,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			CProductVersionConfiguration cProductVersionConfiguration =
 				_configurationProvider.getConfiguration(
 					CProductVersionConfiguration.class,
-					new SystemSettingsLocator(
+					new CompanyServiceSettingsLocator(
+						cpDefinition.getCompanyId(),
 						CProductVersionConfiguration.class.getName()));
 
 			if (cProductVersionConfiguration.enabled()) {

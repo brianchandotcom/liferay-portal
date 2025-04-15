@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -448,10 +448,12 @@ public class CPDefinitionsDisplayContext
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		CPDefinition cpDefinition = getCPDefinition();
+
 		CProductVersionConfiguration cProductVersionConfiguration =
 			_configurationProvider.getConfiguration(
 				CProductVersionConfiguration.class,
-				new SystemSettingsLocator(
+				new CompanyServiceSettingsLocator(
+					cpDefinition.getCompanyId(),
 					CProductVersionConfiguration.class.getName()));
 
 		if (((cpDefinition != null) && cpDefinition.isDraft()) ||
@@ -583,7 +585,8 @@ public class CPDefinitionsDisplayContext
 		CProductVersionConfiguration cProductVersionConfiguration =
 			ConfigurationProviderUtil.getConfiguration(
 				CProductVersionConfiguration.class,
-				new SystemSettingsLocator(
+				new CompanyServiceSettingsLocator(
+					cpRequestHelper.getCompanyId(),
 					CProductVersionConfiguration.class.getName()));
 
 		return cProductVersionConfiguration.enabled();

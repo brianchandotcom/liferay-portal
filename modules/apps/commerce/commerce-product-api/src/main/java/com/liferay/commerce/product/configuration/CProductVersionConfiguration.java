@@ -14,7 +14,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alec Sloan
  */
 @ExtendedObjectClassDefinition(
-	category = "catalog", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "catalog", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.product.configuration.CProductVersionConfiguration",

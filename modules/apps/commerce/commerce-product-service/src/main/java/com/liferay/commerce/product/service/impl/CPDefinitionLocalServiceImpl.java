@@ -114,7 +114,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -974,12 +974,13 @@ public class CPDefinitionLocalServiceImpl
 					publishedCPDefinition.getCProductId(),
 					targetCPDefinition.getCPDefinitionId());
 
+				long companyId = publishedCPDefinition.getCompanyId();
 				long cProductId = publishedCPDefinition.getCProductId();
 
 				TransactionCommitCallbackUtil.registerCallback(
 					() -> {
 						cpDefinitionLocalService.maintainVersionThreshold(
-							cProductId);
+							companyId, cProductId);
 
 						return null;
 					});
@@ -2003,7 +2004,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isVersionable(CPDefinition cpDefinition) {
-		if (!_isVersioningEnabled()) {
+		if (!_isVersioningEnabled(cpDefinition.getCompanyId())) {
 			return false;
 		}
 
@@ -2012,7 +2013,12 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isVersionable(long cpDefinitionId) {
-		if (!_isVersioningEnabled()) {
+		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionId);
+
+		if ((cpDefinition == null) ||
+			!_isVersioningEnabled(cpDefinition.getCompanyId())) {
+
 			return false;
 		}
 
@@ -2039,7 +2045,7 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public void maintainVersionThreshold(long cProductId)
+	public void maintainVersionThreshold(long companyId, long cProductId)
 		throws PortalException {
 
 		int threshold = 0;
@@ -2048,7 +2054,8 @@ public class CPDefinitionLocalServiceImpl
 			CProductVersionConfiguration cProductVersionConfiguration =
 				_configurationProvider.getConfiguration(
 					CProductVersionConfiguration.class,
-					new SystemSettingsLocator(
+					new CompanyServiceSettingsLocator(
+						companyId,
 						CProductVersionConfiguration.class.getName()));
 
 			threshold = cProductVersionConfiguration.versionThreshold();
@@ -3036,12 +3043,13 @@ public class CPDefinitionLocalServiceImpl
 		return newURLTitleMap;
 	}
 
-	private boolean _isVersioningEnabled() {
+	private boolean _isVersioningEnabled(long companyId) {
 		try {
 			CProductVersionConfiguration cProductVersionConfiguration =
 				_configurationProvider.getConfiguration(
 					CProductVersionConfiguration.class,
-					new SystemSettingsLocator(
+					new CompanyServiceSettingsLocator(
+						companyId,
 						CProductVersionConfiguration.class.getName()));
 
 			if (cProductVersionConfiguration.enabled()) {

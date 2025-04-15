@@ -5,9 +5,14 @@
 
 package com.liferay.search.experiences.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -17,7 +22,9 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -69,7 +76,8 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
 
-		sxpBlueprint.setConfigurationJSON(configurationJSON);
+		sxpBlueprint.setConfigurationJSON(
+			_enhanceConfiguration(configurationJSON));
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
 		sxpBlueprint.setSchemaVersion(schemaVersion);
@@ -180,7 +188,8 @@ public class SXPBlueprintLocalServiceImpl
 			sxpBlueprintId);
 
 		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
-		sxpBlueprint.setConfigurationJSON(configurationJSON);
+		sxpBlueprint.setConfigurationJSON(
+			_enhanceConfiguration(configurationJSON));
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
 		sxpBlueprint.setTitleMap(titleMap);
@@ -190,6 +199,69 @@ public class SXPBlueprintLocalServiceImpl
 				GetterUtil.getFloat(sxpBlueprint.getVersion(), 0.9F) + 0.1));
 
 		return updateSXPBlueprint(sxpBlueprint);
+	}
+
+	private String _enhanceConfiguration(String configuration) {
+		try {
+			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
+				configuration);
+
+			JSONObject generalConfigurationJSONObject =
+				configurationJSONObject.getJSONObject("generalConfiguration");
+
+			JSONArray searchableAssetTypesJSONArray =
+				(JSONArray)generalConfigurationJSONObject.get(
+					"searchableAssetTypes");
+
+			if (searchableAssetTypesJSONArray == null) {
+				return configuration;
+			}
+//			ArrayUtil.toStringArray()
+//			String searchableAssetTypes = searchableAssetTypesJSONArray.toString();
+			String[] searchableAssetTypesArray = JSONUtil.toStringArray(searchableAssetTypesJSONArray);
+
+
+//				String[] searchableAssetTypesArray = StringUtil.split(
+//				searchableAssetTypes);
+
+			if (searchableAssetTypesArray.length == 1) {
+				return _setCollectionProviderType(
+					configurationJSONObject, generalConfigurationJSONObject,
+					searchableAssetTypesArray[0]);
+			}
+
+			String[] searchableAssetTypeWithSubtype = StringUtil.split(
+				searchableAssetTypesArray[0], StringPool.POUND);
+
+			String className = searchableAssetTypeWithSubtype[0];
+
+			for (int i = 1; i < searchableAssetTypesArray.length; i++) {
+				searchableAssetTypeWithSubtype = StringUtil.split(
+					searchableAssetTypesArray[i], StringPool.POUND);
+
+				if (!className.equals(searchableAssetTypeWithSubtype[0])) {
+					return _setCollectionProviderType(
+						configurationJSONObject, generalConfigurationJSONObject,
+						AssetEntry.class.getName());
+				}
+			}
+
+			return _setCollectionProviderType(
+				configurationJSONObject, generalConfigurationJSONObject,
+				className);
+		}
+		catch (Exception exception) {
+			return configuration;
+		}
+	}
+
+	private String _setCollectionProviderType(
+		JSONObject configurationJSONObject,
+		JSONObject generalConfigurationJSONObject, String type) {
+
+		generalConfigurationJSONObject.put("collectionProviderType", type);
+
+		return configurationJSONObject.toString();
 	}
 
 	private SXPBlueprint _upgradeSXPBlueprint(SXPBlueprint sxpBlueprint) {
@@ -241,6 +313,9 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private static final String[] _WILDCARD = {StringPool.STAR};
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

@@ -492,23 +492,22 @@ public class CommerceCurrencyLocalServiceImpl
 			return;
 		}
 
-		BigDecimal exchangeRate = BigDecimal.ZERO;
-
 		try {
-			exchangeRate = exchangeRateProvider.getExchangeRate(
+			BigDecimal exchangeRate = exchangeRateProvider.getExchangeRate(
 				primaryCommerceCurrency, commerceCurrency);
+
+			if (BigDecimalUtil.gt(exchangeRate, BigDecimal.ZERO)) {
+				commerceCurrency.setRate(exchangeRate);
+
+				commerceCurrencyLocalService.updateCommerceCurrency(
+					commerceCurrency);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-
-			return;
 		}
-
-		commerceCurrency.setRate(exchangeRate);
-
-		commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
 	}
 
 	@Override

@@ -174,7 +174,15 @@ public class LiferayOAuth2ClientConfiguration {
 
 			if (!tokenURI.contains("://")) {
 				tokenURI = new StringBuilder(
-				).append(_lxcDXPServerProtocol).append("://").append(_lxcDXPMainDomain).append(tokenURI).toString();
+				).append(
+					_lxcDXPServerProtocol
+				).append(
+					"://"
+				).append(
+					_lxcDXPMainDomain
+				).append(
+					tokenURI
+				).toString();
 			}
 
 			ClientRegistration clientRegistration =

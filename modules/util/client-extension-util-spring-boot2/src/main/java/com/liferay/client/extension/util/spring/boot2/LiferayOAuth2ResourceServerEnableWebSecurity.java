@@ -62,7 +62,8 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 		DefaultJWTProcessor<SecurityContext> defaultJWTProcessor =
 			new DefaultJWTProcessor<>();
 
-		URL jwkSetURL = new URL(new StringBuilder(
+		URL jwkSetURL = new URL(
+			new StringBuilder(
 			).append(
 				_lxcDXPServerProtocol
 			).append(

@@ -5,28 +5,19 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.action.ActionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,30 +66,9 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			Validator.isNull(user.getLastFailedLoginDate()) &&
 			Validator.isNull(user.getLockoutDate())) {
 
-			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
-				user.getCompanyId(), User.class.getName(), user.getUserId(),
-				TicketConstants.TYPE_PASSWORD, null,
-				new Date(
-					System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)),
-				new ServiceContext());
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(PortalUtil.getPortalURL(httpServletRequest));
-			sb.append(PortalUtil.getPathContext());
-			sb.append("/c/portal/update_password?p_l_id=");
-			sb.append(LayoutConstants.DEFAULT_PLID);
-			sb.append("&ticketId=");
-			sb.append(ticket.getTicketId());
-			sb.append("&ticketKey=");
-			sb.append(ticket.getKey());
-
-			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
-
-			TicketLocalServiceUtil.updateTicket(ticket);
-
 			httpServletRequest.setAttribute(
-				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, sb.toString());
+				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				ActionUtil.generateUpdatePasswordURL(httpServletRequest, user));
 
 			String[] credentials = new String[3];
 

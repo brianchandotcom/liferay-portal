@@ -8,6 +8,7 @@ package com.liferay.portal.struts;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.action.ActionUtil;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.PortletActiveException;
 import com.liferay.portal.kernel.exception.UserActiveException;
@@ -16,8 +17,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.model.UserTrackerPath;
@@ -27,11 +26,8 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -349,30 +345,8 @@ public class PortalRequestProcessor {
 				return null;
 			}
 
-			Date expirationDate = new Date(System.currentTimeMillis() + 600000);
-
-			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
-				user.getCompanyId(), User.class.getName(), user.getUserId(),
-				TicketConstants.TYPE_PASSWORD, null, expirationDate,
-				new ServiceContext());
-
-			StringBuffer sb = new StringBuffer();
-
-			sb.append(PortalUtil.getPortalURL(httpServletRequest));
-			sb.append(PortalUtil.getPathContext());
-			sb.append("/c/portal/update_password");
-			sb.append("?p_l_id=");
-			sb.append(LayoutConstants.DEFAULT_PLID);
-			sb.append("&ticketId=");
-			sb.append(ticket.getTicketId());
-			sb.append("&ticketKey=");
-			sb.append(ticket.getKey());
-
-			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
-
-			TicketLocalServiceUtil.updateTicket(ticket);
-
-			return sb.toString();
+			return ActionUtil.generateUpdatePasswordURL(
+				httpServletRequest, user);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -69,9 +69,9 @@
 	}
 
 	.ticket-button {
-		border-style: solid;
 		border-color: transparent;
 		border-radius: 0px var(--border-radius-lg, 10px) var(--border-radius-lg, 10px) 0px;
+		border-style: solid;
 		border-width: 1px;
 		
 		&:hover {

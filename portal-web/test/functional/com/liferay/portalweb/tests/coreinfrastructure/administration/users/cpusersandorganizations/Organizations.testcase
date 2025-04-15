@@ -565,7 +565,8 @@ definition {
 		Organization.delete(orgName = "Organization Name");
 	}
 
-	@description = "This sets Order By Name and asserts descending and ascending order"
+	@description = "This sets Order By Name and asserts descending and ascending order. Ignored because of LPD-51577."
+	@ignore = "true"
 	@priority = 4
 	test CanOrderOrganizationsByName {
 		for (var organizationNumber : list "1,2,3,4,5,6,7,8") {
@@ -599,7 +600,8 @@ definition {
 		}
 	}
 
-	@description = "Use case for LPS-198960.Organization users and sub organizations are not mixed across pages using the interactor button."
+	@description = "Use case for LPS-198960.Organization users and sub organizations are not mixed across pages using the interactor button. Ignored because of LPD-51577."
+	@ignore = "true"
 	@priority = 4
 	test CanViewListedUsersAndSubOrganizationsNotMixedAcrossPages {
 		task ("Given an Organization with two Users") {

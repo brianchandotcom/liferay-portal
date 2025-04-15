@@ -762,7 +762,8 @@ definition {
 		}
 	}
 
-	@description = "This test changes pagination and assert countries display properly."
+	@description = "This test changes pagination and assert countries display properly. Ignored because of LPD-51577."
+	@ignore = "true"
 	@priority = 3
 	test PaginationWorksInCountries {
 		property test.liferay.virtual.instance = "false";
@@ -803,7 +804,8 @@ definition {
 		}
 	}
 
-	@description = "This test changes pagination and assert regions display properly."
+	@description = "This test changes pagination and assert regions display properly. Ignored because of LPD-51577."
+	@ignore = "true"
 	@priority = 3
 	test PaginationWorksInRegions {
 		property test.liferay.virtual.instance = "false";

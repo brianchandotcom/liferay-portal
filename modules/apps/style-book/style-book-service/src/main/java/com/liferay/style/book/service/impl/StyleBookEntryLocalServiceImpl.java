@@ -271,7 +271,7 @@ public class StyleBookEntryLocalServiceImpl
 	public List<StyleBookEntry> getStyleBookEntries(
 		long groupId, String themeId) {
 
-		return styleBookEntryPersistence.findByG_T(groupId, themeId);
+		return styleBookEntryPersistence.findByG_T_Head(groupId, themeId, true);
 	}
 
 	@Override

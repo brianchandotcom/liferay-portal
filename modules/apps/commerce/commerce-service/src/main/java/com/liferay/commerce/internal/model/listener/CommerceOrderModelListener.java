@@ -313,7 +313,7 @@ public class CommerceOrderModelListener
 			_commerceTermEntryLocalService.fetchCommerceTermEntry(
 				commerceChannelAccountEntryRel.getClassPK());
 
-		if (commerceTermEntry == null) {
+		if ((commerceTermEntry == null) || !commerceTermEntry.isActive()) {
 			return;
 		}
 
@@ -421,7 +421,7 @@ public class CommerceOrderModelListener
 			_commerceTermEntryLocalService.fetchCommerceTermEntry(
 				commerceChannelAccountEntryRel.getClassPK());
 
-		if (commerceTermEntry == null) {
+		if ((commerceTermEntry == null) || !commerceTermEntry.isActive()) {
 			return;
 		}
 

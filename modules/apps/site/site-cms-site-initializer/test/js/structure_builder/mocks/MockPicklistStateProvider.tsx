@@ -11,12 +11,14 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 
 export const DEFAULT_STATE: State = {
+	deletedOptions: new Set(),
 	erc: 'picklistERC',
 	id: 1,
 	name: {en_US: 'Picklist Name'},
 	options: new Map([
 		['option1ERC', {key: 'option1', name: {en_US: 'Option 1'}}],
 	]),
+	setDeletedOptions: jest.fn(),
 	setErc: jest.fn(),
 	setId: jest.fn(),
 	setName: jest.fn(),

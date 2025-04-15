@@ -102,6 +102,7 @@ public class KaleoDefinitionVersionUpgradeProcess extends UpgradeProcess {
 				"status", WorkflowConstants.STATUS_DRAFT);
 		}
 
+		serviceContext.setCompanyId(companyId);
 		serviceContext.setCreateDate(createDate);
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setScopeGroupId(groupId);

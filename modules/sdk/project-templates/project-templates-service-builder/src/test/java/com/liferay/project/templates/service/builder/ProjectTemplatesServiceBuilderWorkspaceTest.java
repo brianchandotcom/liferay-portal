@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.URI;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -162,6 +163,12 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"liferay.workspace.product=" + liferayWorkspaceProduct);
 		}
 
+		if (Objects.equals(_liferayVersion, "7.4.3.56")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"com.liferay.portal.tools.service.builder.version=1.0.483");
+		}
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 
@@ -256,6 +263,13 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 			}
 			else {
 				projectPath = ":modules:" + _name;
+			}
+
+			if (Objects.equals(_liferayVersion, "7.4.3.56")) {
+				updateMavenPomElementText(
+					new File(mavenProjectDir.toPath() + "/" + _name + "-service"),
+					"//version[text()='1.0.501']",
+					"1.0.483");
 			}
 
 			testBuildTemplateServiceBuilder(

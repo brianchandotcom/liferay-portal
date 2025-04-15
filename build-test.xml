@@ -2469,6 +2469,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<delete dir="${test.app.server.parent.dir}" />
 
 						<copy
+							preservelastmodified="true"
 							todir="${test.app.server.parent.dir}"
 						>
 							<fileset

@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,6 +41,9 @@ public class PicklistBuilderDisplayContext {
 
 	public Map<String, Object> getProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")
+		).put(
 			"state",
 			JSONUtil.put(
 				"listTypeDefinition", _getListTypeDefinitionJSONObject())

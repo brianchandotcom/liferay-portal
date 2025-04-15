@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import CacheContextProvider from '../../contexts/CacheContext';
@@ -17,8 +18,10 @@ import PicklistFields from './PicklistFields';
 import PicklistOptions from './PicklistOptions';
 
 export default function PicklistBuilder({
+	learnResources,
 	state,
 }: {
+	learnResources: ILearnResourceContext;
 	state: {listTypeDefinition: Picklist};
 }) {
 	return (
@@ -33,7 +36,7 @@ export default function PicklistBuilder({
 				</CacheContextProvider>
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
-					<PicklistFields />
+					<PicklistFields learnResources={learnResources} />
 
 					<PicklistOptions />
 				</ClayLayout.ContainerFluid>

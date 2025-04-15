@@ -8,9 +8,13 @@ package com.liferay.object.service.impl;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.model.impl.ObjectEntryImpl;
+import com.liferay.object.model.impl.ObjectEntryVersionImpl;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
@@ -41,6 +45,22 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntryVersionPersistence.create(
 				counterLocalService.increment()),
 			objectEntry.getVersion() + 1);
+	}
+
+	@Override
+	public void deleteObjectEntryVersionByObjectDefinitionId(
+		Long objectDefinitionId) {
+
+		runSQL(
+			StringBundler.concat(
+				"delete from ", ObjectEntryVersionImpl.TABLE_NAME,
+				" where exists (select 1 from ", ObjectEntryImpl.TABLE_NAME,
+				" where ", ObjectEntryImpl.TABLE_NAME, ".objectEntryId = ",
+				ObjectEntryVersionImpl.TABLE_NAME, ".objectEntryId and ",
+				ObjectEntryImpl.TABLE_NAME, ".objectDefinitionId = ",
+				objectDefinitionId, ")"));
+
+		FinderCacheUtil.clearDSLQueryCache(ObjectEntryVersionImpl.TABLE_NAME);
 	}
 
 	@Override

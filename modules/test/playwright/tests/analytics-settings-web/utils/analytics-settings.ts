@@ -228,6 +228,15 @@ export async function syncAnalyticsCloud({
 
 	await goNextStep(page);
 
+	const nextButton = await page.getByRole('button', {
+		exact: true,
+		name: 'Next',
+	});
+
+	if (await nextButton.isVisible()) {
+		await nextButton.click();
+	}
+
 	await page.getByRole('button', {name: 'Finish'}).click();
 
 	return {

@@ -24,4 +24,7 @@ public interface FunctionCaptchaImplConfiguration {
 	@Meta.AD
 	public String captchaName();
 
+	@Meta.AD
+	public String customElementExternalReferenceCode();
+
 }

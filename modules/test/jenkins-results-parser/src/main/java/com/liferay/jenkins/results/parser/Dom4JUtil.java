@@ -11,12 +11,11 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,6 +34,9 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -415,7 +417,65 @@ public class Dom4JUtil {
 		}
 	}
 
-	private static String _getEntities() throws IOException, TimeoutException {
+	private static synchronized String _getEntities() throws IOException {
+		if (_entities != null) {
+			return _entities;
+		}
+
+		JSONObject entitiesJSONObject = _getEntitiesJSONObject();
+
+		Map<String, Integer> map = new TreeMap<>();
+
+		for (String key : entitiesJSONObject.keySet()) {
+			JSONObject entityJSONObject = entitiesJSONObject.getJSONObject(key);
+
+			JSONArray codepointsJSONArray = entityJSONObject.getJSONArray(
+				"codepoints");
+
+			if ((codepointsJSONArray == null) ||
+				codepointsJSONArray.isEmpty()) {
+
+				continue;
+			}
+
+			map.put(
+				key.replaceAll("([&;])", ""), codepointsJSONArray.getInt(0));
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
+			sb.append("  <!ENTITY ");
+			sb.append(entry.getKey());
+			sb.append(" \"&#");
+			sb.append(entry.getValue());
+			sb.append(";\">\n");
+		}
+
+		_entities = sb.toString();
+
+		return _entities;
+	}
+
+	private static synchronized JSONObject _getEntitiesJSONObject()
+		throws IOException {
+
+		String path = "www.w3.org/TR/html5-author/entities.json";
+
+		File file = new File(
+			JenkinsResultsParserUtil.getUserHomeDir(),
+			".liferay/mirrors/" + path);
+
+		if (file.exists()) {
+			try {
+				return new JSONObject(JenkinsResultsParserUtil.read(file));
+			}
+			catch (Exception exception) {
+				System.out.println(
+					"WARNING: Unable to get entities from " + file);
+			}
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
@@ -425,24 +485,11 @@ public class Dom4JUtil {
 			sb.append("https://");
 		}
 
-		sb.append("www.w3.org/TR/html5-author/entities.json");
+		sb.append(path);
 
-		URL url = new URL(sb.toString());
-
-		File entitiesFile = new File("entities.html");
-
-		JenkinsResultsParserUtil.toFile(url, entitiesFile);
-
-		String entities = JenkinsResultsParserUtil.read(entitiesFile);
-
-		entities = entities.replaceAll(
-			"\\\"\\&([\\w]+);?\\\": \\{ \\\"[\\w]+\\\": \\[(\\d+)(, " +
-				"\\d+)?\\], \\\"[\\w]+\\\": \\\"[\\\\\\w\\d]+\\\" },?",
-			"<!ENTITY $1 \"\\&#$2;\">");
-
-		entities = entities.replaceAll("([{|}])", "");
-
-		return entities;
+		return JenkinsResultsParserUtil.toJSONObject(sb.toString());
 	}
+
+	private static String _entities;
 
 }

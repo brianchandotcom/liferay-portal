@@ -336,9 +336,8 @@ public class LayoutUtil {
 			descriptionMap, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			publishedContentPageSpecification, layout, layout.getNameMap(),
-			layout.getTitleMap(), layout.getDescriptionMap(), status,
-			serviceContext);
+			publishedContentPageSpecification, layout, nameMap, titleMap,
+			descriptionMap, status,	serviceContext);
 	}
 
 	public static Layout updateLayout(

@@ -25,8 +25,8 @@ import {
 } from './utils/analytics-settings';
 
 export enum JobId {
-	ContentRecommenderMostPopularItemsEnabled = 'contentRecommenderMostPopularItemsEnabled',
-	ContentRecommenderUserPersonalizationEnabled = 'contentRecommenderUserPersonalizationEnabled',
+	ContentRecommenderMostPopularItemsEnabled = 'contentRecommenderMostPopularItems',
+	ContentRecommenderUserPersonalizationEnabled = 'contentRecommenderUserPersonalization',
 }
 
 const jobs: {
@@ -38,7 +38,7 @@ const jobs: {
 		jobTitle: 'Most Popular Content',
 	},
 	{
-		jobId: JobId.ContentRecommenderMostPopularItemsEnabled,
+		jobId: JobId.ContentRecommenderUserPersonalizationEnabled,
 		jobTitle: 'Users Personalized Content Recommendations',
 	},
 ];

@@ -31,15 +31,12 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.Date;
@@ -96,27 +93,11 @@ public class UpdatePasswordActionTest {
 				user.getLanguageId(), "&ticketId=", _ticketId, "&ticketKey=",
 				_ticketKey));
 
-		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-
-		connection.setRequestMethod("GET");
-
-		try (BufferedReader reader = new BufferedReader(
-				new InputStreamReader(connection.getInputStream()))) {
-
-			String expectedText = "Your password reset link is no longer valid";
-
-			String line = null;
-
-			while ((line = reader.readLine()) != null) {
-				if (line.contains(expectedText)) {
-					break;
-				}
-			}
-
-			Assert.assertNotNull(line);
-			Assert.assertTrue(
-				StringUtil.contains(line, expectedText, StringPool.BLANK));
-		}
+		Assert.assertTrue(
+			StringUtil.contains(
+				URLUtil.toString(url),
+				"Your password reset link is no longer valid",
+				StringPool.BLANK));
 	}
 
 	private MockHttpServletRequest _mockHttpServletRequest(
@@ -159,11 +140,10 @@ public class UpdatePasswordActionTest {
 
 		mockHttpServletRequest.setMethod("POST");
 
-		Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
-
 		Ticket ticket = _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
-			TicketConstants.TYPE_PASSWORD, null, expirationDate,
+			TicketConstants.TYPE_PASSWORD, null,
+			new Date(System.currentTimeMillis() + 3600000),
 			new ServiceContext());
 
 		_ticketId = String.valueOf(ticket.getTicketId());
@@ -182,10 +162,8 @@ public class UpdatePasswordActionTest {
 		httpSession.setAttribute(
 			"LIFERAY_SHARED_AUTHENTICATION_TOKEN#CSRF", "test");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			mockHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextFactory.getInstance(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
 	}

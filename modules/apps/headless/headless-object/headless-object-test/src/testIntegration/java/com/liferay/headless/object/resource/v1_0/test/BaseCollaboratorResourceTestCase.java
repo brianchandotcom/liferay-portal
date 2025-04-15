@@ -184,6 +184,327 @@ public abstract class BaseCollaboratorResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Collaborator collaborator =
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		assertHttpResponseStatusCode(
+			204,
+			collaboratorResource.
+				deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					collaborator.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			collaboratorResource.
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					collaborator.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			collaboratorResource.
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					0L));
+	}
+
+	protected Long
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Collaborator collaborator =
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		assertHttpResponseStatusCode(
+			204,
+			collaboratorResource.
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+						collaborator),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					collaborator.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					collaborator.getExternalReferenceCode(),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					collaborator.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					"-",
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					0L));
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return collaborator.getExternalReferenceCode();
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator postCollaborator =
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		Collaborator getCollaborator =
+			collaboratorResource.
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					postCollaborator.getId());
+
+		assertEquals(postCollaborator, getCollaborator);
+		assertValid(getCollaborator);
+	}
+
+	protected Long
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator collaborator =
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				collaborator,
+				CollaboratorSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectEntryFolderId",
+											testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId());
+
+										put(
+											"collaboratorType",
+											"\"" +
+												testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType() +
+													"\"");
+
+										put(
+											"collaboratorId",
+											collaborator.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator"))));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertTrue(
+			equals(
+				collaborator,
+				CollaboratorSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessObject_v1_0",
+								new GraphQLField(
+									"objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectEntryFolderId",
+												testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId());
+
+											put(
+												"collaboratorType",
+												"\"" +
+													testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType() +
+														"\"");
+
+											put(
+												"collaboratorId",
+												collaborator.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessObject_v1_0",
+						"Object/objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator"))));
+	}
+
+	protected Long
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
+		throws Exception {
+
+		Long irrelevantObjectEntryFolderId = RandomTestUtil.randomLong();
+		String irrelevantCollaboratorType =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									irrelevantObjectEntryFolderId);
+								put(
+									"collaboratorType",
+									irrelevantCollaboratorType);
+								put("collaboratorId", irrelevantCollaboratorId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										irrelevantObjectEntryFolderId);
+									put(
+										"collaboratorType",
+										irrelevantCollaboratorType);
+									put(
+										"collaboratorId",
+										irrelevantCollaboratorId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Collaborator
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return testGraphQLCollaborator_addCollaborator();
+	}
+
+	@Test
 	public void testGetObjectEntryFolderCollaboratorsPage() throws Exception {
 		Long objectEntryFolderId =
 			testGetObjectEntryFolderCollaboratorsPage_getObjectEntryFolderId();
@@ -363,6 +684,241 @@ public abstract class BaseCollaboratorResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator postCollaborator =
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		Collaborator getCollaborator =
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					postCollaborator.getId());
+
+		assertEquals(postCollaborator, getCollaborator);
+		assertValid(getCollaborator);
+	}
+
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return collaborator.getExternalReferenceCode();
+	}
+
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator collaborator =
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				collaborator,
+				CollaboratorSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"scopeKey",
+											"\"" +
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey() +
+													"\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+													collaborator) + "\"");
+
+										put(
+											"collaboratorType",
+											"\"" +
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType() +
+													"\"");
+
+										put(
+											"collaboratorId",
+											collaborator.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator"))));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertTrue(
+			equals(
+				collaborator,
+				CollaboratorSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessObject_v1_0",
+								new GraphQLField(
+									"scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"scopeKey",
+												"\"" +
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+														collaborator) + "\"");
+
+											put(
+												"collaboratorType",
+												"\"" +
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType() +
+														"\"");
+
+											put(
+												"collaboratorId",
+												collaborator.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessObject_v1_0",
+						"Object/scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator"))));
+	}
+
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return collaborator.getExternalReferenceCode();
+	}
+
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
+		throws Exception {
+
+		String irrelevantScopeKey = "\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantCollaboratorType =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator",
+						new HashMap<String, Object>() {
+							{
+								put("scopeKey", irrelevantScopeKey);
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+								put(
+									"collaboratorType",
+									irrelevantCollaboratorType);
+								put("collaboratorId", irrelevantCollaboratorId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator",
+							new HashMap<String, Object>() {
+								{
+									put("scopeKey", irrelevantScopeKey);
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+									put(
+										"collaboratorType",
+										irrelevantCollaboratorType);
+									put(
+										"collaboratorId",
+										irrelevantCollaboratorId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Collaborator
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return testGraphQLCollaborator_addCollaborator();
 	}
 
 	@Test
@@ -600,6 +1156,132 @@ public abstract class BaseCollaboratorResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator postCollaborator =
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		Collaborator randomCollaborator = randomCollaborator();
+
+		Collaborator putCollaborator =
+			collaboratorResource.
+				putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					postCollaborator.getId(), randomCollaborator);
+
+		assertEquals(randomCollaborator, putCollaborator);
+		assertValid(putCollaborator);
+
+		Collaborator getCollaborator =
+			collaboratorResource.
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId(),
+					testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					putCollaborator.getId());
+
+		assertEquals(randomCollaborator, getCollaborator);
+		assertValid(getCollaborator);
+	}
+
+	protected Long
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator postCollaborator =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		Collaborator randomCollaborator = randomCollaborator();
+
+		Collaborator putCollaborator =
+			collaboratorResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					postCollaborator.getId(), randomCollaborator);
+
+		assertEquals(randomCollaborator, putCollaborator);
+		assertValid(putCollaborator);
+
+		Collaborator getCollaborator =
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					putCollaborator.getExternalReferenceCode(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					putCollaborator.getId());
+
+		assertEquals(randomCollaborator, getCollaborator);
+		assertValid(getCollaborator);
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return collaborator.getExternalReferenceCode();
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Collaborator testGraphQLCollaborator_addCollaborator()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		Collaborator collaborator, List<Collaborator> collaborators) {
 
@@ -670,6 +1352,10 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 	protected void assertValid(Collaborator collaborator) throws Exception {
 		boolean valid = true;
+
+		if (collaborator.getId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
@@ -923,6 +1609,16 @@ public abstract class BaseCollaboratorResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						collaborator1.getId(), collaborator2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						collaborator1.getName(), collaborator2.getName())) {
@@ -1161,6 +1857,11 @@ public abstract class BaseCollaboratorResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = collaborator.getName();
 
@@ -1311,6 +2012,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 				dateExpired = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				portrait = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -218,6 +218,73 @@ public class HttpAuthManagerUtilTest {
 	}
 
 	@Test
+	public void testParseBasicWithEncodedPlusCharacter() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Basic " +
+				Base64.encode("test%20test%40liferay%253ecom:test".getBytes()));
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
+
+		Assert.assertEquals(
+			HttpAuthorizationHeader.SCHEME_BASIC,
+			httpAuthorizationHeader.getScheme());
+
+		Map<String, String> authParameters =
+			httpAuthorizationHeader.getAuthParameters();
+
+		Assert.assertEquals(
+			authParameters.toString(), 2, authParameters.size());
+
+		Assert.assertEquals(
+			"test+test@liferay%3ecom",
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
+
+		Assert.assertEquals(
+			"test",
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+	}
+
+	@Test
+	public void testParseBasicWithPlusCharacter() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Basic " + Base64.encode("test+test@liferay.com:test".getBytes()));
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
+
+		Assert.assertEquals(
+			HttpAuthorizationHeader.SCHEME_BASIC,
+			httpAuthorizationHeader.getScheme());
+
+		Map<String, String> authParameters =
+			httpAuthorizationHeader.getAuthParameters();
+
+		Assert.assertEquals(
+			authParameters.toString(), 2, authParameters.size());
+
+		Assert.assertEquals(
+			"test+test@liferay.com",
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
+
+		Assert.assertEquals(
+			"test",
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+	}
+
+	@Test
 	public void testParseDigest() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

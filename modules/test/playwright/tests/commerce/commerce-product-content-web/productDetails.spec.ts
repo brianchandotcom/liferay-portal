@@ -16,6 +16,7 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
+	performLoginViaApi,
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
@@ -900,7 +901,7 @@ test('LPD-39598 Can view SKU UOM discount is applied on product details page', a
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi(page, 'test');
 
 	await apiHelpers.headlessCommerceAdminPricing.deleteDiscountSku(
 		discount2.discountSkuId

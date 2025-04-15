@@ -74,9 +74,9 @@ initContainers:
                                 cp -frv /opt/liferay/data/* /temp/liferay/data
                             fi
 
-                            if [ -d /opt/liferay/deploy ] && [ ! -z "$(ls -A /opt/liferay/deploy)" ]
+                            if [ -d /opt/liferay/deploy ] && [ -z "$(ls -A /temp/liferay/deploy/*license* 2>/dev/null)" ]
                             then
-                                if [ ! -d /temp/liferay/data/license ] || [ ! -e /temp/liferay/data/license/*.li ]
+                                if [ ! -d /temp/liferay/data/license ] || [ -z "$(ls -A /temp/liferay/data/license/*.li)" ]
                                 then
                                     mkdir -p /temp/liferay/deploy
 

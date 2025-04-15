@@ -615,8 +615,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"SocialActivitySetting",
 				new String[] {
-					"groupId", "classNameId", "activityType", "name",
-					"ctCollectionId"
+					"groupId", "classNameId", "activityType", "name"
 				}),
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"Ticket", new String[] {"key_"}, "ticketId asc"));

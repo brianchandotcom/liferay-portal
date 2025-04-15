@@ -22,6 +22,7 @@ page import="com.liferay.commerce.currency.configuration.CommerceCurrencyConfigu
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeException" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyFractionDigitsException" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyNameException" %><%@
+page import="com.liferay.commerce.currency.exception.CommerceCurrencyRateException" %><%@
 page import="com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyException" %><%@
 page import="com.liferay.commerce.currency.exception.NoSuchCurrencyException" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@

@@ -93,34 +93,43 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 
 <c:choose>
 	<c:when test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>">
-		<div class="article-id">
-			<label for="<portlet:namespace />newArticleId"><liferay-ui:message key="id" /></label>
 
-			<aui:input label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
+		<%
+		boolean newArticle = (article != null) && !article.isNew();
+		%>
+
+		<div class="article-id">
+			<label for="<portlet:namespace />newArticleId">
+				<liferay-ui:message key="id" />
+			</label>
+
+			<aui:input disabled="<%= newArticle %>" label="" name="newArticleId" type="text" value="<%= (article != null) ? article.getArticleId() : StringPool.BLANK %>" wrapperCssClass="mb-1" />
 
 			<%
 			String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletResponse.getNamespace() + "newArticleId', event.target.checked);";
 			%>
 
-			<aui:input checked="<%= false %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= false %>" wrapperCssClass="mb-3" />
+			<aui:input checked="<%= false %>" disabled="<%= newArticle %>" label="autogenerate-id" name="autoArticleId" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= false %>" wrapperCssClass="mb-3" />
 		</div>
 
-		<aui:script>
-			var autoArticleInput = document.getElementById(
-				'<portlet:namespace />autoArticleId'
-			);
-			var newArticleInput = document.getElementById(
-				'<portlet:namespace />newArticleId'
-			);
+		<c:if test="<%= !newArticle %>">
+			<aui:script>
+				var autoArticleInput = document.getElementById(
+					'<portlet:namespace />autoArticleId'
+				);
+				var newArticleInput = document.getElementById(
+					'<portlet:namespace />newArticleId'
+				);
 
-			if (autoArticleInput && newArticleInput) {
-				newArticleInput.disabled = autoArticleInput.checked;
+				if (autoArticleInput && newArticleInput) {
+					newArticleInput.disabled = autoArticleInput.checked;
 
-				autoArticleInput.addEventListener('click', () => {
-					Liferay.Util.toggleDisabled(newArticleInput, !newArticleInput.disabled);
-				});
-			}
-		</aui:script>
+					autoArticleInput.addEventListener('click', () => {
+						Liferay.Util.toggleDisabled(newArticleInput, !newArticleInput.disabled);
+					});
+				}
+			</aui:script>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<aui:input name="newArticleId" type="hidden" />

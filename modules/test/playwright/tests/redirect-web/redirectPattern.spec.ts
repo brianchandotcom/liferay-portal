@@ -87,3 +87,25 @@ test('Ensure that a redirect pattern can be updated', async ({
 
 	await expect(page.url()).toContain(destinationPage.friendlyURL);
 });
+
+test('Ensure that a long destination URL is persisted and truncated by ellipsis', async ({
+	page,
+	redirectPage,
+	site,
+}) => {
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirectPattern(
+		'(.*)/source/url$',
+		'/web/test-site/$1/000000000000000000000000000000000'
+	);
+
+	await expect(page.getByLabel('Destination URL')).toHaveValue(
+		'/web/test-site/$1/000000000000000000000000000000000'
+	);
+
+	await expect(page.getByLabel('Destination URL')).toHaveCSS(
+		'text-overflow',
+		'ellipsis'
+	);
+});

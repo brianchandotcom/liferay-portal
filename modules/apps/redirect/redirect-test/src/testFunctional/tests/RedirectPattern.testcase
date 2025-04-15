@@ -48,30 +48,6 @@ definition {
 		}
 	}
 
-	@description = "This test checks that the long destination URL can be clipped."
-	@priority = 5
-	test CanViewClippedDestinationURL {
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/000000000000000000000000000000000",
-			pattern = "(.*)/child1$",
-			patternIndex = 0);
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		AssertAttributeValue(
-			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-			value1 = "value",
-			value2 = "/web/test-site/$1/000000000000000000000000000000000");
-
-		AssertCssValue(
-			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-			locator2 = "text-overflow",
-			value1 = "ellipsis");
-	}
-
 	@description = "This test checks that an error appears when an invalid input is typed into the destination field."
 	@priority = 5
 	test WillGenerateErrorIfDestinationInputIsInvalid {

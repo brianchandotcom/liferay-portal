@@ -822,11 +822,6 @@ public abstract class BaseSkuResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				skuUnsafeFunction = sku -> putSkuByExternalReferenceCode(
-					sku.getExternalReferenceCode(), sku);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				skuUnsafeFunction = sku -> {
 					Sku persistedSku = null;
@@ -856,6 +851,11 @@ public abstract class BaseSkuResourceImpl
 
 					return persistedSku;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				skuUnsafeFunction = sku -> putSkuByExternalReferenceCode(
+					sku.getExternalReferenceCode(), sku);
 			}
 		}
 

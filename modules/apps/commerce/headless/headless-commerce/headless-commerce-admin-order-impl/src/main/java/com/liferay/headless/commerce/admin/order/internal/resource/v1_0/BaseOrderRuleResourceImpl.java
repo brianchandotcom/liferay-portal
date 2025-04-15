@@ -598,12 +598,6 @@ public abstract class BaseOrderRuleResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				orderRuleUnsafeFunction =
-					orderRule -> putOrderRuleByExternalReferenceCode(
-						orderRule.getExternalReferenceCode(), orderRule);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				orderRuleUnsafeFunction = orderRule -> {
 					OrderRule persistedOrderRule = null;
@@ -626,6 +620,12 @@ public abstract class BaseOrderRuleResourceImpl
 
 					return persistedOrderRule;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				orderRuleUnsafeFunction =
+					orderRule -> putOrderRuleByExternalReferenceCode(
+						orderRule.getExternalReferenceCode(), orderRule);
 			}
 		}
 

@@ -633,12 +633,6 @@ public abstract class BaseCatalogResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				catalogUnsafeFunction =
-					catalog -> putCatalogByExternalReferenceCode(
-						catalog.getExternalReferenceCode(), catalog);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				catalogUnsafeFunction = catalog -> {
 					Catalog persistedCatalog = null;
@@ -658,6 +652,12 @@ public abstract class BaseCatalogResourceImpl
 
 					return persistedCatalog;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				catalogUnsafeFunction =
+					catalog -> putCatalogByExternalReferenceCode(
+						catalog.getExternalReferenceCode(), catalog);
 			}
 		}
 

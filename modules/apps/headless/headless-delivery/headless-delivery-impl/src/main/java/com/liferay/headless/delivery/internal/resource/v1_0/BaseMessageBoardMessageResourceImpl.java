@@ -1956,16 +1956,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				messageBoardMessageUnsafeFunction = messageBoardMessage ->
-					putSiteMessageBoardMessageByExternalReferenceCode(
-						messageBoardMessage.getSiteId() != null ?
-							messageBoardMessage.getSiteId() :
-								(Long)parameters.get("siteId"),
-						messageBoardMessage.getExternalReferenceCode(),
-						messageBoardMessage);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				messageBoardMessageUnsafeFunction = messageBoardMessage -> {
 					MessageBoardMessage persistedMessageBoardMessage = null;
@@ -2003,6 +1993,16 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 					return persistedMessageBoardMessage;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				messageBoardMessageUnsafeFunction = messageBoardMessage ->
+					putSiteMessageBoardMessageByExternalReferenceCode(
+						messageBoardMessage.getSiteId() != null ?
+							messageBoardMessage.getSiteId() :
+								(Long)parameters.get("siteId"),
+						messageBoardMessage.getExternalReferenceCode(),
+						messageBoardMessage);
 			}
 		}
 

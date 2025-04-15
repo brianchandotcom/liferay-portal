@@ -710,12 +710,6 @@ public abstract class BasePaymentResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				paymentUnsafeFunction =
-					payment -> putPaymentByExternalReferenceCode(
-						payment.getExternalReferenceCode(), payment);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				paymentUnsafeFunction = payment -> {
 					Payment persistedPayment = null;
@@ -735,6 +729,12 @@ public abstract class BasePaymentResourceImpl
 
 					return persistedPayment;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				paymentUnsafeFunction =
+					payment -> putPaymentByExternalReferenceCode(
+						payment.getExternalReferenceCode(), payment);
 			}
 		}
 

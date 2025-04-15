@@ -617,13 +617,6 @@ public abstract class BaseSpecificationResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				specificationUnsafeFunction =
-					specification -> putSpecificationByExternalReferenceCode(
-						specification.getExternalReferenceCode(),
-						specification);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				specificationUnsafeFunction = specification -> {
 					Specification persistedSpecification = null;
@@ -648,6 +641,13 @@ public abstract class BaseSpecificationResourceImpl
 
 					return persistedSpecification;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				specificationUnsafeFunction =
+					specification -> putSpecificationByExternalReferenceCode(
+						specification.getExternalReferenceCode(),
+						specification);
 			}
 		}
 

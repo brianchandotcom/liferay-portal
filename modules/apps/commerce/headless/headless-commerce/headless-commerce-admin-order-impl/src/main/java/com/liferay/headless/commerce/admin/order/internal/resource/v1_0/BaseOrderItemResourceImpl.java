@@ -766,12 +766,6 @@ public abstract class BaseOrderItemResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				orderItemUnsafeFunction =
-					orderItem -> putOrderItemByExternalReferenceCode(
-						orderItem.getExternalReferenceCode(), orderItem);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				orderItemUnsafeFunction = orderItem -> {
 					OrderItem persistedOrderItem = null;
@@ -804,6 +798,12 @@ public abstract class BaseOrderItemResourceImpl
 
 					return persistedOrderItem;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				orderItemUnsafeFunction =
+					orderItem -> putOrderItemByExternalReferenceCode(
+						orderItem.getExternalReferenceCode(), orderItem);
 			}
 		}
 

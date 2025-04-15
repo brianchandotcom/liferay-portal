@@ -592,11 +592,6 @@ public abstract class BaseTermResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				termUnsafeFunction = term -> putTermByExternalReferenceCode(
-					term.getExternalReferenceCode(), term);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				termUnsafeFunction = term -> {
 					Term persistedTerm = null;
@@ -616,6 +611,11 @@ public abstract class BaseTermResourceImpl
 
 					return persistedTerm;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				termUnsafeFunction = term -> putTermByExternalReferenceCode(
+					term.getExternalReferenceCode(), term);
 			}
 		}
 

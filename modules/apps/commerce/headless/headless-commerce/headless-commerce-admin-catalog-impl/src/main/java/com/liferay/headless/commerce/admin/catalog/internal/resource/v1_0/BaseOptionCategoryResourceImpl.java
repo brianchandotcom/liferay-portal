@@ -591,13 +591,6 @@ public abstract class BaseOptionCategoryResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				optionCategoryUnsafeFunction =
-					optionCategory -> putOptionCategoryByExternalReferenceCode(
-						optionCategory.getExternalReferenceCode(),
-						optionCategory);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				optionCategoryUnsafeFunction = optionCategory -> {
 					OptionCategory persistedOptionCategory = null;
@@ -622,6 +615,13 @@ public abstract class BaseOptionCategoryResourceImpl
 
 					return persistedOptionCategory;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				optionCategoryUnsafeFunction =
+					optionCategory -> putOptionCategoryByExternalReferenceCode(
+						optionCategory.getExternalReferenceCode(),
+						optionCategory);
 			}
 		}
 

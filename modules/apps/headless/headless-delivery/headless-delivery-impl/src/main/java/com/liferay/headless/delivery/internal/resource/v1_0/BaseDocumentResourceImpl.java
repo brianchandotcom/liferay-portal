@@ -2177,14 +2177,6 @@ public abstract class BaseDocumentResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				documentUnsafeFunction =
-					document -> putSiteDocumentByExternalReferenceCode(
-						document.getSiteId() != null ? document.getSiteId() :
-							(Long)parameters.get("siteId"),
-						document.getExternalReferenceCode(), null);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				documentUnsafeFunction = document -> {
 					Document persistedDocument = null;
@@ -2228,6 +2220,14 @@ public abstract class BaseDocumentResourceImpl
 
 					return persistedDocument;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				documentUnsafeFunction =
+					document -> putSiteDocumentByExternalReferenceCode(
+						document.getSiteId() != null ? document.getSiteId() :
+							(Long)parameters.get("siteId"),
+						document.getExternalReferenceCode(), null);
 			}
 		}
 

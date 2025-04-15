@@ -1659,12 +1659,6 @@ public abstract class BaseAccountResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeFunction =
-					account -> putAccountByExternalReferenceCode(
-						account.getExternalReferenceCode(), account);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				accountUnsafeFunction = account -> {
 					Account persistedAccount = null;
@@ -1684,6 +1678,12 @@ public abstract class BaseAccountResourceImpl
 
 					return persistedAccount;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				accountUnsafeFunction =
+					account -> putAccountByExternalReferenceCode(
+						account.getExternalReferenceCode(), account);
 			}
 		}
 

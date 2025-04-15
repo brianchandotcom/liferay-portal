@@ -692,12 +692,6 @@ public abstract class BaseSXPBlueprintResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				sxpBlueprintUnsafeFunction =
-					sxpBlueprint -> putSXPBlueprintByExternalReferenceCode(
-						sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpBlueprintUnsafeFunction = sxpBlueprint -> {
 					SXPBlueprint persistedSXPBlueprint = null;
@@ -721,6 +715,12 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 					return persistedSXPBlueprint;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				sxpBlueprintUnsafeFunction =
+					sxpBlueprint -> putSXPBlueprintByExternalReferenceCode(
+						sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
 			}
 		}
 

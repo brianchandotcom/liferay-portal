@@ -750,12 +750,6 @@ public abstract class BaseChannelResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				channelUnsafeFunction =
-					channel -> putChannelByExternalReferenceCode(
-						channel.getExternalReferenceCode(), channel);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				channelUnsafeFunction = channel -> {
 					Channel persistedChannel = null;
@@ -775,6 +769,12 @@ public abstract class BaseChannelResourceImpl
 
 					return persistedChannel;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				channelUnsafeFunction =
+					channel -> putChannelByExternalReferenceCode(
+						channel.getExternalReferenceCode(), channel);
 			}
 		}
 

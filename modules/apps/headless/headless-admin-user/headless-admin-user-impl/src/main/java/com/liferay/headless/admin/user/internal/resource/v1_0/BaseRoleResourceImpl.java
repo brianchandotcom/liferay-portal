@@ -1278,11 +1278,6 @@ public abstract class BaseRoleResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				roleUnsafeFunction = role -> putRoleByExternalReferenceCode(
-					role.getExternalReferenceCode(), role);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				roleUnsafeFunction = role -> {
 					Role persistedRole = null;
@@ -1302,6 +1297,11 @@ public abstract class BaseRoleResourceImpl
 
 					return persistedRole;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				roleUnsafeFunction = role -> putRoleByExternalReferenceCode(
+					role.getExternalReferenceCode(), role);
 			}
 		}
 

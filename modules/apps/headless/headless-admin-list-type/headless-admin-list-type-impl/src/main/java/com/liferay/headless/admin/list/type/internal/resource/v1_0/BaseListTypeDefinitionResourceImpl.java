@@ -624,13 +624,6 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				listTypeDefinitionUnsafeFunction = listTypeDefinition ->
-					putListTypeDefinitionByExternalReferenceCode(
-						listTypeDefinition.getExternalReferenceCode(),
-						listTypeDefinition);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
 					ListTypeDefinition persistedListTypeDefinition = null;
@@ -655,6 +648,13 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 					return persistedListTypeDefinition;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				listTypeDefinitionUnsafeFunction = listTypeDefinition ->
+					putListTypeDefinitionByExternalReferenceCode(
+						listTypeDefinition.getExternalReferenceCode(),
+						listTypeDefinition);
 			}
 		}
 

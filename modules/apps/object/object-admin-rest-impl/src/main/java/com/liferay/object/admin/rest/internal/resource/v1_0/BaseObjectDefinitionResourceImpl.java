@@ -757,14 +757,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectDefinitionUnsafeFunction =
-					objectDefinition ->
-						putObjectDefinitionByExternalReferenceCode(
-							objectDefinition.getExternalReferenceCode(),
-							objectDefinition);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				objectDefinitionUnsafeFunction = objectDefinition -> {
 					ObjectDefinition persistedObjectDefinition = null;
@@ -789,6 +781,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 					return persistedObjectDefinition;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				objectDefinitionUnsafeFunction =
+					objectDefinition ->
+						putObjectDefinitionByExternalReferenceCode(
+							objectDefinition.getExternalReferenceCode(),
+							objectDefinition);
 			}
 		}
 

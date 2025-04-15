@@ -541,12 +541,6 @@ public abstract class BasePriceListResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				priceListUnsafeFunction =
-					priceList -> putPriceListByExternalReferenceCode(
-						priceList.getExternalReferenceCode(), priceList);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				priceListUnsafeFunction = priceList -> {
 					PriceList persistedPriceList = null;
@@ -569,6 +563,12 @@ public abstract class BasePriceListResourceImpl
 
 					return persistedPriceList;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				priceListUnsafeFunction =
+					priceList -> putPriceListByExternalReferenceCode(
+						priceList.getExternalReferenceCode(), priceList);
 			}
 		}
 

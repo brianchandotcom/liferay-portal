@@ -741,13 +741,6 @@ public abstract class BaseNotificationTemplateResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				notificationTemplateUnsafeFunction = notificationTemplate ->
-					putNotificationTemplateByExternalReferenceCode(
-						notificationTemplate.getExternalReferenceCode(),
-						notificationTemplate);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				notificationTemplateUnsafeFunction = notificationTemplate -> {
 					NotificationTemplate persistedNotificationTemplate = null;
@@ -774,6 +767,13 @@ public abstract class BaseNotificationTemplateResourceImpl
 
 					return persistedNotificationTemplate;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				notificationTemplateUnsafeFunction = notificationTemplate ->
+					putNotificationTemplateByExternalReferenceCode(
+						notificationTemplate.getExternalReferenceCode(),
+						notificationTemplate);
 			}
 		}
 

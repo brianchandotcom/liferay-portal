@@ -665,13 +665,6 @@ public abstract class BaseWarehouseItemResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				warehouseItemUnsafeFunction =
-					warehouseItem -> putWarehouseItemByExternalReferenceCode(
-						warehouseItem.getExternalReferenceCode(),
-						warehouseItem);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				warehouseItemUnsafeFunction = warehouseItem -> {
 					WarehouseItem persistedWarehouseItem = null;
@@ -705,6 +698,13 @@ public abstract class BaseWarehouseItemResourceImpl
 
 					return persistedWarehouseItem;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				warehouseItemUnsafeFunction =
+					warehouseItem -> putWarehouseItemByExternalReferenceCode(
+						warehouseItem.getExternalReferenceCode(),
+						warehouseItem);
 			}
 		}
 

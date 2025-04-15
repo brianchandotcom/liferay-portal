@@ -1228,16 +1228,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder ->
-					putSiteKnowledgeBaseFolderByExternalReferenceCode(
-						knowledgeBaseFolder.getSiteId() != null ?
-							knowledgeBaseFolder.getSiteId() :
-								(Long)parameters.get("siteId"),
-						knowledgeBaseFolder.getExternalReferenceCode(),
-						knowledgeBaseFolder);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder -> {
 					KnowledgeBaseFolder persistedKnowledgeBaseFolder = null;
@@ -1269,6 +1259,16 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 					return persistedKnowledgeBaseFolder;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder ->
+					putSiteKnowledgeBaseFolderByExternalReferenceCode(
+						knowledgeBaseFolder.getSiteId() != null ?
+							knowledgeBaseFolder.getSiteId() :
+								(Long)parameters.get("siteId"),
+						knowledgeBaseFolder.getExternalReferenceCode(),
+						knowledgeBaseFolder);
 			}
 		}
 

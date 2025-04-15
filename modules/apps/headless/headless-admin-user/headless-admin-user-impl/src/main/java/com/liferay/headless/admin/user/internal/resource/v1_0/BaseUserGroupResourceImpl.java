@@ -823,12 +823,6 @@ public abstract class BaseUserGroupResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				userGroupUnsafeFunction =
-					userGroup -> putUserGroupByExternalReferenceCode(
-						userGroup.getExternalReferenceCode(), userGroup);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				userGroupUnsafeFunction = userGroup -> {
 					UserGroup persistedUserGroup = null;
@@ -851,6 +845,12 @@ public abstract class BaseUserGroupResourceImpl
 
 					return persistedUserGroup;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				userGroupUnsafeFunction =
+					userGroup -> putUserGroupByExternalReferenceCode(
+						userGroup.getExternalReferenceCode(), userGroup);
 			}
 		}
 

@@ -931,16 +931,6 @@ public abstract class BaseDocumentShortcutResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				documentShortcutUnsafeFunction = documentShortcut ->
-					putSiteDocumentShortcutByExternalReferenceCode(
-						documentShortcut.getSiteId() != null ?
-							documentShortcut.getSiteId() :
-								(Long)parameters.get("siteId"),
-						documentShortcut.getExternalReferenceCode(),
-						documentShortcut);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				documentShortcutUnsafeFunction = documentShortcut -> {
 					DocumentShortcut persistedDocumentShortcut = null;
@@ -982,6 +972,16 @@ public abstract class BaseDocumentShortcutResourceImpl
 
 					return persistedDocumentShortcut;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				documentShortcutUnsafeFunction = documentShortcut ->
+					putSiteDocumentShortcutByExternalReferenceCode(
+						documentShortcut.getSiteId() != null ?
+							documentShortcut.getSiteId() :
+								(Long)parameters.get("siteId"),
+						documentShortcut.getExternalReferenceCode(),
+						documentShortcut);
 			}
 		}
 

@@ -553,12 +553,6 @@ public abstract class BaseOptionResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				optionUnsafeFunction =
-					option -> putOptionByExternalReferenceCode(
-						option.getExternalReferenceCode(), option);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				optionUnsafeFunction = option -> {
 					Option persistedOption = null;
@@ -578,6 +572,12 @@ public abstract class BaseOptionResourceImpl
 
 					return persistedOption;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				optionUnsafeFunction =
+					option -> putOptionByExternalReferenceCode(
+						option.getExternalReferenceCode(), option);
 			}
 		}
 

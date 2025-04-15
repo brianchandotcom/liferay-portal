@@ -938,12 +938,6 @@ public abstract class BaseAccountGroupResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountGroupUnsafeFunction =
-					accountGroup -> putAccountGroupByExternalReferenceCode(
-						accountGroup.getExternalReferenceCode(), accountGroup);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				accountGroupUnsafeFunction = accountGroup -> {
 					AccountGroup persistedAccountGroup = null;
@@ -967,6 +961,12 @@ public abstract class BaseAccountGroupResourceImpl
 
 					return persistedAccountGroup;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				accountGroupUnsafeFunction =
+					accountGroup -> putAccountGroupByExternalReferenceCode(
+						accountGroup.getExternalReferenceCode(), accountGroup);
 			}
 		}
 

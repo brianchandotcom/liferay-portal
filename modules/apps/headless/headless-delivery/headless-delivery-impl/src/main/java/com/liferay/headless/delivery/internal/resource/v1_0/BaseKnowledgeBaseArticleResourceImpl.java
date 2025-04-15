@@ -1938,16 +1938,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle ->
-					putSiteKnowledgeBaseArticleByExternalReferenceCode(
-						knowledgeBaseArticle.getSiteId() != null ?
-							knowledgeBaseArticle.getSiteId() :
-								(Long)parameters.get("siteId"),
-						knowledgeBaseArticle.getExternalReferenceCode(),
-						knowledgeBaseArticle);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle -> {
 					KnowledgeBaseArticle persistedKnowledgeBaseArticle = null;
@@ -1993,6 +1983,16 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 
 					return persistedKnowledgeBaseArticle;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle ->
+					putSiteKnowledgeBaseArticleByExternalReferenceCode(
+						knowledgeBaseArticle.getSiteId() != null ?
+							knowledgeBaseArticle.getSiteId() :
+								(Long)parameters.get("siteId"),
+						knowledgeBaseArticle.getExternalReferenceCode(),
+						knowledgeBaseArticle);
 			}
 		}
 

@@ -1358,15 +1358,6 @@ public abstract class BaseBlogPostingResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				blogPostingUnsafeFunction =
-					blogPosting -> putSiteBlogPostingByExternalReferenceCode(
-						blogPosting.getSiteId() != null ?
-							blogPosting.getSiteId() :
-								(Long)parameters.get("siteId"),
-						blogPosting.getExternalReferenceCode(), blogPosting);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				blogPostingUnsafeFunction = blogPosting -> {
 					BlogPosting persistedBlogPosting = null;
@@ -1396,6 +1387,15 @@ public abstract class BaseBlogPostingResourceImpl
 
 					return persistedBlogPosting;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				blogPostingUnsafeFunction =
+					blogPosting -> putSiteBlogPostingByExternalReferenceCode(
+						blogPosting.getSiteId() != null ?
+							blogPosting.getSiteId() :
+								(Long)parameters.get("siteId"),
+						blogPosting.getExternalReferenceCode(), blogPosting);
 			}
 		}
 

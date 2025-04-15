@@ -555,12 +555,6 @@ public abstract class BaseObjectFolderResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectFolderUnsafeFunction =
-					objectFolder -> putObjectFolderByExternalReferenceCode(
-						objectFolder.getExternalReferenceCode(), objectFolder);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				objectFolderUnsafeFunction = objectFolder -> {
 					ObjectFolder persistedObjectFolder = null;
@@ -584,6 +578,12 @@ public abstract class BaseObjectFolderResourceImpl
 
 					return persistedObjectFolder;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				objectFolderUnsafeFunction =
+					objectFolder -> putObjectFolderByExternalReferenceCode(
+						objectFolder.getExternalReferenceCode(), objectFolder);
 			}
 		}
 

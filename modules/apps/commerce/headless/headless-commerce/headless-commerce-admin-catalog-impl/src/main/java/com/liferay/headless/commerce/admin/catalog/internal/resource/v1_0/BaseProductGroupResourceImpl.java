@@ -551,12 +551,6 @@ public abstract class BaseProductGroupResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				productGroupUnsafeFunction =
-					productGroup -> putProductGroupByExternalReferenceCode(
-						productGroup.getExternalReferenceCode(), productGroup);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				productGroupUnsafeFunction = productGroup -> {
 					ProductGroup persistedProductGroup = null;
@@ -580,6 +574,12 @@ public abstract class BaseProductGroupResourceImpl
 
 					return persistedProductGroup;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				productGroupUnsafeFunction =
+					productGroup -> putProductGroupByExternalReferenceCode(
+						productGroup.getExternalReferenceCode(), productGroup);
 			}
 		}
 

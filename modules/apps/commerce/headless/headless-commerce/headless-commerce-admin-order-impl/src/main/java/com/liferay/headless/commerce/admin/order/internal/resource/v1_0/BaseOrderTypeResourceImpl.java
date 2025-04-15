@@ -648,12 +648,6 @@ public abstract class BaseOrderTypeResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				orderTypeUnsafeFunction =
-					orderType -> putOrderTypeByExternalReferenceCode(
-						orderType.getExternalReferenceCode(), orderType);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				orderTypeUnsafeFunction = orderType -> {
 					OrderType persistedOrderType = null;
@@ -676,6 +670,12 @@ public abstract class BaseOrderTypeResourceImpl
 
 					return persistedOrderType;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				orderTypeUnsafeFunction =
+					orderType -> putOrderTypeByExternalReferenceCode(
+						orderType.getExternalReferenceCode(), orderType);
 			}
 		}
 

@@ -772,12 +772,6 @@ public abstract class BaseProductResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				productUnsafeFunction =
-					product -> putProductByExternalReferenceCode(
-						product.getExternalReferenceCode(), product);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				productUnsafeFunction = product -> {
 					Product persistedProduct = null;
@@ -797,6 +791,12 @@ public abstract class BaseProductResourceImpl
 
 					return persistedProduct;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				productUnsafeFunction =
+					product -> putProductByExternalReferenceCode(
+						product.getExternalReferenceCode(), product);
 			}
 		}
 

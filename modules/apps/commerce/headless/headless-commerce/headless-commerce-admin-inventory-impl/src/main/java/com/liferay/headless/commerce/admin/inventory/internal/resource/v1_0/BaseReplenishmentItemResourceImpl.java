@@ -667,13 +667,6 @@ public abstract class BaseReplenishmentItemResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				replenishmentItemUnsafeFunction = replenishmentItem ->
-					putReplenishmentItemByExternalReferenceCode(
-						replenishmentItem.getExternalReferenceCode(),
-						replenishmentItem);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				replenishmentItemUnsafeFunction = replenishmentItem -> {
 					ReplenishmentItem persistedReplenishmentItem = null;
@@ -699,6 +692,13 @@ public abstract class BaseReplenishmentItemResourceImpl
 
 					return persistedReplenishmentItem;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				replenishmentItemUnsafeFunction = replenishmentItem ->
+					putReplenishmentItemByExternalReferenceCode(
+						replenishmentItem.getExternalReferenceCode(),
+						replenishmentItem);
 			}
 		}
 

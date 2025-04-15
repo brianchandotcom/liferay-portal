@@ -2250,16 +2250,6 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				taxonomyVocabularyUnsafeFunction = taxonomyVocabulary ->
-					putSiteTaxonomyVocabularyByExternalReferenceCode(
-						taxonomyVocabulary.getSiteId() != null ?
-							taxonomyVocabulary.getSiteId() :
-								(Long)parameters.get("siteId"),
-						taxonomyVocabulary.getExternalReferenceCode(),
-						taxonomyVocabulary);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				taxonomyVocabularyUnsafeFunction = taxonomyVocabulary -> {
 					TaxonomyVocabulary persistedTaxonomyVocabulary = null;
@@ -2300,6 +2290,16 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 					return persistedTaxonomyVocabulary;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				taxonomyVocabularyUnsafeFunction = taxonomyVocabulary ->
+					putSiteTaxonomyVocabularyByExternalReferenceCode(
+						taxonomyVocabulary.getSiteId() != null ?
+							taxonomyVocabulary.getSiteId() :
+								(Long)parameters.get("siteId"),
+						taxonomyVocabulary.getExternalReferenceCode(),
+						taxonomyVocabulary);
 			}
 		}
 

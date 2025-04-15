@@ -703,14 +703,6 @@ public abstract class BaseMeasurementUnitResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				measurementUnitUnsafeFunction =
-					measurementUnit ->
-						putMeasurementUnitByExternalReferenceCode(
-							measurementUnit.getExternalReferenceCode(),
-							measurementUnit);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				measurementUnitUnsafeFunction = measurementUnit -> {
 					MeasurementUnit persistedMeasurementUnit = null;
@@ -735,6 +727,14 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 					return persistedMeasurementUnit;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				measurementUnitUnsafeFunction =
+					measurementUnit ->
+						putMeasurementUnitByExternalReferenceCode(
+							measurementUnit.getExternalReferenceCode(),
+							measurementUnit);
 			}
 		}
 

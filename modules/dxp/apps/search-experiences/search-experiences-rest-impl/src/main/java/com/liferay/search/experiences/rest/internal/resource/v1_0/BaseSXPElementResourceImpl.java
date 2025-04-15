@@ -725,12 +725,6 @@ public abstract class BaseSXPElementResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				sxpElementUnsafeFunction =
-					sxpElement -> putSXPElementByExternalReferenceCode(
-						sxpElement.getExternalReferenceCode(), sxpElement);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpElementUnsafeFunction = sxpElement -> {
 					SXPElement persistedSXPElement = null;
@@ -753,6 +747,12 @@ public abstract class BaseSXPElementResourceImpl
 
 					return persistedSXPElement;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				sxpElementUnsafeFunction =
+					sxpElement -> putSXPElementByExternalReferenceCode(
+						sxpElement.getExternalReferenceCode(), sxpElement);
 			}
 		}
 

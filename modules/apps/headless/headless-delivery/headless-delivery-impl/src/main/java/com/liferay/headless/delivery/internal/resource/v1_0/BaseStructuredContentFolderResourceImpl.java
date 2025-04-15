@@ -1988,17 +1988,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				structuredContentFolderUnsafeFunction =
-					structuredContentFolder ->
-						putSiteStructuredContentFolderByExternalReferenceCode(
-							structuredContentFolder.getSiteId() != null ?
-								structuredContentFolder.getSiteId() :
-									(Long)parameters.get("siteId"),
-							structuredContentFolder.getExternalReferenceCode(),
-							structuredContentFolder);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				structuredContentFolderUnsafeFunction =
 					structuredContentFolder -> {
@@ -2047,6 +2036,17 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 						return persistedStructuredContentFolder;
 					};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				structuredContentFolderUnsafeFunction =
+					structuredContentFolder ->
+						putSiteStructuredContentFolderByExternalReferenceCode(
+							structuredContentFolder.getSiteId() != null ?
+								structuredContentFolder.getSiteId() :
+									(Long)parameters.get("siteId"),
+							structuredContentFolder.getExternalReferenceCode(),
+							structuredContentFolder);
 			}
 		}
 

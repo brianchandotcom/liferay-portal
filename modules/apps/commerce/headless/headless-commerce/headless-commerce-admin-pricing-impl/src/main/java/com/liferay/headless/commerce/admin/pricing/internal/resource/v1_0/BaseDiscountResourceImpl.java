@@ -517,12 +517,6 @@ public abstract class BaseDiscountResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				discountUnsafeFunction =
-					discount -> putDiscountByExternalReferenceCode(
-						discount.getExternalReferenceCode(), discount);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				discountUnsafeFunction = discount -> {
 					Discount persistedDiscount = null;
@@ -544,6 +538,12 @@ public abstract class BaseDiscountResourceImpl
 
 					return persistedDiscount;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				discountUnsafeFunction =
+					discount -> putDiscountByExternalReferenceCode(
+						discount.getExternalReferenceCode(), discount);
 			}
 		}
 

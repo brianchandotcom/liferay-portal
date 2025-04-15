@@ -820,13 +820,6 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				companyTestEntityUnsafeFunction = companyTestEntity ->
-					putCompanyTestEntityByExternalReferenceCode(
-						companyTestEntity.getExternalReferenceCode(),
-						companyTestEntity);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
 					CompanyTestEntity persistedCompanyTestEntity = null;
@@ -851,6 +844,13 @@ public abstract class BaseCompanyTestEntityResourceImpl
 
 					return persistedCompanyTestEntity;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				companyTestEntityUnsafeFunction = companyTestEntity ->
+					putCompanyTestEntityByExternalReferenceCode(
+						companyTestEntity.getExternalReferenceCode(),
+						companyTestEntity);
 			}
 		}
 

@@ -1147,13 +1147,6 @@ public abstract class BasePostalAddressResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				postalAddressUnsafeFunction =
-					postalAddress -> putPostalAddressByExternalReferenceCode(
-						postalAddress.getExternalReferenceCode(),
-						postalAddress);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				postalAddressUnsafeFunction = postalAddress -> {
 					PostalAddress persistedPostalAddress = null;
@@ -1185,6 +1178,13 @@ public abstract class BasePostalAddressResourceImpl
 
 					return persistedPostalAddress;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				postalAddressUnsafeFunction =
+					postalAddress -> putPostalAddressByExternalReferenceCode(
+						postalAddress.getExternalReferenceCode(),
+						postalAddress);
 			}
 		}
 

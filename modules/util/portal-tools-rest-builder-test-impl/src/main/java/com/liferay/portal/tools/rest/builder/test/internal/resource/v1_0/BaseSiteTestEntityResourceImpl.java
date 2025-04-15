@@ -872,17 +872,6 @@ public abstract class BaseSiteTestEntityResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				siteTestEntityUnsafeFunction =
-					siteTestEntity ->
-						putSiteSiteTestEntityByExternalReferenceCode(
-							siteTestEntity.getExternalReferenceCode(),
-							siteTestEntity.getSiteId() != null ?
-								siteTestEntity.getSiteId() :
-									(Long)parameters.get("siteId"),
-							siteTestEntity);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				siteTestEntityUnsafeFunction = siteTestEntity -> {
 					SiteTestEntity persistedSiteTestEntity = null;
@@ -912,6 +901,17 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 					return persistedSiteTestEntity;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				siteTestEntityUnsafeFunction =
+					siteTestEntity ->
+						putSiteSiteTestEntityByExternalReferenceCode(
+							siteTestEntity.getExternalReferenceCode(),
+							siteTestEntity.getSiteId() != null ?
+								siteTestEntity.getSiteId() :
+									(Long)parameters.get("siteId"),
+							siteTestEntity);
 			}
 		}
 

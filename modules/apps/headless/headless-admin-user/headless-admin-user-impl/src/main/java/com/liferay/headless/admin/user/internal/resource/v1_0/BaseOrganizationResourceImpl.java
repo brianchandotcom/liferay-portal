@@ -1715,12 +1715,6 @@ public abstract class BaseOrganizationResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				organizationUnsafeFunction =
-					organization -> putOrganizationByExternalReferenceCode(
-						organization.getExternalReferenceCode(), organization);
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				organizationUnsafeFunction = organization -> {
 					Organization persistedOrganization = null;
@@ -1742,6 +1736,12 @@ public abstract class BaseOrganizationResourceImpl
 
 					return persistedOrganization;
 				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				organizationUnsafeFunction =
+					organization -> putOrganizationByExternalReferenceCode(
+						organization.getExternalReferenceCode(), organization);
 			}
 		}
 

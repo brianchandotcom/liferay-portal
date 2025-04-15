@@ -119,9 +119,11 @@ test(
 
 		await remotePage.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
 
-		expect(
+		await expect(
 			remotePage.getByRole('heading', {name: 'WC WebContent Title'})
 		).toBeVisible();
-		expect(remotePage.getByText('WC WebContent Content')).toBeVisible();
+		await expect(
+			remotePage.getByText('WC WebContent Content')
+		).toBeVisible();
 	}
 );

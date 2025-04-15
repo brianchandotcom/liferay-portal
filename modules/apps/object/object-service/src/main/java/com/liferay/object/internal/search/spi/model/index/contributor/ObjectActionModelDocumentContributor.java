@@ -34,6 +34,7 @@ public class ObjectActionModelDocumentContributor
 				0));
 		document.addLocalizedKeyword(
 			"localized_label", objectAction.getLabelMap(), true, true);
+		document.addKeyword("objectActionId", objectAction.getObjectActionId());
 		document.addKeyword(
 			"objectDefinitionId", objectAction.getObjectDefinitionId());
 

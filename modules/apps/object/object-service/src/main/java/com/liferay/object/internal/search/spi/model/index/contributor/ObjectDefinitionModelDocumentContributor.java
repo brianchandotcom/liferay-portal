@@ -31,6 +31,8 @@ public class ObjectDefinitionModelDocumentContributor
 		document.addLocalizedKeyword(
 			"localized_label", objectDefinition.getLabelMap(), true, true);
 		document.addKeyword(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId());
+		document.addKeyword(
 			"objectFolderExternalReferenceCode",
 			objectDefinition.getObjectFolderExternalReferenceCode(), true);
 		document.addKeyword(

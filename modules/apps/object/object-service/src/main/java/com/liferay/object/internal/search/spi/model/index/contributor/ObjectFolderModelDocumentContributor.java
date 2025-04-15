@@ -27,6 +27,7 @@ public class ObjectFolderModelDocumentContributor
 		document.addLocalizedKeyword(
 			"localized_label", objectFolder.getLabelMap(), true, true);
 		document.addText(Field.NAME, objectFolder.getName());
+		document.addKeyword("objectFolderId", objectFolder.getObjectFolderId());
 
 		document.remove(Field.USER_NAME);
 	}

@@ -38,6 +38,9 @@ public class ObjectValidationRuleModelDocumentContributor
 			"localized_name", objectValidationRule.getNameMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectValidationRule.getObjectDefinitionId());
+		document.addKeyword(
+			"objectValidationRuleId",
+			objectValidationRule.getObjectValidationRuleId());
 
 		document.remove(Field.USER_NAME);
 	}

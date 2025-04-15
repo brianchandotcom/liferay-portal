@@ -38,6 +38,7 @@ public class ObjectFieldModelDocumentContributor
 			"localized_label", objectField.getLabelMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectField.getObjectDefinitionId());
+		document.addKeyword("objectFieldId", objectField.getObjectFieldId());
 		document.addKeyword("state", objectField.isState());
 		document.addKeyword(
 			"unique",

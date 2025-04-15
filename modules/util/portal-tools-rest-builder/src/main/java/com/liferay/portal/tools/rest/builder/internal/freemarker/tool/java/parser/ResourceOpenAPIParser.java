@@ -86,19 +86,17 @@ public class ResourceOpenAPIParser {
 					_visitRequestBodyMediaTypes(
 						operation.getRequestBody(),
 						requestBodyMediaTypes -> {
-							List<JavaMethodParameter> javaMethodParameters =
-								_getJavaMethodParameters(
-									javaDataTypeMap, operation,
-									requestBodyMediaTypes);
-
 							String methodName = _getMethodName(
 								configYAML, operation, path, returnType,
 								schemaName,
 								configYAML.isForcePredictableOperationId());
 
-							if (operation != null) {
-								operation.setOperationId(methodName);
-							}
+							operation.setOperationId(methodName);
+
+							List<JavaMethodParameter> javaMethodParameters =
+								_getJavaMethodParameters(
+									javaDataTypeMap, operation,
+									requestBodyMediaTypes);
 
 							JavaMethodSignature javaMethodSignature =
 								new JavaMethodSignature(

@@ -200,13 +200,16 @@ public class LayoutUtil {
 			draftLayoutStatus = WorkflowConstants.STATUS_DRAFT;
 		}
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		updateLayout(
-			draftContentPageSpecification, layout.fetchDraftLayout(), nameMap,
-			titleMap, descriptionMap, draftLayoutStatus, serviceContext);
+			draftContentPageSpecification, draftLayout, nameMap, titleMap,
+			descriptionMap, draftLayout.getFriendlyURLMap(), draftLayoutStatus,
+			serviceContext);
 
 		return updateLayout(
 			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, status, serviceContext);
+			descriptionMap, friendlyURLMap, status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
@@ -239,7 +242,8 @@ public class LayoutUtil {
 		return updateLayout(
 			contentPageSpecification, draftLayout, layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			draftLayout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 	}
 
 	public static boolean isPublished(Layout layout) {
@@ -263,6 +267,7 @@ public class LayoutUtil {
 	public static Layout updateContentLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -271,7 +276,7 @@ public class LayoutUtil {
 			return _updateLayout(
 				layout, nameMap, titleMap, descriptionMap,
 				layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
-				layout.getMasterLayoutPlid(), serviceContext);
+				layout.getMasterLayoutPlid(), friendlyURLMap, serviceContext);
 		}
 
 		if (pageSpecifications.length != 2) {
@@ -333,22 +338,24 @@ public class LayoutUtil {
 
 		updateLayout(
 			draftContentPageSpecification, draftLayout, nameMap, titleMap,
-			descriptionMap, draftLayoutStatus, serviceContext);
+			descriptionMap, draftLayout.getFriendlyURLMap(), draftLayoutStatus,
+			serviceContext);
 
 		return updateLayout(
 			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, status,	serviceContext);
+			descriptionMap, friendlyURLMap, status, serviceContext);
 	}
 
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, int status,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(
-			layout, nameMap, titleMap, descriptionMap,
+			layout, nameMap, titleMap, descriptionMap, friendlyURLMap,
 			contentPageSpecification.getSettings(), serviceContext);
 
 		_updatePageExperiences(
@@ -363,7 +370,8 @@ public class LayoutUtil {
 	public static Layout updateLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Settings settings, ServiceContext serviceContext)
+			Map<Locale, String> friendlyURLMap, Settings settings,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		layout = _updateLookAndFeel(layout, settings);
@@ -372,7 +380,8 @@ public class LayoutUtil {
 			layout, nameMap, titleMap, descriptionMap,
 			_getStyleBookEntryId(layout, settings),
 			_getFaviconFileEntryId(layout, settings),
-			_getMasterLayoutPlid(layout, settings), serviceContext);
+			_getMasterLayoutPlid(layout, settings), friendlyURLMap,
+			serviceContext);
 	}
 
 	private static long _getFaviconFileEntryId(Layout layout, Settings settings)
@@ -493,7 +502,8 @@ public class LayoutUtil {
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			long styleBookEntryId, long faviconFileEntryId,
-			long masterLayoutPlid, ServiceContext serviceContext)
+			long masterLayoutPlid, Map<Locale, String> friendlyURLMap,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
@@ -505,9 +515,9 @@ public class LayoutUtil {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, styleBookEntryId, faviconFileEntryId,
-			masterLayoutPlid, serviceContext);
+			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
+			styleBookEntryId, faviconFileEntryId, masterLayoutPlid,
+			serviceContext);
 	}
 
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)

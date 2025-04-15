@@ -218,6 +218,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 		LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), titleMap, descriptionMap,
+			LocalizedMapUtil.getLocalizedMap(
+				utilityPage.getFriendlyUrlPath_i18n()),
 			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 

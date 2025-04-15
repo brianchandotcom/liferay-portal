@@ -625,7 +625,7 @@ public class VerticalCardTag extends BaseCardTag {
 			jspWriter.write("<p class=\"card-subtitle\"><span class=\"");
 			jspWriter.write("text-truncate-inline\"><span class=\"");
 			jspWriter.write("text-truncate\">");
-			jspWriter.write(subtitle);
+			jspWriter.write(HtmlUtil.escape(subtitle));
 			jspWriter.write("</span></span></p>");
 		}
 

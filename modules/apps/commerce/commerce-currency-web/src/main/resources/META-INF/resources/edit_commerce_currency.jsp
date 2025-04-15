@@ -28,6 +28,7 @@ boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary")
 		<liferay-ui:error exception="<%= CommerceCurrencyCodeException.class %>" message="please-enter-a-valid-code" />
 		<liferay-ui:error exception="<%= CommerceCurrencyFractionDigitsException.class %>" message="the-decimal-place-bounds-are-invalid" />
 		<liferay-ui:error exception="<%= CommerceCurrencyNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= CommerceCurrencyRateException.class %>" message="exchange-rate-must-be-greater-than-zero" />
 		<liferay-ui:error exception="<%= DuplicateCommerceCurrencyException.class %>" message="please-enter-a-unique-code" />
 
 		<div class="mb-4 sheet">
@@ -78,7 +79,7 @@ boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary")
 					%>
 
 					<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-						<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceCurrency.getRate()) %>">
+						<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ONE : commerceCurrency.round(commerceCurrency.getRate()) %>">
 							<aui:validator name="number" />
 						</aui:input>
 					</div>

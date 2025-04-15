@@ -11,6 +11,7 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyPortletKeys;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyFractionDigitsException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
+import com.liferay.commerce.currency.exception.CommerceCurrencyRateException;
 import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -91,6 +92,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 					 exception instanceof
 						 CommerceCurrencyFractionDigitsException ||
 					 exception instanceof CommerceCurrencyNameException ||
+					 exception instanceof CommerceCurrencyRateException ||
 					 exception instanceof DuplicateCommerceCurrencyException) {
 
 				hideDefaultErrorMessage(actionRequest);

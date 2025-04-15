@@ -12,6 +12,7 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConst
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
+import com.liferay.commerce.currency.exception.CommerceCurrencyRateException;
 import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.internal.model.listener.PortalInstanceLifecycleListenerImpl;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -115,7 +117,7 @@ public class CommerceCurrencyLocalServiceImpl
 			rate = BigDecimal.ONE;
 		}
 
-		_validate(0, user.getCompanyId(), code, nameMap, primary);
+		_validate(0, user.getCompanyId(), code, nameMap, primary, rate);
 
 		if (formatPatternMap.isEmpty()) {
 			formatPatternMap.put(
@@ -389,7 +391,8 @@ public class CommerceCurrencyLocalServiceImpl
 
 		_validate(
 			commerceCurrencyId, commerceCurrency.getCompanyId(),
-			commerceCurrency.getCode(), commerceCurrency.getNameMap(), primary);
+			commerceCurrency.getCode(), commerceCurrency.getNameMap(), primary,
+			commerceCurrency.getRate());
 
 		commerceCurrency.setPrimary(primary);
 
@@ -416,7 +419,7 @@ public class CommerceCurrencyLocalServiceImpl
 		_validate(
 			commerceCurrency.getCommerceCurrencyId(),
 			serviceContext.getCompanyId(), commerceCurrency.getCode(), nameMap,
-			primary);
+			primary, rate);
 
 		if (formatPatternMap.isEmpty()) {
 			formatPatternMap.put(
@@ -635,11 +638,21 @@ public class CommerceCurrencyLocalServiceImpl
 
 	private void _validate(
 			long commerceCurrencyId, long companyId, String code,
-			Map<Locale, String> nameMap, boolean primary)
+			Map<Locale, String> nameMap, boolean primary, BigDecimal rate)
 		throws PortalException {
 
 		if (Validator.isNull(code)) {
 			throw new CommerceCurrencyCodeException();
+		}
+
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
+
+		if (Validator.isNull(name)) {
+			throw new CommerceCurrencyNameException();
+		}
+
+		if (BigDecimalUtil.lte(rate, BigDecimal.ZERO)) {
+			throw new CommerceCurrencyRateException();
 		}
 
 		CommerceCurrency oldCommerceCurrency =
@@ -650,12 +663,6 @@ public class CommerceCurrencyLocalServiceImpl
 				oldCommerceCurrency.getCommerceCurrencyId())) {
 
 			throw new DuplicateCommerceCurrencyException();
-		}
-
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
-
-		if (Validator.isNull(name)) {
-			throw new CommerceCurrencyNameException();
 		}
 
 		if (primary) {

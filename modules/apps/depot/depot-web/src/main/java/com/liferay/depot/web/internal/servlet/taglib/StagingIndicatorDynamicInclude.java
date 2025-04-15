@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -103,7 +106,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (T value : values) {
-			jsonArray.put(value);
+			if (value != null) {
+				jsonArray.put(value);
+			}
 		}
 
 		return jsonArray;
@@ -191,6 +196,29 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return "live";
 	}
 
+	private JSONObject _getPublishToLiveItemJSONObject(
+			HttpServletRequest httpServletRequest, Group stagingGroupId)
+		throws PortalException, PortletException {
+
+		if (!GroupPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(), stagingGroupId,
+				ActionKeys.PUBLISH_STAGING)) {
+
+			return null;
+		}
+
+		return JSONUtil.put(
+			"action", "publishToLive"
+		).put(
+			"label", _language.get(httpServletRequest, "publish-to-live")
+		).put(
+			"publishURL",
+			_getPublishToLiveURL(stagingGroupId, httpServletRequest)
+		).put(
+			"symbolLeft", "cards2"
+		);
+	}
+
 	private String _getPublishToLiveURL(
 			Group group, HttpServletRequest httpServletRequest)
 		throws PortletException {
@@ -269,17 +297,8 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 				_createJSONArray(
 					_getLiveGroupItemJSONObject(
 						httpServletRequest, scopeGroup, liveGroupURL),
-					JSONUtil.put(
-						"action", "publishToLive"
-					).put(
-						"label",
-						_language.get(httpServletRequest, "publish-to-live")
-					).put(
-						"publishURL",
-						_getPublishToLiveURL(scopeGroup, httpServletRequest)
-					).put(
-						"symbolLeft", "cards2"
-					))
+					_getPublishToLiveItemJSONObject(
+						httpServletRequest, scopeGroup))
 			).put(
 				"title", _language.get(httpServletRequest, "staging")
 			).build();

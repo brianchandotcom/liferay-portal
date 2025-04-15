@@ -119,10 +119,10 @@ public class DynamicDataSource implements DataSource {
 					PortalSessionThreadLocal.getHttpSession();
 
 				if (httpSession == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Failed to get write data source last used date " +
-								"from http session");
+					if (_log.isTraceEnabled()) {
+						_log.trace(
+							"No context HTTP session exists, skipped getting " +
+								"the write data source last used date");
 					}
 				}
 				else {
@@ -155,10 +155,10 @@ public class DynamicDataSource implements DataSource {
 			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
 			if (httpSession == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Failed to set write data source last used date into " +
-							"http session");
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"No context HTTP session exists, skipped setting the " +
+							"write data source last used date");
 				}
 			}
 			else {

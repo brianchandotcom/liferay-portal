@@ -40,7 +40,6 @@ const Support = () => {
 						type: NewAppTypes.SET_SUPPORT,
 					})
 				}
-				placeholder="https://"
 				value={support.url}
 			/>
 
@@ -54,7 +53,6 @@ const Support = () => {
 						type: NewAppTypes.SET_SUPPORT,
 					})
 				}
-				placeholder="https://"
 				required={isPaidApp}
 				value={support.publisherWebsiteURL}
 			/>

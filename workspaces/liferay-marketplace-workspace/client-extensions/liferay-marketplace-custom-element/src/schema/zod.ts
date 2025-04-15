@@ -12,6 +12,13 @@ import {removeHTMLTags} from '../utils/string';
 
 const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+?\.)+[a-zA-Z]{2,}$/;
 
+const baseAppSchema = {
+	appUsageTermsURL: z.string().url().or(z.literal('')),
+	documentationURL: z.string().url().or(z.literal('')),
+	installationGuideURL: z.string().url().or(z.literal('')),
+	url: z.string().url().or(z.literal('')),
+};
+
 const baseContentSchema = z.object({
 	description: z.string().min(1).refine(removeHTMLTags),
 	title: z.string().min(1),
@@ -34,6 +41,20 @@ const contentMediaTypeImage = z.object({
 const contentMediaTypeVideo = z.object({
 	headerVideoDescription: z.string().optional(),
 	headerVideoUrl: z.string().url().min(1),
+});
+
+const freeApp = z.object({
+	...baseAppSchema,
+	email: z.string().email().or(z.literal('')),
+	phone: z.string().min(8).or(z.literal('')),
+	publisherWebsiteURL: z.string().url().or(z.literal('')),
+});
+
+const paidApp = z.object({
+	...baseAppSchema,
+	email: z.string().email(),
+	phone: z.string().min(8),
+	publisherWebsiteURL: z.string().url(),
 });
 
 const resources = z.object({
@@ -112,6 +133,10 @@ const zodSchema = {
 			tags: z.array(z.any()).nonempty(),
 		}),
 		storefront: z.object({images: z.array(z.any()).min(1).max(10)}),
+		support: {
+			supportForFreeApp: freeApp,
+			supportForPaidApp: paidApp,
+		},
 		termsAndConditions: z.boolean().refine((data) => data === true),
 		version: z.object({
 			notes: z.string(),

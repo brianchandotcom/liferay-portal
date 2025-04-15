@@ -103,13 +103,17 @@ public class DynamicDataSourceTest {
 					"JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT", 0)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, true, true);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true, true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, true, false);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true, false);
 			_testGetDataSource(
-				_dynamicDataSource.getReadDataSource(), null, false, true);
+				_dynamicDataSource.getReadDataSource(),
+				List.of("Returning read data source"), false, true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, false, false);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false, false);
 		}
 	}
 
@@ -121,21 +125,28 @@ public class DynamicDataSourceTest {
 					Long.MAX_VALUE)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, true, true);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true, true);
 			_testGetDataSource(
 				_dynamicDataSource.getWriteDataSource(),
-				"Failed to set write data source last used date into http " +
-					"session",
+				List.of(
+					"No context HTTP session exists, skipped setting the " +
+						"write data source last used date",
+					"Returning write data source"),
 				true, false);
 			_testGetDataSource(
 				_dynamicDataSource.getReadDataSource(),
-				"Failed to get write data source last used date from http " +
-					"session",
+				List.of(
+					"No context HTTP session exists, skipped getting the " +
+						"write data source last used date",
+					"Returning read data source"),
 				false, true);
 			_testGetDataSource(
 				_dynamicDataSource.getWriteDataSource(),
-				"Failed to set write data source last used date into http " +
-					"session",
+				List.of(
+					"No context HTTP session exists, skipped setting the " +
+						"write data source last used date",
+					"Returning write data source"),
 				false, false);
 		}
 	}
@@ -158,13 +169,17 @@ public class DynamicDataSourceTest {
 					Long.MAX_VALUE)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, true, true);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true, true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, true, false);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true, false);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, false, true);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false, true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(), null, false, false);
+				_dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false, false);
 		}
 		finally {
 			sessionIdThreadLocal.remove();
@@ -172,7 +187,7 @@ public class DynamicDataSourceTest {
 	}
 
 	private void _testGetDataSource(
-		DataSource expectedDataSource, String expectedLogMessage,
+		DataSource expectedDataSource, List<String> expectedLogMessages,
 		boolean writeDataSource, boolean currentTransactionReadOnly) {
 
 		_writeDataSourceThreadLocal.set(writeDataSource);
@@ -186,7 +201,7 @@ public class DynamicDataSourceTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 				"com.liferay.portal.dao.jdbc.util.DynamicDataSource",
-				Level.WARNING)) {
+				Level.FINEST)) {
 
 			Assert.assertSame(
 				expectedDataSource,
@@ -195,16 +210,20 @@ public class DynamicDataSourceTest {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			if (expectedLogMessage == null) {
+			if (expectedLogMessages == null) {
 				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 			}
 			else {
 				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
+					logEntries.toString(), expectedLogMessages.size(),
+					logEntries.size());
 
-				LogEntry logEntry = logEntries.get(0);
+				for (int i = 0; i < expectedLogMessages.size(); i++) {
+					LogEntry logEntry = logEntries.get(i);
 
-				Assert.assertEquals(expectedLogMessage, logEntry.getMessage());
+					Assert.assertEquals(
+						expectedLogMessages.get(i), logEntry.getMessage());
+				}
 			}
 		}
 	}

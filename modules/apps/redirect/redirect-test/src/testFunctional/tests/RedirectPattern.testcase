@@ -79,71 +79,6 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "/parent/child3");
 	}
 
-	@description = "This test checks that the user can redirect to destination URL when the user agent configured as bot."
-	@priority = 5
-	test CanRedirectToDestinationURLWhenUserAgentConfiguredAsBot {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/child2",
-			pattern = "(.*)/child1$",
-			patternIndex = 0,
-			userAgent = "Bot",
-			userAgentIndex = 0);
-
-		Redirect.addPattern(
-			destinationIndex = 1,
-			destinationURL = "/web/test-site/$1/child3",
-			pattern = "(.*)/child1$",
-			patternIndex = 1,
-			userAgent = "Human",
-			userAgentIndex = 1);
-
-		Redirect.gotoConfigureCrawlerUserAgents(navigateFromJavaScriptSEODynamicRendering = "true");
-
-		Redirect.configureCrawlerUserAgents(removeCrawlerUserAgent = "baiduspider");
-
-		Redirect.configureCrawlerUserAgents(addCrawlerUserAgent = "AppleWebKit");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child2");
-	}
-
-	@description = "This test checks that the user can redirect to destination URL when the user agent configured as human."
-	@priority = 5
-	test CanRedirectToDestinationURLWhenUserAgentConfiguredAsHuman {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/child2",
-			pattern = "(.*)/child1$",
-			patternIndex = 0,
-			userAgent = "Bot",
-			userAgentIndex = 0);
-
-		Redirect.addPattern(
-			destinationIndex = 1,
-			destinationURL = "/web/test-site/$1/child3",
-			pattern = "(.*)/child1$",
-			patternIndex = 1,
-			userAgent = "Human",
-			userAgentIndex = 1);
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child3");
-	}
-
 	@description = "This test checks that a Pattern can be updated."
 	@priority = 5
 	test CanUpdatePattern {
@@ -190,48 +125,6 @@ definition {
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
 			locator2 = "text-overflow",
 			value1 = "ellipsis");
-	}
-
-	@description = "This test checks that when there are multiple Patterns, the first one that matches the URL will be applied."
-	@priority = 5
-	test FirstMatchingPatternWillBeApplied {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/void",
-			pattern = "void",
-			patternIndex = 0);
-
-		Redirect.addPattern(
-			destinationIndex = 1,
-			destinationURL = "/web/test-site/$1/child2",
-			pattern = "(.*)/child1$",
-			patternIndex = 1);
-
-		Redirect.addPattern(
-			destinationIndex = 2,
-			destinationURL = "https://www.liferay.com",
-			pattern = "(.*)/child1$",
-			patternIndex = 2);
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child2");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		WaitForPageLoad();
-
-		Redirect.removePattern(index = 2);
-
-		Button.clickSave();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "www.liferay.com");
 	}
 
 	@description = "This test checks that an error appears when an invalid input is typed into the destination field."

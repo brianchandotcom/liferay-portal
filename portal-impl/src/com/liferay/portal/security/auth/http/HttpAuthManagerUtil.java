@@ -323,7 +323,13 @@ public class HttpAuthManagerUtil {
 		if (index > -1) {
 			login = credentials.substring(0, index);
 
+			login = StringUtil.replace(
+				login, new String[] {StringPool.PLUS, "%20"},
+				new String[] {_TEMP_PLUS, _TEMP_PLUS});
+
 			login = HttpComponentsUtil.decodeURL(login.trim());
+
+			login = StringUtil.replace(login, _TEMP_PLUS, StringPool.PLUS);
 
 			password = credentials.substring(index + 1);
 
@@ -375,6 +381,8 @@ public class HttpAuthManagerUtil {
 
 	private HttpAuthManagerUtil() {
 	}
+
+	private static final String _TEMP_PLUS = "_LIFERAY_TEMP_PLUS_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HttpAuthManagerUtil.class);

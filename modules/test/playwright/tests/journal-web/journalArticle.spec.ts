@@ -13,8 +13,10 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSettingsPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {openFieldset} from '../../utils/openFieldset';
 import {nextPage, setItemsPerPage} from '../../utils/pagination';
@@ -1813,5 +1815,69 @@ translationAndAutosaveTest(
 				'[id="_com_liferay_journal_web_portlet_JournalPortlet_articles_1"] span.label-item'
 			)
 		).toHaveText('Approved');
+	}
+);
+
+baseTest(
+	'Verify Journal Article ID field is not editable after assignment',
+	{
+		tag: '@LPD-39034',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		const systemSettingsPage = new SystemSettingsPage(page);
+		const articleTitle = 'Test Article';
+
+		try {
+			await systemSettingsPage.goToSystemSetting(
+				'Web Content',
+				'Administration'
+			);
+
+			const toggle = page.getByLabel(
+				'Journal Article Force Autogenerate ID'
+			);
+
+			await toggle.uncheck();
+
+			await page.getByRole('button', {name: /save|update/i}).click();
+
+			await waitForAlert(page);
+
+			await journalEditArticlePage.createArticleWithCustomArticleId(
+				page,
+				site,
+				String(getRandomInt()),
+				articleTitle
+			);
+
+			await journalEditArticlePage.editArticle(articleTitle);
+
+			await expect(
+				page.locator(
+					'input[name="_com_liferay_journal_web_portlet_JournalPortlet_newArticleId"]'
+				)
+			).toBeDisabled();
+
+			await expect(
+				page.locator(
+					'input[name="_com_liferay_journal_web_portlet_JournalPortlet_autoArticleId"]'
+				)
+			).toBeDisabled();
+		}
+		finally {
+			await systemSettingsPage.goToSystemSetting(
+				'Web Content',
+				'Administration'
+			);
+
+			const toggle = page.getByLabel(
+				'Journal Article Force Autogenerate ID'
+			);
+			await toggle.check();
+
+			await page.getByRole('button', {name: /save|update/i}).click();
+
+			await waitForAlert(page);
+		}
 	}
 );

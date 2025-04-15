@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {openFieldset} from '../../../utils/openFieldset';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -183,6 +184,24 @@ export class JournalEditArticlePage {
 			this.page,
 			`Success:${title} was created successfully.`
 		);
+	}
+
+	async createArticleWithCustomArticleId(
+		page: Page,
+		site: Site,
+		articleId: string,
+		title?: string
+	) {
+		await this.goto({siteUrl: site.friendlyUrlPath});
+
+		await this.fillTitle(title || getRandomString());
+
+		const articleIdInput = page.locator(
+			'input[name="_com_liferay_journal_web_portlet_JournalPortlet_newArticleId"]'
+		);
+		await articleIdInput.fill(articleId || String(getRandomInt()));
+
+		await this.publishArticle();
 	}
 
 	async createArticleWithDuplicatedField(

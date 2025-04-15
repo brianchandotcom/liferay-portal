@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
@@ -12,13 +12,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {switchChannel} from './utils/channel';
+import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
@@ -27,7 +22,6 @@ import {
 	navigateToACPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
 import {
 	addSegmentField,
 	addStaticMember,
@@ -39,7 +33,6 @@ import {
 	setSegmentName,
 } from './utils/segments';
 import {CardSelectors, SegmentConditions} from './utils/selectors';
-import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
 import {
 	searchByTerm,
@@ -60,68 +53,30 @@ export const test = mergeTests(
 	loginTest()
 );
 
-const goToWithReferrer = async function ({
-	page,
-	referrer,
-	url,
-}: {
-	page: Page;
-	referrer: string;
-	url: string;
-}) {
-	await page.goto(referrer);
-
-	await page.evaluate((url) => {
-		const aTag = document.createElement('a');
-
-		aTag.href = url;
-
-		aTag.click();
-	}, url);
-};
-
 const randomString = getRandomString();
 
 const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
-const siteName = 'My Site ' + randomString;
 
 let channel;
 let project;
-let site;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
-	});
-
-	await createSitePage({
-		apiHelpers,
-		pageTitle,
-		siteName,
-	});
-
-	const result = await syncAnalyticsCloud({
+test.beforeEach(async ({apiHelpers}) => {
+	const result = await createChannel({
 		apiHelpers,
 		channelName,
-		page,
-		siteName,
 	});
 
 	channel = result.channel;
 	project = result.project;
 });
 
-test.afterEach(async ({apiHelpers, page}) => {
+test.afterEach(async ({apiHelpers}) => {
 	await test.step('Delete channel and delete site on the DXP side', async () => {
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
 		);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
 
@@ -131,14 +86,36 @@ test(
 		tag: '@LRAC-8112 Legacy',
 	},
 
-	async ({page}) => {
-		await test.step('Go to My Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
+	async ({apiHelpers, page}) => {
+		const individualName = 'user1';
+
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-			await page.waitForTimeout(10000);
+		});
+
+		const date1 = new Date();
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -172,7 +149,6 @@ test(
 
 		await test.step('Assert Page Profile', async () => {
 			await expect(page.locator('h1.title')).toContainText(pageTitle);
-			await expect(page.locator('h1.title')).toContainText(siteName);
 
 			const cardsNames = [
 				'Unique Visitors',
@@ -239,69 +215,44 @@ test(
 		tag: '@LRAC-14813',
 	},
 
-	async ({apiHelpers, assetPublisherPage, page, pageEditorPage}) => {
-		const blogTitle = 'My Blog ' + randomString;
-		const blogPageTitle = 'My Blog Page ' + randomString;
+	async ({apiHelpers, page}) => {
+		const pageTitle = 'My Page ' + randomString;
 
-		await test.step('Create a page with an Asset Publisher Widget and access to the configuration of the widget from the page editor', async () => {
-			const widgetId = getRandomString();
+		const individualName = 'user1';
 
-			const widgetDefinition = getWidgetDefinition({
-				id: widgetId,
-				widgetName:
-					'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([widgetDefinition]),
-				siteId: site.id,
-				title: blogPageTitle,
-			});
-
-			await navigateToSitePage({
-				page,
-				pageName: blogPageTitle,
-				siteName,
-			});
-
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await pageEditorPage.goToWidgetConfiguration(widgetId);
-
-			await assetPublisherPage.changeAssetSelection('Dynamic');
-
-			await page.keyboard.press('Escape');
-
-			await pageEditorPage.publishPage();
 		});
 
-		await test.step('Create a Blog', async () => {
-			await apiHelpers.headlessDelivery.postBlog(site.id, {
-				headline: blogTitle,
-			});
-			await page.waitForTimeout(3000);
-		});
+		const date1 = new Date();
 
-		await test.step('Go to My Blog Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: blogPageTitle,
-				siteName,
-			});
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
 
-			await page.locator('.asset-title').getByText(blogTitle).click();
-
-			await page.waitForTimeout(3000);
-
-			await page.reload();
-
-			await page.waitForTimeout(10000);
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -325,7 +276,7 @@ test(
 		await test.step('Access one of the pages on the list', async () => {
 			await navigateTo({
 				page,
-				pageName: blogTitle,
+				pageName: pageTitle,
 			});
 		});
 
@@ -355,50 +306,60 @@ test(
 	async ({apiHelpers, page}) => {
 		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
+		const pageTitle3 = 'My Page 3';
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle: pageTitle1,
-			siteName,
-		});
+		const individualName = 'user1';
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle: pageTitle2,
-			siteName,
-		});
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
-		const pageTitle3 = 'My Page';
-
-		await test.step('Sign in with the new user to visit the site pages', async () => {
-			await performLogout(page);
-			await performLogin(page, user.alternateName);
-
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle3,
-				siteName,
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-			await page.reload();
-			await page.waitForTimeout(10000);
 		});
 
-		await test.step('Go to My Page 2', async () => {
-			await page.getByText(pageTitle1, {exact: true}).click();
-			await page.waitForTimeout(10000);
-		});
+		const date1 = new Date();
 
-		await test.step('Go to My Page 3', async () => {
-			await page.getByText(pageTitle2, {exact: true}).click();
-			await page.waitForTimeout(10000);
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals
+				.map((individual) => ({
+					applicationId: 'Page',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date1.toISOString(),
+					eventId: 'pageViewed',
+					title: pageTitle1,
+					userId: individual.id,
+				}))
+				.concat(
+					individuals.map((individual) => ({
+						applicationId: 'Page',
+						canonicalUrl: 'https://www.liferay.com',
+						channelId: channel.id,
+						eventDate: date1.toISOString(),
+						eventId: 'pageViewed',
+						title: pageTitle2,
+						userId: individual.id,
+					}))
+				)
+				.concat(
+					individuals.map((individual) => ({
+						applicationId: 'Page',
+						canonicalUrl: 'https://www.liferay.com',
+						channelId: channel.id,
+						eventDate: date1.toISOString(),
+						eventId: 'pageViewed',
+						title: pageTitle3,
+						userId: individual.id,
+					}))
+				);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -425,13 +386,13 @@ test(
 
 		await test.step('Assert the page list', async () => {
 			await expect(
-				page.getByRole('link', {name: `${pageTitle3} - ${siteName}`})
+				page.getByRole('link', {name: `${pageTitle1}`})
 			).toBeVisible();
 			await expect(
-				page.getByRole('link', {name: `${pageTitle1} - ${siteName}`})
+				page.getByRole('link', {name: `${pageTitle2}`})
 			).toBeVisible();
 			await expect(
-				page.getByRole('link', {name: `${pageTitle2} - ${siteName}`})
+				page.getByRole('link', {name: `${pageTitle3}`})
 			).toBeVisible();
 		});
 	}
@@ -697,19 +658,35 @@ test(
 
 	async ({apiHelpers, page}) => {
 		const pageTitle = 'Snúið Vinsælar þú';
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName,
+
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
+			});
 		});
 
-		await test.step('Go to Snúið Vinsælar þú Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-			await page.waitForTimeout(10000);
+		const date1 = new Date();
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -883,19 +860,35 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		await test.step('Go to My Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-			await page.waitForTimeout(3000);
+		});
 
-			await page.reload();
+		const date1 = new Date();
 
-			await page.waitForTimeout(10000);
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				browserName: 'Chrome',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
 
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -951,20 +944,36 @@ test(
 		tag: '@LRAC-14827',
 	},
 
-	async ({page}) => {
-		await test.step('Access the DXP Home Page using Google Page as a reference page', async () => {
-			await goToWithReferrer({
-				page,
-				referrer: 'https://www.google.com',
-				url: `${liferayConfig.environment.baseUrl}/web/${siteName}`,
-			});
+	async ({apiHelpers, page}) => {
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
-			await page.waitForTimeout(10000);
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
+			});
 		});
 
-		await test.step('Go to My Page', async () => {
-			await page.getByText(pageTitle).first().click();
-			await page.waitForTimeout(10000);
+		const date1 = new Date();
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				referrer: 'https://www.google.com',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1033,33 +1042,64 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const pageTitle1 = 'My Page';
+		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
+		const pageURL1 = 'https://www.liferay.com/page1';
+		const pageURL2 = 'https://www.liferay.com/page2';
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle: pageTitle2,
-			siteName,
-		});
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
-		await test.step('Go to My Page 1', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle1,
-				siteName,
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-			await page.waitForTimeout(10000);
 		});
 
-		await test.step('Go to My Page 2', async () => {
-			await page.getByText(pageTitle2, {exact: true}).click();
-			await page.waitForTimeout(10000);
-		});
+		const date1 = new Date();
 
-		await test.step('Go to My Page 1', async () => {
-			await page.getByText(pageTitle1, {exact: true}).click();
-			await page.waitForTimeout(10000);
-			await closeSessions(apiHelpers, page);
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals
+				.map((individual) => ({
+					applicationId: 'Page',
+					canonicalUrl: pageURL1,
+					channelId: channel.id,
+					eventDate: date1.toISOString(),
+					eventId: 'pageViewed',
+					title: pageTitle1,
+					userId: individual.id,
+				}))
+				.concat(
+					individuals.map((individual) => ({
+						applicationId: 'Page',
+						canonicalUrl: pageURL2,
+						channelId: channel.id,
+						eventDate: date1.toISOString(),
+						eventId: 'pageViewed',
+						referrer: pageURL1,
+						title: pageTitle2,
+						userId: individual.id,
+					}))
+				)
+				.concat(
+					individuals.map((individual) => ({
+						applicationId: 'Page',
+						canonicalUrl: pageURL1,
+						channelId: channel.id,
+						eventDate: date1.toISOString(),
+						eventId: 'pageViewed',
+						referrer: pageURL2,
+						title: pageTitle1,
+						userId: individual.id,
+					}))
+				);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1115,14 +1155,36 @@ test(
 		tag: '@LRAC-14836',
 	},
 
-	async ({page}) => {
-		await test.step('Go to created Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
+	async ({apiHelpers, page}) => {
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
 			});
-			await page.waitForTimeout(10000);
+		});
+
+		const date1 = new Date();
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				referrer: 'https://www.google.com',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1148,7 +1210,7 @@ test(
 
 		await test.step('Add static member and save segment', async () => {
 			await addStaticMember({
-				memberNames: [`test`],
+				memberNames: [`user1`],
 				page,
 			});
 
@@ -1227,28 +1289,35 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const individualName = 'user1';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
-		await test.step('Sign in with the new user to visit the site pages', async () => {
-			await performLogout(page);
-			await performLogin(page, user.alternateName);
-
-			const siteNameURL = siteName.replace(/ /g, '-').toLowerCase();
-
-			await page.goto(
-				`${liferayConfig.environment.baseUrl}/web/${siteNameURL}`
-			);
-			await page.reload();
-			await page.waitForTimeout(10000);
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
+			});
 		});
 
-		const href = page.url();
+		const date1 = new Date();
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
@@ -1273,10 +1342,10 @@ test(
 		});
 
 		await test.step('Assert the page list', async () => {
-			await searchByTerm({page, searchTerm: href});
+			await searchByTerm({page, searchTerm: 'https://www.liferay.com'});
 
 			await expect(
-				page.getByRole('link', {name: `${pageTitle} - ${siteName}`})
+				page.getByRole('link', {name: `${pageTitle}`})
 			).toBeVisible();
 		});
 	}

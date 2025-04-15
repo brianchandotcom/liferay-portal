@@ -42,13 +42,17 @@ type Event = {
 	applicationId: string;
 	assetId?: string;
 	assetTitle?: string;
+	browserName?: string;
 	canonicalUrl: string;
 	channelId: string;
 	dataSourceId?: number;
+	deviceType?: string;
 	eventDate: string;
 	eventId: string;
 	eventProperties?: string;
+	platformName?: string;
 	properties?: Property[];
+	referrer?: string;
 	title: string;
 	userId: string;
 };

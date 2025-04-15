@@ -155,7 +155,7 @@ public class CompanyTestEntityResourceTest
 	}
 
 	private CompanyTestEntityResource _createCompanyTestEntityResource(
-			String[] parameters)
+			String importStrategy, String updateStrategy)
 		throws Exception {
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
@@ -169,8 +169,10 @@ public class CompanyTestEntityResourceTest
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
-		).parameters(
-			parameters
+		).parameter(
+			"importStrategy", importStrategy
+		).parameter(
+			"updateStrategy", updateStrategy
 		).build();
 	}
 
@@ -214,11 +216,7 @@ public class CompanyTestEntityResourceTest
 				LoggerTestUtil.ERROR)) {
 
 			CompanyTestEntityResource companyTestEntityResource =
-				_createCompanyTestEntityResource(
-					new String[] {
-						"importStrategy", "ON_ERROR_CONTINUE", "updateStrategy",
-						"UPDATE"
-					});
+				_createCompanyTestEntityResource("ON_ERROR_CONTINUE", "UPDATE");
 
 			_waitForFinish(
 				"COMPLETED", true,

@@ -65,9 +65,11 @@ public class MarketplaceRestController extends BaseRestController {
 		JSONObject commerceOrderJSONObject = jsonObject.getJSONObject(
 			"commerceOrder");
 
-		if ((commerceOrderJSONObject.getInt("paymentStatus") !=
+		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
+
+		if ((paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
-			(commerceOrderJSONObject.getInt("paymentStatus") !=
+			(paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED)) {
 
 			if (_log.isInfoEnabled()) {

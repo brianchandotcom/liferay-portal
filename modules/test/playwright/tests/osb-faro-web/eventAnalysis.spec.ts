@@ -16,8 +16,8 @@ import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
+import {createChannel} from './utils/channel';
 import {
 	addBreakdown,
 	addCustomEvent,
@@ -30,10 +30,7 @@ import {
 	navigateToACPageViaURL,
 	navigateToACSettingsViaURL,
 } from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
-import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
-import {createPageWithHTMLFragment} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -53,29 +50,14 @@ const randomString = getRandomString();
 
 const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
-const siteName = 'My Site ' + randomString;
 
 let channel;
-let layout;
 let project;
-let site;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
-	});
-
-	layout = await createSitePage({
-		apiHelpers,
-		pageTitle,
-		siteName,
-	});
-
-	const result = await syncAnalyticsCloud({
+test.beforeEach(async ({apiHelpers}) => {
+	const result = await createChannel({
 		apiHelpers,
 		channelName,
-		page,
-		siteName,
 	});
 
 	channel = result.channel;
@@ -90,8 +72,6 @@ test.afterEach(async ({apiHelpers, page}) => {
 		);
 
 		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
 
@@ -101,42 +81,94 @@ test(
 		tag: '@LRAC-6280',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-Analytics.track('customEvent', {
-birthdate: "2021-11-25T14:36:30.685Z",
-category: "wetsuit",
-duration: "3600000",
-like: "true",
-price: "259.95",
-temp: "11"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'birthdate',
+							value: '2021-11-25T14:36:30.685Z',
+						},
+						{
+							name: 'category',
+							value: 'wetsuit',
+						},
+						{
+							name: 'duration',
+							value: '3600000',
+						},
+						{
+							name: 'like',
+							value: 'true',
+						},
+						{
+							name: 'price',
+							value: '259.95',
+						},
+						{
+							name: 'temp',
+							value: '11',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'DATE',
+							displayName: 'birthdate',
+							name: 'birthdate',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'STRING',
+							displayName: 'category',
+							name: 'category',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'DURATION',
+							displayName: 'duration',
+							name: 'duration',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'BOOLEAN',
+							displayName: 'like',
+							name: 'like',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'NUMBER',
+							displayName: 'price',
+							name: 'price',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'NUMBER',
+							displayName: 'temp',
+							name: 'temp',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -322,37 +354,44 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-  Analytics.track('customEvent', {
-city:  "rio de janeiro"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'city',
+							value: 'rio de janeiro',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'city',
+							name: 'city',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -456,37 +495,44 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-  Analytics.track('customEvent', {
-city:  "rio de janeiro"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'city',
+							value: 'rio de janeiro',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'city',
+							name: 'city',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -591,37 +637,44 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-  Analytics.track('customEvent', {
-city:  "rio de janeiro"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'city',
+							value: 'rio de janeiro',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'city',
+							name: 'city',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -723,37 +776,44 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-  Analytics.track('customEvent', {
-city:  "rio de janeiro"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'city',
+							value: 'rio de janeiro',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'city',
+							name: 'city',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -857,37 +917,44 @@ test(
 		tag: '@LRAC-7868',
 	},
 
-	async ({apiHelpers, page, pageEditorPage}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			const customEventContent = `<h1>My Custom Events</h1>
-<script>window.onload = (event) => {
-  Analytics.track('customEvent', {
-city:  "rio de janeiro"
-});
-};</script>`;
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'customEvent',
+					properties: [
+						{
+							name: 'city',
+							value: 'rio de janeiro',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
 
-			await createPageWithHTMLFragment({
-				htmlContent: customEventContent,
-				page,
-			});
-		});
-
-		await test.step('Generate a custom event with attributes of different types', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'customEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'city',
+							name: 'city',
+							type: 'LOCAL',
+						},
+					],
+					name: 'customEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1051,45 +1118,50 @@ test(
 		tag: '@LRAC-11746',
 	},
 
-	async ({
-		apiHelpers,
-		page,
-		pageConfigurationPage,
-		pageEditorPage,
-		pagesAdminPage,
-	}) => {
-		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+	async ({apiHelpers, page}) => {
+		await test.step('Send a custom event', async () => {
+			const date = new Date();
 
-			await pageConfigurationPage.goToSection(pageTitle, 'Design');
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'pageTitleEvent',
+					properties: [
+						{
+							name: 'pageTitleEvent',
+							value: pageTitle,
+						},
+					],
+					title: pageTitle,
+					userId: '1',
+				},
+			]);
 
-			await page.getByRole('tab', {name: 'JavaScript'}).click();
-
-			const customEventContent = `Analytics.track('pageTitleEvent', {
-'pageTitleEvent': '${pageTitle}',
-});`;
-
-			await page.getByPlaceholder('JavaScript').fill(customEventContent);
-
-			await pageConfigurationPage.save();
-		});
-
-		await test.step('Publish My Page and generate a custom event', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await pageEditorPage.publishPage();
-
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.reload();
-
-			await page.waitForTimeout(5000);
-
-			await closeSessions(apiHelpers, page);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: 'pageTitleEvent',
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: 'pageTitleEvent',
+							name: 'pageTitleEvent',
+							type: 'LOCAL',
+						},
+						{
+							dataType: 'STRING',
+							displayName: 'pageTitle',
+							name: 'pageTitle',
+							type: 'GLOBAL',
+						},
+					],
+					name: 'pageTitleEvent',
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -1105,7 +1177,7 @@ test(
 			await page.getByRole('link', {name: 'Create Analysis'}).click();
 		});
 
-		await test.step('Add a name to the segment', async () => {
+		await test.step('Add a name to the analysis', async () => {
 			await setEventAnalysisName({
 				eventAnalysisName: `Event Analysis ${randomString}`,
 				page,
@@ -1137,7 +1209,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await addFilter({
 				filterName: 'pageTitle',
-				input: `${pageTitle} - ${siteName}`,
+				input: pageTitle,
 				operator: 'contains',
 				page,
 			});
@@ -1145,7 +1217,7 @@ test(
 
 		await test.step('View the information displayed', async () => {
 			await expect(
-				page.getByTitle(`${pageTitle} - ${siteName}`)
+				page.getByTestId(pageTitle.toLowerCase())
 			).toBeVisible();
 			await expect(
 				page.getByRole('cell', {exact: true, name: 'pageTitleEvent'})
@@ -1163,7 +1235,7 @@ test(
 
 			await addFilter({
 				filterName: 'pageTitle',
-				input: `${pageTitle} - ${siteName}`,
+				input: pageTitle,
 				operator: 'does not contain',
 				page,
 			});

@@ -395,6 +395,7 @@ const getColumns = ({
 							'align-top',
 							className
 						)}
+						data-testid={decodeURIComponent(dataValue.name)}
 						rowSpan={dataValue.rowSpan}
 					>
 						<TextTruncate

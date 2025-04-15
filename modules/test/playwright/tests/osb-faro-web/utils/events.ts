@@ -131,11 +131,11 @@ export async function setEventAnalysisName({
 	eventAnalysisName: string;
 	page: Page;
 }) {
-	const editEventAnalysisName = page.getByText('Unnamed Analysis');
+	const editEventAnalysisName = await page.locator(
+		'.event-analysis-toolbar-left-content button'
+	);
 
-	if (await editEventAnalysisName.isVisible()) {
-		await editEventAnalysisName.click();
-	}
+	await editEventAnalysisName.click();
 
-	await page.getByPlaceholder('Analysis').fill(eventAnalysisName);
+	await page.keyboard.type(eventAnalysisName);
 }

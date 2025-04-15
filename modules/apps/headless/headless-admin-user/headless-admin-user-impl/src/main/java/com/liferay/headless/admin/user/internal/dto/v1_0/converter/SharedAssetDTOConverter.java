@@ -60,11 +60,10 @@ public class SharedAssetDTOConverter
 	public SharedAsset toDTO(
 		DTOConverterContext dtoConverterContext, SharingEntry sharingEntry) {
 
+		String mimeType = _getMimeType(sharingEntry);
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 				sharingEntry);
-
-		String mimeType = _getMimeType(sharingEntry);
 
 		return new SharedAsset() {
 			{

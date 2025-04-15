@@ -1686,6 +1686,14 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (navigationMenu.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1907,6 +1915,17 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				if (!Objects.deepEquals(
 						navigationMenu1.getNavigationType(),
 						navigationMenu2.getNavigationType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						navigationMenu1.getPermissions(),
+						navigationMenu2.getPermissions())) {
 
 					return false;
 				}
@@ -2193,6 +2212,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		}
 
 		if (entityFieldName.equals("navigationType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

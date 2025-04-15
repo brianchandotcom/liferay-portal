@@ -2833,11 +2833,6 @@ public class ServletDataImpl implements ServletData {
 							MessageBoardAttachmentResourceImpl.class,
 							"getMessageBoardThreadMessageBoardAttachmentsPage"));
 					put(
-						"query#NavigationMenu.permissions",
-						new ObjectValuePair<>(
-							NavigationMenuResourceImpl.class,
-							"getNavigationMenuPermissionsPage"));
-					put(
 						"query#MessageBoardSection.permissions",
 						new ObjectValuePair<>(
 							MessageBoardSectionResourceImpl.class,

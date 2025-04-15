@@ -503,7 +503,7 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new navigation menu."
@@ -665,7 +665,7 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the navigation menu with the information sent in the request body. Any missing fields are deleted, unless they are required."
@@ -840,7 +840,7 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the navigation menu with the given external reference code or creates it if it does not exist."

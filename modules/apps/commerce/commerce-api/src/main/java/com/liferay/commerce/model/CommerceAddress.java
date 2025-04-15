@@ -58,10 +58,10 @@ public interface CommerceAddress extends CommerceAddressModel {
 	public com.liferay.portal.kernel.model.Region getRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getSubtype(java.util.Locale locale);
+
 	public boolean isGeolocated();
 
 	public boolean isSameAddress(CommerceAddress commerceAddress);
-
-	public String getSubtype(java.util.Locale locale);
 
 }

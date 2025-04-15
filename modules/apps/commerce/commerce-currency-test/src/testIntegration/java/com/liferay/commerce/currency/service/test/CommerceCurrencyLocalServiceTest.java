@@ -7,9 +7,11 @@ package com.liferay.commerce.currency.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
+import com.liferay.commerce.currency.exception.CommerceCurrencyRateException;
 import com.liferay.commerce.currency.exception.DuplicateCommerceCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.test.util.TestExchangeRateProvider;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -23,6 +25,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,7 +56,7 @@ public class CommerceCurrencyLocalServiceTest {
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			null, _user.getUserId(), RandomTestUtil.randomString(3),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(3), BigDecimal.ZERO,
+			RandomTestUtil.randomString(3), BigDecimal.ONE,
 			LocalizationUtil.getLocalizationMap(
 				CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN),
 			2, 2, "HALF_EVEN", false, 0.0, false);
@@ -61,10 +64,43 @@ public class CommerceCurrencyLocalServiceTest {
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			null, _user.getUserId(), _commerceCurrency.getCode(),
 			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(3), BigDecimal.ONE,
+			LocalizationUtil.getLocalizationMap(
+				CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN),
+			2, 2, "HALF_EVEN", false, 0.0, false);
+	}
+
+	@Test(expected = CommerceCurrencyRateException.class)
+	public void testAddCommerceCurrencyRateValidator() throws Exception {
+		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
+			null, _user.getUserId(), RandomTestUtil.randomString(3),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(3), BigDecimal.ZERO,
 			LocalizationUtil.getLocalizationMap(
 				CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN),
 			2, 2, "HALF_EVEN", false, 0.0, false);
+	}
+
+	@Test
+	public void testFailedUpdateExchangeRate() throws Exception {
+		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
+			null, _user.getUserId(), "FAIL",
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(3), BigDecimal.ONE,
+			LocalizationUtil.getLocalizationMap(
+				CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN),
+			2, 2, "HALF_EVEN", false, 0.0, true);
+
+		BigDecimal oldExchangeRate = _commerceCurrency.getRate();
+
+		_commerceCurrencyLocalService.updateExchangeRate(
+			_commerceCurrency.getCommerceCurrencyId(),
+			TestExchangeRateProvider.NAME);
+
+		_commerceCurrency = _commerceCurrencyLocalService.getCommerceCurrency(
+			_commerceCurrency.getCommerceCurrencyId());
+
+		Assert.assertEquals(oldExchangeRate, _commerceCurrency.getRate());
 	}
 
 	private static User _user;

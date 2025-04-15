@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import {useStaleCache} from '../../contexts/CacheContext';
 import {
+	useDeletedOptions,
 	useErc,
 	useId,
 	useName,
@@ -20,6 +22,7 @@ import AsyncButton from '../AsyncButton';
 import ManagementBar from '../ManagementBar';
 
 export default function PicklistBuilderManagementBar() {
+	const deletedOptions = useDeletedOptions();
 	const erc = useErc();
 	const id = useId();
 	const name = useName();
@@ -33,6 +36,22 @@ export default function PicklistBuilderManagementBar() {
 	);
 
 	const onSave = async () => {
+		if (deletedOptions) {
+			if (
+				!(await openConfirmModal({
+					buttonLabel: Liferay.Language.get('Save'),
+					center: true,
+					status: 'danger',
+					text: Liferay.Language.get(
+						'you-deleted-one-or-more-options-from-the-picklist'
+					),
+					title: Liferay.Language.get('save-picklist-changes'),
+				}))
+			) {
+				return;
+			}
+		}
+
 		try {
 			if (!localizedName || !erc) {
 				focusInvalidElement();

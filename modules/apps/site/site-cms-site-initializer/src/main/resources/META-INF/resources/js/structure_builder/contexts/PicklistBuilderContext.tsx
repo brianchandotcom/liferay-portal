@@ -21,12 +21,14 @@ const noop = () => null;
 const DEFAULT_PICKLIST_NAME = Liferay.Language.get('untitled-picklist');
 
 const INITIAL_STATE = {
+	deletedOptions: false,
 	erc: getRandomId(),
 	id: null,
 	name: {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_PICKLIST_NAME,
 	},
 	options: new Map(),
+	setDeletedOptions: noop,
 	setErc: noop,
 	setId: noop,
 	setName: noop,
@@ -42,10 +44,12 @@ export type Option = {
 export type Options = Map<string, Partial<Option>>;
 
 export type State = {
+	deletedOptions: boolean;
 	erc: string;
 	id: number | null;
 	name: Liferay.Language.LocalizedValue<string>;
 	options: Options;
+	setDeletedOptions: Dispatch<SetStateAction<boolean>>;
 	setErc: Dispatch<SetStateAction<string>>;
 	setId: Dispatch<SetStateAction<number | null>>;
 	setName: Dispatch<SetStateAction<Liferay.Language.LocalizedValue<string>>>;
@@ -61,6 +65,7 @@ export default function PicklistBuilderContextProvider({
 	children: ReactNode;
 	initialState: State;
 }) {
+	const [deletedOptions, setDeletedOptions] = useState<boolean>(false);
 	const [erc, setErc] = useState<string>(initialState.erc);
 	const [id, setId] = useState<number | null>(initialState.id);
 	const [name, setName] = useState<Liferay.Language.LocalizedValue<string>>(
@@ -71,10 +76,12 @@ export default function PicklistBuilderContextProvider({
 	return (
 		<PicklistBuilderContext.Provider
 			value={{
+				deletedOptions,
 				erc,
 				id,
 				name,
 				options,
+				setDeletedOptions,
 				setErc,
 				setId,
 				setName,
@@ -119,6 +126,9 @@ const useAddOption = () => {
 		});
 };
 
+const useDeletedOptions = () =>
+	useContext(PicklistBuilderContext).deletedOptions;
+
 const useErc = () => useContext(PicklistBuilderContext).erc;
 
 const useId = () => useContext(PicklistBuilderContext).id;
@@ -134,9 +144,11 @@ const useSetName = () => useContext(PicklistBuilderContext).setName;
 const useOptions = () => useContext(PicklistBuilderContext).options;
 
 const useRemoveOptions = () => {
-	const {setOptions} = useContext(PicklistBuilderContext);
+	const {setDeletedOptions, setOptions} = useContext(PicklistBuilderContext);
 
 	return (ercs: string[]) => {
+		setDeletedOptions(true);
+
 		setOptions((options) => {
 			const newOptions = new Map(options);
 
@@ -153,6 +165,7 @@ export {
 	PicklistBuilderContextProvider,
 	buildState,
 	useAddOption,
+	useDeletedOptions,
 	useErc,
 	useId,
 	useName,

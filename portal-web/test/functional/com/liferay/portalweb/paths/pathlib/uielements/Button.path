@@ -481,11 +481,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IGNORE_REDIRECT_URLS</td>
-	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-hidden')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMAGE_CLEAR</td>
 	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[contains(@id,'openGraphClearImageButton')] | //div[normalize-space(text())='${key_fieldLabel}']/../following-sibling::div//button[contains(@id,'openGraphClearImageButton')]</td>
 	<td></td>
@@ -983,11 +978,6 @@
 <tr>
 	<td>UNDO</td>
 	<td>//button[contains(.,'Undo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>UNIGNORE_REDIRECT_URLS</td>
-	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>
 </tr>
 <tr>

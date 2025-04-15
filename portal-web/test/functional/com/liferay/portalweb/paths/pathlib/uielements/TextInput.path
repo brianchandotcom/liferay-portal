@@ -606,21 +606,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REDIRECT_DESTINATION_URL</td>
-	<td>//input[contains(@id,'destinationURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REDIRECT_SOURCE_URL</td>
-	<td>//input[contains(@id,'sourceURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REDIRECT_SOURCE_URL_PREFIX</td>
-	<td>//div[contains(@class,'form-text')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REMINDER_QUERY</td>
 	<td>//input[contains(@id,'reminderQueryAnswer')]</td>
 	<td></td>

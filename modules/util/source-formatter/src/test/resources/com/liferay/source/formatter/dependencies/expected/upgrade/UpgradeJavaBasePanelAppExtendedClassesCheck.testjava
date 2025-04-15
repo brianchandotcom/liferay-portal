@@ -17,4 +17,12 @@ public class UpgradeJavaBasePanelAppExtendedClassesCheck extends BasePanelApp {
 		return _portlet;
 	}
 
+	@Override
+	public void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		super.setUserNotificationEventLocalService(
+			userNotificationEventLocalService);
+	}
+
 }

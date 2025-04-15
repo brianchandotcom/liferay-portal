@@ -135,6 +135,17 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	}
 
 	@Override
+	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry)
+		throws PortalException {
+
+		sharingPermission.checkManageCollaboratorsPermission(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId());
+
+		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
 	public SharingEntry deleteSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

@@ -33,6 +33,9 @@ import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -148,6 +151,27 @@ public class SimpleCaptchaImpl implements Captcha {
 	@Override
 	public boolean isEnabled(PortletRequest portletRequest) {
 		return isEnabled(portal.getHttpServletRequest(portletRequest));
+	}
+
+	@Override
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(getTaglibPath());
+
+		try {
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (ServletException servletException) {
+			_log.error(
+				"Unable to render JSP " + getTaglibPath(), servletException);
+
+			throw new IOException(
+				"Unable to render " + getTaglibPath(), servletException);
+		}
 	}
 
 	@Override
@@ -461,6 +485,9 @@ public class SimpleCaptchaImpl implements Captcha {
 		target = "(&(release.bundle.symbolic.name=com.liferay.captcha.impl)(release.schema.version>=1.1.0))"
 	)
 	protected Release release;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.captcha.taglib)")
+	protected ServletContext servletContext;
 
 	private HttpSession _getHttpSession(HttpServletRequest httpServletRequest) {
 		HttpServletRequest originalHttpServletRequest =

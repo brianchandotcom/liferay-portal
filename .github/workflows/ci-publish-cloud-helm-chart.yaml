@@ -33,7 +33,7 @@ jobs:
                     fi
 
                     echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
-                working-directory: ./cloud/helm
+                working-directory: ./cloud/helm/default
             -   name: Log in to GAR
                 run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
             -   name: Package and Push Helm charts

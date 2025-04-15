@@ -3,6 +3,7 @@ defaults:
         shell: bash
 jobs:
     test-cloud-helm-chart:
+        if: (github.repository == 'liferay/liferay-portal')
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code

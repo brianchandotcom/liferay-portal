@@ -33,6 +33,8 @@ dependencies:
         portalProperties: ""
         source: external
 env:
+    -   name: DNS_MEMBERSHIP_SERVICE_NAME
+        value: liferay-default-headless
     -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
         value: "${env.POD_ID}"
     -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
@@ -82,6 +84,38 @@ initContainers:
 
                                     cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
                                 fi
+                            fi
+
+                            if [ ! -f /temp/tomcat/conf/server.xml ]
+                            then
+                                mkdir -p /temp/tomcat/conf
+
+                                cat /opt/liferay/tomcat/conf/server.xml | sed '/<!--.*-->/d' | sed '/<!--/,/-->/d' > /temp/tomcat/conf/server.xml
+
+                                IFS='' read -r -d '' cluster <<EOF
+                                <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
+                                    <Manager className="com.liferay.support.tomcat.session.LiferayDeltaManager" />
+                                    <Channel className="org.apache.catalina.tribes.group.GroupChannel">
+                                        <Membership
+                                            className="org.apache.catalina.tribes.membership.cloud.CloudMembershipService"
+                                            membershipProviderClassName="org.apache.catalina.tribes.membership.cloud.DNSMembershipProvider"
+                                        />
+
+                                        <Sender
+                                            className="org.apache.catalina.tribes.transport.ReplicationTransmitter">
+                                            <Transport
+                                                className="org.apache.catalina.tribes.transport.nio.PooledParallelSender"
+                                                timeout="300000" />
+                                        </Sender>
+                                    </Channel>
+                                </Cluster>
+                            EOF
+
+                                sed -i '/<Engine/r'<(echo "$cluster") /temp/tomcat/conf/server.xml
+
+                                cp /opt/liferay/tomcat/conf/logging.properties /temp/tomcat/conf/logging.properties
+
+                                echo -e "\norg.apache.catalina.tribes.membership.cloud.level=SEVERE" >> /temp/tomcat/conf/logging.properties
                             fi
                 image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                 imagePullPolicy: {{ .image.pullPolicy }}
@@ -235,6 +269,12 @@ volumeMounts:
     -   mountPath: /opt/liferay/routes
         name: liferay-persistent-volume
         subPath: liferay/routes
+    -   mountPath: /opt/liferay/tomcat/conf/logging.properties
+        name: liferay-persistent-volume
+        subPath: tomcat/conf/logging.properties
+    -   mountPath: /opt/liferay/tomcat/conf/server.xml
+        name: liferay-persistent-volume
+        subPath: tomcat/conf/server.xml
     -   mountPath: /opt/liferay/tomcat/logs
         name: liferay-persistent-volume
         subPath: tomcat/logs

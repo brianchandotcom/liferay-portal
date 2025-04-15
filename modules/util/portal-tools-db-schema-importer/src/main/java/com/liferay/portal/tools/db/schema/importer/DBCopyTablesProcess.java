@@ -258,6 +258,12 @@ public class DBCopyTablesProcess {
 
 				return;
 			}
+			else if (targetType == Types.BINARY) {
+				preparedStatement.setBinaryStream(
+					index, value.getBinaryStream());
+
+				return;
+			}
 
 			valueString = new String(value.getBytes(1, (int)value.length()));
 		}

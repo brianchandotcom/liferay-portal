@@ -18,7 +18,7 @@ import {
 const renderComponent = (state?: Partial<State>) => {
 	return render(
 		<MockStateProvider state={state}>
-			<PicklistFields />
+			<PicklistFields learnResources={{}} />
 		</MockStateProvider>
 	);
 };
@@ -58,5 +58,25 @@ describe('PicklistFields', () => {
 		fireEvent.blur(nameInput);
 
 		expect(setErc).toBeCalledWith('new erc');
+	});
+
+	it('does not show an info alert if the picklist has not been saved yet', async () => {
+		renderComponent({id: null});
+
+		expect(
+			screen.queryByText(
+				'picklists-are-shared-resources-so-changes-to-a-picklist-affect-all-structures-that-use-it'
+			)
+		).not.toBeInTheDocument();
+	});
+
+	it('shows an info alert if the picklist has been saved', async () => {
+		renderComponent();
+
+		expect(
+			screen.queryByText(
+				'picklists-are-shared-resources-so-changes-to-a-picklist-affect-all-structures-that-use-it'
+			)
+		).toBeInTheDocument();
 	});
 });

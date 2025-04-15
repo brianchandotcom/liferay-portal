@@ -66,6 +66,14 @@ test(
 		await test.step('Go to DXP --> Instance Settings --> Analytics Cloud and disconnect the workspace', async () => {
 			await goToAnalyticsCloudInstanceSettings(page);
 
+			const disconnectButton = page.getByRole('button', {
+				name: 'Disconnect',
+			});
+
+			if (await disconnectButton.isVisible()) {
+				await disconnectFromAnalyticsCloud(page);
+			}
+
 			await connectToAnalyticsCloud(page);
 
 			await expect(

@@ -41,14 +41,16 @@ public class UpgradeJavaBasePanelAppExtendedClassesCheck
 				StringBundler.concat(
 					matcher.group(1),
 					"\n\t)\n\tprivate Portlet _portlet;\n\n\t@Override\n\t",
-					"public Portlet getPortlet() {\n\t\treturn _portlet;"));
+					"public Portlet getPortlet() {\n\t\treturn _portlet;",
+					"\n\t}"));
 		}
 
 		return content;
 	}
 
 	private static final Pattern _setPortletPattern = Pattern.compile(
-		"(?:@Override\\s*|)(@Reference\\(\\s*.+\\s*\\)+\")[\\s+\\S+]+" +
-			"setPortlet[\\s+\\S+]+;");
+		"(?:@Override\\s*|)?(@Reference\\([\\s\\S]*?\"\\)\")[\\s\\S]*?" +
+			"\\)\\s*public\\s+void\\s+setPortlet\\s*\\([^)]*\\)\\s*\\" +
+				"{[\\s\\S]*?\\}");
 
 }

@@ -52,7 +52,8 @@ public class LayoutUtil {
 			long groupId, PageSpecification[] pageSpecifications,
 			boolean privateLayout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String type, boolean hidden, boolean system, int status,
+			String type, boolean hidden, boolean system,
+			Map<Locale, String> friendlyURLMap, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -60,7 +61,7 @@ public class LayoutUtil {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
 				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
 				0, nameMap, titleMap, descriptionMap, null, null, type, null,
-				hidden, system, new HashMap<>(), 0L, serviceContext);
+				hidden, system, friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,
@@ -188,7 +189,7 @@ public class LayoutUtil {
 			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
 			nameMap, titleMap, descriptionMap, null, null, type,
 			typeSettingsUnicodeProperties.toString(), hidden, system,
-			new HashMap<>(), masterLayoutPlid, serviceContext);
+			friendlyURLMap, masterLayoutPlid, serviceContext);
 
 		int draftLayoutStatus = WorkflowConstants.STATUS_APPROVED;
 

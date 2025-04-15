@@ -93,6 +93,8 @@ definition {
 	@description = "This is a use case for LPS-169035."
 	@priority = 4
 	test AssertCustomSearchResultsDisplayTemplate {
+		property custom.properties = "search.container.page.delta.values=4,20,40,60";
+
 		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		WidgetTemplates.addCP(
@@ -289,7 +291,7 @@ definition {
 	@description = "This is a use case for LPS-130227."
 	@priority = 4
 	test AssertPaginationURLforHTTPS {
-		property custom.properties = "redirect.url.domains.allowed=${line.separator}redirect.url.security.mode=domain${line.separator}web.server.host=localhost${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https${line.separator}feature.flag.LPD-35013=true";
+		property custom.properties = "redirect.url.domains.allowed=${line.separator}redirect.url.security.mode=domain${line.separator}search.container.page.delta.values=4,20,40,60${line.separator}web.server.host=localhost${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https${line.separator}feature.flag.LPD-35013=true";
 		property portal.ssl.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -344,7 +346,7 @@ definition {
 	@description = "This is a use case for LPS-89561."
 	@priority = 4
 	test AssertSearchURLWhenModifyingPagination {
-		property custom.properties = "search.container.page.default.delta=10${line.separator}feature.flag.LPD-35013=true";
+		property custom.properties = "search.container.page.default.delta=10${line.separator}search.container.page.delta.values=4,8,20,40,60${line.separator}feature.flag.LPD-35013=true";
 
 		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
 			JSONWebcontent.addWebContent(
@@ -1244,6 +1246,8 @@ definition {
 	@description = "This is a use case for LPS-115435."
 	@priority = 3
 	test ModifyPaginationConfigurationProperties {
+		property custom.properties = "search.container.page.delta.values=4,20,40,60";
+
 		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",

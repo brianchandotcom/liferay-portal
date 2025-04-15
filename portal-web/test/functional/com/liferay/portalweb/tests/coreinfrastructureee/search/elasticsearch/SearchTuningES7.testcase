@@ -218,6 +218,8 @@ definition {
 
 	@priority = 3
 	test AssertResultRankingsMiscUI {
+		property custom.properties = "search.container.page.delta.values=4,20,40,60";
+
 		SearchTuning.openResultRankingsAdmin();
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
@@ -297,7 +299,7 @@ definition {
 
 	@priority = 4
 	test AssertResultRankingsPagination {
-		property custom.properties = "search.container.page.default.delta=5";
+		property custom.properties = "search.container.page.default.delta=5${line.separator}search.container.page.delta.values=4,20,40,60";
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -541,7 +543,7 @@ definition {
 
 	@priority = 4
 	test AssertSynonymsPagination {
-		property custom.properties = "search.container.page.default.delta=5";
+		property custom.properties = "search.container.page.default.delta=5${line.separator}search.container.page.delta.values=4,20,40,60";
 
 		SearchTuning.openSynonymsAdmin();
 

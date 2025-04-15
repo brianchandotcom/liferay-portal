@@ -2760,6 +2760,8 @@ definition {
 	@description = "This is a use case for LPS-185631."
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {
+		property custom.properties = "search.container.page.delta.values=4,20,40,60";
+
 		task ("Assert 'Show Default Empty Result Message' and 'Show Default Pagination' are checked by default within the Search Results widget configuration") {
 			SearchPage.openSearchPage();
 

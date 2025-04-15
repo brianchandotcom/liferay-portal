@@ -335,7 +335,9 @@ public class DBCopyTablesProcess {
 
 			valueString = value.toString();
 		}
-		else if (sourceType == Types.DOUBLE) {
+		else if ((sourceType == Types.DOUBLE) ||
+				 (sourceType == _SQL_TYPE_ORACLE_BINARY_DOUBLE)) {
+
 			double value = resultSet.getDouble(columnName);
 
 			if ((value == 0.0) && resultSet.wasNull()) {
@@ -565,6 +567,8 @@ public class DBCopyTablesProcess {
 			throw new PortalException("Invalid type: " + targetType);
 		}
 	}
+
+	private static final int _SQL_TYPE_ORACLE_BINARY_DOUBLE = 101;
 
 	private final Map<String, List<String>> _sourceColumnNamesMap =
 		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

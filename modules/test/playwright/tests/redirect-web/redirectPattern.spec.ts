@@ -10,6 +10,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {redirectPagesTest} from '../../fixtures/redirectPagesTest';
 import {liferayConfig} from '../../liferay.config';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -107,5 +108,35 @@ test('Ensure that a long destination URL is persisted and truncated by ellipsis'
 	await expect(page.getByLabel('Destination URL')).toHaveCSS(
 		'text-overflow',
 		'ellipsis'
+	);
+});
+
+test('Ensure that an error displays when entering an invalid destination URL', async ({
+	page,
+	redirectPage,
+	site,
+}) => {
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirectPattern('(.*)/source/url$', '(', false);
+
+	await expect(page.getByText('Please enter a valid URL.')).toBeVisible();
+});
+
+test('Ensure that an error displays when entering an invalid pattern', async ({
+	page,
+	redirectPage,
+	site,
+}) => {
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirectPattern('(', '/web/guest/home', false);
+
+	await waitForAlert(
+		page,
+		'Error:Patterns must be valid regular expressions.',
+		{
+			type: 'danger',
+		}
 	);
 });

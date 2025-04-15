@@ -61,7 +61,11 @@ export class RedirectPage {
 		await this.page.getByText(sourceURL).waitFor();
 	}
 
-	async addRedirectPattern(pattern: string, destinationURL: string) {
+	async addRedirectPattern(
+		pattern: string,
+		destinationURL: string,
+		isSuccessful: boolean = true
+	) {
 		await this.patternLink.click();
 
 		await this.pattern.fill(pattern);
@@ -69,7 +73,9 @@ export class RedirectPage {
 
 		await this.saveButton.click();
 
-		await waitForAlert(this.page);
+		if (isSuccessful) {
+			await waitForAlert(this.page);
+		}
 	}
 
 	async assertDestinationURLValidation(destinationURL: string) {

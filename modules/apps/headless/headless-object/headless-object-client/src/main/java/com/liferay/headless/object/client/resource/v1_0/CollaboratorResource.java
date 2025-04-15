@@ -36,6 +36,42 @@ public interface CollaboratorResource {
 		return new Builder();
 	}
 
+	public void
+			deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception;
+
+	public void
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
+		throws Exception;
+
+	public Collaborator
+			getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId)
+		throws Exception;
+
 	public Page<Collaborator> getObjectEntryFolderCollaboratorsPage(
 			Long objectEntryFolderId, Pagination pagination)
 		throws Exception;
@@ -43,6 +79,18 @@ public interface CollaboratorResource {
 	public HttpInvoker.HttpResponse
 			getObjectEntryFolderCollaboratorsPageHttpResponse(
 				Long objectEntryFolderId, Pagination pagination)
+		throws Exception;
+
+	public Collaborator
+			getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId)
 		throws Exception;
 
 	public Page<Collaborator>
@@ -87,6 +135,32 @@ public interface CollaboratorResource {
 			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPageHttpResponse(
 				String scopeKey, String externalReferenceCode,
 				Collaborator[] collaborators)
+		throws Exception;
+
+	public Collaborator
+			putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId, Collaborator collaborator)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				Long objectEntryFolderId, String collaboratorType,
+				Long collaboratorId, Collaborator collaborator)
+		throws Exception;
+
+	public Collaborator
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId,
+				Collaborator collaborator)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+				String scopeKey, String externalReferenceCode,
+				String collaboratorType, Long collaboratorId,
+				Collaborator collaborator)
 		throws Exception;
 
 	public static class Builder {
@@ -198,6 +272,347 @@ public interface CollaboratorResource {
 	public static class CollaboratorResourceImpl
 		implements CollaboratorResource {
 
+		public void
+				deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					objectEntryFolderId, collaboratorType, collaboratorId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("objectEntryFolderId", objectEntryFolderId);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					scopeKey, externalReferenceCode, collaboratorType,
+					collaboratorId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("scopeKey", scopeKey);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Collaborator
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					objectEntryFolderId, collaboratorType, collaboratorId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CollaboratorSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("objectEntryFolderId", objectEntryFolderId);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<Collaborator> getObjectEntryFolderCollaboratorsPage(
 				Long objectEntryFolderId, Pagination pagination)
 			throws Exception {
@@ -304,6 +719,121 @@ public interface CollaboratorResource {
 						"/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators");
 
 			httpInvoker.path("objectEntryFolderId", objectEntryFolderId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Collaborator
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					scopeKey, externalReferenceCode, collaboratorType,
+					collaboratorId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CollaboratorSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("scopeKey", scopeKey);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -774,6 +1304,241 @@ public interface CollaboratorResource {
 
 			httpInvoker.path("scopeKey", scopeKey);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Collaborator
+				putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId, Collaborator collaborator)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					objectEntryFolderId, collaboratorType, collaboratorId,
+					collaborator);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CollaboratorSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					Long objectEntryFolderId, String collaboratorType,
+					Long collaboratorId, Collaborator collaborator)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(collaborator.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("objectEntryFolderId", objectEntryFolderId);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Collaborator
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId,
+					Collaborator collaborator)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					scopeKey, externalReferenceCode, collaboratorType,
+					collaboratorId, collaborator);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CollaboratorSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorHttpResponse(
+					String scopeKey, String externalReferenceCode,
+					String collaboratorType, Long collaboratorId,
+					Collaborator collaborator)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(collaborator.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{collaboratorType}/{collaboratorId}");
+
+			httpInvoker.path("scopeKey", scopeKey);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("collaboratorType", collaboratorType);
+			httpInvoker.path("collaboratorId", collaboratorId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -60,7 +60,15 @@ const DEFAULT_STATE: State = {
 	uuid: getUuid(),
 };
 
-const DEFAULT_PICKLISTS = [{externalReferenceCode: '1', id: 1, name: 'papaya'}];
+const DEFAULT_PICKLISTS = [
+	{
+		externalReferenceCode: '1',
+		id: 1,
+		listTypeEntries: [],
+		name: 'papaya',
+		name_i18n: {en_US: 'Papaya'},
+	},
+];
 
 const renderComponent = ({
 	dispatch = jest.fn(),

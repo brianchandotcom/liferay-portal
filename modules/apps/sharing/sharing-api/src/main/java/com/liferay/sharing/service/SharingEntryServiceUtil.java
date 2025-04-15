@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.sharing.model.SharingEntry;
 
+import java.util.List;
+
 /**
  * Provides the remote service utility for SharingEntry. This utility wraps
  * <code>com.liferay.sharing.service.impl.SharingEntryServiceImpl</code> and is an
@@ -108,6 +110,12 @@ public class SharingEntryServiceUtil {
 		return getService().deleteSharingEntry(sharingEntryId, serviceContext);
 	}
 
+	public static SharingEntry deleteSharingEntry(SharingEntry sharingEntry)
+		throws PortalException {
+
+		return getService().deleteSharingEntry(sharingEntry);
+	}
+
 	public static SharingEntry deleteSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -131,6 +139,14 @@ public class SharingEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<SharingEntry> getSharingEntries(
+			long classNameId, long classPK, long groupId, int start, int end)
+		throws PortalException {
+
+		return getService().getSharingEntries(
+			classNameId, classPK, groupId, start, end);
 	}
 
 	public static SharingEntry getSharingEntry(long sharingEntryId)

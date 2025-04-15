@@ -109,6 +109,14 @@ public class SharingEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+			com.liferay.sharing.model.SharingEntry sharingEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
 	public com.liferay.sharing.model.SharingEntry
 			deleteSharingEntryByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
@@ -136,6 +144,17 @@ public class SharingEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _sharingEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(
+				long classNameId, long classPK, long groupId, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntries(
+			classNameId, classPK, groupId, start, end);
 	}
 
 	@Override

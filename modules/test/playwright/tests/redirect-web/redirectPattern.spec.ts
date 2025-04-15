@@ -59,3 +59,31 @@ test('Ensure that a redirect alias will override a redirect pattern', async ({
 
 	await expect(page.url()).toContain(patternPage.friendlyURL);
 });
+
+test('Ensure that a redirect pattern can be updated', async ({
+	apiHelpers,
+	page,
+	redirectPage,
+	site,
+}) => {
+	const destinationPage = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: 'Destination Page',
+	});
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirectPattern(
+		'(.*)/source/url$',
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/invalid-page`
+	);
+
+	await redirectPage.addRedirectPattern(
+		'(.*)/source/url$',
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`
+	);
+
+	await page.goto(`/web/${site.name}/test/source/url`);
+
+	await expect(page.url()).toContain(destinationPage.friendlyURL);
+});

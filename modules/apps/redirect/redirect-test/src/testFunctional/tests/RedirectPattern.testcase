@@ -48,30 +48,6 @@ definition {
 		}
 	}
 
-	@description = "This test checks that a Pattern can be updated."
-	@priority = 5
-	test CanUpdatePattern {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/changethis",
-			pattern = "(.*)/child1$",
-			patternIndex = 0);
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/child2",
-			pattern = "(.*)/child1$",
-			patternIndex = 0);
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child2");
-	}
-
 	@description = "This test checks that the long destination URL can be clipped."
 	@priority = 5
 	test CanViewClippedDestinationURL {

@@ -77,9 +77,15 @@ test(
 				timeFilterPeriod: 'Custom Range',
 			});
 
-			await page.getByRole('button', {exact: true, name: '2'}).click();
+			await page
+				.getByRole('button', {exact: true, name: '2'})
+				.first()
+				.click();
 
-			await page.getByRole('button', {exact: true, name: '3'}).click();
+			await page
+				.getByRole('button', {exact: true, name: '3'})
+				.first()
+				.click();
 		});
 
 		await test.step('Open Download Reports Modal and click in the download button', async () => {

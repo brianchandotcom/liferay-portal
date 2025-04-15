@@ -10,6 +10,7 @@ import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import TableKebabButton from '../../../components/Table/TableButtons/TableKebabButton';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {ProductWorkflowStatusCode} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {
 	getProductVersionFromSpecifications,
@@ -20,7 +21,6 @@ import {
 	formatDate,
 	getProductTypeFromSpecifications,
 } from '../PublisherDashboardPageUtil';
-import {ProductWorkflowStatusCode} from '../../../enums/Product';
 
 type PublisherAppsTableProps = {
 	items: Order[];

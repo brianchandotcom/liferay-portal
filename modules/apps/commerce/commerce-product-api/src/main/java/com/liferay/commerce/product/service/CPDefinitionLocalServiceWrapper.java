@@ -887,10 +887,11 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public void maintainVersionThreshold(long cProductId)
+	public void maintainVersionThreshold(long companyId, long cProductId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_cpDefinitionLocalService.maintainVersionThreshold(cProductId);
+		_cpDefinitionLocalService.maintainVersionThreshold(
+			companyId, cProductId);
 	}
 
 	@Override

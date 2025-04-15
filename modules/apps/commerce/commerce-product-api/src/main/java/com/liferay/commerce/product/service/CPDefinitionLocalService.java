@@ -588,7 +588,7 @@ public interface CPDefinitionLocalService
 	public boolean isVersionable(
 		long cpDefinitionId, HttpServletRequest httpServletRequest);
 
-	public void maintainVersionThreshold(long cProductId)
+	public void maintainVersionThreshold(long companyId, long cProductId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -785,10 +785,10 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().isVersionable(cpDefinitionId, httpServletRequest);
 	}
 
-	public static void maintainVersionThreshold(long cProductId)
+	public static void maintainVersionThreshold(long companyId, long cProductId)
 		throws PortalException {
 
-		getService().maintainVersionThreshold(cProductId);
+		getService().maintainVersionThreshold(companyId, cProductId);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult

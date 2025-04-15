@@ -19,6 +19,7 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -103,6 +104,9 @@ public interface SharingEntryService extends BaseService {
 			long sharingEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry)
+		throws PortalException;
+
 	public SharingEntry deleteSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -118,6 +122,11 @@ public interface SharingEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntries(
+			long classNameId, long classPK, long groupId, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntry(long sharingEntryId)

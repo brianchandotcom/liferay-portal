@@ -181,6 +181,47 @@ public class SharingEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+			HttpPrincipal httpPrincipal,
+			com.liferay.sharing.model.SharingEntry sharingEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SharingEntryServiceUtil.class, "deleteSharingEntry",
+				_deleteSharingEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sharingEntry);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.sharing.model.SharingEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.sharing.model.SharingEntry
 			deleteSharingEntryByExternalReferenceCode(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
@@ -191,7 +232,7 @@ public class SharingEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SharingEntryServiceUtil.class,
 				"deleteSharingEntryByExternalReferenceCode",
-				_deleteSharingEntryByExternalReferenceCodeParameterTypes3);
+				_deleteSharingEntryByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -234,7 +275,7 @@ public class SharingEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SharingEntryServiceUtil.class,
 				"fetchSharingEntryByExternalReferenceCode",
-				_fetchSharingEntryByExternalReferenceCodeParameterTypes4);
+				_fetchSharingEntryByExternalReferenceCodeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -267,6 +308,49 @@ public class SharingEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(
+				HttpPrincipal httpPrincipal, long classNameId, long classPK,
+				long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SharingEntryServiceUtil.class, "getSharingEntries",
+				_getSharingEntriesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, classNameId, classPK, groupId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.sharing.model.SharingEntry>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.sharing.model.SharingEntry getSharingEntry(
 			HttpPrincipal httpPrincipal, long sharingEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -274,7 +358,7 @@ public class SharingEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SharingEntryServiceUtil.class, "getSharingEntry",
-				_getSharingEntryParameterTypes5);
+				_getSharingEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sharingEntryId);
@@ -317,7 +401,7 @@ public class SharingEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SharingEntryServiceUtil.class,
 				"getSharingEntryByExternalReferenceCode",
-				_getSharingEntryByExternalReferenceCodeParameterTypes6);
+				_getSharingEntryByExternalReferenceCodeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -362,7 +446,7 @@ public class SharingEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SharingEntryServiceUtil.class, "updateSharingEntry",
-				_updateSharingEntryParameterTypes7);
+				_updateSharingEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sharingEntryId, sharingEntryActions, shareable,
@@ -417,20 +501,24 @@ public class SharingEntryServiceHttp {
 		new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _deleteSharingEntryParameterTypes3 =
+		new Class[] {com.liferay.sharing.model.SharingEntry.class};
 	private static final Class<?>[]
-		_deleteSharingEntryByExternalReferenceCodeParameterTypes3 =
+		_deleteSharingEntryByExternalReferenceCodeParameterTypes4 =
 			new Class[] {String.class, long.class};
 	private static final Class<?>[]
-		_fetchSharingEntryByExternalReferenceCodeParameterTypes4 = new Class[] {
+		_fetchSharingEntryByExternalReferenceCodeParameterTypes5 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getSharingEntryParameterTypes5 =
+	private static final Class<?>[] _getSharingEntriesParameterTypes6 =
+		new Class[] {long.class, long.class, long.class, int.class, int.class};
+	private static final Class<?>[] _getSharingEntryParameterTypes7 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getSharingEntryByExternalReferenceCodeParameterTypes6 = new Class[] {
+		_getSharingEntryByExternalReferenceCodeParameterTypes8 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _updateSharingEntryParameterTypes7 =
+	private static final Class<?>[] _updateSharingEntryParameterTypes9 =
 		new Class[] {
 			long.class, java.util.Collection.class, boolean.class,
 			java.util.Date.class,

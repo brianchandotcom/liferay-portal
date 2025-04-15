@@ -3148,7 +3148,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenu(navigationMenuId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, name, navigationMenuItems, navigationType, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenu(navigationMenuId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, name, navigationMenuItems, navigationType, permissions, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NavigationMenu navigationMenu(
@@ -3184,7 +3184,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenuByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, name, navigationMenuItems, navigationType, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenuByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, name, navigationMenuItems, navigationType, permissions, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the navigation menu by external reference code."
@@ -5031,32 +5031,6 @@ public class Query {
 		}
 
 		private MessageBoardThread _messageBoardThread;
-
-	}
-
-	@GraphQLTypeExtension(NavigationMenu.class)
-	public class GetNavigationMenuPermissionsPageTypeExtension {
-
-		public GetNavigationMenuPermissionsPageTypeExtension(
-			NavigationMenu navigationMenu) {
-
-			_navigationMenu = navigationMenu;
-		}
-
-		@GraphQLField
-		public NavigationMenuPage permissions(
-				@GraphQLName("roleNames") String roleNames)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_navigationMenuResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				navigationMenuResource -> new NavigationMenuPage(
-					navigationMenuResource.getNavigationMenuPermissionsPage(
-						_navigationMenu.getId(), roleNames)));
-		}
-
-		private NavigationMenu _navigationMenu;
 
 	}
 

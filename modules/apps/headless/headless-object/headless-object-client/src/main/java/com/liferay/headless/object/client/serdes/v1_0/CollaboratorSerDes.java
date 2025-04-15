@@ -121,6 +121,16 @@ public class CollaboratorSerDes {
 			sb.append("\"");
 		}
 
+		if (collaborator.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(collaborator.getId());
+		}
+
 		if (collaborator.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -234,6 +244,13 @@ public class CollaboratorSerDes {
 				String.valueOf(collaborator.getExternalReferenceCode()));
 		}
 
+		if (collaborator.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(collaborator.getId()));
+		}
+
 		if (collaborator.getName() == null) {
 			map.put("name", null);
 		}
@@ -297,6 +314,9 @@ public class CollaboratorSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -348,6 +368,12 @@ public class CollaboratorSerDes {
 				if (jsonParserFieldValue != null) {
 					collaborator.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					collaborator.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

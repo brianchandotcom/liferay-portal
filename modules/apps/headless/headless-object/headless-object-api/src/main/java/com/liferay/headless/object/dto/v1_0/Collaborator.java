@@ -35,7 +35,6 @@ import java.util.function.Supplier;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,7 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a collaborator for an entry.",
-	requiredProperties = {"actionIds", "externalReferenceCode", "type"}
+	requiredProperties = {"actionIds", "type"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Collaborator")
@@ -283,12 +282,52 @@ public class Collaborator implements Serializable {
 	}
 
 	@GraphQLField(description = "The collaborator external reference code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The collaborator ID."
+	)
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The collaborator ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	@JsonIgnore
+	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The collaborator name."
@@ -584,6 +623,18 @@ public class Collaborator implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
 		}
 
 		String name = getName();

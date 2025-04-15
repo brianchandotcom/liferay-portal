@@ -61,6 +61,30 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(collaboratorId: ___, collaboratorType: ___, objectEntryFolderId: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborator of an object entry."
+	)
+	public Collaborator
+			objectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+				@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+				@GraphQLName("collaboratorType") String collaboratorType,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+						objectEntryFolderId, collaboratorType, collaboratorId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaborators(objectEntryFolderId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -78,6 +102,33 @@ public class Query {
 			collaboratorResource -> new CollaboratorPage(
 				collaboratorResource.getObjectEntryFolderCollaboratorsPage(
 					objectEntryFolderId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(collaboratorId: ___, collaboratorType: ___, externalReferenceCode: ___, scopeKey: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborator for an object entry folder."
+	)
+	public Collaborator
+			scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("collaboratorType") String collaboratorType,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+						scopeKey, externalReferenceCode, collaboratorType,
+						collaboratorId));
 	}
 
 	/**
@@ -204,6 +255,38 @@ public class Query {
 					collaboratorResource.getObjectEntryFolderCollaboratorsPage(
 						_objectEntryFolder.getId(),
 						Pagination.of(page, pageSize))));
+		}
+
+		private ObjectEntryFolder _objectEntryFolder;
+
+	}
+
+	@GraphQLTypeExtension(ObjectEntryFolder.class)
+	public class
+		GetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorTypeExtension {
+
+		public GetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorTypeExtension(
+			ObjectEntryFolder objectEntryFolder) {
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the collaborator of an object entry."
+		)
+		public Collaborator collaboratorByTypeCollaboratorTypeCollaborator(
+				@GraphQLName("collaboratorType") String collaboratorType,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_collaboratorResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				collaboratorResource ->
+					collaboratorResource.
+						getObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator(
+							_objectEntryFolder.getId(), collaboratorType,
+							collaboratorId));
 		}
 
 		private ObjectEntryFolder _objectEntryFolder;

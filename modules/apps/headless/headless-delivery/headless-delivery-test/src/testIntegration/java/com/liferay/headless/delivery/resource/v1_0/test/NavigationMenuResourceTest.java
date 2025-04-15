@@ -35,11 +35,17 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -56,6 +62,7 @@ import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
@@ -165,6 +172,10 @@ public class NavigationMenuResourceTest
 	@Test
 	public void testGetNavigationMenu() throws Exception {
 		super.testGetNavigationMenu();
+
+		_testGetNavigationMenuWithNestedFields();
+
+		_testGetNavigationMenuWithoutNestedFields();
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -847,6 +858,68 @@ public class NavigationMenuResourceTest
 			getNavigationMenu.getNavigationMenuItems()[4], "page", false);
 	}
 
+	private void _testGetNavigationMenuWithNestedFields() throws Exception {
+		NavigationMenu postNavigationMenu =
+			testGetNavigationMenu_addNavigationMenu();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), SiteNavigationMenu.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postNavigationMenu.getId()), role.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		NavigationMenuResource navigationMenuResource =
+			NavigationMenuResource.builder(
+			).authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.getDefault()
+			).parameters(
+				"nestedFields", "permissions"
+			).build();
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu.getId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getNavigationMenu.getPermissions(),
+				permission ->
+					Objects.equals(permission.getRoleName(), role.getName()) &&
+					(permission.getActionIds().length == 1) &&
+					Objects.equals(permission.getActionIds()[0], "DELETE")));
+	}
+
+	private void _testGetNavigationMenuWithoutNestedFields() throws Exception {
+		NavigationMenu postNavigationMenu =
+			testGetNavigationMenu_addNavigationMenu();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), SiteNavigationMenu.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postNavigationMenu.getId()), role.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		NavigationMenuResource navigationMenuResource =
+			NavigationMenuResource.builder(
+			).authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu.getId());
+
+		Assert.assertNull(getNavigationMenu.getPermissions());
+	}
+
 	private void _testGetSiteNavigationMenusPage(
 			long classPK, long classTypeId, Class<?> clazz, String contentURL,
 			String displayPageType, String title, String type,
@@ -996,6 +1069,9 @@ public class NavigationMenuResourceTest
 
 	@Inject
 	private ResourceActions _resourceActions;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

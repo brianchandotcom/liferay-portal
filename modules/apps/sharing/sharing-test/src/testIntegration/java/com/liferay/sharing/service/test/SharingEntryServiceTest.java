@@ -6,6 +6,7 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -42,6 +43,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -499,6 +501,18 @@ public class SharingEntryServiceTest {
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				sharingEntry.getSharingEntryId()));
+
+		sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, _toUser.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		_sharingEntryService.deleteSharingEntry(sharingEntry);
+
+		Assert.assertNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry.getSharingEntryId()));
 	}
 
 	@Test
@@ -533,6 +547,40 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.deleteSharingEntryByExternalReferenceCode(
 			RandomTestUtil.randomString(), _group.getGroupId());
+	}
+
+	@Test
+	public void testGetSharingEntries() throws Exception {
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		User user1 = UserTestUtil.addUser();
+
+		SharingEntry sharingEntry1 = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, user1.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		User user2 = UserTestUtil.addUser();
+
+		SharingEntry sharingEntry2 = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, user2.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		List<SharingEntry> sharingEntries =
+			_sharingEntryService.getSharingEntries(
+				_classNameId, _group.getGroupId(), _group.getGroupId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 2, sharingEntries.size());
+
+		Assert.assertTrue(
+			sharingEntries.toString(), sharingEntries.contains(sharingEntry1));
+		Assert.assertTrue(
+			sharingEntries.toString(), sharingEntries.contains(sharingEntry2));
 	}
 
 	@Test(expected = PrincipalException.class)

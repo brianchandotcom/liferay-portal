@@ -60,4 +60,4 @@ on:
         branches:
             -   master
         paths:
-            -   cloud/helm/default/**
+            -   cloud/helm/**

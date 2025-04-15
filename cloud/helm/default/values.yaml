@@ -64,7 +64,7 @@ ingress:
 initContainers:
     -   containerTemplate: |
             -   command:
-                    -   /bin/sh
+                    -   bash
                     -   -c
                     -   |
                             if [ ! -d /temp/liferay/data ] || [ -z "$(ls -A /temp/liferay/data)" ]
@@ -91,7 +91,7 @@ initContainers:
                         name: liferay-persistent-volume
     -   containerTemplate: |
             -   command:
-                    -   /bin/sh
+                    -   bash
                     -   -c
                     -   |
                             trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
@@ -106,7 +106,7 @@ initContainers:
                                     done
                                 {{- end }}
                             {{- end }}
-                image: busybox:latest
+                image: bash:5.2
                 imagePullPolicy: IfNotPresent
                 name: liferay-wait-on-services
 livenessProbe:

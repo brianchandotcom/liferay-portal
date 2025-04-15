@@ -166,14 +166,14 @@ public class BatchEnginePortletDataHandlerTest {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			for (LogEntry logEntry : logEntries) {
+				String message = logEntry.getMessage();
+
 				Assert.assertFalse(
-					logEntry.getMessage(),
-					logEntry.getMessage(
-					).contains(
+					message,
+					message.contains(
 						"Portlet export failed for portlet com_liferay_object" +
 							"_web_internal_object_definitions_portlet" +
-								"_ObjectDefinitionsPortlet"
-					));
+								"_ObjectDefinitionsPortlet"));
 			}
 
 			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());

@@ -388,9 +388,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					serviceRegistrationsMap = new HashMap<>();
 				}
 
-				String portletId =
-					featureFlagEnabled ? objectDefinition.getPortletId() : null;
-
 				serviceRegistrationsMap.computeIfAbsent(
 					objectDefinition.getCompanyId(),
 					key2 -> Arrays.asList(
@@ -468,7 +465,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								objectDefinition.getName()
 							).put(
 								"batch.engine.task.item.delegate.portlet.id",
-								portletId
+								featureFlagEnabled ?
+									objectDefinition.getPortletId() : null
 							).put(
 								"batch.planner.export.enabled", "true"
 							).put(

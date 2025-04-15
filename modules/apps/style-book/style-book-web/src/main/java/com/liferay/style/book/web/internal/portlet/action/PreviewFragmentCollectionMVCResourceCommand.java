@@ -5,22 +5,33 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
+import com.liferay.client.extension.type.ThemeCSSCET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
+
+import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -90,17 +101,64 @@ public class PreviewFragmentCollectionMVCResourceCommand
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			themeDisplay.getScopeGroupId(), false);
+		Theme theme = null;
 
-		themeDisplay.setLayoutSet(layoutSet);
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-30204")) {
+
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				themeDisplay.getScopeGroupId(), false);
+
+			theme = layoutSet.getTheme();
+
+			themeDisplay.setLayoutSet(layoutSet);
+
+			themeDisplay.setLookAndFeel(theme, layoutSet.getColorScheme());
+		}
+		else {
+			String themeId = GetterUtil.getString(
+				httpServletRequest.getParameter("themeId"));
+
+			FrontendTokenDefinition frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					themeDisplay.getCompanyId(), themeId);
+
+			if ((frontendTokenDefinition != null) &&
+				Objects.equals(
+					frontendTokenDefinition.getThemeType(),
+					FrontendTokenDefinitionConstants.
+						THEME_TYPE_THEME_CSS_CET)) {
+
+				themeId = "classic_WAR_classictheme";
+
+				ThemeCSSCET themeCSSCET = (ThemeCSSCET)_cetManager.getCET(
+					themeDisplay.getCompanyId(), themeId);
+
+				if (themeCSSCET != null) {
+					if (_portal.isRightToLeft(httpServletRequest)) {
+						themeDisplay.setClayCSSURL(themeCSSCET.getClayRTLURL());
+						themeDisplay.setMainCSSURL(themeCSSCET.getMainRTLURL());
+					}
+					else {
+						themeDisplay.setClayCSSURL(themeCSSCET.getClayURL());
+						themeDisplay.setMainCSSURL(themeCSSCET.getMainURL());
+					}
+				}
+			}
+
+			theme = _themeLocalService.fetchTheme(
+				themeDisplay.getCompanyId(), themeId);
+
+			themeDisplay.setLookAndFeel(
+				theme,
+				_themeLocalService.getColorScheme(
+					themeDisplay.getCompanyId(), theme.getThemeId(),
+					StringPool.BLANK));
+		}
 
 		return ThemeUtil.include(
 			ServletContextPool.get(StringPool.BLANK), httpServletRequest,
-			httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
-			false);
+			httpServletResponse, "portal_normal.ftl", theme, false);
 	}
 
 	private String _renderPreviewFragmentCollection(
@@ -123,8 +181,14 @@ public class PreviewFragmentCollectionMVCResourceCommand
 	}
 
 	@Reference
+	private CETManager _cetManager;
+
+	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
@@ -134,5 +198,8 @@ public class PreviewFragmentCollectionMVCResourceCommand
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.style.book.web)")
 	private ServletContext _servletContext;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 }

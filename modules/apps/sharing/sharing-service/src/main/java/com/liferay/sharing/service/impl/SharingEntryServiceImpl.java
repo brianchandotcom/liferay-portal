@@ -16,6 +16,7 @@ import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,6 +179,18 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		}
 
 		return sharingEntry;
+	}
+
+	@Override
+	public List<SharingEntry> getSharingEntries(
+			long classNameId, long classPK, long groupId, int start, int end)
+		throws PortalException {
+
+		sharingPermission.checkSharePermission(
+			getPermissionChecker(), classNameId, classPK, groupId);
+
+		return sharingEntryLocalService.getSharingEntries(
+			classNameId, classPK, start, end);
 	}
 
 	@Override

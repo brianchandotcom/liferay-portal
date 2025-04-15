@@ -53,336 +53,60 @@ public class HttpAuthManagerUtilTest {
 
 	@Test
 	public void testParseBasic() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test@liferay.com",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic("test@liferay.com:test", "test@liferay.com", "test");
 	}
 
 	@Test
 	public void testParseBasicNoCredentials() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode("test@liferay.com".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test@liferay.com",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			null,
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
-
-		mockHttpServletRequest = new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode("test@liferay.com:".getBytes()));
-
-		httpAuthorizationHeader = HttpAuthManagerUtil.parse(
-			mockHttpServletRequest);
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
-
-		mockHttpServletRequest = new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode(":".getBytes()));
-
-		httpAuthorizationHeader = HttpAuthManagerUtil.parse(
-			mockHttpServletRequest);
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic("test@liferay.com", "test@liferay.com", null);
+		_testParseBasic(
+			"test@liferay.com:", "test@liferay.com", StringPool.BLANK);
+		_testParseBasic(":", StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
 	public void testParseBasicTrimValues() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode(" test@liferay.com : test ".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test@liferay.com",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			" test@liferay.com : test ", "test@liferay.com", "test");
 	}
 
 	@Test
 	public void testParseBasicURLDecode() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " +
-				Base64.encode("test%40liferay%253ecom:test%40".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test@liferay%3ecom",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test%40",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"test%40liferay%253ecom:test%40", "test@liferay%3ecom", "test%40");
 	}
 
 	@Test
 	public void testParseBasicWithEncodedPercentCharacter() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " +
-				Base64.encode("test%25test%40liferay%253ecom:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test%test@liferay%3ecom",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"test%25test%40liferay%253ecom:test", "test%test@liferay%3ecom",
+			"test");
 	}
 
 	@Test
 	public void testParseBasicWithEncodedPlusCharacter() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " +
-				Base64.encode("test%20test%40liferay%253ecom:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test+test@liferay%3ecom",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"test%20test%40liferay%253ecom:test", "test+test@liferay%3ecom",
+			"test");
 	}
 
 	@Test
 	public void testParseBasicWithPercentCharacter() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode("%test%test@liferay.com:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"%test%test@liferay.com",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"%test%test@liferay.com:test", "%test%test@liferay.com", "test");
 	}
 
 	@Test
 	public void testParseBasicWithPercentCharacterAndEncoding() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " +
-				Base64.encode("test%test%40liferay%253ecom:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test%test@liferay%3ecom",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"test%test%40liferay%253ecom:test", "test%test@liferay%3ecom",
+			"test");
 	}
 
 	@Test
 	public void testParseBasicWithPlusCharacter() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Basic " + Base64.encode("test+test@liferay.com:test".getBytes()));
-
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(mockHttpServletRequest);
-
-		Assert.assertEquals(
-			HttpAuthorizationHeader.SCHEME_BASIC,
-			httpAuthorizationHeader.getScheme());
-
-		Map<String, String> authParameters =
-			httpAuthorizationHeader.getAuthParameters();
-
-		Assert.assertEquals(
-			authParameters.toString(), 2, authParameters.size());
-
-		Assert.assertEquals(
-			"test+test@liferay.com",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
-			"test",
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		_testParseBasic(
+			"test+test@liferay.com:test", "test+test@liferay.com", "test");
 	}
 
 	@Test
@@ -464,6 +188,41 @@ public class HttpAuthManagerUtilTest {
 			HttpHeaders.AUTHORIZATION, "Unsupported");
 
 		HttpAuthManagerUtil.parse(mockHttpServletRequest);
+	}
+
+	private void _testParseBasic(
+		String authorizationHeader, String expectedUserName,
+		String expectedPassword) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Basic " + Base64.encode(authorizationHeader.getBytes()));
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(mockHttpServletRequest);
+
+		Assert.assertEquals(
+			HttpAuthorizationHeader.SCHEME_BASIC,
+			httpAuthorizationHeader.getScheme());
+
+		Map<String, String> authParameters =
+			httpAuthorizationHeader.getAuthParameters();
+
+		Assert.assertEquals(
+			authParameters.toString(), 2, authParameters.size());
+
+		Assert.assertEquals(
+			expectedUserName,
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
+
+		Assert.assertEquals(
+			expectedPassword,
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
 	}
 
 }

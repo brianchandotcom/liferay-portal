@@ -7,15 +7,20 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {searchPageTest} from '../../fixtures/searchPageTest';
 import getRandomString from '../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
 	isolatedLayoutTest({type: 'portlet'}),
+	isolatedSiteTest,
 	loginTest(),
 	searchPageTest,
-	dataApiHelpersTest
+	dataApiHelpersTest,
+	pageEditorPagesTest
 );
 
 test.describe('Category facet configuration for vocabularies', () => {
@@ -74,6 +79,86 @@ test.describe('Category facet configuration for vocabularies', () => {
 					})
 				).toBeVisible();
 			}
+		});
+	});
+});
+
+test.describe('Retain items per page in search paginator', () => {
+	test('Retains items per page after new keyword search @LPD-19994', async ({
+		apiHelpers,
+		page,
+		searchPage,
+		site,
+	}) => {
+		let siteLayout: Layout;
+
+		await test.step('Create web content for search results', async () => {
+			const basicWebContentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			for (let count = 0; count < 21; count++) {
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: basicWebContentStructureId,
+					groupId: site.id,
+					titleMap: {en_US: `Test Web Content ${count}`},
+				});
+			}
+		});
+
+		await test.step('Create a portlet page associated to site', async () => {
+			siteLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {type: 'portlet'},
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Navigate to the site page', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${siteLayout.friendlyURL}`
+			);
+		});
+
+		await test.step('Add search bar and results portlet to new page', async () => {
+			await searchPage.addPortlet('Search Bar', 'Search');
+
+			await searchPage.addPortlet('Search Results', 'Search');
+		});
+
+		await test.step('Perform new search', async () => {
+			await searchPage.searchKeywordInMainContent('test');
+
+			await expect(searchPage.searchResultsTotalLabel).toHaveText(
+				/\d+ Results for test/
+			);
+		});
+
+		await test.step('Change pagination items per page and page number', async () => {
+			await searchPage.selectPaginationItemsPerPage(20);
+
+			await searchPage.selectPaginationPageNumber(2);
+		});
+
+		await test.step('Perform new search with different keyword', async () => {
+			await searchPage.searchKeywordInMainContent('web');
+
+			await expect(searchPage.searchResultsTotalLabel).toHaveText(
+				/\d+ Results for web/
+			);
+		});
+
+		await test.step('Verify that page number is reset but items per page is not', async () => {
+			await expect(
+				searchPage.searchResultsPaginationItemsPerPageToggle
+			).toHaveText(/20 Entries/);
+
+			await expect(
+				searchPage.searchResultsPaginationBar.getByText('1').first()
+			).toHaveAttribute('aria-current', 'page');
+
+			await expect(
+				searchPage.searchResultsPaginationDescription
+			).toHaveText(/Showing 1 to 20 of \d+ entries./);
 		});
 	});
 });
@@ -181,38 +266,6 @@ test.describe('Clear and retain facet selections', () => {
 		});
 	});
 
-	test('Retains items per page after new keyword search @LPD-19994', async ({
-		searchPage,
-	}) => {
-		await test.step('Change pagination items per page and page number', async () => {
-			await searchPage.selectPaginationItemsPerPage(4);
-
-			await searchPage.selectPaginationPageNumber(2);
-		});
-
-		await test.step('Perform new search with different keyword', async () => {
-			await searchPage.searchKeywordInMainContent('png');
-
-			await expect(searchPage.searchResultsTotalLabel).toHaveText(
-				/\d+ Results for png/
-			);
-		});
-
-		await test.step('Verify that page number is reset but items per page is not', async () => {
-			await expect(
-				searchPage.searchResultsPaginationItemsPerPageToggle
-			).toHaveText(/4 Entries/);
-
-			await expect(
-				searchPage.searchResultsPaginationBar.getByText('1').first()
-			).toHaveAttribute('aria-current', 'page');
-
-			await expect(
-				searchPage.searchResultsPaginationDescription
-			).toHaveText(/Showing 1 to 4 of \d+ entries./);
-		});
-	});
-
 	test('Clears facet terms if performing an empty search @LPD-19994', async ({
 		page,
 		searchPage,
@@ -231,8 +284,6 @@ test.describe('Clear and retain facet selections', () => {
 
 			await page.reload();
 		});
-
-		//
 
 		await test.step('Perform new search with empty keyword', async () => {
 			await searchPage.searchKeywordInMainContent('');

@@ -5,10 +5,12 @@
 
 import React, {
 	ReactNode,
+	RefObject,
 	createContext,
 	useCallback,
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 
@@ -47,17 +49,17 @@ const INITIAL_CACHE: Cache = {
 };
 
 const CacheContext = createContext<{
-	broadcast: BroadcastChannel;
+	broadcastRef: RefObject<BroadcastChannel>;
 	cache: Cache;
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
-	broadcast: {} as BroadcastChannel,
+	broadcastRef: {current: null},
 	cache: INITIAL_CACHE,
 	update: () => {},
 });
 
 function CacheContextProvider({children}: {children: ReactNode}) {
-	const [broadcast] = useState(() => new BroadcastChannel('update-cache'));
+	const broadcastRef = useRef(new BroadcastChannel('update-cache'));
 	const [cache, setCache] = useState(INITIAL_CACHE);
 
 	const update = <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => {
@@ -71,14 +73,14 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 	};
 
 	return (
-		<CacheContext.Provider value={{broadcast, cache, update}}>
+		<CacheContext.Provider value={{broadcastRef, cache, update}}>
 			{children}
 		</CacheContext.Provider>
 	);
 }
 
 function useCache<T extends CacheKey>(key: T): Cache[T] & {load: () => void} {
-	const {broadcast, cache, update} = useContext(CacheContext);
+	const {broadcastRef, cache, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
@@ -99,6 +101,8 @@ function useCache<T extends CacheKey>(key: T): Cache[T] & {load: () => void} {
 	}, [item, load]);
 
 	useEffect(() => {
+		const broadcast = broadcastRef.current;
+
 		const staleCache = ({data}: MessageEvent) => {
 			if (data.type !== 'staleCache' || data.key !== key) {
 				return;
@@ -107,21 +111,21 @@ function useCache<T extends CacheKey>(key: T): Cache[T] & {load: () => void} {
 			update(key, {status: 'stale'} as Partial<Cache[T]>);
 		};
 
-		broadcast.addEventListener('message', staleCache);
+		broadcast?.addEventListener('message', staleCache);
 
 		return () => {
-			broadcast.removeEventListener('message', staleCache);
+			broadcast?.removeEventListener('message', staleCache);
 		};
-	}, [broadcast, item, update, key]);
+	}, [broadcastRef, item, update, key]);
 
 	return {...item, load};
 }
 
 function useStaleCache() {
-	const {broadcast} = useContext(CacheContext);
+	const {broadcastRef} = useContext(CacheContext);
 
 	return (key: CacheKey) => {
-		broadcast.postMessage({key, type: 'staleCache'});
+		broadcastRef.current?.postMessage({key, type: 'staleCache'});
 	};
 }
 export default CacheContextProvider;

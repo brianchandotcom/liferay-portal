@@ -11,7 +11,10 @@ import React from 'react';
 import PicklistBuilderManagementBar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderManagementBar';
 import {State} from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 import PicklistService from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService';
-import {MockCacheProvider, broadcastMock} from '../../mocks/MockCacheProvider';
+import {
+	MockCacheProvider,
+	broadcastRefMock,
+} from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 const renderComponent = (state?: Partial<State>) => {
@@ -67,7 +70,7 @@ describe('PicklistBuilderManagementBar', () => {
 
 		await userEvent.click(saveButton);
 
-		expect(broadcastMock.postMessage).toHaveBeenCalledWith({
+		expect(broadcastRefMock.current.postMessage).toHaveBeenCalledWith({
 			key: 'picklists',
 			type: 'staleCache',
 		});

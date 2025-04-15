@@ -104,12 +104,7 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"fragmentCollectionPreviewURL",
-			ResourceURLBuilder.createResourceURL(
-				_renderResponse
-			).setResourceID(
-				"/style_book/preview_fragment_collection"
-			).buildString()
+			"fragmentCollectionPreviewURL", _getFragmentCollectionPreviewURL()
 		).put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
@@ -246,7 +241,7 @@ public class EditStyleBookEntryDisplayContext {
 								"name", fragmentCollectionContributor.getName()
 							).put(
 								"url",
-								_getPreviewFragmentCollectionURL(
+								_getFragmentCollectionPreviewURL(
 									fragmentCollectionContributor.
 										getFragmentCollectionKey(),
 									CompanyConstants.SYSTEM)
@@ -262,7 +257,7 @@ public class EditStyleBookEntryDisplayContext {
 								"name", fragmentCollection.getName()
 							).put(
 								"url",
-								_getPreviewFragmentCollectionURL(
+								_getFragmentCollectionPreviewURL(
 									fragmentCollection.
 										getFragmentCollectionKey(),
 									fragmentCollection.getGroupId())
@@ -273,6 +268,34 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"totalLayouts", fragmentCollectionsCount
 		);
+	}
+
+	private String _getFragmentCollectionPreviewURL() {
+		return ResourceURLBuilder.createResourceURL(
+			_renderResponse
+		).setParameter(
+			"styleBookEntryFragmentCollectionPreview", true
+		).setParameter(
+			"themeId", _styleBookEntry.getThemeId()
+		).setResourceID(
+			"/style_book/preview_fragment_collection"
+		).buildString();
+	}
+
+	private String _getFragmentCollectionPreviewURL(
+		String fragmentCollectionKey, long groupId) {
+
+		String url = _getFragmentCollectionPreviewURL();
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			StyleBookPortletKeys.STYLE_BOOK);
+
+		url = HttpComponentsUtil.addParameter(
+			url, portletNamespace + "groupId", groupId);
+
+		return HttpComponentsUtil.addParameter(
+			url, portletNamespace + "fragmentCollectionKey",
+			fragmentCollectionKey);
 	}
 
 	private int _getFragmentCollectionsCount() {
@@ -439,26 +462,6 @@ public class EditStyleBookEntryDisplayContext {
 		).put(
 			"totalLayouts", total
 		);
-	}
-
-	private String _getPreviewFragmentCollectionURL(
-		String fragmentCollectionKey, long groupId) {
-
-		String url = ResourceURLBuilder.createResourceURL(
-			_renderResponse
-		).setResourceID(
-			"/style_book/preview_fragment_collection"
-		).buildString();
-
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			StyleBookPortletKeys.STYLE_BOOK);
-
-		url = HttpComponentsUtil.addParameter(
-			url, portletNamespace + "groupId", groupId);
-
-		return HttpComponentsUtil.addParameter(
-			url, portletNamespace + "fragmentCollectionKey",
-			fragmentCollectionKey);
 	}
 
 	private long _getPreviewItemsGroupId() {

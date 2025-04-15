@@ -10,7 +10,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -46,8 +45,6 @@ public class StyleBookEntryLocalServiceImplTest {
 		).findByG_T_Head(
 			Mockito.anyLong(), Mockito.anyString(), Mockito.eq(true)
 		);
-
-		Assert.assertTrue(true);
 	}
 
 	@InjectMocks

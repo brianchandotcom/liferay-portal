@@ -55,7 +55,7 @@ public class CommerceCurrencyServiceTest {
 		_commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
 			null, RandomTestUtil.randomString(3),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(3), BigDecimal.ZERO,
+			RandomTestUtil.randomString(3), BigDecimal.ONE,
 			LocalizationUtil.getLocalizationMap(
 				CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN),
 			2, 2, "HALF_EVEN", false, 0.0, true);

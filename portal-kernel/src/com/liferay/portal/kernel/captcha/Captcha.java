@@ -40,6 +40,11 @@ public interface Captcha {
 
 	public boolean isEnabled(PortletRequest portletRequest);
 
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException;
+
 	public void serveImage(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

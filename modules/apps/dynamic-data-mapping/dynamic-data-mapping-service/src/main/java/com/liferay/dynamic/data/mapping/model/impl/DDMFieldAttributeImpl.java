@@ -29,7 +29,9 @@ public class DDMFieldAttributeImpl extends DDMFieldAttributeBaseImpl {
 		String smallAttributeValue = null;
 
 		if (value != null) {
-			if (value.length() > SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
+			byte[] bytes = value.getBytes();
+
+			if (bytes.length > SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
 				largeAttributeValue = value;
 			}
 			else {

@@ -746,44 +746,6 @@ public abstract class Base${schemaName}ResourceImpl
 				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
-					<#if putByExternalReferenceCodeBatchJavaMethodSignature??>
-						if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-							<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-							<#else>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-							</#if>
-
-							<#list putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-								<#elseif putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-									<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
-										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
-									</#if>
-
-									<@castParameters
-										type = javaMethodParameter.parameterType
-										value = "${javaMethodParameter.parameterName}"
-									/>
-								<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-									${schemaVarName}
-								<#else>
-									null
-								</#if>
-
-								<#sep>, </#sep>
-							</#list>
-							);
-
-							<#if !stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
-									return null;
-								};
-							</#if>
-						}
-					</#if>
-
 					<#if getByExternalReferenceCodeBatchJavaMethodSignature?? && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
@@ -964,6 +926,44 @@ public abstract class Base${schemaName}ResourceImpl
 
 								return persisted${schemaName};
 							};
+						}
+					</#if>
+
+					<#if putByExternalReferenceCodeBatchJavaMethodSignature??>
+						if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+							<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+							</#if>
+
+							<#list putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+								<#elseif putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
+									<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
+										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
+										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
+									</#if>
+
+									<@castParameters
+										type = javaMethodParameter.parameterType
+										value = "${javaMethodParameter.parameterName}"
+									/>
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+									${schemaVarName}
+								<#else>
+									null
+								</#if>
+
+								<#sep>, </#sep>
+							</#list>
+							);
+
+							<#if !stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
 						}
 					</#if>
 				}

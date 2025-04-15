@@ -335,12 +335,15 @@ public class HttpAuthManagerUtil {
 				boolean first = true;
 
 				for (String loginPart : loginParts) {
-					if (!first) {
-						loginPart = StringPool.PERCENT + loginPart;
-					}
-					else {
+					if (first) {
+						sb.append(loginPart);
+
 						first = false;
+
+						continue;
 					}
+
+					loginPart = StringPool.PERCENT + loginPart;
 
 					String decodedLoginPart = HttpComponentsUtil.decodeURL(
 						loginPart);

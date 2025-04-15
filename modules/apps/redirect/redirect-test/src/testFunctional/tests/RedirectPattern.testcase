@@ -48,37 +48,6 @@ definition {
 		}
 	}
 
-	@description = "This test checks that an Alias will override a Pattern."
-	@priority = 5
-	test AliasTakesPrecedenceOverPattern {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site/parent/child2",
-			groupName = "Test Site",
-			sourceURL = "parent/child1");
-
-		Redirect.openToPatterns(siteURLKey = "test-site");
-
-		Redirect.addPattern(
-			destinationIndex = 0,
-			destinationURL = "/web/test-site/$1/child3",
-			pattern = "(.*)/child1$",
-			patternIndex = 0);
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child2");
-
-		JSONRedirect.deleteEntry(
-			destinationURL = "${portalURL}/web/test-site/parent/child2",
-			groupName = "Test Site");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site/parent/child1");
-
-		AssertLocation.assertPartialLocation(value1 = "/parent/child3");
-	}
-
 	@description = "This test checks that a Pattern can be updated."
 	@priority = 5
 	test CanUpdatePattern {

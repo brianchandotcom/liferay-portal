@@ -16,6 +16,8 @@ export class RedirectPage {
 	readonly destinationURLErrorMessage: Locator;
 	readonly expirationDate: Locator;
 	readonly page: Page;
+	readonly pattern: Locator;
+	readonly patternLink: Locator;
 	readonly redirectChainModal: Locator;
 	readonly saveButton: Locator;
 	readonly sourceURL: Locator;
@@ -30,6 +32,8 @@ export class RedirectPage {
 		);
 		this.expirationDate = page.getByLabel('Expiration Date');
 		this.page = page;
+		this.pattern = page.getByLabel('Pattern', {exact: true});
+		this.patternLink = page.getByRole('link', {name: 'Patterns'});
 		this.redirectChainModal = page.getByRole('dialog');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.sourceURL = page.getByLabel('Source URL');
@@ -55,6 +59,17 @@ export class RedirectPage {
 		await this.createButton.click();
 
 		await this.page.getByText(sourceURL).waitFor();
+	}
+
+	async addRedirectPattern(pattern: string, destinationURL: string) {
+		await this.patternLink.click();
+
+		await this.pattern.fill(pattern);
+		await this.destinationURL.fill(destinationURL);
+
+		await this.saveButton.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async assertDestinationURLValidation(destinationURL: string) {
@@ -88,6 +103,8 @@ export class RedirectPage {
 				.getByRole('row', {name: currentSourceURL})
 				.getByLabel('Show Actions'),
 		});
+
+		await waitForAlert(this.page);
 	}
 
 	async editRedirect(

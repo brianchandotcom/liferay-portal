@@ -125,14 +125,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			long sharingEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
-			sharingEntryId);
-
-		sharingPermission.checkManageCollaboratorsPermission(
-			getPermissionChecker(), sharingEntry.getClassNameId(),
-			sharingEntry.getClassPK(), sharingEntry.getGroupId());
-
-		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+		return deleteSharingEntry(
+			sharingEntryLocalService.getSharingEntry(sharingEntryId));
 	}
 
 	@Override
@@ -151,15 +145,9 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		SharingEntry sharingEntry =
+		return deleteSharingEntry(
 			sharingEntryLocalService.getSharingEntryByExternalReferenceCode(
-				externalReferenceCode, groupId);
-
-		sharingPermission.checkManageCollaboratorsPermission(
-			getPermissionChecker(), sharingEntry.getClassNameId(),
-			sharingEntry.getClassPK(), sharingEntry.getGroupId());
-
-		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+				externalReferenceCode, groupId));
 	}
 
 	@Override

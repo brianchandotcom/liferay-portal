@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -14,7 +13,6 @@ import getRandomString from '../../utils/getRandomString';
 import {localizationPagesTest} from '../site-admin-web/fixtures/localizationPagesTest';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	localizationPagesTest,
@@ -29,7 +27,6 @@ test(
 	},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		localizationInstanceSettingsPage,
 		page,
 		siteSettingsLocalizationPage,
@@ -65,9 +62,7 @@ test(
 				.toBeVisible();
 		}
 
-		await applicationsMenuPage.goToSite(site.name);
-
-		await siteSettingsLocalizationPage.goto();
+		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
 		for (let i = 0; i < currentInstanceLanguages.length; i++) {
 			await expect
@@ -97,9 +92,7 @@ test(
 
 		await page.waitForTimeout(500);
 
-		await applicationsMenuPage.goToSite(site.name);
-
-		await siteSettingsLocalizationPage.goto();
+		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
 		await expect
 			.soft(siteSettingsLocalizationPage.availableLanguages)

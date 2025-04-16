@@ -62,9 +62,15 @@ public class FragmentEntryLinkCacheImpl implements FragmentEntryLinkCache {
 
 	@Override
 	public void removeFragmentEntryLinkCache(long fragmentEntryLinkId) {
-		removeFragmentEntryLinkCache(
+		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId));
+				fragmentEntryLinkId);
+
+		if (fragmentEntryLink == null) {
+			return;
+		}
+
+		removeFragmentEntryLinkCache(fragmentEntryLink);
 	}
 
 	@Activate

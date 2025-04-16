@@ -71,7 +71,7 @@ public class FragmentEntryLinkCacheImpl implements FragmentEntryLinkCache {
 		if (fragmentEntryLink == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No FragmentEntryLink exists with the fragment entry " +
+					"No fragment entry link exists with the fragment entry " +
 						"link ID " + fragmentEntryLinkId);
 			}
 

@@ -151,8 +151,8 @@ public class FragmentEntryLinkCacheTest {
 			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"No FragmentEntryLink exists with the fragment entry link ID " +
-					randomLong,
+				"No fragment entry link exists with the fragment entry link " +
+					"ID " + randomLong,
 				logEntry.getMessage());
 		}
 	}

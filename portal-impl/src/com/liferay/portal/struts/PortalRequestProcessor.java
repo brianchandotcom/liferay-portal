@@ -127,18 +127,30 @@ public class PortalRequestProcessor {
 
 		String path = _processPath(httpServletRequest);
 
-		if (_PATH_PORTAL_UPDATE_PASSWORD.equals(path)) {
-			String updatePasswordPath = _getUpadatePasswordPath(
-				httpServletRequest);
+		try {
+			User user = PortalUtil.getUser(httpServletRequest);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Update Password path " + updatePasswordPath);
-			}
+			if (path.equals(_PATH_PORTAL_UPDATE_PASSWORD) &&
+				Validator.isNull(
+					ParamUtil.getString(httpServletRequest, "ticketId")) &&
+				(user != null) && !user.isGuestUser() &&
+				user.isPasswordReset()) {
 
-			if (Validator.isNotNull(updatePasswordPath)) {
-				httpServletResponse.sendRedirect(updatePasswordPath);
+				String updatePasswordURL = ActionUtil.generateUpdatePasswordURL(
+					httpServletRequest, user);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Update password url " + updatePasswordURL);
+				}
+
+				httpServletResponse.sendRedirect(updatePasswordURL);
 
 				return;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 
@@ -327,34 +339,6 @@ public class PortalRequestProcessor {
 		return StringBundler.concat(
 			portalURL, lastPath.getContextPath(), lastPath.getPath(),
 			parameters);
-	}
-
-	private String _getUpadatePasswordPath(
-		HttpServletRequest httpServletRequest) {
-
-		if (Validator.isNotNull(httpServletRequest.getParameter("ticketId"))) {
-			return null;
-		}
-
-		try {
-			User user = PortalUtil.getUser(httpServletRequest);
-
-			if ((user == null) || !user.isPasswordReset() ||
-				user.isGuestUser()) {
-
-				return null;
-			}
-
-			return ActionUtil.generateUpdatePasswordURL(
-				httpServletRequest, user);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
 	}
 
 	private void _internalModuleRelativeForward(

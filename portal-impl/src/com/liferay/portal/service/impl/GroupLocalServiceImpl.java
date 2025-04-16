@@ -5392,7 +5392,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected File publicLARFile;
 
 	private static void _clearStagingGroupIds() {
-		_stagingGroupIdsDCLSingleton.destroy(null);
+		_doClearStagingGroupIds();
 
 		if (!ClusterExecutorUtil.isEnabled()) {
 			return;
@@ -5402,7 +5402,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			() -> {
 				ClusterRequest clusterRequest =
 					ClusterRequest.createMulticastRequest(
-						_clearStagingGroupIdsMethodHandler, true);
+						_doClearStagingGroupIdsMethodHandler, true);
 
 				clusterRequest.setFireAndForget(true);
 
@@ -5410,6 +5410,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				return null;
 			});
+	}
+
+	private static void _doClearStagingGroupIds() {
+		_stagingGroupIdsDCLSingleton.destroy(null);
 	}
 
 	private Collection<Group> _filterGroups(
@@ -5556,10 +5560,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		new MethodKey(
 			GroupServiceUtil.class, "checkRemoteStagingGroup",
 			new Class<?>[] {long.class});
-	private static final MethodHandler _clearStagingGroupIdsMethodHandler =
+	private static final MethodHandler _doClearStagingGroupIdsMethodHandler =
 		new MethodHandler(
 			new MethodKey(
-				GroupLocalServiceImpl.class, "_clearStagingGroupIds"));
+				GroupLocalServiceImpl.class, "_doClearStagingGroupIds"));
 	private static final Snapshot<ReindexerBridge> _reindexerBridgeSnapshot =
 		new Snapshot<>(GroupLocalServiceImpl.class, ReindexerBridge.class);
 	private static final DCLSingleton<Map<Long, Long>>

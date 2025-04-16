@@ -103,8 +103,9 @@ public class ResourceOpenAPIParser {
 									path, pathItem, operation,
 									requestBodyMediaTypes, schemaName,
 									javaMethodParameters,
-									_hasObjectParameter(javaMethodParameters) ?
-										methodName + "Object" : methodName,
+									_getMethodName(
+										configYAML, javaMethodParameters,
+										methodName),
 									returnType,
 									_getParentSchema(
 										path, pathItems, schemaName));
@@ -952,6 +953,19 @@ public class ResourceOpenAPIParser {
 		}
 
 		return "@javax.ws.rs.Produces(" + sb.toString() + ")";
+	}
+
+	private static String _getMethodName(
+		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
+		String methodName) {
+
+		if (ConfigUtil.isVersionCompatible(configYAML, 9) &&
+			_hasObjectParameter(javaMethodParameters)) {
+
+			return methodName + "Object";
+		}
+
+		return methodName;
 	}
 
 	private static String _getMethodName(

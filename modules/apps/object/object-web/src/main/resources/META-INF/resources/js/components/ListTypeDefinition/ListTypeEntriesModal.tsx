@@ -255,6 +255,7 @@ function ListTypeEntriesModal() {
 					<Input
 						disabled={system}
 						error={errors.externalReferenceCode}
+						id="externalReferenceCodeInput"
 						label={Liferay.Language.get('external-reference-code')}
 						name="externalReferenceCode"
 						onChange={({target}) =>

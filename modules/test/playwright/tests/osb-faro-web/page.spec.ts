@@ -182,9 +182,7 @@ test(
 
 			await expect(
 				page
-					.locator(
-						'[id="container\\.report\\.visitorsBehaviorCard"]'
-					)
+					.locator('[id="container\\.report\\.visitorsBehaviorCard"]')
 					.getByRole('button', {name: 'Last 24 hours'})
 			).toBeVisible();
 		});

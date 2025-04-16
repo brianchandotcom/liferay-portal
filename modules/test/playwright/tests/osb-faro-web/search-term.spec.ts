@@ -12,7 +12,7 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import { createChannel } from './utils/channel';
+import {createChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
@@ -39,7 +39,7 @@ let project;
 test.beforeEach(async ({apiHelpers}) => {
 	const result = await createChannel({
 		apiHelpers,
-		channelName
+		channelName,
 	});
 
 	channel = result.channel;

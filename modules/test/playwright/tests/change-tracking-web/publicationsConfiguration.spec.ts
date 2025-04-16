@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	changeTrackingPagesTest,
@@ -170,4 +171,37 @@ test('LPD-29282 Assert publications user can not see the hidden fields if show a
 	await performLogin(page, 'test');
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+});
+
+test('Cannot Enable Publications When Staging Is Enabled', async ({
+	apiHelpers,
+	changeTrackingPage,
+	page,
+	site,
+}) => {
+	await changeTrackingPage.enablePublications(false);
+
+	await page.goto('/');
+
+	await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
+		groupId: site.id,
+	});
+
+	await changeTrackingPage.goToPublicationsViaApplicationMenu();
+
+	await page
+		.getByRole('checkbox', {
+			name: 'Enable Publications',
+		})
+		.check();
+
+	await waitForAlert(page, 'Error:Your request failed to complete.', {
+		type: 'danger',
+	});
+
+	await expect(
+		page.getByText(
+			'Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.'
+		)
+	).toBeVisible();
 });

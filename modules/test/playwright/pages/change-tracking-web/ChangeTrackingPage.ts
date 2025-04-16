@@ -193,11 +193,7 @@ export class ChangeTrackingPage {
 	}
 
 	async enablePublications(check: boolean) {
-		await this.page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
-
-		await this.page.getByRole('menuitem', {name: 'Publications'}).click();
-
-		await expect(this.page.getByText('Enable Publications')).toBeVisible();
+		await this.goToPublicationsViaApplicationMenu();
 
 		const checkBox = this.page.getByRole('checkbox', {
 			name: 'Enable Publications',
@@ -231,6 +227,14 @@ export class ChangeTrackingPage {
 		if (!(await changeTrackingIndicatorButton.isVisible())) {
 			await this.enablePublications(true);
 		}
+	}
+
+	async goToPublicationsViaApplicationMenu() {
+		await this.page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
+
+		await this.page.getByRole('menuitem', {name: 'Publications'}).click();
+
+		await expect(this.page.getByText('Enable Publications')).toBeVisible();
 	}
 
 	async goToPublicationHistory() {

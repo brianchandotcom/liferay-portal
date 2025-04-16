@@ -67,29 +67,6 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 	}
 
-	@priority = 5
-	test CannotEnablePublicationsWhenStagingIsTurnedOn {
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging",
-			site = "Guest");
-
-		Staging.activateStagingCP(siteName = ${siteName});
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
-
-		WaitForElementPresent(locator1 = "Message#ERROR");
-
-		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
-	}
-
 	@description = "Publications test in a non-root portal context."
 	@priority = 4
 	test CreatePublicationsInNonRootContext {

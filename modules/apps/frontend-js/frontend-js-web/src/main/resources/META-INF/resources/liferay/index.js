@@ -374,6 +374,8 @@ Liferay.Util.Cookie = Cookie;
 Liferay.Util.LocalStorage = localStorage;
 Liferay.Util.SessionStorage = sessionStorage;
 
+/* Set Portlet 3.0 hub global variable */
+
 window.portlet = portlet;
 
 Liferay.__INTERNALS = {

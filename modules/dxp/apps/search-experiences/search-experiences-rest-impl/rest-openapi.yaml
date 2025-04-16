@@ -405,6 +405,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                collectionProviderSubTypeName:
+                    type: string
+                collectionProviderTypeName:
+                    type: string
                 configuration:
                     $ref: "#/components/schemas/Configuration"
                 createDate:

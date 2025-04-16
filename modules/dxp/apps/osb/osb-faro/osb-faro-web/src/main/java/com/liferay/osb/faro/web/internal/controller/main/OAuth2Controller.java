@@ -22,6 +22,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,8 +37,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,14 +50,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -259,28 +262,35 @@ public class OAuth2Controller extends BaseFaroController {
 	private String _invokeOAuth2Endpoint(String clientId, String clientSecret)
 		throws Exception {
 
-		Client client = ClientBuilder.newClient();
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		WebTarget webTarget = client.target(
-			String.format(
-				_O_AUTH2_ENDPOINT_TEMPLATE, FaroPropsValues.FARO_URL));
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
 
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_FORM_URLENCODED);
+			HttpPost httpPost = new HttpPost(
+				String.format(
+					_O_AUTH2_ENDPOINT_TEMPLATE, FaroPropsValues.FARO_URL));
 
-		builder.accept(MediaType.APPLICATION_JSON);
+			httpPost.setEntity(
+				new UrlEncodedFormEntity(
+					Arrays.asList(
+						new BasicNameValuePair(
+							"grant_type", "client_credentials"),
+						new BasicNameValuePair("client_id", clientId),
+						new BasicNameValuePair(
+							"client_secret", clientSecret))));
 
-		Form form = new Form();
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
 
-		form.param("grant_type", "client_credentials");
-		form.param("client_id", clientId);
-		form.param("client_secret", clientSecret);
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
-		Invocation invocation = builder.buildPost(Entity.form(form));
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				throw new PortalException("Unexpected Error");
+			}
 
-		Future<String> future = invocation.submit(String.class);
-
-		return future.get(5, TimeUnit.SECONDS);
+			return EntityUtils.toString(closeableHttpResponse.getEntity());
+		}
 	}
 
 	private TokenDisplay _mapTokenDisplay(

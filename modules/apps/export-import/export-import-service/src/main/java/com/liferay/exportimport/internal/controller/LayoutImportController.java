@@ -87,7 +87,6 @@ import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
-import com.liferay.staging.constants.CompanyGroupConstants;
 
 import java.io.File;
 import java.io.Serializable;
@@ -602,10 +601,12 @@ public class LayoutImportController implements ImportController {
 			String groupFriendlyUrl = headerElement.attributeValue(
 				"group-friendly-url");
 
-			boolean sameFriendlyURL = Objects.equals(
-				groupFriendlyUrl, CompanyGroupConstants.FRIENDLY_URL);
+			boolean companyGroupFriendlyURL =
+				stagingGroupHelper.isCompanyGroupFriendlyURL(groupFriendlyUrl);
 
-			if (sameFriendlyURL != stagingGroupHelper.isCompanyGroup(group)) {
+			if (companyGroupFriendlyURL != stagingGroupHelper.isCompanyGroup(
+					group)) {
+
 				throw new LARScopeException();
 			}
 		}

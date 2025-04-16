@@ -28,10 +28,11 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.constants.CompanyGroupConstants;
+import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -183,6 +184,11 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isCompanyGroupFriendlyURL(String friendlyURL) {
+		return Objects.equals(friendlyURL, CompanyGroupConstants.FRIENDLY_URL);
 	}
 
 	@Override

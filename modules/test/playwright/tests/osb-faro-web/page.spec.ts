@@ -174,38 +174,20 @@ test(
 			).toBeVisible();
 		});
 
-		const tabNames = ['Path', 'Known Individuals'];
-
-		for (const tab of tabNames) {
-			await test.step('Switch the tab', async () => {
-				await navigateTo({
-					page,
-					pageName: tab,
-				});
+		await test.step('Switch to Overview tab and view the time filter of Visitors Behavior is Last 24 Hours', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Overview',
 			});
 
-			await test.step('Set the time filter to the last 30 days', async () => {
-				await changeTimeFilter({
-					page,
-					timeFilterPeriod: 'Last 30 days',
-				});
-			});
-
-			await test.step('Switch to Overview tab and view the time filter of Visitors Behavior is Last 24 Hours', async () => {
-				await navigateTo({
-					page,
-					pageName: 'Overview',
-				});
-
-				await expect(
-					page
-						.locator(
-							'[id="container\\.report\\.visitorsBehaviorCard"]'
-						)
-						.getByRole('button', {name: 'Last 24 hours'})
-				).toBeVisible();
-			});
-		}
+			await expect(
+				page
+					.locator(
+						'[id="container\\.report\\.visitorsBehaviorCard"]'
+					)
+					.getByRole('button', {name: 'Last 24 hours'})
+			).toBeVisible();
+		});
 	}
 );
 

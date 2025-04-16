@@ -100,16 +100,16 @@ public class ParentObjectEntryFolderBriefSerDes {
 			sb.append(_toJSON(parentObjectEntryFolderBrief.getLabel_i18n()));
 		}
 
-		if (parentObjectEntryFolderBrief.getName() != null) {
+		if (parentObjectEntryFolderBrief.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"title\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(parentObjectEntryFolderBrief.getName()));
+			sb.append(_escape(parentObjectEntryFolderBrief.getTitle()));
 
 			sb.append("\"");
 		}
@@ -171,12 +171,13 @@ public class ParentObjectEntryFolderBriefSerDes {
 				String.valueOf(parentObjectEntryFolderBrief.getLabel_i18n()));
 		}
 
-		if (parentObjectEntryFolderBrief.getName() == null) {
-			map.put("name", null);
+		if (parentObjectEntryFolderBrief.getTitle() == null) {
+			map.put("title", null);
 		}
 		else {
 			map.put(
-				"name", String.valueOf(parentObjectEntryFolderBrief.getName()));
+				"title",
+				String.valueOf(parentObjectEntryFolderBrief.getTitle()));
 		}
 
 		return map;
@@ -209,7 +210,7 @@ public class ParentObjectEntryFolderBriefSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
 				return true;
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			else if (Objects.equals(jsonParserFieldName, "title")) {
 				return false;
 			}
 
@@ -245,9 +246,9 @@ public class ParentObjectEntryFolderBriefSerDes {
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
-					parentObjectEntryFolderBrief.setName(
+					parentObjectEntryFolderBrief.setTitle(
 						(String)jsonParserFieldValue);
 				}
 			}

@@ -51,7 +51,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the object entry folder.")
 	public ObjectEntryFolder objectEntryFolder(
@@ -69,7 +69,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectEntryFolder

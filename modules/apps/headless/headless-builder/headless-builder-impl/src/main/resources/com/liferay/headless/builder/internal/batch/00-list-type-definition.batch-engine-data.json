@@ -19,12 +19,14 @@
 				{
 					"externalReferenceCode": "PUBLISHED",
 					"key": "published",
-					"name": "published"
+					"name": "published",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "UNPUBLISHED",
 					"key": "unpublished",
-					"name": "unpublished"
+					"name": "unpublished",
+					"system": true
 				}
 			],
 			"name": "Application Status",
@@ -37,12 +39,14 @@
 				{
 					"externalReferenceCode": "GET",
 					"key": "get",
-					"name": "get"
+					"name": "get",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "POST",
 					"key": "post",
-					"name": "post"
+					"name": "post",
+					"system": true
 				}
 			],
 			"name": "HTTP Method",
@@ -55,12 +59,14 @@
 				{
 					"externalReferenceCode": "COLLECTION",
 					"key": "collection",
-					"name": "collection"
+					"name": "collection",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "SINGLE_ELEMENT",
 					"key": "singleElement",
-					"name": "singleElement"
+					"name": "singleElement",
+					"system": true
 				}
 			],
 			"name": "Retrieve Type",
@@ -73,12 +79,14 @@
 				{
 					"externalReferenceCode": "COMPANY",
 					"key": "company",
-					"name": "company"
+					"name": "company",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "SITE",
 					"key": "site",
-					"name": "site"
+					"name": "site",
+					"system": true
 				}
 			],
 			"name": "Scope",
@@ -91,12 +99,14 @@
 				{
 					"externalReferenceCode": "FIELD",
 					"key": "field",
-					"name": "Field"
+					"name": "Field",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "RECORD",
 					"key": "record",
-					"name": "Record"
+					"name": "Record",
+					"system": true
 				}
 			],
 			"name": "API Property Types",

@@ -44,7 +44,16 @@ public class ConfigurationTestUtil {
 			String factoryPid, Dictionary<String, Object> properties)
 		throws Exception {
 
-		Configuration configuration = _createFactoryConfiguration(factoryPid);
+		return createFactoryConfiguration(factoryPid, null, properties);
+	}
+
+	public static String createFactoryConfiguration(
+			String factoryPid, String name,
+			Dictionary<String, Object> properties)
+		throws Exception {
+
+		Configuration configuration = _createFactoryConfiguration(
+			factoryPid, name);
 
 		_updateProperties(configuration, properties);
 
@@ -194,8 +203,17 @@ public class ConfigurationTestUtil {
 
 	}
 
-	private static Configuration _createFactoryConfiguration(String factoryPid)
+	private static Configuration _createFactoryConfiguration(
+			String factoryPid, String name)
 		throws Exception {
+
+		if (name != null) {
+			return OSGiServiceUtil.callService(
+				_bundleContext, ConfigurationAdmin.class,
+				(ConfigurationAdmin configurationAdmin) ->
+					configurationAdmin.getFactoryConfiguration(
+						factoryPid, name, StringPool.QUESTION));
+		}
 
 		return OSGiServiceUtil.callService(
 			_bundleContext, ConfigurationAdmin.class,

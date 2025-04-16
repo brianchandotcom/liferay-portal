@@ -7,6 +7,7 @@ interface SessionConfig {
 	autoExtend: boolean;
 	redirectOnExpire: boolean;
 	redirectUrl: string;
+	rememberMe: boolean;
 	sessionLength: number;
 	sessionTimeoutOffset: number;
 	warningLength: number;
@@ -72,7 +73,9 @@ export class Session {
 		);
 		this.sessionState = 'active';
 
-		this._startTimer();
+		if (!config.rememberMe) {
+			this._startTimer();
+		}
 	}
 
 	destructor() {

@@ -11,14 +11,17 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -79,10 +82,18 @@ public class SXPBlueprintDTOConverter
 
 		return new SXPBlueprint() {
 			{
-				setConfiguration(
-					() -> _toConfiguration(
+				setCollectionProviderSubTypeName(
+					() -> _getSubtypeName(
 						sxpBlueprint.getCompanyId(),
 						dtoConverterContext.getLocale(),
+						sxpBlueprint.getConfigurationJSON()));
+				setCollectionProviderTypeName(
+					() -> _getTypeName(
+						sxpBlueprint.getCompanyId(),
+						dtoConverterContext.getLocale(),
+						sxpBlueprint.getConfigurationJSON()));
+				setConfiguration(
+					() -> _toConfiguration(
 						sxpBlueprint.getConfigurationJSON()));
 				setCreateDate(sxpBlueprint::getCreateDate);
 				setDescription(
@@ -125,11 +136,20 @@ public class SXPBlueprintDTOConverter
 
 		return new SXPBlueprint() {
 			{
-				setConfiguration(
-					() -> _toConfiguration(
+				setCollectionProviderSubTypeName(
+					() -> _getSubtypeName(
 						sxpBlueprint.getCompanyId(),
 						LocaleUtil.fromLanguageId(
 							sxpBlueprint.getDefaultLanguageId()),
+						sxpBlueprint.getConfigurationJSON()));
+				setCollectionProviderTypeName(
+					() -> _getTypeName(
+						sxpBlueprint.getCompanyId(),
+						LocaleUtil.fromLanguageId(
+							sxpBlueprint.getDefaultLanguageId()),
+						sxpBlueprint.getConfigurationJSON()));
+				setConfiguration(
+					() -> _toConfiguration(
 						sxpBlueprint.getConfigurationJSON()));
 				setCreateDate(sxpBlueprint::getCreateDate);
 				setDescription(sxpBlueprint::getDescription);
@@ -154,6 +174,129 @@ public class SXPBlueprintDTOConverter
 		};
 	}
 
+	private String[] _getCollectionProviderType(String json) {
+		try {
+			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
+				json);
+
+			if (configurationJSONObject == null) {
+				return new String[0];
+			}
+
+			JSONObject generalConfigurationJSONObject =
+				configurationJSONObject.getJSONObject("generalConfiguration");
+
+			if (generalConfigurationJSONObject == null) {
+				return new String[0];
+			}
+
+			String collectionProviderTypes =
+				generalConfigurationJSONObject.getString(
+					"collectionProviderType");
+
+			return StringUtil.split(collectionProviderTypes, "&&");
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return new String[0];
+		}
+	}
+
+	private String _getSubtypeName(long companyId, Locale locale, String json) {
+		String[] collectionProviderTypes = _getCollectionProviderType(json);
+
+		if (collectionProviderTypes.length != 3) {
+			return StringPool.DASH;
+		}
+
+		String className = collectionProviderTypes[0];
+		String groupExternalReferenceCode = collectionProviderTypes[1];
+		String subTypeExternalReferenceCode = collectionProviderTypes[2];
+
+		try {
+			if (className.equals(DLFileEntry.class.getName())) {
+				DLFileEntryType dlFileEntryType;
+
+				if (groupExternalReferenceCode.equals(StringPool.BLANK)) {
+					dlFileEntryType =
+						_dlFileEntryTypeLocalService.
+							getBasicDocumentDLFileEntryType();
+				}
+				else {
+					Group group =
+						_groupLocalService.getGroupByExternalReferenceCode(
+							groupExternalReferenceCode, companyId);
+
+					dlFileEntryType =
+						_dlFileEntryTypeLocalService.
+							getDLFileEntryTypeByExternalReferenceCode(
+								subTypeExternalReferenceCode,
+								group.getGroupId());
+				}
+
+				return dlFileEntryType.getName(locale);
+			}
+			else if (className.equals(JournalArticle.class.getName())) {
+				Group group =
+					_groupLocalService.getGroupByExternalReferenceCode(
+						groupExternalReferenceCode, companyId);
+
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.
+						fetchStructureByExternalReferenceCode(
+							subTypeExternalReferenceCode, group.getGroupId(),
+							_classNameLocalService.getClassNameId(
+								JournalArticle.class));
+
+				return ddmStructure.getName(locale);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return StringPool.DASH;
+	}
+
+	private String _getTypeName(long companyId, Locale locale, String json) {
+		String[] collectionProviderTypes = _getCollectionProviderType(json);
+
+		if (collectionProviderTypes.length == 0) {
+			return StringPool.DASH;
+		}
+
+		String className = collectionProviderTypes[0];
+
+		try {
+			String typeName = ResourceActionsUtil.getModelResource(
+				locale, className);
+
+			if (className.startsWith(
+					ObjectDefinitionConstants.
+						CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByClassName(companyId, className);
+
+				if (objectDefinition != null) {
+					typeName = objectDefinition.getLabel(
+						LocaleUtil.toLanguageId(locale));
+				}
+			}
+
+			return typeName;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return StringPool.DASH;
+	}
+
 	private void _setLocalizedDescriptionAndTitle(
 		Map<Locale, String> descriptionMap, String fallbackDescription,
 		String fallbackTitle, Locale locale, SXPElement sxpElement,
@@ -167,109 +310,8 @@ public class SXPBlueprintDTOConverter
 				fallbackTitle, _language, locale, titleMap));
 	}
 
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	private Configuration _toConfiguration(
-		long companyId, Locale locale, String json) {
-
-		try {
-			JSONObject configurationJSON =
-				_jsonFactory.createJSONObject(json);
-
-			if (configurationJSON == null) {
-				return ConfigurationUtil.toConfiguration(json);
-			}
-
-			JSONObject generalConfigurationJSON =
-				configurationJSON.getJSONObject("generalConfiguration");
-
-			if (generalConfigurationJSON == null) {
-				return ConfigurationUtil.toConfiguration(json);
-			}
-
-			String collectionProviderType =
-				generalConfigurationJSON.getString("collectionProviderType");
-
-			String[] searchableAssetTypeWithSubtype = StringUtil.split(
-				collectionProviderType, StringPool.POUND);
-
-			if (searchableAssetTypeWithSubtype.length == 1) {
-				generalConfigurationJSON.put(
-					"collectionProviderTypeName",
-					searchableAssetTypeWithSubtype[0]);
-			} else if (searchableAssetTypeWithSubtype.length == 3) {
-				if (searchableAssetTypeWithSubtype[0].equals(
-					DLFileEntry.class.getName())) {
-
-					DLFileEntryType dlFileEntryType;
-
-					if (searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
-						dlFileEntryType = _dlFileEntryTypeLocalService.
-							getBasicDocumentDLFileEntryType();
-
-					} else {
-
-						Group group =
-							_groupLocalService.getGroupByExternalReferenceCode(
-								searchableAssetTypeWithSubtype[1], companyId);
-
-						dlFileEntryType =
-							_dlFileEntryTypeLocalService.
-								getDLFileEntryTypeByExternalReferenceCode(
-									searchableAssetTypeWithSubtype[2],
-									group.getGroupId());
-					}
-
-					generalConfigurationJSON.put(
-						"collectionProviderTypeName",
-						searchableAssetTypeWithSubtype[0] + " - " +
-						dlFileEntryType.getName(locale));
-
-				} else if (searchableAssetTypeWithSubtype[0].equals(
-					JournalArticle.class.getName())) {
-
-					Group group =
-						_groupLocalService.getGroupByExternalReferenceCode(
-							searchableAssetTypeWithSubtype[1], companyId);
-
-					DDMStructure ddmStructure =
-						_ddmStructureLocalService.
-							fetchStructureByExternalReferenceCode(
-								searchableAssetTypeWithSubtype[2],
-								group.getGroupId(),
-								_classNameLocalService.getClassNameId(
-									JournalArticle.class));
-
-					generalConfigurationJSON.put(
-						"collectionProviderTypeName",
-						searchableAssetTypeWithSubtype[0] + " - " +
-						ddmStructure.getName(locale));
-				}
-			}
-
-			return ConfigurationUtil.toConfiguration(
-				configurationJSON.toString());
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			return null;
-		}
+	private Configuration _toConfiguration(String json) {
+		return ConfigurationUtil.toConfiguration(json);
 	}
 
 	private ElementInstance[] _toElementInstances(String json) {
@@ -328,7 +370,25 @@ public class SXPBlueprintDTOConverter
 		SXPBlueprintDTOConverter.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

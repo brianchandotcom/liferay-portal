@@ -13,6 +13,12 @@ import '@testing-library/jest-dom/extend-expect';
 import CreationModalContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/modal/CreationModalContent';
 
 const mockOnSubmit = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock('frontend-js-web', () => ({
+	...(jest.requireActual('frontend-js-web') ?? {}),
+	navigate: (url: string) => mockNavigate(url),
+}));
 
 const defaultProps = {
 	action: 'createFolder' as const,
@@ -76,5 +82,42 @@ describe('CreationModalContent', () => {
 				setFieldError: expect.any(Function),
 			})
 		);
+	});
+
+	test('navigates with correct parameters when form is submitted and redirect is provided', async () => {
+		const originalURL = window.URL;
+
+		try {
+			window.URL = class extends URL {
+				constructor(path: string, base = 'http://localhost:8080') {
+					super(path, base);
+				}
+			} as typeof URL;
+
+			render(
+				<CreationModalContent
+					{...defaultProps}
+					redirect="/target-page"
+				/>
+			);
+
+			await userEvent.type(screen.getByLabelText(/name/i), 'Folder Name');
+			await userEvent.click(screen.getByText('select-a-space'));
+			await userEvent.click(screen.getByText('Space 1'));
+			await userEvent.click(screen.getByText('save'));
+
+			expect(mockNavigate).toHaveBeenCalledWith(
+				expect.stringContaining('/target-page?')
+			);
+			expect(mockNavigate).toHaveBeenCalledWith(
+				expect.stringContaining('name=Folder+Name')
+			);
+			expect(mockNavigate).toHaveBeenCalledWith(
+				expect.stringContaining('groupId=123')
+			);
+		}
+		finally {
+			window.URL = originalURL;
+		}
 	});
 });

@@ -51,7 +51,7 @@ public class WorkflowInstanceManagerImplTest
 	extends BaseWorkflowManagerTestCase {
 
 	@Test
-	public void testCompleteKaleoInstanceOnFailure() throws Exception {
+	public void testCompleteKaleoInstance() throws Exception {
 		String workflowDefinitionName = RandomTestUtil.randomString();
 		String content = readFileToJSON(
 			"broken-scripted-assignment-workflow-definition.json");

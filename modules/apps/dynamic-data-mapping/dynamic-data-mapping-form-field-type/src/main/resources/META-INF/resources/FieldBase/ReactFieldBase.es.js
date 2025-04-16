@@ -11,13 +11,13 @@ import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
-	FieldFeedback,
 	Layout,
 	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
+import {FieldFeedback} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -752,7 +752,7 @@ export default function FieldBase({
 				aria-hidden={readFieldDetails}
 				errorMessage={hasError ? errorMessage : undefined}
 				helpMessage={typeof tip === 'string' ? tip : undefined}
-				name={id ?? name}
+				id={`${id ?? name}_fieldFeedback`}
 				warningMessage={warningMessage}
 			/>
 

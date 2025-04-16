@@ -129,11 +129,8 @@ export default function CheckboxBase({
 		<>
 			<Toggle
 				accessibleProps={{
-					...(otherProps.tip && {
-						'aria-describedby': `${otherProps.id ?? name}_fieldHelp`,
-					}),
-					...(otherProps.errorMessage && {
-						'aria-errormessage': `${otherProps.id ?? name}_fieldError`,
+					...((otherProps.errorMessage || otherProps.tip) && {
+						'aria-describedby': `${otherProps.id ?? name}_fieldFeedback`,
 					}),
 					'aria-required': !!otherProps.required,
 				}}
@@ -187,7 +184,6 @@ export interface ICheckboxBaseProps {
 interface ISwitcherProps extends ICheckboxBaseProps {
 	accessibleProps: {
 		'aria-describedby'?: string;
-		'aria-errormessage'?: string;
 		'aria-required': boolean;
 	};
 	showMaximumRepetitionsInfo: boolean;

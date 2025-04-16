@@ -29,11 +29,8 @@ const MultipleSelectBase = ({
 		...(label && {
 			'aria-labelledby': `${id ?? name}`,
 		}),
-		...(tip && {
-			'aria-describedby': `${id ?? name}_fieldHelp`,
-		}),
-		...(errorMessage && {
-			'aria-errormessage': `${id ?? name}_fieldError`,
+		...((errorMessage || tip) && {
+			'aria-describedby': `${id ?? name}_fieldFeedback`,
 		}),
 		'aria-required': required,
 	};

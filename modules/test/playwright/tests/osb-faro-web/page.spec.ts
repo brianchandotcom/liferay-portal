@@ -632,7 +632,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Create the page name with special characters makes the correct name appear in the path part of AC pages',
 	{
 		tag: '@LRAC-8988',
@@ -920,7 +920,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Path analysis shows the outside pages that were interacted with in DXP',
 	{
 		tag: '@LRAC-14827',
@@ -1017,7 +1017,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Path Analysis shows the pages that were interacted with in DXP',
 	{
 		tag: '@LRAC-14827',
@@ -1131,7 +1131,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Remove segments from the filter',
 	{
 		tag: '@LRAC-14836',

@@ -11,7 +11,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {getOrder} from './util';
 
 const StepTracker = ({isOpen, orderId, stepModels}) => {
-	const [steps, setSteps] = useState(stepModels);
+	const [steps, setSteps] = useState([]);
 
 	const onStatusChange = useCallback(
 		({order = null}) => {
@@ -34,10 +34,8 @@ const StepTracker = ({isOpen, orderId, stepModels}) => {
 	);
 
 	useEffect(() => {
-		onStatusChange({order: {steps}});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		onStatusChange({order: {steps: stepModels}});
+	}, [onStatusChange, stepModels]);
 
 	useEffect(() => {
 		Liferay.on(commerceEvents.ORDER_INFORMATION_ALTERED, onStatusChange);
@@ -50,7 +48,9 @@ const StepTracker = ({isOpen, orderId, stepModels}) => {
 		};
 	}, [onStatusChange]);
 
-	return (
+	return steps.length <= 1 ? (
+		<></>
+	) : (
 		<ClayMultiStepNav indicatorLabel="top">
 			{steps.map(({label, state}, i) => {
 				const complete = state === 'completed';

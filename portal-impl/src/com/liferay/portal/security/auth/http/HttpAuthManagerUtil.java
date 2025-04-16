@@ -327,32 +327,32 @@ public class HttpAuthManagerUtil {
 				login, new String[] {StringPool.PLUS, "%20"},
 				new String[] {_TEMP_PLUS, _TEMP_PLUS});
 
-			String[] loginParts = StringUtil.split(login, CharPool.PERCENT);
+			String[] parts = StringUtil.split(login, CharPool.PERCENT);
 
-			if (loginParts.length > 1) {
-				StringBuilder sb = new StringBuilder(loginParts.length);
+			if (parts.length > 1) {
+				StringBuilder sb = new StringBuilder(parts.length);
 
 				boolean first = true;
 
-				for (String loginPart : loginParts) {
+				for (String part : parts) {
 					if (first) {
-						sb.append(loginPart);
+						sb.append(part);
 
 						first = false;
 
 						continue;
 					}
 
-					loginPart = StringPool.PERCENT + loginPart;
+					part = StringPool.PERCENT + part;
 
 					String decodedLoginPart = HttpComponentsUtil.decodeURL(
-						loginPart);
+						part);
 
 					if (Validator.isNotNull(decodedLoginPart)) {
 						sb.append(decodedLoginPart);
 					}
 					else {
-						sb.append(loginPart);
+						sb.append(part);
 					}
 				}
 

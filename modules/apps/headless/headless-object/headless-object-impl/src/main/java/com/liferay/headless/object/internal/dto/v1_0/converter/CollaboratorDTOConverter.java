@@ -65,6 +65,14 @@ public class CollaboratorDTOConverter
 
 						return userGroup.getExternalReferenceCode();
 					});
+				setId(
+					() -> {
+						if (user != null) {
+							return user.getUserId();
+						}
+
+						return userGroup.getUserGroupId();
+					});
 				setName(
 					() -> {
 						if (user != null) {

@@ -23,6 +23,10 @@ body {
 	position: relative;
 }
 
+.box.hidden {
+	display: none;
+}
+
 .box .box__title {
 	color: #0f7213;
 	margin-top: 0;
@@ -79,11 +83,16 @@ pre {
 	margin: 1rem 0;
 }
 
-.btns-header button {
+.btns-header .btn {
 	all: unset;
 	background-color: #fff;
 	border: 1px solid;
 	cursor: pointer;
+	display: none;
 	margin: 0 0.25rem;
 	padding: 5px 10px;
+}
+
+.btns-header .btn.show {
+	display: inline-block;
 }

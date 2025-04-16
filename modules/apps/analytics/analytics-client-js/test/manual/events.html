@@ -23,12 +23,22 @@
 			<a href="https://chrome.google.com/webstore/detail/ac-event-bucket/gghpanomgaddpgokmgjjemebmdkbpbck" target="_blank">ac-event-bucket chrome extension</a>
 			</div>
 
-			<div id="hiddenBoxes"></div>
+			<div id="hiddenBoxes">
+				<div class="btns-header">
+					<span>Hidden boxes</span>
+
+					<button data-id="blog" data-action="enable" class="btn">blog X</button>
+					<button data-id="custom" data-action="enable" class="btn">custom X</button>
+					<button data-id="document" data-action="enable" class="btn">document X</button>
+					<button data-id="form" data-action="enable" class="btn">form X</button>
+					<button data-id="webContent" data-action="enable" class="btn">webContent X</button>
+				</div>
+			</div>
 		</div>
 
 		<div class="container">
 			<div class="box" id="blog">
-				<button class="btn-hidden" onclick="setHidden('blog')">
+				<button class="btn-hidden" data-action="disable" data-id="blog">
 					hide
 				</button>
 
@@ -57,7 +67,7 @@
 			</div>
 
 			<div class="box" id="document">
-				<button class="btn-hidden" onclick="setHidden('document')">
+				<button class="btn-hidden" data-action="disable" data-id="document">
 					hide
 				</button>
 
@@ -91,7 +101,7 @@
 			</div>
 
 			<div class="box" id="webContent">
-				<button class="btn-hidden" onclick="setHidden('webContent')">
+				<button class="btn-hidden" data-action="disable" data-id="webContent">
 					hide
 				</button>
 
@@ -121,7 +131,7 @@
 			</div>
 
 			<div class="box" id="form">
-				<button class="btn-hidden" onclick="setHidden('form')">
+				<button class="btn-hidden" data-action="disable" data-id="form">
 					hide
 				</button>
 
@@ -160,7 +170,7 @@
 			</div>
 
 			<div class="box" id="custom">
-				<button class="btn-hidden" onclick="setHidden('custom')">
+				<button class="btn-hidden" data-action="disable" data-id="custom">
 					hide
 				</button>
 
@@ -234,61 +244,31 @@
 				return JSON.parse(localStorage.getItem('boxes'));
 			}
 
-			function renderBtns() {
-				const btns = [];
-				const boxes = getBoxes();
-
-				Object.keys(boxes)
-					.filter((key) => boxes[key] === 'hidden')
-					.forEach((key) => {
-						btns.push(`<button onclick='setShow("${key}")'>${key} X</button>`);
-					});
-
-				const hiddenBoxes = document.querySelector('#hiddenBoxes');
-
-				if (Object.keys(boxes).some((key) => boxes[key] === 'hidden')) {
-					hiddenBoxes.innerHTML = `
-									<div class="btns-header">
-										<span>Hidden boxes</span>
-										${btns.join('')}
-									</div>
-								`;
-				}
-			}
-
-			function renderBoxes() {
-				const boxes = getBoxes();
-
-				Object.keys(getBoxes()).forEach((key) => {
-					const box = document.querySelector(`#${key}`);
-
-					if (boxes[key] === 'hidden') {
-						box.remove();
-					}
-				});
-			}
-
-			function setHidden(id) {
+			function setEnabled(id, enabled) {
 				localStorage.setItem(
 					'boxes',
-					JSON.stringify({...getBoxes(), [id]: 'hidden'})
-				);
-
-				window.location.reload();
-			}
-
-			function setShow(id) {
-				localStorage.setItem(
-					'boxes',
-					JSON.stringify({...getBoxes(), [id]: 'show'})
+					JSON.stringify({...getBoxes(), [id]: enabled})
 				);
 
 				window.location.reload();
 			}
 
 			function init() {
-				renderBtns();
-				renderBoxes();
+				document.querySelector('body').addEventListener('click', (event) => {
+					if (event.target.dataset.id) {
+						setEnabled(event.target.dataset.id, event.target.dataset.action === 'enable')
+					}
+				});
+
+				const boxes = getBoxes();
+
+				boxes && Object.keys(boxes).forEach((box) => {
+					const boxElement = document.querySelector(`#${box}`);
+					const buttonEnabled = document.querySelector(`.btn[data-id="${box}"]`);
+
+					buttonEnabled.classList.toggle('show', !boxes[box]);
+					boxElement.classList.toggle('hidden', !boxes[box]);
+				});
 			}
 
 			init();

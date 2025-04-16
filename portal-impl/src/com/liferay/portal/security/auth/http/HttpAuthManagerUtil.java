@@ -330,29 +330,19 @@ public class HttpAuthManagerUtil {
 			String[] parts = StringUtil.split(login, CharPool.PERCENT);
 
 			if (parts.length > 1) {
-				StringBuilder sb = new StringBuilder(parts.length);
+				StringBundler sb = new StringBundler(parts.length);
 
-				boolean first = true;
+				sb.append(parts[0]);
 
-				for (String part : parts) {
-					if (first) {
-						sb.append(part);
+				for (int i = 1; i < parts.length; i++) {
+					String decodedPart = HttpComponentsUtil.decodeURL(
+						StringPool.PERCENT + parts[i]);
 
-						first = false;
-
-						continue;
-					}
-
-					part = StringPool.PERCENT + part;
-
-					String decodedLoginPart = HttpComponentsUtil.decodeURL(
-						part);
-
-					if (Validator.isNotNull(decodedLoginPart)) {
-						sb.append(decodedLoginPart);
+					if (Validator.isNotNull(decodedPart)) {
+						sb.append(decodedPart);
 					}
 					else {
-						sb.append(part);
+						sb.append(StringPool.PERCENT + parts[i]);
 					}
 				}
 
@@ -415,7 +405,7 @@ public class HttpAuthManagerUtil {
 	private HttpAuthManagerUtil() {
 	}
 
-	private static final String _TEMP_PLUS = "_LIFERAY_TEMP_PLUS_";
+	private static final String _TEMP_PLUS = "_TEMP_PLUS_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HttpAuthManagerUtil.class);

@@ -16,7 +16,7 @@ const getItem = <T>(key: string) => {
 		let item;
 
 		if (Liferay?.FeatureFlags?.['LPD-10588']) {
-			item = Liferay.Util.LocalStorage.getItem(
+			item = Liferay?.Util?.LocalStorage?.getItem(
 				key,
 				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
 			);
@@ -39,7 +39,7 @@ const setItem = <T>(key: string, value: T) => {
 
 	try {
 		if (Liferay?.FeatureFlags?.['LPD-10588']) {
-			Liferay.Util.LocalStorage.setItem(
+			Liferay?.Util?.LocalStorage?.setItem(
 				key,
 				JSON.stringify(value),
 				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
@@ -59,7 +59,7 @@ const removeItem = (key: string) => {
 
 	try {
 		if (Liferay?.FeatureFlags?.['LPD-10588']) {
-			Liferay.Util.LocalStorage.removeItem(
+			Liferay?.Util?.LocalStorage?.removeItem(
 				key,
 				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
 			);

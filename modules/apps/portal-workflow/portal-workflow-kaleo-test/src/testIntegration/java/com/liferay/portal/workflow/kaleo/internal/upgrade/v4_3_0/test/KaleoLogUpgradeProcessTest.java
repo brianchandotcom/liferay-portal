@@ -88,14 +88,13 @@ public class KaleoLogUpgradeProcessTest {
 				serviceContext);
 
 		_updateKaleoLogType(
-			_kaleoLogLocalService.addInstanceStartKaleoLog(
-				kaleoInstanceToken, serviceContext),
-			"WORKFLOW_INSTANCE_START");
-
-		_updateKaleoLogType(
 			_kaleoLogLocalService.addInstanceEndKaleoLog(
 				kaleoInstanceToken, serviceContext),
 			"WORKFLOW_INSTANCE_END");
+		_updateKaleoLogType(
+			_kaleoLogLocalService.addInstanceStartKaleoLog(
+				kaleoInstanceToken, serviceContext),
+			"WORKFLOW_INSTANCE_START");
 	}
 
 	@Test

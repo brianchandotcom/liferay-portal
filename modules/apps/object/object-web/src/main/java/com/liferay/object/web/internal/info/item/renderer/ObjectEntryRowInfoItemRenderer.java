@@ -106,6 +106,7 @@ public class ObjectEntryRowInfoItemRenderer
 				ObjectWebKeys.OBJECT_ENTRY_VALUES,
 				_getValues(
 					objectEntry.getExternalReferenceCode(),
+					objectEntry.getGroupId(),
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)));
 
@@ -121,7 +122,8 @@ public class ObjectEntryRowInfoItemRenderer
 	}
 
 	private Map<String, Serializable> _getValues(
-			String externalReferenceCode, ThemeDisplay themeDisplay)
+			String externalReferenceCode, long groupId,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry;
@@ -134,8 +136,7 @@ public class ObjectEntryRowInfoItemRenderer
 					null, themeDisplay.getUser()),
 				externalReferenceCode, _objectDefinition,
 				ObjectEntryInfoItemUtil.getScopeKey(
-					themeDisplay.getScopeGroupId(), _objectDefinition,
-					_objectScopeProviderRegistry));
+					groupId, _objectDefinition, _objectScopeProviderRegistry));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

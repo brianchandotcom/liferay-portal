@@ -232,27 +232,29 @@ public class ParentObjectEntryFolderBrief implements Serializable {
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The parent object entry folder's main title/name."
 	)
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
+	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
 
-			_nameSupplier = null;
+			_titleSupplier = null;
 		}
 
-		return name;
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 
-		_nameSupplier = null;
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		_titleSupplier = () -> {
 			try {
-				return nameUnsafeSupplier.get();
+				return titleUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -267,10 +269,10 @@ public class ParentObjectEntryFolderBrief implements Serializable {
 		description = "The parent object entry folder's main title/name."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String title;
 
 	@JsonIgnore
-	private Supplier<String> _nameSupplier;
+	private Supplier<String> _titleSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -357,18 +359,18 @@ public class ParentObjectEntryFolderBrief implements Serializable {
 			sb.append(_toJSON(label_i18n));
 		}
 
-		String name = getName();
+		String title = getTitle();
 
-		if (name != null) {
+		if (title != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"title\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(title));
 
 			sb.append("\"");
 		}

@@ -152,20 +152,6 @@ public class ObjectEntryFolderSerDes {
 			sb.append(_toJSON(objectEntryFolder.getLabel_i18n()));
 		}
 
-		if (objectEntryFolder.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(objectEntryFolder.getName()));
-
-			sb.append("\"");
-		}
-
 		if (objectEntryFolder.getNumberOfObjectEntries() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -237,6 +223,20 @@ public class ObjectEntryFolderSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(objectEntryFolder.getScopeKey()));
+
+			sb.append("\"");
+		}
+
+		if (objectEntryFolder.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectEntryFolder.getTitle()));
 
 			sb.append("\"");
 		}
@@ -345,13 +345,6 @@ public class ObjectEntryFolderSerDes {
 				String.valueOf(objectEntryFolder.getLabel_i18n()));
 		}
 
-		if (objectEntryFolder.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(objectEntryFolder.getName()));
-		}
-
 		if (objectEntryFolder.getNumberOfObjectEntries() == null) {
 			map.put("numberOfObjectEntries", null);
 		}
@@ -412,6 +405,13 @@ public class ObjectEntryFolderSerDes {
 				"scopeKey", String.valueOf(objectEntryFolder.getScopeKey()));
 		}
 
+		if (objectEntryFolder.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(objectEntryFolder.getTitle()));
+		}
+
 		if (objectEntryFolder.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
@@ -465,9 +465,6 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
 				return true;
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfObjectEntries")) {
 
@@ -495,6 +492,9 @@ public class ObjectEntryFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
@@ -558,11 +558,6 @@ public class ObjectEntryFolderSerDes {
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					objectEntryFolder.setName((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfObjectEntries")) {
 
@@ -609,6 +604,11 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setScopeKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

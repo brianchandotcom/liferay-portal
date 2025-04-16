@@ -791,8 +791,8 @@ class App extends EventEmitter {
 				{
 					href,
 					isScheduledNavigation: true,
+					...event,
 				},
-				...event,
 			];
 
 			return true;

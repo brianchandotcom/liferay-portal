@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -89,7 +88,7 @@ public class GeneralSXPSearchRequestBodyContributor
 
 			for (String searchableAssetType : searchableAssetTypes) {
 				String[] assetTypeIdentifier = StringUtil.split(
-					searchableAssetType, StringPool.POUND);
+					searchableAssetType, "&&");
 
 				assetTypeNameSet.add(assetTypeIdentifier[0]);
 			}
@@ -104,7 +103,7 @@ public class GeneralSXPSearchRequestBodyContributor
 
 			for (String searchableAssetType : searchableAssetTypes) {
 				String[] assetTypeIdentifier = StringUtil.split(
-					searchableAssetType, StringPool.POUND);
+					searchableAssetType, "&&");
 
 				if (assetTypeIdentifier.length <= 1) {
 					continue;

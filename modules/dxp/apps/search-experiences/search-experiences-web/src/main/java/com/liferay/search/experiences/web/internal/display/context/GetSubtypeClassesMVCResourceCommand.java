@@ -306,37 +306,37 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 	private JSONObject _getSubtypeClassesInfoJSONObject(
 		ResourceRequest resourceRequest) {
 
-		String[] ddmStructureIdentifiers = ParamUtil.getStringValues(
-			resourceRequest, "ddmStructureIdentifiers");
+		String[] subtypeClassIdentifiers = ParamUtil.getStringValues(
+			resourceRequest, "subTypeIdentifiers");
 
-		if (ddmStructureIdentifiers == null) {
+		if (subtypeClassIdentifiers == null) {
 			return null;
 		}
 
-		JSONArray ddmStructureJSONArray = _jsonFactory.createJSONArray();
+		JSONArray subtypeClassesJSONArray = _jsonFactory.createJSONArray();
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(resourceRequest, "languageId"));
 
-		for (String ddmStructureIdentifier : ddmStructureIdentifiers) {
-			String[] ddmStructureIdentifierArray = StringUtil.split(
-				ddmStructureIdentifier, "&&");
+		for (String subtypeClassIdentifier : subtypeClassIdentifiers) {
+			String[] subtypeClassIdentifierArray = StringUtil.split(
+				subtypeClassIdentifier, "&&");
 
-			String className = ddmStructureIdentifierArray[0];
+			String className = subtypeClassIdentifierArray[0];
 
 			if (className.equals(DLFileEntry.class.getName())) {
 				_addDLFileEntryTypesInfo(
-					ddmStructureJSONArray, ddmStructureIdentifierArray, locale,
-					resourceRequest);
+					subtypeClassesJSONArray, subtypeClassIdentifierArray,
+					locale, resourceRequest);
 			}
 			else if (className.equals(JournalArticle.class.getName())) {
 				_addDDMStructureInfo(
-					ddmStructureJSONArray, ddmStructureIdentifierArray, locale,
-					resourceRequest);
+					subtypeClassesJSONArray, subtypeClassIdentifierArray,
+					locale, resourceRequest);
 			}
 		}
 
-		return JSONUtil.put("subtypeClasses", ddmStructureJSONArray);
+		return JSONUtil.put("subtypeClasses", subtypeClassesJSONArray);
 	}
 
 	private JSONObject _getSubtypeClassesJSONObject(

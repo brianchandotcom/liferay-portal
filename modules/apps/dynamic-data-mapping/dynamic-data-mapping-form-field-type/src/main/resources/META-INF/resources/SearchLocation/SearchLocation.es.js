@@ -60,11 +60,8 @@ const Field = ({
 	}, [initialValid, pageValidationFailed]);
 
 	const accessibleProps = {
-		...(otherProps.tip && {
-			'aria-describedby': `${id ?? name}_fieldHelp`,
-		}),
-		...(otherProps.errorMessage && {
-			'aria-errormessage': `${id ?? name}_fieldError`,
+		...((otherProps.errorMessage || otherProps.tip) && {
+			'aria-describedby': `${id ?? name}_fieldFeedback`,
 		}),
 		'aria-invalid': !valid,
 		'aria-required': otherProps.required,

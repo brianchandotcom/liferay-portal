@@ -50,11 +50,8 @@ const NumericBase = ({
 	onChange: (formattedValue: IMaskedNumber) => void;
 }) => {
 	const accessibleProperties = {
-		...(tip && {
-			'aria-describedby': `${id ?? name}_fieldHelp`,
-		}),
-		...(errorMessage && {
-			'aria-errormessage': `${id ?? name}_fieldError`,
+		...((errorMessage || tip) && {
+			'aria-describedby': `${id ?? name}_fieldFeedback`,
 		}),
 		'aria-invalid': !valid,
 		'aria-required': required,

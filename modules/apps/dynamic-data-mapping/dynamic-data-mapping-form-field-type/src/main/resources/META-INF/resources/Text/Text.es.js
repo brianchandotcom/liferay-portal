@@ -168,7 +168,6 @@ const Text = ({
 						{...(htmlAutocompleteAttribute && {
 							autoComplete: htmlAutocompleteAttribute,
 						})}
-						aria-describedby={`${name}_fieldError`}
 						className="ddm-field-text"
 						dir={Liferay.Language.direction[editingLanguageId]}
 						disabled={disabled}
@@ -519,11 +518,8 @@ const Main = ({
 		>
 			<Component
 				accessibleProps={{
-					...(otherProps.tip && {
-						'aria-describedby': `${id ?? name}_fieldHelp`,
-					}),
-					...(otherProps.errorMessage && {
-						'aria-errormessage': `${id ?? name}_fieldError`,
+					...((otherProps.errorMessage || otherProps.tip) && {
+						'aria-describedby': `${otherProps.id ?? name}_fieldFeedback`,
 					}),
 					'aria-invalid': !valid,
 					'aria-required': otherProps.required,

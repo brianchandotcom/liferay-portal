@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -45,6 +48,15 @@ public class CommerceOrderModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CommerceOrder commerceOrder) {
+		document.setSortableTextFields(
+			ArrayUtil.append(
+				PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS),
+				new String[] {
+					Field.NAME, Field.USER_NAME, "accountName",
+					"commerceOrderTypeExternalReferenceCode",
+					"externalReferenceCode", "purchaseOrderNumber"
+				}));
+
 		try {
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(

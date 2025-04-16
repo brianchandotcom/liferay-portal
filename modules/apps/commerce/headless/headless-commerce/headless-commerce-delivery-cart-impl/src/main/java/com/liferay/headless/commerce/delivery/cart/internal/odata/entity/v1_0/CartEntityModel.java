@@ -47,26 +47,22 @@ public class CartEntityModel implements EntityModel {
 				"orderId",
 				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK)),
 			new StringEntityField(
-				"account", locale -> Field.getSortableFieldName("accountName"),
-				locale -> "accountName"),
+				"account", locale -> Field.getSortableFieldName("accountName")),
 			new StringEntityField(
-				"author", locale -> Field.getSortableFieldName(Field.USER_NAME),
-				locale -> Field.USER_NAME),
+				"author",
+				locale -> Field.getSortableFieldName(Field.USER_NAME)),
 			new StringEntityField(
 				"externalReferenceCode",
-				locale -> Field.getSortableFieldName("externalReferenceCode"),
-				locale -> "externalReferenceCode"),
+				locale -> Field.getSortableFieldName("externalReferenceCode")),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME),
-				locale -> Field.NAME),
+				"name", locale -> Field.getSortableFieldName(Field.NAME)),
 			new StringEntityField(
 				"orderType",
 				locale -> Field.getSortableFieldName("commerceOrderTypeName"),
 				locale -> "commerceOrderTypeName"),
 			new StringEntityField(
 				"purchaseOrderNumber",
-				locale -> Field.getSortableFieldName("purchaseOrderNumber"),
-				locale -> "purchaseOrderNumber"));
+				locale -> Field.getSortableFieldName("purchaseOrderNumber")));
 	}
 
 	@Override

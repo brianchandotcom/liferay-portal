@@ -12,10 +12,9 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
+import { createChannel } from './utils/channel';
 import {createIndividuals} from './utils/individuals';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
-import {createSitePage} from './utils/portal';
 import {CardSelectors} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {viewNameOnTableList} from './utils/utils';
@@ -33,45 +32,26 @@ export const test = mergeTests(
 const randomString = getRandomString();
 
 const channelName = 'My Property ' + randomString;
-const pageTitle = 'My Page';
-const siteName = 'My Site ' + randomString;
 
 let channel;
 let project;
-let site;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
-	});
-
-	await createSitePage({
+test.beforeEach(async ({apiHelpers}) => {
+	const result = await createChannel({
 		apiHelpers,
-		pageTitle,
-		siteName,
-	});
-
-	const result = await syncAnalyticsCloud({
-		apiHelpers,
-		channelName,
-		page,
-		siteName,
+		channelName
 	});
 
 	channel = result.channel;
 	project = result.project;
 });
 
-test.afterEach(async ({apiHelpers, page}) => {
+test.afterEach(async ({apiHelpers}) => {
 	await test.step('Delete channel and delete site on the DXP side', async () => {
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
 		);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
 

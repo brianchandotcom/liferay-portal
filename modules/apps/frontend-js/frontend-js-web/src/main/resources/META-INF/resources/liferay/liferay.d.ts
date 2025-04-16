@@ -249,17 +249,17 @@ declare module Liferay {
 		export function getDefaultLanguageId(): Language.Locale;
 		export function getLanguageId(): Language.Locale;
 		export function getPathContext(): string;
+		export function getPathMain(): string;
 		export function getPathThemeImages(): string;
 		export function getPathThemeSpritemap(): string;
 		export function getPortalURL(): string;
-		export function getTimeZone(): string;
+		export function getRealUserId(): string;
 		export function getSiteGroupId(): number;
+		export function getTimeZone(): string;
 		export function getUserId(): string;
 		export function isControlPanel(): boolean;
 		export function isImpersonated(): boolean;
 		export function isSignedIn(): boolean;
-		export function getRealUserId(): string;
-		export function getPathMain(): string;
 	}
 
 	namespace Util {

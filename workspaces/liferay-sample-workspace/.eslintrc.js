@@ -30,7 +30,6 @@ const config = {
 	plugins: ['@liferay', 'sort-class-members'],
 	root: true,
 	rules: {
-		"@typescript-eslint/member-ordering": "error"
 		"sort-class-members/sort-class-members": 2,
 		'@liferay/empty-line-between-elements': 'off',
 		'@liferay/import-extensions': 'off',

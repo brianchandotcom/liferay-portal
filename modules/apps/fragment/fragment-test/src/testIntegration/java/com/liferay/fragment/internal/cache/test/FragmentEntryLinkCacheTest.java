@@ -16,6 +16,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -25,11 +26,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -58,6 +63,7 @@ public class FragmentEntryLinkCacheTest {
 	}
 
 	@Test
+	@TestInfo("LPD-53565")
 	public void testFragmentEntryLinkCache() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -128,6 +134,27 @@ public class FragmentEntryLinkCacheTest {
 		Assert.assertNull(
 			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
 				fragmentEntryLink, locale));
+
+		long randomLong = RandomTestUtil.randomLong();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.fragment.internal.cache." +
+					"FragmentEntryLinkCacheImpl",
+				LoggerTestUtil.DEBUG)) {
+
+			_fragmentEntryLinkCache.removeFragmentEntryLinkCache(randomLong);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"No FragmentEntryLink exists with the fragment entry link ID " +
+					randomLong,
+				logEntry.getMessage());
+		}
 	}
 
 	@Inject

@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.internal.resource.v1_0.CollaboratorResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
@@ -432,6 +433,7 @@ public class ObjectEntryOpenAPIResourceImpl
 			openAPISchemaFilter,
 			new HashSet<Class<?>>() {
 				{
+					add(CollaboratorResourceImpl.class);
 					add(ObjectEntryRelatedObjectsResourceImpl.class);
 					add(ObjectEntryResourceImpl.class);
 					add(OpenAPIResourceImpl.class);

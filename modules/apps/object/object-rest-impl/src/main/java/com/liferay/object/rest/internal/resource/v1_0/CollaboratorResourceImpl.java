@@ -7,10 +7,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.rest.resource.v1_0.CollaboratorResource;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -37,14 +34,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
-
 /**
- * @author Javier Gamarra
+ * @author Mikel Lorza
  */
 public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
+
+	public CollaboratorResourceImpl(
+		ClassNameLocalService classNameLocalService,
+		DTOConverter<SharingEntry, Collaborator> collaboratorDTOConverter,
+		DTOConverterRegistry dtoConverterRegistry,
+		GroupLocalService groupLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
+		SharingEntryService sharingEntryService,
+		SharingEntryLocalService sharingEntryLocalService,
+		UserGroupLocalService userGroupLocalService,
+		UserLocalService userLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+		_collaboratorDTOConverter = collaboratorDTOConverter;
+		_dtoConverterRegistry = dtoConverterRegistry;
+		_groupLocalService = groupLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
+		_sharingEntryService = sharingEntryService;
+		_sharingEntryLocalService = sharingEntryLocalService;
+		_userGroupLocalService = userGroupLocalService;
+		_userLocalService = userLocalService;
+	}
 
 	@Override
 	public Page<Collaborator> getObjectEntryCollaboratorsPage(
@@ -234,39 +249,15 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			sharingEntry);
 	}
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference(
-		target = "(component.name=com.liferay.object.rest.internal.dto.v1_0.converter.CollaboratorDTOConverter)"
-	)
-	private DTOConverter<SharingEntry, Collaborator> _collaboratorDTOConverter;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectEntryService _objectEntryService;
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Reference
-	private SharingEntryService _sharingEntryService;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final ClassNameLocalService _classNameLocalService;
+	private final DTOConverter<SharingEntry, Collaborator>
+		_collaboratorDTOConverter;
+	private final DTOConverterRegistry _dtoConverterRegistry;
+	private final GroupLocalService _groupLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final SharingEntryLocalService _sharingEntryLocalService;
+	private final SharingEntryService _sharingEntryService;
+	private final UserGroupLocalService _userGroupLocalService;
+	private final UserLocalService _userLocalService;
 
 }

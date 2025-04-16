@@ -58,6 +58,10 @@ public class LogoSelectorTag extends IncludeTag {
 		return _portletNamespace;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	public boolean isDisabled() {
 		return _disabled;
 	}
@@ -105,6 +109,10 @@ public class LogoSelectorTag extends IncludeTag {
 		_preserveRatio = preserveRatio;
 	}
 
+	public void setType(String type) {
+		_type = type;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -117,6 +125,7 @@ public class LogoSelectorTag extends IncludeTag {
 		_label = null;
 		_portletNamespace = null;
 		_preserveRatio = false;
+		_type = null;
 	}
 
 	@Override
@@ -199,6 +208,8 @@ public class LogoSelectorTag extends IncludeTag {
 			"preserveRatio", isPreserveRatio()
 		).setParameter(
 			"randomNamespace", randomNamespace
+		).setParameter(
+			"type", getType()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -214,5 +225,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _label;
 	private String _portletNamespace;
 	private boolean _preserveRatio;
+	private String _type;
 
 }

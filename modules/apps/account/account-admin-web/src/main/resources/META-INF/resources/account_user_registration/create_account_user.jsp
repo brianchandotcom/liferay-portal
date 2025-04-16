@@ -80,6 +80,7 @@ portletDisplay.setURLBack(backURL);
 					currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 					label='<%= LanguageUtil.get(request, "image") %>'
+					type="user_portrait"
 				/>
 
 				<aui:input name="screenName">

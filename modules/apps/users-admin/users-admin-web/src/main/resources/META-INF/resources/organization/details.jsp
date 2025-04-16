@@ -38,6 +38,7 @@ if (organization != null) {
 	currentLogoURL='<%= (organization != null) ? organization.getLogoURL() : themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 	defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 	label='<%= LanguageUtil.get(request, "image") %>'
+	type="organization_portrait"
 />
 
 <aui:input name="name" />

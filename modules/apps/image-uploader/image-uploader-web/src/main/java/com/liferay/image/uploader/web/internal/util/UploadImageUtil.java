@@ -30,6 +30,7 @@ public class UploadImageUtil {
 
 	public static long getMaxFileSize(PortletRequest portletRequest) {
 		String currentLogoURL = portletRequest.getParameter("currentLogoURL");
+		String type = portletRequest.getParameter("type");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -45,7 +46,9 @@ public class UploadImageUtil {
 				themeDisplay.getPathImage() + "/user_male_portrait") ||
 			StringUtil.startsWith(
 				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_portrait")) {
+				themeDisplay.getPathImage() + "/user_portrait") ||
+			StringUtil.equals(type, "organization_portrait") ||
+			StringUtil.equals(type, "user_portrait")) {
 
 			UserFileUploadsSettings userFileUploadsSettings =
 				_userFileUploadSettingsSnapshot.get();

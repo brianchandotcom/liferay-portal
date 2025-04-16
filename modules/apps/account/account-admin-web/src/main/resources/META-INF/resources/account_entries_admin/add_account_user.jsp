@@ -83,6 +83,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 				currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 				defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 				label='<%= LanguageUtil.get(request, "image") %>'
+				type="user_portrait"
 			/>
 
 			<aui:input label="job-title" maxlength='<%= ModelHintsUtil.getMaxLength(Contact.class.getName(), "jobTitle") %>' name="jobTitle" type="text" />

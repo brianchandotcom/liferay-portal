@@ -78,6 +78,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 					defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
 					label='<%= LanguageUtil.get(request, "image") %>'
 					preserveRatio="<%= true %>"
+					type="user_portrait"
 				/>
 			</c:when>
 			<c:otherwise>
@@ -92,6 +93,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 			label='<%= LanguageUtil.get(request, "image") %>'
 			preserveRatio="<%= true %>"
+			type="user_portrait"
 		/>
 	</c:otherwise>
 </c:choose>

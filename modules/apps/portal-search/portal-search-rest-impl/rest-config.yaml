@@ -7,6 +7,6 @@ application:
 author: "Petteri Karttunen"
 changeTrackingEnabled: true
 clientDir: "../portal-search-rest-client/src/main/java"
-compatibilityVersion: 8
+compatibilityVersion: 9
 forcePredictableOperationId: true
 testDir: "../portal-search-rest-test/src/testIntegration/java"

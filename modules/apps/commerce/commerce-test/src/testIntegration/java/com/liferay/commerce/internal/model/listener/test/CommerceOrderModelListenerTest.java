@@ -190,6 +190,7 @@ public class CommerceOrderModelListenerTest {
 				Address.class.getName(), commerceAddress.getCommerceAddressId(),
 				_commerceChannel.getCommerceChannelId(), true, 0,
 				CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS);
+
 		_commerceChannelAccountEntryRelLocalService.
 			addCommerceChannelAccountEntryRel(
 				_user.getUserId(), _accountEntry.getAccountEntryId(),

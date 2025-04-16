@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
@@ -48,8 +47,7 @@ public class UpgradeSCSSNodeSassPatternsCheck extends BaseUpgradeCheck {
 		}
 
 		if (replaced) {
-			newContent = StringBundler.concat(
-				"@use \"sass:math\";", StringPool.NEW_LINE, newContent);
+			newContent = "@use \"sass:math\";\n" + newContent;
 		}
 
 		Matcher interpolationMatcher = _interpolationPattern.matcher(content);

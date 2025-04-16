@@ -6,7 +6,6 @@
 package com.liferay.portal.sharepoint;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -128,15 +127,12 @@ public class SharepointServlet extends HttpServlet {
 		ServletResponseUtil.write(
 			httpServletResponse,
 			StringBundler.concat(
-				"<!-- FrontPage Configuration Information", StringPool.NEW_LINE,
-				" FPVersion=\"6.0.2.9999\"", StringPool.NEW_LINE,
-				"FPShtmlScriptUrl=\"_vti_bin/shtml.dll/_vti_rpc\"",
-				StringPool.NEW_LINE,
-				"FPAuthorScriptUrl=\"_vti_bin/_vti_aut/author.dll\"",
-				StringPool.NEW_LINE,
-				"FPAdminScriptUrl=\"_vti_bin/_vti_adm/admin.dll\"",
-				StringPool.NEW_LINE, "TPScriptUrl=\"_vti_bin/owssvr.dll\"",
-				StringPool.NEW_LINE, "-->"));
+				"<!-- FrontPage Configuration Information\n ",
+				"FPVersion=\"6.0.2.9999\"\n",
+				"FPShtmlScriptUrl=\"_vti_bin/shtml.dll/_vti_rpc\"\n",
+				"FPAuthorScriptUrl=\"_vti_bin/_vti_aut/author.dll\"\n",
+				"FPAdminScriptUrl=\"_vti_bin/_vti_adm/admin.dll\"\n",
+				"TPScriptUrl=\"_vti_bin/owssvr.dll\"\n-->"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

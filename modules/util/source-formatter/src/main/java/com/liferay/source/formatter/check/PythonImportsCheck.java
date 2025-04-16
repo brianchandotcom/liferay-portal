@@ -68,13 +68,12 @@ public class PythonImportsCheck extends BaseFileCheck {
 
 		Collections.sort(importNames);
 
-		StringBundler sb = new StringBundler((importNames.size() * 3) + 1);
+		StringBundler sb = new StringBundler((importNames.size() * 2) + 1);
 
 		sb.append(StringPool.NEW_LINE);
 
 		for (String importName : importNames) {
-			sb.append(StringPool.NEW_LINE);
-			sb.append("import ");
+			sb.append("\nimport ");
 			sb.append(importName);
 		}
 

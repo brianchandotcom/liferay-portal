@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -52,7 +51,7 @@ public class UpgradeJavaStorageTypeAwareCheck extends BaseUpgradeCheck {
 			newContent = StringUtil.removeSubstring(
 				newContent,
 				"import com.liferay.portal.kernel.scheduler.StorageTypeAware;" +
-					StringPool.NEW_LINE);
+					"\n");
 		}
 
 		return newContent;

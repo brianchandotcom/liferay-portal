@@ -85,11 +85,9 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 	private String _getNewMethodCall(
 		String methodCall, List<String> parameterNames, String variableName) {
 
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append(StringPool.TAB);
-		sb.append(StringPool.TAB);
-		sb.append("InputStream inputStream = ");
+		sb.append("\t\tInputStream inputStream = ");
 		sb.append(getVariableName(methodCall));
 		sb.append(".getFileAsStream(");
 		sb.append(StringUtil.merge(parameterNames, ", "));

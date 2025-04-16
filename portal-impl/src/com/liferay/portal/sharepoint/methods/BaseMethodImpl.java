@@ -58,12 +58,10 @@ public abstract class BaseMethodImpl implements Method {
 
 		List<ResponseElement> elements = getElements(sharepointRequest);
 
-		StringBundler sb = new StringBundler(elements.size() + 9);
+		StringBundler sb = new StringBundler(elements.size() + 5);
 
-		sb.append("<html><head><title>vermeer RPC packet</title></head>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("<body>");
-		sb.append(StringPool.NEW_LINE);
+		sb.append("<html><head><title>vermeer RPC packet</title></head>\n");
+		sb.append("<body>\n");
 
 		Property property = new Property(
 			"method", getMethodName() + ":" + SharepointUtil.VERSION);
@@ -74,9 +72,7 @@ public abstract class BaseMethodImpl implements Method {
 			sb.append(element.parse());
 		}
 
-		sb.append("</body>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("</html>");
+		sb.append("</body>\n</html>");
 
 		if (appendNewline) {
 			sb.append(StringPool.NEW_LINE);

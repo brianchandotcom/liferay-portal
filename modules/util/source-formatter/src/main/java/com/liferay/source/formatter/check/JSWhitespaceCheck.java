@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -23,14 +22,12 @@ public class JSWhitespaceCheck extends WhitespaceCheck {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				StringPool.TAB + "else{", StringPool.TAB + "for(",
-				StringPool.TAB + "if(", StringPool.TAB + "while(",
-				" function (", "){\n", "= new Array();", "= new Object();"
+				"\telse{", "\tfor(", "\tif(", "\twhile(", " function (", "){\n",
+				"= new Array();", "= new Object();"
 			},
 			new String[] {
-				StringPool.TAB + "else {", StringPool.TAB + "for (",
-				StringPool.TAB + "if (", StringPool.TAB + "while (",
-				" function(", ") {\n", "= [];", "= {};"
+				"\telse {", "\tfor (", "\tif (", "\twhile (", " function(",
+				") {\n", "= [];", "= {};"
 			});
 
 		return super.doProcess(fileName, absolutePath, content);

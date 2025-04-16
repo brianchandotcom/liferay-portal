@@ -32,7 +32,6 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -148,9 +147,7 @@ public class CommerceOrderImporterTypeTest {
 
 		String fileName = "test_failed_csv_import.csv";
 
-		String fileContent = StringBundler.concat(
-			"sku,quantity", StringPool.NEW_LINE, "erc-test-fail,1",
-			StringPool.NEW_LINE, "erc-test,0");
+		String fileContent = "sku,quantity\nerc-test-fail,1\nerc-test,0";
 
 		File file = FileUtil.createTempFile(fileContent.getBytes());
 
@@ -218,8 +215,7 @@ public class CommerceOrderImporterTypeTest {
 
 		String fileName = "test_successful_csv_import.csv";
 
-		String fileContent = StringBundler.concat(
-			"sku,quantity", StringPool.NEW_LINE, "erc-test2,1");
+		String fileContent = "sku,quantity\nerc-test2,1";
 
 		File file = FileUtil.createTempFile(fileContent.getBytes());
 

@@ -167,7 +167,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					deprecationFeatureFlagKeyMatcher.group(1));
 			}
 
-			StringBundler sb = new StringBundler(featureFlagKeys.size() * 15);
+			StringBundler sb = new StringBundler(featureFlagKeys.size() * 6);
 
 			for (String featureFlagKey : featureFlagKeys) {
 				String featureFlagPropertyKey =
@@ -176,18 +176,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				String environmentVariable =
 					ToolsUtil.encodeEnvironmentProperty(featureFlagPropertyKey);
 
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(StringPool.POUND);
-				sb.append(StringPool.NEW_LINE);
-				sb.append("    # Env: ");
+				sb.append("\n\n    #\n    # Env: ");
 				sb.append(environmentVariable);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(StringPool.POUND);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
+				sb.append("\n    #\n    ");
 				sb.append(featureFlagPropertyKey);
 				sb.append(StringPool.EQUAL);
 
@@ -216,7 +207,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	private String _generateFeatureFlagUIProperties(
 		Map<String, String> properties) {
 
-		StringBundler sb = new StringBundler(properties.size() * 15);
+		StringBundler sb = new StringBundler(properties.size() * 6);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String key = entry.getKey();
@@ -224,18 +215,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			String environmentVariable = ToolsUtil.encodeEnvironmentProperty(
 				key);
 
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(StringPool.POUND);
-			sb.append(StringPool.NEW_LINE);
-			sb.append("    # Env: ");
+			sb.append("\n\n    #\n    # Env: ");
 			sb.append(environmentVariable);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(StringPool.POUND);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
+			sb.append("\n    #\n    ");
 			sb.append(key);
 			sb.append(StringPool.EQUAL);
 			sb.append(entry.getValue());

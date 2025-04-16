@@ -6,6 +6,6 @@ application:
     name: "Liferay.Digital.Signature.REST"
 author: "José Abelenda"
 clientDir: "../digital-signature-rest-client/src/main/java"
-compatibilityVersion: 8
+compatibilityVersion: 9
 forcePredictableOperationId: true
 testDir: "../digital-signature-rest-test/src/testIntegration/java"

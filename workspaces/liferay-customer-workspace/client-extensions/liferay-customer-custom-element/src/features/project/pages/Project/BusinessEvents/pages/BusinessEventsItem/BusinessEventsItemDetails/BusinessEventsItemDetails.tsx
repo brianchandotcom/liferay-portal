@@ -275,14 +275,14 @@ const BusinessEventsItemDetails = () => {
 									{getFormattedDate(
 										businessEvent?.targetGoLiveDateTime,
 										'day2DMonthSYearN',
-										'GMT'
+										'UTC'
 									)}
 								</div>
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
 										businessEvent?.targetGoLiveDateTime,
-										'GMT'
+										'UTC'
 									)}
 								</div>
 							</div>
@@ -300,14 +300,14 @@ const BusinessEventsItemDetails = () => {
 									{getFormattedDate(
 										businessEvent?.actualGoLiveDateTime,
 										'day2DMonthSYearN',
-										'GMT'
+										'UTC'
 									)}
 								</div>
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
 										businessEvent?.actualGoLiveDateTime,
-										'GMT'
+										'UTC'
 									)}
 								</div>
 							</div>

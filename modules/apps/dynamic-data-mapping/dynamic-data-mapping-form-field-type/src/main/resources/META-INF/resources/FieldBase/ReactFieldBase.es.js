@@ -749,7 +749,6 @@ export default function FieldBase({
 			)}
 
 			<FieldFeedback
-				aria-hidden={readFieldDetails}
 				errorMessage={hasError ? errorMessage : undefined}
 				helpMessage={typeof tip === 'string' ? tip : undefined}
 				id={`${id ?? name}_fieldFeedback`}

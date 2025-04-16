@@ -103,6 +103,14 @@ public class SharingEntryServiceUtil {
 	}
 
 	public static SharingEntry deleteSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().deleteSharingEntry(
+			toUserGroupId, toUserId, classNameId, classPK);
+	}
+
+	public static SharingEntry deleteSharingEntry(
 			long sharingEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -153,6 +161,14 @@ public class SharingEntryServiceUtil {
 		throws PortalException {
 
 		return getService().getSharingEntry(sharingEntryId);
+	}
+
+	public static SharingEntry getSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().getSharingEntry(
+			toUserGroupId, toUserId, classNameId, classPK);
 	}
 
 	public static SharingEntry getSharingEntryByExternalReferenceCode(

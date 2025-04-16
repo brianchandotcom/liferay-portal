@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,15 +66,132 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_objectEntryFolder = _addObjectEntryFolder();
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
+		throws Exception {
+
+		Long irrelevantObjectEntryFolderId = RandomTestUtil.randomLong();
+		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolderCollaboratorByTypeCollaborator" +
+							"TypeCollaborator",
+						HashMapBuilder.<String, Object>put(
+							"collaboratorId", irrelevantCollaboratorId
+						).put(
+							"collaboratorType", "\"User\""
+						).put(
+							"objectEntryFolderId", irrelevantObjectEntryFolderId
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"objectEntryFolderCollaboratorByType" +
+								"CollaboratorTypeCollaborator",
+							HashMapBuilder.<String, Object>put(
+								"collaboratorId", irrelevantCollaboratorId
+							).put(
+								"collaboratorType", "\"User\""
+							).put(
+								"objectEntryFolderId",
+								irrelevantObjectEntryFolderId
+							).build(),
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
+		throws Exception {
+
+		String irrelevantScopeKey = "\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"scopeScopeKeyObjectEntryFolderByExternalReference" +
+							"CodeCollaboratorByTypeCollaboratorType" +
+								"Collaborator",
+						HashMapBuilder.<String, Object>put(
+							"collaboratorId", irrelevantCollaboratorId
+						).put(
+							"collaboratorType", "\"User\""
+						).put(
+							"externalReferenceCode",
+							irrelevantExternalReferenceCode
+						).put(
+							"scopeKey", irrelevantScopeKey
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessObject_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessObject_v1_0",
+						new GraphQLField(
+							"scopeScopeKeyObjectEntryFolderByExternal" +
+								"ReferenceCodeCollaboratorByTypeCollaborator" +
+									"TypeCollaborator",
+							HashMapBuilder.<String, Object>put(
+								"collaboratorId", irrelevantCollaboratorId
+							).put(
+								"collaboratorType", "\"User\""
+							).put(
+								"externalReferenceCode",
+								irrelevantExternalReferenceCode
+							).put(
+								"scopeKey", irrelevantScopeKey
+							).build(),
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	@Override
 	@Test
 	public void testPostObjectEntryFolderCollaboratorsPage() throws Exception {
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder();
 
-		_addUserCollaborator(
-			_classNameLocalService.getClassNameId(
-				ObjectEntryFolder.class.getName()),
-			objectEntryFolder.getObjectEntryFolderId());
+		_addUserCollaborator(objectEntryFolder);
 
 		Collaborator[] collaborators = {
 			_getUserCollaborator(), _getUserGroupCollaborator(),
@@ -94,10 +213,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder();
 
-		_addUserCollaborator(
-			_classNameLocalService.getClassNameId(
-				ObjectEntryFolder.class.getName()),
-			objectEntryFolder.getObjectEntryFolderId());
+		_addUserCollaborator(objectEntryFolder);
 
 		Collaborator[] collaborators = {
 			_getUserCollaborator(), _getUserGroupCollaborator(),
@@ -116,21 +232,53 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator()
+		throws Exception {
+
+		Collaborator postCollaborator =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
+
+		Collaborator randomCollaborator = randomCollaborator();
+
+		Collaborator putCollaborator =
+			collaboratorResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					postCollaborator.getId(), randomCollaborator);
+
+		assertEquals(randomCollaborator, putCollaborator);
+		assertValid(putCollaborator);
+
+		Collaborator getCollaborator =
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType(),
+					putCollaborator.getId());
+
+		assertEquals(randomCollaborator, getCollaborator);
+		assertValid(getCollaborator);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {
-			"actionIds", "dateExpired", "externalReferenceCode", "name",
-			"share", "type"
-		};
+		return new String[] {"actionIds", "dateExpired", "share", "type"};
 	}
 
 	@Override
 	protected Collaborator randomCollaborator() throws Exception {
 		return new Collaborator() {
 			{
+				actionIds = new String[] {
+					SharingEntryAction.VIEW.getActionId()
+				};
 				dateExpired = _randomDatePlusAYear();
-				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				portrait = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				share = RandomTestUtil.randomBoolean();
@@ -141,14 +289,94 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 	@Override
 	protected Collaborator
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected Long
+			testDeleteObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		return _objectEntryFolder.getObjectEntryFolderId();
+	}
+
+	@Override
+	protected Collaborator
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return _objectEntryFolder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		return testGroup.getGroupKey();
+	}
+
+	@Override
+	protected Collaborator
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserGroupCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER_GROUP.getValue();
+	}
+
+	@Override
+	protected Long
+			testGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		return _objectEntryFolder.getObjectEntryFolderId();
+	}
+
+	@Override
+	protected Collaborator
 			testGetObjectEntryFolderCollaboratorsPage_addCollaborator(
 				Long objectEntryFolderId, Collaborator collaborator)
 		throws Exception {
 
 		return _addUserGroupCollaborator(
-			_classNameLocalService.getClassNameId(
-				ObjectEntryFolder.class.getName()),
-			objectEntryFolderId);
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolderId));
 	}
 
 	@Override
@@ -156,9 +384,40 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			testGetObjectEntryFolderCollaboratorsPage_getObjectEntryFolderId()
 		throws Exception {
 
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder();
+		return _objectEntryFolder.getObjectEntryFolderId();
+	}
 
-		return objectEntryFolder.getObjectEntryFolderId();
+	@Override
+	protected Collaborator
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return _objectEntryFolder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		return testGroup.getGroupKey();
 	}
 
 	@Override
@@ -168,16 +427,11 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 				Collaborator collaborator)
 		throws Exception {
 
-		ObjectEntryFolder objectEntryFolder =
+		return _addUserCollaborator(
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
 					externalReferenceCode, testGroup.getGroupId(),
-					testCompany.getCompanyId());
-
-		return _addUserCollaborator(
-			_classNameLocalService.getClassNameId(
-				ObjectEntryFolder.class.getName()),
-			objectEntryFolder.getObjectEntryFolderId());
+					testCompany.getCompanyId()));
 	}
 
 	@Override
@@ -198,6 +452,111 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		return testGroup.getGroupKey();
 	}
 
+	@Override
+	protected Collaborator testGraphQLCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		return _objectEntryFolder.getObjectEntryFolderId();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return _objectEntryFolder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		return testGroup.getGroupKey();
+	}
+
+	@Override
+	protected Collaborator
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected Long
+			testPutObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaborator_getObjectEntryFolderId()
+		throws Exception {
+
+		return _objectEntryFolder.getObjectEntryFolderId();
+	}
+
+	@Override
+	protected Collaborator
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator()
+		throws Exception {
+
+		return _addUserCollaborator(_objectEntryFolder);
+	}
+
+	@Override
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getCollaboratorType()
+		throws Exception {
+
+		return Collaborator.Type.USER.getValue();
+	}
+
+	@Override
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
+		throws Exception {
+
+		return _objectEntryFolder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_getScopeKey()
+		throws Exception {
+
+		return testGroup.getGroupKey();
+	}
+
 	private ObjectEntryFolder _addObjectEntryFolder() throws Exception {
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
@@ -208,7 +567,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
-	private Collaborator _addUserCollaborator(long classNameId, long classPK)
+	private Collaborator _addUserCollaborator(
+			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		User user = _getUser();
@@ -216,14 +576,17 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
 				null, TestPropsValues.getUserId(), 0, user.getUserId(),
-				classNameId, classPK, testGroup.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null,
+				_classNameLocalService.getClassNameId(
+					ObjectEntryFolder.class.getName()),
+				objectEntryFolder.getObjectEntryFolderId(),
+				objectEntryFolder.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), _randomDatePlusAYear(),
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 	}
 
 	private Collaborator _addUserGroupCollaborator(
-			long classNameId, long classPK)
+			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		UserGroup userGroup = _getUserGroup();
@@ -231,8 +594,12 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
 				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
-				0, classNameId, classPK, testGroup.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null,
+				0,
+				_classNameLocalService.getClassNameId(
+					ObjectEntryFolder.class.getName()),
+				objectEntryFolder.getObjectEntryFolderId(),
+				testGroup.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), _randomDatePlusAYear(),
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 	}
@@ -268,6 +635,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 				};
 				dateExpired = _randomDatePlusAYear();
 				externalReferenceCode = user.getExternalReferenceCode();
+				id = user.getUserId();
 				name = user.getFullName();
 				share = true;
 				type = Type.USER;
@@ -293,6 +661,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 				};
 				dateExpired = _randomDatePlusAYear();
 				externalReferenceCode = userGroup.getExternalReferenceCode();
+				id = userGroup.getUserGroupId();
 				name = userGroup.getName();
 				share = true;
 				type = Type.USER_GROUP;
@@ -324,6 +693,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 						SharingEntryAction::getActionId, String.class);
 					dateExpired = sharingEntry.getExpirationDate();
 					externalReferenceCode = user.getExternalReferenceCode();
+					id = user.getUserId();
 					name = user.getFullName();
 					share = sharingEntry.isShareable();
 					type = Type.USER;
@@ -342,6 +712,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 					SharingEntryAction::getActionId, String.class);
 				dateExpired = sharingEntry.getExpirationDate();
 				externalReferenceCode = userGroup.getExternalReferenceCode();
+				id = userGroup.getUserGroupId();
 				name = userGroup.getName();
 				share = sharingEntry.isShareable();
 				type = Type.USER_GROUP;
@@ -354,6 +725,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	private ObjectEntryFolder _objectEntryFolder;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

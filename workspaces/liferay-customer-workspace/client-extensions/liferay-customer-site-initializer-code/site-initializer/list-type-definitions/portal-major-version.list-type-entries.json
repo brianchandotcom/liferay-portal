@@ -1,41 +1,41 @@
 [
 	{
-		"key": "62",
-		"name": "6.2",
+		"key": "portal62",
+		"name": "Portal 6.2",
 		"name_i18n": {
-			"en-US": "6.2"
+			"en-US": "Portal 6.2"
 		},
 		"type": "string"
 	},
 	{
-		"key": "61",
-		"name": "6.1",
+		"key": "portal61",
+		"name": "Portal 6.1",
 		"name_i18n": {
-			"en-US": "6.1"
+			"en-US": "Portal 6.1"
 		},
 		"type": "string"
 	},
 	{
-		"key": "60",
-		"name": "6.0",
+		"key": "portal60",
+		"name": "Portal 6.0",
 		"name_i18n": {
-			"en-US": "6.0"
+			"en-US": "Portal 6.0"
 		},
 		"type": "string"
 	},
 	{
-		"key": "52",
-		"name": "5.2",
+		"key": "portal52",
+		"name": "Portal 5.2",
 		"name_i18n": {
-			"en-US": "5.2"
+			"en-US": "Portal 5.2"
 		},
 		"type": "string"
 	},
 	{
-		"key": "51",
-		"name": "5.1",
+		"key": "portal51",
+		"name": "Portal 5.1",
 		"name_i18n": {
-			"en-US": "5.1"
+			"en-US": "Portal 5.1"
 		},
 		"type": "string"
 	}

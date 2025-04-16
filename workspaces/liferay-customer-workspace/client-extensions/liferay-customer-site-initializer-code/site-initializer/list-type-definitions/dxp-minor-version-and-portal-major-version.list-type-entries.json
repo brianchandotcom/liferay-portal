@@ -1,129 +1,129 @@
 [
 	{
-		"key": "2025q10",
-		"name": "2025.Q1.0 (LTS)",
+		"key": "dxp2025q10",
+		"name": "DXP 2025.Q1.0 (LTS)",
 		"name_i18n": {
-			"en-US": "2025.Q1.0 (LTS)"
+			"en-US": "DXP 2025.Q1.0 (LTS)"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2024q43",
-		"name": "2024.Q4.3",
+		"key": "dxp2024q43",
+		"name": "DXP 2024.Q4.3",
 		"name_i18n": {
-			"en-US": "2024.Q4.3"
+			"en-US": "DXP 2024.Q4.3"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2024q313",
-		"name": "2024.Q3.13",
+		"key": "dxp2024q313",
+		"name": "DXP 2024.Q3.13",
 		"name_i18n": {
-			"en-US": "2024.Q3.13"
+			"en-US": "DXP 2024.Q3.13"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2024q212",
-		"name": "2024.Q2.12",
+		"key": "dxp2024q212",
+		"name": "DXP 2024.Q2.12",
 		"name_i18n": {
-			"en-US": "2024.Q2.12"
+			"en-US": "DXP 2024.Q2.12"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2024q112",
-		"name": "2024.Q1.12 (LTS)",
+		"key": "dxp2024q112",
+		"name": "DXP 2024.Q1.12 (LTS)",
 		"name_i18n": {
-			"en-US": "2024.Q1.12 (LTS)"
+			"en-US": "DXP 2024.Q1.12 (LTS)"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2024q11",
-		"name": "2024.Q1.1 (LTS)",
+		"key": "dxp2024q11",
+		"name": "DXP 2024.Q1.1 (LTS)",
 		"name_i18n": {
-			"en-US": "2024.Q1.1 (LTS)"
+			"en-US": "DXP 2024.Q1.1 (LTS)"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2023q49",
-		"name": "2023.Q4.9",
+		"key": "dxp2023q49",
+		"name": "DXP 2023.Q4.9",
 		"name_i18n": {
-			"en-US": "2023.Q4.9"
+			"en-US": "DXP 2023.Q4.9"
 		},
 		"type": "string"
 	},
 	{
-		"key": "2023q39",
-		"name": "2023.Q3.9",
+		"key": "dxp2023q39",
+		"name": "DXP 2023.Q3.9",
 		"name_i18n": {
-			"en-US": "2023.Q3.9"
+			"en-US": "DXP 2023.Q3.9"
 		},
 		"type": "string"
 	},
 	{
-		"key": "7413u112",
-		"name": "7.4.13.u112",
+		"key": "dxp7413u112",
+		"name": "DXP 7.4.13.u112",
 		"name_i18n": {
-			"en-US": "7.4.13.u112"
+			"en-US": "DXP 7.4.13.u112"
 		},
 		"type": "string"
 	},
 	{
-		"key": "7310u36",
-		"name": "7.3.10.u36",
+		"key": "dxp7310u36",
+		"name": "DXP 7.3.10.u36",
 		"name_i18n": {
-			"en-US": "7.3.10.u36"
+			"en-US": "DXP 7.3.10.u36"
 		},
 		"type": "string"
 	},
 	{
-		"key": "72108",
-		"name": "7.2.10.8",
+		"key": "dxp72108",
+		"name": "DXP 7.2.10.8",
 		"name_i18n": {
-			"en-US": "7.2.10.8"
+			"en-US": "DXP 7.2.10.8"
 		},
 		"type": "string"
 	},
 	{
-		"key": "62",
-		"name": "6.2",
+		"key": "portal62",
+		"name": "Portal 6.2",
 		"name_i18n": {
 			"en-US": "6.2"
 		},
 		"type": "string"
 	},
 	{
-		"key": "61",
-		"name": "6.1",
+		"key": "portal61",
+		"name": "Portal 6.1",
 		"name_i18n": {
 			"en-US": "6.1"
 		},
 		"type": "string"
 	},
 	{
-		"key": "60",
-		"name": "6.0",
+		"key": "portal60",
+		"name": "Portal 6.0",
 		"name_i18n": {
 			"en-US": "6.0"
 		},
 		"type": "string"
 	},
 	{
-		"key": "52",
-		"name": "5.2",
+		"key": "portal52",
+		"name": "Portal 5.2",
 		"name_i18n": {
-			"en-US": "5.2"
+			"en-US": "Portal 5.2"
 		},
 		"type": "string"
 	},
 	{
-		"key": "51",
-		"name": "5.1",
+		"key": "portal51",
+		"name": "Portal 5.1",
 		"name_i18n": {
-			"en-US": "5.1"
+			"en-US": "Portal 5.1"
 		},
 		"type": "string"
 	}

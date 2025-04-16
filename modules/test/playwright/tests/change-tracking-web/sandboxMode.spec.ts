@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
@@ -39,7 +39,7 @@ test('LPD-34602 Add view-only mode for production when using Publications sandbo
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi(page, user.alternateName);
 
 	const changeTrackingIndicatorButton = page.locator(
 		'.change-tracking-indicator-button'
@@ -69,7 +69,7 @@ test('LPD-34602 Add view-only mode for production when using Publications sandbo
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi(page, 'test');
 
 	await changeTrackingPage.workOnProduction();
 
@@ -86,7 +86,7 @@ test('LPD-39341 Sandbox mode allows users to work on production without permissi
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi(page, user.alternateName);
 
 	const sandboxPublication = await page.getByText(user.alternateName + ' - ');
 
@@ -104,13 +104,13 @@ test('LPD-39341 Sandbox mode allows users to work on production without permissi
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi(page, 'test');
 
 	await changeTrackingPage.publishSandboxPublication(user.alternateName);
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi(page, user.alternateName);
 
 	const newSandboxPublication = await page.getByText(
 		user.alternateName + ' - '
@@ -122,7 +122,7 @@ test('LPD-39341 Sandbox mode allows users to work on production without permissi
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi(page, 'test');
 
 	await changeTrackingPage.workOnProduction();
 

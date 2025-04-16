@@ -13,7 +13,11 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
@@ -324,7 +328,7 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi(page, user.alternateName);
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 
@@ -346,7 +350,7 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi(page, 'test');
 });
 
 test('LPD-26155 Conflict warning is visible when content is edited in more than one publication', async ({

@@ -59,7 +59,7 @@ export function SearchableSubtypesModal({
 		groupExternalReferenceCode,
 		subtypeClassExternalReferenceCode,
 	}) => {
-		return `${className}#${groupExternalReferenceCode}#${subtypeClassExternalReferenceCode}`;
+		return `${className}&&${groupExternalReferenceCode}&&${subtypeClassExternalReferenceCode}`;
 	};
 
 	const isSelected = useCallback(

@@ -22,7 +22,7 @@ export default function mapSubtypeClasses(subtypeClasses = []) {
 			subtypeClassLocalizedName,
 		} = subtypeClass;
 
-		const value = `${className}#${groupExternalReferenceCode}#${subtypeClassExternalReferenceCode}`;
+		const value = `${className}&&${groupExternalReferenceCode}&&${subtypeClassExternalReferenceCode}`;
 		const label = groupLocalizedName
 			? `${subtypeClassLocalizedName} (${groupLocalizedName})`
 			: subtypeClassLocalizedName;

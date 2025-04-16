@@ -36,7 +36,7 @@ const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
 	const selected = [];
 
 	initialSelectedTypes.forEach((item) => {
-		const selectedTypes = item.split('#');
+		const selectedTypes = item.split('&&');
 
 		if (selectedTypes.length < 3) {
 			selected.push({subtypes: [], type: item});

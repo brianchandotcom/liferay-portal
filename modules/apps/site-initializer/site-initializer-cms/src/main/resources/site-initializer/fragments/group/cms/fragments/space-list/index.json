@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Space Name",
+					"label": "space-name",
+					"localizable": true,
+					"name": "spaceName",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

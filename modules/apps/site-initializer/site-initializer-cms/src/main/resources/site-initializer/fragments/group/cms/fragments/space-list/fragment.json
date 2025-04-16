@@ -1,0 +1,10 @@
+{
+	"cacheable": true,
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "Space List",
+	"type": "component"
+}

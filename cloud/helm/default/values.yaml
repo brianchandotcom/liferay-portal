@@ -90,9 +90,13 @@ initContainers:
                             then
                                 mkdir -p /temp/tomcat/conf
 
+                                cp /opt/liferay/tomcat/conf/logging.properties /temp/tomcat/conf/logging.properties
+
+                                echo -e "\norg.apache.catalina.tribes.membership.cloud.level=SEVERE" >> /temp/tomcat/conf/logging.properties
+
                                 cat /opt/liferay/tomcat/conf/server.xml | sed '/<!--.*-->/d' | sed '/<!--/,/-->/d' > /temp/tomcat/conf/server.xml
 
-                                IFS='' read -r -d '' cluster <<EOF
+                                IFS='' read -r -d '' SERVER_XML_CLUSTER <<EOF
                                 <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
                                     <Manager className="com.liferay.support.tomcat.session.LiferayDeltaManager" />
                                     <Channel className="org.apache.catalina.tribes.group.GroupChannel">
@@ -100,22 +104,17 @@ initContainers:
                                             className="org.apache.catalina.tribes.membership.cloud.CloudMembershipService"
                                             membershipProviderClassName="org.apache.catalina.tribes.membership.cloud.DNSMembershipProvider"
                                         />
-
-                                        <Sender
-                                            className="org.apache.catalina.tribes.transport.ReplicationTransmitter">
+                                        <Sender className="org.apache.catalina.tribes.transport.ReplicationTransmitter">
                                             <Transport
                                                 className="org.apache.catalina.tribes.transport.nio.PooledParallelSender"
-                                                timeout="300000" />
+                                                timeout="300000"
+                                            />
                                         </Sender>
                                     </Channel>
                                 </Cluster>
                             EOF
 
-                                sed -i '/<Engine/r'<(echo "$cluster") /temp/tomcat/conf/server.xml
-
-                                cp /opt/liferay/tomcat/conf/logging.properties /temp/tomcat/conf/logging.properties
-
-                                echo -e "\norg.apache.catalina.tribes.membership.cloud.level=SEVERE" >> /temp/tomcat/conf/logging.properties
+                                sed -i '/<Engine/r'<(echo "${SERVER_XML_CLUSTER}") /temp/tomcat/conf/server.xml
                             fi
                 image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                 imagePullPolicy: {{ .image.pullPolicy }}

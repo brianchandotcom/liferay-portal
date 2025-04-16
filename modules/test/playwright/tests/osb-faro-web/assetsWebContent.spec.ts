@@ -17,12 +17,9 @@ import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
-import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
@@ -46,29 +43,14 @@ const randomString = getRandomString();
 
 const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
-const siteName = 'My Site ' + randomString;
 
 let channel;
-let layout;
 let project;
-let site;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
-	});
-
-	layout = await createSitePage({
-		apiHelpers,
-		pageTitle,
-		siteName,
-	});
-
-	const result = await syncAnalyticsCloud({
+test.beforeEach(async ({apiHelpers}) => {
+	const result = await createChannel({
 		apiHelpers,
 		channelName,
-		page,
-		siteName,
 	});
 
 	channel = result.channel;
@@ -77,14 +59,12 @@ test.beforeEach(async ({apiHelpers, page}) => {
 
 test.afterEach(async ({apiHelpers, page}) => {
 	await test.step('Delete channel and delete site on the DXP side', async () => {
+		await page.goto(liferayConfig.environment.baseUrl);
+
 		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 			`[${channel.id}]`,
 			project.groupId
 		);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.headlessSite.deleteSite(String(site.id));
 	});
 });
 
@@ -95,61 +75,24 @@ test(
 		tag: '@LRAC-8456',
 	},
 
-	async ({
-		apiHelpers,
-		journalEditArticlePage,
-		journalPage,
-		page,
-		pageEditorPage,
-		uiElementsPage,
-		webContentDisplayPage,
-	}) => {
-		await journalPage.goto(site.friendlyUrlPath);
-
+	async ({apiHelpers, page}) => {
 		const webContentTitle = 'Web Content Title';
-		const content = 'Basic Web Content';
 
-		await test.step('Create a page with a web content and publish it', async () => {
-			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		const date1 = new Date();
 
-			await journalEditArticlePage.fillTitle(webContentTitle);
-
-			await journalEditArticlePage.fillContent(content);
-
-			await journalEditArticlePage.publishButton.click();
-
-			await waitForAlert(
-				page,
-				`Success:${webContentTitle} was created successfully.`
-			);
-
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await pageEditorPage.addWidget(
-				'Content Management',
-				'Web Content Display'
-			);
-
-			await webContentDisplayPage.addWebContentWithDisplay();
-
-			await uiElementsPage.publishButton.click();
-		});
-
-		await test.step('Go to the site page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
-
-			await page.waitForTimeout(2000);
-
-			await page.reload();
-
-			await page.waitForTimeout(3000);
-
-			await closeSessions(apiHelpers, page);
-		});
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'WebContent',
+				assetId: '1',
+				assetTitle: webContentTitle,
+				canonicalUrl: '/web/my-site',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'webContentViewed',
+				title: pageTitle,
+				userId: 'user1',
+			},
+		]);
 
 		await test.step('Switch to new property in AC and go to WC tab', async () => {
 			await navigateToACPageViaURL({
@@ -172,12 +115,14 @@ test(
 		await test.step('Go to the WC overview and check appears on metric', async () => {
 			await page.getByRole('link', {name: 'Web Content Title'}).click();
 
-			expect(page.getByRole('button', {name: 'Views'})).toBeVisible();
-			expect(page.getByText('Asset Appears On')).toBeVisible();
-			expect(
-				page.getByRole('link', {name: 'My Page - My Site'})
+			await expect(
+				page.getByRole('button', {name: 'Views'})
 			).toBeVisible();
-			expect(
+			await expect(page.getByText('Asset Appears On')).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: 'My Page'})
+			).toBeVisible();
+			await expect(
 				page.getByRole('cell', {
 					name: '/web/my-site',
 				})

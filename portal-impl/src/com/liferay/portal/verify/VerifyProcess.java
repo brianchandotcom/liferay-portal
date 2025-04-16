@@ -67,7 +67,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 					doVerify();
 
-					closeConnections(false);
+					closeConnections();
 				});
 		}
 		catch (Exception exception) {
@@ -76,7 +76,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		finally {
 			this.connection = null;
 
-			closeConnections(false);
+			closeConnections();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

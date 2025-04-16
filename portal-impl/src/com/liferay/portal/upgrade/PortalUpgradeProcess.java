@@ -324,7 +324,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 			doUpgrade();
 
-			closeConnections(false);
+			closeConnections();
 		}
 		catch (Exception exception) {
 			message = "Failed upgrade process ";
@@ -334,7 +334,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		finally {
 			this.connection = null;
 
-			closeConnections(false);
+			closeConnections();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

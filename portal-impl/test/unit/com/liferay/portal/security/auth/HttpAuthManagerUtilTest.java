@@ -53,60 +53,60 @@ public class HttpAuthManagerUtilTest {
 
 	@Test
 	public void testParseBasic() {
-		_testParseBasic("test@liferay.com:test", "test@liferay.com", "test");
+		_testParseBasic("test@liferay.com:test", "test", "test@liferay.com");
 	}
 
 	@Test
 	public void testParseBasicNoCredentials() {
-		_testParseBasic("test@liferay.com", "test@liferay.com", null);
+		_testParseBasic("test@liferay.com", null, "test@liferay.com");
 		_testParseBasic(
-			"test@liferay.com:", "test@liferay.com", StringPool.BLANK);
+			"test@liferay.com:", StringPool.BLANK, "test@liferay.com");
 		_testParseBasic(":", StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
 	public void testParseBasicTrimValues() {
 		_testParseBasic(
-			" test@liferay.com : test ", "test@liferay.com", "test");
+			" test@liferay.com : test ", "test", "test@liferay.com");
 	}
 
 	@Test
 	public void testParseBasicURLDecode() {
 		_testParseBasic(
-			"test%40liferay%253ecom:test%40", "test@liferay%3ecom", "test%40");
+			"test%40liferay%253ecom:test%40", "test%40", "test@liferay%3ecom");
 	}
 
 	@Test
 	public void testParseBasicWithEncodedPercentCharacter() {
 		_testParseBasic(
-			"test%25test%40liferay%253ecom:test", "test%test@liferay%3ecom",
-			"test");
+			"test%25test%40liferay%253ecom:test", "test",
+			"test%test@liferay%3ecom");
 	}
 
 	@Test
 	public void testParseBasicWithEncodedPlusCharacter() {
 		_testParseBasic(
-			"test%20test%40liferay%253ecom:test", "test+test@liferay%3ecom",
-			"test");
+			"test%20test%40liferay%253ecom:test", "test",
+			"test+test@liferay%3ecom");
 	}
 
 	@Test
 	public void testParseBasicWithPercentCharacter() {
 		_testParseBasic(
-			"%test%test@liferay.com:test", "%test%test@liferay.com", "test");
+			"%test%test@liferay.com:test", "test", "%test%test@liferay.com");
 	}
 
 	@Test
 	public void testParseBasicWithPercentCharacterAndEncoding() {
 		_testParseBasic(
-			"test%test%40liferay%253ecom:test", "test%test@liferay%3ecom",
-			"test");
+			"test%test%40liferay%253ecom:test", "test",
+			"test%test@liferay%3ecom");
 	}
 
 	@Test
 	public void testParseBasicWithPlusCharacter() {
 		_testParseBasic(
-			"test+test@liferay.com:test", "test+test@liferay.com", "test");
+			"test+test@liferay.com:test", "test", "test+test@liferay.com");
 	}
 
 	@Test
@@ -191,8 +191,8 @@ public class HttpAuthManagerUtilTest {
 	}
 
 	private void _testParseBasic(
-		String authorizationHeader, String expectedUserName,
-		String expectedPassword) {
+		String authorizationHeader, String expectedPassword,
+		String expectedUserName) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -215,14 +215,13 @@ public class HttpAuthManagerUtilTest {
 			authParameters.toString(), 2, authParameters.size());
 
 		Assert.assertEquals(
-			expectedUserName,
-			httpAuthorizationHeader.getAuthParameter(
-				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
-
-		Assert.assertEquals(
 			expectedPassword,
 			httpAuthorizationHeader.getAuthParameter(
 				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+		Assert.assertEquals(
+			expectedUserName,
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME));
 	}
 
 }

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.constants.CompanyGroupConstants;
+import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

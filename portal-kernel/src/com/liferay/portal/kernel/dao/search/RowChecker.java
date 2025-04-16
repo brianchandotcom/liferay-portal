@@ -251,7 +251,7 @@ public class RowChecker {
 		sb.append(checkBoxRowIds);
 		sb.append(",");
 		sb.append(checkBoxAllRowIds);
-		sb.append(");AUI().one(this).ancestor('tr:not(.d-none)')?.");
+		sb.append("); AUI().one(this).ancestor('tr:not(.d-none)')?.");
 		sb.append("toggleClass('info');");
 
 		if (Validator.isNotNull(checkBoxPostOnClick)) {

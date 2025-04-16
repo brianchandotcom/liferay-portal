@@ -299,6 +299,9 @@ function TreeItem({
 									renderMenuOnClick
 									trigger={
 										<ClayButtonWithIcon
+											aria-label={Liferay.Language.get(
+												'actions'
+											)}
 											className="component-action quick-action-item"
 											displayType={null}
 											size="sm"

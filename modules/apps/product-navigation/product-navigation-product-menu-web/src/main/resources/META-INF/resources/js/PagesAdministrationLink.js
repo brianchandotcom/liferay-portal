@@ -23,6 +23,6 @@ export default function PagesAdministrationLink({
 }
 
 PagesAdministrationLink.propTypes = {
-	administrationPortletURL: PropTypes.array.isRequired,
+	administrationPortletURL: PropTypes.string.isRequired,
 	hasAdministrationPortletPermission: PropTypes.bool.isRequired,
 };

@@ -22,11 +22,14 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CouponCode;
+import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
+import com.liferay.headless.commerce.delivery.cart.client.pagination.Pagination;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -177,6 +180,14 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 				_commerceChannel.getGroupId(), "&nextStep=", callbackURL,
 				"&uuid=", cart.getOrderUUID()),
 			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
+	}
+
+	@Override
+	@Test
+	public void testGetChannelCartsPage() throws Exception {
+		super.testGetChannelCartsPage();
+
+		_testGetChannelCartsPageWithFilter();
 	}
 
 	@Ignore
@@ -466,8 +477,14 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		return _createCart();
 	}
 
+	private CommerceOrder _addCommerceOrder() throws Exception {
+		return _commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+	}
+
 	private Cart _createCart() throws Exception {
-		CommerceOrder commerceOrder = _getCommerceOrder();
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
 		return new Cart() {
 			{
@@ -493,10 +510,57 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		};
 	}
 
-	private CommerceOrder _getCommerceOrder() throws Exception {
-		return _commerceOrderLocalService.addCommerceOrder(
-			_user.getUserId(), _commerceChannel.getGroupId(),
-			_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+	private void _testGetChannelCartsPageWithFilter() throws Exception {
+		CommerceOrder commerceOrder = _addCommerceOrder();
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(),
+				RandomTestUtil.randomString() + StringPool.SEMICOLON, null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
+
+		commerceOrder.setCommerceAccountId(accountEntry.getAccountEntryId());
+
+		commerceOrder.setExternalReferenceCode(
+			RandomTestUtil.randomString() + StringPool.CLOSE_CURLY_BRACE);
+		commerceOrder.setName(RandomTestUtil.randomString() + StringPool.AT);
+		commerceOrder.setPurchaseOrderNumber(
+			RandomTestUtil.randomString() + StringPool.AMPERSAND);
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		Page<Cart> page = cartResource.getChannelCartsPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format("(account eq '%s')", accountEntry.getName()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = cartResource.getChannelCartsPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format(
+				"(externalReferenceCode eq '%s')",
+				commerceOrder.getExternalReferenceCode()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = cartResource.getChannelCartsPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format("(name eq '%s')", commerceOrder.getName()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = cartResource.getChannelCartsPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format(
+				"(purchaseOrderNumber eq '%s')",
+				commerceOrder.getPurchaseOrderNumber()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
 	}
 
 	private void _testPatchCartByExternalReferenceCodeWithMoreExternalReferenceCodes()

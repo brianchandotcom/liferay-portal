@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -21,6 +22,8 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrder;
+import com.liferay.headless.commerce.delivery.order.client.pagination.Page;
+import com.liferay.headless.commerce.delivery.order.client.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -78,6 +82,14 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
+	}
+
+	@Override
+	@Test
+	public void testGetChannelPlacedOrdersPage() throws Exception {
+		super.testGetChannelPlacedOrdersPage();
+
+		_testGetChannelPlacedOrdersPageWithFilter();
 	}
 
 	@Ignore
@@ -341,6 +353,81 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				valid = true;
 			}
 		};
+	}
+
+	private void _testGetChannelPlacedOrdersPageWithFilter() throws Exception {
+		PlacedOrder placedOrder = _addCommerceOrder(randomPlacedOrder());
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(placedOrder.getId());
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(),
+				RandomTestUtil.randomString() + StringPool.SEMICOLON, null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
+
+		commerceOrder.setCommerceAccountId(accountEntry.getAccountEntryId());
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeLocalService.addCommerceOrderType(
+				RandomTestUtil.randomString() + StringPool.CARET,
+				_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, 0, 1, 1970, 12, 0,
+				0, 0, 0, 0, 0, 0, true, _serviceContext);
+
+		commerceOrder.setCommerceOrderTypeId(
+			commerceOrderType.getCommerceOrderTypeId());
+
+		commerceOrder.setExternalReferenceCode(
+			RandomTestUtil.randomString() + StringPool.CLOSE_CURLY_BRACE);
+		commerceOrder.setName(RandomTestUtil.randomString() + StringPool.AT);
+		commerceOrder.setPurchaseOrderNumber(
+			RandomTestUtil.randomString() + StringPool.AMPERSAND);
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		Page<PlacedOrder> page = placedOrderResource.getChannelPlacedOrdersPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format("(account eq '%s')", accountEntry.getName()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = placedOrderResource.getChannelPlacedOrdersPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format(
+				"(externalReferenceCode eq '%s')",
+				commerceOrder.getExternalReferenceCode()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = placedOrderResource.getChannelPlacedOrdersPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format("(name eq '%s')", commerceOrder.getName()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = placedOrderResource.getChannelPlacedOrdersPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format(
+				"(orderTypeExternalReferenceCode eq '%s')",
+				commerceOrderType.getExternalReferenceCode()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = placedOrderResource.getChannelPlacedOrdersPage(
+			_commerceChannel.getCommerceChannelId(), null,
+			String.format(
+				"(purchaseOrderNumber eq '%s')",
+				commerceOrder.getPurchaseOrderNumber()),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
 	}
 
 	@DeleteAfterTestRun

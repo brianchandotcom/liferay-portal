@@ -18,8 +18,8 @@ import {Button, DatePicker, Input, Select, TimePicker} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
 import useGetBusinessEventTypesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetBusinessEventTypesList';
-import useGetGMTTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetGMTTimeZonesList';
 import useGetLiferayVersions from '~/features/project/pages/Project/BusinessEvents/hooks/useGetLiferayVersions';
+import useGetUTCTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetUTCTimeZonesList';
 import {Liferay} from '~/services/liferay';
 import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
@@ -76,9 +76,6 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {gmtTimeZonesList, loading: loadingGMTTimeZonesList} =
-		useGetGMTTimeZonesList();
-
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
@@ -103,6 +100,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const {loading: loadingTickets, tickets} = useAccountTickets(
 		project?.accountKey || ''
 	);
+
+	const {loading: loadingUTCTimeZonesList, utcTimeZonesList} =
+		useGetUTCTimeZonesList();
 
 	const navigate = useNavigate();
 
@@ -224,9 +224,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	const loading =
 		loadingBusinessEventTypesList ||
-		loadingGMTTimeZonesList ||
 		loadingLiferayVersions ||
-		loadingTickets;
+		loadingTickets ||
+		loadingUTCTimeZonesList;
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
@@ -617,7 +617,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 														'time-zone'
 													)}
 													name="businessEvent.timeZone.key"
-													options={gmtTimeZonesList}
+													options={utcTimeZonesList}
 												/>
 											</ClayInput.GroupItem>
 

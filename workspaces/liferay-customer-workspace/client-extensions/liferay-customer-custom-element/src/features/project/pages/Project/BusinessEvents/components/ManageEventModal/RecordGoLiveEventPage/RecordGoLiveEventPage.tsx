@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import {isValidDate} from '~/utils/validations.form';
 
 import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
-import useGetGMTTimeZonesList from '../../../hooks/useGetGMTTimeZonesList';
+import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
@@ -70,11 +70,6 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
-	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
-		[]
-	);
-
 	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
 		accountExternalReferenceCode,
 		businessEvent,
@@ -82,18 +77,23 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		true
 	);
 
+	const {utcTimeZonesList} = useGetUTCTimeZonesList();
+	const [utcTimeZonesOptions, setUTCTimeZonesOptions] = useState<IOption[]>(
+		[]
+	);
+
 	const handleInputChange = (event: {target: {value: string}}) => {
 		setFieldValue('businessEvent.lastComment', event.target.value);
 	};
 
 	useEffect(() => {
-		if (gmtTimeZonesList?.length) {
-			setGMTTimeZonesOptions([
+		if (utcTimeZonesList?.length) {
+			setUTCTimeZonesOptions([
 				{...emptyOption, disabled: false},
-				...gmtTimeZonesList,
+				...utcTimeZonesList,
 			]);
 		}
-	}, [emptyOption, gmtTimeZonesList]);
+	}, [emptyOption, utcTimeZonesList]);
 
 	useEffect(() => {
 		const hasError = errors && Object.keys(errors).length;
@@ -207,7 +207,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 							id="select-businessEvent.timeZone"
 							label={i18n.translate('time-zone')}
 							name="businessEvent.timeZone.key"
-							options={gmtTimeZonesOptions}
+							options={utcTimeZonesOptions}
 						/>
 					</ClayInput.GroupItem>
 

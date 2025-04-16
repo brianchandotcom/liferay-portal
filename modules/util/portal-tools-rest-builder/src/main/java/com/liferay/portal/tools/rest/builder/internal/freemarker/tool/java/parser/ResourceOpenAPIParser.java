@@ -86,12 +86,12 @@ public class ResourceOpenAPIParser {
 					_visitRequestBodyMediaTypes(
 						operation.getRequestBody(),
 						requestBodyMediaTypes -> {
-							String methodName = _getMethodName(
+							String operationId = _getOperationId(
 								configYAML, operation, path, returnType,
 								schemaName,
 								configYAML.isForcePredictableOperationId());
 
-							operation.setOperationId(methodName);
+							operation.setOperationId(operationId);
 
 							List<JavaMethodParameter> javaMethodParameters =
 								_getJavaMethodParameters(
@@ -105,7 +105,7 @@ public class ResourceOpenAPIParser {
 									javaMethodParameters,
 									_getMethodName(
 										configYAML, javaMethodParameters,
-										methodName),
+										operationId),
 									returnType,
 									_getParentSchema(
 										path, pathItems, schemaName));
@@ -957,18 +957,27 @@ public class ResourceOpenAPIParser {
 
 	private static String _getMethodName(
 		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
-		String methodName) {
+		String operationId) {
 
-		if (ConfigUtil.isVersionCompatible(configYAML, 9) &&
-			_hasObjectParameter(javaMethodParameters)) {
-
-			return methodName + "Object";
+		if (!ConfigUtil.isVersionCompatible(configYAML, 9)) {
+			return operationId;
 		}
 
-		return methodName;
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			if (Objects.equals(
+					javaMethodParameter.getParameterName(), "object") &&
+				Objects.equals(
+					javaMethodParameter.getParameterType(),
+					"java.lang.Object")) {
+
+				return operationId + "Object";
+			}
+		}
+
+		return operationId;
 	}
 
-	private static String _getMethodName(
+	private static String _getOperationId(
 		ConfigYAML configYAML, Operation operation, String path,
 		String returnType, String schemaName,
 		boolean forcePredictableOperationId) {
@@ -982,9 +991,9 @@ public class ResourceOpenAPIParser {
 		boolean collection = StringUtil.startsWith(
 			returnType, "com.liferay.portal.vulcan.pagination.Page<");
 
-		List<String> methodNameSegments = new ArrayList<>();
+		List<String> operationIdSegments = new ArrayList<>();
 
-		methodNameSegments.add(OpenAPIParserUtil.getHTTPMethod(operation));
+		operationIdSegments.add(OpenAPIParserUtil.getHTTPMethod(operation));
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
@@ -1019,8 +1028,8 @@ public class ResourceOpenAPIParser {
 			}
 
 			if ((i == (pathSegments.length - 1)) && collection) {
-				String previousMethodNameSegment = methodNameSegments.get(
-					methodNameSegments.size() - 1);
+				String previousMethodNameSegment = operationIdSegments.get(
+					operationIdSegments.size() - 1);
 
 				String pageClassName =
 					"com.liferay.portal.vulcan.pagination.Page";
@@ -1039,24 +1048,24 @@ public class ResourceOpenAPIParser {
 						previousMethodNameSegment, schemaName,
 						pluralSchemaName);
 
-					methodNameSegments.set(
-						methodNameSegments.size() - 1, string);
+					operationIdSegments.set(
+						operationIdSegments.size() - 1, string);
 				}
 
-				methodNameSegments.add(pathName + "Page");
+				operationIdSegments.add(pathName + "Page");
 			}
 			else if (pathSegment.contains("{")) {
-				String previousMethodNameSegment = methodNameSegments.get(
-					methodNameSegments.size() - 1);
+				String previousMethodNameSegment = operationIdSegments.get(
+					operationIdSegments.size() - 1);
 
 				if (!previousMethodNameSegment.endsWith(pathName) &&
 					!previousMethodNameSegment.endsWith(schemaName)) {
 
-					methodNameSegments.add(pathName);
+					operationIdSegments.add(pathName);
 				}
 			}
 			else if (Objects.equals(pathName, schemaName)) {
-				methodNameSegments.add(pathName);
+				operationIdSegments.add(pathName);
 			}
 			else if ((i != (pathSegments.length - 1)) ||
 					 !Objects.equals(returnType, String.class.getName())) {
@@ -1078,14 +1087,14 @@ public class ResourceOpenAPIParser {
 					}
 				}
 
-				methodNameSegments.add(segment);
+				operationIdSegments.add(segment);
 			}
 			else {
-				methodNameSegments.add(pathName);
+				operationIdSegments.add(pathName);
 			}
 		}
 
-		return StringUtil.merge(methodNameSegments, "");
+		return StringUtil.merge(operationIdSegments, "");
 	}
 
 	private static Schema _getOperationSchema(
@@ -1420,23 +1429,6 @@ public class ResourceOpenAPIParser {
 		}
 
 		return javax.ws.rs.core.Response.class.getName();
-	}
-
-	private static boolean _hasObjectParameter(
-		List<JavaMethodParameter> javaMethodParameters) {
-
-		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			if (Objects.equals(
-					javaMethodParameter.getParameterName(), "object") &&
-				Objects.equals(
-					javaMethodParameter.getParameterType(),
-					"java.lang.Object")) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static boolean _isSchemaMethod(

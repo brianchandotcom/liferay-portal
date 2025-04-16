@@ -165,6 +165,7 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.sql.PreparedStatement;
 
@@ -558,6 +559,11 @@ public class ObjectDefinitionLocalServiceImpl
 					_objectEntryVersionLocalService.
 						deleteObjectEntryVersionByObjectDefinitionId(
 							objectDefinition.getObjectDefinitionId());
+
+					_sharingEntryLocalService.deleteCompanySharingEntries(
+						objectDefinition.getCompanyId(),
+						_classNameLocalService.getClassNameId(
+							objectDefinition.getClassName()));
 
 					_deleteFromTable(objectDefinition.getDBTableName());
 
@@ -3195,6 +3201,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private SharingModelResourcePermissionConfigurator

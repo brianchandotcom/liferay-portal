@@ -627,6 +627,11 @@ public class ObjectEntryLocalServiceImpl
 			_objectEntryVersionLocalService.deleteObjectEntryVersions(
 				objectEntry.getObjectEntryId());
 
+			_sharingEntryLocalService.deleteSharingEntries(
+				_classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId());
+
 			_deleteFromTable(
 				objectDefinition.getDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
@@ -655,11 +660,6 @@ public class ObjectEntryLocalServiceImpl
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
-
-		_sharingEntryLocalService.deleteSharingEntries(
-			_classNameLocalService.getClassNameId(
-				objectDefinition.getClassName()),
-			objectEntry.getObjectEntryId());
 
 		if (!objectDefinition.isActive() ||
 			!objectDefinition.isEnableIndexSearch()) {

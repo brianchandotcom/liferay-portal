@@ -1,0 +1,202 @@
+[
+	{
+		"key": "utcMinus12",
+		"name": "UTC-12",
+		"name_i18n": {
+			"en-US": "UTC-12"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus11",
+		"name": "UTC-11",
+		"name_i18n": {
+			"en-US": "UTC-11"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus10",
+		"name": "UTC-10",
+		"name_i18n": {
+			"en-US": "UTC-10"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus9",
+		"name": "UTC-9",
+		"name_i18n": {
+			"en-US": "UTC-9"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus8",
+		"name": "UTC-8",
+		"name_i18n": {
+			"en-US": "UTC-8"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus7",
+		"name": "UTC-7",
+		"name_i18n": {
+			"en-US": "UTC-7"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus6",
+		"name": "UTC-6",
+		"name_i18n": {
+			"en-US": "UTC-6"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus5",
+		"name": "UTC-5",
+		"name_i18n": {
+			"en-US": "UTC-5"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus4",
+		"name": "UTC-4",
+		"name_i18n": {
+			"en-US": "UTC-4"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus3",
+		"name": "UTC-3",
+		"name_i18n": {
+			"en-US": "UTC-3"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus2",
+		"name": "UTC-2",
+		"name_i18n": {
+			"en-US": "UTC-2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcMinus1",
+		"name": "UTC-1",
+		"name_i18n": {
+			"en-US": "UTC-1"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus0",
+		"name": "UTC+0",
+		"name_i18n": {
+			"en-US": "UTC+0"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus1",
+		"name": "UTC+1",
+		"name_i18n": {
+			"en-US": "UTC+1"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus2",
+		"name": "UTC+2",
+		"name_i18n": {
+			"en-US": "UTC+2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus3",
+		"name": "UTC+3",
+		"name_i18n": {
+			"en-US": "UTC+3"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus4",
+		"name": "UTC+4",
+		"name_i18n": {
+			"en-US": "UTC+4"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus5",
+		"name": "UTC+5",
+		"name_i18n": {
+			"en-US": "UTC+5"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus6",
+		"name": "UTC+6",
+		"name_i18n": {
+			"en-US": "UTC+6"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus7",
+		"name": "UTC+7",
+		"name_i18n": {
+			"en-US": "UTC+7"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus8",
+		"name": "UTC+8",
+		"name_i18n": {
+			"en-US": "UTC+8"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus9",
+		"name": "UTC+9",
+		"name_i18n": {
+			"en-US": "UTC+9"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus10",
+		"name": "UTC+10",
+		"name_i18n": {
+			"en-US": "UTC+10"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus11",
+		"name": "UTC+11",
+		"name_i18n": {
+			"en-US": "UTC+11"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utcPlus12",
+		"name": "UTC+12",
+		"name_i18n": {
+			"en-US": "UTC+12"
+		},
+		"type": "string"
+	}
+]

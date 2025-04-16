@@ -249,7 +249,7 @@
 			"label": {
 				"en_US": "Time Zone"
 			},
-			"listTypeDefinitionExternalReferenceCode": "GMT-TIME-ZONES",
+			"listTypeDefinitionExternalReferenceCode": "UTC-TIME-ZONES",
 			"localized": false,
 			"name": "timeZone",
 			"readOnly": "false",

@@ -25,8 +25,8 @@ import AssociatedTicketsContainer from '../../components/AssociatedTicketsContai
 import useAccountBusinessEvents from '../../hooks/useAccountBusinessEvents';
 import useAccountTickets from '../../hooks/useAccountTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
-import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
+import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../utils/containsOption';
 import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
@@ -71,9 +71,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {gmtTimeZonesList, loading: loadingGMTTimeZonesList} =
-		useGetGMTTimeZonesList();
-
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
@@ -96,6 +93,9 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const {loading: loadingTickets, tickets} = useAccountTickets(
 		project?.accountKey || ''
 	);
+
+	const {loading: loadingUTCTimeZonesList, utcTimeZonesList} =
+		useGetUTCTimeZonesList();
 
 	const navigate = useNavigate();
 
@@ -195,9 +195,9 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const loading =
 		loadingBusinessEventTypesList ||
-		loadingGMTTimeZonesList ||
 		loadingLiferayVersions ||
-		loadingTickets;
+		loadingTickets ||
+		loadingUTCTimeZonesList;
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
@@ -487,7 +487,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											name="businessEvent.timeZone.key"
 											options={[
 												emptyOption,
-												...gmtTimeZonesList,
+												...utcTimeZonesList,
 											]}
 										/>
 									</ClayInput.GroupItem>

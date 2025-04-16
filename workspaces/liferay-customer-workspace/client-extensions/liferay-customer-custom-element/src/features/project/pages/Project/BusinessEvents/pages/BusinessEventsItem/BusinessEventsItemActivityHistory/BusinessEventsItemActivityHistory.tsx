@@ -98,14 +98,14 @@ const BusinessEventsItemActivityHistory = () => {
 								{getFormattedDate(
 									businessEventVersion?.dateModified,
 									'day2DMonthSYearN',
-									'GMT'
+									'UTC'
 								)}
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
 									businessEventVersion?.dateModified,
-									'GMT'
+									'UTC'
 								)}
 							</div>
 						</div>

@@ -9,17 +9,17 @@ import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
 import {IOption} from '~/utils/types';
 
-const listTypeGMTTimeZones = LIST_TYPES.gmtTimeZones;
+const listTypeUTCTimeZones = LIST_TYPES.utcTimeZones;
 
-export default function useGetGMTTimeZonesList(): {
-	gmtTimeZonesList: IOption[];
+export default function useGetUTCTimeZonesList(): {
 	loading: boolean;
+	utcTimeZonesList: IOption[];
 } {
 	const {data, loading} = useGetListTypeDefinitions({
-		filter: SearchBuilder.eq('name', listTypeGMTTimeZones),
+		filter: SearchBuilder.eq('name', listTypeUTCTimeZones),
 	});
 
-	const gmtTimeZonesList = useMemo(
+	const utcTimeZonesList = useMemo(
 		() =>
 			(
 				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
@@ -30,5 +30,5 @@ export default function useGetGMTTimeZonesList(): {
 		[data?.listTypeDefinitions?.items]
 	);
 
-	return {gmtTimeZonesList, loading};
+	return {loading, utcTimeZonesList};
 }

@@ -25,7 +25,7 @@ public class CSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/*.ftl", "**/*.jsp", "**/*.jspf", "**/*.jspx", "**/*.vm"
+		"**/*.ftl", "**/*.html", "**/*.jsp", "**/*.jspf", "**/*.jspx", "**/*.vm"
 	};
 
 }

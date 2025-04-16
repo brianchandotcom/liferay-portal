@@ -64,6 +64,12 @@ const changeTrackingPages = test.extend<{
 	],
 });
 
+test.afterEach(async ({page}) => {
+	const apiHelpers = new ApiHelpers(page);
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+});
+
 const changeTrackingPagesTest = mergeTests(loginTest(), changeTrackingPages);
 
 export {changeTrackingPagesTest};

@@ -100,6 +100,15 @@ public class SharingEntryServiceWrapper
 
 	@Override
 	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.deleteSharingEntry(
+			toUserGroupId, toUserId, classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
 			long sharingEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -163,6 +172,15 @@ public class SharingEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryService.getSharingEntry(sharingEntryId);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry getSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntry(
+			toUserGroupId, toUserId, classNameId, classPK);
 	}
 
 	@Override

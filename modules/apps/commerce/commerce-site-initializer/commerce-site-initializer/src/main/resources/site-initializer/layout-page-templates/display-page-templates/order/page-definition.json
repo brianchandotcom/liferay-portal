@@ -560,9 +560,6 @@
 												"definition": {
 													"fragmentStyle": {
 														"backgroundColor": "whiteColor",
-														"borderColor": "gray300Color",
-														"borderRadius": "0.25rem",
-														"borderWidth": "1px",
 														"marginBottom": "4"
 													},
 													"indexed": true,
@@ -586,7 +583,11 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$]:has(> div:empty), .[$FRAGMENT_CLASS$]:has(> div > div:empty) {display: none!important;}",
 																	"fragmentStyle": {
+																		"borderColor": "gray300Color",
+																		"borderRadius": "0.25px",
+																		"borderWidth": "1px",
 																		"paddingBottom": "2",
 																		"paddingLeft": "5",
 																		"paddingRight": "5",

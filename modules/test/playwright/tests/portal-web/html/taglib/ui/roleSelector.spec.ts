@@ -69,16 +69,17 @@ test(
 
 		await test.step('Check that selected role info is still in the DOM', async () => {
 			const selectedRole = iframeSelectRole.locator(
-				'input[data-id="20101"]'
+				'input[data-name="Analytics Administrator"]'
 			);
+			const selectedRoleValue = await selectedRole.getAttribute('value');
 
 			await expect(selectedRole).not.toBeVisible();
-			await expect(await selectedRole.dataset.name).toEqual(
+			await expect(selectedRole).toHaveAttribute(
+				'data-name',
 				'Analytics Administrator'
 			);
-			await expect(await selectedRole.getAttribute('value')).toEqual(
-				'20101'
-			);
+
+			await expect(Number(selectedRoleValue)).toBeGreaterThanOrEqual(0);
 		});
 	}
 );

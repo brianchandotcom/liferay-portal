@@ -336,7 +336,7 @@ test(
 
 test(
 	'Order Step Tracker fragment configuration',
-	{tag: '@LPD-32236'},
+	{tag: ['@LPD-32236', '@LPD-39679']},
 	async ({
 		apiHelpers,
 		commerceLayoutsPage,
@@ -424,6 +424,56 @@ test(
 		await expect(
 			commerceLayoutsPage.stepTrackerItem('Completed')
 		).not.toHaveClass(/active/);
+
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(cart.id, {
+			orderStatus: '20',
+		});
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Pending')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Processing')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Shipped')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Completed')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('On Hold')
+		).toHaveCount(0);
+
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(cart.id, {
+			orderStatus: '8',
+		});
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Pending')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Processing')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Shipped')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Completed')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Cancelled')
+		).toHaveCount(0);
 	}
 );
 

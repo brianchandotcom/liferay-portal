@@ -121,7 +121,7 @@ public abstract class UpgradeProcess
 
 					doUpgrade();
 
-					closeConnections(false);
+					closeConnections();
 				});
 		}
 		catch (Throwable throwable) {
@@ -132,7 +132,7 @@ public abstract class UpgradeProcess
 		finally {
 			this.connection = null;
 
-			closeConnections(false);
+			closeConnections();
 
 			NotificationThreadLocal.setEnabled(notificationEnabled);
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

@@ -4,8 +4,10 @@
  */
 
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 
 export interface IColumn {
+	className?: string;
 	columnKey: string;
 	label: string;
 	subLabel?: string;
@@ -35,7 +37,10 @@ const Table = ({className, columns, onRowClick, rows}: IProps) => {
 				<ClayTable.Row>
 					{columns.map((column) => (
 						<ClayTable.Cell
-							className="font-weight-semi-bold text-neutral-10"
+							className={classNames(
+								'font-weight-semi-bold text-neutral-10',
+								column.className
+							)}
 							key={column.columnKey}
 						>
 							<div>
@@ -62,7 +67,10 @@ const Table = ({className, columns, onRowClick, rows}: IProps) => {
 						onClick={() => onRowClick && onRowClick(row)}
 					>
 						{columns.map((column) => (
-							<ClayTable.Cell key={column.columnKey}>
+							<ClayTable.Cell
+								className={column.className}
+								key={column.columnKey}
+							>
 								{row[column.columnKey]}
 							</ClayTable.Cell>
 						))}

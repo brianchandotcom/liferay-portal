@@ -82,6 +82,20 @@ public class CSPTagIllegalAttributesCheck extends BaseTagAttributesCheck {
 					continue;
 				}
 
+				if (illegalAttributeName.equals("style")) {
+					Tag tag = parseTag(tagString, false);
+
+					if (tag == null) {
+						continue;
+					}
+
+					String tagName = tag.getName();
+
+					if (!tagName.matches("\\w+")) {
+						continue;
+					}
+				}
+
 				for (String ignoredTagPrefix : ignoredTagPrefixes) {
 					if (tagString.startsWith(ignoredTagPrefix)) {
 						continue outerLoop;

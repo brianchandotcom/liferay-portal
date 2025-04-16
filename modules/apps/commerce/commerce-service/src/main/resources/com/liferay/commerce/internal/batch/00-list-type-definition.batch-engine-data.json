@@ -18,57 +18,68 @@
 				{
 					"externalReferenceCode": "AUTHORIZED",
 					"key": "authorized",
-					"name": "Authorized"
+					"name": "Authorized",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "AWAITING_AUTHORIZATION",
 					"key": "awaitingAuthorization",
-					"name": "Awaiting Authorization"
+					"name": "Awaiting Authorization",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "AWAITING_RECEIPT",
 					"key": "awaitingReceipt",
-					"name": "Awaiting Receipt"
+					"name": "Awaiting Receipt",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "COMPLETED",
 					"key": "completed",
-					"name": "Completed"
+					"name": "Completed",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "NOT_AUTHORIZED",
 					"key": "notAuthorized",
-					"name": "Not Authorized"
+					"name": "Not Authorized",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PARTIALLY_AUTHORIZED",
 					"key": "partiallyAuthorized",
-					"name": "Partially Authorized"
+					"name": "Partially Authorized",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PARTIALLY_RECEIVED",
 					"key": "partiallyReceived",
-					"name": "Partially Received"
+					"name": "Partially Received",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PROCESSED",
 					"key": "processed",
-					"name": "Processed"
+					"name": "Processed",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "RECEIPT_REJECTED",
 					"key": "receiptRejected",
-					"name": "Receipt Rejected"
+					"name": "Receipt Rejected",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "RECEIVED",
 					"key": "received",
-					"name": "Received"
+					"name": "Received",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "TO_BE_PROCESSED",
 					"key": "toBeProcessed",
-					"name": "To Be Processed"
+					"name": "To Be Processed",
+					"system": true
 				}
 			],
 			"name": "Commerce Return Item Statuses",
@@ -80,12 +91,14 @@
 				{
 					"externalReferenceCode": "CHANGE_OF_MIND",
 					"key": "changeOfMind",
-					"name": "Change Of Mind"
+					"name": "Change Of Mind",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PRODUCT_DEFECT",
 					"key": "productDefect",
-					"name": "Product Defect"
+					"name": "Product Defect",
+					"system": true
 				}
 			],
 			"name": "Commerce Return Reasons",
@@ -97,7 +110,8 @@
 				{
 					"externalReferenceCode": "REFUND",
 					"key": "refund",
-					"name": "Refund"
+					"name": "Refund",
+					"system": true
 				}
 			],
 			"name": "Commerce Return Resolution Methods",
@@ -109,37 +123,44 @@
 				{
 					"externalReferenceCode": "AUTHORIZED",
 					"key": "authorized",
-					"name": "Authorized"
+					"name": "Authorized",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "CANCELLED",
 					"key": "cancelled",
-					"name": "Cancelled"
+					"name": "Cancelled",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "COMPLETED",
 					"key": "completed",
-					"name": "Completed"
+					"name": "Completed",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "DRAFT",
 					"key": "draft",
-					"name": "Draft"
+					"name": "Draft",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PENDING",
 					"key": "pending",
-					"name": "Pending"
+					"name": "Pending",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "PROCESSING",
 					"key": "processing",
-					"name": "Processing"
+					"name": "Processing",
+					"system": true
 				},
 				{
 					"externalReferenceCode": "REJECTED",
 					"key": "rejected",
-					"name": "Rejected"
+					"name": "Rejected",
+					"system": true
 				}
 			],
 			"name": "Commerce Return Statuses",

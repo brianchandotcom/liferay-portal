@@ -68,7 +68,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTUG_TU_C_C(
-			0, toUserId, classNameId, classPK);
+			toUserGroupId, toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
 			return sharingEntryService.addSharingEntry(

@@ -320,7 +320,7 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 
 		for (String ddmStructureIdentifier : ddmStructureIdentifiers) {
 			String[] ddmStructureIdentifierArray = StringUtil.split(
-				ddmStructureIdentifier, StringPool.POUND);
+				ddmStructureIdentifier, "&&");
 
 			String className = ddmStructureIdentifierArray[0];
 

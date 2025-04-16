@@ -27,10 +27,9 @@ const config = {
 		},
 		ecmaVersion: 2023,
 	},
-	plugins: ['@liferay', 'sort-class-members'],
+	plugins: ['@liferay'],
 	root: true,
 	rules: {
-		"sort-class-members/sort-class-members": 2,
 		'@liferay/empty-line-between-elements': 'off',
 		'@liferay/import-extensions': 'off',
 		'@liferay/portal/deprecation': 'off',

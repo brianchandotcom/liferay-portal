@@ -122,6 +122,21 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 	@Override
 	public SharingEntry deleteSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryPersistence.findByTUG_TU_C_C(
+			toUserGroupId, toUserId, classNameId, classPK);
+
+		sharingPermission.checkManageCollaboratorsPermission(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId());
+
+		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
+	public SharingEntry deleteSharingEntry(
 			long sharingEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -187,6 +202,22 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
 			sharingEntryId);
+
+		sharingPermission.check(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId(),
+			Collections.singletonList(SharingEntryAction.VIEW));
+
+		return sharingEntry;
+	}
+
+	@Override
+	public SharingEntry getSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryPersistence.findByTUG_TU_C_C(
+			toUserGroupId, toUserId, classNameId, classPK);
 
 		sharingPermission.check(
 			getPermissionChecker(), sharingEntry.getClassNameId(),

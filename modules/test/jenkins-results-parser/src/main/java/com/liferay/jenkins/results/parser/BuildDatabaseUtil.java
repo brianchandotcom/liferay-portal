@@ -30,7 +30,7 @@ public class BuildDatabaseUtil {
 		File buildDir = _getBuildDir(null);
 
 		File buildDatabaseFile = new File(
-			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 		if (buildDatabaseFile.exists()) {
 			buildDatabaseFile.delete();
@@ -48,7 +48,7 @@ public class BuildDatabaseUtil {
 		File buildDir = new File(buildDirPath);
 
 		File buildDatabaseFile = new File(
-			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 		buildDatabaseFile.delete();
 
@@ -60,7 +60,7 @@ public class BuildDatabaseUtil {
 				buildDatabaseFile,
 				JenkinsResultsParserUtil.toString(
 					JenkinsResultsParserUtil.getBuildArtifactURL(
-						buildURL, BuildDatabase.FILE_NAME_BUILD_DATABASE)));
+						buildURL, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -112,7 +112,7 @@ public class BuildDatabaseUtil {
 		}
 
 		File buildDatabaseFile = new File(
-			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			buildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 		if (buildDatabaseFile.exists()) {
 			return;
@@ -170,7 +170,7 @@ public class BuildDatabaseUtil {
 				}
 
 				File defaultBuildDatabaseFile = new File(
-					defaultBuildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+					defaultBuildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 				try {
 					Files.copy(
@@ -213,7 +213,7 @@ public class BuildDatabaseUtil {
 					commands[1] = JenkinsResultsParserUtil.combine(
 						"timeout 1200 rsync -Iq \"root@", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								buildDatabaseFile)));
@@ -237,7 +237,7 @@ public class BuildDatabaseUtil {
 						JenkinsResultsParserUtil.combine(
 							"#!/bin/sh\nscp \"", distNode, ":",
 							JenkinsResultsParserUtil.escapeForBash(distPath),
-							"/", BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+							"/", BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, "\" ",
 							JenkinsResultsParserUtil.escapeForBash(
 								JenkinsResultsParserUtil.getCanonicalPath(
 									buildDatabaseFile))));
@@ -250,13 +250,13 @@ public class BuildDatabaseUtil {
 					commands[1] = JenkinsResultsParserUtil.combine(
 						"if ! ", "timeout 1200 rsync -Iq \"", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, "\" ",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, "\" ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								buildDatabaseFile)),
 						"; then ", "timeout 1200 rsync -Iq ", distNode, ":",
 						JenkinsResultsParserUtil.escapeForBash(distPath), "/",
-						BuildDatabase.FILE_NAME_BUILD_DATABASE, " ",
+						BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, " ",
 						JenkinsResultsParserUtil.escapeForBash(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								buildDatabaseFile)),
@@ -273,7 +273,7 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to download ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE, "\n\n",
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, "\n\n",
 							errorText));
 				}
 
@@ -281,7 +281,7 @@ public class BuildDatabaseUtil {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE, " from ",
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, " from ",
 							distNode, ", retrying..."));
 
 					continue;
@@ -316,7 +316,7 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE, " file"),
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, " file"),
 						exception);
 				}
 
@@ -388,7 +388,7 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE,
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON,
 							" file from ", path),
 						exception);
 				}
@@ -418,7 +418,7 @@ public class BuildDatabaseUtil {
 			private void _downloadBuildDatabaseFiles() {
 				CloudBucketUtil.copyS3File(
 					buildDatabaseFilePath,
-					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 				CloudBucketUtil.copyS3File(
 					buildDatabaseSHAFilePath,

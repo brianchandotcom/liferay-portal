@@ -394,7 +394,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	public void uploadBuildDatabaseFileToCloudBucket() {
 		uploadBuildDatabaseFileToCloudBucket(
 			System.getenv("S3_BUCKET_DIST_PATH") + "/" +
-				FILE_NAME_BUILD_DATABASE);
+				FILE_NAME_BUILD_DATABASE_JSON);
 	}
 
 	@Override
@@ -405,7 +405,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		synchronized (_buildDatabaseFile) {
 			String shaPath = path.replace(
-				FILE_NAME_BUILD_DATABASE, FILE_NAME_BUILD_DATABASE_JSON_SHA);
+				FILE_NAME_BUILD_DATABASE_JSON, FILE_NAME_BUILD_DATABASE_JSON_SHA);
 
 			Retryable<JSONObject> retryable = new Retryable<JSONObject>(
 				true, 3, 5, true) {
@@ -421,7 +421,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 						JenkinsResultsParserUtil.getCanonicalPath(baseTempDir);
 
 					File tempFile = new File(
-						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE);
+						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE_JSON);
 					File tempSHAFile = new File(
 						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE_JSON_SHA);
 
@@ -594,7 +594,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	protected BaseBuildDatabase(File baseDir) {
 		_buildDatabaseFile = new File(
-			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 		_readBuildDatabaseFile();
 	}

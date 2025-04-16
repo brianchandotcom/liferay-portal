@@ -50,7 +50,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 			buildDatabase.uploadBuildDatabaseFileToCloudBucket(
 				topLevelBuildData.getS3BucketDistPath() + "/" +
-					BuildDatabase.FILE_NAME_BUILD_DATABASE);
+					BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 		}
 		else {
 			propagateBuildDatabaseToDistNodes();

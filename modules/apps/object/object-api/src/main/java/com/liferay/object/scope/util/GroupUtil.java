@@ -30,6 +30,15 @@ public class GroupUtil {
 			group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
 		}
 
+		if (group == null) {
+			group = groupLocalService.fetchGroupByExternalReferenceCode(
+				siteKey, companyId);
+
+			if (group != null) {
+				return group.getGroupId();
+			}
+		}
+
 		if ((group != null) && group.isUserGroup()) {
 			return group.getGroupId();
 		}

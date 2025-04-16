@@ -2004,7 +2004,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isVersionable(CPDefinition cpDefinition) {
-		if (!_isVersioningEnabled(cpDefinition.getCompanyId())) {
+		if ((cpDefinition == null) ||
+			!_isVersioningEnabled(cpDefinition.getCompanyId())) {
+
 			return false;
 		}
 
@@ -2013,16 +2015,8 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean isVersionable(long cpDefinitionId) {
-		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
-
-		if ((cpDefinition == null) ||
-			!_isVersioningEnabled(cpDefinition.getCompanyId())) {
-
-			return false;
-		}
-
-		return isPublishedCPDefinition(cpDefinitionId);
+		return cpDefinitionLocalService.isVersionable(
+			cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId));
 	}
 
 	@Override

@@ -52,10 +52,6 @@ components:
                     description:
                         The localized object entry folder's label.
                     type: object
-                title:
-                    description:
-                        The object entry folder's main title/name.
-                    type: string
                 numberOfObjectEntries:
                     description:
                         The number of object entries in this object entry folder.
@@ -88,6 +84,10 @@ components:
                     description:
                         The scope key of the object entry folder.
                     readOnly: true
+                    type: string
+                title:
+                    description:
+                        The object entry folder's main title/name.
                     type: string
                 viewableBy:
                     description:

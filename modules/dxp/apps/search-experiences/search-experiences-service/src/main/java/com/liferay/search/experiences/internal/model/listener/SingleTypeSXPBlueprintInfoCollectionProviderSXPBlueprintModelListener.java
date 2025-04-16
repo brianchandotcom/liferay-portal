@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -41,19 +42,22 @@ public class
 		extends InfoCollectionProviderSXPBlueprintModelListener {
 
 	public SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-		BundleContext bundleContext, CompanyLocalService companyLocalService,
-		SXPBlueprintLocalService sxpBlueprintLocalService,
-		AssetHelper assetHelper, ClassNameLocalService classNameLocalService,
+		AssetHelper assetHelper, BundleContext bundleContext,
+		ClassNameLocalService classNameLocalService,
+		CompanyLocalService companyLocalService,
 		DDMStructureService ddmStructureService,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLAppLocalService dlAppLocalService, GroupService groupService,
 		JournalArticleService journalArticleService, Searcher searcher,
-		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+		SearchRequestBuilderFactory searchRequestBuilderFactory,
+		SXPBlueprintLocalService sxpBlueprintLocalService) {
 
 		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
 
 		_assetHelper = assetHelper;
 		_classNameLocalService = classNameLocalService;
 		_ddmStructureService = ddmStructureService;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlAppLocalService = dlAppLocalService;
 		_groupService = groupService;
 		_journalArticleService = journalArticleService;
@@ -87,8 +91,9 @@ public class
 		}
 		else if (_className.equals(DLFileEntry.class.getName())) {
 			return new FileEntrySXPBlueprintInfoCollectionProvider(
-				_assetHelper, _dlAppLocalService, _searcher,
-				_searchRequestBuilderFactory, sxpBlueprint);
+				_assetHelper, _dlAppLocalService, _dlFileEntryTypeLocalService,
+				_groupService, _searcher, _searchRequestBuilderFactory,
+				sxpBlueprint);
 		}
 
 		return new AssetEntrySXPBlueprintInfoCollectionProvider(
@@ -156,6 +161,7 @@ public class
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private final DLAppLocalService _dlAppLocalService;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final GroupService _groupService;
 	private final JournalArticleService _journalArticleService;
 	private final Searcher _searcher;

@@ -6,7 +6,9 @@
 package com.liferay.search.experiences.internal.info.collection.provider;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -17,9 +19,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -46,13 +51,16 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 
 	public FileEntrySXPBlueprintInfoCollectionProvider(
 		AssetHelper assetHelper, DLAppLocalService dlAppLocalService,
-		Searcher searcher,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+		GroupService groupService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		SXPBlueprint sxpBlueprint) {
 
 		super(assetHelper, searcher, searchRequestBuilderFactory, sxpBlueprint);
 
 		_dlAppLocalService = dlAppLocalService;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+		_groupService = groupService;
 	}
 
 	@Override
@@ -88,11 +96,53 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		GeneralConfiguration generalConfiguration =
 			configuration.getGeneralConfiguration();
 
-		if (generalConfiguration == null) {
+		String[] searchableAssetTypes =
+			generalConfiguration.getSearchableAssetTypes();
+
+		if (searchableAssetTypes.length != 1) {
 			return "0";
 		}
 
-		return generalConfiguration.getSearchableAssetSubType();
+		String[] searchableAssetTypeWithSubtype = StringUtil.split(
+			searchableAssetTypes[0], StringPool.POUND);
+
+		if ((searchableAssetTypeWithSubtype.length < 3) ||
+			searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
+
+			return "0";
+		}
+
+		Group group;
+
+		try {
+			group = _groupService.fetchGroupByExternalReferenceCode(
+				searchableAssetTypeWithSubtype[1], sxpBlueprint.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get group with external reference code " +
+					searchableAssetTypeWithSubtype[1],
+				portalException);
+
+			return "0";
+		}
+
+		try {
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.
+					getDLFileEntryTypeByExternalReferenceCode(
+						searchableAssetTypeWithSubtype[2], group.getGroupId());
+
+			return String.valueOf(dlFileEntryType.getFileEntryTypeId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get file entry type with external reference code " +
+					searchableAssetTypeWithSubtype[2],
+				portalException);
+		}
+
+		return "0";
 	}
 
 	@Override
@@ -130,5 +180,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		FileEntrySXPBlueprintInfoCollectionProvider.class);
 
 	private final DLAppLocalService _dlAppLocalService;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private final GroupService _groupService;
 
 }

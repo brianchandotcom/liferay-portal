@@ -200,6 +200,11 @@ public class SharingEntryLocalServiceImpl
 		return newSharingEntry;
 	}
 
+	@Override
+	public void deleteCompanySharingEntries(long companyId, long classNameId) {
+		sharingEntryPersistence.removeByC_CN(companyId, classNameId);
+	}
+
 	/**
 	 * Deletes the sharing entries whose expiration date is before the current
 	 * date.
@@ -359,6 +364,11 @@ public class SharingEntryLocalServiceImpl
 
 		return sharingEntryPersistence.fetchByTUG_TU_C_C(
 			0, toUserId, classNameId, classPK);
+	}
+
+	@Override
+	public int getCompanySharingEntriesCount(long companyId, long classNameId) {
+		return sharingEntryPersistence.countByC_CN(companyId, classNameId);
 	}
 
 	/**

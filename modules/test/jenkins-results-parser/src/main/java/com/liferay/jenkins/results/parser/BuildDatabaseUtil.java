@@ -341,35 +341,71 @@ public class BuildDatabaseUtil {
 
 		parentDir.mkdirs();
 
-		Retryable<JSONObject> retryable = new Retryable<JSONObject>(
+		String buildDatabaseFilePath =
+			JenkinsResultsParserUtil.getCanonicalPath(buildDatabaseFile);
+
+		File buildDatabaseSHAFile = new File(
+			parentDir, BuildDatabase.SHA_FILE_NAME_BUILD_DATABASE);
+
+		String buildDatabaseSHAFilePath =
+			JenkinsResultsParserUtil.getCanonicalPath(buildDatabaseSHAFile);
+
+		Retryable<Object> retryable = new Retryable<Object>(
 			true, 3, 5, true) {
 
-			@Override
-			public JSONObject execute() {
-				try {
-					CloudBucketUtil.copyS3File(
-						buildDatabaseFile.getCanonicalPath(),
-						path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			private void _deleteBuildDatabaseFiles() {
+				if (buildDatabaseFile.exists()) {
+					JenkinsResultsParserUtil.delete(buildDatabaseFile);
+				}
 
-					if (!_isValidBuildDatabaseFile(buildDatabaseFile)) {
-						JenkinsResultsParserUtil.delete(buildDatabaseFile);
+				if (buildDatabaseSHAFile.exists()) {
+					JenkinsResultsParserUtil.delete(buildDatabaseSHAFile);
+				}
+			}
+
+			private void _downloadBuildDatabaseFiles() {
+				CloudBucketUtil.copyS3File(
+					buildDatabaseFilePath,
+					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+				CloudBucketUtil.copyS3File(
+					buildDatabaseSHAFilePath,
+					path + "/" + BuildDatabase.SHA_FILE_NAME_BUILD_DATABASE);
+			}
+
+			@Override
+			public Object execute() {
+				try {
+					_deleteBuildDatabaseFiles();
+
+					_downloadBuildDatabaseFiles();
+
+					if (!JenkinsResultsParserUtil.isMatchingSHAFile(
+							buildDatabaseFile, buildDatabaseSHAFile)) {
+
+						_deleteBuildDatabaseFiles();
 
 						throw new RuntimeException(
 							JenkinsResultsParserUtil.combine(
-								"Invalid ",
-								JenkinsResultsParserUtil.getCanonicalPath(
-									buildDatabaseFile),
+								"Mismatched SHA for ", buildDatabaseFilePath,
 								" from ", path));
+					}
+
+					if (!_isValidBuildDatabaseFile(buildDatabaseFile)) {
+						_deleteBuildDatabaseFiles();
+
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Invalid ", buildDatabaseFilePath, " from ",
+								path));
 					}
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
-							"Downloaded ",
-							JenkinsResultsParserUtil.getCanonicalPath(
-								buildDatabaseFile),
-							" from ", path));
+							"Downloaded ", path, " to ",
+							buildDatabaseFilePath));
 				}
-				catch (IOException | RuntimeException exception) {
+				catch (Exception exception) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
@@ -384,8 +420,10 @@ public class BuildDatabaseUtil {
 			@Override
 			protected String getRetryMessage(int retryCount) {
 				return JenkinsResultsParserUtil.combine(
-					"Unable to upload ", path, ": ",
-					super.getRetryMessage(retryCount));
+					"Unable to download ", path, " to ",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						buildDatabaseFile),
+					" : ", super.getRetryMessage(retryCount));
 			}
 
 		};

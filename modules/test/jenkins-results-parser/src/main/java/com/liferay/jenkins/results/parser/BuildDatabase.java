@@ -23,6 +23,9 @@ public interface BuildDatabase {
 
 	public static final String FILE_NAME_BUILD_DATABASE = "build-database.json";
 
+	public static final String SHA_FILE_NAME_BUILD_DATABASE =
+		"build-database.json.sha512";
+
 	public File getBuildDatabaseFile();
 
 	public JSONObject getBuildDataJSONObject(String key);

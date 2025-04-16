@@ -404,34 +404,80 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		}
 
 		synchronized (_buildDatabaseFile) {
+			String shaPath = path.replace(
+				FILE_NAME_BUILD_DATABASE, SHA_FILE_NAME_BUILD_DATABASE);
+
 			Retryable<JSONObject> retryable = new Retryable<JSONObject>(
 				true, 3, 5, true) {
 
 				@Override
 				public JSONObject execute() {
-					File tempBuildDatabaseFile = new File(
+					File baseTempDir = new File(
 						JenkinsResultsParserUtil.combine(
 							System.getProperty("java.io.tmpdir"), "/",
-							String.valueOf(_buildDatabaseFile.hashCode()), "/",
-							_buildDatabaseFile.getName()));
+							String.valueOf(_buildDatabaseFile.hashCode())));
+
+					String baseTempDirPath =
+						JenkinsResultsParserUtil.getCanonicalPath(baseTempDir);
+
+					File tempFile = new File(
+						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE);
+					File tempSHAFile = new File(
+						baseTempDirPath + "/" + SHA_FILE_NAME_BUILD_DATABASE);
+
+					String tempFilePath =
+						JenkinsResultsParserUtil.getCanonicalPath(tempFile);
+					String tempSHAFilePath =
+						JenkinsResultsParserUtil.getCanonicalPath(tempSHAFile);
 
 					try {
 						JenkinsResultsParserUtil.write(
 							_buildDatabaseFile, _jsonObject.toString());
 
 						JenkinsResultsParserUtil.copy(
-							_buildDatabaseFile, tempBuildDatabaseFile);
+							_buildDatabaseFile, tempFile);
 
-						CloudBucketUtil.copyS3File(
-							path, tempBuildDatabaseFile.toString());
+						JenkinsResultsParserUtil.writeSHAFile(
+							tempFile, tempSHAFile);
+
+						CloudBucketUtil.copyS3File(shaPath, tempSHAFilePath);
+
+						CloudBucketUtil.copyS3File(path, tempFilePath);
 					}
 					catch (IOException ioException) {
 						throw new RuntimeException(ioException);
 					}
 					finally {
-						if (tempBuildDatabaseFile.exists()) {
-							JenkinsResultsParserUtil.delete(
-								tempBuildDatabaseFile);
+						if (tempFile.exists()) {
+							JenkinsResultsParserUtil.delete(tempFile);
+						}
+
+						if (tempSHAFile.exists()) {
+							JenkinsResultsParserUtil.delete(tempSHAFile);
+						}
+					}
+
+					CloudBucketUtil.copyS3File(tempSHAFilePath, shaPath);
+
+					CloudBucketUtil.copyS3File(tempFilePath, path);
+
+					try {
+						if (!JenkinsResultsParserUtil.isMatchingSHAFile(
+							tempFile, tempSHAFile)) {
+
+							throw new RuntimeException(
+								JenkinsResultsParserUtil.combine(
+									"Invalid file uploaded to ", path,
+									" has mismatched SHA"));
+						}
+					}
+					finally {
+						if (tempFile.exists()) {
+							JenkinsResultsParserUtil.delete(tempFile);
+						}
+
+						if (tempSHAFile.exists()) {
+							JenkinsResultsParserUtil.delete(tempSHAFile);
 						}
 					}
 
@@ -441,8 +487,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				@Override
 				protected String getRetryMessage(int retryCount) {
 					return JenkinsResultsParserUtil.combine(
-						"Unable to download ", path, ": ",
-						super.getRetryMessage(retryCount));
+						"Unable to upload ",
+						JenkinsResultsParserUtil.getCanonicalPath(
+							_buildDatabaseFile),
+						" to ", path, " : ", super.getRetryMessage(retryCount));
 				}
 
 			};

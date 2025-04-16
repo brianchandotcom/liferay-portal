@@ -1402,3 +1402,33 @@ test(
 		await expect(accountSettingsPage.userPersonalMenuButton).toBeVisible();
 	}
 );
+
+test(
+	'Max fileSize limit is used uploading the user profile picture',
+	{tag: '@LPD-52424'},
+	async ({editUserPage, page, usersAndOrganizationsPage}) => {
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink('test')
+		).click();
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await editUserPage.changeImageButton.click();
+
+		await expect(editUserPage.maxFileSizeText).toBeVisible();
+
+		await editUserPage.uploadImageSelectImageButton.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/liferay.png')
+		);
+		await editUserPage.uploadImageDoneButton.click();
+		await editUserPage.changeImageButton.click();
+
+		await expect(editUserPage.maxFileSizeText).toBeVisible();
+	}
+);

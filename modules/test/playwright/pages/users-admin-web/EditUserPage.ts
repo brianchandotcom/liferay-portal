@@ -12,6 +12,8 @@ export class EditUserPage {
 	readonly appsLink: Locator;
 	readonly backLink: Locator;
 	readonly cancelButton: Locator;
+	readonly changeImageButton: Locator;
+	readonly clearImageButton: Locator;
 	readonly confirmButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
 	readonly doneButton: Locator;
@@ -21,6 +23,7 @@ export class EditUserPage {
 	readonly generateWebDAVPasswordButton: Locator;
 	readonly informationLink: Locator;
 	readonly lastNameInput: Locator;
+	readonly maxFileSizeText: Locator;
 	readonly membershipsAccountsRemoveButton: (accountName: string) => Locator;
 	readonly membershipsAccountsTableRow: (
 		colPosition: number,
@@ -92,6 +95,8 @@ export class EditUserPage {
 	readonly tagCheckbox: (tagName: string) => Locator;
 	readonly tagInput: (name: string) => Locator;
 	readonly tagsFrame: FrameLocator;
+	readonly uploadImageSelectImageButton: Locator;
+	readonly uploadImageDoneButton: Locator;
 	readonly userIDInput: Locator;
 	readonly webDAVPasswordLabel: Locator;
 	readonly yourPasswordInput: Locator;
@@ -112,6 +117,8 @@ export class EditUserPage {
 			exact: true,
 			name: 'Cancel',
 		});
+		this.changeImageButton = page.getByLabel('Change Image');
+		this.clearImageButton = page.getByLabel('Clear Image');
 		this.customField = async (fieldName: string) => {
 			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
 
@@ -143,6 +150,9 @@ export class EditUserPage {
 			name: 'Information',
 		});
 		this.lastNameInput = page.getByLabel('Last Name');
+		this.maxFileSizeText = page
+			.frameLocator('iframe[title="Upload Image"]')
+			.getByText('Upload images no larger than 300 KB.');
 		this.membershipsAccountsRemoveButton = (accountName) =>
 			page.getByLabel(`Remove ${accountName}`);
 		this.membershipsAccountsTableRow = async (
@@ -341,6 +351,12 @@ export class EditUserPage {
 		this.tagCheckbox = (tagName) => this.tagsFrame.getByLabel(tagName);
 		this.tagInput = (name) => page.getByRole('row', {name});
 		this.tagsFrame = page.frameLocator(`iframe[title="Tags"]`);
+		this.uploadImageSelectImageButton = page
+			.frameLocator('iframe[title="Upload Image"]')
+			.getByLabel('Select Image');
+		this.uploadImageDoneButton = page
+			.frameLocator('iframe[title="Upload Image"]')
+			.getByRole('button', {name: 'Done'});
 		this.userIDInput = page.getByLabel('User ID');
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'

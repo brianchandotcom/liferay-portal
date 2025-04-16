@@ -158,7 +158,7 @@ export default function FormBuilder() {
 	}, []);
 
 	useEffect(() => {
-		if (session && !session.get('autoExtend')) {
+		if (session && !session.autoExtend) {
 			Liferay.Session.autoExtend = true;
 
 			return () => {

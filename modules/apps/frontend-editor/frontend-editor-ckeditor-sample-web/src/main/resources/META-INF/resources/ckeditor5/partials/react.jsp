@@ -7,6 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDisplayContext)request.getAttribute(CKEditorSampleWebKeys.CKEDITOR_SAMPLE_DISPLAY_CONTEXT);
+%>
+
 <react:component
 	module="{CKEditor5ReactClassicEditor} from frontend-editor-ckeditor-sample-web"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"editorConfig", ckEditorSampleDisplayContext.getCKEditor5ClassicEditorConfig()
+		).build()
+	%>'
 />

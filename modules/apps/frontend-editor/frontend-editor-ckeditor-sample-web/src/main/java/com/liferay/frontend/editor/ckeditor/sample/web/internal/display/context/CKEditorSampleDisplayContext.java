@@ -8,13 +8,20 @@ package com.liferay.frontend.editor.ckeditor.sample.web.internal.display.context
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -31,6 +38,20 @@ public class CKEditorSampleDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public Object getCKEditor5ClassicEditorConfig() throws Exception {
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				StringPool.BLANK, StringPool.BLANK, "ckeditor5_classic",
+				new HashMap<String, Object>(), _themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(
+					_themeDisplay.getRequest()));
+
+		Map<String, Object> editorConfigurationData =
+			editorConfiguration.getData();
+
+		return editorConfigurationData.get("editorConfig");
 	}
 
 	public JSONArray getEditorTransformerURLsJSONArray() throws Exception {

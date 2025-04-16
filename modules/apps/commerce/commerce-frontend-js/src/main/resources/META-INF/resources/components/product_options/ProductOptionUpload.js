@@ -61,10 +61,12 @@ const ProductOptionUpload = ({
 
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
+				namespace,
 				skuOptions: currentSkuOptions,
 			});
 		},
 		[
+			namespace,
 			productOption.key,
 			productOption.name,
 			skuOptionsAtomState,

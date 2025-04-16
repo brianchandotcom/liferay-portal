@@ -45,6 +45,10 @@
 		<finder name="LtExpirationDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="expirationDate" />
 		</finder>
+		<finder name="C_CN" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="U_C" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />

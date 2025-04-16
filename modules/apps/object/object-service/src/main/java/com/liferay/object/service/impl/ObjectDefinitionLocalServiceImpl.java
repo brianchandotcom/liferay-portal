@@ -76,6 +76,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -553,6 +554,10 @@ public class ObjectDefinitionLocalServiceImpl
 							objectDefinition.getCompanyId(),
 							_classNameLocalService.getClassNameId(
 								objectDefinition.getClassName()));
+
+					_objectEntryVersionLocalService.
+						deleteObjectEntryVersionByObjectDefinitionId(
+							objectDefinition.getObjectDefinitionId());
 
 					_deleteFromTable(objectDefinition.getDBTableName());
 
@@ -3118,6 +3123,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -657,6 +657,9 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinition.getClassName()),
 				objectEntry.getObjectEntryId());
 
+			_objectEntryVersionLocalService.deleteObjectEntryVersions(
+				objectEntry.getObjectEntryId());
+
 			_deleteFromTable(
 				objectDefinition.getDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
@@ -685,9 +688,6 @@ public class ObjectEntryLocalServiceImpl
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
-
-		_objectEntryVersionLocalService.deleteObjectEntryVersions(
-			objectEntry.getObjectEntryId());
 
 		_sharingEntryLocalService.deleteSharingEntries(
 			_classNameLocalService.getClassNameId(

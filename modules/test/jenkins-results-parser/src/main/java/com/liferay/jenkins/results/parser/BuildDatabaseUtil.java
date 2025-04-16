@@ -402,7 +402,7 @@ public class BuildDatabaseUtil {
 					"Unable to download ", path, " to ",
 					JenkinsResultsParserUtil.getCanonicalPath(
 						buildDatabaseFile),
-					" : ", super.getRetryMessage(retryCount));
+					": ", super.getRetryMessage(retryCount));
 			}
 
 			private void _deleteBuildDatabaseFiles() {

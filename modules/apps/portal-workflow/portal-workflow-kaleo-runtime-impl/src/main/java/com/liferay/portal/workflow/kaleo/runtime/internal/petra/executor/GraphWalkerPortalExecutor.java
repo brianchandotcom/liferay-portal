@@ -147,11 +147,10 @@ public class GraphWalkerPortalExecutor {
 	}
 
 	private void _walk(PathElement pathElement) {
+		ExecutionContext executionContext = pathElement.getExecutionContext();
 		String name = PrincipalThreadLocal.getName();
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
-		ExecutionContext executionContext = pathElement.getExecutionContext();
 
 		try {
 			ServiceContext serviceContext =

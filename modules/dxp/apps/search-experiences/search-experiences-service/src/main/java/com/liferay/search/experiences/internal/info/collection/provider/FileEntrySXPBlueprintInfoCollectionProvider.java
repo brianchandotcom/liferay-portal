@@ -100,15 +100,17 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 			generalConfiguration.getSearchableAssetTypes();
 
 		if (searchableAssetTypes.length != 1) {
-			return "0";
+			return StringPool.BLANK;
 		}
 
 		String[] searchableAssetTypeWithSubtype = StringUtil.split(
 			searchableAssetTypes[0], StringPool.POUND);
 
-		if ((searchableAssetTypeWithSubtype.length < 3) ||
-			searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
+		if (searchableAssetTypeWithSubtype.length != 3) {
+			return StringPool.BLANK;
+		}
 
+		if (searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
 			return "0";
 		}
 
@@ -124,7 +126,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 					searchableAssetTypeWithSubtype[1],
 				portalException);
 
-			return "0";
+			return StringPool.BLANK;
 		}
 
 		try {
@@ -142,7 +144,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 				portalException);
 		}
 
-		return "0";
+		return StringPool.BLANK;
 	}
 
 	@Override

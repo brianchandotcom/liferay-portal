@@ -79,7 +79,7 @@ function LayoutFinder({
 	);
 
 	const handleOnClick = useCallback(() => {
-		Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
+		Liferay.Portlet.destroy(`#p_p_id${namespace}`);
 
 		setSessionValue(
 			'com.liferay.product.navigation.product.menu.web_pagesTreeState',

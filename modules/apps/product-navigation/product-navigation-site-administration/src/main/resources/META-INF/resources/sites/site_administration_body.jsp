@@ -110,7 +110,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 		);
 
 		pagesTreeToggle.addEventListener('click', (event) => {
-			Liferay.Portlet.destroy('#p_p_id<portlet:namespace />', true);
+			Liferay.Portlet.destroy('#p_p_id<portlet:namespace />');
 
 			Liferay.Util.Session.set(
 				'com.liferay.product.navigation.product.menu.web_pagesTreeState',

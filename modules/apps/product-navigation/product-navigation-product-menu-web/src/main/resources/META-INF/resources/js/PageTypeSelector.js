@@ -27,7 +27,7 @@ function PageTypeSelector({
 	const handleSelect = (type) => {
 		setSessionValue(`${namespace}PAGE_TYPE_SELECTED_OPTION`, type).then(
 			() => {
-				Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
+				Liferay.Portlet.destroy(`#p_p_id${namespace}`);
 
 				fetch(pagesTreeURL)
 					.then((response) => {

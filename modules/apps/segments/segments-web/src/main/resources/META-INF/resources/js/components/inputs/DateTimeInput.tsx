@@ -8,6 +8,7 @@ import {dateUtils} from 'frontend-js-web';
 import {default as React, useEffect, useRef, useState} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
+import {convertTimezoneToUTC} from '../../utils/date';
 
 const INTERNAL_DATE_FORMAT = 'yyyy-MM-dd';
 const DISPLAY_DATE_FORMAT = 'yyyy/MM/dd';
@@ -134,7 +135,7 @@ function datesAreEqual(dateA: string, dateB: string) {
 }
 
 function toDisplayDate(internalOrIsoDate: string, previousDate?: string) {
-	let dateObject = new Date(internalOrIsoDate);
+	let dateObject = convertTimezoneToUTC(internalOrIsoDate);
 
 	const resetDate = previousDate ? new Date(previousDate) : new Date();
 

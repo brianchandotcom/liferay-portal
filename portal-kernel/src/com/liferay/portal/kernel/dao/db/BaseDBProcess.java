@@ -287,20 +287,11 @@ public abstract class BaseDBProcess implements DBProcess {
 				newTableName));
 	}
 
-	protected void closeConnections(boolean closeAllConnections) {
-		if (closeAllConnections) {
-			for (Map<Thread, Connection> connectionMap :
-					_companyConnectionMap.values()) {
+	protected void closeConnections() {
+		Map<Thread, Connection> connectionMap = _companyConnectionMap.get(
+			CompanyThreadLocal.getCompanyId());
 
-				_closeConnectionsInMap(connectionMap);
-			}
-		}
-		else {
-			Map<Thread, Connection> connectionMap = _companyConnectionMap.get(
-				CompanyThreadLocal.getCompanyId());
-
-			_closeConnectionsInMap(connectionMap);
-		}
+		_closeConnectionsInMap(connectionMap);
 	}
 
 	/**
@@ -757,7 +748,11 @@ public abstract class BaseDBProcess implements DBProcess {
 			String methodName = method.getName();
 
 			if (methodName.equals("close") && (_countConnections() > 0)) {
-				closeConnections(true);
+				for (Map<Thread, Connection> connectionMap :
+						_companyConnectionMap.values()) {
+
+					_closeConnectionsInMap(connectionMap);
+				}
 
 				return null;
 			}

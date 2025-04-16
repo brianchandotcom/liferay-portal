@@ -48,7 +48,9 @@ public class LayoutFixture {
 				String randomString = FriendlyURLNormalizerUtil.normalize(
 					RandomTestUtil.randomString());
 
-				put(LocaleUtil.US, StringPool.SLASH + randomString);
+				put(
+					LocaleUtil.getSiteDefault(),
+					StringPool.SLASH + randomString);
 			}
 		};
 

@@ -32,8 +32,7 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 
 		if ((text.startsWith("CharPool.") || text.startsWith("StringPool.")) &&
 			!text.endsWith(".DEFAULT_CHARSET_NAME") &&
-			!text.endsWith(".DELETE") && !text.endsWith(".NEW_LINE") &&
-			!text.endsWith(".NO_BREAK_SPACE") && !text.endsWith(".TAB")) {
+			!text.endsWith(".DELETE") && !text.endsWith(".NO_BREAK_SPACE")) {
 
 			log(
 				literalStringDetailAST, _MSG_COMBINE_STRING,

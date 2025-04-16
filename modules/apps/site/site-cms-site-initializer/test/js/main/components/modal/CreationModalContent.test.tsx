@@ -5,11 +5,14 @@
 
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import CreationModalContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/modal/CreationModalContent';
+
+const mockOnSubmit = jest.fn();
 
 const defaultProps = {
 	action: 'createFolder' as const,
@@ -18,11 +21,15 @@ const defaultProps = {
 		{groupId: '456', name: 'Space 2'},
 	],
 	closeModal: () => {},
-	onSubmit: () => {},
+	onSubmit: mockOnSubmit,
 	title: 'Create Folder',
 };
 
 describe('CreationModalContent', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	test('renders the modal title in the header', () => {
 		render(<CreationModalContent {...defaultProps} />);
 		expect(screen.getByText('Create Folder')).toBeInTheDocument();
@@ -49,5 +56,25 @@ describe('CreationModalContent', () => {
 			/>
 		);
 		expect(screen.queryByLabelText(/space/i)).not.toBeInTheDocument();
+	});
+
+	test('calls onSubmit when form is submitted and there is no redirect', async () => {
+		render(<CreationModalContent {...defaultProps} />);
+
+		await userEvent.type(screen.getByLabelText(/name/i), 'Folder Name');
+		await userEvent.click(screen.getByText('select-a-space'));
+		await userEvent.click(screen.getByText('Space 1'));
+		await userEvent.click(screen.getByText('save'));
+
+		expect(mockOnSubmit).toHaveBeenCalledWith(
+			expect.objectContaining({
+				groupId: '123',
+				name: 'Folder Name',
+			}),
+			expect.objectContaining({
+				setErrors: expect.any(Function),
+				setFieldError: expect.any(Function),
+			})
+		);
 	});
 });

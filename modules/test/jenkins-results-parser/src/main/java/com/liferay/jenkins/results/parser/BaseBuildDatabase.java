@@ -463,7 +463,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 					try {
 						if (!JenkinsResultsParserUtil.isMatchingSHAFile(
-							tempFile, tempSHAFile)) {
+								tempFile, tempSHAFile)) {
 
 							throw new RuntimeException(
 								JenkinsResultsParserUtil.combine(

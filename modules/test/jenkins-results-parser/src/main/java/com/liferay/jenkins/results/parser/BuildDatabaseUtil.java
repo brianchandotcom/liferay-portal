@@ -350,28 +350,7 @@ public class BuildDatabaseUtil {
 		String buildDatabaseSHAFilePath =
 			JenkinsResultsParserUtil.getCanonicalPath(buildDatabaseSHAFile);
 
-		Retryable<Object> retryable = new Retryable<Object>(
-			true, 3, 5, true) {
-
-			private void _deleteBuildDatabaseFiles() {
-				if (buildDatabaseFile.exists()) {
-					JenkinsResultsParserUtil.delete(buildDatabaseFile);
-				}
-
-				if (buildDatabaseSHAFile.exists()) {
-					JenkinsResultsParserUtil.delete(buildDatabaseSHAFile);
-				}
-			}
-
-			private void _downloadBuildDatabaseFiles() {
-				CloudBucketUtil.copyS3File(
-					buildDatabaseFilePath,
-					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
-
-				CloudBucketUtil.copyS3File(
-					buildDatabaseSHAFilePath,
-					path + "/" + BuildDatabase.SHA_FILE_NAME_BUILD_DATABASE);
-			}
+		Retryable<Object> retryable = new Retryable<Object>(true, 3, 5, true) {
 
 			@Override
 			public Object execute() {
@@ -424,6 +403,26 @@ public class BuildDatabaseUtil {
 					JenkinsResultsParserUtil.getCanonicalPath(
 						buildDatabaseFile),
 					" : ", super.getRetryMessage(retryCount));
+			}
+
+			private void _deleteBuildDatabaseFiles() {
+				if (buildDatabaseFile.exists()) {
+					JenkinsResultsParserUtil.delete(buildDatabaseFile);
+				}
+
+				if (buildDatabaseSHAFile.exists()) {
+					JenkinsResultsParserUtil.delete(buildDatabaseSHAFile);
+				}
+			}
+
+			private void _downloadBuildDatabaseFiles() {
+				CloudBucketUtil.copyS3File(
+					buildDatabaseFilePath,
+					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+				CloudBucketUtil.copyS3File(
+					buildDatabaseSHAFilePath,
+					path + "/" + BuildDatabase.SHA_FILE_NAME_BUILD_DATABASE);
 			}
 
 		};

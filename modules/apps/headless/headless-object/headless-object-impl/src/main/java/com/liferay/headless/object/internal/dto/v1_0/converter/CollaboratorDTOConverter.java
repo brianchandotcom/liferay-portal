@@ -65,6 +65,14 @@ public class CollaboratorDTOConverter
 
 						return userGroup.getExternalReferenceCode();
 					});
+				setId(
+					() -> {
+						if (user != null) {
+							return user.getUserId();
+						}
+
+						return userGroup.getUserGroupId();
+					});
 				setName(
 					() -> {
 						if (user != null) {
@@ -95,10 +103,10 @@ public class CollaboratorDTOConverter
 				setType(
 					() -> {
 						if (user != null) {
-							return Type.USER;
+							return "User";
 						}
 
-						return Type.USER_GROUP;
+						return "UserGroup";
 					});
 			}
 		};

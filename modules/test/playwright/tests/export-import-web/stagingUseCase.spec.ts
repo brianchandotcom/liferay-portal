@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
-const {exec} = require('child_process');
-const fs = require('fs');
+import {mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
 import path from 'path';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -18,10 +17,10 @@ import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
 import {stagingPageTest} from '../export-import-web/fixtures/stagingPageTest';
 import {stagingConfigurationPageTest} from '../staging-configuration-web/fixtures/stagingConfigurationPageTest';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
+
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	companyExportImportPageTest,
@@ -38,52 +37,21 @@ export const test = mergeTests(
 	webContentDisplayPageTest
 );
 
-async function editWebcontent(page, webContentTitle: String) {
-	const openProductButton = page.getByLabel('Open Product Menu');
-
-	if (await openProductButton.isVisible()) {
-		await openProductButton.click();
-	}
-
-	const contentAndDataTab = page.getByRole('menuitem', {
-		name: 'Content & Data',
-	});
-
-	await contentAndDataTab.waitFor({state: 'visible'});
-
-	await contentAndDataTab.click();
-
-	const webContentButton = page.getByRole('menuitem', {
-		name: 'Web Content',
-	});
-
-	await webContentButton.waitFor({state: 'visible'});
-
-	await webContentButton.click();
-
-	const webContentPage = page.getByRole('heading', {name: 'Web Content'});
-
-	await webContentPage.waitFor({state: 'visible'});
-
-	await page
-		.getByRole('link', {name: webContentTitle})
-		.waitFor({state: 'visible'});
-	await page.getByText(webContentTitle).click();
-}
-
 test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option', async ({
 	apiHelpers,
 	page,
 	stagingPage,
 }) => {
 	const siteName = 'site-' + getRandomString();
+	const siteERC = 'ERC-' + getRandomString();
 	const site = await apiHelpers.headlessSite.createSite({
+		externalReferenceCode: siteERC,
 		name: siteName,
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+	await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		title: getRandomString(),
 	});
@@ -92,9 +60,10 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		await getBasicWebContentStructureId(apiHelpers);
 
 	const webContentTitle = getRandomString();
+	const webContentContent = getRandomString();
 
-	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: getRandomString(),
+	let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
+		content: webContentContent,
 		ddmStructureId: basicWebContentStructureId,
 		groupId: site.id,
 		titleMap: {en_US: webContentTitle},
@@ -108,28 +77,29 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 	await stagingPage.goto(site.name);
 	await stagingPage.enableLocalStaging();
 
-	await page.goto(`/web${site.friendlyUrlPath}-staging`);
+	const stagingSite =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+			`${site.friendlyUrlPath}-staging`
+		);
 
-	await editWebcontent(page, webContentTitle);
+	const document = await apiHelpers.headlessDelivery.postDocument(
+		stagingSite.id,
+		createReadStream(path.join(__dirname, '/dependencies/Document_1.jpg')),
+		{
+			fileName: 'Document_1.jpg',
+			title: 'Document_1.jpg',
+		}
+	);
 
-	await page.getByLabel('Image', {exact: true}).click();
-	const fileChooserPromise = page.waitForEvent('filechooser');
+	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
+		{
+			content: `<img alt="" data-fileentryid="${document.id}" src="/documents/d${stagingSite.friendlyUrlPath}/Document_1-jpg">&nbsp;<br>${webContentContent}`,
+		},
+		stagingSite.id,
+		webContent
+	);
 
-	const iframe = page.frameLocator('iframe[title="Select Item"]');
-	await iframe
-		.getByText('Drag & Drop Your Images or Browse to Upload')
-		.click();
-	const filePath = path.join(__dirname, '/dependencies/Document_1.jpg');
-
-	const fileChooser = await fileChooserPromise;
-	await fileChooser.setFiles(filePath);
-
-	await iframe.getByText('Add').click();
-
-	await page.getByRole('button', {name: 'Publish'}).click();
-	await page.getByRole('menuitem', {name: 'Publish'}).click();
-
-	await waitForAlert(page, `Success:`);
+	await page.goto(`/web${stagingSite.friendlyUrlPath}`);
 
 	await page.goto(
 		`/group/${site.name}/~/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.staging.configuration.StagingConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration`
@@ -147,15 +117,12 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 	}
 
 	await page.getByRole('button', {name: 'Update'}).click();
-	await page.goto(`/web${site.friendlyUrlPath}-staging${layout.friendlyURL}`);
 
-	await editWebcontent(page, webContentTitle);
-
-	await page
-		.getByPlaceholder('Untitled Basic Web Content')
-		.fill('edit-' + getRandomString());
-	await page.getByRole('button', {name: 'Publish'}).click();
-	await page.getByRole('menuitem', {name: 'Publish'}).click();
+	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
+		{title: getRandomString()},
+		stagingSite.id,
+		webContent
+	);
 
 	await stagingPage.goto(site.name + '-staging');
 
@@ -171,5 +138,4 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 	await page
 		.getByRole('button', {exact: true, name: 'Publish to Live'})
 		.click();
-
 });

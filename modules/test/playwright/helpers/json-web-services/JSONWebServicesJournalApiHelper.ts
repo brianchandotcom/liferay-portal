@@ -21,13 +21,18 @@ type TWebContent = {
 	content?: string;
 	ddmStructureId: number | string;
 	ddmTemplateKey?: string;
+	description?: string;
 	descriptionMap?: any;
 	externalReferenceCode?: string;
 	folderId?: number | string;
 	groupId: number | string;
+	layoutUuid?: string;
 	resourcePrimKey?: number | string;
 	serviceContext?: any;
+	title?: string;
 	titleMap?: any;
+	userId?: number | string;
+	version?: number | string;
 };
 
 export class JSONWebServicesJournalApiHelper {
@@ -122,6 +127,85 @@ export class JSONWebServicesJournalApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-article`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
+	async editWebContent(
+		contentEdit,
+		groupId,
+		webContent?: TWebContent
+	): Promise<TWebContent> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('userId', String(webContent.userId));
+		urlSearchParams.append('groupId', String(groupId));
+
+		if (Object.prototype.hasOwnProperty.call(contentEdit, 'folderId')) {
+			urlSearchParams.append('folderId', contentEdit.folderId);
+		}
+		else {
+			urlSearchParams.append('folderId', String(webContent.folderId));
+		}
+
+		urlSearchParams.append('articleId', webContent.articleId);
+		urlSearchParams.append('version', String(webContent.version));
+
+		if (Object.prototype.hasOwnProperty.call(contentEdit, 'title')) {
+			urlSearchParams.append(
+				'titleMap',
+				JSON.stringify({en_US: contentEdit.title})
+			);
+		}
+		else {
+			urlSearchParams.append(
+				'titleMap',
+				JSON.stringify({en_US: webContent.title})
+			);
+		}
+
+		if (Object.prototype.hasOwnProperty.call(contentEdit, 'description')) {
+			urlSearchParams.append(
+				'descriptionMap',
+				JSON.stringify({en_US: contentEdit.description})
+			);
+		}
+		else {
+			urlSearchParams.append(
+				'descriptionMap',
+				JSON.stringify({en_US: webContent.description})
+			);
+		}
+
+		if (Object.prototype.hasOwnProperty.call(contentEdit, 'content')) {
+			urlSearchParams.append(
+				'content',
+				`<root>
+					<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
+					<dynamic-content><![CDATA[<p>${contentEdit.content}</p>]]></dynamic-content>
+					</dynamic-element>
+					</root>`
+			);
+		}
+		else {
+			urlSearchParams.append('content', webContent.content);
+		}
+
+		urlSearchParams.append('layoutUuid', String(webContent.layoutUuid));
+		urlSearchParams.append(
+			'serviceContext',
+			JSON.stringify({
+				scopeGroupId: webContent.groupId,
+				userId: webContent.userId,
+			})
+		);
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/update-article`,
 			{
 				data: urlSearchParams.toString(),
 				failOnStatusCode: true,

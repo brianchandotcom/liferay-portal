@@ -19,7 +19,7 @@ import {
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {formatDate} from '../../PublisherDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
@@ -41,9 +41,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 		setLoading(true);
 
 		try {
-			await HeadlessCommerceAdminCatalogImpl.deleteProduct(
-				product.productId
-			);
+			await HeadlessCommerceAdminCatalog.deleteProduct(product.productId);
 
 			mutate(items);
 

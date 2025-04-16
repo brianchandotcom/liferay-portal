@@ -16,7 +16,7 @@ import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../liferay/liferay';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getSiteURL} from '../../../../utils/site';
 import PublishedSolutionsTable from './PublishedSolutionsTable';
 
@@ -50,7 +50,7 @@ const Solutions = () => {
 				return {items: [], totalCount: 0};
 			}
 
-			return HeadlessCommerceAdminCatalogImpl.getProducts(
+			return HeadlessCommerceAdminCatalog.getProducts(
 				new URLSearchParams({
 					'accountId': '-1',
 					'attachments.accountId': '-1',

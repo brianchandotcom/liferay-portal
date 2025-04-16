@@ -5,55 +5,55 @@
 
 import fetcher from '../fetcher';
 
-class HeadlessAdminUser {
-	async getAccount(accountId: string | number) {
+export default class HeadlessAdminUser {
+	static async getAccount(accountId: string | number) {
 		return fetcher<UserAccount>(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}`
 		);
 	}
 
-	async getAccountPostalAddresses(accountId: string | number) {
+	static async getAccountPostalAddresses(accountId: string | number) {
 		return fetcher<APIResponse<AccountPostalAddresses>>(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`
 		);
 	}
 
-	async getAccounts(searchParams = new URLSearchParams()) {
+	static async getAccounts(searchParams = new URLSearchParams()) {
 		return fetcher<APIResponse<UserAccount>>(
 			`/o/headless-admin-user/v1.0/accounts?${searchParams.toString()}`
 		);
 	}
 
-	async getMyUserAccount() {
+	static async getMyUserAccount() {
 		return fetcher<UserAccount>(
 			'/o/headless-admin-user/v1.0/my-user-account'
 		);
 	}
 
-	async getUserAccountById(accountId: string | number) {
+	static async getUserAccountById(accountId: string | number) {
 		return fetcher(
 			`/o/headless-admin-user/v1.0/user-accounts/${accountId}`
 		);
 	}
 
-	async getUserAccounts() {
+	static async getUserAccounts() {
 		return fetcher(`/o/headless-admin-user/v1.0/user-accounts`);
 	}
 
-	async getUserAccountsByAccountId(accountId: string | number) {
+	static async getUserAccountsByAccountId(accountId: string | number) {
 		return fetcher(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}/user-accounts`
 		);
 	}
 
-	async postAddress(accountId: number, body: any) {
+	static async postAddress(accountId: number, body: any) {
 		return fetcher.post(
 			`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`,
 			body
 		);
 	}
 
-	async sendRoleAccountUser(
+	static async sendRoleAccountUser(
 		accountId: number,
 		roleId: number,
 		userId: number
@@ -63,14 +63,14 @@ class HeadlessAdminUser {
 		);
 	}
 
-	async updateUserAccount(data: unknown, accountId: number) {
+	static async updateUserAccount(data: unknown, accountId: number) {
 		return fetcher.patch(
 			`/o/headless-admin-user/v1.0/user-accounts/${accountId}`,
 			data
 		);
 	}
 
-	async updateUserImage(userId: number, formData: FormData) {
+	static async updateUserImage(userId: number, formData: FormData) {
 		return fetcher.post(
 			`/o/headless-admin-user/v1.0/user-accounts/${userId}/image`,
 			formData,
@@ -78,9 +78,3 @@ class HeadlessAdminUser {
 		);
 	}
 }
-
-const HeadlessAdminUserImpl = new HeadlessAdminUser();
-
-export {HeadlessAdminUser};
-
-export default HeadlessAdminUserImpl;

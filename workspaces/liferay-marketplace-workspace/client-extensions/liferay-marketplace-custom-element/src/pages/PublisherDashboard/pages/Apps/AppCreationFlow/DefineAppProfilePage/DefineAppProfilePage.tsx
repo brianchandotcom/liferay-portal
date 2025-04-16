@@ -26,7 +26,7 @@ import {
 	ProductWorkflowStatusCode,
 } from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getRandomID} from '../../../../../../utils/string';
 
 type DefineAppProfilePageProps = {
@@ -102,7 +102,7 @@ export function DefineAppProfilePage({
 		setLoading(true);
 
 		const catalog =
-			await HeadlessCommerceAdminCatalogImpl.getCatalog(catalogId);
+			await HeadlessCommerceAdminCatalog.getCatalog(catalogId);
 
 		const _category = categories.find(({name}) => name === appCategory);
 
@@ -115,7 +115,7 @@ export function DefineAppProfilePage({
 
 		if (appERC) {
 			product =
-				await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+				await HeadlessCommerceAdminCatalog.updateProductByExternalReferenceCode(
 					appERC,
 					{
 						catalogId,
@@ -127,22 +127,21 @@ export function DefineAppProfilePage({
 				);
 		}
 		else {
-			product =
-				await HeadlessCommerceAdminCatalogImpl.createVirtualProduct({
-					catalogId,
-					categories: _categories,
-					description: appDescription,
-					name: appName,
-					productSpecifications: [
-						{
-							specificationKey:
-								ProductSpecificationKey.APP_DEVELOPER_NAME,
-							value: {en_US: catalog?.name},
-						},
-					],
-					productStatus: ProductWorkflowStatusCode.DRAFT,
-					workflowStatusInfo: ProductWorkflowStatusCode.DRAFT,
-				});
+			product = await HeadlessCommerceAdminCatalog.createVirtualProduct({
+				catalogId,
+				categories: _categories,
+				description: appDescription,
+				name: appName,
+				productSpecifications: [
+					{
+						specificationKey:
+							ProductSpecificationKey.APP_DEVELOPER_NAME,
+						value: {en_US: catalog?.name},
+					},
+				],
+				productStatus: ProductWorkflowStatusCode.DRAFT,
+				workflowStatusInfo: ProductWorkflowStatusCode.DRAFT,
+			});
 
 			dispatch({
 				payload: {

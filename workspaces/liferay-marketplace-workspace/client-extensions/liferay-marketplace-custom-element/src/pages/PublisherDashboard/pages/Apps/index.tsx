@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useAccount} from '../../../../hooks/data/useAccounts';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import PublisherAppsTable from '../../components/PublisherAppsTable';
 
 const Apps = () => {
@@ -31,7 +31,7 @@ const Apps = () => {
 			? `/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}/${pageSize}`
 			: null,
 		() =>
-			HeadlessCommerceAdminCatalogImpl.getProducts(
+			HeadlessCommerceAdminCatalog.getProducts(
 				new URLSearchParams({
 					'accountId': '-1',
 					'attachments.accountId': '-1',

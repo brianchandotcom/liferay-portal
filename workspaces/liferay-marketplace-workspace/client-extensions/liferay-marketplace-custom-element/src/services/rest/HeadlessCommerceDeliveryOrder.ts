@@ -5,8 +5,8 @@
 
 import fetcher from '../fetcher';
 
-class HeadlessCommerceDeliveryOrder {
-	getPlacedOrders(
+export default class HeadlessCommerceDeliveryOrder {
+	static getPlacedOrders(
 		channelId: number | string,
 		accountId: number | string,
 		params = new URLSearchParams()
@@ -16,19 +16,15 @@ class HeadlessCommerceDeliveryOrder {
 		);
 	}
 
-	async getPlacedOrder(orderId: string) {
+	static async getPlacedOrder(orderId: string) {
 		return fetcher<PlacedOrder>(
 			`o/headless-commerce-delivery-order/v1.0/placed-orders/${orderId}?nestedFields=placedOrderItems`
 		);
 	}
 
-	async getPlacedOrderBillingAddress(orderId: string) {
+	static async getPlacedOrderBillingAddress(orderId: string) {
 		return fetcher(
 			`o/headless-commerce-delivery-order/v1.0/placed-orders/${orderId}/placed-order-billing-address`
 		);
 	}
 }
-
-const HeadlessCommerceDeliveryOrderImpl = new HeadlessCommerceDeliveryOrder();
-
-export default HeadlessCommerceDeliveryOrderImpl;

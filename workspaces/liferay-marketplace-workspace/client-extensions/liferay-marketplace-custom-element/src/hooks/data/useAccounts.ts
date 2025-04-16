@@ -7,20 +7,20 @@ import useSWR from 'swr';
 
 import SearchBuilder from '../../core/SearchBuilder';
 import {Liferay} from '../../liferay/liferay';
-import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
+import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
 import useInfiniteSearch from '../useInfiniteSearch';
 
 const useAccount = () => {
 	const accountId = Liferay.CommerceContext.account?.accountId ?? 0;
 
 	return useSWR(`/account/${accountId}`, () =>
-		HeadlessAdminUserImpl.getAccount(accountId)
+		HeadlessAdminUser.getAccount(accountId)
 	);
 };
 
 const useAccounts = () =>
 	useInfiniteSearch('accounts', ({pageIndex, search}) =>
-		HeadlessAdminUserImpl.getAccounts(
+		HeadlessAdminUser.getAccounts(
 			new URLSearchParams({
 				fields: 'id,name,logoURL',
 				filter: SearchBuilder.contains('name', search),

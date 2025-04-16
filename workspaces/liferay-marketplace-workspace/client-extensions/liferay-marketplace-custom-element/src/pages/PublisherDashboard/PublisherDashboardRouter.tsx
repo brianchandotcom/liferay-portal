@@ -13,7 +13,7 @@ import {useAccount} from '../../hooks/data/useAccounts';
 import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
-import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
+import CommerceSelectAccount from '../../services/rest/CommerceSelectAccount';
 import PublishedDashboardOutlet from './PublisherDashboardOutlet';
 import Accounts from './pages/Accounts/Accounts';
 import Apps from './pages/Apps';
@@ -50,7 +50,7 @@ const PublisherDashboardRouter = () => {
 
 	useEffect(() => {
 		const checkAccount = async (accountId: number) => {
-			await CommerceSelectAccountImpl.selectAccount(accountId);
+			await CommerceSelectAccount.selectAccount(accountId);
 
 			Liferay.CommerceContext.account = {
 				accountId,

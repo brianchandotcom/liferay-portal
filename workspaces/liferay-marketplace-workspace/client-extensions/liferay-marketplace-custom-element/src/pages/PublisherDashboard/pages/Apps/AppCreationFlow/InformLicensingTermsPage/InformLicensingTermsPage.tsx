@@ -13,7 +13,7 @@ import {
 	ProductSpecificationKey,
 	ProductType,
 } from '../../../../../../enums/Product';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createAppSKU,
 	createProductSpecification,
@@ -97,7 +97,7 @@ export function InformLicensingTermsPage({
 
 	const submitLicenseTermsPage = async () => {
 		const {items: skus} =
-			await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
+			await HeadlessCommerceAdminCatalog.getProductSkus(appProductId);
 
 		for (const sku of skus) {
 			await patchSKUById(sku.id, {

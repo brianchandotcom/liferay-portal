@@ -25,7 +25,7 @@ import {
 	ProductWorkflowStatusCode,
 } from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createProductSpecification,
 	createProductVirtualEntry,
@@ -273,7 +273,7 @@ export function ProvideAppBuildPage({
 			}
 		}
 
-		await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+		await HeadlessCommerceAdminCatalog.updateProductByExternalReferenceCode(
 			appERC,
 			{
 				productSpecifications: [

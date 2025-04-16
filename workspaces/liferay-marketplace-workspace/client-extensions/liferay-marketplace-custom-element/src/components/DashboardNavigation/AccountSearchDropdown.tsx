@@ -10,7 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import useAccounts from '../../hooks/data/useAccounts';
 import {Liferay} from '../../liferay/liferay';
-import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
+import CommerceSelectAccount from '../../services/rest/CommerceSelectAccount';
 import {getAccountImage} from '../../utils/util';
 import Search from './Search';
 
@@ -38,7 +38,7 @@ const DropdownItems: React.FC<{
 						className="mb-1"
 						key={account.id}
 						onClick={() =>
-							CommerceSelectAccountImpl.selectAccount(
+							CommerceSelectAccount.selectAccount(
 								account.id
 							).then(() => {
 								Liferay.CommerceContext.account = {

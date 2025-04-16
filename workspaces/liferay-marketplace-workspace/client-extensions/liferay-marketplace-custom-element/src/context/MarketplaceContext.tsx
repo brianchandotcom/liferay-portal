@@ -8,8 +8,8 @@ import useSWR, {KeyedMutator} from 'swr';
 
 import SearchBuilder from '../core/SearchBuilder';
 import {Liferay} from '../liferay/liferay';
-import HeadlessAdminUserImpl from '../services/rest/HeadlessAdminUser';
-import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessAdminUser from '../services/rest/HeadlessAdminUser';
+import HeadlessCommerceDeliveryCatalog from '../services/rest/HeadlessCommerceDeliveryCatalog';
 
 type ContextType = {
 	channel: Channel;
@@ -47,7 +47,7 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 		'/marketplace/channel',
 		async () => {
 			const channelResponse =
-				await HeadlessCommerceDeliveryCatalogImpl.getChannels(
+				await HeadlessCommerceDeliveryCatalog.getChannels(
 					urlSearchParams
 				);
 
@@ -59,7 +59,7 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 		Liferay.ThemeDisplay.isSignedIn()
 			? '/marketplace/my-user-account'
 			: null,
-		() => HeadlessAdminUserImpl.getMyUserAccount()
+		() => HeadlessAdminUser.getMyUserAccount()
 	);
 
 	return (

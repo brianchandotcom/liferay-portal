@@ -11,7 +11,7 @@ import ErrorBoundary from '../../../../components/ErrorBoundary';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import HeadlessCommerceAdminOrderImpl from '../../../../services/rest/HeadlessCommerceAdminOrder';
+import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import InfoCard from '../../components/InfoCard';
 import useAccountsMetrics from '../../hooks/useAccountsMetrics';
 import useAnalyticsViewsMetrics from '../../hooks/useAnalyticsViewsMetrics';
@@ -42,7 +42,7 @@ const Metrics = () => {
 	const {data: orders} = useSWR<APIResponse<Order>>(
 		'administrator-dashboard/orders',
 		() =>
-			HeadlessCommerceAdminOrderImpl.getOrders(
+			HeadlessCommerceAdminOrder.getOrders(
 				new URLSearchParams({
 					filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
 						OrderTypes.CLIENT_EXTENSION,

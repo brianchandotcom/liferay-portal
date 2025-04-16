@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../../enums/Order';
 import trialOAuth2 from '../../../services/oauth/Trial';
-import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
+import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
@@ -99,7 +99,7 @@ const useTrialMetrics = (param: FilterType) => {
 			Promise.all([
 				trialOAuth2.getAvailability(),
 				...requestsParams.map((searchParam) =>
-					HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
+					HeadlessCommerceAdminOrder.getOrders(searchParam)
 				),
 			]),
 		{refreshInterval}

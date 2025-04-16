@@ -6,14 +6,14 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../../liferay/liferay';
-import HeadlessCommerceDeliveryCatalogImpl from '../../services/rest/HeadlessCommerceDeliveryCatalog';
-import HeadlessCommerceDeliveryOrderImpl from '../../services/rest/HeadlessCommerceDeliveryOrder';
+import HeadlessCommerceDeliveryCatalog from '../../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 import {getAccountInfoFromCommerce} from '../../utils/api';
 
 const useNextSteps = (orderId: string) => {
 	const {data: placedOrder = {} as PlacedOrder, isLoading: cartLoading} =
 		useSWR(`/next-steps/cart/${orderId}`, () =>
-			HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(orderId)
+			HeadlessCommerceDeliveryOrder.getPlacedOrder(orderId)
 		);
 
 	const {accountId, placedOrderItems = []} = placedOrder as PlacedOrder;
@@ -27,7 +27,7 @@ const useNextSteps = (orderId: string) => {
 			? `/next-steps/product/${productId}/${firstPlacedOrder?.id}`
 			: null,
 		() =>
-			HeadlessCommerceDeliveryCatalogImpl.getProduct(
+			HeadlessCommerceDeliveryCatalog.getProduct(
 				Liferay.CommerceContext.commerceChannelId,
 				productId as number,
 				new URLSearchParams({

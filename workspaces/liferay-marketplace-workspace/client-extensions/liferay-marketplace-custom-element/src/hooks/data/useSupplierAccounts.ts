@@ -4,12 +4,12 @@
  */
 
 import SearchBuilder from '../../core/SearchBuilder';
-import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
+import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
 import useInfiniteSearch from '../useInfiniteSearch';
 
 const useSupplierAccounts = () =>
 	useInfiniteSearch('supplier-accounts', ({pageIndex, search}) =>
-		HeadlessAdminUserImpl.getAccounts(
+		HeadlessAdminUser.getAccounts(
 			new URLSearchParams({
 				fields: 'id,logoURL,name',
 				filter: new SearchBuilder()

@@ -5,8 +5,8 @@
 
 import {Liferay} from '../../liferay/liferay';
 
-class CommerceSelectAccount {
-	async selectAccount(accountId: string | number) {
+export default class CommerceSelectAccount {
+	static async selectAccount(accountId: string | number) {
 		const body = new FormData();
 
 		body.append('accountId', accountId as string);
@@ -25,9 +25,3 @@ class CommerceSelectAccount {
 		);
 	}
 }
-
-const CommerceSelectAccountImpl = new CommerceSelectAccount();
-
-export {CommerceSelectAccount};
-
-export default CommerceSelectAccountImpl;

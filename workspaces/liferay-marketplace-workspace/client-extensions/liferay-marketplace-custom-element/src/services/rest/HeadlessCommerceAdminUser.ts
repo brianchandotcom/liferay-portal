@@ -5,8 +5,8 @@
 
 import fetcher from '../fetcher';
 
-class HeadlessCommerceAdminUser {
-	async getAccountInfo(
+export default class HeadlessCommerceAdminUser {
+	static async getAccountInfo(
 		accountId: number | string,
 		searchParams = new URLSearchParams()
 	) {
@@ -15,7 +15,3 @@ class HeadlessCommerceAdminUser {
 		);
 	}
 }
-
-const headlessCommerceAdminUser = new HeadlessCommerceAdminUser();
-
-export default headlessCommerceAdminUser;

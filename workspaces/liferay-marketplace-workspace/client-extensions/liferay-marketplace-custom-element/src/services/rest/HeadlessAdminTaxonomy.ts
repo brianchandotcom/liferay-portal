@@ -6,8 +6,8 @@
 import {Liferay} from '../../liferay/liferay';
 import fetcher from '../fetcher';
 
-class HeadlessAdminTaxonomy {
-	async getTaxonomyVocabularies() {
+export default class HeadlessAdminTaxonomy {
+	static async getTaxonomyVocabularies() {
 		return fetcher(
 			`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`
 		);
@@ -18,7 +18,7 @@ class HeadlessAdminTaxonomy {
 	 * @description Due a recent change the query was renamed from taxonomyVocabularies to siteTaxonomyVocabularies
 	 */
 
-	async getTaxonomyVocabulariesWithCategories() {
+	static async getTaxonomyVocabulariesWithCategories() {
 		const response = await fetcher.post<{
 			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
 		}>('/o/graphql', {
@@ -46,7 +46,7 @@ class HeadlessAdminTaxonomy {
 		return response.data.taxonomyVocabularies;
 	}
 
-	async getSiteTaxonomyVocabulariesWithCategories() {
+	static async getSiteTaxonomyVocabulariesWithCategories() {
 		const response = await fetcher.post<{
 			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
 		}>('/o/graphql', {
@@ -74,7 +74,7 @@ class HeadlessAdminTaxonomy {
 		return response.data.taxonomyVocabularies;
 	}
 
-	async getTaxonomyCategories(
+	static async getTaxonomyCategories(
 		vocabularyId: number,
 		searchParams = new URLSearchParams()
 	) {
@@ -83,7 +83,3 @@ class HeadlessAdminTaxonomy {
 		);
 	}
 }
-
-const HeadlessAdminTaxonomyImpl = new HeadlessAdminTaxonomy();
-
-export default HeadlessAdminTaxonomyImpl;

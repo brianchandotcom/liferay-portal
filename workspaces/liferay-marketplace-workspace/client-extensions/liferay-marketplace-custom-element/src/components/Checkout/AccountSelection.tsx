@@ -9,7 +9,7 @@ import {ReactNode, useMemo} from 'react';
 import useSWR from 'swr';
 
 import {Liferay} from '../../liferay/liferay';
-import headlessCommerceAdminUser from '../../services/rest/HeadlessCommerceAdminUser';
+import HeadlessCommerceAdminUser from '../../services/rest/HeadlessCommerceAdminUser';
 import RadioCardList from '../RadioCardList/RadioCardList';
 
 type AccountSelectionProps = {
@@ -45,7 +45,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 		() =>
 			Promise.all(
 				accountBriefIds.map((accountBriefId) =>
-					headlessCommerceAdminUser.getAccountInfo(accountBriefId)
+					HeadlessCommerceAdminUser.getAccountInfo(accountBriefId)
 				)
 			)
 	);

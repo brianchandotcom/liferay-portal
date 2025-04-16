@@ -7,7 +7,7 @@ import useSWR from 'swr';
 
 import Page from '../../../../components/Page';
 import i18n from '../../../../i18n';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import AppAdministratorTable from './AppAdministratorTable';
 
 const AppAdministrator = () => {
@@ -18,7 +18,7 @@ const AppAdministrator = () => {
 	} = useSWR<APIResponse<PublisherRequestInfo>>(
 		'administrator-dashboard/apps',
 		() =>
-			HeadlessCommerceAdminCatalogImpl.getProducts(
+			HeadlessCommerceAdminCatalog.getProducts(
 				new URLSearchParams({
 					'nestedFields': 'productSpecifications',
 					'productSpecifications.pageSize': '-1',

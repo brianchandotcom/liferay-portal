@@ -6,11 +6,11 @@
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../../../core/SearchBuilder';
-import HeadlessCommerceDeliveryCatalogImpl from '../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessCommerceDeliveryCatalog from '../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 
 export function useTrialProducts(channelId: number, name: string) {
 	return useSWR(`administrator-dashboard/trial/products/${name}`, () =>
-		HeadlessCommerceDeliveryCatalogImpl.getProductsByChannelId(
+		HeadlessCommerceDeliveryCatalog.getProductsByChannelId(
 			channelId,
 			new URLSearchParams({
 				'accountId': '-1',

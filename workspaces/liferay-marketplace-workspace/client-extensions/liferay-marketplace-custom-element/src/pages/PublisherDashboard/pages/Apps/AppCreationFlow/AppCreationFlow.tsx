@@ -18,7 +18,7 @@ import {
 } from '../../../../../enums/Product';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
-import HeadlessAdminTaxonomyImpl from '../../../../../services/rest/HeadlessAdminTaxonomy';
+import HeadlessAdminTaxonomy from '../../../../../services/rest/HeadlessAdminTaxonomy';
 import {useAppContext} from './AppContext/AppManageState';
 import {initialFLowListItems} from './AppCreationFlowUtil';
 import {ChoosePricingModelPage} from './ChoosePricingModelPage/ChoosePricingModelPage';
@@ -58,8 +58,8 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 	const {data: {areas = [], categories = [], productType, tags = []} = {}} =
 		useSWR('/taxonomy-vocabularies', async () => {
 			const fn = properties.useSiteTaxonomyVocabularyQuery
-				? HeadlessAdminTaxonomyImpl.getSiteTaxonomyVocabulariesWithCategories
-				: HeadlessAdminTaxonomyImpl.getTaxonomyVocabulariesWithCategories;
+				? HeadlessAdminTaxonomy.getSiteTaxonomyVocabulariesWithCategories
+				: HeadlessAdminTaxonomy.getTaxonomyVocabulariesWithCategories;
 
 			const data = await fn();
 

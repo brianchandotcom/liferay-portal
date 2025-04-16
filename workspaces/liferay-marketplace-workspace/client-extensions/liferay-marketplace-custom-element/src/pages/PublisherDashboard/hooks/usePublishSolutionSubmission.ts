@@ -20,7 +20,7 @@ import {
 } from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
 
 type ProductConfig = {
@@ -65,7 +65,7 @@ const addOrUpdateImages = async (
 			},
 		};
 
-		await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+		await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
 			product?.externalReferenceCode,
 			imageMetadata,
 			(progress) => {
@@ -101,8 +101,8 @@ const updateSpecification = async (
 	}
 
 	const fn = specification
-		? headlessCommerceAdminCatalogImpl.updateProductSpecification
-		: headlessCommerceAdminCatalogImpl.createProductSpecification;
+		? HeadlessCommerceAdminCatalog.updateProductSpecification
+		: HeadlessCommerceAdminCatalog.createProductSpecification;
 
 	const result = await fn(
 		(specification ? specification.id : productId) as number,
@@ -157,7 +157,7 @@ const usePublishSolutionSubmission = (
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
-				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+				await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
 					_product.externalReferenceCode,
 					{
 						attachment: base64ToText(
@@ -174,7 +174,7 @@ const usePublishSolutionSubmission = (
 				);
 			}
 
-			await headlessCommerceAdminCatalogImpl.updateProduct(
+			await HeadlessCommerceAdminCatalog.updateProduct(
 				_product.productId as number,
 				{
 					categories: productCategories,
@@ -188,20 +188,21 @@ const usePublishSolutionSubmission = (
 			return _product;
 		}
 
-		const product =
-			await headlessCommerceAdminCatalogImpl.createVirtualProduct({
+		const product = await HeadlessCommerceAdminCatalog.createVirtualProduct(
+			{
 				catalogId,
 				categories: productCategories,
 				description,
 				name,
 				productStatus,
 				workflowStatusInfo: productStatus,
-			});
+			}
+		);
 
 		product.productSpecifications = [];
 
 		if (file.file) {
-			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+			await HeadlessCommerceAdminCatalog.createProductImageByExternalReferenceCodeAxios(
 				product.externalReferenceCode,
 				{
 					attachment: base64ToText(
@@ -344,7 +345,7 @@ const usePublishSolutionSubmission = (
 
 		for (const externalReferenceCode of imagesToDelete) {
 			try {
-				await headlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
+				await HeadlessCommerceAdminCatalog.deleteAttachmentByExternalReferenceCode(
 					externalReferenceCode
 				);
 			}

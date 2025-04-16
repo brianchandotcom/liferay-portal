@@ -8,8 +8,8 @@ import useSWR, {SWRConfiguration} from 'swr';
 import MarketplaceDeliveryOrder from '../entity/DeliveryOrder';
 import {ProductImageFallbackCategories} from '../enums/Product';
 import {Liferay} from '../liferay/liferay';
-import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
-import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
+import HeadlessCommerceDeliveryCatalog from '../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessCommerceDeliveryOrder from '../services/rest/HeadlessCommerceDeliveryOrder';
 import {
 	getProductFallback,
 	getProductImageFallback,
@@ -23,11 +23,11 @@ const useGetProductByOrderId = (
 		`/placed-order/${orderId}`,
 		async () => {
 			const placedOrder =
-				await HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(orderId);
+				await HeadlessCommerceDeliveryOrder.getPlacedOrder(orderId);
 
 			if (placedOrder.placedOrderBillingAddressId > 0) {
 				placedOrder.placedOrderBillingAddress =
-					await HeadlessCommerceDeliveryOrderImpl.getPlacedOrderBillingAddress(
+					await HeadlessCommerceDeliveryOrder.getPlacedOrderBillingAddress(
 						orderId
 					);
 			}
@@ -35,7 +35,7 @@ const useGetProductByOrderId = (
 			let product;
 
 			try {
-				product = await HeadlessCommerceDeliveryCatalogImpl.getProduct(
+				product = await HeadlessCommerceDeliveryCatalog.getProduct(
 					Liferay.CommerceContext.commerceChannelId,
 					placedOrder.placedOrderItems[0].productId,
 					new URLSearchParams({

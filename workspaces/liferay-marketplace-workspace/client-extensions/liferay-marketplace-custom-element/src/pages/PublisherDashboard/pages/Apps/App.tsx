@@ -19,7 +19,7 @@ import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import koroneikiOAuth2 from '../../../../services/oauth/Koroneiki';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
@@ -50,7 +50,7 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 		workflowStatus: ProductWorkflowStatusCode
 	) => {
 		try {
-			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+			await HeadlessCommerceAdminCatalog.updateProductByExternalReferenceCode(
 				selectedApp.externalReferenceCode,
 				{workflowStatusInfo: workflowStatus}
 			);
@@ -130,7 +130,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 		isLoading,
 		mutate,
 	} = useSWR(`/published-app/${productId}`, () =>
-		HeadlessCommerceAdminCatalogImpl.getProduct(
+		HeadlessCommerceAdminCatalog.getProduct(
 			productId,
 			new URLSearchParams({
 				nestedFields: 'attachments,images,productSpecifications',

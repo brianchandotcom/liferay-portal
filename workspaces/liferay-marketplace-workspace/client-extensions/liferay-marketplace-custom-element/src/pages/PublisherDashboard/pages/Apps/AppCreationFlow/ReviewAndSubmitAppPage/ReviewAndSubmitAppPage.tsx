@@ -25,7 +25,7 @@ import {
 	ProductSpecificationKey,
 } from '../../../../../../enums/Product';
 import {Liferay} from '../../../../../../liferay/liferay';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
 
 type ReviewAndSubmitAppPageProps = {
@@ -55,7 +55,7 @@ export function ReviewAndSubmitAppPage({
 			setLoading(true);
 
 			const product =
-				await HeadlessCommerceAdminCatalogImpl.getProductByExternalReferenceCode(
+				await HeadlessCommerceAdminCatalog.getProductByExternalReferenceCode(
 					productERC as string,
 					new URLSearchParams({
 						nestedFields:

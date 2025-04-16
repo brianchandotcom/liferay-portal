@@ -8,7 +8,7 @@ import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
 import {OrderTypes} from '../../../enums/Order';
-import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
+import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 export const METRIC_PARAMETER = {
 	month: 30,
@@ -74,7 +74,7 @@ const useOrderMetrics = (param: FilterType) => {
 
 		const response = await Promise.all(
 			requestsParams.map((searchParam) =>
-				HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
+				HeadlessCommerceAdminOrder.getOrders(searchParam)
 			)
 		);
 
@@ -153,7 +153,7 @@ const useOrderChartLineMetrics = () => {
 
 		const response = await Promise.all(
 			requestsParams.map((searchParam) =>
-				HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
+				HeadlessCommerceAdminOrder.getOrders(searchParam)
 			)
 		);
 

@@ -14,7 +14,7 @@ import {getAccountImage, removeProtocolURL} from '../../../../utils/util';
 
 import './Accounts.scss';
 import EmptyState from '../../../../components/EmptyState';
-import HeadlessAdminUserImpl from '../../../../services/rest/HeadlessAdminUser';
+import HeadlessAdminUser from '../../../../services/rest/HeadlessAdminUser';
 
 type AccountDetailsPageProps = {
 	selectedAccount: Account;
@@ -80,10 +80,9 @@ function AccountDetailsPage({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const {items} =
-				await HeadlessAdminUserImpl.getAccountPostalAddresses(
-					selectedAccount.id
-				);
+			const {items} = await HeadlessAdminUser.getAccountPostalAddresses(
+				selectedAccount.id
+			);
 
 			setSelectedAccountAddress(items);
 		};

@@ -6,12 +6,11 @@
 import useSWR from 'swr';
 
 import {ProductVocabulary} from '../../enums/Product';
-import HeadlessAdminTaxonomyImpl from '../../services/rest/HeadlessAdminTaxonomy';
+import HeadlessAdminTaxonomy from '../../services/rest/HeadlessAdminTaxonomy';
 
 const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 	return useSWR({key: 'vocabularies/', vocabulariesName}, async () => {
-		const {items} =
-			await HeadlessAdminTaxonomyImpl.getTaxonomyVocabularies();
+		const {items} = await HeadlessAdminTaxonomy.getTaxonomyVocabularies();
 
 		const _vocabularies = items.filter((vocabulary: ProductCategories) =>
 			vocabulariesName.includes(vocabulary.name as ProductVocabulary)
@@ -21,7 +20,7 @@ const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 
 		for (const vocabulary of _vocabularies) {
 			const categories =
-				await HeadlessAdminTaxonomyImpl.getTaxonomyCategories(
+				await HeadlessAdminTaxonomy.getTaxonomyCategories(
 					vocabulary.id,
 					new URLSearchParams({
 						fields: 'id,name',

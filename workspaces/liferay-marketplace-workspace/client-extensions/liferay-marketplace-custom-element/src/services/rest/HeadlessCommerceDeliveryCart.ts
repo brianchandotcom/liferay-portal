@@ -6,27 +6,27 @@
 import {Liferay} from '../../liferay/liferay';
 import fetcher from '../fetcher';
 
-class HeadlessCommerceDeliveryCart {
-	async createCart(channelId: number | string, cart: Partial<Cart>) {
+export default class HeadlessCommerceDeliveryCart {
+	static async createCart(channelId: number | string, cart: Partial<Cart>) {
 		return fetcher.post(
 			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts`,
 			cart
 		);
 	}
 
-	async checkoutCart(cartId: number) {
+	static async checkoutCart(cartId: number) {
 		return fetcher.post(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}/checkout`
 		);
 	}
 
-	async deleteCart(id: number | string) {
+	static async deleteCart(id: number | string) {
 		return fetcher.delete(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${id}`
 		);
 	}
 
-	async getPaymentURL(orderId: string, callbackURL: string) {
+	static async getPaymentURL(orderId: string, callbackURL: string) {
 		const response = await Liferay.Util.fetch(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${orderId}/payment-url?callbackURL=${callbackURL}`
 		);
@@ -34,14 +34,10 @@ class HeadlessCommerceDeliveryCart {
 		return response.text();
 	}
 
-	async updateCart(id: number | string, data: Partial<Cart>) {
+	static async updateCart(id: number | string, data: Partial<Cart>) {
 		return fetcher.patch(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${id}`,
 			data
 		);
 	}
 }
-
-const headlessCommerceDeliveryCart = new HeadlessCommerceDeliveryCart();
-
-export default headlessCommerceDeliveryCart;

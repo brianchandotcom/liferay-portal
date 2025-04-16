@@ -15,8 +15,8 @@ import Table from '../../../../../components/Table/Table';
 import SearchBuilder from '../../../../../core/SearchBuilder';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
-import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import CommerceSelectAccount from '../../../../../services/rest/CommerceSelectAccount';
+import HeadlessCommerceAdminCatalog from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
 
 type AppsTableProps = {
 	items: Order[];
@@ -55,7 +55,7 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 			id: 1,
 			name: i18n.translate('customer-dashboard'),
 			onClick: (order: Order) =>
-				CommerceSelectAccountImpl.selectAccount(order?.accountId).then(
+				CommerceSelectAccount.selectAccount(order?.accountId).then(
 					() => {
 						Liferay.CommerceContext.account = {
 							accountId: order?.accountId,
@@ -74,22 +74,18 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 			id: 2,
 			name: i18n.translate('publisher-dashboard'),
 			onClick: async (order: Order) => {
-				const product =
-					await HeadlessCommerceAdminCatalogImpl.getProducts(
-						new URLSearchParams({
-							filter: new SearchBuilder()
-								.eq(
-									'name',
-									`${order.orderItems[0]?.name?.en_US}`
-								)
-								.build(),
-							nestedFields: 'catalog',
-						})
-					);
+				const product = await HeadlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: new SearchBuilder()
+							.eq('name', `${order.orderItems[0]?.name?.en_US}`)
+							.build(),
+						nestedFields: 'catalog',
+					})
+				);
 
 				const accountId = product.items[0]?.catalog?.accountId;
 
-				return CommerceSelectAccountImpl.selectAccount(accountId).then(
+				return CommerceSelectAccount.selectAccount(accountId).then(
 					() => {
 						Liferay.CommerceContext.account = {
 							accountId,

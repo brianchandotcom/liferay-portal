@@ -15,7 +15,7 @@ import {
 	ProductSpecificationKey,
 } from '../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
-import HeadlessCommerceDeliveryCatalogImpl from '../../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessCommerceDeliveryCatalog from '../../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
 import DownloadTable from './DownloadTable';
 
@@ -48,7 +48,7 @@ const Download = () => {
 		() =>
 			Promise.all(
 				virtualProducts.map((orderItem: PlacedOrderItems) =>
-					HeadlessCommerceDeliveryCatalogImpl.getSkuInfo(
+					HeadlessCommerceDeliveryCatalog.getSkuInfo(
 						channel.id,
 						orderItem.productId,
 						orderItem.skuId,

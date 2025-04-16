@@ -20,8 +20,8 @@ import useModalContext from '../../../../../hooks/useModalContext';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import trialOAuth2 from '../../../../../services/oauth/Trial';
-import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
-import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
+import CommerceSelectAccount from '../../../../../services/rest/CommerceSelectAccount';
+import HeadlessCommerceAdminOrder from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 import NewTrialModal from './NewTrialModal';
 import TrialDetailsModal, {ORDER_STATUS_LABEL} from './TrialDetailsModal';
 
@@ -48,7 +48,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 	const confirmationModal = useConfirmationModal();
 
 	const onDeleteTrial = async (order: Order) => {
-		await safeRunner(HeadlessCommerceAdminOrderImpl.deleteOrder(order.id));
+		await safeRunner(HeadlessCommerceAdminOrder.deleteOrder(order.id));
 		await safeRunner(trialOAuth2.deleteTrial(order.id));
 
 		await revalidate();
@@ -93,7 +93,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 		{
 			name: i18n.translate('customer-dashboard'),
 			onClick: (order: Order) =>
-				CommerceSelectAccountImpl.selectAccount(order?.accountId).then(
+				CommerceSelectAccount.selectAccount(order?.accountId).then(
 					() => {
 						Liferay.CommerceContext.account = {
 							accountId: order?.accountId,

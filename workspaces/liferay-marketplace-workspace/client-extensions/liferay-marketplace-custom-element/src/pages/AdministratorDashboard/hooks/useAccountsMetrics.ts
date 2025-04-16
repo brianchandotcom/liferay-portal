@@ -7,7 +7,7 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import HeadlessAdminUserImpl from '../../../services/rest/HeadlessAdminUser';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 
 type UseOrderMetricsProps = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
@@ -63,7 +63,7 @@ const useAccountsMetrics = (param: UseOrderMetricsProps) => {
 
 		const response = await Promise.all(
 			requestsParams.map((searchParam) =>
-				HeadlessAdminUserImpl.getAccounts(searchParam)
+				HeadlessAdminUser.getAccounts(searchParam)
 			)
 		);
 

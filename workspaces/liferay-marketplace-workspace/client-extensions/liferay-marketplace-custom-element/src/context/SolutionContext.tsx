@@ -20,7 +20,7 @@ import {
 	ProductVocabulary,
 } from '../enums/Product';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
-import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../services/rest/HeadlessCommerceAdminCatalog';
 import {safeJSONParse} from '../utils/util';
 
 export enum BlockDirections {
@@ -559,7 +559,7 @@ export default function SolutionContextProvider({
 			return;
 		}
 
-		HeadlessCommerceAdminCatalogImpl.getProduct(
+		HeadlessCommerceAdminCatalog.getProduct(
 			productId as string,
 			new URLSearchParams({
 				nestedFields: 'attachments,images,productSpecifications',

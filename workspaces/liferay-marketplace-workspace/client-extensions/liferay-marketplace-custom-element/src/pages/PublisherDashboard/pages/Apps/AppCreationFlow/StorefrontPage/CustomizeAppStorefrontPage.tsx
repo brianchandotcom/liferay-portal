@@ -30,7 +30,7 @@ import {useState} from 'react';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import fetcher from '../../../../../../services/fetcher';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {swapElements} from '../../../../../../utils/array';
 import {getRandomID} from '../../../../../../utils/string';
 import {submitBase64EncodedFile} from '../../../../../../utils/util';
@@ -242,7 +242,7 @@ export function CustomizeAppStorefrontPage({
 							uploadedImage.title.en_US =
 								image.imageDescription as string;
 
-							await HeadlessCommerceAdminCatalogImpl.addOrUpdateProductImageByExternalReferenceCode(
+							await HeadlessCommerceAdminCatalog.addOrUpdateProductImageByExternalReferenceCode(
 								appERC,
 								uploadedImage as unknown as UploadedImage
 							);

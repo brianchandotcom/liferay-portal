@@ -6,7 +6,7 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import {useMarketplaceContext} from '../context/MarketplaceContext';
-import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
+import HeadlessCommerceDeliveryCatalog from '../services/rest/HeadlessCommerceDeliveryCatalog';
 import {getUrlParam} from '../utils/getUrlParam';
 
 const useGetProduct = (
@@ -22,7 +22,7 @@ const useGetProduct = (
 
 		if (productId) {
 			const fetchProduct =
-				await HeadlessCommerceDeliveryCatalogImpl.getProduct(
+				await HeadlessCommerceDeliveryCatalog.getProduct(
 					channel.id,
 					productId,
 					new URLSearchParams({

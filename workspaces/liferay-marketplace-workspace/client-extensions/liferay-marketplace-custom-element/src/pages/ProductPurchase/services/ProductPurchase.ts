@@ -5,7 +5,7 @@
 
 import {Analytics} from '../../../core/Analytics';
 import {OrderTypes} from '../../../enums/Order';
-import CommerceSelectAccountImpl from '../../../services/rest/CommerceSelectAccount';
+import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 
 export default class ProductPurchase {
@@ -51,7 +51,7 @@ export default class ProductPurchase {
 		);
 
 		await Promise.all([
-			CommerceSelectAccountImpl.selectAccount(this.account.id),
+			CommerceSelectAccount.selectAccount(this.account.id),
 			HeadlessCommerceDeliveryCart.checkoutCart(cart.id),
 		]);
 

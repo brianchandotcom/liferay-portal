@@ -197,7 +197,7 @@ public class BuildArchiverUtil {
 	}
 
 	private static final String _DEFAULT_OUTPUT_DIR_PATH =
-		"/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins";
+		"/opt/dev/projects/github/.tmp/jenkins";
 
 	private static final Properties _buildProperties;
 	private static final ExecutorService _executorService =

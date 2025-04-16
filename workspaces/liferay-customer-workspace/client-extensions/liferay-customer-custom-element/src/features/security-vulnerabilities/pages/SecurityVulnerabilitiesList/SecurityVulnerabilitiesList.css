@@ -5,3 +5,12 @@
 		right: 0;
 	}
 }
+
+.sv-priority-summary-column {
+	min-width: 320px !important;
+}
+
+.sv-wrap-text {
+	white-space: normal;
+	word-wrap: break-word;
+}

@@ -60,6 +60,7 @@ const SecurityVulnerabilitiesList = () => {
 
 	const columns = [
 		{
+			className: 'sv-priority-summary-column',
 			columnKey: 'prioritySummary',
 			label: i18n.translate('priority-summary'),
 		},
@@ -110,7 +111,7 @@ const SecurityVulnerabilitiesList = () => {
 								{issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]}
 							</div>
 
-							<div className="font-weight-bold sv-name">
+							<div className="font-weight-bold sv-name sv-wrap-text">
 								<Link
 									className="sv-name-link"
 									to={`/${issue?.[JiraEnum.KEY]}`}
@@ -119,7 +120,8 @@ const SecurityVulnerabilitiesList = () => {
 								</Link>
 							</div>
 						</div>
-						<div className="sv-summary text-neutral-8">
+
+						<div className="sv-summary sv-wrap-text text-neutral-8">
 							{issue[JiraEnum.FIELDS]?.[JiraEnum.SUMMARY]}
 						</div>
 					</div>

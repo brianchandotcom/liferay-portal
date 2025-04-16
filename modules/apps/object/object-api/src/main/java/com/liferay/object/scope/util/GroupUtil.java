@@ -24,22 +24,18 @@ public class GroupUtil {
 			return groupId;
 		}
 
-		Group group = groupLocalService.fetchGroup(companyId, siteKey);
+		Group group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
 
 		if (group == null) {
-			group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
+			group = groupLocalService.fetchGroup(companyId, siteKey);
 		}
 
 		if (group == null) {
 			group = groupLocalService.fetchGroupByExternalReferenceCode(
 				siteKey, companyId);
-
-			if (group != null) {
-				return group.getGroupId();
-			}
 		}
 
-		if ((group != null) && group.isUserGroup()) {
+		if (group != null) {
 			return group.getGroupId();
 		}
 

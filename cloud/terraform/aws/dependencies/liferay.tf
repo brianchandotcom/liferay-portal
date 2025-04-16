@@ -1,4 +1,4 @@
-data "aws_caller_identity" "current" {    
+data "aws_caller_identity" "current" {
 }
 data "aws_region" "current" {
 }
@@ -181,6 +181,11 @@ resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
 	security_group_id=aws_security_group.rds.id
 	to_port=5432
 }
+resource "kubernetes_namespace" "liferay" {
+	metadata {
+		name=var.deployment_namespace
+	}
+}
 resource "kubernetes_secret" "managed_service_details" {
 	data={
 		"DATABASE_ENDPOINT"=aws_db_instance.postgres.address
@@ -195,7 +200,7 @@ resource "kubernetes_secret" "managed_service_details" {
 	}
 	metadata {
 		name="managed-service-details"
-		namespace=var.deployment_namespace
+		namespace=kubernetes_namespace.liferay.metadata[0].name
 	}
 	type="Opaque"
 }

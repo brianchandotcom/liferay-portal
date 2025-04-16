@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -201,7 +200,9 @@ public class SXPBlueprintLocalServiceImpl
 		return updateSXPBlueprint(sxpBlueprint);
 	}
 
-	private String _enhanceConfiguration(String configuration) {
+	private String _enhanceConfiguration(String configuration)
+		throws PortalException {
+
 		try {
 			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
 				configuration);
@@ -216,13 +217,9 @@ public class SXPBlueprintLocalServiceImpl
 			if (searchableAssetTypesJSONArray == null) {
 				return configuration;
 			}
-//			ArrayUtil.toStringArray()
-//			String searchableAssetTypes = searchableAssetTypesJSONArray.toString();
-			String[] searchableAssetTypesArray = JSONUtil.toStringArray(searchableAssetTypesJSONArray);
 
-
-//				String[] searchableAssetTypesArray = StringUtil.split(
-//				searchableAssetTypes);
+			String[] searchableAssetTypesArray = JSONUtil.toStringArray(
+				searchableAssetTypesJSONArray);
 
 			if (searchableAssetTypesArray.length == 1) {
 				return _setCollectionProviderType(
@@ -251,7 +248,7 @@ public class SXPBlueprintLocalServiceImpl
 				className);
 		}
 		catch (Exception exception) {
-			return configuration;
+			throw new PortalException(exception);
 		}
 	}
 

@@ -7,7 +7,7 @@ application:
 author: "Alicia García"
 changeTrackingEnabled: true
 clientDir: "../headless-object-client/src/main/java"
-compatibilityVersion: 8
+compatibilityVersion: 9
 forcePredictableOperationId: true
 managePermissions: true
 testDir: "../headless-object-test/src/testIntegration/java"

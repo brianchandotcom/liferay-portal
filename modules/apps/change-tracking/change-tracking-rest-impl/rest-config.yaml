@@ -6,7 +6,7 @@ application:
     name: "Liferay.Change.Tracking.REST"
 author: "David Truong"
 clientDir: "../change-tracking-rest-client/src/main/java"
-compatibilityVersion: 8
+compatibilityVersion: 9
 forcePredictableOperationId: true
 generateClientJS: true
 testDir: "../change-tracking-rest-test/src/testIntegration/java"

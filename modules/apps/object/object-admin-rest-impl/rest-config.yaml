@@ -6,7 +6,7 @@ application:
     name: "Liferay.Object.Admin.REST"
 author: "Javier Gamarra"
 clientDir: "../object-admin-rest-client/src/main/java"
-compatibilityVersion: 8
+compatibilityVersion: 9
 forcePredictableOperationId: true
 generateClientJS: true
 testDir: "../object-admin-rest-test/src/testIntegration/java"

@@ -340,10 +340,11 @@ public class HttpAuthManagerUtil {
 
 					if (Validator.isNotNull(decodedPart)) {
 						sb.append(decodedPart);
+
+						continue;
 					}
-					else {
-						sb.append(StringPool.PERCENT + parts[i]);
-					}
+
+					sb.append(StringPool.PERCENT + parts[i]);
 				}
 
 				login = sb.toString();

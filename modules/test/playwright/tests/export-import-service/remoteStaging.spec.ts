@@ -17,6 +17,7 @@ import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {remoteApiHelpersTest} from '../../fixtures/remoteApiHelpersTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
+import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
@@ -118,6 +119,13 @@ test(
 		);
 
 		await remotePage.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
+
+		await reloadUntilVisible({
+			myLocator: remotePage.getByRole('heading', {
+				name: 'WC WebContent Title',
+			}),
+			page: remotePage,
+		});
 
 		await expect(
 			remotePage.getByRole('heading', {name: 'WC WebContent Title'})

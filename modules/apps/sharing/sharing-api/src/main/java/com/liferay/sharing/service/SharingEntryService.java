@@ -101,6 +101,10 @@ public interface SharingEntryService extends BaseService {
 		throws PortalException;
 
 	public SharingEntry deleteSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
+		throws PortalException;
+
+	public SharingEntry deleteSharingEntry(
 			long sharingEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -130,6 +134,11 @@ public interface SharingEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntry(long sharingEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry getSharingEntry(
+			long toUserGroupId, long toUserId, long classNameId, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

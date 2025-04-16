@@ -265,6 +265,8 @@ html#{$cadmin-selector} {
 			background: $cadmin-primary-l3;
 			border: $dashedBorderWidth dashed $cadmin-primary-l2;
 			border-radius: 8px;
+			// stylelint-disable-next-line property-no-unknown
+			container-type: inline-size;
 			justify-content: center;
 			padding: 15vh 12%;
 
@@ -283,6 +285,28 @@ html#{$cadmin-selector} {
 				color: $secondary;
 				font-size: 14px;
 				margin: 0;
+			}
+
+			// stylelint-disable-next-line at-rule-no-unknown
+			@container (max-width: 100px) {
+				&__image {
+					display: none;
+				}
+
+				&__message {
+					overflow-wrap: anywhere;
+				}
+			}
+
+			// stylelint-disable-next-line at-rule-no-unknown
+			@container (max-height: 100px) {
+				&__image {
+					display: none;
+				}
+
+				&__message {
+					overflow-wrap: anywhere;
+				}
 			}
 
 			&__title {
@@ -368,6 +392,8 @@ html#{$cadmin-selector} {
 	}
 
 	.custom-height .page-editor__no-fragments-state {
+		// stylelint-disable-next-line property-no-unknown
+		container-type: size;
 		padding: 0;
 	}
 }

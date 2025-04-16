@@ -60,44 +60,8 @@
 @import '../../plugins/page_design_options/components/Plugin';
 @import '../../plugins/page_rules/components/Plugin';
 
-html#{$cadmin-selector} {
-	.page-editor__small-resolution .cadmin.control-menu-container {
-		position: static;
-	}
-
-	// WARNING
-	// LPD-44860: This CSS always has to be at the end of the file,
-	// since the RTL converter has problems converting modern CSS
-
-	.page-editor__no-fragments-state {
-		// stylelint-disable-next-line property-no-unknown
-		container-type: inline-size;
-
-		// stylelint-disable-next-line at-rule-no-unknown
-		@container (max-width: 100px) {
-			&__image {
-				display: none;
-			}
-
-			&__message {
-				overflow-wrap: anywhere;
-			}
-		}
-
-		// stylelint-disable-next-line at-rule-no-unknown
-		@container (max-height: 100px) {
-			&__image {
-				display: none;
-			}
-
-			&__message {
-				overflow-wrap: anywhere;
-			}
-		}
-	}
-
-	.custom-height .page-editor__no-fragments-state {
-		// stylelint-disable-next-line property-no-unknown
-		container-type: size;
-	}
+html#{$cadmin-selector}
+	.page-editor__small-resolution
+	.cadmin.control-menu-container {
+	position: static;
 }

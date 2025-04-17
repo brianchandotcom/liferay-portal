@@ -46,13 +46,19 @@ public class RelevantTestSuite {
 		String testBatchNamesPropertyValue =
 			JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
-				"test.batch.names[relevant]", true,
 				"relevant.batch.names.whitelist");
 
 		if (testBatchNamesPropertyValue == null) {
-			throw new RuntimeException(
-				"Please set relevant.batch.names.whitelist or " +
-					"test.batch.names[relevant] in " + baseTestPropertiesFile);
+			testBatchNamesPropertyValue = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
+				"test.batch.names[relevant]");
+
+			if (testBatchNamesPropertyValue == null) {
+				throw new RuntimeException(
+					"Please set relevant.batch.names.whitelist or " +
+						"test.batch.names[relevant] in " +
+							baseTestPropertiesFile);
+			}
 		}
 
 		List<RelevantRule> relevantRules =

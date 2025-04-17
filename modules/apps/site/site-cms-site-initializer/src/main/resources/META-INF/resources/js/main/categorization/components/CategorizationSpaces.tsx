@@ -153,7 +153,7 @@ export default function CategorizationSpaces({
 	}, [inputError, setSpaceInputError]);
 
 	return (
-		<div>
+		<div className="categorization-spaces">
 			<label htmlFor="multiSelect">
 				{Liferay.Language.get('space')}
 

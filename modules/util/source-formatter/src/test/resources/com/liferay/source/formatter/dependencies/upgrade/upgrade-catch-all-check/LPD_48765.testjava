@@ -9,9 +9,13 @@ package com.liferay.source.formatter.dependencies.upgrade;
  * @author Wilson Ferreira
  */
 public class LPD_48765 {
+
 	public AccountEntry method(AccountEntry accountEntry) {
-		if (accountEntry.getType() == CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
+		if (accountEntry.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
+
 			return accountEntry;
 		}
 	}
+
 }

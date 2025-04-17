@@ -111,7 +111,7 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	public enum Status {
 
-		ERROR, FAILURE, PENDING, SUCCESS
+		BYPASSED, ERROR, FAILURE, PENDING, SUCCESS
 
 	}
 

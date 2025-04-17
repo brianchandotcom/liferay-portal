@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 function CountryRegionDynamicSelect({
 	countrySelect,
 	countrySelectVal = 0,
+	namespace,
 	regionSelect,
 	regionSelectVal = 0,
 }) {
@@ -39,6 +40,8 @@ function CountryRegionDynamicSelect({
 			select: regionSelect,
 			selectData(callback, selectKey) {
 				getRegions((regions) => {
+					updateRegionRequired(regions, namespace);
+
 					if (
 						selectKey === japanCountryId &&
 						Liferay.ThemeDisplay.getLanguageId() === 'ja_JP'
@@ -71,6 +74,28 @@ function CountryRegionDynamicSelect({
 			selectVal: regionSelectVal,
 		},
 	]);
+}
+
+function updateRegionRequired(regions, namespace) {
+	const regionRequiredWrapper = document.getElementById(
+		`${namespace}regionRequiredWrapper`
+	);
+	const formValidator = Liferay.Form.get(`${namespace}fm`).formValidator;
+
+	const rules = formValidator._getAttr('rules');
+
+	let required = false;
+
+	if (regions.length) {
+		regionRequiredWrapper.removeAttribute('hidden');
+
+		required = true;
+	}
+	else {
+		regionRequiredWrapper.setAttribute('hidden', true);
+	}
+
+	rules.addressRegion = {required};
 }
 
 CountryRegionDynamicSelect.prototypes = {

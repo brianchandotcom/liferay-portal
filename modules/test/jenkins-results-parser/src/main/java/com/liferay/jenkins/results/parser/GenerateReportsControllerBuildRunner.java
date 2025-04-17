@@ -15,6 +15,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Kenji Heigel
  */
@@ -126,49 +129,61 @@ public class GenerateReportsControllerBuildRunner
 		_updateBuildDescription(reportNames);
 	}
 
-	private String _getBuildDescription(Build build) {
-		String buildDescription = build.getBuildDescription();
+	private Map<String, JSONObject> _getBuildJSONObjectsMap() {
+		Map<String, JSONObject> buildJSONObjectsMap = new HashMap<>();
 
-		if (buildDescription == null) {
-			return "";
-		}
-
-		return buildDescription;
-	}
-
-	private List<Build> _getBuildHistory() {
 		BuildData buildData = getBuildData();
 
-		Build build = BuildFactory.newBuild(buildData.getBuildURL(), null);
+		StringBuffer sb = new StringBuffer();
 
-		Job job = JobFactory.newJob(buildData.getJobName());
+		sb.append(JenkinsResultsParserUtil.getLocalURL(buildData.getJobURL()));
+		sb.append("/api/json?tree=builds[description,timestamp,url]");
 
-		return job.getBuildHistory(build.getJenkinsMaster());
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				sb.toString(), false);
+
+			JSONArray buildsJSONArray = jsonObject.getJSONArray("builds");
+
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+				buildJSONObjectsMap.put(
+					buildJSONObject.getString("url"), buildJSONObject);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to get job JSON", ioException);
+		}
+
+		return buildJSONObjectsMap;
 	}
 
 	private Map<String, Long> _getLatestReportUpdateTimes() {
 		Map<String, Long> latestReportUpdateTimes = new HashMap<>();
 
-		List<Build> builds = _getBuildHistory();
+		Map<String, JSONObject> buildJSONObjectsMap = _getBuildJSONObjectsMap();
 
 		BuildData buildData = getBuildData();
 
-		Build currentBuild = BuildFactory.newBuild(
-			buildData.getBuildURL(), null);
-
-		builds.remove(currentBuild);
+		buildJSONObjectsMap.remove(buildData.getBuildURL());
 
 		for (GenerateReportsBuildRunner.Report report :
 				GenerateReportsBuildRunner.Report.values()) {
 
 			String reportName = report.toString();
 
-			for (Build build : builds) {
-				String buildDescription = _getBuildDescription(build);
+			for (Map.Entry<String, JSONObject> buildJSONObjectEntry :
+					buildJSONObjectsMap.entrySet()) {
+
+				JSONObject buildJSONObject = buildJSONObjectEntry.getValue();
+
+				String buildDescription = buildJSONObject.optString(
+					"description", "");
 
 				if (buildDescription.contains(reportName)) {
 					latestReportUpdateTimes.put(
-						reportName, build.getStartTime());
+						reportName, buildJSONObject.getLong("timestamp"));
 
 					break;
 				}

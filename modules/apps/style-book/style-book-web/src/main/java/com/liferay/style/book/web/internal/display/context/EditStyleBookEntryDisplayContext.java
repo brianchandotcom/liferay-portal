@@ -274,9 +274,7 @@ public class EditStyleBookEntryDisplayContext {
 		return ResourceURLBuilder.createResourceURL(
 			_renderResponse
 		).setParameter(
-			"styleBookEntryFragmentCollectionPreview", true
-		).setParameter(
-			"themeId", _styleBookEntry.getThemeId()
+			"styleBookEntryThemeId", _styleBookEntry.getThemeId()
 		).setResourceID(
 			"/style_book/preview_fragment_collection"
 		).buildString();

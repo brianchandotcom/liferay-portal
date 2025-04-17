@@ -94,7 +94,7 @@ test('LPD-39428 Assert publication timeline history is enabled for data provider
 		.getByPlaceholder('Enter the REST service URL')
 		.fill('http://' + getRandomString() + '.com');
 	await page.getByRole('button', {name: 'Save'}).click();
-	await waitForAlert(page, 'Success:Your request completed successfully.');
+	await expect(page.getByText(dataProviderTitle)).toBeVisible();
 	await formsPage.goTo();
 	await changeTrackingPage.selectTab('Data Providers');
 

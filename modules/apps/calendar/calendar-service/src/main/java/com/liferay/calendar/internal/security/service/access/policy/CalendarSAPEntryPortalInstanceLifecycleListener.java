@@ -7,7 +7,6 @@ package com.liferay.calendar.internal.security.service.access.policy;
 
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,9 +55,8 @@ public class CalendarSAPEntryPortalInstanceLifecycleListener
 		}
 
 		String allowedServiceSignatures = StringBundler.concat(
-			CalendarBookingService.class.getName(), "#search",
-			StringPool.NEW_LINE, CalendarBookingService.class.getName(),
-			"#searchCount");
+			CalendarBookingService.class.getName(), "#search\n",
+			CalendarBookingService.class.getName(), "#searchCount");
 		Map<Locale, String> titleMap = ResourceBundleUtil.getLocalizationMap(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
 			"service-access-policy-entry-default-calendar-title");

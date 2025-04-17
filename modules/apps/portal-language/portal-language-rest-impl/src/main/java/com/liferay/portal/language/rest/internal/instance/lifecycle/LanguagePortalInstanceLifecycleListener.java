@@ -6,7 +6,6 @@
 package com.liferay.portal.language.rest.internal.instance.lifecycle;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +55,7 @@ public class LanguagePortalInstanceLifecycleListener
 			_userLocalService.getGuestUserId(companyId),
 			StringBundler.concat(
 				"com.liferay.portal.language.rest.internal.resource.v1_0.",
-				"MessageResourceImpl#getMessages", StringPool.NEW_LINE,
+				"MessageResourceImpl#getMessages\n",
 				"com.liferay.portal.language.rest.internal.resource.v1_0.",
 				"MessageResourceImpl#postMessagesExportPage"),
 			true, true, _SAP_ENTRY_NAME,

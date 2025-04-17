@@ -480,3 +480,33 @@ test(
 		});
 	}
 );
+
+test('Fragment collection preview applies the theme in which the style book is based on', async ({
+	page,
+	site,
+	styleBooksPage,
+}) => {
+	await test.step('Create a style book based on the Dialect theme', async () => {
+		await styleBooksPage.goto(site.friendlyUrlPath);
+
+		await styleBooksPage.create('New style book', 'Dialect Theme');
+	});
+
+	await test.step("Assert that the tokens applied to the preview page of the 'Basic Components' fragment collection are from the dialect theme", async () => {
+		await styleBooksPage.previewFragmentCollection('Basic Components');
+
+		const previewIframe = page.frameLocator(
+			'iframe.style-book-editor__page-preview-frame'
+		);
+
+		const firstButton = previewIframe
+			.getByRole('link', {
+				name: 'Go Somewhere',
+			})
+			.first();
+
+		await firstButton.waitFor();
+
+		expect(firstButton).toHaveCSS('background-color', 'rgb(89, 36, 235)');
+	});
+});

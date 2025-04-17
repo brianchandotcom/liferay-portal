@@ -118,6 +118,9 @@ public interface ObjectEntryVersionLocalService
 	public ObjectEntryVersion deleteObjectEntryVersion(
 		ObjectEntryVersion objectEntryVersion);
 
+	public void deleteObjectEntryVersionByObjectDefinitionId(
+		Long objectDefinitionId);
+
 	public void deleteObjectEntryVersions(long objectEntryId);
 
 	/**

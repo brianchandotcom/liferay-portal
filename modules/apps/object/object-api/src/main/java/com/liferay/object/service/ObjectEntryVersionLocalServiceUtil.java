@@ -115,6 +115,13 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().deleteObjectEntryVersion(objectEntryVersion);
 	}
 
+	public static void deleteObjectEntryVersionByObjectDefinitionId(
+		Long objectDefinitionId) {
+
+		getService().deleteObjectEntryVersionByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
 	public static void deleteObjectEntryVersions(long objectEntryId) {
 		getService().deleteObjectEntryVersions(objectEntryId);
 	}

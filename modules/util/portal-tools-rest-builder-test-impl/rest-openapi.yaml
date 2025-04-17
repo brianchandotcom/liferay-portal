@@ -584,7 +584,7 @@ paths:
                         "OK"
             tags: ["SiteTestEntity"]
         patch:
-            description: 
+            description:
                 Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchSiteTestEntity
             parameters:

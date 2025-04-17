@@ -252,6 +252,11 @@ test('LPD-33274 Disable Publish button after first click', async ({
 
 	await page.getByRole('link', {name: 'Publish'}).click();
 
-	await page.getByRole('button', {name: 'Publish'}).click();
-	await expect(page.getByRole('button', {name: 'Publish'})).toBeDisabled();
+	const button = page.locator('button:text("Publish")');
+
+	await button.dblclick();
+
+	await expect(
+		page.getByRole('link', {name: ctCollection.body.name})
+	).toBeVisible();
 });

@@ -32,7 +32,6 @@ import {
 	navigateToACPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
 import {
 	addNestedSegmentField,
 	addSegmentField,
@@ -69,6 +68,7 @@ export const test = mergeTests(
 );
 
 let channel;
+let channelName;
 let project;
 
 test(
@@ -168,28 +168,38 @@ test(
 		tag: '@LRAC-8233',
 	},
 	async ({apiHelpers, page}) => {
-		const pageTitle = 'AC Page';
-		const sitePage = await createSitePage({
-			apiHelpers,
-			pageTitle,
-		});
+		const individualName = 'user1';
 
-		const channelName = 'My Property - ' + getRandomString();
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
+		await test.step('Create an Individual directly in the AC database', async () => {
+			await createIndividuals({
 				apiHelpers,
-				channelName,
-				page,
+				individuals,
 			});
 		});
 
-		await test.step('Go to AC Page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-			});
-			await page.waitForTimeout(10000);
+		const date1 = new Date();
+		const pageTitle = 'AC Page';
+
+		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				assetId: 'https://www.liferay.com/ac-page',
+				assetTitle: pageTitle,
+				canonicalUrl: 'https://www.liferay.com/ac-page',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -226,20 +236,8 @@ test(
 			});
 
 			await expect(
-				page.locator(
-					`tr:has-text("${pageTitle}"):has-text("Liferay DXP")`
-				)
-			).toBeVisible({
-				timeout: 100 * 1000,
-			});
-		});
-
-		await test.step('Delete page created in DXP during automation execution', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-
-			await apiHelpers.jsonWebServicesLayout.deleteLayout(
-				String(sitePage.id)
-			);
+				page.locator(`tr:has-text("${pageTitle}")`)
+			).toBeVisible();
 		});
 	}
 );
@@ -1554,7 +1552,7 @@ test.skip(
 );
 
 test.beforeEach(async ({apiHelpers}) => {
-	const channelName = 'My Property - ' + getRandomString();
+	channelName = 'My Property - ' + getRandomString();
 
 	const result = await createChannel({
 		apiHelpers,

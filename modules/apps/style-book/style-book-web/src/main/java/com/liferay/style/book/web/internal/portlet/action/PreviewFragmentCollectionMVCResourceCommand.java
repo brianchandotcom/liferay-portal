@@ -101,15 +101,13 @@ public class PreviewFragmentCollectionMVCResourceCommand
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Theme theme = null;
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			themeDisplay.getScopeGroupId(), false);
+
+		Theme theme = layoutSet.getTheme();
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-30204")) {
-
-			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-				themeDisplay.getScopeGroupId(), false);
-
-			theme = layoutSet.getTheme();
 
 			themeDisplay.setLayoutSet(layoutSet);
 
@@ -129,7 +127,7 @@ public class PreviewFragmentCollectionMVCResourceCommand
 					FrontendTokenDefinitionConstants.
 						THEME_TYPE_THEME_CSS_CET)) {
 
-				themeId = "classic_WAR_classictheme";
+				themeId = theme.getThemeId();
 
 				ThemeCSSCET themeCSSCET = (ThemeCSSCET)_cetManager.getCET(
 					themeDisplay.getCompanyId(), themeId);

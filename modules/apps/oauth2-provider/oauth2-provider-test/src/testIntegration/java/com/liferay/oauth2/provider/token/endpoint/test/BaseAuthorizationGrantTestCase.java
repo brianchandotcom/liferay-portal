@@ -10,8 +10,8 @@ import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.JWTAssertionClientSecretAuthorizationGrant;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.junit.Assert;
@@ -54,7 +54,7 @@ public abstract class BaseAuthorizationGrantTestCase
 
 	@Test
 	public void testClientAuthentication4() throws PortalException {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 		JWTAssertionClientSecretAuthorizationGrant
 			jwtAssertionClientSecretAuthorizationGrant =

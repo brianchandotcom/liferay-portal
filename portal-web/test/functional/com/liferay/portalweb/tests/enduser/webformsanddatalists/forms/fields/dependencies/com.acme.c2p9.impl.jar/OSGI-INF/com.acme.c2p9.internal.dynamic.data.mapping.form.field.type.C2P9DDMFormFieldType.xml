@@ -9,6 +9,5 @@
   <service>
     <provide interface="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType"/>
   </service>
-  <reference name="_npmResolver" interface="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" field="_npmResolver"/>
   <implementation class="com.acme.c2p9.internal.dynamic.data.mapping.form.field.type.C2P9DDMFormFieldType"/>
 </scr:component>

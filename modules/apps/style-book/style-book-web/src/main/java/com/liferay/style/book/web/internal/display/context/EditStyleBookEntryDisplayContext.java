@@ -283,13 +283,11 @@ public class EditStyleBookEntryDisplayContext {
 	private String _getFragmentCollectionPreviewURL(
 		String fragmentCollectionKey, long groupId) {
 
-		String url = _getFragmentCollectionPreviewURL();
-
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			StyleBookPortletKeys.STYLE_BOOK);
 
-		url = HttpComponentsUtil.addParameter(
-			url, portletNamespace + "groupId", groupId);
+		String url = HttpComponentsUtil.addParameter(
+			_getFragmentCollectionPreviewURL(), portletNamespace + "groupId", groupId);
 
 		return HttpComponentsUtil.addParameter(
 			url, portletNamespace + "fragmentCollectionKey",

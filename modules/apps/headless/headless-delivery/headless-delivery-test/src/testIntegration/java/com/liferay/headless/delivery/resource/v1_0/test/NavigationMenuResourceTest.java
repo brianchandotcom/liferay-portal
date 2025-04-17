@@ -173,10 +173,6 @@ public class NavigationMenuResourceTest
 	public void testGetNavigationMenu() throws Exception {
 		super.testGetNavigationMenu();
 
-		_testGetNavigationMenuWithNestedFields();
-
-		_testGetNavigationMenuWithoutNestedFields();
-
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(),
@@ -240,6 +236,8 @@ public class NavigationMenuResourceTest
 			"structuredContent", false);
 
 		_testGetNavigationMenuWithChildNavigationMenusAndNavigationMenuItems();
+		_testGetNavigationMenuWithNestedFields();
+		_testGetNavigationMenuWithoutNestedFields();
 	}
 
 	@Override

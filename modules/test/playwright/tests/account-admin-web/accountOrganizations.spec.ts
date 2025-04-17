@@ -328,7 +328,7 @@ test('LPD-47225 Can paginate organizations during assignment', async ({
 	for (let i = 1; i <= 21; i++) {
 		organizations.push(
 			await apiHelpers.headlessAdminUser.postOrganization({
-				name: `Organization ${String(i).padStart(2, '0')}`,
+				name: `${String(i).padStart(2, '0')}_Organization `,
 			})
 		);
 	}

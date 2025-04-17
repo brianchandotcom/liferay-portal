@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.web.internal.display.context;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -191,26 +191,24 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 	private JSONObject _getDDMStructuresJSONObject(
 		String className, ResourceRequest resourceRequest) {
 
-		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getClassStructures(
-				_portal.getCompanyId(resourceRequest),
-				_portal.getClassNameId(className));
-
 		JSONArray subtypeClassInfoJSONArray = _jsonFactory.createJSONArray();
 
-		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
 		int page = ParamUtil.getInteger(resourceRequest, "page", 1);
+		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
 
+		int start = (page - 1) * pageSize;
 		int end = page * pageSize;
-		page = (page - 1) * pageSize;
+
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
+			_portal.getCompanyId(resourceRequest), new long[0],
+			_portal.getClassNameId(className), null,
+			WorkflowConstants.STATUS_ANY, start, end, null);
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(resourceRequest, "languageId"));
 
-		for (int i = page; (i < ddmStructures.size()) && (i < end); i++) {
+		for (DDMStructure ddmStructure : ddmStructures) {
 			try {
-				DDMStructure ddmStructure = ddmStructures.get(i);
-
 				Group group = _groupLocalService.getGroup(
 					ddmStructure.getGroupId());
 
@@ -230,55 +228,44 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 		return JSONUtil.put(
 			"subtypeClasses", subtypeClassInfoJSONArray
 		).put(
-			"totalCount", ddmStructures.size()
+			"totalCount",
+			_ddmStructureLocalService.searchCount(
+				_portal.getCompanyId(resourceRequest), new long[0],
+				_portal.getClassNameId(className), null,
+				WorkflowConstants.STATUS_ANY)
 		);
 	}
 
 	private JSONObject _getDLFileEntryTypesJSONObject(
 		String className, ResourceRequest resourceRequest) {
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypesByCompanyId(
-				_portal.getCompanyId(resourceRequest));
-
 		JSONArray subtypeClassInfoJSONArray = _jsonFactory.createJSONArray();
 
-		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
 		int page = ParamUtil.getInteger(resourceRequest, "page", 1);
+		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
 
+		int start = (page - 1) * pageSize;
 		int end = page * pageSize;
-		page = (page - 1) * pageSize;
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			_dlFileEntryTypeLocalService.search(
+				_portal.getCompanyId(resourceRequest), new long[0], null, true,
+				start, end, null);
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(resourceRequest, "languageId"));
 
-		int size = dlFileEntryTypes.size();
-
-		if (page == 0) {
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			try {
-				DLFileEntryType dlFileEntryType =
-					_dlFileEntryTypeLocalService.
-						getBasicDocumentDLFileEntryType();
+				if (dlFileEntryType.getGroupId() == 0) {
+					_addSubtypeClassInfo(
+						subtypeClassInfoJSONArray, className, StringPool.BLANK,
+						StringPool.BLANK,
+						dlFileEntryType.getExternalReferenceCode(),
+						dlFileEntryType.getName(locale));
 
-				_addSubtypeClassInfo(
-					subtypeClassInfoJSONArray, className, StringPool.BLANK,
-					StringPool.BLANK,
-					dlFileEntryType.getExternalReferenceCode(),
-					dlFileEntryType.getName(locale));
-
-				end--;
-				size++;
-			}
-			catch (NoSuchFileEntryTypeException noSuchFileEntryTypeException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchFileEntryTypeException);
+					continue;
 				}
-			}
-		}
-
-		for (int i = page; (i < dlFileEntryTypes.size()) && (i < end); i++) {
-			try {
-				DLFileEntryType dlFileEntryType = dlFileEntryTypes.get(i);
 
 				Group group = _groupLocalService.getGroup(
 					dlFileEntryType.getGroupId());
@@ -299,7 +286,9 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 		return JSONUtil.put(
 			"subtypeClasses", subtypeClassInfoJSONArray
 		).put(
-			"totalCount", size
+			"totalCount",
+			_dlFileEntryTypeLocalService.searchCount(
+				_portal.getCompanyId(resourceRequest), new long[0], null, true)
 		);
 	}
 

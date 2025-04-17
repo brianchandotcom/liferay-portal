@@ -70,13 +70,13 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 
 	@Test
 	public void testPortalInstanceRegistered() throws Exception {
-		String includedExternalReferenceCode1 = String.format(
+		String externalReferenceCode1 = String.format(
 			"included-custom-element-%s",
 			RandomTestUtil.randomString(
 				4, NumericStringRandomizerBumper.INSTANCE));
 
 		_addCETConfiguration(
-			includedExternalReferenceCode1,
+			externalReferenceCode1,
 			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
 			"friendlyURLMapping=vanilla-counter", "instanceable=false",
 			String.format("urls=index.%s.js", RandomTestUtil.randomString()),
@@ -85,45 +85,41 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 				"cssURLs=style.%s.css", RandomTestUtil.randomString()),
 			"portletCategoryName=category.client-extensions");
 
-		String includedExternalReferenceCode2 = String.format(
+		String externalReferenceCode2 = String.format(
 			"included-global-js-%s",
 			RandomTestUtil.randomString(
 				4, NumericStringRandomizerBumper.INSTANCE));
 
 		_addCETConfiguration(
-			includedExternalReferenceCode2,
+			externalReferenceCode2,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
 			String.format("url=global.%s.js", RandomTestUtil.randomString()));
 
-		String excludedExternalReferenceCode = String.format(
+		String externalReferenceCode3 = String.format(
 			"excluded-global-js-%s",
 			RandomTestUtil.randomString(
 				4, NumericStringRandomizerBumper.INSTANCE));
 
 		_addCETConfiguration(
-			excludedExternalReferenceCode,
+			externalReferenceCode3,
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
 			String.format("url=global.%s.js", RandomTestUtil.randomString()));
 
 		PropsUtil.set(
 			"client.extension.all.companies.external.reference.codes",
 			String.format(
-				"%s,%s", includedExternalReferenceCode1,
-				includedExternalReferenceCode2));
+				"%s,%s", externalReferenceCode1, externalReferenceCode2));
 
 		Company company = CompanyTestUtil.addCompany(
 			RandomTestUtil.randomString());
 
 		Assert.assertNotNull(
-			_cetManager.getCET(
-				company.getCompanyId(), includedExternalReferenceCode1));
+			_cetManager.getCET(company.getCompanyId(), externalReferenceCode1));
 		Assert.assertNotNull(
-			_cetManager.getCET(
-				company.getCompanyId(), includedExternalReferenceCode2));
+			_cetManager.getCET(company.getCompanyId(), externalReferenceCode2));
 
 		Assert.assertNull(
-			_cetManager.getCET(
-				company.getCompanyId(), excludedExternalReferenceCode));
+			_cetManager.getCET(company.getCompanyId(), externalReferenceCode3));
 	}
 
 	private void _addCETConfiguration(

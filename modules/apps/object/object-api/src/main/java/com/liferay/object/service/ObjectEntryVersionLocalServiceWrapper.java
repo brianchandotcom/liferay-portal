@@ -121,6 +121,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteObjectEntryVersionByObjectDefinitionId(
+		Long objectDefinitionId) {
+
+		_objectEntryVersionLocalService.
+			deleteObjectEntryVersionByObjectDefinitionId(objectDefinitionId);
+	}
+
+	@Override
 	public void deleteObjectEntryVersions(long objectEntryId) {
 		_objectEntryVersionLocalService.deleteObjectEntryVersions(
 			objectEntryId);

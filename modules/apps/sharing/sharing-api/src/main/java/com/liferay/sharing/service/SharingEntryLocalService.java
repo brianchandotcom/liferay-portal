@@ -147,6 +147,8 @@ public interface SharingEntryLocalService
 	@Transactional(enabled = false)
 	public SharingEntry createSharingEntry(long sharingEntryId);
 
+	public void deleteCompanySharingEntries(long companyId, long classNameId);
+
 	/**
 	 * Deletes the sharing entries whose expiration date is before the current
 	 * date.
@@ -337,6 +339,9 @@ public interface SharingEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanySharingEntriesCount(long companyId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

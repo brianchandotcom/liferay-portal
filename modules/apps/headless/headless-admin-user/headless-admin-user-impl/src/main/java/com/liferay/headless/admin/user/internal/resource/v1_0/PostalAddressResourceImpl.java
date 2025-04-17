@@ -12,7 +12,6 @@ import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.model.Address;
@@ -38,6 +37,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -110,10 +111,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			transform(
 				_addressService.getAddresses(
 					AccountEntry.class.getName(), accountId),
-				address -> PostalAddressUtil.toPostalAddress(
-					contextAcceptLanguage.isAcceptAllLanguages(), address,
-					contextCompany.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale())));
+				address -> _toPostalAddress(address)));
 	}
 
 	@Override
@@ -141,21 +139,14 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 				_addressService.getAddresses(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				address -> PostalAddressUtil.toPostalAddress(
-					contextAcceptLanguage.isAcceptAllLanguages(), address,
-					contextCompany.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale())));
+				address -> _toPostalAddress(address)));
 	}
 
 	@Override
 	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception {
 
-		return PostalAddressUtil.toPostalAddress(
-			contextAcceptLanguage.isAcceptAllLanguages(),
-			_addressService.getAddress(postalAddressId),
-			contextCompany.getCompanyId(),
-			contextAcceptLanguage.getPreferredLocale());
+		return _toPostalAddress(_addressService.getAddress(postalAddressId));
 	}
 
 	@Override
@@ -202,10 +193,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			transform(
 				_addressService.getAddresses(
 					Contact.class.getName(), user.getContactId()),
-				address -> PostalAddressUtil.toPostalAddress(
-					contextAcceptLanguage.isAcceptAllLanguages(), address,
-					contextCompany.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale())));
+				address -> _toPostalAddress(address)));
 	}
 
 	@Override
@@ -290,10 +278,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			}
 		}
 
-		return PostalAddressUtil.toPostalAddress(
-			contextAcceptLanguage.isAcceptAllLanguages(), address,
-			contextCompany.getCompanyId(),
-			contextAcceptLanguage.getPreferredLocale());
+		return _toPostalAddress(address);
 	}
 
 	@Override
@@ -336,10 +321,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getPhoneNumber(),
 			ServiceContextFactory.getInstance(contextHttpServletRequest));
 
-		return PostalAddressUtil.toPostalAddress(
-			contextAcceptLanguage.isAcceptAllLanguages(), address,
-			contextCompany.getCompanyId(),
-			contextAcceptLanguage.getPreferredLocale());
+		return _toPostalAddress(address);
 	}
 
 	@Override
@@ -367,10 +349,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getAddressSubtype(), postalAddress.getPostalCode(),
 			postalAddress.getPhoneNumber());
 
-		return PostalAddressUtil.toPostalAddress(
-			contextAcceptLanguage.isAcceptAllLanguages(), address,
-			contextCompany.getCompanyId(),
-			contextAcceptLanguage.getPreferredLocale());
+		return _toPostalAddress(address);
 	}
 
 	@Override
@@ -483,6 +462,15 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return region.getRegionId();
 	}
 
+	private PostalAddress _toPostalAddress(Address address) throws Exception {
+		return _postalAddressDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, address.getAddressId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
 	private void _updatePrimaryAddress(String className, long contactId)
 		throws Exception {
 
@@ -523,6 +511,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private CountryService _countryService;
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference(
@@ -531,6 +522,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private DTOConverter
 		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
 			_organizationResourceDTOConverter;
+
+	@Reference(target = DTOConverterConstants.POSTAL_ADDRESS_DTO_CONVERTER)
+	private DTOConverter<Address, PostalAddress> _postalAddressDTOConverter;
 
 	@Reference
 	private RegionService _regionService;

@@ -8,7 +8,6 @@ package com.liferay.adaptive.media.image.web.internal.html;
 import com.liferay.adaptive.media.image.media.query.Condition;
 import com.liferay.adaptive.media.image.media.query.MediaQuery;
 import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -136,10 +135,9 @@ public class AMImageHTMLTagFactoryImplTest {
 	public void testSupportsImageTagsWithNewLineCharacters() throws Exception {
 		_addMediaQueries(_createMediaQuery(1989, "adaptiveURL"));
 
-		StringBundler originalSB = new StringBundler(3);
+		StringBundler originalSB = new StringBundler(2);
 
-		originalSB.append("<img data-fileentryid=\"1234\" ");
-		originalSB.append(CharPool.NEW_LINE);
+		originalSB.append("<img data-fileentryid=\"1234\" \n");
 		originalSB.append("src=\"adaptable\"/>");
 
 		StringBundler expectedSB = new StringBundler(5);

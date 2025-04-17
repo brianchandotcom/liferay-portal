@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.sql.Connection;
@@ -762,46 +761,10 @@ public abstract class BaseDBProcess implements DBProcess {
 					CompanyThreadLocal.getCompanyId(),
 					key -> new ConcurrentHashMap<>());
 
-			Object invocation = null;
-
-			try {
-				invocation = method.invoke(
-					connectionMap.computeIfAbsent(
-						Thread.currentThread(), thread -> _getConnection()),
-					args);
-			}
-			catch (InvocationTargetException invocationTargetException) {
-				Throwable targetThrowable =
-					invocationTargetException.getTargetException();
-
-				if (targetThrowable instanceof SQLException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get connection for company " +
-								CompanyThreadLocal.getCompanyId());
-
-						int connectionsCount = _countConnections();
-
-						int maximumPoolSize = GetterUtil.getInteger(
-							PropsUtil.get("jdbc.default.maximumPoolSize"), 180);
-
-						if (connectionsCount >= (maximumPoolSize - 10)) {
-							_log.warn(
-								StringBundler.concat(
-									"Number of open connections (",
-									connectionsCount,
-									") is near the connection pool limit (",
-									maximumPoolSize, "). Consider increasing ",
-									"\"jdbc.default.maximumPoolSize\" to ",
-									"improve performance."));
-						}
-					}
-				}
-
-				throw invocationTargetException;
-			}
-
-			return invocation;
+			return method.invoke(
+				connectionMap.computeIfAbsent(
+					Thread.currentThread(), thread -> _getConnection()),
+				args);
 		}
 
 	}

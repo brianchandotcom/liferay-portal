@@ -1911,8 +1911,7 @@ public class DefaultObjectEntryManagerImpl
 			}
 			else {
 				methodName =
-					"putByExternalReferenceCodeObjectEntryExternal" +
-						"ReferenceCodeObjectActionObjectActionName";
+					"putByExternalReferenceCodeObjectActionObjectActionName";
 			}
 
 			for (ObjectAction objectAction :
@@ -1942,13 +1941,7 @@ public class DefaultObjectEntryManagerImpl
 									serviceBuilderObjectEntry.getGroupId());
 							}
 						).put(
-							() -> {
-								if (scopeSite) {
-									return "externalReferenceCode";
-								}
-
-								return "objectEntryExternalReferenceCode";
-							},
+							"externalReferenceCode",
 							serviceBuilderObjectEntry.getExternalReferenceCode()
 						).put(
 							"objectActionName", objectAction.getName()

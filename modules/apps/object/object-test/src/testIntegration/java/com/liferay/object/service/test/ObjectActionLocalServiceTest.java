@@ -738,7 +738,7 @@ public class ObjectActionLocalServiceTest {
 
 			try {
 				objectEntryResource.
-					putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+					putByExternalReferenceCodeObjectActionObjectActionName(
 						objectEntry.getExternalReferenceCode(),
 						objectAction5.getName());
 
@@ -758,7 +758,7 @@ public class ObjectActionLocalServiceTest {
 				_user.getUserId());
 
 			objectEntryResource.
-				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+				putByExternalReferenceCodeObjectActionObjectActionName(
 					objectEntry.getExternalReferenceCode(),
 					objectAction5.getName());
 
@@ -787,7 +787,7 @@ public class ObjectActionLocalServiceTest {
 				_user.getUserId());
 
 			objectEntryResource.
-				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+				putByExternalReferenceCodeObjectActionObjectActionName(
 					objectEntry.getExternalReferenceCode(),
 					systemObjectAction.getName());
 

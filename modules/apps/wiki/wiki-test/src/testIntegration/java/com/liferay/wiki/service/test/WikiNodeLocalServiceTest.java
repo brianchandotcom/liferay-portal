@@ -6,7 +6,6 @@
 package com.liferay.wiki.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -176,25 +175,19 @@ public class WikiNodeLocalServiceTest {
 		long sharedImagesPageAttachmentsFolderId =
 			sharedImagesPage.getAttachmentsFolderId();
 
-		String testFileName = "media_link_test.docx";
-
-		String linkLabel = "Download link";
-
 		FileEntry attachmentFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				_node.getGroupId(), sharedImagesPageAttachmentsFolderId,
-				testFileName);
+				"media_link_test.docx");
 
 		String attachmentFileEntryURL =
 			PortletFileRepositoryUtil.getPortletFileEntryURL(
 				themeDisplay, attachmentFileEntry, StringPool.BLANK);
 
-		String linkTag = StringBundler.concat(
-			"[[", attachmentFileEntryURL, StringPool.PIPE, linkLabel, "]]");
+		String linkTag = "[[" + attachmentFileEntryURL + "|Download link]]";
 
-		String expectedContent = "<<TableOfContents>>\n\n" + linkTag;
-
-		Assert.assertEquals(expectedContent, importedPage.getContent());
+		Assert.assertEquals(
+			"<<TableOfContents>>\n\n" + linkTag, importedPage.getContent());
 	}
 
 	@DeleteAfterTestRun

@@ -653,13 +653,17 @@
 				"captchaName": {
 					"type": "string"
 				},
+				"customElementExternalReferenceCode": {
+					"type": "string"
+				},
 				"pid": {
 					"const": "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration"
 				}
 			},
 			"required": [
 				"pid",
-				"captchaName"
+				"captchaName",
+				"customElementExternalReferenceCode"
 			]
 		},
 		{

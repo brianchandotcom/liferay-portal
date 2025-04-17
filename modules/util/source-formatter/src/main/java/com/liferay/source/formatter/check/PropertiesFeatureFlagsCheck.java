@@ -181,13 +181,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				sb.append("\n    #\n    ");
 				sb.append(featureFlagPropertyKey);
 				sb.append(StringPool.EQUAL);
-
-				if (deprecationFeatureFlagKeys.contains(featureFlagKey)) {
-					sb.append(true);
-				}
-				else {
-					sb.append(false);
-				}
+				sb.append(deprecationFeatureFlagKeys.contains(featureFlagKey));
 			}
 
 			if (matchedFeatureFlags.contains("feature.flag.")) {

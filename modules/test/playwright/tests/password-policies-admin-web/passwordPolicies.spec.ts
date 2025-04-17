@@ -5,35 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
-import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
-import {loginTest} from '../../../fixtures/loginTest';
-import {passwordPoliciesAdminPageTest} from '../../../fixtures/passwordPoliciesAdminConfigPageTest';
-import {TPasswordPolicy} from '../../../helpers/PasswordPolicyApiHelper';
-import {PasswordPoliciesAdminPage} from '../../../pages/password-policies-admin-web/PasswordPoliciesAdminPage';
-import getRandomString from '../../../utils/getRandomString';
-import performLoginViaApi from '../../../utils/performLogin';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {passwordPoliciesAdminPageTest} from '../../fixtures/passwordPoliciesAdminConfigPageTest';
+import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
+import {PasswordPoliciesAdminPage} from '../../pages/password-policies-admin-web/PasswordPoliciesAdminPage';
+import getRandomString from '../../utils/getRandomString';
+import performLoginViaApi from '../../utils/performLogin';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	captchaConfigPageTest,
 	loginTest(),
 	passwordPoliciesAdminPageTest
-);
-
-test.beforeEach(
-	'Disable create account CAPTCHA',
-	async ({captchaConfigPage, page}) => {
-		await page.goto('/');
-
-		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
-			await performLoginViaApi(page, 'test');
-		}
-
-		await captchaConfigPage.goTo();
-
-		await captchaConfigPage.disableCreateAccountCaptcha();
-	}
 );
 
 test.afterEach(
@@ -52,7 +37,23 @@ test.afterEach(
 		await page.goto('/');
 
 		await passwordPoliciesAdminConfigPage.goTo();
+
 		await passwordPoliciesAdminConfigPage.resetDefaultPasswordPolicy();
+	}
+);
+
+test.beforeEach(
+	'Disable create account CAPTCHA',
+	async ({captchaConfigPage, page}) => {
+		await page.goto('/');
+
+		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
+			await performLoginViaApi(page, 'test');
+		}
+
+		await captchaConfigPage.goTo();
+
+		await captchaConfigPage.disableCreateAccountCaptcha();
 	}
 );
 
@@ -202,6 +203,7 @@ async function testPasswordPolicySyntaxCheck(
 	password: String
 ) {
 	await passwordPoliciesAdminConfigPage.goTo();
+
 	await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy(
 		passwordPolicy
 	);

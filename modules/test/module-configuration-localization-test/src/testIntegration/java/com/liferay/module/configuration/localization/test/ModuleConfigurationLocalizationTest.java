@@ -67,8 +67,7 @@ public class ModuleConfigurationLocalizationTest {
 				continue;
 			}
 
-			sb.append(StringPool.NEW_LINE);
-			sb.append("Bundle {id: ");
+			sb.append("\nBundle {id: ");
 			sb.append(bundle.getBundleId());
 			sb.append(", name: ");
 			sb.append(bundle.getSymbolicName());

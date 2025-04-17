@@ -147,6 +147,12 @@ public class SharingEntryLocalServiceWrapper
 		return _sharingEntryLocalService.createSharingEntry(sharingEntryId);
 	}
 
+	@Override
+	public void deleteCompanySharingEntries(long companyId, long classNameId) {
+		_sharingEntryLocalService.deleteCompanySharingEntries(
+			companyId, classNameId);
+	}
+
 	/**
 	 * Deletes the sharing entries whose expiration date is before the current
 	 * date.
@@ -423,6 +429,12 @@ public class SharingEntryLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _sharingEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public int getCompanySharingEntriesCount(long companyId, long classNameId) {
+		return _sharingEntryLocalService.getCompanySharingEntriesCount(
+			companyId, classNameId);
 	}
 
 	@Override

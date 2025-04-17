@@ -117,7 +117,7 @@ public class PreviewFragmentCollectionMVCResourceCommand
 		}
 		else {
 			String themeId = GetterUtil.getString(
-				httpServletRequest.getParameter("themeId"));
+				httpServletRequest.getParameter("styleBookEntryThemeId"));
 
 			FrontendTokenDefinition frontendTokenDefinition =
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(

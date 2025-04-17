@@ -52,15 +52,13 @@ public class DefaultThemeScopedCSSVariablesProvider
 		if (FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-30204")) {
 
-			if (GetterUtil.getBoolean(
-					httpServletRequest.getParameter(
-						"styleBookEntryFragmentCollectionPreview"))) {
+			String styleBookEntryThemeId = GetterUtil.getString(
+				httpServletRequest.getParameter("styleBookEntryThemeId"));
 
+			if (Validator.isNotNull(styleBookEntryThemeId)) {
 				frontendTokenDefinition =
 					_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-						themeDisplay.getCompanyId(),
-						GetterUtil.getString(
-							httpServletRequest.getParameter("themeId")));
+						themeDisplay.getCompanyId(), styleBookEntryThemeId);
 			}
 			else {
 				frontendTokenDefinition =

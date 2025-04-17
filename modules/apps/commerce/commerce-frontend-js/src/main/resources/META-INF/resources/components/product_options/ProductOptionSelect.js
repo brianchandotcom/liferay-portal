@@ -199,8 +199,6 @@ const ProductOptionSelect = ({
 				(skuOption) => skuOption.skuOptionKey !== productOption.key
 			);
 
-			setHasErrors(optionIsRequired);
-
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
 				[errorsKey]: getSkuOptionsErrors(
@@ -221,6 +219,12 @@ const ProductOptionSelect = ({
 					skuOptions: currentSkuOptions,
 				})
 			);
+
+			if (optionIsRequired) {
+				setHasErrors(optionIsRequired);
+
+				return;
+			}
 		}
 		else {
 			setSelectedProductOptionValue({

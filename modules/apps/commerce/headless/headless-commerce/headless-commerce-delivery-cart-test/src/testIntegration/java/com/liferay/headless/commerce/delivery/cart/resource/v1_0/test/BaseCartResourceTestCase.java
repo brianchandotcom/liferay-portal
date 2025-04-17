@@ -884,7 +884,7 @@ public abstract class BaseCartResourceTestCase {
 			testGetChannelAccountCartsPage_getIrrelevantChannelId();
 
 		Page<Cart> page = cartResource.getChannelAccountCartsPage(
-			accountId, channelId, null, Pagination.of(1, 10));
+			accountId, channelId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -894,8 +894,8 @@ public abstract class BaseCartResourceTestCase {
 				randomIrrelevantCart());
 
 			page = cartResource.getChannelAccountCartsPage(
-				irrelevantAccountId, irrelevantChannelId, null,
-				Pagination.of(1, (int)totalCount + 1));
+				irrelevantAccountId, irrelevantChannelId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -913,7 +913,7 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, randomCart());
 
 		page = cartResource.getChannelAccountCartsPage(
-			accountId, channelId, null, Pagination.of(1, 10));
+			accountId, channelId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -940,6 +940,97 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelAccountCartsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long accountId = testGetChannelAccountCartsPage_getAccountId();
+		Long channelId = testGetChannelAccountCartsPage_getChannelId();
+
+		Cart cart1 = randomCart();
+
+		cart1 = testGetChannelAccountCartsPage_addCart(
+			accountId, channelId, cart1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> page = cartResource.getChannelAccountCartsPage(
+				accountId, channelId, null,
+				getFilterString(entityField, "between", cart1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(cart1), (List<Cart>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetChannelAccountCartsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long accountId = testGetChannelAccountCartsPage_getAccountId();
+		Long channelId = testGetChannelAccountCartsPage_getChannelId();
+
+		Cart cart1 = testGetChannelAccountCartsPage_addCart(
+			accountId, channelId, randomCart());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Cart cart2 = testGetChannelAccountCartsPage_addCart(
+			accountId, channelId, randomCart());
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> page = cartResource.getChannelAccountCartsPage(
+				accountId, channelId, null,
+				getFilterString(entityField, operator, cart1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(cart1), (List<Cart>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetChannelAccountCartsPageWithPagination()
 		throws Exception {
 
@@ -947,7 +1038,7 @@ public abstract class BaseCartResourceTestCase {
 		Long channelId = testGetChannelAccountCartsPage_getChannelId();
 
 		Page<Cart> cartPage = cartResource.getChannelAccountCartsPage(
-			accountId, channelId, null, null);
+			accountId, channelId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(cartPage.getTotalCount());
 
@@ -966,34 +1057,38 @@ public abstract class BaseCartResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Cart> page1 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null,
+				accountId, channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-					pageSizeLimit));
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(cart1, (List<Cart>)page1.getItems());
 
 			Page<Cart> page2 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null,
+				accountId, channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-					pageSizeLimit));
+					pageSizeLimit),
+				null);
 
 			assertContains(cart2, (List<Cart>)page2.getItems());
 
 			Page<Cart> page3 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null,
+				accountId, channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-					pageSizeLimit));
+					pageSizeLimit),
+				null);
 
 			assertContains(cart3, (List<Cart>)page3.getItems());
 		}
 		else {
 			Page<Cart> page1 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null, Pagination.of(1, totalCount + 2));
+				accountId, channelId, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 			List<Cart> carts1 = (List<Cart>)page1.getItems();
 
@@ -1001,7 +1096,8 @@ public abstract class BaseCartResourceTestCase {
 				carts1.toString(), totalCount + 2, carts1.size());
 
 			Page<Cart> page2 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null, Pagination.of(2, totalCount + 2));
+				accountId, channelId, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1010,12 +1106,152 @@ public abstract class BaseCartResourceTestCase {
 			Assert.assertEquals(carts2.toString(), 1, carts2.size());
 
 			Page<Cart> page3 = cartResource.getChannelAccountCartsPage(
-				accountId, channelId, null,
-				Pagination.of(1, (int)totalCount + 3));
+				accountId, channelId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(cart1, (List<Cart>)page3.getItems());
 			assertContains(cart2, (List<Cart>)page3.getItems());
 			assertContains(cart3, (List<Cart>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithSortDateTime()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(
+					cart1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithSortDouble()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(cart1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(cart2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithSortInteger()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(cart1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(cart2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetChannelAccountCartsPageWithSortString()
+		throws Exception {
+
+		testGetChannelAccountCartsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, cart1, cart2) -> {
+				Class<?> clazz = cart1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetChannelAccountCartsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Cart, Cart, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long accountId = testGetChannelAccountCartsPage_getAccountId();
+		Long channelId = testGetChannelAccountCartsPage_getChannelId();
+
+		Cart cart1 = randomCart();
+		Cart cart2 = randomCart();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, cart1, cart2);
+		}
+
+		cart1 = testGetChannelAccountCartsPage_addCart(
+			accountId, channelId, cart1);
+
+		cart2 = testGetChannelAccountCartsPage_addCart(
+			accountId, channelId, cart2);
+
+		Page<Cart> page = cartResource.getChannelAccountCartsPage(
+			accountId, channelId, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> ascPage = cartResource.getChannelAccountCartsPage(
+				accountId, channelId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
+
+			assertContains(cart1, (List<Cart>)ascPage.getItems());
+			assertContains(cart2, (List<Cart>)ascPage.getItems());
+
+			Page<Cart> descPage = cartResource.getChannelAccountCartsPage(
+				accountId, channelId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
+
+			assertContains(cart2, (List<Cart>)descPage.getItems());
+			assertContains(cart1, (List<Cart>)descPage.getItems());
 		}
 	}
 
@@ -1070,7 +1306,7 @@ public abstract class BaseCartResourceTestCase {
 			cartResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 					accountExternalReferenceCode, channelExternalReferenceCode,
-					null, Pagination.of(1, 10));
+					null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1087,8 +1323,8 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						irrelevantAccountExternalReferenceCode,
-						irrelevantChannelExternalReferenceCode, null,
-						Pagination.of(1, (int)totalCount + 1));
+						irrelevantChannelExternalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -1114,7 +1350,7 @@ public abstract class BaseCartResourceTestCase {
 			cartResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 					accountExternalReferenceCode, channelExternalReferenceCode,
-					null, Pagination.of(1, 10));
+					null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -1142,6 +1378,116 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String accountExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode();
+		String channelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode();
+
+		Cart cart1 = randomCart();
+
+		cart1 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				accountExternalReferenceCode, channelExternalReferenceCode,
+				cart1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> page =
+				cartResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+						accountExternalReferenceCode,
+						channelExternalReferenceCode, null,
+						getFilterString(entityField, "between", cart1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(cart1), (List<Cart>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String accountExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode();
+		String channelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode();
+
+		Cart cart1 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				accountExternalReferenceCode, channelExternalReferenceCode,
+				randomCart());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Cart cart2 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				accountExternalReferenceCode, channelExternalReferenceCode,
+				randomCart());
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> page =
+				cartResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+						accountExternalReferenceCode,
+						channelExternalReferenceCode, null,
+						getFilterString(entityField, operator, cart1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(cart1), (List<Cart>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithPagination()
 		throws Exception {
 
@@ -1154,7 +1500,7 @@ public abstract class BaseCartResourceTestCase {
 			cartResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 					accountExternalReferenceCode, channelExternalReferenceCode,
-					null, null);
+					null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(cartPage.getTotalCount());
 
@@ -1182,10 +1528,11 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
+						channelExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1195,10 +1542,11 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
+						channelExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			assertContains(cart2, (List<Cart>)page2.getItems());
 
@@ -1206,10 +1554,11 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
+						channelExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			assertContains(cart3, (List<Cart>)page3.getItems());
 		}
@@ -1218,8 +1567,8 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
-						Pagination.of(1, totalCount + 2));
+						channelExternalReferenceCode, null, null,
+						Pagination.of(1, totalCount + 2), null);
 
 			List<Cart> carts1 = (List<Cart>)page1.getItems();
 
@@ -1230,8 +1579,8 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
-						Pagination.of(2, totalCount + 2));
+						channelExternalReferenceCode, null, null,
+						Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1243,12 +1592,168 @@ public abstract class BaseCartResourceTestCase {
 				cartResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 						accountExternalReferenceCode,
-						channelExternalReferenceCode, null,
-						Pagination.of(1, (int)totalCount + 3));
+						channelExternalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(cart1, (List<Cart>)page3.getItems());
 			assertContains(cart2, (List<Cart>)page3.getItems());
 			assertContains(cart3, (List<Cart>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSortDateTime()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(
+					cart1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSortDouble()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(cart1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(cart2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSortInteger()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, cart1, cart2) -> {
+				BeanTestUtil.setProperty(cart1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(cart2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSortString()
+		throws Exception {
+
+		testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, cart1, cart2) -> {
+				Class<?> clazz = cart1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						cart1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						cart2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer<EntityField, Cart, Cart, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String accountExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode();
+		String channelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode();
+
+		Cart cart1 = randomCart();
+		Cart cart2 = randomCart();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, cart1, cart2);
+		}
+
+		cart1 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				accountExternalReferenceCode, channelExternalReferenceCode,
+				cart1);
+
+		cart2 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				accountExternalReferenceCode, channelExternalReferenceCode,
+				cart2);
+
+		Page<Cart> page =
+			cartResource.
+				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+					accountExternalReferenceCode, channelExternalReferenceCode,
+					null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Cart> ascPage =
+				cartResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+						accountExternalReferenceCode,
+						channelExternalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
+
+			assertContains(cart1, (List<Cart>)ascPage.getItems());
+			assertContains(cart2, (List<Cart>)ascPage.getItems());
+
+			Page<Cart> descPage =
+				cartResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+						accountExternalReferenceCode,
+						channelExternalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
+
+			assertContains(cart2, (List<Cart>)descPage.getItems());
+			assertContains(cart1, (List<Cart>)descPage.getItems());
 		}
 	}
 

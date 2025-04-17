@@ -46,13 +46,19 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PlacedOrderResource {
 
 	public Page<PlacedOrder> getChannelAccountPlacedOrdersPage(
-			Long accountId, Long channelId, Pagination pagination)
+			Long accountId, Long channelId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<PlacedOrder>
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
 				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, Pagination pagination)
+				String channelExternalReferenceCode, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<PlacedOrder> getChannelByExternalReferenceCodePlacedOrdersPage(

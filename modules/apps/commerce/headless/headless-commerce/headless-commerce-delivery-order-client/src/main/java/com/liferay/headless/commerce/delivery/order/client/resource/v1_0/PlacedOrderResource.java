@@ -35,24 +35,28 @@ public interface PlacedOrderResource {
 	}
 
 	public Page<PlacedOrder> getChannelAccountPlacedOrdersPage(
-			Long accountId, Long channelId, Pagination pagination)
+			Long accountId, Long channelId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelAccountPlacedOrdersPageHttpResponse(
-				Long accountId, Long channelId, Pagination pagination)
+				Long accountId, Long channelId, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Page<PlacedOrder>
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
 				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, Pagination pagination)
+				String channelExternalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPageHttpResponse(
 				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, Pagination pagination)
+				String channelExternalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Page<PlacedOrder> getChannelByExternalReferenceCodePlacedOrdersPage(
@@ -234,12 +238,14 @@ public interface PlacedOrderResource {
 	public static class PlacedOrderResourceImpl implements PlacedOrderResource {
 
 		public Page<PlacedOrder> getChannelAccountPlacedOrdersPage(
-				Long accountId, Long channelId, Pagination pagination)
+				Long accountId, Long channelId, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelAccountPlacedOrdersPageHttpResponse(
-					accountId, channelId, pagination);
+					accountId, channelId, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -302,7 +308,9 @@ public interface PlacedOrderResource {
 
 		public HttpInvoker.HttpResponse
 				getChannelAccountPlacedOrdersPageHttpResponse(
-					Long accountId, Long channelId, Pagination pagination)
+					Long accountId, Long channelId, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -326,11 +334,23 @@ public interface PlacedOrderResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -352,13 +372,15 @@ public interface PlacedOrderResource {
 		public Page<PlacedOrder>
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
 					String accountExternalReferenceCode,
-					String channelExternalReferenceCode, Pagination pagination)
+					String channelExternalReferenceCode, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPageHttpResponse(
 					accountExternalReferenceCode, channelExternalReferenceCode,
-					pagination);
+					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -422,7 +444,9 @@ public interface PlacedOrderResource {
 		public HttpInvoker.HttpResponse
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPageHttpResponse(
 					String accountExternalReferenceCode,
-					String channelExternalReferenceCode, Pagination pagination)
+					String channelExternalReferenceCode, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -446,11 +470,23 @@ public interface PlacedOrderResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

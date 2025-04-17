@@ -12,6 +12,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,6 +50,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -92,6 +99,22 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), _commerceCurrency.getCode());
 
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			_user.getTimeZone());
+
+		_commerceDiscount = _commerceDiscountLocalService.addCommerceDiscount(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			CommerceDiscountConstants.TARGET_SUBTOTAL, true,
+			RandomTestUtil.randomString(), true, BigDecimal.TEN, BigDecimal.TEN,
+			BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+			CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED, 0, true,
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			true, _serviceContext);
+
 		_country = _countryLocalService.addCountry(
 			"XY", "XYZ", true, true, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -125,19 +148,10 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteCart() throws Exception {
-		Cart cart = testDeleteCart_addCart();
-
-		assertHttpResponseStatusCode(
-			204, cartResource.deleteCartHttpResponse(cart.getId()));
-	}
-
-	@Override
-	@Test
 	public void testGetCartByExternalReferenceCodePaymentUrl()
 		throws Exception {
 
-		Cart cart = randomCart();
+		Cart cart = _createCart();
 
 		String callbackURL = RandomTestUtil.randomString();
 
@@ -153,7 +167,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	@Override
 	@Test
 	public void testGetCartPaymentURL() throws Exception {
-		Cart cart = randomCart();
+		Cart cart = _createCart();
 
 		String callbackURL = RandomTestUtil.randomString();
 
@@ -223,8 +237,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"account", "accountId", "billingAddressId", "couponCode",
-			"orderTypeId", "paymentStatus", "shippingAddressId", "status"
+			"account", "accountId", "billingAddressId", "shippingAddressId",
+			"status"
 		};
 	}
 
@@ -238,6 +252,221 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Override
 	protected Cart randomCart() throws Exception {
+		return new Cart() {
+			{
+				account = _accountEntry.getName();
+				accountId = _accountEntry.getAccountEntryId();
+				billingAddressId = 0L;
+				channelId = _commerceChannel.getCommerceChannelId();
+				couponCode = RandomTestUtil.randomString();
+				currencyCode = _commerceCurrency.getCode();
+				currencyExternalReferenceCode =
+					_commerceCurrency.getExternalReferenceCode();
+				currencyId = _commerceCurrency.getCommerceCurrencyId();
+				externalReferenceCode = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				orderTypeId = RandomTestUtil.randomLong();
+				orderUUID = RandomTestUtil.randomString();
+				paymentStatus = RandomTestUtil.randomInt();
+				shippingAddressId = 0L;
+				status = WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED);
+			}
+		};
+	}
+
+	@Override
+	protected Cart testDeleteCart_addCart() throws Exception {
+		Cart cart = randomCart();
+
+		return cartResource.postChannelCart(cart.getChannelId(), cart);
+	}
+
+	@Override
+	protected Cart testDeleteCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		return cartResource.postChannelCartByExternalReferenceCode(
+			_commerceChannel.getExternalReferenceCode(), randomCart());
+	}
+
+	@Override
+	protected Cart testGetCart_addCart() throws Exception {
+		Cart cart = randomCart();
+
+		return cartResource.postChannelCart(cart.getChannelId(), cart);
+	}
+
+	@Override
+	protected Cart testGetCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		return cartResource.postChannelCartByExternalReferenceCode(
+			_commerceChannel.getExternalReferenceCode(), randomCart());
+	}
+
+	@Override
+	protected Cart testGetChannelAccountCartsPage_addCart(
+			Long accountId, Long channelId, Cart cart)
+		throws Exception {
+
+		return cartResource.postChannelCart(channelId, cart);
+	}
+
+	@Override
+	protected Long testGetChannelAccountCartsPage_getAccountId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
+	}
+
+	@Override
+	protected Long testGetChannelAccountCartsPage_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
+	protected Cart
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, Cart cart)
+		throws Exception {
+
+		return cartResource.postChannelCartByExternalReferenceCode(
+			channelExternalReferenceCode, cart);
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Cart testGetChannelCartsPage_addCart(Long channelId, Cart cart)
+		throws Exception {
+
+		return cartResource.postChannelCart(channelId, cart);
+	}
+
+	@Override
+	protected Long testGetChannelCartsPage_getChannelId() throws Exception {
+		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
+	protected Cart testGraphQLCart_addCart() throws Exception {
+		Cart cart = randomCart();
+
+		return cartResource.postChannelCart(cart.getChannelId(), cart);
+	}
+
+	@Override
+	protected Cart testPatchCart_addCart() throws Exception {
+		return _createCart();
+	}
+
+	@Override
+	protected Cart testPatchCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		return _createCart();
+	}
+
+	@Override
+	protected Cart testPostCartByExternalReferenceCodeCheckout_addCart(
+			Cart cart)
+		throws Exception {
+
+		Cart createCart = _createCart();
+
+		return cartResource.postCartByExternalReferenceCodeCheckout(
+			createCart.getExternalReferenceCode());
+	}
+
+	@Override
+	protected Cart testPostCartByExternalReferenceCodeCouponCode_addCart(
+			Cart cart)
+		throws Exception {
+
+		Cart createCart = _createCart();
+
+		_updateCommerceDiscount(cart.getCouponCode());
+
+		return cartResource.postCartByExternalReferenceCodeCouponCode(
+			createCart.getExternalReferenceCode(),
+			new CouponCode() {
+				{
+					code = cart.getCouponCode();
+				}
+			});
+	}
+
+	@Override
+	protected Cart testPostCartCheckout_addCart(Cart cart) throws Exception {
+		Cart createCart = _createCart();
+
+		return cartResource.postCartCheckout(createCart.getId());
+	}
+
+	@Override
+	protected Cart testPostCartCouponCode_addCart(Cart cart) throws Exception {
+		Cart createCart = _createCart();
+
+		_updateCommerceDiscount(cart.getCouponCode());
+
+		return cartResource.postCartCouponCode(
+			createCart.getId(),
+			new CouponCode() {
+				{
+					code = cart.getCouponCode();
+				}
+			});
+	}
+
+	@Override
+	protected Cart testPostChannelCartByExternalReferenceCode_addCart(Cart cart)
+		throws Exception {
+
+		return cartResource.postChannelCartByExternalReferenceCode(
+			_commerceChannel.getExternalReferenceCode(), cart);
+	}
+
+	@Override
+	protected Cart testPutCart_addCart() throws Exception {
+		Cart cart = randomCart();
+
+		return cartResource.postChannelCart(cart.getChannelId(), cart);
+	}
+
+	@Override
+	protected Cart testPutCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		return cartResource.postChannelCartByExternalReferenceCode(
+			_commerceChannel.getExternalReferenceCode(), randomCart());
+	}
+
+	@Override
+	protected Cart testPutCartByExternalReferenceCode_createCart()
+		throws Exception {
+
+		return _createCart();
+	}
+
+	private Cart _createCart() throws Exception {
 		CommerceOrder commerceOrder = _getCommerceOrder();
 
 		return new Cart() {
@@ -264,192 +493,10 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		};
 	}
 
-	@Override
-	protected Cart testDeleteCart_addCart() throws Exception {
-		Cart cart = randomCart();
-
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Cart testDeleteCartByExternalReferenceCode_addCart()
-		throws Exception {
-
-		Cart cart = randomCart();
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
-	@Override
-	protected Cart testGetCart_addCart() throws Exception {
-		Cart cart = randomCart();
-
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Cart testGetCartByExternalReferenceCode_addCart()
-		throws Exception {
-
-		Cart cart = randomCart();
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
-	@Override
-	protected Cart testGetChannelAccountCartsPage_addCart(
-			Long accountId, Long channelId, Cart cart)
-		throws Exception {
-
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Long testGetChannelAccountCartsPage_getAccountId()
-		throws Exception {
-
-		return _accountEntry.getAccountEntryId();
-	}
-
-	@Override
-	protected Long testGetChannelAccountCartsPage_getChannelId()
-		throws Exception {
-
-		return _commerceChannel.getCommerceChannelId();
-	}
-
-	@Override
-	protected Cart
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
-				String accountExternalReferenceCode,
-				String channelExternalReferenceCode, Cart cart)
-		throws Exception {
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
-	@Override
-	protected String
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode()
-		throws Exception {
-
-		return _accountEntry.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode()
-		throws Exception {
-
-		return _commerceChannel.getExternalReferenceCode();
-	}
-
-	@Override
-	protected Cart testGetChannelCartsPage_addCart(Long channelId, Cart cart)
-		throws Exception {
-
-		return cartResource.postCartCheckout(
-			_commerceOrder.getCommerceOrderId());
-	}
-
-	@Override
-	protected Long testGetChannelCartsPage_getChannelId() throws Exception {
-		return _commerceChannel.getCommerceChannelId();
-	}
-
-	@Override
-	protected Cart testGraphQLCart_addCart() throws Exception {
-		Cart cart = randomCart();
-
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Cart testPatchCart_addCart() throws Exception {
-		return randomCart();
-	}
-
-	@Override
-	protected Cart testPatchCartByExternalReferenceCode_addCart()
-		throws Exception {
-
-		return randomCart();
-	}
-
-	@Override
-	protected Cart testPostCartByExternalReferenceCodeCheckout_addCart(
-			Cart cart)
-		throws Exception {
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
-	@Override
-	protected Cart testPostCartByExternalReferenceCodeCouponCode_addCart(
-			Cart cart)
-		throws Exception {
-
-		CouponCode couponCode = new CouponCode() {
-			{
-				code = cart.getCouponCode();
-			}
-		};
-
-		return cartResource.postCartByExternalReferenceCodeCouponCode(
-			cart.getExternalReferenceCode(), couponCode);
-	}
-
-	@Override
-	protected Cart testPostCartCheckout_addCart(Cart cart) throws Exception {
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Cart testPostCartCouponCode_addCart(Cart cart) throws Exception {
-		CouponCode couponCode = new CouponCode() {
-			{
-				code = cart.getCouponCode();
-			}
-		};
-
-		return cartResource.postCartCouponCode(cart.getId(), couponCode);
-	}
-
-	@Override
-	protected Cart testPostChannelCartByExternalReferenceCode_addCart(Cart cart)
-		throws Exception {
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
-	@Override
-	protected Cart testPutCart_addCart() throws Exception {
-		Cart cart = randomCart();
-
-		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Cart testPutCartByExternalReferenceCode_addCart()
-		throws Exception {
-
-		Cart cart = randomCart();
-
-		return cartResource.postCartByExternalReferenceCodeCheckout(
-			cart.getExternalReferenceCode());
-	}
-
 	private CommerceOrder _getCommerceOrder() throws Exception {
-		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
+		return _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
-
-		return _commerceOrder;
 	}
 
 	private void _testPatchCartByExternalReferenceCodeWithMoreExternalReferenceCodes()
@@ -858,6 +905,28 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			getCart.getShippingAddressExternalReferenceCode());
 	}
 
+	private void _updateCommerceDiscount(String couponCode) throws Exception {
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			_user.getTimeZone());
+
+		_commerceDiscountLocalService.updateCommerceDiscount(
+			_commerceDiscount.getCommerceDiscountId(),
+			_commerceDiscount.getTitle(), _commerceDiscount.getTarget(),
+			_commerceDiscount.isUseCouponCode(), couponCode,
+			_commerceDiscount.isUsePercentage(),
+			_commerceDiscount.getMaximumDiscountAmount(),
+			_commerceDiscount.getLevel1(), _commerceDiscount.getLevel2(),
+			_commerceDiscount.getLevel3(), _commerceDiscount.getLevel4(),
+			_commerceDiscount.getLimitationType(),
+			_commerceDiscount.getLimitationTimes(),
+			_commerceDiscount.isActive(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), true, _serviceContext);
+	}
+
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -872,7 +941,11 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
-	private CommerceOrder _commerceOrder;
+	@DeleteAfterTestRun
+	private CommerceDiscount _commerceDiscount;
+
+	@Inject
+	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

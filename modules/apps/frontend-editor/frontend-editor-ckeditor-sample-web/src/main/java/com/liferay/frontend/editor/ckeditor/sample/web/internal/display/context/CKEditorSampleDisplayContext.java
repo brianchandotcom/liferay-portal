@@ -48,10 +48,9 @@ public class CKEditorSampleDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(
 					_themeDisplay.getRequest()));
 
-		Map<String, Object> editorConfigurationData =
-			editorConfiguration.getData();
+		Map<String, Object> data = editorConfiguration.getData();
 
-		return editorConfigurationData.get("editorConfig");
+		return data.get("editorConfig");
 	}
 
 	public JSONArray getEditorTransformerURLsJSONArray() throws Exception {

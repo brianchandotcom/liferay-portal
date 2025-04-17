@@ -527,18 +527,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
-	private int _countConnections() {
-		int connectionsCount = 0;
-
-		for (Map<Thread, Connection> connectionMap :
-				_companyConnectionMap.values()) {
-
-			connectionsCount += connectionMap.size();
-		}
-
-		return connectionsCount;
-	}
-
 	private PreparedStatement _getConcurrentPreparedStatement(
 		String updateSQL,
 		Map<Thread, PreparedStatement> preparedStatementHashMap) {
@@ -596,6 +584,18 @@ public abstract class BaseDBProcess implements DBProcess {
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	private int _getConnectionsCount() {
+		int connectionsCount = 0;
+
+		for (Map<Thread, Connection> connectionMap :
+				_companyConnectionMap.values()) {
+
+			connectionsCount += connectionMap.size();
+		}
+
+		return connectionsCount;
 	}
 
 	private InputStream _getInputStream(String path) {
@@ -746,7 +746,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			String methodName = method.getName();
 
-			if (methodName.equals("close") && (_countConnections() > 0)) {
+			if (methodName.equals("close") && (_getConnectionsCount() > 0)) {
 				for (Map<Thread, Connection> connectionMap :
 						_companyConnectionMap.values()) {
 

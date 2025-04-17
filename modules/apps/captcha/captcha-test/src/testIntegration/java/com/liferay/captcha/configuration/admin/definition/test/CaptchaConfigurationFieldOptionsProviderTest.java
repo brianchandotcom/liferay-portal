@@ -62,6 +62,8 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 				"FunctionCaptchaImplConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captchaName", "ClientExtensionCaptcha"
+			).put(
+				"customElementExternalReferenceCode", "test"
 			).build());
 	}
 

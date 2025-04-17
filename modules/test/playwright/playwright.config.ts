@@ -74,6 +74,7 @@ import {config as layoutLockedLayoutsWebConfig} from './tests/layout-locked-layo
 import {config as layoutPageTemplateAdminWebConfig} from './tests/layout-page-template-admin-web/config';
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/config';
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/config';
+import {config as loginWebSetupAdminConfig} from './tests/login-web-setup-admin/config';
 import {config as loginWebConfig} from './tests/login-web/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
 import {config as multifactorAuthenticationConfig} from './tests/multi-factor-authentication-timebased-otp/config';
@@ -83,8 +84,9 @@ import {config as notificationsWebConfig} from './tests/notifications-web/config
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as openIdLinkConfig} from './tests/openid-link/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
-import {config as passwordPoliciesAdminWebConfigLogic} from './tests/password-policies-admin-web/password-policies-admin-web-logic/config';
-import {config as passwordPoliciesAdminWebConfigLogin} from './tests/password-policies-admin-web/password-policies-admin-web-login/config';
+import {config as passwordPoliciesAdminWebFirstLoginConfig} from './tests/password-policies-admin-web-first-login/config';
+import {config as passwordPoliciesAdminWebSetupAdminConfig} from './tests/password-policies-admin-web-setup-admin/config';
+import {config as passwordPoliciesAdminWebConfig} from './tests/password-policies-admin-web/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalLanguageOverrideWebConfig} from './tests/portal-language-override-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
@@ -112,8 +114,6 @@ import {config as scimConfiguraitonWebConfig} from './tests/scim-configuration-w
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/config';
 import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/config';
 import {config as segmentsWebConfig} from './tests/segments-web/config';
-import {config as setAdminPasswordBlankPasswordPolicy} from './tests/set-admin-password/set-admin-password-blank-password-policy/config';
-import {config as setAdminPasswordBlank} from './tests/set-admin-password/set-admin-password-blank/config';
 import {
 	pageManagementSiteSetup,
 	pageManagementSiteTeardown,
@@ -218,6 +218,7 @@ export default defineConfig({
 		layoutSetPrototypeWebConfig,
 		lockedItemsWebConfig,
 		loginWebConfig,
+		loginWebSetupAdminConfig,
 		marketplaceConfig,
 		messageBoardsWebConfig,
 		multifactorAuthenticationConfig,
@@ -227,8 +228,9 @@ export default defineConfig({
 		objectWebConfig,
 		openIdLinkConfig,
 		osbFaroWebConfig,
-		passwordPoliciesAdminWebConfigLogic,
-		passwordPoliciesAdminWebConfigLogin,
+		passwordPoliciesAdminWebConfig,
+		passwordPoliciesAdminWebFirstLoginConfig,
+		passwordPoliciesAdminWebSetupAdminConfig,
 		portalDefaultPermissionsWebConfig,
 		portalLanguageOverrideWebConfig,
 		portalSearchAdminWebConfig,
@@ -256,8 +258,6 @@ export default defineConfig({
 		searchExperiencesWebConfig,
 		segmentExperimentWebConfig,
 		segmentsWebConfig,
-		setAdminPasswordBlank,
-		setAdminPasswordBlankPasswordPolicy,
 		siteAdminWebConfig,
 		siteCmsSiteInitializerConfig,
 		siteNavigationAdminWebConfig,

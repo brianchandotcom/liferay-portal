@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'set-admin-password-blank',
-	testDir: 'tests/set-admin-password/set-admin-password-blank',
+	name: 'password-policies-admin-web-first-login',
+	testDir: 'tests/password-policies-admin-web-first-login',
 };

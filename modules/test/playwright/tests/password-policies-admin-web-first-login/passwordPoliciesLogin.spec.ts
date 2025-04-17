@@ -5,8 +5,8 @@
 
 import {expect, test} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-import {userData} from '../../../utils/performLogin';
+import {liferayConfig} from '../../liferay.config';
+import {userData} from '../../utils/performLogin';
 
 test('LPD-38816 Checking the user has to change the password if the password policy is enabled', async ({
 	page,
@@ -18,6 +18,7 @@ test('LPD-38816 Checking the user has to change the password if the password pol
 	await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 	await page.getByLabel('Email Address').fill(screenName + '@liferay.com');
+
 	await page.getByLabel('Password').fill(userData[screenName].password);
 
 	await page.getByRole('button', {name: 'Sign In'}).last().click();

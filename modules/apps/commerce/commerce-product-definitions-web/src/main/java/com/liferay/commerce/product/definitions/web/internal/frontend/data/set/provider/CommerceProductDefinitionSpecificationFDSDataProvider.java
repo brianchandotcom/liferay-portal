@@ -72,7 +72,7 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 						getCPDefinitionSpecificationOptionValueId(),
 					_getCPSpecificationOptionTitle(
 						cpSpecificationOption, languageId),
-					_getCPDefinitionSpecificationOptionValue(
+					_getLocalizedSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValue, languageId),
 					_getCPOptionCategoryTitle(
 						cpDefinitionSpecificationOptionValue, languageId),
@@ -90,29 +90,6 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 
 		return _cpDefinitionSpecificationOptionValueService.
 			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId, null);
-	}
-
-	private String _getCPDefinitionSpecificationOptionValue(
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue,
-		String languageId) {
-
-		String[] availableLanguageIds =
-			cpDefinitionSpecificationOptionValue.getAvailableLanguageIds();
-
-		if (availableLanguageIds.length == 1) {
-			return cpDefinitionSpecificationOptionValue.getValue(
-				availableLanguageIds[0]);
-		}
-
-		if (Validator.isBlank(
-				cpDefinitionSpecificationOptionValue.getValue(languageId))) {
-
-			return cpDefinitionSpecificationOptionValue.getValue(
-				cpDefinitionSpecificationOptionValue.getDefaultLanguageId());
-		}
-
-		return cpDefinitionSpecificationOptionValue.getValue(languageId);
 	}
 
 	private String _getCPOptionCategoryTitle(
@@ -162,6 +139,29 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 		}
 
 		return cpSpecificationOption.getTitle(languageId);
+	}
+
+	private String _getLocalizedSpecificationOptionValue(
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue,
+		String languageId) {
+
+		String[] availableLanguageIds =
+			cpDefinitionSpecificationOptionValue.getAvailableLanguageIds();
+
+		if (availableLanguageIds.length == 1) {
+			return cpDefinitionSpecificationOptionValue.getValue(
+				availableLanguageIds[0]);
+		}
+
+		if (Validator.isBlank(
+				cpDefinitionSpecificationOptionValue.getValue(languageId))) {
+
+			return cpDefinitionSpecificationOptionValue.getValue(
+				cpDefinitionSpecificationOptionValue.getDefaultLanguageId());
+		}
+
+		return cpDefinitionSpecificationOptionValue.getValue(languageId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -98,40 +99,44 @@ public class GeneralSXPSearchRequestBodyContributor
 			searchRequestBuilder.entryClassNames(assetTypeNames);
 			searchRequestBuilder.modelIndexerClassNames(assetTypeNames);
 
-			HashMap<String, List<String[]>> assetSubtypeNameHashMap =
-				new HashMap<>();
+			if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
+				HashMap<String, List<String[]>> assetSubtypeNameHashMap =
+					new HashMap<>();
 
-			for (String searchableAssetType : searchableAssetTypes) {
-				String[] assetTypeIdentifier = StringUtil.split(
-					searchableAssetType, "&&");
+				for (String searchableAssetType : searchableAssetTypes) {
+					String[] assetTypeIdentifier = StringUtil.split(
+						searchableAssetType, "&&");
 
-				if (assetTypeIdentifier.length <= 1) {
-					continue;
+					if (assetTypeIdentifier.length <= 1) {
+						continue;
+					}
+
+					String assetTypeKey = assetTypeIdentifier[0];
+
+					List<String[]> searchableAssetSubtypeIdentifiers;
+
+					if (assetSubtypeNameHashMap.containsKey(assetTypeKey)) {
+						searchableAssetSubtypeIdentifiers =
+							assetSubtypeNameHashMap.get(assetTypeKey);
+
+						searchableAssetSubtypeIdentifiers.add(
+							assetTypeIdentifier);
+					}
+					else {
+						searchableAssetSubtypeIdentifiers = new ArrayList<>();
+
+						searchableAssetSubtypeIdentifiers.add(
+							assetTypeIdentifier);
+					}
+
+					assetSubtypeNameHashMap.put(
+						assetTypeKey, searchableAssetSubtypeIdentifiers);
 				}
 
-				String assetTypeKey = assetTypeIdentifier[0];
-
-				List<String[]> searchableAssetSubtypeIdentifiers;
-
-				if (assetSubtypeNameHashMap.containsKey(assetTypeKey)) {
-					searchableAssetSubtypeIdentifiers =
-						assetSubtypeNameHashMap.get(assetTypeKey);
-
-					searchableAssetSubtypeIdentifiers.add(assetTypeIdentifier);
-				}
-				else {
-					searchableAssetSubtypeIdentifiers = new ArrayList<>();
-
-					searchableAssetSubtypeIdentifiers.add(assetTypeIdentifier);
-				}
-
-				assetSubtypeNameHashMap.put(
-					assetTypeKey, searchableAssetSubtypeIdentifiers);
+				searchRequestBuilder.withSearchContext(
+					searchContext -> searchContext.setAttribute(
+						"searchableAssetSubtypesMap", assetSubtypeNameHashMap));
 			}
-
-			searchRequestBuilder.withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					"searchableAssetSubtypesMap", assetSubtypeNameHashMap));
 		}
 
 		if (!Validator.isBlank(generalConfiguration.getLanguageId())) {

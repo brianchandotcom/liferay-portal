@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class GlobalClientExtensionPortalInstanceLifecycleListener
+public class ClientExtensionAllCompaniesPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
@@ -48,7 +48,8 @@ public class GlobalClientExtensionPortalInstanceLifecycleListener
 		}
 
 		List<String> externalReferenceCodes = StringUtil.split(
-			PropsUtil.get("client.extension.global.external.reference.codes"));
+			PropsUtil.get(
+				"client.extension.all.companies.external.reference.codes"));
 
 		if (ListUtil.isEmpty(externalReferenceCodes)) {
 			if (_log.isDebugEnabled()) {
@@ -101,7 +102,7 @@ public class GlobalClientExtensionPortalInstanceLifecycleListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GlobalClientExtensionPortalInstanceLifecycleListener.class);
+		ClientExtensionAllCompaniesPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private CETManager _cetManager;

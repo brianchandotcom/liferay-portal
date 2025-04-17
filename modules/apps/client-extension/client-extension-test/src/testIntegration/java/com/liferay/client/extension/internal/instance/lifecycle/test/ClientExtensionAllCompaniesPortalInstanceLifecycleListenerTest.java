@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class GlobalClientExtensionPortalInstanceLifecycleListenerTest {
+public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 
 	@ClassRule
 	@Rule
@@ -106,7 +106,7 @@ public class GlobalClientExtensionPortalInstanceLifecycleListenerTest {
 			String.format("url=global.%s.js", RandomTestUtil.randomString()));
 
 		PropsUtil.set(
-			"client.extension.global.external.reference.codes",
+			"client.extension.all.companies.external.reference.codes",
 			String.format(
 				"%s,%s", includedExternalReferenceCode1,
 				includedExternalReferenceCode2));
@@ -170,7 +170,7 @@ public class GlobalClientExtensionPortalInstanceLifecycleListenerTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GlobalClientExtensionPortalInstanceLifecycleListenerTest.class);
+		ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest.class);
 
 	private final List<AutoCloseable> _autoCloseables = new ArrayList<>();
 

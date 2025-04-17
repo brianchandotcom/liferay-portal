@@ -21,7 +21,8 @@ import org.json.JSONObject;
  */
 public interface BuildDatabase {
 
-	public static final String FILE_NAME_BUILD_DATABASE_JSON = "build-database.json";
+	public static final String FILE_NAME_BUILD_DATABASE_JSON =
+		"build-database.json";
 
 	public static final String FILE_NAME_BUILD_DATABASE_JSON_SHA =
 		"build-database.json.sha512";

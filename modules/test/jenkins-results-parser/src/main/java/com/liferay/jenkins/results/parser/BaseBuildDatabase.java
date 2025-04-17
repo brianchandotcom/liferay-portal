@@ -405,7 +405,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		synchronized (_buildDatabaseFile) {
 			String shaPath = path.replace(
-				FILE_NAME_BUILD_DATABASE_JSON, FILE_NAME_BUILD_DATABASE_JSON_SHA);
+				FILE_NAME_BUILD_DATABASE_JSON,
+				FILE_NAME_BUILD_DATABASE_JSON_SHA);
 
 			Retryable<JSONObject> retryable = new Retryable<JSONObject>(
 				true, 3, 5, true) {
@@ -423,7 +424,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 					File tempFile = new File(
 						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE_JSON);
 					File tempSHAFile = new File(
-						baseTempDirPath + "/" + FILE_NAME_BUILD_DATABASE_JSON_SHA);
+						baseTempDirPath + "/" +
+							FILE_NAME_BUILD_DATABASE_JSON_SHA);
 
 					String tempFilePath =
 						JenkinsResultsParserUtil.getCanonicalPath(tempFile);

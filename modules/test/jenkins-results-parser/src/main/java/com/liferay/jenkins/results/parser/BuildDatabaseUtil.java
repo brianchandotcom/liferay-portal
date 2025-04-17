@@ -60,7 +60,8 @@ public class BuildDatabaseUtil {
 				buildDatabaseFile,
 				JenkinsResultsParserUtil.toString(
 					JenkinsResultsParserUtil.getBuildArtifactURL(
-						buildURL, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON)));
+						buildURL,
+						BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -170,7 +171,8 @@ public class BuildDatabaseUtil {
 				}
 
 				File defaultBuildDatabaseFile = new File(
-					defaultBuildDir, BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
+					defaultBuildDir,
+					BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON);
 
 				try {
 					Files.copy(
@@ -237,7 +239,8 @@ public class BuildDatabaseUtil {
 						JenkinsResultsParserUtil.combine(
 							"#!/bin/sh\nscp \"", distNode, ":",
 							JenkinsResultsParserUtil.escapeForBash(distPath),
-							"/", BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, "\" ",
+							"/", BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON,
+							"\" ",
 							JenkinsResultsParserUtil.escapeForBash(
 								JenkinsResultsParserUtil.getCanonicalPath(
 									buildDatabaseFile))));
@@ -281,8 +284,8 @@ public class BuildDatabaseUtil {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, " from ",
-							distNode, ", retrying..."));
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON,
+							" from ", distNode, ", retrying..."));
 
 					continue;
 				}
@@ -316,7 +319,8 @@ public class BuildDatabaseUtil {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
-							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON, " file"),
+							BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON,
+							" file"),
 						exception);
 				}
 
@@ -422,7 +426,8 @@ public class BuildDatabaseUtil {
 
 				CloudBucketUtil.copyS3File(
 					buildDatabaseSHAFilePath,
-					path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON_SHA);
+					path + "/" +
+						BuildDatabase.FILE_NAME_BUILD_DATABASE_JSON_SHA);
 			}
 
 		};

@@ -126,4 +126,11 @@ public class CookiesBannerDisplayContext
 		return StringPool.POUND;
 	}
 
+	public String getTitle(Locale locale) {
+		LocalizedValuesMap titleLocalizedValuesMap =
+			cookiesBannerConfiguration.title();
+
+		return titleLocalizedValuesMap.get(locale);
+	}
+
 }

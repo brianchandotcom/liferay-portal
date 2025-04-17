@@ -23,6 +23,10 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 			<clay:content-col
 				expand="<%= true %>"
 			>
+				<p class="mb-2 text-5 text-weight-semi-bold">
+					<%= cookiesBannerDisplayContext.getTitle(locale) %>
+				</p>
+
 				<p class="mb-0">
 					<%= cookiesBannerDisplayContext.getContent(locale) %>
 

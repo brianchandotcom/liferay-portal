@@ -25,6 +25,13 @@ public interface CookiesBannerConfiguration {
 
 	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
+		deflt = "${language:cookies-banner-title}", name = "title",
+		required = false
+	)
+	public LocalizedValuesMap title();
+
+	@ExtendedAttributeDefinition(requiredInput = true)
+	@Meta.AD(
 		deflt = "${language:cookies-banner-content}", name = "content",
 		required = false
 	)

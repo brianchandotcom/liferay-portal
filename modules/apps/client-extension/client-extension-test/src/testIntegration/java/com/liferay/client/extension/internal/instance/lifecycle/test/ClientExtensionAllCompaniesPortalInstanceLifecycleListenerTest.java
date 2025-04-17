@@ -119,8 +119,7 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 	}
 
 	private void _addCETConfiguration(
-			String externalReferenceCode, String clientExtensionType,
-			String... typeSettings)
+			String externalReferenceCode, String type, String... typeSettings)
 		throws Exception {
 
 		String pid = ConfigurationTestUtil.createFactoryConfiguration(
@@ -148,7 +147,7 @@ public class ClientExtensionAllCompaniesPortalInstanceLifecycleListenerTest {
 			).put(
 				"sourceCodeURL", ""
 			).put(
-				"type", clientExtensionType
+				"type", type
 			).put(
 				"typeSettings", typeSettings
 			).put(

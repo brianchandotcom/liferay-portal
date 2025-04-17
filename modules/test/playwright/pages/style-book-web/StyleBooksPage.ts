@@ -32,16 +32,35 @@ export class StyleBooksPage {
 		await this.page.getByRole('menuitem', {name: nextPage}).click();
 	}
 
-	async create(styleBookName: string) {
+	async create(styleBookName: string, baseThemeName?: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
 		await this.page
 			.getByRole('textbox', {name: 'Name'})
 			.fill(styleBookName);
 
+		if (baseThemeName) {
+			await this.page.getByLabel('Create Style Book For').click();
+
+			await this.page.getByRole('option', {name: baseThemeName}).click();
+		}
+
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page);
+	}
+
+	async previewFragmentCollection(collectionName: string) {
+		await this.page
+			.getByRole('button', {name: 'Fragments'})
+			.or(this.page.getByRole('button', {name: 'Pages'}))
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Fragments'}).click();
+
+		await this.page.getByRole('button', {name: 'Account'}).click();
+
+		await this.page.getByRole('menuitem', {name: collectionName}).click();
 	}
 
 	async delete(styleBookName: string) {

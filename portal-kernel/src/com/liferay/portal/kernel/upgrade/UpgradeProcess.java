@@ -132,8 +132,6 @@ public abstract class UpgradeProcess
 		finally {
 			this.connection = null;
 
-			closeConnections();
-
 			NotificationThreadLocal.setEnabled(notificationEnabled);
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 

@@ -334,8 +334,6 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		finally {
 			this.connection = null;
 
-			closeConnections();
-
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(

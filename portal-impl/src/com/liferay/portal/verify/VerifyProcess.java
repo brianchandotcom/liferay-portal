@@ -76,8 +76,6 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		finally {
 			this.connection = null;
 
-			closeConnections();
-
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(

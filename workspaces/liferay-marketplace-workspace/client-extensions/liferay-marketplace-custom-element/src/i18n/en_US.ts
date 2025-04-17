@@ -127,7 +127,7 @@ export default {
 	'created-by': 'Created By',
 	'customer-account': 'Customer Account',
 	'customer-dashboard': 'Customer Dashboard',
-	'customer-roject': 'Customer Project',
+	'customer-project': 'Customer Project',
 	'customers-of-the-marketplace-will-see-this-as-the-name-of-the-solution-please-use-a-title-of-no-longer-than-50-characters-titles-longer-than-18-characters-may-be-truncated-the-solution-title-may-contain-the-word-liferay-to-describe-its-use-or-intent-as-long-as-the-name-does-not-imply-official-certification-or-validation-from-liferay-inc-an-example-of-permissible-names-would-be-exchange-connector-for-liferay-or-integration-connector-kit-for-liferay-while-liferay-mail-solution-or-liferay-management-console-would-not-be-permitted-without-explicit-approval-please-refer-to-our-trademark-policy':
 		'Customers of the marketplace will see this as the name of the solution. Please use a title of no longer than 50 characters. Titles longer than 18 characters may be truncated. The Solution title may contain the word "Liferay" to describe its use or intent as long as the name does not imply official certification or validation from Liferay, Inc. An example of permissible names would be "Exchange Connector for Liferay" or "Integration Connector Kit for Liferay" while "Liferay Mail Solution" or "Liferay Management Console" would not be permitted without explicit approval. Please refer to our trademark policy.',
 	'customize-solution-header': 'Customize solution header',
@@ -366,6 +366,7 @@ export default {
 	'purchase-order-number': 'Purchase Order Number',
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
+	'quantity': 'Quantity',
 	'ram': 'RAM',
 	'ram-in-gbs': 'RAM in GBs',
 	'recent-published-apps': 'Recent Published Apps',

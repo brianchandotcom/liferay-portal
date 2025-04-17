@@ -1,11 +1,8 @@
 {
-	"friendlyURL": "/support-ticket-escalation",
+	"friendlyURL": "/escalation-request",
 	"hidden": true,
 	"name_i18n": {
-		"en_US": "Escalate a Ticket",
-		"es_ES": "Escalar un billete",
-		"ja_JP": "チケットのエスカレーション",
-		"pt_BR": "Escalar um tíquete"
+		"en_US": "Escalation Request"
 	},
 	"permissions": [
 		{

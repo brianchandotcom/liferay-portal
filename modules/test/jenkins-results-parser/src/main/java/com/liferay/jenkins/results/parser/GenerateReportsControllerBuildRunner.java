@@ -134,7 +134,7 @@ public class GenerateReportsControllerBuildRunner
 
 		BuildData buildData = getBuildData();
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		sb.append(JenkinsResultsParserUtil.getLocalURL(buildData.getJobURL()));
 		sb.append("/api/json?tree=builds[description,timestamp,url]");

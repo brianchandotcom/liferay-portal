@@ -427,42 +427,38 @@ function SelectSubtypes({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-129412'] && (
-				<ClayList.ItemText subtext>
-					<span className="align-items-center display-flex">
-						<ClayButton
-							aria-label={Liferay.Language.get('select-subtypes')}
-							className="c-p-0 text-secondary"
-							displayType="link"
-							onClick={_handleOpen}
-							size="sm"
+			<ClayList.ItemText subtext>
+				<span className="align-items-center display-flex">
+					<ClayButton
+						aria-label={Liferay.Language.get('select-subtypes')}
+						className="c-p-0 text-secondary"
+						displayType="link"
+						onClick={_handleOpen}
+						size="sm"
+					>
+						{Liferay.Language.get('select-subtypes')}
+					</ClayButton>
+
+					{open && (
+						<SearchableSubtypesModal
+							className={className}
+							observer={observer}
+							onClose={_handleClose}
+							onDone={_handleModalDone}
+							selectedSubtypes={selectedSubtypes}
+						/>
+					)}
+
+					<ClayTooltipProvider>
+						<span
+							className="c-ml-2"
+							title={Liferay.Language.get('select-subtypes-help')}
 						>
-							{Liferay.Language.get('select-subtypes')}
-						</ClayButton>
-
-						{open && (
-							<SearchableSubtypesModal
-								className={className}
-								observer={observer}
-								onClose={_handleClose}
-								onDone={_handleModalDone}
-								selectedSubtypes={selectedSubtypes}
-							/>
-						)}
-
-						<ClayTooltipProvider>
-							<span
-								className="c-ml-2"
-								title={Liferay.Language.get(
-									'select-subtypes-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</span>
-				</ClayList.ItemText>
-			)}
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
+				</span>
+			</ClayList.ItemText>
 
 			{!!selectedSubtypes.length && (
 				<ClayList.ItemText className="c-mt-2">

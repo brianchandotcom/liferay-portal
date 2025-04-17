@@ -166,6 +166,8 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 		count = _addCountForStatements(
 			count, s, varName, "\tif (", "else ", level);
 		count = _addCountForStatements(
+			count, s, varName, "\ttry (", "catch ", level);
+		count = _addCountForStatements(
 			count, s, varName, "\ttry {", "catch ", level);
 		count = _addCountForStatements(
 			count, s, varName, " -> {\n", null, level);

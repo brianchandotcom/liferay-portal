@@ -144,10 +144,10 @@ definition {
 				schema = "Student");
 		}
 
-		task ("Then I can see myCustomAction with PUT and o/c/students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction") {
+		task ("Then I can see myCustomAction with PUT and o/c/students/by-external-reference-code/{externalReferenceCode}/object-actions/myCustomAction") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "PUT",
-				objectHref = "c/students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction",
+				objectHref = "c/students/by-external-reference-code/{externalReferenceCode}/object-actions/myCustomAction",
 				property = "myCustomAction",
 				schema = "Student");
 		}

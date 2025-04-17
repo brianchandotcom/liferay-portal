@@ -274,7 +274,7 @@
 							"objectAction": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:8080/o/c/object1s/by-external-reference-code/{object1ExternalReferenceCode}/object-actions/objectAction",
+										"default": "http://localhost:8080/o/c/object1s/by-external-reference-code/{externalReferenceCode}/object-actions/objectAction",
 										"type": "string"
 									},
 									"method": {
@@ -587,7 +587,7 @@
 							"objectAction": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:8080/o/c/object1s/by-external-reference-code/{object1ExternalReferenceCode}/object-actions/objectAction",
+										"default": "http://localhost:8080/o/c/object1s/by-external-reference-code/{externalReferenceCode}/object-actions/objectAction",
 										"type": "string"
 									},
 									"method": {
@@ -1409,6 +1409,35 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/object-actions/objectAction": {
+			"put": {
+				"operationId": "putObject1ObjectAction",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/versions": {
 			"get": {
 				"operationId": "getByExternalReferenceCodeVersionsPage",
@@ -1448,35 +1477,6 @@
 								"schema": {
 									"$ref": "#/components/schemas/PageObject1"
 								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Object1"
-				]
-			}
-		},
-		"/by-external-reference-code/{object1ExternalReferenceCode}/object-actions/objectAction": {
-			"put": {
-				"operationId": "putObject1ObjectAction",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "object1ExternalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-							},
-							"application/xml": {
 							}
 						},
 						"description": "default response"

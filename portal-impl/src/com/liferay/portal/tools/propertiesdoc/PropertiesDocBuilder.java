@@ -357,11 +357,8 @@ public class PropertiesDocBuilder {
 				}
 				else {
 					System.out.println(
-						StringBundler.concat(
-							"Properties section should consist of 3 or more ",
-							"lines:", StringPool.NEW_LINE, "##",
-							StringPool.NEW_LINE, "## Comments",
-							StringPool.NEW_LINE, "##"));
+						"Properties section should consist of 3 or more " +
+							"lines:\n##\n## Comments\n##");
 
 					return null;
 				}

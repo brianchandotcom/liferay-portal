@@ -38,14 +38,14 @@ public class PlacedCommerceOrderShipmentFragmentTableFDSView
 		).add(
 			"createDate", "create-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
+				"date"
 			).setSortable(
 				true
 			)
 		).add(
 			"expectedDate", "delivery-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
+				"date"
 			).setSortable(
 				true
 			)
@@ -61,7 +61,7 @@ public class PlacedCommerceOrderShipmentFragmentTableFDSView
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"commerceStatusDataRenderer"
+				"commerceShipmentStatusDataRenderer"
 			).setSortable(
 				true
 			)

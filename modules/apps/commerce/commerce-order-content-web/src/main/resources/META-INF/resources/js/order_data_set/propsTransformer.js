@@ -9,11 +9,13 @@ import {
 	PLACED_ORDERS_FDS_NAME,
 	PLACED_ORDER_ITEMS_FDS_NAME,
 	PLACED_ORDER_RETURNS_FDS_NAME,
+	PLACED_ORDER_SHIPMENTS_FDS_NAME,
 } from './constants';
 import PendingOrderItemsFDSPropsTransformer from './props_transformers/PendingOrderItemsFDSPropsTransformer';
 import PendingOrdersFDSPropsTransformer from './props_transformers/PendingOrdersFDSPropsTransformer';
 import PlacedOrderItemsFDSPropsTransformer from './props_transformers/PlacedOrderItemsFDSPropsTransformer';
 import PlacedOrderReturnsFDSPropsTransformer from './props_transformers/PlacedOrderReturnsFDSPropsTransformer';
+import PlacedOrderShipmentsFDSPropsTransformer from './props_transformers/PlacedOrderShipmentsFDSPropsTransformer';
 import PlacedOrdersFDSPropsTransformer from './props_transformers/PlacedOrdersFDSPropsTransformer';
 
 const PROPS_TRANSFORMERS = {
@@ -21,6 +23,7 @@ const PROPS_TRANSFORMERS = {
 	[PENDING_ORDERS_FDS_NAME]: PendingOrdersFDSPropsTransformer,
 	[PLACED_ORDER_ITEMS_FDS_NAME]: PlacedOrderItemsFDSPropsTransformer,
 	[PLACED_ORDER_RETURNS_FDS_NAME]: PlacedOrderReturnsFDSPropsTransformer,
+	[PLACED_ORDER_SHIPMENTS_FDS_NAME]: PlacedOrderShipmentsFDSPropsTransformer,
 	[PLACED_ORDERS_FDS_NAME]: PlacedOrdersFDSPropsTransformer,
 };
 

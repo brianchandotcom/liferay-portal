@@ -14,4 +14,5 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 String apiURL = (String)request.getAttribute("liferay-commerce:placed-order-shipments-data-set:apiURL");
 String displayStyle = (String)request.getAttribute("liferay-commerce:placed-order-shipments-data-set:displayStyle");
 String name = (String)request.getAttribute("liferay-commerce:placed-order-shipments-data-set:name");
+String propsTransformer = (String)request.getAttribute("liferay-commerce:placed-order-shipments-data-set:propsTransformer");
 %>

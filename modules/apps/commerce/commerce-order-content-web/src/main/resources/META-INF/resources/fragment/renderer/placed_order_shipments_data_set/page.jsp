@@ -10,5 +10,6 @@
 <frontend-data-set:headless-display
 	apiURL="<%= apiURL %>"
 	id="<%= name %>"
+	propsTransformer="<%= propsTransformer %>"
 	style="<%= displayStyle %>"
 />

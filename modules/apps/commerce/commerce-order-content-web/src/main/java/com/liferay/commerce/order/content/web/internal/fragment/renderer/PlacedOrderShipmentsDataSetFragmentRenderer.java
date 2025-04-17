@@ -145,6 +145,11 @@ public class PlacedOrderShipmentsDataSetFragmentRenderer
 			httpServletRequest.setAttribute(
 				"liferay-commerce:placed-order-shipments-data-set:namespace",
 				StringUtil.randomId() + StringPool.UNDERLINE);
+			httpServletRequest.setAttribute(
+				"liferay-commerce:placed-order-shipments-data-set:" +
+					"propsTransformer",
+				"{OrderDataSetPropsTransformer} from " +
+					"commerce-order-content-web");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

@@ -6,19 +6,12 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
 import com.liferay.account.constants.AccountListTypeConstants;
-import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Javier Gamarra
@@ -37,63 +30,6 @@ public class PostalAddressUtil {
 
 				return listType.getListTypeId();
 			});
-	}
-
-	public static PostalAddress toPostalAddress(
-		boolean acceptAllLanguages, Address address, long companyId,
-		Locale locale) {
-
-		ListType listType = address.getListType();
-
-		return new PostalAddress() {
-			{
-				setAddressCountry(
-					() -> {
-						if (address.getCountryId() <= 0) {
-							return null;
-						}
-
-						Country country = address.getCountry();
-
-						return country.getName(locale);
-					});
-				setAddressCountry_i18n(
-					() -> {
-						Country country = address.getCountry();
-
-						if (country == null) {
-							return null;
-						}
-
-						return LocalizedMapUtil.getI18nMap(
-							acceptAllLanguages,
-							LanguageUtil.getCompanyAvailableLocales(companyId),
-							country.getLanguageIdToTitleMap());
-					});
-				setAddressLocality(address::getCity);
-				setAddressRegion(
-					() -> {
-						if (address.getRegionId() <= 0) {
-							return null;
-						}
-
-						Region region = address.getRegion();
-
-						return region.getName();
-					});
-				setAddressSubtype(address::getSubtype);
-				setAddressType(listType::getName);
-				setExternalReferenceCode(address::getExternalReferenceCode);
-				setId(address::getAddressId);
-				setName(address::getName);
-				setPhoneNumber(address::getPhoneNumber);
-				setPostalCode(address::getZip);
-				setPrimary(address::isPrimary);
-				setStreetAddressLine1(address::getStreet1);
-				setStreetAddressLine2(address::getStreet2);
-				setStreetAddressLine3(address::getStreet3);
-			}
-		};
 	}
 
 	private static final List<String> _names = ListUtil.fromArray(

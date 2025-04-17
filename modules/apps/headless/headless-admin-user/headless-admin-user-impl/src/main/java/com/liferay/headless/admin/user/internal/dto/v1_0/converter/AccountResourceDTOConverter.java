@@ -26,6 +26,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
@@ -60,6 +61,8 @@ import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 
 import org.osgi.service.component.annotations.Component;
@@ -324,10 +327,14 @@ public class AccountResourceDTOConverter
 								getAccountEntryContactAddressListTypeIds(
 									accountEntry.getCompanyId(),
 									_listTypeLocalService)),
-						address -> PostalAddressUtil.toPostalAddress(
-							dtoConverterContext.isAcceptAllLanguages(), address,
-							accountEntry.getCompanyId(),
-							dtoConverterContext.getLocale()),
+						address -> _postalAddressDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								dtoConverterContext.isAcceptAllLanguages(),
+								null, _dtoConverterRegistry,
+								address.getAddressId(),
+								dtoConverterContext.getLocale(),
+								dtoConverterContext.getUriInfo(),
+								dtoConverterContext.getUser())),
 						PostalAddress.class));
 				setSkype(
 					() -> {
@@ -429,6 +436,9 @@ public class AccountResourceDTOConverter
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
@@ -439,6 +449,9 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = DTOConverterConstants.POSTAL_ADDRESS_DTO_CONVERTER)
+	private DTOConverter<Address, PostalAddress> _postalAddressDTOConverter;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

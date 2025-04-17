@@ -329,7 +329,7 @@ public class ContactsUtil {
 	private static String _getName(User user, Contact contact)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("N:");
 		sb.append(user.getLastName());
@@ -359,8 +359,7 @@ public class ContactsUtil {
 			sb.append(listType.getName());
 		}
 
-		sb.append(StringPool.NEW_LINE);
-		sb.append("FN:");
+		sb.append("\nFN:");
 		sb.append(user.getFullName());
 		sb.append(StringPool.NEW_LINE);
 

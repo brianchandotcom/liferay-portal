@@ -56,8 +56,6 @@
 				return;
 			}
 
-			const url = imageSrc.url ? imageSrc.url : imageSrc;
-
 			const editorContentDocument =
 				!editor.window.$.AlloyEditor &&
 				!editorContent.id.endsWith('BalloonEditor')
@@ -65,14 +63,16 @@
 					: editorContent;
 
 			const imgElement = editorContentDocument.querySelector(
-				`img[src='${url}']`
+				`div[data-fileentryid="${imageSrc.fileEntryId}"]`
 			);
 
-			imgElement.onload = function () {
-				if (this.width === 0) {
-					this.setAttribute('width', '150px');
-				}
-			};
+			if (imgElement) {
+				imgElement.onload = function () {
+					if (this.width === 0) {
+						this.setAttribute('width', '150px');
+					}
+				};
+			}
 		},
 
 		_commitAudioValue(value, node) {
@@ -281,7 +281,7 @@
 						: document.getElementById(`cke_${editor.name}`);
 
 					if (typeof callback === 'function') {
-						callback(imageSrc, selectedItem);
+						callback(imageSrc.url, selectedItem);
 
 						instance._checkImageWidth(
 							editor,
@@ -295,7 +295,7 @@
 
 						const imgElement = new Image();
 
-						imgElement.src = imageSrc;
+						imgElement.src = imageSrc.url;
 
 						imgElement.onload = function () {
 							if (imgElement.height > editorContentHeight) {

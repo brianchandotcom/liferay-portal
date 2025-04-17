@@ -837,14 +837,13 @@ public class ModulesStructureTest {
 
 		if (!sortedBuildExtGradleFileNames.isEmpty()) {
 			StringBundler sb = new StringBundler(
-				(4 * sortedBuildExtGradleFileNames.size()) + 2);
+				(sortedBuildExtGradleFileNames.size() * 3) + 2);
 
 			sb.append(buildGradleTemplate);
 			sb.append(StringPool.NEW_LINE);
 
 			for (String fileName : sortedBuildExtGradleFileNames) {
-				sb.append(StringPool.NEW_LINE);
-				sb.append("apply from: \"");
+				sb.append("\napply from: \"");
 				sb.append(fileName);
 				sb.append("\"");
 			}
@@ -1212,8 +1211,7 @@ public class ModulesStructureTest {
 		if (Files.notExists(dirPath.resolve("settings-ext.gradle"))) {
 			settingsGradleTemplate = StringUtil.removeSubstring(
 				settingsGradleTemplate,
-				StringPool.NEW_LINE + StringPool.NEW_LINE +
-					"apply from: \"settings-ext.gradle\"");
+				"\n\napply from: \"settings-ext.gradle\"");
 		}
 
 		if (!dxpRepo && !privateRepo && !readOnlyRepo) {

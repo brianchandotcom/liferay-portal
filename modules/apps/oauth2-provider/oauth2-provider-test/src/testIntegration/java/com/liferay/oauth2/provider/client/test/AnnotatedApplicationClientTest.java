@@ -11,9 +11,9 @@ import com.liferay.oauth2.provider.internal.test.TestInterfaceAnnotatedApplicati
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -62,9 +62,9 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			Dictionary<String, Object> properties =
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -81,7 +81,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 				new TestAnnotatedApplication(), "annotated-impl", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				companyId, user, "oauthTestApplication",
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 		}

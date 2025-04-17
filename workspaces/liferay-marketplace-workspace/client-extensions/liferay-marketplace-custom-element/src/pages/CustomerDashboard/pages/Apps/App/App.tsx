@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import classNames from 'classnames';
-import {ReactNode} from 'react';
+import Icon from '@clayui/icon';
 import {useOutletContext, useParams} from 'react-router-dom';
 
-import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
+import QATable from '../../../../../components/QATable';
 import i18n from '../../../../../i18n';
 import formatLocaleCurrency from '../../../../../utils/formatLocaleCurrency';
 import {
@@ -19,6 +18,100 @@ import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel'
 import {formatDate} from '../../../../PublisherDashboard/PublisherDashboardPageUtil';
 
 import './App.scss';
+
+type HeaderProps = {
+	icon: string;
+	title: string;
+};
+
+const Header = ({icon, title}: HeaderProps) => {
+	return (
+		<div className="detailed-card-header">
+			<h2>{title}</h2>
+
+			<div className="detailed-card-header-icon-container">
+				<Icon
+					className="detailed-card-header-clay-icon"
+					symbol={icon}
+				/>
+			</div>
+		</div>
+	);
+};
+
+const getPriceList = (
+	isCloud: boolean,
+	isPaidApp: boolean,
+	placedOrder: PlacedOrder
+) => {
+	if (isPaidApp) {
+		return {
+			title: 'License Price',
+			value: (
+				<table className="qa-table">
+					<thead>
+						<tr>
+							<th {...{width: '40%'}}>
+								{i18n.translate('type')}
+							</th>
+
+							<th {...{width: '30%'}}>{i18n.translate('qty')}</th>
+
+							<th>{i18n.translate('total')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{placedOrder.placedOrderItems.map(
+							(order: PlacedOrderItems, index: number) => {
+								const optionName = safeJSONParse<any>(
+									order.options,
+									[]
+								);
+
+								const type = isCloud
+									? 'Standard'
+									: optionName[0]?.value || '';
+								{
+									return (
+										<tr key={index}>
+											<td className="text-capitalize">
+												{type}
+											</td>
+
+											<td>{order.quantity}</td>
+
+											<td>
+												{formatLocaleCurrency(
+													order.quantity *
+														order.price.price
+												)}
+											</td>
+										</tr>
+									);
+								}
+							}
+						)}
+					</tbody>
+				</table>
+			),
+		};
+	}
+
+	return {
+		title: 'license',
+		value: placedOrder.placedOrderItems.map(
+			(order: PlacedOrderItems, index: number) => {
+				return (
+					<p key={index}>
+						{formatLocaleCurrency(
+							order.quantity * order.price.price
+						)}
+					</p>
+				);
+			}
+		),
+	};
+};
 
 const App = () => {
 	const {orderId} = useParams();
@@ -37,225 +130,130 @@ const App = () => {
 	return (
 		<div className="app-details-page-container mt-6">
 			<div className="app-details-body-container">
-				<DetailedCard
-					cardIconAltText="Details Icon"
-					cardTitle={i18n.translate('details')}
-					clayIcon="order-form-tag"
-				>
-					<div className="mb-2 mt-7 row">
-						<div className="col-6 h5">
-							{i18n.translate('order-id')}
-						</div>
-						<p className="col">{orderId}</p>
-					</div>
-					<div className="mb-2 row">
-						<div className="col-6 h5">
-							{i18n.translate('order-date')}
-						</div>
-						<p className="col">
-							{formatDate(placedOrder.createDate)}
-						</p>
-					</div>
-					<div className="mb-2 row">
-						<div className="col-6 h5">
-							{i18n.translate('customer-account')}
-						</div>
-						<p className="col">{placedOrder.account}</p>
-					</div>
-					<div className="mb-2 row">
-						<div className="col-6 h5">
-							{i18n.translate('customer-roject')}
-						</div>
-						<p className="col">{projectNameField as ReactNode}</p>
-					</div>
-					<div className="mb-2 row">
-						<div className="col-6 h5">
-							{i18n.translate('purchased-by')}
-						</div>
-						<p className="col">{placedOrder.author}</p>
-					</div>
-					<div className="row">
-						<div className="col-6 h5">Purchase Order Number</div>
-						<p className="col">
-							{placedOrder.purchaseOrderNumber || '-'}
-						</p>
-					</div>
-					<div className="row">
-						<div className="col-6 h5">
-							{i18n.translate('license-type')}
-						</div>
-						<p className="col">{licenseType?.value || '-'}</p>
-					</div>
-				</DetailedCard>
+				<div className="detailed-card-container">
+					<Header
+						icon="order-form-tag"
+						title={i18n.translate('details')}
+					/>
 
-				<DetailedCard
-					cardIconAltText="Summary Icon"
-					cardTitle={i18n.translate('summary')}
-					clayIcon="shopping-cart"
-				>
-					{isPaidApp && (
-						<div className="justify-content-center mb-2 mt-4 row">
-							<div className="col-3 h5">
-								{i18n.translate('type')}
-							</div>
-							<div className="col-1 h5">
-								{i18n.translate('qty')}
-							</div>
-						</div>
-					)}
-					<div
-						className={classNames('row mb-2', {
-							'mt-6': !isPaidApp,
-						})}
-					>
-						<div className="col h5">
-							{i18n.translate('license-price')}
-						</div>
-						<div className="col-8">
-							{placedOrder.placedOrderItems.map(
-								(order: PlacedOrderItems) => {
-									const optionName = safeJSONParse<any>(
-										order.options,
-										[]
-									);
+					<QATable
+						items={[
+							{
+								title: i18n.translate('order-id'),
+								value: orderId,
+							},
+							{
+								title: i18n.translate('order-date'),
+								value: formatDate(placedOrder.createDate),
+							},
+							{
+								title: i18n.translate('customer-account'),
+								value: placedOrder.account,
+							},
+							{
+								title: i18n.translate('customer-project'),
+								value: projectNameField,
+							},
+							{
+								title: i18n.translate('purchased-by'),
+								value: placedOrder.author,
+							},
+							{
+								title: 'Purchase Order Number',
+								value: placedOrder.purchaseOrderNumber || '-',
+							},
+							{
+								title: i18n.translate('license-type'),
+								value: licenseType?.value || '-',
+							},
+						]}
+					/>
+				</div>
 
-									return (
-										<div
-											className={classNames('mb-2 row', {
-												'justify-content-end':
-													!isPaidApp,
-											})}
-											key={order.id}
-										>
-											{isPaidApp && (
-												<>
-													<p className="col-5 text-capitalize">
-														{isCloud
-															? 'Standard'
-															: optionName[0]
-																	?.value ||
-																''}
-													</p>
-													<p className="col-3">
-														{order.quantity}
-													</p>
-												</>
-											)}
-											<p className="col-4 text-right">
-												{formatLocaleCurrency(
-													order.quantity *
-														order.price.price
-												)}
-											</p>
-										</div>
-									);
-								}
-							)}
-						</div>
-					</div>
+				<div className="detailed-card-container">
+					<Header
+						icon="shopping-cart"
+						title={i18n.translate('summary')}
+					/>
 
-					<div className="justify-content-between mb-2 row">
-						<div className="col h5">
-							{i18n.translate('subtotal')}
-						</div>
-						<p className="col-3 text-right">
-							{formatLocaleCurrency(
-								placedOrder.summary.subtotal
-							) || ''}
-						</p>
-					</div>
-					<div className="justify-content-between mb-2 row">
-						<div className="col h5">
-							{i18n.translate('subtotal-discount')}
-						</div>
-						<p className="col-3 text-right">
-							{formatLocaleCurrency(
-								placedOrder.summary.totalDiscountValue
-							) || ''}
-						</p>
-					</div>
-					<div className="justify-content-between mb-2 row">
-						<div className="col h5">
-							{i18n.translate('coupon-code')}
-						</div>
-						<p className="col-3 text-right">
-							{placedOrder.couponCode || '-'}
-						</p>
-					</div>
-					<div className="justify-content-between mb-2 row">
-						<div className="col h5">
-							{i18n.translate('tax-vat')}
-						</div>
-						<p className="col-3 text-right">
-							{formatLocaleCurrency(
-								placedOrder.summary.taxValue
-							) || ''}
-						</p>
-					</div>
-					<div className="justify-content-between row">
-						<div className="col h5">{i18n.translate('total')}</div>
-						<p className="col-3 text-right">
-							{formatLocaleCurrency(placedOrder.summary.total) ||
-								''}
-						</p>
-					</div>
-				</DetailedCard>
+					<QATable
+						items={[
+							getPriceList(isCloud, isPaidApp, placedOrder),
+							{
+								title: i18n.translate('subtotal'),
+								value:
+									formatLocaleCurrency(
+										placedOrder.summary.subtotal
+									) || '',
+							},
+							{
+								title: i18n.translate('subtotal-discount'),
+								value:
+									formatLocaleCurrency(
+										placedOrder.summary.totalDiscountValue
+									) || '',
+							},
+							{
+								title: i18n.translate('coupon-code'),
+								value: placedOrder.couponCode || '-',
+							},
+							{
+								title: i18n.translate('tax-vat'),
+								value:
+									formatLocaleCurrency(
+										placedOrder.summary.taxValue
+									) || '',
+							},
+							{
+								title: i18n.translate('total'),
+								value:
+									formatLocaleCurrency(
+										placedOrder.summary.total
+									) || '-',
+							},
+						]}
+					/>
+				</div>
 
 				{placedOrder.placedOrderBillingAddress && (
-					<DetailedCard
-						cardIconAltText="Location Icon"
-						cardTitle={i18n.translate('address')}
-						clayIcon="geolocation"
-					>
-						<div className="mb-2 mt-4 row">
-							<div className="col-6 h5">
-								{i18n.translate('billing-address')}
-							</div>
-							<div className="col-6">
-								<p>
-									{placedOrder.placedOrderBillingAddress
-										.street1 || ''}
-									,
-								</p>
-								{placedOrder.placedOrderBillingAddress
-									.street2 && (
-									<p>
-										{
-											placedOrder
-												.placedOrderBillingAddress
-												.street2
-										}
-									</p>
-								)}
-								{placedOrder.placedOrderBillingAddress
-									.street3 && (
-									<p>
-										{
-											placedOrder
-												.placedOrderBillingAddress
-												.street3
-										}
-									</p>
-								)}
-								<p>
-									{placedOrder.placedOrderBillingAddress.city}
-									,
-								</p>
-								<p>
-									{placedOrder.placedOrderBillingAddress
-										.regionISOCode || ''}
-									,{' '}
-									{placedOrder.placedOrderBillingAddress
-										.zip || ''}
-									,
-								</p>
-								<p>
-									{placedOrder.placedOrderBillingAddress
-										.countryISOCode || ''}
-								</p>
-							</div>
-						</div>
-					</DetailedCard>
+					<div className="detailed-card-container">
+						<Header
+							icon="geolocation"
+							title={i18n.translate('address')}
+						/>
+
+						<QATable
+							items={[
+								{
+									title: i18n.translate('billing-address'),
+									value:
+										placedOrder.placedOrderBillingAddress
+											.street1 || '',
+								},
+								{
+									title: '',
+									value: placedOrder.placedOrderBillingAddress
+										.city,
+								},
+								{
+									title: '',
+									value: `${
+										placedOrder.placedOrderBillingAddress
+											.regionISOCode || ''
+									}, ${
+										placedOrder.placedOrderBillingAddress
+											.zip || ''
+									}`,
+								},
+								{
+									title: '',
+									value:
+										placedOrder.placedOrderBillingAddress
+											.countryISOCode || '',
+								},
+							]}
+						/>
+					</div>
 				)}
 			</div>
 		</div>

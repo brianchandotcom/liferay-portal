@@ -8,7 +8,6 @@ package com.liferay.friendly.url.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
-import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -16,7 +15,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -58,15 +56,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			constraintResolverContext.getTargetCTModel();
-
-		_friendlyURLEntryLocalizationPersistence.remove(
-			friendlyURLEntryLocalization);
+		constraintResolverContext.mergeSourceIntoTarget();
 	}
-
-	@Reference
-	private FriendlyURLEntryLocalizationPersistence
-		_friendlyURLEntryLocalizationPersistence;
 
 }

@@ -8,7 +8,6 @@ package com.liferay.layout.seo.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -16,7 +15,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -55,13 +53,7 @@ public class LayoutSEOEntryConstraintResolver
 			ConstraintResolverContext<LayoutSEOEntry> constraintResolverContext)
 		throws PortalException {
 
-		LayoutSEOEntry layoutSEOEntry =
-			constraintResolverContext.getTargetCTModel();
-
-		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(layoutSEOEntry);
+		constraintResolverContext.mergeSourceIntoTarget();
 	}
-
-	@Reference
-	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 }

@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.image.internal.change.tracking.spi.resolver;
 
 import com.liferay.adaptive.media.image.model.AMImageEntry;
-import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,7 +15,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -55,13 +53,7 @@ public class AMImageEntryConstraintResolver
 			ConstraintResolverContext<AMImageEntry> constraintResolverContext)
 		throws PortalException {
 
-		AMImageEntry amImageEntry =
-			constraintResolverContext.getTargetCTModel();
-
-		_amImageEntryLocalService.deleteAMImageEntry(amImageEntry);
+		constraintResolverContext.mergeSourceIntoTarget();
 	}
-
-	@Reference
-	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

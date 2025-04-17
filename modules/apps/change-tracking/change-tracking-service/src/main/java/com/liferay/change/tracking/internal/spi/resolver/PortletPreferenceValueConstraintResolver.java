@@ -9,15 +9,12 @@ import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -58,31 +55,7 @@ public class PortletPreferenceValueConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		PortletPreferenceValue sourcePortletPreferenceValue =
-			constraintResolverContext.getSourceCTModel();
-
-		_portletPreferenceValueLocalService.deletePortletPreferenceValue(
-			sourcePortletPreferenceValue);
-
-		CTPersistence ctPersistence =
-			_portletPreferenceValueLocalService.getCTPersistence();
-
-		ctPersistence.flush();
-
-		PortletPreferenceValue targetPortletPreferenceValue =
-			constraintResolverContext.getTargetCTModel();
-
-		targetPortletPreferenceValue.setReadOnly(
-			sourcePortletPreferenceValue.isReadOnly());
-		targetPortletPreferenceValue.setValue(
-			sourcePortletPreferenceValue.getValue());
-
-		_portletPreferenceValueLocalService.updatePortletPreferenceValue(
-			targetPortletPreferenceValue);
+		constraintResolverContext.mergeSourceIntoTarget();
 	}
-
-	@Reference
-	private PortletPreferenceValueLocalService
-		_portletPreferenceValueLocalService;
 
 }

@@ -9,14 +9,12 @@ import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -57,14 +55,7 @@ public class LayoutFriendlyURLConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		LayoutFriendlyURL layoutFriendlyURL =
-			constraintResolverContext.getTargetCTModel();
-
-		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
-			layoutFriendlyURL);
+		constraintResolverContext.mergeSourceIntoTarget();
 	}
-
-	@Reference
-	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 }

@@ -1,11 +1,10 @@
-<?xml version="1.0"?>
-
-<scr:component name="com.liferay.oauth2.provider.sample.SampleApp" xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0">
-	<implementation class="com.liferay.oauth2.provider.sample.SampleApp" />
-	<service>
-		<provide interface="javax.ws.rs.core.Application" />
-	</service>
-	<property name="osgi.jaxrs.application.base" type="String" value="/sample-app" />
-	<property name="oauth2.scopechecker.type" type="String" value="annotations" />
-	<property name="osgi.jaxrs.name" type="String" value="sample-app" />
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.oauth2.provider.sample.SampleApp">
+  <property name="oauth2.scopechecker.type" type="String" value="annotations"/>
+  <property name="osgi.jaxrs.application.base" type="String" value="/sample-app"/>
+  <property name="osgi.jaxrs.name" type="String" value="sample-app"/>
+  <service>
+    <provide interface="jakarta.ws.rs.core.Application"/>
+  </service>
+  <implementation class="com.liferay.oauth2.provider.sample.SampleApp"/>
 </scr:component>

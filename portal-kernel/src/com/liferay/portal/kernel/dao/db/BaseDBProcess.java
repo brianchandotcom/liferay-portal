@@ -290,7 +290,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		Map<Thread, Connection> connectionMap = _companyConnectionMap.get(
 			CompanyThreadLocal.getCompanyId());
 
-		_closeConnectionsInMap(connectionMap);
+		_closeConnections(connectionMap);
 	}
 
 	/**
@@ -504,7 +504,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected Connection connection;
 
-	private void _closeConnectionsInMap(Map<Thread, Connection> connectionMap) {
+	private void _closeConnections(Map<Thread, Connection> connectionMap) {
 		if (MapUtil.isEmpty(connectionMap)) {
 			return;
 		}
@@ -750,7 +750,7 @@ public abstract class BaseDBProcess implements DBProcess {
 				for (Map<Thread, Connection> connectionMap :
 						_companyConnectionMap.values()) {
 
-					_closeConnectionsInMap(connectionMap);
+					_closeConnections(connectionMap);
 				}
 
 				return null;

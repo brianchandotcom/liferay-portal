@@ -146,6 +146,12 @@ public class SharingEntryLocalServiceUtil {
 		return getService().createSharingEntry(sharingEntryId);
 	}
 
+	public static void deleteCompanySharingEntries(
+		long companyId, long classNameId) {
+
+		getService().deleteCompanySharingEntries(companyId, classNameId);
+	}
+
 	/**
 	 * Deletes the sharing entries whose expiration date is before the current
 	 * date.
@@ -379,6 +385,13 @@ public class SharingEntryLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static int getCompanySharingEntriesCount(
+		long companyId, long classNameId) {
+
+		return getService().getCompanySharingEntriesCount(
+			companyId, classNameId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

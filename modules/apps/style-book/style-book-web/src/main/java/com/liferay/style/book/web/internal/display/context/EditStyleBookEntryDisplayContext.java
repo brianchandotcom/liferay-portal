@@ -287,7 +287,8 @@ public class EditStyleBookEntryDisplayContext {
 			StyleBookPortletKeys.STYLE_BOOK);
 
 		String url = HttpComponentsUtil.addParameter(
-			_getFragmentCollectionPreviewURL(), portletNamespace + "groupId", groupId);
+			_getFragmentCollectionPreviewURL(), portletNamespace + "groupId",
+			groupId);
 
 		return HttpComponentsUtil.addParameter(
 			url, portletNamespace + "fragmentCollectionKey",

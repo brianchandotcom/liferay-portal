@@ -84,7 +84,7 @@ public class DBSchemaImporterProcess {
 	}
 
 	public String getReleaseInfo() throws Exception {
-		StringBundler sb = new StringBundler(0);
+		StringBundler sb = new StringBundler(6);
 
 		try (Connection connection = _sourceDataSource.getConnection();
 			Statement statement = connection.createStatement();

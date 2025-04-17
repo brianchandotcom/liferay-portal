@@ -2,10 +2,73 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_analytics-cloud",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Analytics Cloud",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_commerce",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "Commerce",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 3
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_enterprise-search",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "Enterprise Search",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_liferay-paas",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay PaaS",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
 			"externalReferenceCode": "ERC-001_liferay-saas",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "Liferay SaaS",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_liferay-self-hosted",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay Self-Hosted",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_other",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Other",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001_portal",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Portal",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
 			"tabOrder": 2
 		},

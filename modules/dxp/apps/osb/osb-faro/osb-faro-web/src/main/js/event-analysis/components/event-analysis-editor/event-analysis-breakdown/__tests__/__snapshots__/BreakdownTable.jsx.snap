@@ -64,6 +64,7 @@ exports[`BreakdownTable render 1`] = `
           >
             <td
               class="font-weight-semibold align-top"
+              data-testid="articleTitle [0]"
               rowspan="1"
             >
               <span

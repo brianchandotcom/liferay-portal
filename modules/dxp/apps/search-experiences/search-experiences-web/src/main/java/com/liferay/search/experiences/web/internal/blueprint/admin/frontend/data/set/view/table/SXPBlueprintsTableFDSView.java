@@ -48,6 +48,10 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
 			fdsTableSchemaBuilder.add(
+				"collectionProvider", "collection-provider",
+				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+					"collectionProviderCellRenderer")
+			).add(
 				"type", "type",
 				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 					"typeCellRenderer")

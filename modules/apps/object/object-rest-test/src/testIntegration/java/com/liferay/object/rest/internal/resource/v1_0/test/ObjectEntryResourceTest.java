@@ -941,6 +941,19 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testDeleteScopeScopeKeyPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		Group group = _addObjectEntryAndGetGroup();
+
+		JSONObject deleteJSONObject = _invoke(
+			Http.Method.DELETE, group.getExternalReferenceCode(), null,
+			_siteScopedObjectEntry1.getExternalReferenceCode());
+
+		Assert.assertTrue(JSONUtil.isEmpty(deleteJSONObject));
+	}
+
+	@Test
 	public void testFilterByComparisonOperatorsObjectEntriesByRelatedObjectEntriesFields()
 		throws Exception {
 
@@ -7399,6 +7412,34 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectEntry1.getObjectEntryId());
 	}
 
+	@Test
+	public void testGetScopeScopeKeyPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		Group group = _addObjectEntryAndGetGroup();
+
+		JSONObject jsonObject = _invoke(
+			Http.Method.GET, group.getExternalReferenceCode(), null);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			itemJSONObject.getLong("id"),
+			_siteScopedObjectEntry1.getObjectEntryId());
+
+		jsonObject = _invoke(
+			Http.Method.GET, group.getExternalReferenceCode(), null,
+			_siteScopedObjectEntry1.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_1,
+			GetterUtil.getInteger(jsonObject.getString(_OBJECT_FIELD_NAME_1)));
+	}
+
 	@FeatureFlags("LPD-21926")
 	@Test
 	public void testPatchObjectEntryWithFriendlyURL() throws Exception {
@@ -7826,18 +7867,35 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPatchScopeScopeKeyPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		Group group = _addObjectEntryAndGetGroup();
+
+		JSONObject patchJSONObject = _invoke(
+			Http.Method.PATCH, group.getExternalReferenceCode(),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+			).toString(),
+			_siteScopedObjectEntry1.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_2,
+			patchJSONObject.getInt(_OBJECT_FIELD_NAME_1));
+	}
+
+	@Test
 	public void testPatchSiteScopedCustomObjectEntry() throws Exception {
 		String newObjectFieldValue = RandomTestUtil.randomString();
-
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			_OBJECT_FIELD_NAME_1, newObjectFieldValue);
 
 		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, newObjectFieldValue
+			).toString(),
 			StringBundler.concat(
 				_getEndpoint(
 					TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
@@ -9035,10 +9093,35 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostScopeScopeKeyPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		Group group = _addObjectEntryAndGetGroup();
+
+		JSONObject postJSONObject = _invoke(
+			Http.Method.POST, group.getExternalReferenceCode(),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).toString());
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_1, postJSONObject.getInt(_OBJECT_FIELD_NAME_1));
+	}
+
+	@Test
 	public void testPostScopeScopeKeyValidate() throws Exception {
 		_testPostValidate(
 			String.valueOf(TestPropsValues.getGroupId()),
 			_siteScopedObjectDefinition1,
+			_objectFieldLocalService.getObjectField(
+				_siteScopedObjectDefinition1.getObjectDefinitionId(),
+				_OBJECT_FIELD_NAME_1));
+
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getGroupId());
+
+		_testPostValidate(
+			group.getExternalReferenceCode(), _siteScopedObjectDefinition1,
 			_objectFieldLocalService.getObjectField(
 				_siteScopedObjectDefinition1.getObjectDefinitionId(),
 				_OBJECT_FIELD_NAME_1));
@@ -10193,6 +10276,31 @@ public class ObjectEntryResourceTest {
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
+	}
+
+	@Test
+	public void testPutScopeScopeKeyPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		Group group = _addObjectEntryAndGetGroup();
+
+		JSONObject putJSONObject = _invoke(
+			Http.Method.PUT, group.getExternalReferenceCode(),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+			).toString(),
+			_siteScopedObjectEntry1.getExternalReferenceCode());
+
+		ObjectEntry entry = _objectEntryLocalService.getObjectEntry(
+			putJSONObject.getLong("id"));
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_2,
+			GetterUtil.getInteger(
+				entry.getValues(
+				).get(
+					_OBJECT_FIELD_NAME_1
+				)));
 	}
 
 	@Test
@@ -13110,6 +13218,14 @@ public class ObjectEntryResourceTest {
 			false);
 	}
 
+	private Group _addObjectEntryAndGetGroup() throws Exception {
+		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
+			_OBJECT_FIELD_VALUE_1);
+
+		return _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
+	}
+
 	private ObjectRelationship _addObjectRelationship(long companyId)
 		throws Exception {
 
@@ -13607,17 +13723,17 @@ public class ObjectEntryResourceTest {
 	}
 
 	private String _getEndpoint(
-		long groupId, ObjectDefinition objectDefinition) {
+		Object scopeKey, ObjectDefinition objectDefinition) {
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		if (objectScopeProvider.isGroupAware()) {
-			return objectDefinition.getRESTContextPath() + "/scopes/" + groupId;
+		if (!objectScopeProvider.isGroupAware()) {
+			return objectDefinition.getRESTContextPath();
 		}
 
-		return objectDefinition.getRESTContextPath();
+		return objectDefinition.getRESTContextPath() + "/scopes/" + scopeKey;
 	}
 
 	private JSONObject _getFileEntryJSONObject(
@@ -13907,6 +14023,27 @@ public class ObjectEntryResourceTest {
 				setValues(() -> objectEntry);
 			}
 		};
+	}
+
+	private JSONObject _invoke(
+			Http.Method method, String siteKey, String payload)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			payload, _getEndpoint(0, _siteScopedObjectDefinition1), method);
+	}
+
+	private JSONObject _invoke(
+			Http.Method method, String siteKey, String payload,
+			String externalReferenceCode)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			payload,
+			StringBundler.concat(
+				_getEndpoint(0, _siteScopedObjectDefinition1),
+				"/by-external-reference-code/", externalReferenceCode),
+			method);
 	}
 
 	private JSONObject
@@ -14815,10 +14952,12 @@ public class ObjectEntryResourceTest {
 				jsonObject.getLong("id");
 
 		if (useExternalReferenceCode) {
+			String endpointPrefix = _getEndpoint(
+				TestPropsValues.getGroupId(), objectDefinition);
+
 			endpoint =
-				_getEndpoint(TestPropsValues.getGroupId(), objectDefinition) +
-					"/by-external-reference-code/" +
-						jsonObject.getString("externalReferenceCode");
+				endpointPrefix + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode");
 		}
 
 		if (nestedFields != null) {

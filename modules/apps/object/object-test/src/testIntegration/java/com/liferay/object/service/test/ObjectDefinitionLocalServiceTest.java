@@ -50,6 +50,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
+import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
@@ -59,6 +60,7 @@ import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -71,6 +73,7 @@ import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -88,6 +91,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
@@ -110,6 +114,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -129,6 +134,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryLocalService;
+
+import java.io.Serializable;
 
 import java.sql.Connection;
 
@@ -2025,6 +2034,68 @@ public class ObjectDefinitionLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
+	@FeatureFlags("LPD-17564")
+	@Test
+	public void testDeleteObjectDefinitionWithObjectEntries() throws Exception {
+		String objectFieldName = StringUtil.randomId();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				false, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + StringUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), objectFieldName)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, RandomTestUtil.randomString()
+			).build());
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_addSharingEntry(
+			objectDefinition.getClassName(), objectEntry1.getObjectEntryId(),
+			userGroup.getUserGroupId());
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, RandomTestUtil.randomString()
+			).build());
+
+		_addSharingEntry(
+			objectDefinition.getClassName(), objectEntry2.getObjectEntryId(),
+			userGroup.getUserGroupId());
+
+		Assert.assertEquals(
+			2,
+			_getObjectEntryVersionsCount(
+				objectDefinition.getObjectDefinitionId()));
+		Assert.assertEquals(2, _getSharingEntriesCount(objectDefinition));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		Assert.assertEquals(
+			0,
+			_getObjectEntryVersionsCount(
+				objectDefinition.getObjectDefinitionId()));
+		Assert.assertEquals(0, _getSharingEntriesCount(objectDefinition));
+	}
+
 	@Test
 	public void testEnableAccountEntryRestrictedForNondefaultStorageType()
 		throws Exception {
@@ -3346,6 +3417,18 @@ public class ObjectDefinitionLocalServiceTest {
 			RandomTestUtil.randomString());
 	}
 
+	private void _addSharingEntry(
+			String className, long classPK, long userGroupId)
+		throws Exception {
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			userGroupId, 0, _classNameLocalService.getClassNameId(className),
+			classPK, TestPropsValues.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(String name)
 		throws Exception {
 
@@ -3550,6 +3633,28 @@ public class ObjectDefinitionLocalServiceTest {
 			).buildString());
 
 		return objectAction;
+	}
+
+	private int _getObjectEntryVersionsCount(long objectDefinitionId) {
+		return _objectEntryVersionLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				ObjectEntryVersionTable.INSTANCE
+			).innerJoinON(
+				ObjectEntryTable.INSTANCE,
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					ObjectEntryVersionTable.INSTANCE.objectEntryId)
+			).where(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectDefinitionId)
+			));
+	}
+
+	private int _getSharingEntriesCount(ObjectDefinition objectDefinition) {
+		return _sharingEntryLocalService.getCompanySharingEntriesCount(
+			objectDefinition.getCompanyId(),
+			_classNameLocalService.getClassNameId(
+				objectDefinition.getClassName()));
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)
@@ -4042,6 +4147,9 @@ public class ObjectDefinitionLocalServiceTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
+
+	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
@@ -4058,5 +4166,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 }

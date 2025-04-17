@@ -10,9 +10,9 @@ import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.JWTAssertionAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.junit.Assert;
@@ -30,7 +30,7 @@ public class JWTAssertAuthorizationGrantTest
 
 	@Test
 	public void testGrantWithCorrectAudience() throws Exception {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
 			new JWTAssertionAuthorizationGrant(
@@ -45,7 +45,7 @@ public class JWTAssertAuthorizationGrantTest
 
 	@Test
 	public void testGrantWithWrongAudience() throws Exception {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
 			new JWTAssertionAuthorizationGrant(
@@ -64,7 +64,7 @@ public class JWTAssertAuthorizationGrantTest
 		User user = null;
 
 		try {
-			user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
+			user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 
 			return new JWTAssertionAuthorizationGrant(
 				TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());

@@ -16,9 +16,9 @@ import com.liferay.oauth2.provider.internal.test.JWTAssertionClientAuthenticatio
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.nio.charset.StandardCharsets;
@@ -55,7 +55,7 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 		@Override
 		protected void prepareTest() throws Exception {
 			User user = UserTestUtil.getAdminUser(
-				PortalUtil.getDefaultCompanyId());
+				TestPropsValues.getCompanyId());
 
 			clientAuthentications.put(
 				TEST_CLIENT_ID_1,
@@ -136,6 +136,8 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 		AuthorizationGrant authorizationGrant,
 		ClientAuthentication clientAuthentication) {
 
+		Invocation.Builder invocationBuilder = _getInvocationBuilder();
+
 		MultivaluedMap<String, String> multivaluedMap =
 			new MultivaluedHashMap<>();
 
@@ -144,7 +146,7 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 		multivaluedMap.putAll(
 			clientAuthentication.getClientAuthenticationParameters());
 
-		return _invocationBuilder.post(Entity.form(multivaluedMap));
+		return invocationBuilder.post(Entity.form(multivaluedMap));
 	}
 
 	protected String parseAccessTokenString(Response response) {
@@ -166,7 +168,7 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 	protected static final Map<String, ClientAuthentication>
 		clientAuthentications = new HashMap<>();
 
-	private static Invocation.Builder _getInvocationBuilder() {
+	private Invocation.Builder _getInvocationBuilder() {
 		return getInvocationBuilder(
 			null, getTokenWebTarget(), Function.identity());
 	}
@@ -176,8 +178,5 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 
 	private static final String _TEST_CLIENT_SECRET_NOT_BASE64 =
 		"secret-2527c3ad-be54-dcea-18a3-ab349ff637ac";
-
-	private static final Invocation.Builder _invocationBuilder =
-		_getInvocationBuilder();
 
 }

@@ -8,7 +8,6 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
@@ -142,10 +141,9 @@ public class TalendProcessCallable
 				_lines.add(
 					_beginningLinesCount,
 					StringBundler.concat(
-						"-----------------", StringPool.NEW_LINE,
-						"Output was truncated for performance reasons. Check ",
-						"the portal log for details.", StringPool.NEW_LINE,
-						"-----------------"));
+						"-----------------\nOutput was truncated for ",
+						"performance reasons. Check the portal log for ",
+						"details.\n-----------------"));
 			}
 
 			return StringUtil.merge(_lines, "\n");

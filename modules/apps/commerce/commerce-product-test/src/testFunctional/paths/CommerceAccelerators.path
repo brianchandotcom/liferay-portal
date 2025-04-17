@@ -814,7 +814,7 @@
 
 <tr>
 	<td>QUICK_ADD_TO_CART_SEARCH_RESULT</td>
-	<td>//div[contains(@class,'autofit-col') and contains(.,"${key_productSku}")]</td>
+	<td>//div[contains(@class, 'dropdown-menu autocomplete-dropdown-menu show')]//div[contains(@class,'autofit-col') and contains(.,"${key_productSku}")]</td>
 	<td></td>
 </tr>
 <tr>

@@ -227,6 +227,8 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Button.click(button = "Create New Order");
+
+		WaitForVisible(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
 	}
 
 	@summary = "Default summary"

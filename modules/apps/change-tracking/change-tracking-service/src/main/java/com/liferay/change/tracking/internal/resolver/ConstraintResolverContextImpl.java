@@ -9,8 +9,12 @@ import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContex
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -75,6 +79,39 @@ public class ConstraintResolverContextImpl<T extends CTModel<T>>
 		}
 
 		return false;
+	}
+
+	public void mergeSourceIntoTarget() {
+		T sourceCTModel = getSourceCTModel();
+
+		T targetCTModel = getTargetCTModel();
+
+		Map<String, Object> sourceModelAttributes =
+			sourceCTModel.getModelAttributes();
+
+		Map<String, Object> targetModelAttributes =
+			targetCTModel.getModelAttributes();
+
+		_ctService.updateWithUnsafeFunction(
+			ctPersistence -> {
+				Set<String> columnNames = ctPersistence.getCTColumnNames(
+					CTColumnResolutionType.MERGE);
+
+				columnNames.add("classPK");
+
+				for (String columnName : columnNames) {
+					targetModelAttributes.put(
+						columnName, sourceModelAttributes.get(columnName));
+				}
+
+				targetCTModel.setModelAttributes(targetModelAttributes);
+
+				ctPersistence.remove(sourceCTModel);
+
+				ctPersistence.flush();
+
+				return ctPersistence.update(targetCTModel);
+			});
 	}
 
 	public void setPrimaryKeys(long sourcePrimaryKey, long targetPrimaryKey) {

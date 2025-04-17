@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
@@ -493,15 +494,24 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			callables, getExecutorService(), "update");
 
 		try {
-			if (Objects.equals(getJobName(), "test-portal-release")) {
-				parallelExecutor.execute(60L * 240L);
+			long buildUpdateTimeout = 60L * 90L;
+
+			String buildUpdateTimeoutString =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.update.timeout", getBranchName(), getJobName(),
+					getTestSuiteName());
+
+			if (JenkinsResultsParserUtil.isInteger(buildUpdateTimeoutString)) {
+				buildUpdateTimeout = Long.parseLong(buildUpdateTimeoutString);
 			}
-			else {
-				parallelExecutor.execute();
+			else if (Objects.equals(getJobName(), "test-portal-release")) {
+				buildUpdateTimeout = 60L * 240L;
 			}
+
+			parallelExecutor.execute(buildUpdateTimeout);
 		}
-		catch (TimeoutException timeoutException) {
-			throw new RuntimeException(timeoutException);
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
 		}
 
 		findDownstreamBuilds();

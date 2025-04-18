@@ -41,7 +41,7 @@ function forcePost(event) {
 }
 
 function getConfig(event) {
-	return ICON_REGISTRY[event.currentTarget.attr('id')];
+	return ICON_REGISTRY[event.currentTarget.getAttribute('id')];
 }
 
 function handleDocClick(event) {

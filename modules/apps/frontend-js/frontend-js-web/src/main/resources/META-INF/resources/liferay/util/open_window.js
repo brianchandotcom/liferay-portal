@@ -28,6 +28,10 @@ export function openInDialog(event, config) {
 		config.title = currentTarget.getAttribute('title');
 	}
 
+	if (!config.url) {
+		config.url = config.uri;
+	}
+
 	openWindow(config);
 }
 

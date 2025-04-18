@@ -707,10 +707,6 @@ renderResponse.setTitle(headerTitle);
 	function <portlet:namespace />saveFileEntry(draft) {
 		var fileElement = Liferay.Util.getFormElement(form, 'file');
 
-		if (fileElement && fileElement.value) {
-			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
-		}
-
 		var cmdElement = Liferay.Util.getFormElement(form, 'cmd');
 
 		if (cmdElement && !cmdElement.value) {

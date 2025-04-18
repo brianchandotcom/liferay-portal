@@ -297,12 +297,18 @@ public class FilePropagator {
 			_busySlaves.add(targetSlave);
 
 			try {
-				int result = _executeBashCommands(commands, targetSlave);
+				Process process = _executeBashCommands(commands, targetSlave);
+
+				int result = process.exitValue();
 
 				_busySlaves.remove(targetSlave);
 
 				if (result != 0) {
 					_errorSlaves.add(targetSlave);
+
+					log(
+						JenkinsResultsParserUtil.readInputStream(
+							process.getErrorStream(), true));
 
 					_copyFromSource();
 				}
@@ -326,7 +332,8 @@ public class FilePropagator {
 		log("Finished copying from source.");
 	}
 
-	private int _executeBashCommands(List<String> commands, String targetSlave)
+	private Process _executeBashCommands(
+			List<String> commands, String targetSlave)
 		throws IOException, TimeoutException {
 
 		StringBuffer sb = new StringBuffer();
@@ -356,10 +363,7 @@ public class FilePropagator {
 
 		sb.append("'");
 
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			sb.toString());
-
-		return process.exitValue();
+		return JenkinsResultsParserUtil.executeBashCommands(sb.toString());
 	}
 
 	private String _getMkdirCommand(String fileName) {
@@ -450,15 +454,22 @@ public class FilePropagator {
 
 			Thread currentThread = Thread.currentThread();
 
+			String errorMessage = null;
+
 			if (currentThread.isInterrupted()) {
 				_successful = false;
 			}
 			else {
 				try {
-					int value = _filePropagator._executeBashCommands(
+					Process process = _filePropagator._executeBashCommands(
 						commands, _targetSlave);
 
-					_successful = value == 0;
+					int exitValue = process.exitValue();
+
+					errorMessage = JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream(), true);
+
+					_successful = exitValue == 0;
 				}
 				catch (Exception exception) {
 					_successful = false;
@@ -481,6 +492,10 @@ public class FilePropagator {
 					JenkinsResultsParserUtil.combine(
 						"Unable to propagate to ", _targetSlave, " from ",
 						_mirrorSlave, "."));
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+					_filePropagator.log(errorMessage);
+				}
 			}
 
 			synchronized (_filePropagator) {

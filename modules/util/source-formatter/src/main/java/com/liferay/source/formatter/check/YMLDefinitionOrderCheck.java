@@ -11,13 +11,15 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,256 +34,163 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		if (fileName.endsWith(".travis.yml")) {
 			return content;
 		}
 
-		List<String> directives = YMLSourceUtil.splitDirectives(content);
+		String trimmedContent = content.trim();
 
-		StringBundler sb = new StringBundler(directives.size() * 2);
+		if (trimmedContent.startsWith("---") ||
+			trimmedContent.endsWith("---")) {
 
-		for (String directive : directives) {
-			sb.append(_sortDefinitions(fileName, directive, StringPool.BLANK));
+			return content;
+		}
+
+		List<String> documents = YMLSourceUtil.splitDocuments(content);
+
+		StringBundler sb = new StringBundler(documents.size() * 2);
+
+		for (String document : documents) {
+			sb.append(_sortDefinitions(document));
 			sb.append("\n---\n");
 		}
 
 		sb.setIndex(sb.index() - 1);
 
-		content = _sortFeatureFlags(sb.toString());
+		content = sb.toString();
+
+		content = _sortFeatureFlags(content);
 
 		if (fileName.endsWith("docker-compose.yaml")) {
-			content = _sortPorts(sb.toString());
+			content = _sortPorts(content);
 		}
 
 		return _sortPathParameters(content);
 	}
 
-	private List<String> _combineComments(
-		List<String> definitions, String indent) {
+	private List<YMLDefinition> _combineComments(List<String> definitions) {
+		List<YMLDefinition> ymlDefinitions = new ArrayList<>();
 
-		List<String> definitionsList = new ArrayList<>();
-
-		StringBundler sb = new StringBundler();
-
-		String previousDefinition = StringPool.BLANK;
+		StringBundler commentsSB = new StringBundler();
 
 		for (String definition : definitions) {
-			if (definition.startsWith(indent + StringPool.POUND)) {
-				sb.append(definition);
-				sb.append("\n");
+			if (definition.matches(" *#.*")) {
+				commentsSB.append(definition);
+				commentsSB.append("\n");
 			}
-			else if (previousDefinition.startsWith(indent + StringPool.POUND)) {
-				sb.append(definition);
+			else if (commentsSB.length() > 0) {
+				commentsSB.setIndex(commentsSB.index() - 1);
 
-				definitionsList.add(sb.toString());
+				ymlDefinitions.add(
+					new YMLDefinition(definition, commentsSB.toString()));
 
-				sb.setIndex(0);
+				commentsSB.setIndex(0);
 			}
 			else {
-				definitionsList.add(definition);
-			}
-
-			previousDefinition = definition;
-		}
-
-		if (sb.index() > 0) {
-			definitionsList.add(StringUtil.trimTrailing(sb.toString()));
-		}
-
-		return definitionsList;
-	}
-
-	private String _getParameterType(String definition) {
-		return definition.replaceAll("(?s).*in: (\\S*).*", "$1");
-	}
-
-	private int _getParameterTypeWeight(String definitionKey) {
-		if (_parameterTypesWeightMap.containsKey(definitionKey)) {
-			return _parameterTypesWeightMap.get(definitionKey);
-		}
-
-		return -1;
-	}
-
-	private String _removeComments(String definition) {
-		int y = definition.indexOf("\n");
-
-		if (y == -1) {
-			return definition;
-		}
-
-		int x = 0;
-
-		String line = definition.substring(x, y);
-
-		while (line.matches(" *#.*")) {
-			x = y + 1;
-
-			y = definition.indexOf("\n", x);
-
-			if (y == -1) {
-				return definition;
-			}
-
-			line = definition.substring(x, y);
-		}
-
-		return definition.substring(x);
-	}
-
-	private List<String> _removeDuplicateAttribute(List<String> list) {
-		List<String> definitions = new ArrayList<>();
-		Iterator<String> iterator = list.iterator();
-
-		while (iterator.hasNext()) {
-			String s = iterator.next();
-
-			if (!definitions.contains(s) || s.startsWith("{{") ||
-				s.startsWith("#")) {
-
-				definitions.add(s);
+				ymlDefinitions.add(
+					new YMLDefinition(definition, commentsSB.toString()));
 			}
 		}
 
-		return definitions;
-	}
+		if (commentsSB.index() > 0) {
+			commentsSB.setIndex(commentsSB.index() - 1);
 
-	private String _sortDefinitions(
-		String fileName, String content, String indent) {
-
-		List<String> definitions = YMLSourceUtil.getDefinitions(
-			content, indent);
-
-		if ((definitions.size() == 1) && !content.contains("\n")) {
-			return content;
+			ymlDefinitions.add(new YMLDefinition("", commentsSB.toString()));
 		}
 
-		definitions = _removeDuplicateAttribute(definitions);
+		return ymlDefinitions;
+	}
 
-		definitions = _combineComments(definitions, indent);
+	private String _sortDefinitions(String s) {
+		List<String> definitions = _splitDefinitions(s);
 
-		List<String> oldDefinitions = new ArrayList<>(definitions);
+		List<YMLDefinition> ymlDefinitions = _combineComments(definitions);
 
-		Collections.sort(
-			definitions,
-			new Comparator<String>() {
+		Collections.sort(ymlDefinitions, new DefinitionComparator());
 
-				@Override
-				public int compare(String definition1, String definition2) {
-					String trimmedDefinition1 = StringUtil.trimLeading(
-						definition1);
-					String trimmedDefinition2 = StringUtil.trimLeading(
-						definition2);
+		StringBundler sb1 = new StringBundler(ymlDefinitions.size() * 2);
 
-					if (trimmedDefinition1.matches("( *#.*\n)* *\\{\\{.*") ||
-						trimmedDefinition2.matches("( *#.*\n)* *\\{\\{.*") ||
-						Validator.isNull(trimmedDefinition1) ||
-						Validator.isNull(trimmedDefinition2)) {
+		for (YMLDefinition ymlDefinition : ymlDefinitions) {
+			String precedingComments = ymlDefinition.getPrecedingComments();
 
-						return 0;
-					}
-
-					String[] definition1Lines = StringUtil.splitLines(
-						_removeComments(definition1));
-					String[] definition2Lines = StringUtil.splitLines(
-						_removeComments(definition2));
-
-					String trimmedDefinition1Line = definition1Lines[0];
-					String trimmedDefinition2Line = definition2Lines[0];
-
-					if (trimmedDefinition1Line.equals(StringPool.DASH) ||
-						trimmedDefinition2Line.equals(StringPool.DASH)) {
-
-						if (definition1Lines[1].contains("in: ") &&
-							definition2Lines[1].contains("in: ")) {
-
-							return _sortSpecificDefinitions(
-								definition1, definition2, "name");
-						}
-
-						return 0;
-					}
-
-					if (trimmedDefinition1Line.startsWith("in:") ||
-						trimmedDefinition2Line.startsWith("in:")) {
-
-						if (trimmedDefinition1Line.startsWith("in:")) {
-							return -1;
-						}
-
-						return 1;
-					}
-
-					String definition1Key = definition1.replaceAll(
-						"( *#.*(\\Z|\n))*(.*)", "$3");
-					String definition2Key = definition2.replaceAll(
-						"( *#.*(\\Z|\n))*(.*)", "$3");
-
-					if (Validator.isNull(definition1Key) ||
-						Validator.isNull(definition2Key)) {
-
-						return 0;
-					}
-
-					definition1Key = definition1Key.replaceAll("(?s):\n.*", "");
-					definition2Key = definition2Key.replaceAll("(?s):\n.*", "");
-
-					return definition1Key.compareTo(definition2Key);
-				}
-
-			});
-
-		if (!oldDefinitions.equals(definitions)) {
-			StringBundler sb = new StringBundler();
-
-			for (String definition : definitions) {
-				sb.append(definition);
-				sb.append("\n");
+			if (!Validator.isBlank(precedingComments)) {
+				sb1.append(precedingComments);
+				sb1.append("\n");
 			}
 
-			sb.setIndex(sb.index() - 1);
+			String content = ymlDefinition.getContent();
+
+			if (Validator.isBlank(content)) {
+				continue;
+			}
 
 			String[] lines = content.split("\n");
 
-			if (!indent.equals("")) {
-				content = lines[0] + "\n" + sb.toString();
-			}
-			else {
-				content = sb.toString();
-			}
-		}
+			String firstLine = lines[0];
 
-		definitions = YMLSourceUtil.getDefinitions(content, indent);
-
-		for (String definition : definitions) {
-			String trimmedDefinition = StringUtil.trimLeading(definition);
-
-			if (trimmedDefinition.startsWith("|")) {
-				continue;
-			}
-
-			String[] lines = StringUtil.splitLines(definition);
-
-			if ((lines.length != 0) &&
-				lines[0].matches(" *(description:|.+: +.+)")) {
+			if ((lines.length == 1) || YMLSourceUtil.isBlockStyle(firstLine)) {
+				sb1.append(content);
+				sb1.append("\n");
 
 				continue;
 			}
 
-			String nestedDefinitionIndent =
-				YMLSourceUtil.getNestedDefinitionIndent(definition);
+			String secondLine = lines[1];
 
-			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
-				content = StringUtil.replaceFirst(
-					content, definition,
-					_sortDefinitions(
-						fileName, definition, nestedDefinitionIndent));
+			if (firstLine.matches(" +-") &&
+				YMLSourceUtil.isBlockStyle(secondLine)) {
+
+				sb1.append(content);
+				sb1.append("\n");
+
+				continue;
 			}
+
+			String trimmedSecondLine = secondLine.trim();
+
+			if (firstLine.endsWith(":") && !trimmedSecondLine.contains(":") &&
+				!trimmedSecondLine.equals("-") &&
+				!trimmedSecondLine.startsWith("#") &&
+				!trimmedSecondLine.startsWith("{{")) {
+
+				sb1.append(content);
+				sb1.append("\n");
+
+				continue;
+			}
+
+			StringBundler sb2 = new StringBundler(lines.length * 2);
+
+			for (int i = 0; i < lines.length; i++) {
+				String line = lines[i];
+
+				if (i == 0) {
+					sb1.append(line);
+					sb1.append("\n");
+
+					continue;
+				}
+
+				sb2.append(line);
+				sb2.append("\n");
+			}
+
+			if (sb2.index() > 0) {
+				sb2.setIndex(sb2.index() - 1);
+			}
+
+			sb1.append(_sortDefinitions(sb2.toString()));
+			sb1.append("\n");
 		}
 
-		return content;
+		if (sb1.index() > 0) {
+			sb1.setIndex(sb1.index() - 1);
+		}
+
+		return sb1.toString();
 	}
 
 	private String _sortFeatureFlags(String content) {
@@ -312,10 +221,12 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 			String newFeatureFlags = StringUtil.merge(array);
 
-			if (!featureFlags.equals(newFeatureFlags)) {
-				return StringUtil.replaceFirst(
-					content, featureFlags, newFeatureFlags, x);
+			if (featureFlags.equals(newFeatureFlags)) {
+				continue;
 			}
+
+			return StringUtil.replaceFirst(
+				content, featureFlags, newFeatureFlags, x);
 		}
 	}
 
@@ -399,49 +310,72 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 			String newPorts = sb.toString();
 
-			if (!ports.equals(newPorts)) {
-				return StringUtil.replaceFirst(
-					content, ports, newPorts, matcher.start(2));
+			if (ports.equals(newPorts)) {
+				continue;
 			}
+
+			return StringUtil.replaceFirst(
+				content, ports, newPorts, matcher.start(2));
 		}
 
 		return content;
 	}
 
-	private int _sortSpecificDefinitions(
-		String definition1, String definition2, String key) {
+	private List<String> _splitDefinitions(String content) {
+		List<String> definitions = new ArrayList<>();
 
-		String parameter1Type = _getParameterType(definition1);
-		String parameter2Type = _getParameterType(definition2);
+		String[] lines = content.split("\n");
 
-		Pattern pattern = Pattern.compile(
-			"^ *" + key + ": *(\\S*)(\n|\\Z)", Pattern.MULTILINE);
+		StringBundler sb = new StringBundler();
 
-		String value1 = StringPool.BLANK;
+		String leadingSpaces = StringPool.BLANK;
+		int leadingSpacesLength = 0;
 
-		Matcher matcher = pattern.matcher(definition1);
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
 
-		if (matcher.find()) {
-			value1 = matcher.group(1);
+			if (i == 0) {
+				leadingSpaces = SourceUtil.getLeadingSpaces(line);
+
+				leadingSpacesLength = leadingSpaces.length();
+
+				sb.append(line);
+				sb.append("\n");
+
+				continue;
+			}
+
+			if ((line.length() == 0) || line.matches(" +")) {
+				sb.append(line);
+				sb.append("\n");
+
+				continue;
+			}
+
+			if (line.charAt(leadingSpacesLength) != ' ') {
+				if (sb.index() > 0) {
+					sb.setIndex(sb.index() - 1);
+				}
+
+				definitions.add(sb.toString());
+
+				sb.setIndex(0);
+			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
-		String value2 = StringPool.BLANK;
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
 
-		matcher = pattern.matcher(definition2);
-
-		if (matcher.find()) {
-			value2 = matcher.group(1);
+			definitions.add(sb.toString());
 		}
 
-		if (parameter1Type.equals(parameter2Type)) {
-			return value1.compareTo(value2);
-		}
-
-		return _getParameterTypeWeight(parameter1Type) -
-			_getParameterTypeWeight(parameter2Type);
+		return definitions;
 	}
 
-	private static final Map<String, Integer> _parameterTypesWeightMap =
+	private static final Map<String, Integer> _parametersWeightMap =
 		HashMapBuilder.put(
 			"cookie", 4
 		).put(
@@ -459,5 +393,127 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		" *-\n( +)in: path(\n\\1.+)*\n");
 	private static final Pattern _portsPattern = Pattern.compile(
 		"\n( +)ports:((\n +-\\s+\\d{4}:\\d{4}){2,})");
+
+	private class DefinitionComparator implements Comparator<YMLDefinition> {
+
+		@Override
+		public int compare(
+			YMLDefinition ymlDefinition1, YMLDefinition ymlDefinition2) {
+
+			String content1 = ymlDefinition1.getContent();
+			String content2 = ymlDefinition2.getContent();
+
+			String trimmedContent1 = StringUtil.trimLeading(content1);
+			String trimmedContent2 = StringUtil.trimLeading(content2);
+
+			if (trimmedContent1.startsWith("{{") ||
+				trimmedContent2.startsWith("{{")) {
+
+				return 0;
+			}
+
+			if (trimmedContent1.startsWith("-\n") &&
+				trimmedContent2.startsWith("-\n")) {
+
+				if (content1.contains("in: ") && content2.contains("in: ")) {
+					return _sortParameters(content1, content2);
+				}
+
+				return 0;
+			}
+
+			if (trimmedContent1.startsWith("in:") ||
+				trimmedContent2.startsWith("in:")) {
+
+				if (trimmedContent1.startsWith("in:")) {
+					return -1;
+				}
+
+				return 1;
+			}
+
+			int x = trimmedContent1.indexOf(":");
+
+			if (x == -1) {
+				return 0;
+			}
+
+			String name1 = trimmedContent1.substring(0, x);
+
+			x = trimmedContent2.indexOf(":");
+
+			if (x == -1) {
+				return 0;
+			}
+
+			String name2 = trimmedContent2.substring(0, x);
+
+			return name1.compareTo(name2);
+		}
+
+		private String _getInValue(String parameter) {
+			return parameter.replaceAll("(?s).*in: (\\S*).*", "$1");
+		}
+
+		private int _getParameterWeight(String definitionKey) {
+			if (_parametersWeightMap.containsKey(definitionKey)) {
+				return _parametersWeightMap.get(definitionKey);
+			}
+
+			return -1;
+		}
+
+		private int _sortParameters(String parameter1, String parameter2) {
+			String inValue1 = _getInValue(parameter1);
+			String inValue2 = _getInValue(parameter2);
+
+			if (!inValue1.equals(inValue2)) {
+				return _getParameterWeight(inValue1) -
+					_getParameterWeight(inValue2);
+			}
+
+			String name1 = StringPool.BLANK;
+
+			Matcher matcher = _namePattern.matcher(parameter1);
+
+			if (matcher.find()) {
+				name1 = matcher.group(1);
+			}
+
+			String name2 = StringPool.BLANK;
+
+			matcher = _namePattern.matcher(parameter2);
+
+			if (matcher.find()) {
+				name2 = matcher.group(1);
+			}
+
+			return name1.compareTo(name2);
+		}
+
+		private final Pattern _namePattern = Pattern.compile(
+			"^ *name: *(.*)(\n|\\Z)", Pattern.MULTILINE);
+
+	}
+
+	private class YMLDefinition {
+
+		public YMLDefinition(String content, String precedingComments) {
+			_content = content;
+			_precedingComments = precedingComments;
+		}
+
+		public String getContent() {
+			return _content;
+		}
+
+		public String getPrecedingComments() {
+			return _precedingComments;
+		}
+
+		private final String _content;
+		private final String _precedingComments;
+
+	}
 
 }

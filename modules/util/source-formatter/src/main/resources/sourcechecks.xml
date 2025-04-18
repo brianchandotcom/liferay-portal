@@ -2186,6 +2186,10 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
 		</check>
+		<check name="YMLIndentationCheck">
+			<category name="Styling" />
+			<description name="Finds incorrect indentation in YAML files." />
+		</check>
 		<check name="YMLLongLinesCheck">
 			<category name="Styling" />
 			<description name="Finds lines that are longer than the specified maximum line length." />

@@ -10,7 +10,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Peter Shin
@@ -67,6 +69,32 @@ public class YMLSourceUtil {
 		return definitions;
 	}
 
+	public static Map<Integer, String> getDocumentsMap(String content) {
+		Map<Integer, String> documentsMap = new HashMap<>();
+
+		int x = -1;
+
+		while (true) {
+			x = content.lastIndexOf("\n---\n");
+
+			if (x == -1) {
+				break;
+			}
+
+			String s = content.substring(x + 5);
+
+			int startLineNumber = SourceUtil.getLineNumber(content, x + 5);
+
+			documentsMap.put(startLineNumber, s);
+
+			content = content.substring(0, x);
+		}
+
+		documentsMap.put(1, content);
+
+		return documentsMap;
+	}
+
 	public static String getNestedDefinitionIndent(String definition) {
 		String[] lines = StringUtil.splitLines(definition);
 
@@ -85,6 +113,19 @@ public class YMLSourceUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static boolean isBlockStyle(String line) {
+		String trimmedLine = StringUtil.trimTrailing(line);
+
+		if (trimmedLine.endsWith(">") || trimmedLine.endsWith(">+") ||
+			trimmedLine.endsWith(">-") || trimmedLine.endsWith("|") ||
+			trimmedLine.endsWith("|+") || trimmedLine.endsWith("|-")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static List<String> splitDirectives(String content) {
@@ -118,6 +159,30 @@ public class YMLSourceUtil {
 		}
 
 		return directives;
+	}
+
+	public static List<String> splitDocuments(String content) {
+		List<String> documents = new ArrayList<>();
+
+		int x = -1;
+
+		while (true) {
+			x = content.lastIndexOf("\n---\n");
+
+			if (x == -1) {
+				break;
+			}
+
+			String s = content.substring(x + 5);
+
+			documents.add(0, s);
+
+			content = content.substring(0, x);
+		}
+
+		documents.add(0, content);
+
+		return documents;
 	}
 
 }

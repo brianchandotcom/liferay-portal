@@ -267,9 +267,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 
 			if (Objects.equals(_liferayVersion, "7.4.3.56")) {
 				updateMavenPomElementText(
-					new File(mavenProjectDir.toPath() + "/" + _name + "-service"),
-					"//version[text()='1.0.501']",
-					"1.0.483");
+					new File(
+						mavenProjectDir.toPath() + "/" + _name + "-service"),
+					"//version[text()='1.0.501']", "1.0.483");
 			}
 
 			testBuildTemplateServiceBuilder(

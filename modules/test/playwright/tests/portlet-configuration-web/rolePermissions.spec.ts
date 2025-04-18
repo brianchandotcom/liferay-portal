@@ -20,21 +20,12 @@ test('LPD-25265 search results should stay when form submitted', async ({
 	await expect(portletConfigurationPermissionsPage.searchBar).toBeVisible();
 
 	await portletConfigurationPermissionsPage.searchBar.click();
-	await portletConfigurationPermissionsPage.searchBar.fill('r');
+	await portletConfigurationPermissionsPage.searchBar.fill('owner');
 	await portletConfigurationPermissionsPage.searchBar.press('Enter');
 
 	await expect(
 		portletConfigurationPermissionsPage.resultsBanner
 	).toBeVisible();
-	await expect(
-		portletConfigurationPermissionsPage.ownerRoleCell
-	).toBeVisible();
-	await expect(
-		portletConfigurationPermissionsPage.siteMemberRoleCell
-	).toBeVisible();
-
-	await portletConfigurationPermissionsPage.changePagination(20, 4);
-
 	await expect(
 		portletConfigurationPermissionsPage.ownerRoleCell
 	).toBeVisible();

@@ -221,6 +221,10 @@ public class SXPBlueprintLocalServiceImpl
 			String[] searchableAssetTypesArray = JSONUtil.toStringArray(
 				searchableAssetTypesJSONArray);
 
+			if (searchableAssetTypesArray.length == 0) {
+				return configuration;
+			}
+
 			if (searchableAssetTypesArray.length == 1) {
 				return _setCollectionProviderType(
 					configurationJSONObject, generalConfigurationJSONObject,

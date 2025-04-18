@@ -11,6 +11,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -51,6 +52,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,6 +63,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,23 +157,87 @@ public class CommerceOrderModelListener
 		throws ModelListenerException {
 
 		try {
-			User user = _userLocalService.getUser(commerceOrder.getUserId());
+			_executeInTransaction(
+				new Callable<CommerceOrder>() {
 
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					commerceOrder.getGroupId());
+					@Override
+					public CommerceOrder call() throws Exception {
+						User user = _userLocalService.getUser(
+							commerceOrder.getUserId());
 
-			_setBillingAddress(commerceChannel, commerceOrder);
-			_setShippingAddress(commerceChannel, commerceOrder);
-			_setPaymentIntegration(commerceChannel, commerceOrder, user);
-			_setShippingOption(commerceChannel, commerceOrder, user);
-			_setDeliveryTerm(commerceChannel, commerceOrder, user);
-			_setPaymentTerm(commerceChannel, commerceOrder, user);
+						CommerceChannel commerceChannel =
+							_commerceChannelLocalService.
+								getCommerceChannelByOrderGroupId(
+									commerceOrder.getGroupId());
+
+						_setBillingAddress(commerceChannel, commerceOrder);
+						_setShippingAddress(commerceChannel, commerceOrder);
+						_setPaymentIntegration(
+							commerceChannel, commerceOrder, user);
+						_setDeliveryTerm(commerceChannel, commerceOrder, user);
+						_setPaymentTerm(commerceChannel, commerceOrder, user);
+
+						return commerceOrder;
+					}
+
+				});
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
+		}
+	}
+
+	@Override
+	public void onBeforeUpdate(
+			CommerceOrder originalcommerceOrder, CommerceOrder commerceOrder)
+		throws ModelListenerException {
+
+		try {
+			_executeInTransaction(
+				new Callable<CommerceOrder>() {
+
+					@Override
+					public CommerceOrder call() throws Exception {
+						User user = _userLocalService.getUser(
+							commerceOrder.getUserId());
+
+						CommerceChannel commerceChannel =
+							_commerceChannelLocalService.
+								getCommerceChannelByOrderGroupId(
+									commerceOrder.getGroupId());
+
+						_setBillingAddress(commerceChannel, commerceOrder);
+						_setShippingAddress(commerceChannel, commerceOrder);
+						_setPaymentIntegration(
+							commerceChannel, commerceOrder, user);
+						_setShippingOption(
+							commerceChannel, commerceOrder, user);
+						_setDeliveryTerm(commerceChannel, commerceOrder, user);
+						_setPaymentTerm(commerceChannel, commerceOrder, user);
+
+						return commerceOrder;
+					}
+
+				});
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+	}
+
+	private CommerceOrder _executeInTransaction(
+			Callable<CommerceOrder> callable)
+		throws PortalException {
+
+		try {
+			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
 		}
 	}
 
@@ -305,7 +374,9 @@ public class CommerceOrderModelListener
 					commerceChannel.getCommerceChannelId(),
 					CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
 
-		if (commerceChannelAccountEntryRel == null) {
+		if ((commerceChannelAccountEntryRel == null) ||
+			!commerceChannelAccountEntryRel.isOverrideEligibility()) {
+
 			return;
 		}
 
@@ -413,7 +484,9 @@ public class CommerceOrderModelListener
 					commerceChannel.getCommerceChannelId(),
 					CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
 
-		if (commerceChannelAccountEntryRel == null) {
+		if ((commerceChannelAccountEntryRel == null) ||
+			!commerceChannelAccountEntryRel.isOverrideEligibility()) {
+
 			return;
 		}
 
@@ -479,8 +552,13 @@ public class CommerceOrderModelListener
 			User user)
 		throws PortalException {
 
-		if ((commerceOrder.getCommerceShippingMethodId() > 0) &&
-			Validator.isNotNull(commerceOrder.getShippingOptionName())) {
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		if (((commerceOrder.getCommerceShippingMethodId() > 0) &&
+			 Validator.isNotNull(commerceOrder.getShippingOptionName())) ||
+			(commerceOrder.getShippingAddressId() <= 0) ||
+			commerceOrderItems.isEmpty()) {
 
 			return;
 		}
@@ -556,6 +634,8 @@ public class CommerceOrderModelListener
 			if (defaultCommerceShippingOption != null) {
 				commerceOrder.setCommerceShippingMethodId(
 					commerceShippingMethod.getCommerceShippingMethodId());
+				commerceOrder.setShippingAmount(
+					defaultCommerceShippingOption.getAmount());
 				commerceOrder.setShippingOptionName(
 					defaultCommerceShippingOption.getKey());
 			}
@@ -777,6 +857,10 @@ public class CommerceOrderModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderModelListener.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;

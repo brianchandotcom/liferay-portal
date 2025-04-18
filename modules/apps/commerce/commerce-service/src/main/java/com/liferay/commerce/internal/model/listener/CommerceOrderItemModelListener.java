@@ -40,19 +40,31 @@ public class CommerceOrderItemModelListener
 	@Override
 	public void onAfterCreate(CommerceOrderItem commerceOrderItem) {
 		try {
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+			CommerceOrder commerceOrder = _executeInTransaction(
+				new Callable<CommerceOrder>() {
 
-			if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
-				commerceOrder.setManuallyAdjusted(false);
-			}
+					@Override
+					public CommerceOrder call() throws Exception {
+						CommerceOrder commerceOrder =
+							commerceOrderItem.getCommerceOrder();
 
-			if (!commerceOrder.isShippable() &&
-				commerceOrderItem.isShippable()) {
+						if (commerceOrder.isManuallyAdjusted() &&
+							commerceOrder.isOpen()) {
 
-				commerceOrder.setShippable(true);
-			}
+							commerceOrder.setManuallyAdjusted(false);
+						}
 
-			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+						if (!commerceOrder.isShippable() &&
+							commerceOrderItem.isShippable()) {
+
+							commerceOrder.setShippable(true);
+						}
+
+						return _commerceOrderLocalService.updateCommerceOrder(
+							commerceOrder);
+					}
+
+				});
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

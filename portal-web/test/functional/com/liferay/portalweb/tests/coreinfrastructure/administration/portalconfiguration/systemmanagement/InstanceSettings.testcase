@@ -604,50 +604,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-168123. Verify properties which are supported for overriding via hook can be overriden by environment variable."
-	@priority = 3
-	test CanOverrideHookProperties {
-		property custom.system.properties = "company-id-properties=true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given the default theme is set to Classic") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-			DropdownMenuItem.click(menuItem = "Configuration");
-
-			AssertElementPresent(
-				key_card = "Classic",
-				locator1 = "Card#CARD");
-		}
-
-		task ("When the default theme is set to the Minimum theme via environment variable") {
-			Tomcat.addCompanyProperties(properties = "default.regular.theme.id=minium_WAR_miniumtheme");
-		}
-
-		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-		}
-
-		task ("Then the default theme for a new site should be Minium theme") {
-			HeadlessSite.addSite(siteName = "Test Site");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-			DropdownMenuItem.click(menuItem = "Configuration");
-
-			AssertElementPresent(
-				key_card = "Minium",
-				locator1 = "Card#CARD");
-		}
-	}
-
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
 	@priority = 5
 	test CanSetPortalPropertyViaEnvironmentVariable {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayoutsPage';
 
@@ -26,7 +26,7 @@ export class ProductDetailsPage {
 	readonly mappedProductCheckbox: Locator;
 	readonly mpnField: (mpn: string) => Promise<Locator>;
 	readonly nameField: (name: string) => Promise<Locator>;
-	readonly optionSelector: (optionName: string) => Promise<Locator>;
+	readonly optionSelector: (optionName: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly paginationText: (text: string) => Locator;
@@ -45,6 +45,8 @@ export class ProductDetailsPage {
 	readonly replacementsSearchButton: Locator;
 	readonly replacementsTab: Locator;
 	readonly replacementsTableCell: (cellValue: string) => Locator;
+	readonly selectDocumentFrame: FrameLocator;
+	readonly selectedDocumentLabel: Locator;
 	readonly selectOption: (
 		optionLabel: string,
 		optionName: string
@@ -97,7 +99,7 @@ export class ProductDetailsPage {
 		this.nameField = async (name: string) => {
 			return page.getByRole('heading', {name});
 		};
-		this.optionSelector = async (optionName: string) => {
+		this.optionSelector = (optionName: string) => {
 			return page.getByLabel(optionName);
 		};
 		this.page = page;
@@ -127,6 +129,10 @@ export class ProductDetailsPage {
 		this.replacementsTab = page.getByRole('tab', {name: 'Replacements'});
 		this.replacementsTableCell = (cellValue: string) =>
 			page.getByRole('cell', {name: cellValue});
+		this.selectDocumentFrame = page.frameLocator(
+			'iframe[title="Select Document"]'
+		);
+		this.selectedDocumentLabel = page.getByLabel('File', {exact: true});
 		this.selectOption = (optionLabel: string, optionName: string) =>
 			page.getByLabel(optionName).selectOption({label: optionLabel});
 		this.shortDescriptionField = async (shortDescription: string) => {

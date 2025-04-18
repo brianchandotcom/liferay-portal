@@ -477,26 +477,22 @@ test(
 
 		await page.goto(`/web/${site.name}/p/productbundle`);
 
-		await expect(
-			await productDetailsPage.optionSelector('Color')
-		).toBeVisible();
-		await expect(
-			await productDetailsPage.optionSelector('Size')
-		).toBeVisible();
-		await (
-			await productDetailsPage.optionSelector('Color')
-		).selectOption({label: 'Choose an Option'});
+		await expect(productDetailsPage.optionSelector('Color')).toBeVisible();
+		await expect(productDetailsPage.optionSelector('Size')).toBeVisible();
+		await productDetailsPage
+			.optionSelector('Color')
+			.selectOption({label: 'Choose an Option'});
 
 		await expect(page.getByText('This field is required.')).toBeVisible();
 
 		await expect(productDetailsPage.addToCartButton).toBeDisabled();
 
-		await (
-			await productDetailsPage.optionSelector('Color')
-		).selectOption({label: 'Black'});
-		await (
-			await productDetailsPage.optionSelector('Size')
-		).selectOption({label: 'XL + $ 10.00'});
+		await productDetailsPage
+			.optionSelector('Color')
+			.selectOption({label: 'Black'});
+		await productDetailsPage
+			.optionSelector('Size')
+			.selectOption({label: 'XL + $ 10.00'});
 
 		await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
 		await expect(

@@ -37,6 +37,7 @@ page import="com.liferay.account.admin.web.internal.dao.search.AccountUserDispla
 page import="com.liferay.account.admin.web.internal.dao.search.AssignableAccountOrganizationSearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AssignableAccountUserDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.SelectAccountUserAccountRoleRowChecker" %><%@
+page import="com.liferay.account.admin.web.internal.dao.search.UserAccountEntryRowChecker" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountEntryDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountEntryDisplayFactoryUtil" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountGroupDisplay" %><%@

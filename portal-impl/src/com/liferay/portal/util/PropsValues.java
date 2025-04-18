@@ -2100,7 +2100,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_ENABLE_URL_WITH_SESSION_ID));
 
-	public static final int SESSION_MAX_ALLOWED = GetterUtil.getInteger(
+	public static int SESSION_MAX_ALLOWED = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SESSION_MAX_ALLOWED));
 
 	public static String[] SESSION_PHISHING_PROTECTED_ATTRIBUTES =

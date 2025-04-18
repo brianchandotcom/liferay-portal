@@ -2661,3 +2661,109 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'An account is disabled if already associated to a user',
+	{tag: ['@LPD-53780']},
+	async ({
+		accountUsersAccountSelectorPage,
+		apiHelpers,
+		editUserPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const accounts = [];
+
+		for (let i = 0; i < 25; i++) {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: `${String(i).padStart(2, '0')}_${getRandomString()}`,
+				type: 'business',
+			});
+
+			apiHelpers.data.push({id: account.id, type: 'account'});
+
+			if (i < 23) {
+				await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+					account.id,
+					[user.emailAddress]
+				);
+			}
+
+			accounts.push(account);
+		}
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.membershipsLink.click();
+
+		await expect(async () => {
+			await expect(editUserPage.selectAccountsButton).toBeVisible();
+			await expect(
+				editUserPage.membershipsNoAccountsMessage
+			).not.toBeVisible();
+		}).toPass();
+
+		await editUserPage.selectAccountsButton.click();
+
+		await expect(
+			accountUsersAccountSelectorPage.accountsTable.searchInput
+		).toBeEditable();
+
+		await expect(async () => {
+			await accountUsersAccountSelectorPage.accountsTable.search(
+				accounts[0].name
+			);
+
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[0].name
+				)
+			).toBeChecked();
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[0].name
+				)
+			).toBeDisabled();
+		}).toPass();
+
+		await expect(async () => {
+			await accountUsersAccountSelectorPage.accountsTable.search(
+				accounts[21].name
+			);
+
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[21].name
+				)
+			).toBeChecked();
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[21].name
+				)
+			).toBeDisabled();
+		}).toPass();
+
+		await expect(async () => {
+			await accountUsersAccountSelectorPage.accountsTable.search(
+				accounts[24].name
+			);
+
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[24].name
+				)
+			).not.toBeChecked();
+			await expect(
+				await accountUsersAccountSelectorPage.accountsTable.rowCheckbox(
+					accounts[24].name
+				)
+			).toBeEnabled();
+		}).toPass();
+	}
+);

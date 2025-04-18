@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
@@ -45,8 +45,7 @@ export class PortletConfigurationPermissionsPage {
 		this.ownerRoleCell = this.permissionsFrame.getByRole('cell', {
 			name: 'Owner',
 		});
-		this.resultsBanner =
-			this.permissionsFrame.getByText('Results Found for');
+		this.resultsBanner = this.permissionsFrame.getByText('Found for');
 		this.saveButton = this.permissionsFrame.getByRole('button', {
 			name: 'Save',
 		});
@@ -57,18 +56,6 @@ export class PortletConfigurationPermissionsPage {
 		this.successMessage = this.permissionsFrame.getByText(
 			'Success:Your request completed successfully.'
 		);
-	}
-
-	async changePagination(startValue: number, endValue: number) {
-		await this.permissionsFrame
-			.getByText(startValue + ' Entries', {exact: true})
-			.click();
-		await this.permissionsFrame
-			.getByRole('option', {name: endValue + ' Entries'})
-			.click();
-		await expect(
-			this.permissionsFrame.getByText('Showing 1 to ' + endValue)
-		).toBeVisible();
 	}
 
 	async goto() {

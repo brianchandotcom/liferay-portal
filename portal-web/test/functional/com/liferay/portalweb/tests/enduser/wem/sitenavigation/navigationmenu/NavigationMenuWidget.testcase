@@ -942,7 +942,7 @@ definition {
 <#if entries?has_content>
 	<#list entries as navItem>
 		<#assign customFields = navItem.getExpandoAttributes()/>
-		${customFields["subtitle"]}
+		${customFields["Subtitle"]}
 			''';
 
 			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");

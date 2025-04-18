@@ -13,7 +13,6 @@ export {EVENT_TYPES} from './core/actions/eventTypes.es';
 
 export {Field} from './core/components/Field/Field.es';
 export {FieldStateless} from './core/components/Field/FieldStateless.es';
-export {FieldFeedback} from './core/components/FieldFeedback';
 
 // Keyboard drag and drop
 

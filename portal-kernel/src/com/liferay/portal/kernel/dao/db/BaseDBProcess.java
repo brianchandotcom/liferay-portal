@@ -746,11 +746,13 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			String methodName = method.getName();
 
-			if (methodName.equals("close") && (_getConnectionsCount() > 0)) {
-				for (Map<Thread, Connection> connectionMap :
-						_companyConnectionMap.values()) {
+			if (methodName.equals("close")) {
+				if (_getConnectionsCount() > 0) {
+					for (Map<Thread, Connection> connectionMap :
+							_companyConnectionMap.values()) {
 
-					_closeConnections(connectionMap);
+						_closeConnections(connectionMap);
+					}
 				}
 
 				return null;

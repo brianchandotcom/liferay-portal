@@ -80,6 +80,11 @@ function updateRegionRequired(regions, namespace) {
 	const regionRequiredWrapper = document.getElementById(
 		`${namespace}regionRequiredWrapper`
 	);
+
+	if (!regionRequiredWrapper) {
+		return;
+	}
+
 	const formValidator = Liferay.Form.get(`${namespace}fm`).formValidator;
 
 	const rules = formValidator._getAttr('rules');

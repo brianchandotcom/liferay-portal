@@ -50,9 +50,7 @@ String innerNavigation = ParamUtil.getString(request, "innerNavigation", "classi
 	%>'
 />
 
-<clay:container-fluid
-	cssClass="mt-3"
->
+<div class="mt-3">
 	<c:choose>
 		<c:when test='<%= StringUtil.equals(innerNavigation, "classic") %>'>
 			<liferay-util:include page="/ckeditor4/partials/classic.jsp" servletContext="<%= application %>" />
@@ -70,4 +68,4 @@ String innerNavigation = ParamUtil.getString(request, "innerNavigation", "classi
 			<liferay-util:include page="/ckeditor4/partials/balloon.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
-</clay:container-fluid>
+</div>

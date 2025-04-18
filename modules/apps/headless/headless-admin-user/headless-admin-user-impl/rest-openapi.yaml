@@ -2593,7 +2593,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
-                    # @review
+            # @review
             tags: ["AccountRole"]
         post:
             # @review
@@ -2623,7 +2623,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
-                    # @review
+            # @review
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/by-external-reference-code/{accountRoleExternalReferenceCode}/user-accounts/by-email-address/{emailAddress}":
         delete:
@@ -2887,7 +2887,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Phone"
                                 type: array
-                    # @review
+            # @review
             tags: ["Phone"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses":
         get:
@@ -3362,7 +3362,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
-                    # @review
+            # @review
             tags: ["AccountRole"]
         post:
             # @review
@@ -3393,7 +3393,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
-                    # @review
+            # @review
             tags: ["AccountRole"]
     "/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}":
         delete:

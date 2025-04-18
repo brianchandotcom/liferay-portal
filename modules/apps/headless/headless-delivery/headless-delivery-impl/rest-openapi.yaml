@@ -3488,7 +3488,7 @@ components:
                     type: string
                 creator:
                     $ref: "#/components/schemas/Creator"
-                        # @review
+                    # @review
                     description:
                         The navigation menu item's creator.
                     readOnly: true

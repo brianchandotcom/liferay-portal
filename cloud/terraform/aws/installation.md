@@ -85,7 +85,7 @@ To use Helm you must use the `aws` CLI to set up `kubectl`.
 1. Run the command below:
 
    ```bash
-   aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
+   aws eks --name $(terraform output -raw cluster_name) --region $(terraform output -raw region) update-kubeconfig
    ```
 
 1. Test that `kubectl cluster-info` works.
@@ -118,24 +118,22 @@ This secret is created automatically when you run the Terraform auto-configurati
 1. Run the following command:
 
    ```bash
-   helm upgrade -i \
-     liferay \
+   helm upgrade liferay oci://[aws_chart] \
      --create-namespace \
+     --install \
      --namespace $(terraform output -raw deployment_namespace) \
      --set "awsServiceAccountArn=$(terraform output -raw liferay_sa_role)" \
-     --values ../helm/values.yaml \
-     oci://[aws_chart]
+     --values ../helm/values.yaml
    ```
 
    If you have an externally created service account, use
 
    ```bash
-   helm upgrade -i \
-     liferay \
+   helm upgrade liferay oci://[aws_chart] \
      --create-namespace \
+     --install \
      --namespace $(terraform output -raw deployment_namespace) \
      --set "serviceAccount.create=false" \
      --set "serviceAccount.name=${SERVICE_ACCOUNT_NAME}" \
-     --values ../helm/values.yaml \
-     oci://[aws_chart]
+     --values ../helm/values.yaml
    ```

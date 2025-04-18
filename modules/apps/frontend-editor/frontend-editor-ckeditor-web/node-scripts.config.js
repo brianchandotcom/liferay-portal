@@ -17,6 +17,7 @@ module.exports = {
 			'Bold',
 			'ButtonView',
 			'ClassicEditor',
+			'Command',
 			'EditorConfig',
 			'Essentials',
 			'Font',

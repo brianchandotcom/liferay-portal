@@ -19,6 +19,9 @@ import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 const picklistBooleanOptionLabel = 'Boolean';
 const picklistDefaultOptionLabel = 'Default';
 
+const picklistBooleanOptionKey = picklistBooleanOptionLabel.toLocaleLowerCase();
+const picklistDefaultOptionKey = picklistDefaultOptionLabel.toLocaleLowerCase();
+
 const apiHeadlessName = 'FieldType';
 const apiHeadlessURL = `c/${apiHeadlessName.toLocaleLowerCase()}s`;
 const dataSetERCs: string[] = [];
@@ -27,6 +30,7 @@ let dataSetLabel: string;
 let objectDefinition: any;
 let picklistBooleanOption: any;
 let picklistDefaultOption: any;
+let picklistERC: any;
 let picklistName: string;
 
 export const test = mergeTests(
@@ -55,18 +59,20 @@ test.beforeEach(
 		});
 
 		await test.step('Create and populate a picklist', async () => {
-			await picklistApiHelpers.createPicklist({
+			const picklist = await picklistApiHelpers.createPicklist({
 				name: picklistName,
 			});
 
+			picklistERC = picklist.externalReferenceCode;
+
 			picklistDefaultOption = await picklistApiHelpers.editPicklist({
-				key: picklistDefaultOptionLabel.toLocaleLowerCase(),
+				key: picklistDefaultOptionKey,
 				name: picklistName,
 				value: picklistDefaultOptionLabel,
 			});
 
 			picklistBooleanOption = await picklistApiHelpers.editPicklist({
-				key: picklistBooleanOptionLabel.toLocaleLowerCase(),
+				key: picklistBooleanOptionKey,
 				name: picklistName,
 				value: picklistBooleanOptionLabel,
 			});
@@ -98,6 +104,21 @@ test.beforeEach(
 							required: false,
 							state: false,
 						},
+						{
+							DBType: 'String',
+							businessType: 'MultiselectPicklist',
+							indexed: true,
+							indexedAsKeyword: true,
+							label: {
+								en_US: 'picklist',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								picklistERC,
+							localized: false,
+							name: 'picklist',
+							required: false,
+							state: false,
+						},
 					],
 					pluralLabel: {en_US: `${apiHeadlessName}s`},
 					scope: 'company',
@@ -121,11 +142,27 @@ test.beforeEach(
 				apiHeadlessURL
 			);
 			await apiHelpers.objectEntry.postObjectEntry(
-				{type: 'object'},
+				{
+					picklist: [
+						{
+							key: picklistBooleanOptionKey,
+							name: picklistBooleanOptionLabel,
+						},
+					],
+					type: 'object',
+				},
 				apiHeadlessURL
 			);
 			await apiHelpers.objectEntry.postObjectEntry(
-				{type: 'string'},
+				{
+					picklist: [
+						{
+							key: picklistDefaultOptionKey,
+							name: picklistDefaultOptionLabel,
+						},
+					],
+					type: 'string',
+				},
 				apiHeadlessURL
 			);
 		});
@@ -439,6 +476,99 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 				'Showing 1 to 2 of 2 entries.'
 			)
 		).toBeVisible();
+	});
+});
+
+test('Selection filter of type "Object Picklist" using a "Multiselect Picklist" type field', async ({
+	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
+	layout,
+	picklistApiHelpers,
+}) => {
+	const filterLabel = 'picklist';
+	const picklistDataSetERC = getRandomString();
+	const picklistDataSetLabel = getRandomString();
+
+	await test.step('Create a new data set for FieldType', async () => {
+		dataSetERCs.push(picklistDataSetERC);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: picklistDataSetERC,
+			label: picklistDataSetLabel,
+			restApplication: `/${apiHeadlessURL}`,
+			restSchema: apiHeadlessName,
+		});
+	});
+
+	await test.step('Add fields, so FDS has something to show', async () => {
+		await dataSetManagerApiHelpers.createDataSetTableSection({
+			dataSetERC: picklistDataSetERC,
+			fieldName: 'picklist',
+			label_i18n: {en_US: 'Picklist'},
+		});
+	});
+
+	await test.step('Create a selection filter with the picklist', async () => {
+		const picklist = await picklistApiHelpers.getPicklist(picklistName);
+
+		await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+			dataSetERC: picklistDataSetERC,
+			fieldName: 'picklist[]name',
+			label_i18n: {en_US: filterLabel},
+			multiple: true,
+			source: picklist.externalReferenceCode,
+			sourceType: 'OBJECT_PICKLIST',
+		});
+	});
+
+	await test.step('Configure Data Set fragment', async () => {
+		await dataSetFragmentPage.configureDataSetFragment({
+			dataSetLabel: picklistDataSetLabel,
+			layout,
+		});
+	});
+
+	await test.step(`Select ${filterLabel} filter`, async () => {
+		await dataSetFragmentPage.selectFilter(filterLabel);
+	});
+
+	await test.step('Configure and apply filter', async () => {
+		await expect(
+			dataSetFragmentPage.filterItem.getByRole('checkbox', {
+				name: picklistDefaultOptionLabel,
+			})
+		).toBeVisible();
+		await expect(
+			dataSetFragmentPage.filterItem.getByRole('checkbox', {
+				name: picklistDefaultOptionLabel,
+			})
+		).toBeVisible();
+
+		await dataSetFragmentPage.filterItem
+			.getByRole('checkbox', {name: picklistDefaultOptionLabel})
+			.check();
+
+		await dataSetFragmentPage.addFilterButton.click();
+	});
+
+	await test.step('Check that the filter works', async () => {
+		await dataSetFragmentPage.filterResumeButton.waitFor({
+			state: 'visible',
+		});
+
+		await expect(
+			dataSetFragmentPage.page.getByRole('button', {
+				name: `${filterLabel}: ${picklistDefaultOptionLabel}`,
+			})
+		).toBeVisible();
+
+		const rows = await dataSetFragmentPage.table.bodyRows.all();
+
+		for (const row of rows) {
+			await expect(row.locator('td:first-child')).toHaveText(
+				'[{"key":"default","name":"Default"}]'
+			);
+		}
 	});
 });
 

@@ -1,0 +1,27 @@
+JSONMapAttributeTestEntity:
+ properties:
+    name:
+     type: string
+    properties1:
+     additionalProperties:
+         type: object
+     type: object
+     x-json-map: true
+    properties2:
+      additionalProperties:
+         type: object
+      type: object
+      x-json-map: true
+ title: JSONMapAttributeTestEntity
+NestedArrayItemsTestEntity:
+  properties:
+      name:
+            type: string
+      values:
+        items:
+                         items:
+                          type: string
+                         type: array
+        type: array
+  title: NestedArrayItemsTestEntity
+  type: object

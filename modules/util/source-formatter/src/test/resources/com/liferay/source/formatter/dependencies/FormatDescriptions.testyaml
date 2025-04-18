@@ -1,4 +1,3 @@
----
 components:
     schemas:
         ExternalLink :
@@ -23,33 +22,3 @@ components:
                         (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double),
                         X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In
                         (boolean). Local date will be always present in the request."
-info:
-    version:
-      ver-name: v1
-      ver-date: 20190813
-    title: |-
-        End
-        of
-         file
-    description: |-
-        This
-        is
-         the description
----
-kind: Service1
-apiVersion: v1
----
-apiVersion: v2
-kind: Service2
----
-apiPackagePath: "com.liferay.headless.delivery"
-apiDir: "../headless-delivery-api/src/main/java"
-application:
-    className: "HeadlessDeliveryApplication"
-    baseURI: "/headless-delivery"
-    name: |-
-       "Liferay.Headless.Delivery"
-author: "Javier Gamarra"
-clientDir: "../headless-delivery-client/src/main/java"
-
-testDir: "../headless-delivery-test/src/testIntegration/java"

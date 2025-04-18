@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+    version: v1.0
+    title: "Change Tracking REST"
+components:
+    schemas:
+        ExternalLink:
+            properties:
+                # DOMAIN
+                domain:
+                    type: string
+                    description:
+                        The external domain.
+                dateCreated:
+                    readOnly: true
+                    type: string
+                    format: date-time
+                    description:
+                        The external link's creation date.
+        CollectionType:
+            type: string
+            default: "all"

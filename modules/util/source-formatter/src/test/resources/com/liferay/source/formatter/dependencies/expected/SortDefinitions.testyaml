@@ -1,0 +1,22 @@
+components:
+    schemas:
+        CollectionType:
+            default: "all"
+            type: string
+        ExternalLink:
+            properties:
+                dateCreated:
+                    description:
+                        The external link's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                # DOMAIN
+                domain:
+                    description:
+                        The external domain.
+                    type: string
+info:
+    title: "Change Tracking REST"
+    version: v1.0
+openapi: 3.0.1

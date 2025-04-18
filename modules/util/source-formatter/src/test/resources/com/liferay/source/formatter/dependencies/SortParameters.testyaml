@@ -1,0 +1,42 @@
+openapi: 3.0.1
+paths:
+    "/asset-libraries/{assetLibraryId}/content-elements":
+        get:
+            operationId: getAssetLibraryContentElementsPage
+            parameters:
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: aggregationTerms
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string

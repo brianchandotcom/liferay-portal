@@ -713,9 +713,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 		}
 
-		long replacementCProductId = cpInstance.getReplacementCProductId();
-		String replacementCPInstanceUuid =
-			cpInstance.getReplacementCPInstanceUuid();
+		long replacementCProductId = 0;
+		String replacementCPInstanceUuid = StringPool.BLANK;
 
 		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
 			CPInstance discontinuedCPInstance = null;

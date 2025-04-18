@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'beca01c997f0c53c247cfda2cb3ef5ccad6d273941bca1b76c43e0cd2a7731dd',
+	hash: '92e4b338ff970654eeeb0cd5d4397820d618d1e4395f259db69346b6fce9c936',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -87,8 +87,6 @@ module.exports = {
 		'@liferay/frontend-data-set-web': [],
 		'@liferay/frontend-editor-ckeditor-sample-web': [],
 		'@liferay/frontend-icons-web': [],
-		'@liferay/frontend-js-a11y-sample-web': [],
-		'@liferay/frontend-js-a11y-web': [],
 		'@liferay/frontend-js-bootstrap-support-web': [],
 		'@liferay/frontend-js-codemirror-web': [
 			'codemirror/addon/fold/foldgutter.css',

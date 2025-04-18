@@ -2,7 +2,6 @@ dependencies {
 	testIntegrationImplementation group: "javax.websocket", name: "javax.websocket-api", version: "1.1"
 	testIntegrationImplementation group: "javax.xml.bind", name: "jaxb-api", version: "2.3.0"
 	testIntegrationImplementation group: "junit", name: "junit", version: "4.13.1"
-	testIntegrationImplementation group: "org.eclipse.jetty.websocket", name: "javax-websocket-client-impl", version: "9.3.10.v20160621"
 	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

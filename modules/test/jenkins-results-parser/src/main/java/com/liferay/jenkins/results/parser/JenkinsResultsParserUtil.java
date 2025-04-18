@@ -1604,7 +1604,9 @@ public class JenkinsResultsParserUtil {
 
 		Matcher matcher = _jenkinsReportURLPattern.matcher(jenkinsReportURL);
 
-		matcher.find();
+		if (!matcher.find()) {
+			return jenkinsReportURL;
+		}
 
 		StringBuilder sb = new StringBuilder();
 

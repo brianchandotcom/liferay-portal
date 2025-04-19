@@ -120,13 +120,14 @@ public class ConfigurationEntryRetrieverImpl
 				configurationScreen.getCategoryKey());
 		}
 
-		Set<ConfigurationCategorySectionDisplay> configurationCategorySections =
-			new TreeSet<>(new ConfigurationCategorySectionDisplayComparator());
+		Set<ConfigurationCategorySectionDisplay>
+			configurationCategorySectionDisplays = new TreeSet<>(
+				new ConfigurationCategorySectionDisplayComparator());
 
-		configurationCategorySections.addAll(
+		configurationCategorySectionDisplays.addAll(
 			configurationCategorySectionDisplaysMap.values());
 
-		return new ArrayList<>(configurationCategorySections);
+		return new ArrayList<>(configurationCategorySectionDisplays);
 	}
 
 	@Override

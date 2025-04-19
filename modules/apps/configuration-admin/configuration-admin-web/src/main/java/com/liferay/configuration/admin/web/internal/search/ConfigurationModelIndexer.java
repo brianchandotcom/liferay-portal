@@ -497,11 +497,11 @@ public class ConfigurationModelIndexer
 
 			if (_clusterMasterExecutor.isMaster()) {
 				Map<String, Collection<ConfigurationModel>>
-					configurationModelsMap = new ConcurrentHashMap<>();
+					configurationModelsMap1 = new ConcurrentHashMap<>();
 
 				Bundle[] bundles = _bundleContext.getBundles();
 
-				List<ConfigurationModel> configurationModelsList =
+				List<ConfigurationModel> configurationModels =
 					new ArrayList<>();
 
 				for (Bundle bundle : bundles) {
@@ -509,26 +509,27 @@ public class ConfigurationModelIndexer
 						continue;
 					}
 
-					Map<String, ConfigurationModel> configurationModels =
+					Map<String, ConfigurationModel> configurationModelsMap2 =
 						_configurationModelRetriever.getConfigurationModels(
 							bundle, ExtendedObjectClassDefinition.Scope.SYSTEM,
 							null);
 
-					configurationModelsList.addAll(
-						configurationModels.values());
+					configurationModels.addAll(
+						configurationModelsMap2.values());
 
-					configurationModelsMap.put(
-						bundle.getSymbolicName(), configurationModels.values());
+					configurationModelsMap1.put(
+						bundle.getSymbolicName(),
+						configurationModelsMap2.values());
 				}
 
-				reindex(configurationModelsList);
+				reindex(configurationModels);
 
 				_commit();
 
 				_bundleTracker = new BundleTracker<>(
 					_bundleContext, Bundle.ACTIVE,
 					new ConfigurationModelsBundleTrackerCustomizer(
-						configurationModelsMap));
+						configurationModelsMap1));
 
 				_bundleTracker.open();
 			}

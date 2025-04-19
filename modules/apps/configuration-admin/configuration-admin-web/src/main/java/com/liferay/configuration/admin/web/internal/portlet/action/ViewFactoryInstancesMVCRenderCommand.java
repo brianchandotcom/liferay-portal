@@ -93,7 +93,7 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 						configurationScopeDisplayContext.getScope(),
 						configurationScopeDisplayContext.getScopePK()));
 
-			List<ConfigurationModel> factoryInstances =
+			List<ConfigurationModel> factoryInstancesConfigurationModels =
 				_configurationModelRetriever.getFactoryInstances(
 					factoryConfigurationModel,
 					configurationScopeDisplayContext.getScope(),
@@ -110,7 +110,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
-				new ConfigurationModelIterator(factoryInstances));
+				new ConfigurationModelIterator(
+					factoryInstancesConfigurationModels));
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
 				factoryConfigurationModel);

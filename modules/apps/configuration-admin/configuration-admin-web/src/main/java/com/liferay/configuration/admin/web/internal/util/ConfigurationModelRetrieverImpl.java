@@ -212,7 +212,8 @@ public class ConfigurationModelRetrieverImpl
 			return Collections.emptyList();
 		}
 
-		List<ConfigurationModel> factoryInstances = new ArrayList<>();
+		List<ConfigurationModel> factoryInstancesConfigurationModels =
+			new ArrayList<>();
 
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			new ConfigurationScopeDisplayContext(scope, scopePK);
@@ -225,10 +226,10 @@ public class ConfigurationModelRetrieverImpl
 				configurationScopeDisplayContext, factoryConfigurationModel,
 				false);
 
-			factoryInstances.add(curConfigurationModel);
+			factoryInstancesConfigurationModels.add(curConfigurationModel);
 		}
 
-		return factoryInstances;
+		return factoryInstancesConfigurationModels;
 	}
 
 	@Activate

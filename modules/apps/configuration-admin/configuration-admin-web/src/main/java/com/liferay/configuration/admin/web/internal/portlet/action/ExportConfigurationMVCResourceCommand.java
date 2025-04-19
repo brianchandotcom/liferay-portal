@@ -185,14 +185,16 @@ public class ExportConfigurationMVCResourceCommand
 			String curFactoryPid = configurationModel.getFactoryPid();
 
 			if (configurationModel.isFactory()) {
-				List<ConfigurationModel> factoryInstances =
+				List<ConfigurationModel> factoryInstancesConfigurationModels =
 					_configurationModelRetriever.getFactoryInstances(
 						configurationModel,
 						configurationScopeDisplayContext.getScope(),
 						configurationScopeDisplayContext.getScopePK());
 
-				for (ConfigurationModel factoryInstance : factoryInstances) {
-					String curPid = factoryInstance.getID();
+				for (ConfigurationModel factoryInstancesConfigurationModel :
+						factoryInstancesConfigurationModels) {
+
+					String curPid = factoryInstancesConfigurationModel.getID();
 
 					String curFileName = _getFileName(curFactoryPid, curPid);
 
@@ -267,14 +269,16 @@ public class ExportConfigurationMVCResourceCommand
 		ConfigurationModel factoryConfigurationModel = configurationModels.get(
 			factoryPid);
 
-		List<ConfigurationModel> factoryInstances =
+		List<ConfigurationModel> factoryInstancesConfigurationModels =
 			_configurationModelRetriever.getFactoryInstances(
 				factoryConfigurationModel,
 				configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
 
-		for (ConfigurationModel factoryInstance : factoryInstances) {
-			String curPid = factoryInstance.getID();
+		for (ConfigurationModel factoryInstancesConfigurationModel :
+				factoryInstancesConfigurationModels) {
+
+			String curPid = factoryInstancesConfigurationModel.getID();
 
 			String curFileName = _getFileName(factoryPid, curPid);
 

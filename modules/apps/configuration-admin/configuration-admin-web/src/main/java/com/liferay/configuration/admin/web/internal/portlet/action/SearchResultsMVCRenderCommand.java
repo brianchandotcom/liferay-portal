@@ -95,7 +95,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					configurationScopeDisplayContext.getScope(),
 					configurationScopeDisplayContext.getScopePK());
 
-			List<ConfigurationEntry> searchResults = new ArrayList<>(
+			List<ConfigurationEntry> configurationEntries = new ArrayList<>(
 				documents.length);
 
 			for (Document document : documents) {
@@ -116,7 +116,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 				if ((configurationModel != null) &&
 					configurationModel.isGenerateUI()) {
 
-					searchResults.add(
+					configurationEntries.add(
 						new ConfigurationModelConfigurationEntry(
 							configurationModel, renderRequest.getLocale()));
 				}
@@ -147,7 +147,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 					configurationScreenKey.contains(searchReadyKeywords) ||
 					configurationScreenName.contains(searchReadyKeywords)) {
 
-					searchResults.add(
+					configurationEntries.add(
 						new ConfigurationScreenConfigurationEntry(
 							configurationScreen, renderRequest.getLocale()));
 				}
@@ -155,7 +155,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_ITERATOR,
-				new ConfigurationEntryIterator(searchResults));
+				new ConfigurationEntryIterator(configurationEntries));
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
 				_configurationEntryRetriever);

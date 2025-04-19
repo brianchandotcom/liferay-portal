@@ -128,10 +128,10 @@ public class FilterVisibilityConfigurationModelRetrieverWrapper
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		Map<String, ConfigurationModel> configurationModelMap) {
 
-		Set<Map.Entry<String, ConfigurationModel>> set =
+		Set<Map.Entry<String, ConfigurationModel>> entries =
 			configurationModelMap.entrySet();
 
-		set.removeIf(
+		entries.removeIf(
 			entry -> !ConfigurationVisibilityUtil.isVisible(
 				entry.getValue(), scope, scopePK));
 	}

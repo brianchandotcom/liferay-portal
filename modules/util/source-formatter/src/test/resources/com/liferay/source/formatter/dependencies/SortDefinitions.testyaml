@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
     version: v1.0
-    title: "Change Tracking REST"
+    title: Change Tracking REST
 components:
     schemas:
         ExternalLink:
@@ -19,4 +19,4 @@ components:
                         The external link's creation date.
         CollectionType:
             type: string
-            default: "all"
+            default: all

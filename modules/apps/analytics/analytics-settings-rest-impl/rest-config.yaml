@@ -1,12 +1,12 @@
-apiDir: "../analytics-settings-rest-api/src/main/java"
-apiPackagePath: "com.liferay.analytics.settings.rest"
+apiDir: ../analytics-settings-rest-api/src/main/java
+apiPackagePath: com.liferay.analytics.settings.rest
 application:
-    baseURI: "/analytics-settings-rest"
-    className: "AnalyticsSettingsRESTApplication"
-    name: "Liferay.Analytyics.Settings.REST"
-author: "Riccardo Ferrari"
-clientDir: "../analytics-settings-rest-client/src/main/java"
+    baseURI: /analytics-settings-rest
+    className: AnalyticsSettingsRESTApplication
+    name: Liferay.Analytyics.Settings.REST
+author: Riccardo Ferrari
+clientDir: ../analytics-settings-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
-testDir: "../analytics-settings-rest-test/src/testIntegration/java"
+testDir: ../analytics-settings-rest-test/src/testIntegration/java

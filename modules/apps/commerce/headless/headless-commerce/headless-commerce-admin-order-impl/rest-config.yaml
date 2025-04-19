@@ -1,11 +1,11 @@
-apiDir: "../headless-commerce-admin-order-api/src/main/java"
-apiPackagePath: "com.liferay.headless.commerce.admin.order"
+apiDir: ../headless-commerce-admin-order-api/src/main/java
+apiPackagePath: com.liferay.headless.commerce.admin.order
 application:
-    baseURI: "/headless-commerce-admin-order"
-    className: "HeadlessCommerceAdminOrderApplication"
-    name: "Liferay.Headless.Commerce.Admin.Order"
-author: "Alessio Antonio Rendina"
-clientDir: "../headless-commerce-admin-order-client/src/main/java"
+    baseURI: /headless-commerce-admin-order
+    className: HeadlessCommerceAdminOrderApplication
+    name: Liferay.Headless.Commerce.Admin.Order
+author: Alessio Antonio Rendina
+clientDir: ../headless-commerce-admin-order-client/src/main/java
 compatibilityVersion: 9
 forcePredictableSchemaPropertyName: false
-testDir: "../headless-commerce-admin-order-test/src/testIntegration/java"
+testDir: ../headless-commerce-admin-order-test/src/testIntegration/java

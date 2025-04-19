@@ -1,12 +1,12 @@
-apiDir: "../headless-commerce-delivery-catalog-api/src/main/java"
-apiPackagePath: "com.liferay.headless.commerce.delivery.catalog"
+apiDir: ../headless-commerce-delivery-catalog-api/src/main/java
+apiPackagePath: com.liferay.headless.commerce.delivery.catalog
 application:
-    baseURI: "/headless-commerce-delivery-catalog"
-    className: "HeadlessCommerceDeliveryCatalogApplication"
-    name: "Liferay.Headless.Commerce.Delivery.Catalog"
-author: "Andrea Sbarra"
-clientDir: "../headless-commerce-delivery-catalog-client/src/main/java"
+    baseURI: /headless-commerce-delivery-catalog
+    className: HeadlessCommerceDeliveryCatalogApplication
+    name: Liferay.Headless.Commerce.Delivery.Catalog
+author: Andrea Sbarra
+clientDir: ../headless-commerce-delivery-catalog-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: false
-testDir: "../headless-commerce-delivery-catalog-test/src/testIntegration/java"
+testDir: ../headless-commerce-delivery-catalog-test/src/testIntegration/java

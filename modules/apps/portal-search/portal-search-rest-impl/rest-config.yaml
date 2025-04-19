@@ -1,12 +1,12 @@
-apiDir: "../portal-search-rest-api/src/main/java"
-apiPackagePath: "com.liferay.portal.search.rest"
+apiDir: ../portal-search-rest-api/src/main/java
+apiPackagePath: com.liferay.portal.search.rest
 application:
-    baseURI: "/search"
-    className: "PortalSearchRESTApplication"
-    name: "Liferay.Portal.Search.REST"
-author: "Petteri Karttunen"
+    baseURI: /search
+    className: PortalSearchRESTApplication
+    name: Liferay.Portal.Search.REST
+author: Petteri Karttunen
 changeTrackingEnabled: true
-clientDir: "../portal-search-rest-client/src/main/java"
+clientDir: ../portal-search-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
-testDir: "../portal-search-rest-test/src/testIntegration/java"
+testDir: ../portal-search-rest-test/src/testIntegration/java

@@ -70,7 +70,7 @@ components:
                 className:
                     type: string
                 creator:
-                    $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     readOnly: true
                 dateCreated:
                     format: date
@@ -692,9 +692,9 @@ info:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.object.admin.rest.client', and version '1.0.77'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Object"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Object
     version: v1.0
 openapi: 3.0.1
 paths:

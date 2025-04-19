@@ -1,13 +1,13 @@
-apiDir: "../headless-site-api/src/main/java"
-apiPackagePath: "com.liferay.headless.site"
+apiDir: ../headless-site-api/src/main/java
+apiPackagePath: com.liferay.headless.site
 application:
-    baseURI: "/headless-site"
-    className: "HeadlessSiteApplication"
-    name: "Liferay.Headless.Site"
-author: "Rubén Pulido"
-clientDir: "../headless-site-client/src/main/java"
+    baseURI: /headless-site
+    className: HeadlessSiteApplication
+    name: Liferay.Headless.Site
+author: Rubén Pulido
+clientDir: ../headless-site-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
-testDir: "../headless-site-test/src/testIntegration/java"
+testDir: ../headless-site-test/src/testIntegration/java

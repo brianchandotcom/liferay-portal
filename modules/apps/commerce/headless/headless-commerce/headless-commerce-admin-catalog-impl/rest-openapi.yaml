@@ -2605,8 +2605,8 @@ info:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '4.0.71'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
     title: Liferay Commerce Admin Catalog API
     version: v1.0
 openapi: 3.0.0
@@ -3670,7 +3670,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   HeadlessCommerceAdminCatalog.write
-            summary: "Deletes a Currency by external reference code."
+            summary: Deletes a Currency by external reference code.
             tags: ["Currency"]
         get:
             operationId: getCurrencyByExternalReferenceCode
@@ -3735,7 +3735,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   HeadlessCommerceAdminCatalog.write
-            summary: "Gets a Currency by external reference code."
+            summary: Gets a Currency by external reference code.
             tags: ["Currency"]
         patch:
             operationId: patchCurrencyByExternalReferenceCode
@@ -3809,7 +3809,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   HeadlessCommerceAdminCatalog.write
-            summary: "Updates a Currency by external reference code."
+            summary: Updates a Currency by external reference code.
             tags: ["Currency"]
     "/currencies/{id}":
         delete:

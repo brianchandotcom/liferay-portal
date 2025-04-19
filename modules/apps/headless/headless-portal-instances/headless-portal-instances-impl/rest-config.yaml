@@ -1,13 +1,13 @@
-apiDir: "../headless-portal-instances-api/src/main/java"
-apiPackagePath: "com.liferay.headless.portal.instances"
+apiDir: ../headless-portal-instances-api/src/main/java
+apiPackagePath: com.liferay.headless.portal.instances
 application:
-    baseURI: "/headless-portal-instances"
-    className: "HeadlessPortalInstancesApplication"
-    name: "Liferay.Headless.Portal.Instances"
-author: "Alberto Chaparro"
-clientDir: "../headless-portal-instances-client/src/main/java"
+    baseURI: /headless-portal-instances
+    className: HeadlessPortalInstancesApplication
+    name: Liferay.Headless.Portal.Instances
+author: Alberto Chaparro
+clientDir: ../headless-portal-instances-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
-testDir: "../headless-portal-instances-test/src/testIntegration/java"
+testDir: ../headless-portal-instances-test/src/testIntegration/java

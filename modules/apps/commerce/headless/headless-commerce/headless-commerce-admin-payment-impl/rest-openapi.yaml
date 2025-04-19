@@ -182,8 +182,8 @@ info:
         "Liferay Commerce Admin Payment API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.payment.client', and version '1.0.14'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
     title: Liferay Commerce Admin Payment API
     version: v1.0
 openapi: 3.0.0

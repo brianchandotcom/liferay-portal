@@ -1,11 +1,11 @@
-apiDir: "../notification-rest-api/src/main/java"
-apiPackagePath: "com.liferay.notification.rest"
+apiDir: ../notification-rest-api/src/main/java
+apiPackagePath: com.liferay.notification.rest
 application:
-    baseURI: "/notification"
-    className: "NotificationRESTApplication"
-    name: "Liferay.Notification.REST"
-author: "Gabriel Albuquerque"
-clientDir: "../notification-rest-client/src/main/java"
+    baseURI: /notification
+    className: NotificationRESTApplication
+    name: Liferay.Notification.REST
+author: Gabriel Albuquerque
+clientDir: ../notification-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
-testDir: "../notification-rest-test/src/testIntegration/java"
+testDir: ../notification-rest-test/src/testIntegration/java

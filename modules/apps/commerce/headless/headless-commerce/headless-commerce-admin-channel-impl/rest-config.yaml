@@ -1,12 +1,12 @@
-apiDir: "../headless-commerce-admin-channel-api/src/main/java"
-apiPackagePath: "com.liferay.headless.commerce.admin.channel"
+apiDir: ../headless-commerce-admin-channel-api/src/main/java
+apiPackagePath: com.liferay.headless.commerce.admin.channel
 application:
-    baseURI: "/headless-commerce-admin-channel"
-    className: "HeadlessCommerceAdminChannelApplication"
-    name: "Liferay.Headless.Commerce.Admin.Channel"
-author: "Andrea Sbarra"
-clientDir: "../headless-commerce-admin-channel-client/src/main/java"
+    baseURI: /headless-commerce-admin-channel
+    className: HeadlessCommerceAdminChannelApplication
+    name: Liferay.Headless.Commerce.Admin.Channel
+author: Andrea Sbarra
+clientDir: ../headless-commerce-admin-channel-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: false
 forcePredictableSchemaPropertyName: false
-testDir: "../headless-commerce-admin-channel-test/src/testIntegration/java"
+testDir: ../headless-commerce-admin-channel-test/src/testIntegration/java

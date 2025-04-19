@@ -34,7 +34,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     description:
                         The Display Page Template's creator.
                     readOnly: true
@@ -69,7 +69,7 @@ components:
                         Specifies if the Display Page Template is the default one for the content type.
                     type: boolean
                 pageDefinition:
-                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition
                 siteId:
                     description:
                         The ID of the site to which this Page Template is scoped.
@@ -186,9 +186,9 @@ info:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.headless.admin.content.client', and version '2.0.41'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Headless Admin Content"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Headless Admin Content
     version: v1.0
 openapi: 3.0.1
 paths:
@@ -304,10 +304,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                            $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition
                     application/xml:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                            $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition
             responses:
                 200:
                     content:
@@ -381,12 +381,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                                 type: array
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/draft":
@@ -406,19 +406,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                            $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                     application/xml:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                            $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                         application/xml:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/by-version/{version}":
         delete:
@@ -480,10 +480,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                         application/xml:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/versions":
         get:
@@ -520,11 +520,11 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent
                                 type: array
             tags: ["StructuredContent"]

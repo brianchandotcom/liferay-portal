@@ -1,11 +1,11 @@
-apiDir: "../headless-batch-engine-api/src/main/java"
-apiPackagePath: "com.liferay.headless.batch.engine"
+apiDir: ../headless-batch-engine-api/src/main/java
+apiPackagePath: com.liferay.headless.batch.engine
 application:
-    baseURI: "/headless-batch-engine"
-    className: "HeadlessBatchEngineApplication"
-    name: "Liferay.Headless.Batch.Engine"
-author: "Ivica Cardic"
-clientDir: "../headless-batch-engine-client/src/main/java"
+    baseURI: /headless-batch-engine
+    className: HeadlessBatchEngineApplication
+    name: Liferay.Headless.Batch.Engine
+author: Ivica Cardic
+clientDir: ../headless-batch-engine-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false

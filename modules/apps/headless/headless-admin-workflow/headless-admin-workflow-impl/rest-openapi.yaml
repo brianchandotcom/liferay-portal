@@ -673,9 +673,9 @@ info:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.headless.admin.workflow.client', and version '4.0.38'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Headless Admin Workflow"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Headless Admin Workflow
     version: v1.0
 openapi: 3.0.1
 paths:

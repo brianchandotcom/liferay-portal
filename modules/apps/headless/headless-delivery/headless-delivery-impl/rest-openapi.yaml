@@ -1493,10 +1493,10 @@ components:
                     description:
                         The list of the document data definition type's data definition fields.
                     items:
-                        $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
+                        $ref: ../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField
                     type: array
                 dataLayout:
-                    $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout"
+                    $ref: ../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout
                     description:
                         The layout of the document data definition type fields.
                 dateCreated:
@@ -1700,10 +1700,10 @@ components:
                     description:
                         The list of fields that store the structured content's information.
                     items:
-                        $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
+                        $ref: ../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField
                     type: array
                 dataLayout:
-                    $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout"
+                    $ref: ../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout
                     description:
                         The layout of the document data definition type fields.
                 dateCreated:
@@ -1861,7 +1861,7 @@ components:
                     description:
                         A list of segments the experience is used for.
                     items:
-                        $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Segment"
+                        $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Segment
                     type: array
             type: object
         Fragment:
@@ -6125,9 +6125,9 @@ info:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.headless.delivery.client', and version '4.0.94'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Headless Delivery"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Headless Delivery
     version: v1.0
 openapi: 3.0.1
 paths:

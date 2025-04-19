@@ -256,7 +256,7 @@ components:
                     description:
                         The content type (and optionally subtype) associated to the display page template.
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The display page template's creator. It is not returned by default. It can be embedded via
@@ -354,7 +354,7 @@ components:
                 A display page template folder.
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The display page template folder's creator. It is not returned by default. It can be embedded
@@ -430,7 +430,7 @@ components:
                 A composition of fragments that can be added to a site page.
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The fragment composition's creator. It is not returned by default. It can be embedded via
@@ -1085,7 +1085,7 @@ components:
                 A page with common elements (header, footer, ...) used for all or several pages of a site.
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The master page's creator. It is not returned by default. It can be embedded via nestedFields.
@@ -1126,14 +1126,14 @@ components:
                     description:
                         The external references to the associated keywords.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 keywords:
                     description:
                         The associated keywords. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
                     readOnly: true
                     type: array
                 markedAsDefault:
@@ -1161,7 +1161,7 @@ components:
                         The associated categories. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
                     readOnly: true
                     type: array
                 taxonomyCategoryItemExternalReferences:
@@ -1169,7 +1169,7 @@ components:
                     description:
                         The external references to the associated categories.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 thumbnail:
                     $ref: "#/components/schemas/ItemExternalReference"
@@ -2195,7 +2195,7 @@ components:
                 propertyName: type
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The page template's creator. It is not returned by default. It can be embedded via nestedFields.
@@ -2237,14 +2237,14 @@ components:
                     description:
                         The external references to the associated keywords.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 keywords:
                     description:
                         The associated keywords. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
                     readOnly: true
                     type: array
                 name:
@@ -2278,7 +2278,7 @@ components:
                         The associated categories. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
                     readOnly: true
                     type: array
                 taxonomyCategoryItemExternalReferences:
@@ -2286,7 +2286,7 @@ components:
                     description:
                         The external references to the associated categories.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 type:
                     # @review
@@ -2308,7 +2308,7 @@ components:
                 A page template set.
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The page template set's creator. It is not returned by default. It can be embedded via
@@ -2616,7 +2616,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The page's creator. It is not returned by default. It can be embedded via nestedFields.
@@ -2672,7 +2672,7 @@ components:
                     description:
                         The external references to the associated keywords.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 keywords:
                     # @review
@@ -2680,7 +2680,7 @@ components:
                         The associated keywords. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
                     readOnly: true
                     type: array
                 name_i18n:
@@ -2716,7 +2716,7 @@ components:
                         The associated categories. They are not returned by default. They can be embedded via
                         nestedFields.
                     items:
-                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
                     readOnly: true
                     type: array
                 taxonomyCategoryItemExternalReferences:
@@ -2724,7 +2724,7 @@ components:
                     description:
                         The external references to the associated categories.
                     items:
-                        "$ref": "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 type:
                     enum:
@@ -2795,7 +2795,7 @@ components:
                 The definition of a Utility Page.
             properties:
                 creator:
-                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
                     # @review
                     description:
                         The utility page's creator. It is not returned by default. It can be embedded via nestedFields.

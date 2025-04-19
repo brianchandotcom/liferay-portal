@@ -1,11 +1,11 @@
-apiDir: "../headless-commerce-admin-payment-api/src/main/java"
-apiPackagePath: "com.liferay.headless.commerce.admin.payment"
+apiDir: ../headless-commerce-admin-payment-api/src/main/java
+apiPackagePath: com.liferay.headless.commerce.admin.payment
 application:
-    baseURI: "/headless-commerce-admin-payment"
-    className: "HeadlessCommerceAdminPaymentApplication"
-    name: "Liferay.Headless.Commerce.Admin.Payment"
-author: "Alessio Antonio Rendina"
-clientDir: "../headless-commerce-admin-payment-client/src/main/java"
+    baseURI: /headless-commerce-admin-payment
+    className: HeadlessCommerceAdminPaymentApplication
+    name: Liferay.Headless.Commerce.Admin.Payment
+author: Alessio Antonio Rendina
+clientDir: ../headless-commerce-admin-payment-client/src/main/java
 compatibilityVersion: 9
 forcePredictableSchemaPropertyName: true
-testDir: "../headless-commerce-admin-payment-test/src/testIntegration/java"
+testDir: ../headless-commerce-admin-payment-test/src/testIntegration/java

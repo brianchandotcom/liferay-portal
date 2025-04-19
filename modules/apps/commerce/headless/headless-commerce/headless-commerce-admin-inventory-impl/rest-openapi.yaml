@@ -54,11 +54,11 @@ components:
                     readOnly: true
                     type: integer
                 errorDescription:
-                    example: "Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format."
+                    example: Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format.
                     readOnly: true
                     type: string
                 message:
-                    example: "No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}"
+                    example: No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}
                     readOnly: true
                     type: string
                 status:
@@ -131,7 +131,7 @@ components:
                     example: true
                     type: boolean
                 city:
-                    example: "Diamond Bar"
+                    example: Diamond Bar
                     type: string
                 countryISOCode:
                     example: US
@@ -172,13 +172,13 @@ components:
                     example: CA
                     type: string
                 street1:
-                    example: "1400 Montefino Ave"
+                    example: 1400 Montefino Ave
                     type: string
                 street2:
-                    example: "1st floor"
+                    example: 1st floor
                     type: string
                 street3:
-                    example: "suite 200"
+                    example: suite 200
                     type: string
                 type:
                     type: string
@@ -279,7 +279,7 @@ components:
                     $ref: "#/components/schemas/Channel"
                     readOnly: true
                 channelExternalReferenceCode:
-                    example: "PAB-34098-789-N"
+                    example: PAB-34098-789-N
                     type: string
                 channelId:
                     example: 30130
@@ -293,7 +293,7 @@ components:
                     readOnly: true
                     type: integer
                 warehouseExternalReferenceCode:
-                    example: "DAB-34098-789-N"
+                    example: DAB-34098-789-N
                     type: string
                 warehouseId:
                     example: 30324
@@ -397,22 +397,22 @@ components:
                 authorizationCode:
                     authorizationUrl: /oauth/authorize
                     scopes:
-                        CommerceOpenApiAdmin.admin: "Grants access to admin operations"
-                        CommerceOpenApiAdmin.read: "Grants read access"
-                        CommerceOpenApiAdmin.write: "Grants write access"
+                        CommerceOpenApiAdmin.admin: Grants access to admin operations
+                        CommerceOpenApiAdmin.read: Grants read access
+                        CommerceOpenApiAdmin.write: Grants write access
                     tokenUrl: /oauth/token
             type: oauth2
 info:
     contact:
         email: team-commerce@liferay.com
-        name: "Commerce Team"
+        name: Commerce Team
     description:
         "Liferay Commerce Admin Inventory API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.40'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Liferay Commerce Admin Inventory API"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Liferay Commerce Admin Inventory API
     version: v1.0
 openapi: 3.0.0
 paths:
@@ -451,7 +451,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Replenishment Item by external reference code."
+            summary: Deletes a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
         get:
@@ -517,7 +517,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Replenishment Item by external reference code."
+            summary: Gets a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
         patch:
@@ -592,7 +592,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Replenishment Item by external reference code."
+            summary: Updates a Replenishment Item by external reference code.
             tags:
                 -   ReplenishmentItem
         put:
@@ -705,7 +705,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Replenishment Item by ID."
+            summary: Deletes a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
         get:
@@ -770,7 +770,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Replenishment Item by ID."
+            summary: Gets a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
         patch:
@@ -844,7 +844,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Replenishment Item by ID."
+            summary: Updates a Replenishment Item by ID.
             tags:
                 -   ReplenishmentItem
     "/skus/by-sku/{sku}/replenishment-items":
@@ -920,7 +920,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a list of Replenishment Items related to a SKU."
+            summary: Gets a list of Replenishment Items related to a SKU.
             tags:
                 -   ReplenishmentItem
     "/warehouse-account-groups/{warehouseAccountGroupId}":
@@ -1364,7 +1364,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Warehouse Item by ID."
+            summary: Deletes a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
         get:
@@ -1430,7 +1430,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Warehouse Item by ID."
+            summary: Gets a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
         patch:
@@ -1501,7 +1501,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Warehouse Item by ID."
+            summary: Updates a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
         post:
@@ -1582,7 +1582,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates a Warehouse Item by external reference code."
+            summary: Creates a Warehouse Item by external reference code.
             tags:
                 -   WarehouseItem
         put:
@@ -1663,7 +1663,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates or updates a Warehouse Item by external reference code."
+            summary: Creates or updates a Warehouse Item by external reference code.
             tags:
                 -   WarehouseItem
     "/warehouseItems/updated":
@@ -1795,7 +1795,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Warehouse Item by ID."
+            summary: Deletes a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
         get:
@@ -1860,7 +1860,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Warehouse Item by ID."
+            summary: Gets a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
         patch:
@@ -1930,7 +1930,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Warehouse Item by ID."
+            summary: Updates a Warehouse Item by ID.
             tags:
                 -   WarehouseItem
     "/warehouses":
@@ -2015,7 +2015,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a List of Warehouses."
+            summary: Gets a List of Warehouses.
             tags:
                 -   Warehouse
         post:
@@ -2084,7 +2084,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates or updates a Warehouse."
+            summary: Creates or updates a Warehouse.
             tags:
                 -   Warehouse
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}":
@@ -2120,7 +2120,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Warehouse by external reference code."
+            summary: Deletes a Warehouse by external reference code.
             tags:
                 -   Warehouse
         get:
@@ -2184,7 +2184,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Warehouse by external reference code."
+            summary: Gets a Warehouse by external reference code.
             tags:
                 -   Warehouse
         patch:
@@ -2253,7 +2253,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Warehouse by external reference code."
+            summary: Updates a Warehouse by external reference code.
             tags:
                 -   Warehouse
         put:
@@ -2332,7 +2332,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates or updates a Warehouse."
+            summary: Creates or updates a Warehouse.
             tags:
                 -   Warehouse
     "/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-account-groups":
@@ -3055,7 +3055,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a list of Warehouse Items related to an Warehouse."
+            summary: Gets a list of Warehouse Items related to an Warehouse.
             tags:
                 -   WarehouseItem
         post:
@@ -3134,7 +3134,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates or updates an Warehouse Item."
+            summary: Creates or updates an Warehouse Item.
             tags:
                 -   WarehouseItem
     "/warehouses/{id}":
@@ -3171,7 +3171,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Deletes a Warehouse by ID."
+            summary: Deletes a Warehouse by ID.
             tags:
                 -   Warehouse
         get:
@@ -3236,7 +3236,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a Warehouse by ID."
+            summary: Gets a Warehouse by ID.
             tags:
                 -   Warehouse
         patch:
@@ -3306,7 +3306,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Updates a Warehouse by ID."
+            summary: Updates a Warehouse by ID.
             tags:
                 -   Warehouse
     "/warehouses/{id}/warehouse-account-groups":
@@ -4082,7 +4082,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a list of Warehouse Items related to a Warehouse."
+            summary: Gets a list of Warehouse Items related to a Warehouse.
             tags:
                 -   WarehouseItem
         post:
@@ -4162,7 +4162,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates or updates an Warehouse Item."
+            summary: Creates or updates an Warehouse Item.
             tags:
                 -   WarehouseItem
     "/warehouses/{warehouseId}/replenishment-items":
@@ -4242,7 +4242,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a list of Replenishment Items related to a Warehouse."
+            summary: Gets a list of Replenishment Items related to a Warehouse.
             tags:
                 -   ReplenishmentItem
     "/warehouses/{warehouseId}/skus/by-sku/{sku}/replenishment-items":
@@ -4328,13 +4328,13 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.write
-            summary: "Creates a Replenishment Item by warehouse ID and SKU."
+            summary: Creates a Replenishment Item by warehouse ID and SKU.
             tags:
                 -   ReplenishmentItem
 servers:
     -   description:
             "Liferay Commerce API server"
-        url: "https://commerce.{environment}.liferay.com/commerce-admin-inventory/{basePath}"
+        url: https://commerce.{environment}.liferay.com/commerce-admin-inventory/{basePath}
         variables:
             basePath:
                 default: v1.0
@@ -4378,4 +4378,4 @@ servers:
                     -   https
     -   description:
             "SwaggerHub API Auto Mocking"
-        url: "https://virtserver.swaggerhub.com/liferay6/commerce-admin-inventory/v1.0"
+        url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-inventory/v1.0

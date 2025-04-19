@@ -1,12 +1,12 @@
-apiDir: "../headless-asset-library-api/src/main/java"
-apiPackagePath: "com.liferay.headless.asset.library"
+apiDir: ../headless-asset-library-api/src/main/java
+apiPackagePath: com.liferay.headless.asset.library
 application:
-    baseURI: "/headless-asset-library"
-    className: "HeadlessAssetLibraryApplication"
-    name: "Liferay.Headless.Asset.Library"
-author: "Roberto Díaz"
-clientDir: "../headless-asset-library-client/src/main/java"
+    baseURI: /headless-asset-library
+    className: HeadlessAssetLibraryApplication
+    name: Liferay.Headless.Asset.Library
+author: Roberto Díaz
+clientDir: ../headless-asset-library-client/src/main/java
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
-testDir: "../headless-asset-library-test/src/testIntegration/java"
+testDir: ../headless-asset-library-test/src/testIntegration/java

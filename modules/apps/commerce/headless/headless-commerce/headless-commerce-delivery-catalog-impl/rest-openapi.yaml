@@ -1274,7 +1274,7 @@ paths:
                 -   BearerAuth: []
                 -   OAuth2:
                         -   CommerceOpenApiAdmin.read
-            summary: "Gets a list of channels."
+            summary: Gets a list of channels.
             tags:
                 -   Channel
     "/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/pins":

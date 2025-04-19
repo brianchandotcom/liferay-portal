@@ -486,8 +486,8 @@ info:
         "Liferay Commerce Admin Pricing API. A Java client JAR is available for use with the group ID 'com.liferay',
         artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.43'."
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
     title: Liferay Commerce Admin Pricing API
     version: v1.0
 openapi: 3.0.0

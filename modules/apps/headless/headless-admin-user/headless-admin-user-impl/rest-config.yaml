@@ -1,10 +1,10 @@
-apiDir: "../headless-admin-user-api/src/main/java"
-apiPackagePath: "com.liferay.headless.admin.user"
+apiDir: ../headless-admin-user-api/src/main/java
+apiPackagePath: com.liferay.headless.admin.user
 application:
-    baseURI: "/headless-admin-user"
-    className: "HeadlessAdminUserApplication"
-    name: "Liferay.Headless.Admin.User"
-author: "Javier Gamarra"
-clientDir: "../headless-admin-user-client/src/main/java"
+    baseURI: /headless-admin-user
+    className: HeadlessAdminUserApplication
+    name: Liferay.Headless.Admin.User
+author: Javier Gamarra
+clientDir: ../headless-admin-user-client/src/main/java
 compatibilityVersion: 9
-testDir: "../headless-admin-user-test/src/testIntegration/java"
+testDir: ../headless-admin-user-test/src/testIntegration/java

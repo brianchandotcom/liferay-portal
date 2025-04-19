@@ -74,7 +74,8 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 			String unquotedValue = s.substring(1, s.length() - 1);
 
-			if (unquotedValue.contains("\\") || unquotedValue.matches("\\d+") ||
+			if (unquotedValue.contains("\\") ||
+				unquotedValue.matches("\\d+(\\.\\d*)?") ||
 				unquotedValue.matches("[Ff]alse") ||
 				unquotedValue.matches("[Tt]rue") ||
 				unquotedValue.startsWith("#") ||

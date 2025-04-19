@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {endpoint} from '../utils/constants';
+import {endpoints} from '../utils/constants';
 import {request} from '../utils/request';
 
 export async function getLearningPaths(pageSize) {
@@ -13,7 +13,7 @@ export async function getLearningPaths(pageSize) {
 			pageSize,
 			sort: 'position:asc',
 		},
-		url: `${endpoint.learningPaths}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
+		url: `${endpoints.learningPaths}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 	});
 
 	return data.items;

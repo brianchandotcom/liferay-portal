@@ -1,1 +1,1 @@
-server.basePath: "/o/portal-search-elasticsearch-monitoring/monitoring-proxy"
+server.basePath: /o/portal-search-elasticsearch-monitoring/monitoring-proxy

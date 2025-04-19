@@ -81,6 +81,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 				unquotedValue.startsWith("#") ||
 				unquotedValue.startsWith("&") ||
 				unquotedValue.startsWith("*") ||
+				unquotedValue.startsWith("[") ||
 				unquotedValue.startsWith("{")) {
 
 				return s;

@@ -1,12 +1,7 @@
 application/json: {  }
 etc_hosts: |
     {
-        "mozilla.org": "127.0.0.1",
-        "www.able.com": "127.0.0.1",
-        "www.baker.com": "127.0.0.1",
-        "www.charlie.com": "127.0.0.1",
-        "www.dog.com": "127.0.0.1",
-        "www.easy.com": "127.0.0.1",
-        "www.fox.com": "127.0.0.1"
+        mozilla.org: 127.0.0.1,
+        www.fox.com: 127.0.0.1
     }
 tags: [ "Guest" ]

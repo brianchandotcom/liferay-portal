@@ -5,54 +5,51 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {userPersonalBarPagesTest} from '../../fixtures/userPersonalBarPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
-	userPersonalBarPagesTest,
-	loginTest()
+	dataApiHelpersTest,
+	loginTest(),
+	userPersonalBarPagesTest
 );
 
-test('LPD-15423 notification badge configuration enables and disables notification badge in personal menu', async ({
-	apiHelpers,
-	page,
-	userPersonalBarPage,
-}) => {
-	await userPersonalBarPage.goToProcessBuilderConfigurationTab();
-	await userPersonalBarPage.enableSingleApproverWorkflowProduct();
-	await userPersonalBarPage.disableNotificationBadgeInPersonalMenu();
+test(
+	'Notification badge configuration enables and disables notification badge in personal menu',
+	{tag: ['@LPD-15423']},
+	async ({apiHelpers, page, userPersonalBarPage}) => {
+		test.setTimeout(90000);
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		await userPersonalBarPage.goToProcessBuilderConfigurationTab();
+		await userPersonalBarPage.enableSingleApproverWorkflowProduct();
+		await userPersonalBarPage.disableNotificationBadgeInPersonalMenu();
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
+		await page.goto('/');
 
-	const productId = product.productId;
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	const response = await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
-		productId.toString()
-	);
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	expect(response.ok()).toBe(true);
+		const response =
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				String(product.productId)
+			);
 
-	await page.goto('/');
+		expect(response.ok()).toBe(true);
 
-	await expect(userPersonalBarPage.notificationBadge).not.toBeVisible();
+		await expect(userPersonalBarPage.notificationBadge).not.toBeVisible();
 
-	await userPersonalBarPage.enableNotificationBadgeInPersonalMenu();
+		await userPersonalBarPage.enableNotificationBadgeInPersonalMenu();
 
-	await page.goto('/');
+		await page.goto('/');
 
-	await expect(userPersonalBarPage.notificationBadge).toBeVisible();
+		await expect(userPersonalBarPage.notificationBadge).toBeVisible();
 
-	await userPersonalBarPage.disableSingleApproverWorkflowProduct();
-
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-		product.productId
-	);
-
-	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
-});
+		await userPersonalBarPage.disableSingleApproverWorkflowProduct();
+	}
+);

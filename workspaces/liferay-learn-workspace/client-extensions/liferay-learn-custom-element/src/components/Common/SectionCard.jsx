@@ -18,14 +18,16 @@ const SectionCard = ({
 	title,
 }) => {
 	return (
-		<ClayLayout.Col className="d-flex course-layout-col" key={index} lg={4} md={6} sm={12} xl={4} xs={12}>
+		<ClayLayout.Col className="course-layout-col d-flex" key={index} lg={4} md={6} sm={12} xl={4} xs={12}>
 			<a className="section-card-link" href={link} >
 				<div className="d-flex section-card-container">
 					<div className="card-content d-flex flex-column justify-content-between">
 						<h4 className="title">{title}</h4>
+
 						<div className="description">
 							{getShortText(description, 150)}
 						</div>
+
 						<div className="card-tags-container d-flex learn-education">
 							<ClayTooltipProvider>
 								<div

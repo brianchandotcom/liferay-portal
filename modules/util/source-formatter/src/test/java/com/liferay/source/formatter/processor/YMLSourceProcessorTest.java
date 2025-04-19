@@ -28,6 +28,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortMountPaths() throws Exception {
+		test("SortMountPaths.testyaml");
+	}
+
+	@Test
 	public void testFormatIndentations() throws Exception {
 		test("FormatIndentations.testyaml");
 	}

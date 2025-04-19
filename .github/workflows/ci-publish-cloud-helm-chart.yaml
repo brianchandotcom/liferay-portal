@@ -2,8 +2,8 @@ defaults:
     run:
         shell: bash
 env:
-    CHART_VERSION: "0.0.0"
-    GAR_REPOSITORY: "us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
+    CHART_VERSION: 0.0.0
+    GAR_REPOSITORY: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
 jobs:
     publish-cloud-helm-chart:
         if: (github.repository == 'liferay/liferay-portal')

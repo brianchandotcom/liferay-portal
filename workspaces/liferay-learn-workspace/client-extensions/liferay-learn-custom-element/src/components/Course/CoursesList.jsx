@@ -6,8 +6,7 @@
 import '../../index.scss';
 
 import ClayLayout from '@clayui/layout';
-import React from 'react';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {getCoursesAndFirstLessons} from '../../services/course';
 import SectionCard from '../Common/SectionCard';

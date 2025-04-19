@@ -1,15 +1,15 @@
-apiDir: "../portal-tools-rest-builder-test-api/src/main/java"
-apiPackagePath: "com.liferay.portal.tools.rest.builder.test"
+apiDir: ../portal-tools-rest-builder-test-api/src/main/java
+apiPackagePath: com.liferay.portal.tools.rest.builder.test
 application:
-    baseURI: "/test"
-    className: "PortalToolsRESTBuilderTestApplication"
-    name: "Liferay.Portal.Tools.REST.Builder.Test"
-author: "Alejandro Tardín"
+    baseURI: /test
+    className: PortalToolsRESTBuilderTestApplication
+    name: Liferay.Portal.Tools.REST.Builder.Test
+author: Alejandro Tardín
 changeTrackingEnabled: true
-clientDir: "../portal-tools-rest-builder-test-client/src/main/java"
+clientDir: ../portal-tools-rest-builder-test-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateClientJS: true
 generateGraphQL: false
 generatePermissions: true
-testDir: "../portal-tools-rest-builder-test-test/src/testIntegration/java"
+testDir: ../portal-tools-rest-builder-test-test/src/testIntegration/java

@@ -19,9 +19,9 @@ env:
 jdk: openjdk8
 jobs:
     include:
-        -   name: "Analysis"
+        -   name: Analysis
             script: ./gradlew checkSourceFormatting packageRunLint pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
-        -   name: "Tests"
+        -   name: Tests
             after_success:
                 -   test ${TRAVIS_BRANCH} = "7.1.x" &&
                     test ${TRAVIS_EVENT_TYPE} = "push" &&

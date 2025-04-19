@@ -1,11 +1,11 @@
-apiDir: "../search-experiences-rest-api/src/main/java"
-apiPackagePath: "com.liferay.search.experiences.rest"
+apiDir: ../search-experiences-rest-api/src/main/java
+apiPackagePath: com.liferay.search.experiences.rest
 application:
-    baseURI: "/search-experiences-rest"
-    className: "SearchExperiencesRESTApplication"
-    name: "Liferay.Search.Experiences.REST"
-author: "Brian Wing Shun Chan"
-clientDir: "../search-experiences-rest-client/src/main/java"
+    baseURI: /search-experiences-rest
+    className: SearchExperiencesRESTApplication
+    name: Liferay.Search.Experiences.REST
+author: Brian Wing Shun Chan
+clientDir: ../search-experiences-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
-testDir: "../search-experiences-rest-test/src/testIntegration/java"
+testDir: ../search-experiences-rest-test/src/testIntegration/java

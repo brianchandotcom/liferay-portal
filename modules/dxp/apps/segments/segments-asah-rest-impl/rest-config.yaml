@@ -1,11 +1,11 @@
-apiDir: "../segments-asah-rest-api/src/main/java"
-apiPackagePath: "com.liferay.segments.asah.rest"
+apiDir: ../segments-asah-rest-api/src/main/java
+apiPackagePath: com.liferay.segments.asah.rest
 application:
-    baseURI: "/segments-asah"
-    className: "SegmentsAsahRESTApplication"
-    name: "Liferay.Segments.Asah.REST"
-author: "Javier Gamarra"
-clientDir: "../segments-asah-rest-client/src/main/java"
+    baseURI: /segments-asah
+    className: SegmentsAsahRESTApplication
+    name: Liferay.Segments.Asah.REST
+author: Javier Gamarra
+clientDir: ../segments-asah-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
-testDir: "../segments-asah-rest-test/src/testIntegration/java"
+testDir: ../segments-asah-rest-test/src/testIntegration/java

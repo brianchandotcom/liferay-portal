@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "latest"
+appVersion: latest
 description:
     Liferay is an all-in-one DXP, LCAP, and Commerce platform.
 icon: https://www-cdn.liferay.com/documents/d/guest/liferay-logo

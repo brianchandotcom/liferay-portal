@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: "latest"
+appVersion: latest
 dependencies:
     -   name: liferay-aws
-        repository: "file://../aws"
+        repository: file://../aws
         version: 0.0.0
 description:
     Liferay is an all-in-one DXP, LCAP, and Commerce platform. This chart is optimized for AWS Marketplace.

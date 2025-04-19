@@ -36,11 +36,11 @@ env:
     -   name: DNS_MEMBERSHIP_SERVICE_NAME
         value: liferay-default-headless
     -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
-        value: "${env.POD_ID}"
+        value: ${env.POD_ID}
     -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
-        value: "${env.POD_ID}"
+        value: ${env.POD_ID}
     -   name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
-        value: "${env.POD_ID}:8080"
+        value: ${env.POD_ID}:8080
     -   name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
         value: "true"
     -   name: POD_ID

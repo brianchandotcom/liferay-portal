@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
     annotations:
-        "helm.sh/hook": test
+        helm.sh/hook: test
     labels:
         {{- include "liferay.labels" . | nindent 8 }}
     name: {{ include "liferay.name" . }}-test-connection

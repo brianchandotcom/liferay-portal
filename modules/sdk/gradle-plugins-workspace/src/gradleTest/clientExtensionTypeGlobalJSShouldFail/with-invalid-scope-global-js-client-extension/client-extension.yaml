@@ -1,4 +1,4 @@
 with-invalid-scope-global-js-client-extension:
-    scope: "foo"
+    scope: foo
     type: globalJS
     url: src/dummy.js

@@ -1,5 +1,5 @@
 fire:
-    clayURL: "css/clay.css"
-    mainURL: "css/main.css"
-    name: "fire"
-    type: "themeCSS"
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: fire
+    type: themeCSS

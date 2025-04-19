@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
@@ -419,6 +420,12 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 					return _sortParameters(content1, content2);
 				}
 
+				if (content1.contains("mountPath: ") &&
+					content2.contains("mountPath: ")) {
+
+					return _sortMounts(content1, content2);
+				}
+
 				return 0;
 			}
 
@@ -455,12 +462,25 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			return parameter.replaceAll("(?s).*in: (\\S*).*", "$1");
 		}
 
+		private String _getMountPathValue(String parameter) {
+			return parameter.replaceAll("(?s).*mountPath: (\\S*).*", "$1");
+		}
+
 		private int _getParameterWeight(String definitionKey) {
 			if (_parametersWeightMap.containsKey(definitionKey)) {
 				return _parametersWeightMap.get(definitionKey);
 			}
 
 			return -1;
+		}
+
+		private int _sortMounts(String mountPath1, String mountPath2) {
+			String mountPathValue1 = _getMountPathValue(mountPath1);
+			String mountPathValue2 = _getMountPathValue(mountPath2);
+
+			PropertyValueComparator comparator = new PropertyValueComparator();
+
+			return comparator.compare(mountPathValue1, mountPathValue2);
 		}
 
 		private int _sortParameters(String parameter1, String parameter2) {

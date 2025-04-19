@@ -5,8 +5,6 @@
 
 import axios from 'axios';
 
-import {getCurrentSiteId} from './util';
-
 export function request(config) {
 	return new Promise((resolve, reject) => {
 		axios
@@ -15,7 +13,7 @@ export function request(config) {
 					headers: {
 						'Accept-Language':
 							Liferay.ThemeDisplay.getLanguageId().split('_')[0],
-						'scope-id': getCurrentSiteId(),
+						'scope-id': Liferay.ThemeDisplay.getScopeGroupId(),
 						'x-csrf-token': Liferay.authToken,
 					},
 					method: 'get',

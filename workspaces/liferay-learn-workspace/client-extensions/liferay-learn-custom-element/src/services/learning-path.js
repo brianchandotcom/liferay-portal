@@ -5,7 +5,6 @@
 
 import {endpoint} from '../utils/constants';
 import {request} from '../utils/request';
-import {getCurrentSiteId} from '../utils/util';
 
 export async function getLearningPaths(pageSize) {
 	const data = await request({
@@ -14,7 +13,7 @@ export async function getLearningPaths(pageSize) {
 			pageSize,
 			sort: 'position:asc',
 		},
-		url: `${endpoint.learningPaths}scopes/${getCurrentSiteId()}`,
+		url: `${endpoint.learningPaths}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 	});
 
 	return data.items;

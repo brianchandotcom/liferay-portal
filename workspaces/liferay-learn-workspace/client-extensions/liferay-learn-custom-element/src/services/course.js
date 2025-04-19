@@ -5,7 +5,6 @@
 
 import {endpoint} from '../utils/constants';
 import {request} from '../utils/request';
-import {getCurrentSiteId} from '../utils/util';
 
 export async function getCoursesAndFirstLessons() {
 	const data = await request({
@@ -14,7 +13,7 @@ export async function getCoursesAndFirstLessons() {
 			nestedFields: 'course,lesson',
 			pageSize: -1,
 		},
-		url: `${endpoint.modules}scopes/${getCurrentSiteId()}`,
+		url: `${endpoint.modules}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 	});
 
 	return data.items;

@@ -77,9 +77,9 @@ public class GlobalJSCETImplFactoryImpl
 			_jsonFactory.createJSONObject(
 				newGlobalJSCET.getScriptElementAttributesJSON());
 
-		Set<String> keySet = scriptElementAttributesJSONObject.keySet();
+		Set<String> keys = scriptElementAttributesJSONObject.keySet();
 
-		if (keySet.contains("src")) {
+		if (keys.contains("src")) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Use the \"JavaScript URL\" field instead of the attribute " +
 					"\"src\"",

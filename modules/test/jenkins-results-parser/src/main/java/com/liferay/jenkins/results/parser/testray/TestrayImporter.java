@@ -1067,7 +1067,6 @@ public class TestrayImporter {
 
 						propertiesMap.put(
 							"testray.build.name", testrayBuild.getName());
-
 						propertiesMap.put(
 							"testray.build.time",
 							JenkinsResultsParserUtil.toDurationString(

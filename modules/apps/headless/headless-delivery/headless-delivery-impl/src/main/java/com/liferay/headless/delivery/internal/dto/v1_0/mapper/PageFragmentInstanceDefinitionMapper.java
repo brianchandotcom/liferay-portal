@@ -51,6 +51,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -191,29 +192,26 @@ public class PageFragmentInstanceDefinitionMapper {
 			return Collections.emptyList();
 		}
 
-		List<FragmentField> fragmentFields = new ArrayList<>();
-
 		Set<String> backgroundImageIds = jsonObject.keySet();
 
-		for (String backgroundImageId : backgroundImageIds) {
-			JSONObject imageJSONObject = jsonObject.getJSONObject(
-				backgroundImageId);
+		return TransformUtil.transform(
+			backgroundImageIds,
+			backgroundImageId -> {
+				JSONObject imageJSONObject = jsonObject.getJSONObject(
+					backgroundImageId);
 
-			Map<String, String> localizedValues =
-				LocalizedValueUtil.toLocalizedValues(imageJSONObject);
+				Map<String, String> localizedValues =
+					LocalizedValueUtil.toLocalizedValues(imageJSONObject);
 
-			fragmentFields.add(
-				new FragmentField() {
+				return new FragmentField() {
 					{
 						setId(() -> backgroundImageId);
 						setValue(
 							() -> _toFragmentFieldBackgroundImage(
 								imageJSONObject, localizedValues, saveMapping));
 					}
-				});
-		}
-
-		return fragmentFields;
+				};
+			});
 	}
 
 	private Map<String, Object> _getFragmentConfig(
@@ -409,18 +407,13 @@ public class PageFragmentInstanceDefinitionMapper {
 		Map<String, String> editableTypes, JSONObject jsonObject,
 		boolean saveInlineContent, boolean saveMapping) {
 
-		List<FragmentField> fragmentFields = new ArrayList<>();
-
 		Set<String> textIds = jsonObject.keySet();
 
-		for (String textId : textIds) {
-			fragmentFields.add(
-				_toFragmentField(
-					editableTypes, jsonObject, saveInlineContent, saveMapping,
-					textId));
-		}
-
-		return fragmentFields;
+		return TransformUtil.transform(
+			textIds,
+			textId -> _toFragmentField(
+				editableTypes, jsonObject, saveInlineContent, saveMapping,
+				textId));
 	}
 
 	private WidgetInstance[] _getWidgetInstances(

@@ -33,6 +33,7 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.model.impl.TrashEntryImpl;
 import com.liferay.trash.service.base.TrashEntryServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -529,30 +530,30 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	private List<TrashEntry> _filterEntries(List<TrashEntry> entries)
 		throws PrincipalException {
 
-		List<TrashEntry> filteredEntries = new ArrayList<>();
-
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (TrashEntry entry : entries) {
+		return TransformUtil.transform(entries, entry -> {
 			String className = entry.getClassName();
 			long classPK = entry.getClassPK();
 
 			try {
 				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(className);
+						TrashHandlerRegistryUtil.getTrashHandler(className);
 
 				if (trashHandler.hasTrashPermission(
 						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
 
-					filteredEntries.add(entry);
+					return entry;
 				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
 			}
-		}
 
-		return filteredEntries;
+			return null;
+
+		});
+
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

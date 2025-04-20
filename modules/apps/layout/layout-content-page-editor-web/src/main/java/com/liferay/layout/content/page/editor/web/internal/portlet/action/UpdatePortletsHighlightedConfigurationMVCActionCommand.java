@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.WebAppPool;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -110,37 +110,38 @@ public class UpdatePortletsHighlightedConfigurationMVCActionCommand
 	private List<Portlet> _getPortlets(
 		Set<String> portletIds, ThemeDisplay themeDisplay) {
 
-		List<Portlet> portlets = new ArrayList<>();
+		return TransformUtil.transform(
+			portletIds,
+			portletId -> {
+				Portlet portlet = _portletLocalService.getPortletById(
+					themeDisplay.getCompanyId(), portletId);
 
-		for (String portletId : portletIds) {
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
+				if ((portlet == null) ||
+					ArrayUtil.contains(
+						_UNSUPPORTED_PORTLETS_NAMES,
+						portlet.getPortletName())) {
 
-			if ((portlet == null) ||
-				ArrayUtil.contains(
-					_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
-
-				continue;
-			}
-
-			try {
-				if (PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getLayout(), portlet,
-						ActionKeys.ADD_TO_PAGE)) {
-
-					portlets.add(portlet);
+					return null;
 				}
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to check portlet permissions for " +
-						portlet.getPortletId(),
-					portalException);
-			}
-		}
 
-		return portlets;
+				try {
+					if (PortletPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							themeDisplay.getLayout(), portlet,
+							ActionKeys.ADD_TO_PAGE)) {
+
+						return portlet;
+					}
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to check portlet permissions for " +
+							portlet.getPortletId(),
+						portalException);
+				}
+
+				return null;
+			});
 	}
 
 	private JSONArray _getPortletsJSONArray(

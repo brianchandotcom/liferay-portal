@@ -13,6 +13,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -35,7 +36,6 @@ import com.liferay.trash.BaseTrashHandler;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -89,19 +89,13 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<>();
-
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
-			thread.getGroupId(), parentContainerModelId,
-			WorkflowConstants.STATUS_APPROVED, start, end);
-
-		for (MBCategory category : categories) {
-			containerModels.add(category);
-		}
-
-		return containerModels;
+		return TransformUtil.transform(
+			_mbCategoryLocalService.getCategories(
+				thread.getGroupId(), parentContainerModelId,
+				WorkflowConstants.STATUS_APPROVED, start, end),
+			category -> category);
 	}
 
 	@Override

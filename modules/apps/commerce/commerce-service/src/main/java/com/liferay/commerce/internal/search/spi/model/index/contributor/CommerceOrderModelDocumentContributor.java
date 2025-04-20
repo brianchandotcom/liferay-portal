@@ -48,16 +48,16 @@ public class CommerceOrderModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CommerceOrder commerceOrder) {
-		document.setSortableTextFields(
-			ArrayUtil.append(
-				PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS),
-				new String[] {
-					Field.NAME, Field.USER_NAME, "accountName",
-					"commerceOrderTypeExternalReferenceCode",
-					"externalReferenceCode", "purchaseOrderNumber"
-				}));
-
 		try {
+			document.setSortableTextFields(
+				ArrayUtil.append(
+					PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS),
+					new String[] {
+						Field.NAME, Field.USER_NAME, "accountName",
+						"commerceOrderTypeExternalReferenceCode",
+						"externalReferenceCode", "purchaseOrderNumber"
+					}));
+
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 					commerceOrder.getGroupId());

@@ -531,34 +531,28 @@ public class CommerceTermEntryLocalServiceImpl
 			localeSet.addAll(labelMap.keySet());
 		}
 
-		List<CTermEntryLocalization> cTermEntryLocalizations =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			localeSet,
+			locale -> {
+				String description = null;
+				String label = null;
 
-		for (Locale locale : localeSet) {
-			String description = null;
-			String label = null;
+				if (descriptionMap != null) {
+					description = descriptionMap.get(locale);
+				}
 
-			if (descriptionMap != null) {
-				description = descriptionMap.get(locale);
-			}
+				if (labelMap != null) {
+					label = labelMap.get(locale);
+				}
 
-			if (labelMap != null) {
-				label = labelMap.get(locale);
-			}
+				if (Validator.isNull(description) && Validator.isNull(label)) {
+					return null;
+				}
 
-			if (Validator.isNull(description) && Validator.isNull(label)) {
-				continue;
-			}
-
-			CTermEntryLocalization cTermEntryLocalization =
-				_addCommerceTermEntryLocalizedFields(
+				return _addCommerceTermEntryLocalizedFields(
 					companyId, commerceTermEntryId, description, label,
 					LocaleUtil.toLanguageId(locale));
-
-			cTermEntryLocalizations.add(cTermEntryLocalization);
-		}
-
-		return cTermEntryLocalizations;
+			});
 	}
 
 	private CTermEntryLocalization _addCommerceTermEntryLocalizedFields(

@@ -9,7 +9,6 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.Payment;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
@@ -17,6 +16,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +52,6 @@ public class CommercePaymentFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Payment> payments = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -69,25 +66,23 @@ public class CommercePaymentFDSDataProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		String amount = StringPool.BLANK;
-
-		CommerceMoney totalCommerceMoney = commerceOrder.getTotalMoney();
-
-		if (totalCommerceMoney != null) {
-			amount = totalCommerceMoney.format(themeDisplay.getLocale());
-		}
-
-		List<CommerceOrderPayment> commerceOrderPayments =
+		return TransformUtil.transform(
 			_commerceOrderPaymentLocalService.getCommerceOrderPayments(
 				commerceOrder.getCommerceOrderId(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
+				fdsPagination.getEndPosition(), null),
+			commerceOrderPayment -> {
+				String amount = StringPool.BLANK;
 
-		for (CommerceOrderPayment commerceOrderPayment :
-				commerceOrderPayments) {
+				CommerceMoney totalCommerceMoney =
+					commerceOrder.getTotalMoney();
 
-			payments.add(
-				new Payment(
+				if (totalCommerceMoney != null) {
+					amount = totalCommerceMoney.format(
+						themeDisplay.getLocale());
+				}
+
+				return new Payment(
 					commerceOrderPayment.getCommerceOrderPaymentId(),
 					new LabelField(
 						CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
@@ -99,10 +94,8 @@ public class CommercePaymentFDSDataProvider
 									commerceOrderPayment.getStatus()))),
 					amount,
 					dateTimeFormat.format(commerceOrderPayment.getCreateDate()),
-					commerceOrderPayment.getContent()));
-		}
-
-		return payments;
+					commerceOrderPayment.getContent());
+			});
 	}
 
 	@Override

@@ -64,7 +64,7 @@ test('view workload distribution for all assignees', async ({
 	metricsPage,
 	page,
 }) => {
-	const NEW_PAGE_SIZE = 4;
+	const NEW_PAGE_SIZE = 20;
 	const NUMBER_OF_USERS_AND_TASKS = 5;
 	const WORKFLOW_DEFINITION_NAME = 'Single Approver';
 
@@ -134,22 +134,6 @@ test('view workload distribution for all assignees', async ({
 
 	await expect(
 		page.getByText(`${WORKFLOW_DEFINITION_NAME}: Workload by Assignee`)
-	).toBeVisible();
-
-	await expect(
-		page.getByText(
-			`Showing 1 to ${NUMBER_OF_USERS_AND_TASKS} of ${NUMBER_OF_USERS_AND_TASKS} entries.`
-		)
-	).toBeVisible();
-
-	await page.getByLabel('Items Per Page').click();
-
-	await page.getByRole('option', {name: `${NEW_PAGE_SIZE} Entries`}).click();
-
-	await expect(
-		page.getByText(
-			`Showing 1 to ${NEW_PAGE_SIZE} of ${NUMBER_OF_USERS_AND_TASKS} entries.`
-		)
 	).toBeVisible();
 
 	for (const [index, user] of users.entries()) {

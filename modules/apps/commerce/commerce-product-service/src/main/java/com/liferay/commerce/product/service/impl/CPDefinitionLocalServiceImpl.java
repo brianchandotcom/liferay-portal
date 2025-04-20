@@ -2703,55 +2703,51 @@ public class CPDefinitionLocalServiceImpl
 			localeSet.addAll(metaKeywordsMap.keySet());
 		}
 
-		List<CPDefinitionLocalization> cpDefinitionLocalizations =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			localeSet,
+			locale -> {
+				String name = nameMap.get(locale);
+				String shortDescription = null;
+				String description = null;
+				String metaTitle = null;
+				String metaDescription = null;
+				String metaKeywords = null;
 
-		for (Locale locale : localeSet) {
-			String name = nameMap.get(locale);
-			String shortDescription = null;
-			String description = null;
-			String metaTitle = null;
-			String metaDescription = null;
-			String metaKeywords = null;
+				if (shortDescriptionMap != null) {
+					shortDescription = shortDescriptionMap.get(locale);
+				}
 
-			if (shortDescriptionMap != null) {
-				shortDescription = shortDescriptionMap.get(locale);
-			}
+				if (descriptionMap != null) {
+					description = descriptionMap.get(locale);
+				}
 
-			if (descriptionMap != null) {
-				description = descriptionMap.get(locale);
-			}
+				if (metaTitleMap != null) {
+					metaTitle = metaTitleMap.get(locale);
+				}
 
-			if (metaTitleMap != null) {
-				metaTitle = metaTitleMap.get(locale);
-			}
+				if (metaDescriptionMap != null) {
+					metaDescription = metaDescriptionMap.get(locale);
+				}
 
-			if (metaDescriptionMap != null) {
-				metaDescription = metaDescriptionMap.get(locale);
-			}
+				if (metaKeywordsMap != null) {
+					metaKeywords = metaKeywordsMap.get(locale);
+				}
 
-			if (metaKeywordsMap != null) {
-				metaKeywords = metaKeywordsMap.get(locale);
-			}
+				if (Validator.isNull(name) &&
+					Validator.isNull(shortDescription) &&
+					Validator.isNull(description) &&
+					Validator.isNull(metaTitle) &&
+					Validator.isNull(metaDescription) &&
+					Validator.isNull(metaKeywords)) {
 
-			if (Validator.isNull(name) && Validator.isNull(shortDescription) &&
-				Validator.isNull(description) && Validator.isNull(metaTitle) &&
-				Validator.isNull(metaDescription) &&
-				Validator.isNull(metaKeywords)) {
+					return null;
+				}
 
-				continue;
-			}
-
-			CPDefinitionLocalization cpDefinitionLocalization =
-				_addCPDefinitionLocalizedFields(
+				return _addCPDefinitionLocalizedFields(
 					companyId, cpDefinitionId, name, shortDescription,
 					description, metaTitle, metaDescription, metaKeywords,
 					LocaleUtil.toLanguageId(locale));
-
-			cpDefinitionLocalizations.add(cpDefinitionLocalization);
-		}
-
-		return cpDefinitionLocalizations;
+			});
 	}
 
 	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(

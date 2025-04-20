@@ -287,7 +287,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected void closeConnections() {
-		Map<Thread, Connection> connectionsMap = _companyConnectionsMap.get(
+		Map<Thread, Connection> connectionsMap = _connectionsMaps.get(
 			CompanyThreadLocal.getCompanyId());
 
 		_closeConnections(connectionsMap);
@@ -590,7 +590,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		int connectionsCount = 0;
 
 		for (Map<Thread, Connection> connectionsMap :
-				_companyConnectionsMap.values()) {
+				_connectionsMaps.values()) {
 
 			connectionsCount += connectionsMap.size();
 		}
@@ -734,7 +734,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 
-	private final Map<Long, Map<Thread, Connection>> _companyConnectionsMap =
+	private final Map<Long, Map<Thread, Connection>> _connectionsMaps =
 		new ConcurrentHashMap<>();
 
 	private class ConnectionThreadProxyInvocationHandler
@@ -749,7 +749,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			if (methodName.equals("close")) {
 				if (_getConnectionsCount() > 0) {
 					for (Map<Thread, Connection> connectionsMap :
-							_companyConnectionsMap.values()) {
+							_connectionsMaps.values()) {
 
 						_closeConnections(connectionsMap);
 					}
@@ -759,7 +759,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 
 			Map<Thread, Connection> connectionsMap =
-				_companyConnectionsMap.computeIfAbsent(
+				_connectionsMaps.computeIfAbsent(
 					CompanyThreadLocal.getCompanyId(),
 					key -> new ConcurrentHashMap<>());
 

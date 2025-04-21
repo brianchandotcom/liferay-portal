@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot3;
 
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2ClientConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 

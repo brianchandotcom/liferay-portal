@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot3;
 
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Util;
+
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;

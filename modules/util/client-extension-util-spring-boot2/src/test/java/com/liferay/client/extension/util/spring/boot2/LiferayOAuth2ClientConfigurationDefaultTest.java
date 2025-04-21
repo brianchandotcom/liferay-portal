@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot2;
 
+import com.liferay.client.extension.util.spring.boot2.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot2.client.LiferayOAuth2ClientConfiguration;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 

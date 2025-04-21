@@ -11,18 +11,23 @@ import React, {ComponentProps, useState} from 'react';
 import MarketplaceModal from './MarketplaceModal';
 
 import '../../../css/MarketplaceModal.scss';
+
+import {AppsPermissions} from '@liferay/marketplace-js-components-web';
+
 import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplacePresentationModalProps {
 	body: string;
 	heading: string;
 	onCloseModal: () => void;
+	permissions: AppsPermissions;
 }
 
 export default function MarketplacePresentationModal({
 	body,
 	heading,
 	onCloseModal,
+	permissions,
 	...marketplaceViewProps
 }: MarketplacePresentationModalProps &
 	ComponentProps<typeof MarketplaceViews>) {
@@ -37,6 +42,7 @@ export default function MarketplacePresentationModal({
 	return openMarketplace ? (
 		<MarketplaceModal
 			openOnRender={true}
+			permissions={permissions}
 			trigger={null}
 			{...marketplaceViewProps}
 		/>

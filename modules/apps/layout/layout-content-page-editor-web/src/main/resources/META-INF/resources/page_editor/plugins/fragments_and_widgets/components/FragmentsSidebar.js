@@ -305,6 +305,12 @@ export default function FragmentsSidebar() {
 							isMarketplaceButtonVisited={
 								config.isMarketplaceButtonVisited
 							}
+							permissions={{
+								installFreeApps:
+									permissions.INSTALL_FREE_BUNDLED_APPS_MARKETPLACE,
+								purchaseAndInstallPaidApps:
+									permissions.PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE,
+							}}
 							portletNamespace={config.portletNamespace}
 						/>
 					) : null}

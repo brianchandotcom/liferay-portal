@@ -20,6 +20,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {config} from '../../../app/config';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
+import {useSelector} from '../../../app/contexts/StoreContext';
 import {useKeyboardNavigation} from '../../../app/js-index';
 import MarketplaceTabItem from './MarketplaceTabItem';
 
@@ -161,6 +162,8 @@ function SearchResults({
 	loading: boolean | undefined;
 	results?: APIResponse<Product>;
 }) {
+	const permissions = useSelector((state) => state.permissions);
+
 	const listRef = useRef<HTMLUListElement | null>(null);
 
 	useEffect(() => {
@@ -183,6 +186,12 @@ function SearchResults({
 					fragmentPortletNamespace={config.fragmentPortletNamespace}
 					fragmentsImportURL={config.fragmentsImportURL}
 					hideBackButton={true}
+					permissions={{
+						installFreeApps:
+							permissions.INSTALL_FREE_BUNDLED_APPS_MARKETPLACE,
+						purchaseAndInstallPaidApps:
+							permissions.PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE,
+					}}
 					trigger={null}
 				>
 					<ul

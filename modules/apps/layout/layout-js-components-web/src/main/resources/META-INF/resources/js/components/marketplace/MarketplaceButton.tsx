@@ -12,6 +12,7 @@ import MarketplacePresentationModal from './MarketplacePresentationModal';
 
 import '../../../css/MarketplaceButton.scss';
 
+import {AppsPermissions} from '@liferay/marketplace-js-components-web';
 import classNames from 'classnames';
 
 import MarketplaceViews from './MarketplaceViews';
@@ -20,6 +21,7 @@ interface MarketplaceButtonProps {
 	body: string;
 	heading: string;
 	isMarketplaceButtonVisited: boolean;
+	permissions: AppsPermissions;
 	portletNamespace: string;
 }
 
@@ -27,6 +29,7 @@ function MarketplaceButton({
 	body,
 	heading,
 	isMarketplaceButtonVisited,
+	permissions,
 	portletNamespace,
 	...marketplaceViewProps
 }: MarketplaceButtonProps & ComponentProps<typeof MarketplaceViews>) {
@@ -38,6 +41,7 @@ function MarketplaceButton({
 			modalComponentProps: {
 				body,
 				heading,
+				permissions,
 				...marketplaceViewProps,
 			},
 		});
@@ -47,10 +51,15 @@ function MarketplaceButton({
 			`${portletNamespace}isMarketplaceButtonVisited`,
 			true
 		);
-	}, [body, marketplaceViewProps, heading, portletNamespace]);
+	}, [body, marketplaceViewProps, heading, permissions, portletNamespace]);
 
 	if (visited) {
-		return <MarketplaceModal {...marketplaceViewProps} />;
+		return (
+			<MarketplaceModal
+				permissions={permissions}
+				{...marketplaceViewProps}
+			/>
+		);
 	}
 
 	return (

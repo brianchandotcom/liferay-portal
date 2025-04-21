@@ -9,7 +9,7 @@ import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
-import SpaceRenderer from './cell_renderers/SpaceRenderer';
+import StructureScopeRenderer from './cell_renderers/StructureScopeRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 
 export default function StructuresFDSPropsTransformer({
@@ -32,8 +32,8 @@ export default function StructuresFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: SpaceRenderer,
-					name: 'spaceTableCellRenderer',
+					component: StructureScopeRenderer,
+					name: 'structureScopeTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{

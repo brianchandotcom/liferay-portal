@@ -7,6 +7,12 @@ import {State} from '../contexts/StateContext';
 import {Space} from '../types/Space';
 import ApiHelper from './ApiHelper';
 
+async function getSpace(externalReferenceCode: string): Promise<Space> {
+	return await ApiHelper.get(
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`
+	);
+}
+
 async function getSpaces(): Promise<Space[]> {
 	const {items} = await ApiHelper.get(
 		'/o/headless-asset-library/v1.0/asset-libraries'
@@ -26,5 +32,6 @@ async function addSpace({name}: {name: State['name']}) {
 
 export default {
 	addSpace,
+	getSpace,
 	getSpaces,
 };

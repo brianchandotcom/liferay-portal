@@ -740,6 +740,17 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry partialUpdateObjectEntry(
+			long userId, long objectEntryId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.partialUpdateObjectEntry(
+			userId, objectEntryId, values, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.object.model.ObjectEntry> searchObjectEntries(
 				long groupId, long objectDefinitionId, String keywords, int cur,

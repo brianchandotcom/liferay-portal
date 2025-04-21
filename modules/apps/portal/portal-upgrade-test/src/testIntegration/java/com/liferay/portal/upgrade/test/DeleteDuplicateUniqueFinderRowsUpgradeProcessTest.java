@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
@@ -122,7 +123,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		portletItem1.setGroupId(1);
 		portletItem1.setName("1");
 		portletItem1.setPortletId("1");
-		portletItem1.setClassNameId(1);
+		portletItem1.setClassNameId(
+			ClassNameLocalServiceUtil.getClassNameId(
+				PortletItem.class.getName()));
 
 		List<PortletItem> portletItems = new ArrayList<>();
 
@@ -144,9 +147,10 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount(
 			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
-
 		Assert.assertEquals(
-			portletItems.get(0), _portletItemLocalService.getPortletItem(1));
+			portletItems.get(0),
+			_portletItemLocalService.getPortletItem(
+				1, "1", "1", PortletItem.class.getName()));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 

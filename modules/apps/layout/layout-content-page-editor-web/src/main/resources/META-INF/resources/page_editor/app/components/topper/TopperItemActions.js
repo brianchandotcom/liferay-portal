@@ -21,6 +21,7 @@ import {
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
+import selectCanManageFragmentEntries from '../../selectors/selectCanManageFragmentEntries';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
 import pasteItems from '../../thunks/pasteItems';
@@ -53,6 +54,8 @@ export default function TopperItemActions({disabled, item}) {
 	const setClipboard = useSetClipboard();
 
 	const selectItems = selectMultipleItems;
+
+	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
 		(state) => state
@@ -112,7 +115,7 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (canBeSaved(item, layoutData)) {
+		if (canBeSaved(item, layoutData) && canManageFragments) {
 			items.push({
 				action: () => setOpenSaveModal(true),
 				group: 0,
@@ -229,6 +232,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		return sortItems(items);
 	}, [
+		canManageFragments,
 		clipboard,
 		dispatch,
 		fragmentEntryLink,

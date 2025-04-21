@@ -35,6 +35,7 @@ import {
 } from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import {useGetWidgets} from '../contexts/WidgetsContext';
+import selectCanManageFragmentEntries from '../selectors/selectCanManageFragmentEntries';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
@@ -72,6 +73,7 @@ export default function ShortcutManager() {
 
 	const {onRedo, onUndo} = useUndoRedoActions();
 
+	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
@@ -291,6 +293,7 @@ export default function ShortcutManager() {
 		save: {
 			action: () => setOpenSaveModal(true),
 			canBeExecuted: () =>
+				canManageFragments &&
 				!multiSelection &&
 				canUpdatePageStructure &&
 				!!layoutData.items[activeItemIds[0]] &&

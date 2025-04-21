@@ -6,11 +6,16 @@
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
+import {useSelector} from '../contexts/StoreContext';
+import selectCanManageFragmentEntries from '../selectors/selectCanManageFragmentEntries';
+
 const KEY_LABEL = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
 const OPTION_KEY_LABEL = Liferay.Browser?.isMac() ? '⌥' : 'Alt';
 
 export default function ShortcutModal({onCloseModal}) {
 	const {observer} = useModal({onClose: () => onCloseModal()});
+
+	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 
 	return (
 		<ClayModal
@@ -37,12 +42,14 @@ export default function ShortcutModal({onCloseModal}) {
 					keyCombinations={['⌫']}
 				/>
 
-				<KeyboardShortcut
-					description={Liferay.Language.get(
-						'save-composition-for-containers-and-grids'
-					)}
-					keyCombinations={[KEY_LABEL, 'S']}
-				/>
+				{canManageFragments ? (
+					<KeyboardShortcut
+						description={Liferay.Language.get(
+							'save-composition-for-containers-and-grids'
+						)}
+						keyCombinations={[KEY_LABEL, 'S']}
+					/>
+				) : null}
 
 				<KeyboardShortcut
 					description={Liferay.Language.get('show-hide-fragment')}

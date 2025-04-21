@@ -21,6 +21,8 @@ const mockUseMarketplaceContext = {
 	view: MarketplaceView.PRODUCTS,
 };
 
+const mockBaseResourceURL = '/mock/marketplace/rest';
+
 jest.mock('@liferay/marketplace-js-components-web', () => {
 	const actualModule = jest.requireActual(
 		'@liferay/marketplace-js-components-web'
@@ -43,9 +45,20 @@ jest.mock('@liferay/marketplace-js-components-web', () => {
 				)
 			),
 		},
-		MarketplaceContextProvider: ({children}) => <>{children}</>,
+		MarketplaceContextProvider: ({
+			baseResourceURL,
+			children,
+			permissions,
+			settings,
+		}) => (
+			<div data-testid="mock-marketplace-context-provider">
+				{JSON.stringify({baseResourceURL, permissions, settings})}
+
+				{children}
+			</div>
+		),
 		MarketplaceRest: {
-			getBaseResourceURL: jest.fn(() => '/mock/marketplace/rest'),
+			getBaseResourceURL: jest.fn(() => mockBaseResourceURL),
 		},
 		useMarketplaceContext: jest.fn(() => mockUseMarketplaceContext),
 	};
@@ -68,6 +81,12 @@ jest.mock(
 const mockProps = {
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
+	hideBackButton: true,
+	permissions: {
+		installFreeApps: true,
+		purchaseAndInstallPaidApps: true,
+		viewApps: true,
+	},
 	trigger: <button data-testid="custom-trigger">Custom Trigger</button>,
 };
 
@@ -107,6 +126,7 @@ describe('MarketplaceModal', () => {
 			expect.objectContaining({
 				fragmentPortletNamespace: mockProps.fragmentPortletNamespace,
 				fragmentsImportURL: mockProps.fragmentsImportURL,
+				hideBackButton: mockProps.hideBackButton,
 			}),
 			expect.anything()
 		);
@@ -217,5 +237,19 @@ describe('MarketplaceModal', () => {
 		expect(
 			mockUseMarketplaceContext.modal.onOpenChange
 		).toHaveBeenCalledWith(true);
+	});
+
+	it('permissions are passed correctly to MarketplaceContextProvider', () => {
+		renderComponent();
+
+		expect(
+			screen.getByTestId('mock-marketplace-context-provider')
+		).toHaveTextContent(
+			JSON.stringify({
+				baseResourceURL: mockBaseResourceURL,
+				permissions: mockProps.permissions,
+				settings: {productFilter: 'fragments'},
+			})
+		);
 	});
 });

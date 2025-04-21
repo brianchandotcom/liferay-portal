@@ -13,6 +13,7 @@ import {
 } from '@liferay/marketplace-js-components-web';
 import userEvent from '@testing-library/user-event';
 
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import MarketplaceSearchResults from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults';
 
 global.Liferay = {
@@ -105,7 +106,17 @@ const mockProducts = {
 };
 
 const components = ({searchValue = 'test'}) => (
-	<MarketplaceSearchResults searchValue={searchValue} />
+	<StoreAPIContextProvider
+		dispatch={() => {}}
+		getState={() => ({
+			permissions: {
+				INSTALL_FREE_BUNDLED_APPS_MARKETPLACE: true,
+				PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE: true,
+			},
+		})}
+	>
+		<MarketplaceSearchResults searchValue={searchValue} />
+	</StoreAPIContextProvider>
 );
 
 function renderMarketplaceSearchResults({

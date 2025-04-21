@@ -126,7 +126,7 @@ definition {
 	macro chooseSortOption(sortOption = null) {
 		Click(locator1 = "Search#SORT_WIDGET_DROPDOWN");
 
-		Click.clickNoMouseOver(
+		Click(
 			locator1 = "Search#SORT_WIDGET_SORT_OPTION",
 			sortOption = ${sortOption});
 	}

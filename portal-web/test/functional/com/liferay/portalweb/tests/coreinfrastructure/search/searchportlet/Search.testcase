@@ -3298,6 +3298,8 @@ definition {
 		}
 
 		task ("Assert that 'User' shows up at the top of the dropdown list since it was repositioned earlier") {
+			Click(locator1 = "Search#SORT_WIDGET_DROPDOWN");
+
 			AssertTextEquals(
 				key_position = 1,
 				locator1 = "Search#SORT_WIDGET_SORT_OPTION_POSITION",
@@ -3325,6 +3327,8 @@ definition {
 		}
 
 		task ("Assert that the renamed 'Relevance' sort option appears and is at the top of the Sort dropdown list ") {
+			Click(locator1 = "Search#SORT_WIDGET_DROPDOWN");
+
 			AssertElementPresent(
 				locator1 = "Search#SORT_WIDGET_SORT_OPTION",
 				sortOption = "Relevant Test");

@@ -160,16 +160,13 @@ public class DepotAdminSitesDisplayContext {
 
 		sb.append(group.getDescriptiveName(locale));
 
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			group.isStagingGroup()) {
+		if (_isLayoutSetPrototype(depotEntryGroupRel)) {
+			_appendSuffix(sb, "site-template");
+		}
+		else if (group.isStaged() && !group.isStagedRemotely() &&
+				 group.isStagingGroup()) {
 
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-					"staging"));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			_appendSuffix(sb, "staging");
 		}
 
 		return sb.toString();
@@ -182,6 +179,15 @@ public class DepotAdminSitesDisplayContext {
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
 		return stagingGroupHelper.isLiveGroup(depotEntry.getGroup());
+	}
+
+	private void _appendSuffix(StringBuilder sb, String key) {
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(_liferayPortletRequest), key));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private DepotEntry _getDepotEntry() {
@@ -207,6 +213,15 @@ public class DepotAdminSitesDisplayContext {
 		}
 
 		return "make-searchable";
+	}
+
+	private boolean _isLayoutSetPrototype(DepotEntryGroupRel depotEntryGroupRel)
+		throws PortalException {
+
+		Group group = GroupServiceUtil.getGroup(
+			depotEntryGroupRel.getToGroupId());
+
+		return group.isLayoutSetPrototype();
 	}
 
 	private final PortletURL _currentURL;

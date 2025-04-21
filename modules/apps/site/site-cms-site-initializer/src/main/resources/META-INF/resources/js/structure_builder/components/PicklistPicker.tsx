@@ -4,7 +4,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {Option, Picker} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -19,6 +18,7 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
 import selectValidationErrors from '../selectors/selectValidationErrors';
 import {Field, MultiselectField, SingleSelectField} from '../utils/field';
+import AsyncPicker from './AsyncPicker';
 
 export default function PicklistPicker({field}: {field: Field}) {
 	const selectField = field as SingleSelectField | MultiselectField;
@@ -52,19 +52,12 @@ export default function PicklistPicker({field}: {field: Field}) {
 						/>
 					</label>
 
-					<Picker
+					<AsyncPicker
 						aria-describedby={feedbackId}
-						disabled={
-							(isPublished || !picklists.length) &&
-							status !== 'stale'
-						}
+						disabled={isPublished || !picklists.length}
 						id={pickerId}
 						items={picklists}
-						onActiveChange={(active: boolean) => {
-							if (active && status === 'stale') {
-								loadPicklist();
-							}
-						}}
+						loader={loadPicklist}
 						onBlur={(
 							event: React.FocusEvent<HTMLButtonElement>
 						) => {
@@ -95,10 +88,9 @@ export default function PicklistPicker({field}: {field: Field}) {
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('picklist')
 						)}
-						selectedKey={selectedKey ? String(selectedKey) : ''}
-					>
-						{(item) => <Option key={item.id}>{item.name}</Option>}
-					</Picker>
+						selectedKey={selectedKey}
+						status={status}
+					/>
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem shrink>

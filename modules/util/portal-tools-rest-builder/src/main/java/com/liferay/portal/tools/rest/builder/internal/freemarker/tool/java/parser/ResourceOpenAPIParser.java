@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -313,19 +314,18 @@ public class ResourceOpenAPIParser {
 		getResourceGetPageJavaMethodSignatures(
 			List<JavaMethodSignature> javaMethodSignatures) {
 
-		List<JavaMethodSignature> getPageJavaMethodSignatures =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			javaMethodSignatures,
+			javaMethodSignature -> {
+				if (StringUtil.startsWith(
+						javaMethodSignature.getReturnType(),
+						"com.liferay.portal.vulcan.pagination.Page<")) {
 
-		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			if (StringUtil.startsWith(
-					javaMethodSignature.getReturnType(),
-					"com.liferay.portal.vulcan.pagination.Page<")) {
+					return javaMethodSignature;
+				}
 
-				getPageJavaMethodSignatures.add(javaMethodSignature);
-			}
-		}
-
-		return getPageJavaMethodSignatures;
+				return null;
+			});
 	}
 
 	public static String getResourceMethodName(

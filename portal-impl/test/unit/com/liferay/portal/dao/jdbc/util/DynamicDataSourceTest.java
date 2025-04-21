@@ -62,6 +62,11 @@ public class DynamicDataSourceTest {
 
 		fileUtil.setFile(new FileImpl());
 
+		_currentTransactionReadOnlyThreadLocal =
+			ReflectionTestUtil.getFieldValue(
+				SpringHibernateThreadLocalUtil.class,
+				"_currentTransactionReadOnlyThreadLocal");
+
 		_tempDir = FileUtil.createTempFolder();
 
 		DataSourceFactory dataSourceFactory = new DataSourceFactoryImpl();
@@ -70,7 +75,6 @@ public class DynamicDataSourceTest {
 			"org.hsqldb.jdbc.JDBCDriver",
 			"jdbc:hsqldb:" + _tempDir.getAbsolutePath() + "/lportal-read;",
 			"sa", StringPool.BLANK, StringPool.BLANK);
-
 		DataSource writeDataSource = dataSourceFactory.initDataSource(
 			"org.hsqldb.jdbc.JDBCDriver",
 			"jdbc:hsqldb:" + _tempDir.getAbsolutePath() + "/lportal-write;",
@@ -79,20 +83,16 @@ public class DynamicDataSourceTest {
 		_dynamicDataSource = new DynamicDataSource(
 			readDataSource, writeDataSource);
 
-		_currentTransactionReadOnlyThreadLocal =
-			ReflectionTestUtil.getFieldValue(
-				SpringHibernateThreadLocalUtil.class,
-				"_currentTransactionReadOnlyThreadLocal");
-
 		_writeDataSourceThreadLocal = ReflectionTestUtil.getFieldValue(
 			DynamicDataSource.class, "_writeDataSourceThreadLocal");
 	}
 
 	@After
 	public void tearDown() {
+		_currentTransactionReadOnlyThreadLocal.remove();
+
 		FileUtil.deltree(_tempDir);
 
-		_currentTransactionReadOnlyThreadLocal.remove();
 		_writeDataSourceThreadLocal.remove();
 	}
 

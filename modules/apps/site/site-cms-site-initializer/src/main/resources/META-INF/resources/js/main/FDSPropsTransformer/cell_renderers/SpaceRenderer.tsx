@@ -8,15 +8,7 @@ import React from 'react';
 import SpaceSticker from '../../components/SpaceSticker';
 
 const SpaceRenderer = ({value}: {value: string}) => {
-	const isStructure = false;
-
-	return isStructure ? (
-		<span className="badge badge-pill badge-secondary">
-			<span className="badge-item badge-item-expand">
-				{Liferay.Language.get('all-spaces')}
-			</span>
-		</span>
-	) : (
+	return (
 		<span className="align-items-center d-flex space-renderer-sticker">
 			<SpaceSticker name={value} size="sm" />
 		</span>

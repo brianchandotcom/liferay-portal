@@ -60,7 +60,7 @@ public abstract class BasePortalInstanceOperationTestCase
 		_deleteConfiguration();
 	}
 
-	protected void assertConfigurationIsDeletedAfterDeploy(String pid)
+	protected void assertConfigurationFileIsDeletedAfterDeploy(String pid)
 		throws Exception {
 
 		Assert.assertNull(
@@ -97,7 +97,7 @@ public abstract class BasePortalInstanceOperationTestCase
 		Assert.assertEquals(expectedMessage, throwable.getMessage());
 	}
 
-	protected void deployConfiguration(String pid, String content)
+	protected void deployConfigurationFile(String pid, String content)
 		throws Exception {
 
 		Assert.assertNull(
@@ -110,7 +110,7 @@ public abstract class BasePortalInstanceOperationTestCase
 		try (AutoCloseable autoCloseable =
 				_registerOnAfterDeleteConfigurationModelListener(pid)) {
 
-			_createConfiguration(pid, content);
+			_createConfigurationFile(pid, content);
 
 			Assert.assertNotNull(
 				_configurationAdmin.listConfigurations(
@@ -122,7 +122,7 @@ public abstract class BasePortalInstanceOperationTestCase
 
 	protected abstract String getComponentName();
 
-	private Configuration _createConfiguration(
+	private Configuration _createConfigurationFile(
 			String configurationPid, String content)
 		throws Exception {
 

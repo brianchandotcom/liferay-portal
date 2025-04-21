@@ -15,7 +15,7 @@ jobs:
                     GITHUB_TOKEN: ${{ github.token }}
                 name: Verify Helm chart version
                 run: |
-                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
+                    CHART_VERSION=$(cat ./Chart.yaml | yq --raw-output .version)
 
                     echo "Verifying Helm chart version ${CHART_VERSION}."
 

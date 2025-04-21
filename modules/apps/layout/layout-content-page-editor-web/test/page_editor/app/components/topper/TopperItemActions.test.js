@@ -70,6 +70,7 @@ const LAYOUT_DATA = {
 };
 
 const renderTopperItemActions = ({
+	canManageFragments = true,
 	isDisabled = false,
 	itemId = 'itemId1',
 	layoutData = LAYOUT_DATA,
@@ -81,6 +82,9 @@ const renderTopperItemActions = ({
 			getState={() => ({
 				fragmentEntryLinks: {},
 				layoutData,
+				permissions: {
+					MANAGE_FRAGMENT_ENTRIES: canManageFragments,
+				},
 			})}
 		>
 			<ClipboardContextProvider>
@@ -151,5 +155,11 @@ describe('TopperItemActions', () => {
 				parentItemId: 'itemId3',
 			})
 		);
+	});
+
+	it('does not render save composition action if user does not have the correct permission', async () => {
+		renderTopperItemActions({canManageFragments: false, itemId: 'itemId3'});
+
+		expect(screen.queryByText('save-composition')).not.toBeInTheDocument();
 	});
 });

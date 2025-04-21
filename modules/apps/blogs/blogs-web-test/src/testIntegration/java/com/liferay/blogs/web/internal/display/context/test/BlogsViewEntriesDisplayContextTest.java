@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -81,21 +82,16 @@ public class BlogsViewEntriesDisplayContextTest {
 
 	@Test
 	public void testGetSearchContainer() throws Exception {
-		for (int i = 0; i <= SearchContainer.DEFAULT_DELTA; i++) {
-			_addBlogEntry("alpha_" + i);
+		List<BlogsEntry> blogsEntries = new ArrayList<>();
+
+		for (int i = 0; i < SearchContainer.DEFAULT_DELTA; i++) {
+			blogsEntries.add(_addBlogEntry("alpha_" + i));
 		}
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequest());
+		_addBlogEntry("alpha_" + SearchContainer.DEFAULT_DELTA);
 
-		Assert.assertEquals(
-			SearchContainer.DEFAULT_DELTA + 1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(
-			blogsEntries.toString(), SearchContainer.DEFAULT_DELTA,
-			blogsEntries.size());
+		_assertSearchContainer(
+			_getSearchContainer(_getMockHttpServletRequest()), blogsEntries);
 	}
 
 	@Test
@@ -110,14 +106,10 @@ public class BlogsViewEntriesDisplayContextTest {
 			new IdentityServiceContextFunction(
 				ServiceContextTestUtil.getServiceContext()));
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch(commentBody));
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithSearch(commentBody)),
+			Arrays.asList(blogsEntry));
 	}
 
 	@Test
@@ -126,19 +118,10 @@ public class BlogsViewEntriesDisplayContextTest {
 
 		_addBlogEntry(RandomTestUtil.randomString());
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch(blogsEntry.getContent()));
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
-
-		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
-
-		Assert.assertEquals(
-			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithSearch(blogsEntry.getContent())),
+			Arrays.asList(blogsEntry));
 	}
 
 	@Test
@@ -155,19 +138,10 @@ public class BlogsViewEntriesDisplayContextTest {
 
 		_addBlogEntry(RandomTestUtil.randomString());
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch(assetCategory.getName()));
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
-
-		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
-
-		Assert.assertEquals(
-			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithSearch(assetCategory.getName())),
+			Arrays.asList(blogsEntry));
 	}
 
 	@Test
@@ -182,19 +156,10 @@ public class BlogsViewEntriesDisplayContextTest {
 
 		_addBlogEntry(RandomTestUtil.randomString());
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch(assetCategory.getName()));
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
-
-		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
-
-		Assert.assertEquals(
-			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithSearch(assetCategory.getName())),
+			Arrays.asList(blogsEntry));
 	}
 
 	@Test
@@ -203,19 +168,10 @@ public class BlogsViewEntriesDisplayContextTest {
 
 		_addBlogEntry(RandomTestUtil.randomString());
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithSearch(blogsEntry.getTitle()));
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-
-		List<BlogsEntry> blogsEntries = searchContainer.getResults();
-
-		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
-
-		BlogsEntry returnedBlogsEntry = blogsEntries.get(0);
-
-		Assert.assertEquals(
-			returnedBlogsEntry.getTitle(), blogsEntry.getTitle());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithSearch(blogsEntry.getTitle())),
+			Arrays.asList(blogsEntry));
 	}
 
 	@Test
@@ -227,19 +183,15 @@ public class BlogsViewEntriesDisplayContextTest {
 		BlogsEntry blogsEntry3 = _addBlogEntry(
 			RandomTestUtil.randomString(), 1999);
 
-		SearchContainer<BlogsEntry> searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithOrderBy("display-date", "asc"));
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithOrderBy("display-date", "asc")),
+			Arrays.asList(blogsEntry3, blogsEntry1, blogsEntry2));
 
-		Assert.assertEquals(
-			Arrays.asList(blogsEntry3, blogsEntry1, blogsEntry2),
-			searchContainer.getResults());
-
-		searchContainer = _getSearchContainer(
-			_getMockHttpServletRequestWithOrderBy("display-date", "desc"));
-
-		Assert.assertEquals(
-			Arrays.asList(blogsEntry2, blogsEntry1, blogsEntry3),
-			searchContainer.getResults());
+		_assertSearchContainer(
+			_getSearchContainer(
+				_getMockHttpServletRequestWithOrderBy("display-date", "desc")),
+			Arrays.asList(blogsEntry2, blogsEntry1, blogsEntry3));
 	}
 
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
@@ -314,6 +266,22 @@ public class BlogsViewEntriesDisplayContextTest {
 		throws Exception {
 
 		return _addBlogEntry(title, content, 1990, serviceContext);
+	}
+
+	private void _assertSearchContainer(
+		SearchContainer<BlogsEntry> searchContainer,
+		List<BlogsEntry> expectedBlogsEntries) {
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(
+			blogsEntries.toString(), expectedBlogsEntries.size(),
+			blogsEntries.size());
+
+		for (int i = 0; i < expectedBlogsEntries.size(); i++) {
+			Assert.assertEquals(
+				expectedBlogsEntries.get(i), blogsEntries.get(i));
+		}
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

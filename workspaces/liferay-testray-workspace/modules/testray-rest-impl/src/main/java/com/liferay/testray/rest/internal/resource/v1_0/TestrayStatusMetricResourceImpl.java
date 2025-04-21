@@ -525,7 +525,7 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sb = new StringBundler(28);
+		sb = new StringBundler(29);
 
 		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
 		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
@@ -536,12 +536,13 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
-		sb.append("b.dueDate_, bx.importStatus_, b.gitHash_, b.name_, ");
-		sb.append("b.promoted_, b.archived_, pv.name_ as productVersionName, ");
-		sb.append("(select dueStatus_ from O_[%COMPANY_ID%]_Task t where ");
-		sb.append("t.r_buildToTasks_c_buildId = b.c_buildId_) as taskStatus ");
-		sb.append("from O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Build_x ");
-		sb.append("bx, O_[%COMPANY_ID%]_ProductVersion pv ");
+		sb.append("b.cpuUseTime_, b.dueDate_, bx.importStatus_, b.gitHash_, ");
+		sb.append("b.name_, b.promoted_, b.archived_, pv.name_ as ");
+		sb.append("productVersionName, (select dueStatus_ from ");
+		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
+		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
+		sb.append("b, O_[%COMPANY_ID%]_Build_x bx, ");
+		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
 
 		if (Validator.isNotNull(testrayTaskStatus)) {
 			sb.append(", O_[%COMPANY_ID%]_Task t ");
@@ -593,6 +594,8 @@ public class TestrayStatusMetricResourceImpl
 					{
 						testrayBuildArchived = GetterUtil.getBoolean(
 							String.valueOf(value.get("archived_")));
+						testrayBuildCPUUseTime = GetterUtil.getString(
+							value.get("cpuUseTime_"));
 						testrayBuildGitHash = GetterUtil.getString(
 							value.get("githash_"));
 						testrayBuildId = GetterUtil.getLong(

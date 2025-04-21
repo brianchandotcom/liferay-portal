@@ -101,6 +101,15 @@ const Routine = () => {
 						},
 						{
 							clickable: true,
+							key: 'testrayBuildCPUUseTime',
+							render: (testrayBuildCPUUseTime) =>
+								testrayBuildCPUUseTime === 'null' || ''
+									? '-'
+									: testrayBuildCPUUseTime,
+							value: i18n.translate('cpu-use-time'),
+						},
+						{
+							clickable: true,
 							key: 'testrayBuildGitHash',
 							render: (testrayBuildGitHash) =>
 								testrayBuildGitHash === 'null' || ''

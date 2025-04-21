@@ -464,7 +464,9 @@ definition {
 	macro gotoPGViaMG(mgFolderName = null) {
 		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});
+		Click(
+			key_text = ${mgFolderName},
+			locator1 = "Link#ANY");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#BREADCRUMB",
@@ -743,7 +745,9 @@ definition {
 	macro viewPGViaMG(mgFolderName = null) {
 		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});
+		Click(
+			key_text = ${mgFolderName},
+			locator1 = "Link#ANY");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#FOLDER_HEADER_TITLE",

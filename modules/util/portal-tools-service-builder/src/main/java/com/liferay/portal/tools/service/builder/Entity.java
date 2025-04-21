@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -743,15 +744,15 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public List<EntityColumn> getUADNonanonymizableEntityColumns() {
-		List<EntityColumn> uadNonanonymizableEntityColumns = new ArrayList<>();
+		return TransformUtil.transform(
+			_entityColumns,
+			entityColumn -> {
+				if (entityColumn.isUADNonanonymizable()) {
+					return entityColumn;
+				}
 
-		for (EntityColumn entityColumn : _entityColumns) {
-			if (entityColumn.isUADNonanonymizable()) {
-				uadNonanonymizableEntityColumns.add(entityColumn);
-			}
-		}
-
-		return uadNonanonymizableEntityColumns;
+				return null;
+			});
 	}
 
 	public String getUADOutputPath() {
@@ -769,15 +770,15 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public List<String> getUADUserIdColumnNames() {
-		List<String> uadUserIdColumnNames = new ArrayList<>();
+		return TransformUtil.transform(
+			_entityColumns,
+			entityColumn -> {
+				if (entityColumn.isUADUserId()) {
+					return entityColumn.getName();
+				}
 
-		for (EntityColumn entityColumn : _entityColumns) {
-			if (entityColumn.isUADUserId()) {
-				uadUserIdColumnNames.add(entityColumn.getName());
-			}
-		}
-
-		return uadUserIdColumnNames;
+				return null;
+			});
 	}
 
 	public List<EntityFinder> getUniqueEntityFinders() {

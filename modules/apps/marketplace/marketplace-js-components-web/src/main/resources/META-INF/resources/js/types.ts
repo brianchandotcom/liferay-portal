@@ -13,9 +13,9 @@ export type APIResponse<T = any> = {
 };
 
 export type AppsPermissions = {
-	installFreeApps: boolean;
-	purchaseAndInstallPaidApps: boolean;
-	viewApps: boolean;
+	installFreeApps?: boolean;
+	purchaseAndInstallPaidApps?: boolean;
+	viewApps?: boolean;
 };
 
 type Attachment = {

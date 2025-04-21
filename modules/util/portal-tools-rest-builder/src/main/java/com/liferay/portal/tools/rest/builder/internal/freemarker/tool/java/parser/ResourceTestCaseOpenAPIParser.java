@@ -35,19 +35,19 @@ public class ResourceTestCaseOpenAPIParser {
 		return TransformUtil.transform(
 			ResourceOpenAPIParser.getJavaMethodSignatures(
 				configYAML, openAPIYAML, schemaName),
-			resourceJavaMethodSignature -> new JavaMethodSignature(
-				resourceJavaMethodSignature.getPath(),
-				resourceJavaMethodSignature.getPathItem(),
-				resourceJavaMethodSignature.getOperation(),
-				resourceJavaMethodSignature.getRequestBodyMediaTypes(),
-				resourceJavaMethodSignature.getSchemaName(),
-				resourceJavaMethodSignature.getJavaMethodParameters(),
-				_getMethodName(resourceJavaMethodSignature),
+			javaMethodSignature -> new JavaMethodSignature(
+				javaMethodSignature.getPath(),
+				javaMethodSignature.getPathItem(),
+				javaMethodSignature.getOperation(),
+				javaMethodSignature.getRequestBodyMediaTypes(),
+				javaMethodSignature.getSchemaName(),
+				javaMethodSignature.getJavaMethodParameters(),
+				_getMethodName(javaMethodSignature),
 				_getReturnType(
 					configYAML.getApiPackagePath(),
-					resourceJavaMethodSignature.getReturnType(),
+					javaMethodSignature.getReturnType(),
 					_getVersion(openAPIYAML)),
-				resourceJavaMethodSignature.getParentSchemaName()));
+				javaMethodSignature.getParentSchemaName()));
 	}
 
 	public static String getParameters(

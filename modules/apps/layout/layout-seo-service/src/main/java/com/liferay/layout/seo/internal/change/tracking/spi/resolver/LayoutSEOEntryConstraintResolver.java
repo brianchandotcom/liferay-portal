@@ -53,7 +53,7 @@ public class LayoutSEOEntryConstraintResolver
 			ConstraintResolverContext<LayoutSEOEntry> constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext. mergeSourceCTModelIntoTargetCTModel();
+		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
 	}
 
 }

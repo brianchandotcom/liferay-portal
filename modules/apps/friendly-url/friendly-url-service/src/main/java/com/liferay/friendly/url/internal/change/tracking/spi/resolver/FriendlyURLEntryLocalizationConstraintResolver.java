@@ -56,7 +56,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext. mergeSourceCTModelIntoTargetCTModel();
+		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
 	}
 
 }

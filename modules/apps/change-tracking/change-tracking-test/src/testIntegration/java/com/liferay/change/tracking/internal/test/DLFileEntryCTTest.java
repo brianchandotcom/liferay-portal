@@ -66,6 +66,32 @@ public class DLFileEntryCTTest {
 	}
 
 	@Test
+	public void testAddFileEntry() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_addFileEntry(fileName, title);
+		}
+
+		_addFileEntry(fileName, title);
+
+		Map<Long, List<ConflictInfo>> conflictInfosMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection);
+
+		List<ConflictInfo> conflictInfos = conflictInfosMap.get(
+			_classNameLocalService.getClassNameId(
+				FriendlyURLEntryLocalization.class));
+
+		for (ConflictInfo conflictInfo : conflictInfos) {
+			Assert.assertTrue(conflictInfo.isResolved());
+		}
+	}
+
+	@Test
 	public void testCheckOutFileEntry() throws Exception {
 		FileEntry fileEntry = _addFileEntry();
 
@@ -105,32 +131,6 @@ public class DLFileEntryCTTest {
 		Assert.assertEquals(ctEntries.toString(), 0, ctEntries.size());
 
 		Assert.assertFalse(fileEntry.isCheckedOut());
-	}
-
-	@Test
-	public void testAddFileEntry() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-		String title = RandomTestUtil.randomString();
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			_addFileEntry(fileName, title);
-		}
-
-		_addFileEntry(fileName, title);
-
-		Map<Long, List<ConflictInfo>> conflictInfosMap =
-			_ctCollectionLocalService.checkConflicts(_ctCollection);
-
-		List<ConflictInfo> conflictInfos = conflictInfosMap.get(
-			_classNameLocalService.getClassNameId(
-				FriendlyURLEntryLocalization.class));
-
-		for (ConflictInfo conflictInfo : conflictInfos) {
-			Assert.assertTrue(conflictInfo.isResolved());
-		}
 	}
 
 	private FileEntry _addFileEntry() throws Exception {

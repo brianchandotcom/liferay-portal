@@ -55,7 +55,7 @@ public class PortletPreferenceValueConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext. mergeSourceCTModelIntoTargetCTModel();
+		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
 	}
 
 }

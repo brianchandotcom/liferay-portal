@@ -53,7 +53,7 @@ public class AMImageEntryConstraintResolver
 			ConstraintResolverContext<AMImageEntry> constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext. mergeSourceCTModelIntoTargetCTModel();
+		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
 	}
 
 }

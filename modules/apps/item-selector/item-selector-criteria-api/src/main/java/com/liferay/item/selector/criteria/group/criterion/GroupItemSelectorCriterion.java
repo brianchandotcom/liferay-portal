@@ -55,6 +55,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _includeLayoutScopes;
 	}
 
+	public boolean isIncludeLayoutSetPrototypes() {
+		return _includeLayoutSetPrototypes;
+	}
+
 	public boolean isIncludeMySites() {
 		return _includeMySites;
 	}
@@ -107,6 +111,12 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_includeLayoutScopes = includeLayoutScopes;
 	}
 
+	public void setIncludeLayoutSetPrototypes(
+		boolean includeLayoutSetPrototypes) {
+
+		_includeLayoutSetPrototypes = includeLayoutSetPrototypes;
+	}
+
 	public void setIncludeMySites(boolean includeMySites) {
 		_includeMySites = includeMySites;
 	}
@@ -148,6 +158,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _includeCompany = true;
 	private boolean _includeFormsSite;
 	private boolean _includeLayoutScopes;
+	private boolean _includeLayoutSetPrototypes;
 	private boolean _includeMySites = true;
 	private boolean _includeParentSites;
 	private boolean _includeRecentSites = true;

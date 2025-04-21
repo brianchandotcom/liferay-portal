@@ -38,7 +38,7 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/applications_menu/applications_menu.jsp";
+		return "/applications_menu/applications_menu_control_menu_entry.jsp";
 	}
 
 	@Override

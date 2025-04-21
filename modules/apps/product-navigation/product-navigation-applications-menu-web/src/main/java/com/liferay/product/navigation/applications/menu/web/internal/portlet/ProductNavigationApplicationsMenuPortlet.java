@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Simulation",
+		"javax.portlet.init-param.view-template=/applications_menu/view.jsp",
 		"javax.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.PRODUCT_NAVIGATION_APPLICATIONS_MENU,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",

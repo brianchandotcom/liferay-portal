@@ -242,11 +242,9 @@ public class ObjectRelationshipLocalServiceImpl
 				).build());
 		}
 		else {
-			_objectEntryLocalService.updateObjectEntry(
+			_objectEntryLocalService.partialUpdateObjectEntry(
 				userId, primaryKey2,
-				HashMapBuilder.<String, Serializable>putAll(
-					_objectEntryLocalService.getValues(primaryKey2)
-				).put(
+				HashMapBuilder.<String, Serializable>put(
 					objectField2.getName(), primaryKey1
 				).build(),
 				serviceContext);

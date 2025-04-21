@@ -10,6 +10,7 @@ import com.dumbster.smtp.SmtpServerFactory;
 import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -201,13 +202,8 @@ public class MailServiceTestUtil {
 	private static List<MailMessage> _wrapMailMessages(
 		List<com.dumbster.smtp.MailMessage> mailMessages) {
 
-		List<MailMessage> wrappedMailMessages = new ArrayList<>();
-
-		for (com.dumbster.smtp.MailMessage mailMessage : mailMessages) {
-			wrappedMailMessages.add(new MailMessageImpl(mailMessage));
-		}
-
-		return wrappedMailMessages;
+		return TransformUtil.transform(
+			mailMessages, mailMessage -> new MailMessageImpl(mailMessage));
 	}
 
 	private static final int _START_PORT = 3241;

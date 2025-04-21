@@ -415,6 +415,17 @@ public class CollaboratorResourceTest {
 				continue;
 			}
 
+			if (Objects.equals(assertFieldName, "id")) {
+				if (!StringUtil.equals(
+						jsonObject1.getString("id"),
+						jsonObject2.getString("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(assertFieldName, "name")) {
 				if (!StringUtil.equals(
 						jsonObject1.getString("name"),
@@ -468,6 +479,8 @@ public class CollaboratorResourceTest {
 		).put(
 			"externalReferenceCode", user.getExternalReferenceCode()
 		).put(
+			"id", user.getUserId()
+		).put(
 			"name", user.getFullName()
 		).put(
 			"share", true
@@ -495,6 +508,8 @@ public class CollaboratorResourceTest {
 			"actionIds", JSONUtil.put(SharingEntryAction.VIEW.getActionId())
 		).put(
 			"externalReferenceCode", userGroup.getExternalReferenceCode()
+		).put(
+			"id", userGroup.getUserGroupId()
 		).put(
 			"name", userGroup.getName()
 		).put(

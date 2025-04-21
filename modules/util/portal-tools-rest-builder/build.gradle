@@ -26,6 +26,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.5"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.55"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"

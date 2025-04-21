@@ -62,7 +62,6 @@ public class DLFileEntryCTTest {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, JournalArticleCTTest.class.getName(), null);
-
 		_group = GroupTestUtil.addGroup();
 	}
 

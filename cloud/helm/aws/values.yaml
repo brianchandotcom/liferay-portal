@@ -59,11 +59,11 @@ liferay-default:
         type: LoadBalancer
     volumeClaimTemplates:
         -   metadata:
-            name: liferay-persistent-volume
+                name: liferay-persistent-volume
             spec:
                 accessModes:
                     -   ReadWriteOnce
-                requests:
-                    storage: 10Gi
                 resources:
+                    requests:
+                        storage: 10Gi
                 storageClassName: gp2

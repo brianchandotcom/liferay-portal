@@ -49,11 +49,11 @@ public class DBPartitionCopyPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfiguration() throws Exception {
+	public void testDeployConfigurationFile() throws Exception {
 		long[] companyIds = PortalInstancePool.getCompanyIds();
 
 		try {
-			deployConfiguration(
+			deployConfigurationFile(
 				_PID,
 				StringBundler.concat(
 					"name=\"testName\"\nsourceCompanyId=L\"",
@@ -64,7 +64,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 				companyIds.length + 1,
 				PortalInstancePool.getCompanyIds().length);
 
-			assertConfigurationIsDeletedAfterDeploy(_PID);
+			assertConfigurationFileIsDeletedAfterDeploy(_PID);
 		}
 		finally {
 			Company company = _companyLocalService.fetchCompanyByVirtualHost(
@@ -78,7 +78,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfigurationExistingDestinationCompanyIdWithFF()
+	public void testDeployConfigurationFileExistingDestinationCompanyIdWithFF()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -86,7 +86,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 					"CopyPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(
+			deployConfigurationFile(
 				_PID,
 				StringBundler.concat(
 					"destinationCompanyId=L\"",
@@ -102,11 +102,11 @@ public class DBPartitionCopyPortalInstanceOperationTest
 						" already exists");
 		}
 
-		assertConfigurationIsDeletedAfterDeploy(_PID);
+		assertConfigurationFileIsDeletedAfterDeploy(_PID);
 	}
 
 	@Test
-	public void testDeployConfigurationExistingDestinationCompanyIdWithoutFF()
+	public void testDeployConfigurationFileExistingDestinationCompanyIdWithoutFF()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -114,7 +114,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 					"BasePortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(
+			deployConfigurationFile(
 				_PID,
 				StringBundler.concat(
 					"destinationCompanyId=L\"",
@@ -127,7 +127,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 				logCapture, "Feature flag LPD-11342 is disabled");
 		}
 
-		assertConfigurationIsDeletedAfterDeploy(_PID);
+		assertConfigurationFileIsDeletedAfterDeploy(_PID);
 	}
 
 	private static final String _PID =

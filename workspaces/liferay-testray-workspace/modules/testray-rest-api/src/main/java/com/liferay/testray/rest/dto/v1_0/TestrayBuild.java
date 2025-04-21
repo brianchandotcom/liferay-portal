@@ -11,8 +11,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -43,7 +41,7 @@ public class TestrayBuild implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestrayBuild.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getArchived() {
 		if (_archivedSupplier != null) {
 			archived = _archivedSupplier.get();
@@ -84,7 +82,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _archivedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultBlocked() {
 		if (_caseResultBlockedSupplier != null) {
 			caseResultBlocked = _caseResultBlockedSupplier.get();
@@ -125,7 +123,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultBlockedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultDidNotRun() {
 		if (_caseResultDidNotRunSupplier != null) {
 			caseResultDidNotRun = _caseResultDidNotRunSupplier.get();
@@ -166,7 +164,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultDidNotRunSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultFailed() {
 		if (_caseResultFailedSupplier != null) {
 			caseResultFailed = _caseResultFailedSupplier.get();
@@ -207,7 +205,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultFailedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultInProgress() {
 		if (_caseResultInProgressSupplier != null) {
 			caseResultInProgress = _caseResultInProgressSupplier.get();
@@ -248,7 +246,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultInProgressSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultIncomplete() {
 		if (_caseResultIncompleteSupplier != null) {
 			caseResultIncomplete = _caseResultIncompleteSupplier.get();
@@ -289,7 +287,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultIncompleteSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultPassed() {
 		if (_caseResultPassedSupplier != null) {
 			caseResultPassed = _caseResultPassedSupplier.get();
@@ -330,7 +328,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultPassedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultTestFix() {
 		if (_caseResultTestFixSupplier != null) {
 			caseResultTestFix = _caseResultTestFixSupplier.get();
@@ -371,7 +369,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultTestFixSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseResultUntested() {
 		if (_caseResultUntestedSupplier != null) {
 			caseResultUntested = _caseResultUntestedSupplier.get();
@@ -412,7 +410,48 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultUntestedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getCpuUseTime() {
+		if (_cpuUseTimeSupplier != null) {
+			cpuUseTime = _cpuUseTimeSupplier.get();
+
+			_cpuUseTimeSupplier = null;
+		}
+
+		return cpuUseTime;
+	}
+
+	public void setCpuUseTime(String cpuUseTime) {
+		this.cpuUseTime = cpuUseTime;
+
+		_cpuUseTimeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCpuUseTime(
+		UnsafeSupplier<String, Exception> cpuUseTimeUnsafeSupplier) {
+
+		_cpuUseTimeSupplier = () -> {
+			try {
+				return cpuUseTimeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String cpuUseTime;
+
+	@JsonIgnore
+	private Supplier<String> _cpuUseTimeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDateArchived() {
 		if (_dateArchivedSupplier != null) {
 			dateArchived = _dateArchivedSupplier.get();
@@ -453,7 +492,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dateArchivedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -494,7 +533,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDueDate() {
 		if (_dueDateSupplier != null) {
 			dueDate = _dueDateSupplier.get();
@@ -535,7 +574,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dueDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDueStatus() {
 		if (_dueStatusSupplier != null) {
 			dueStatus = _dueStatusSupplier.get();
@@ -576,7 +615,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dueStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getGitHash() {
 		if (_gitHashSupplier != null) {
 			gitHash = _gitHashSupplier.get();
@@ -617,7 +656,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _gitHashSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getGithubCompareURLs() {
 		if (_githubCompareURLsSupplier != null) {
 			githubCompareURLs = _githubCompareURLsSupplier.get();
@@ -658,7 +697,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _githubCompareURLsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -697,7 +736,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getPromoted() {
 		if (_promotedSupplier != null) {
 			promoted = _promotedSupplier.get();
@@ -738,7 +777,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _promotedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getR_productVersionToBuilds_c_productVersionId() {
 		if (_r_productVersionToBuilds_c_productVersionIdSupplier != null) {
 			r_productVersionToBuilds_c_productVersionId =
@@ -785,7 +824,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_productVersionToBuilds_c_productVersionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getR_projectToBuilds_c_projectId() {
 		if (_r_projectToBuilds_c_projectIdSupplier != null) {
 			r_projectToBuilds_c_projectId =
@@ -830,7 +869,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_projectToBuilds_c_projectIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getR_routineToBuilds_c_routineId() {
 		if (_r_routineToBuilds_c_routineIdSupplier != null) {
 			r_routineToBuilds_c_routineId =
@@ -875,7 +914,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_routineToBuilds_c_routineIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getTemplate() {
 		if (_templateSupplier != null) {
 			template = _templateSupplier.get();
@@ -916,7 +955,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _templateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTemplateTestrayBuildId() {
 		if (_templateTestrayBuildIdSupplier != null) {
 			templateTestrayBuildId = _templateTestrayBuildIdSupplier.get();
@@ -1090,6 +1129,22 @@ public class TestrayBuild implements Serializable {
 			sb.append("\"caseResultUntested\": ");
 
 			sb.append(caseResultUntested);
+		}
+
+		String cpuUseTime = getCpuUseTime();
+
+		if (cpuUseTime != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cpuUseTime\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cpuUseTime));
+
+			sb.append("\"");
 		}
 
 		String dateArchived = getDateArchived();
@@ -1282,8 +1337,8 @@ public class TestrayBuild implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayBuild",
 		name = "x-class-name"
 	)

@@ -11,8 +11,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -46,7 +44,7 @@ public class TestrayComponentMetric implements Serializable {
 			TestrayComponentMetric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestrayComponentId() {
 		if (_testrayComponentIdSupplier != null) {
 			testrayComponentId = _testrayComponentIdSupplier.get();
@@ -87,7 +85,7 @@ public class TestrayComponentMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayComponentIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTestrayComponentName() {
 		if (_testrayComponentNameSupplier != null) {
 			testrayComponentName = _testrayComponentNameSupplier.get();
@@ -128,7 +126,7 @@ public class TestrayComponentMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayComponentNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public TestrayStatusMetric getTestrayStatusMetric() {
 		if (_testrayStatusMetricSupplier != null) {
@@ -246,8 +244,8 @@ public class TestrayComponentMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayComponentMetric",
 		name = "x-class-name"
 	)

@@ -11,8 +11,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -44,7 +42,7 @@ public class TestrayBuildAutofill implements Serializable {
 			TestrayBuildAutofill.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getCaseAmount() {
 		if (_caseAmountSupplier != null) {
 			caseAmount = _caseAmountSupplier.get();
@@ -85,7 +83,7 @@ public class TestrayBuildAutofill implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestrayRunId1() {
 		if (_testrayRunId1Supplier != null) {
 			testrayRunId1 = _testrayRunId1Supplier.get();
@@ -126,7 +124,7 @@ public class TestrayBuildAutofill implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayRunId1Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestrayRunId2() {
 		if (_testrayRunId2Supplier != null) {
 			testrayRunId2 = _testrayRunId2Supplier.get();
@@ -236,8 +234,8 @@ public class TestrayBuildAutofill implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill",
 		name = "x-class-name"
 	)

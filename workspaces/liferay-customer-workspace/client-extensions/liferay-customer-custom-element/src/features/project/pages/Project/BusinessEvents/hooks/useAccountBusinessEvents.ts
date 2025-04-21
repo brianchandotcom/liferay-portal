@@ -21,6 +21,8 @@ export default function useAccountBusinessEvents(
 			filterQuery += ` and id ne '${businessEvent.id || ''}'`;
 		}
 
+		filterQuery += `&sort=dateModified:asc`;
+
 		return filterQuery;
 	}, [
 		businessEvent.id,
@@ -44,15 +46,12 @@ export default function useAccountBusinessEvents(
 						? businessEvent.currentLiferayVersion?.name
 						: null,
 					description: businessEvent.description || null,
+					eventType: businessEvent.eventType || null,
 					name: businessEvent.name,
 					newVersion: businessEvent.newLiferayVersion?.key
 						? businessEvent.newLiferayVersion?.name
 						: null,
-					targetGoLiveDate:
-						businessEvent.targetGoLiveDateTime?.split('T')[0],
-					type: businessEvent.eventType?.key
-						? businessEvent.eventType?.name
-						: null,
+					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime?.split('T')[0],
 				};
 			}
 		);
@@ -66,23 +65,20 @@ export default function useAccountBusinessEvents(
 					? businessEvent.currentLiferayVersion?.name
 					: null,
 				description: businessEvent.description || null,
+				eventType: businessEvent.eventType || null,
 				name: businessEvent.name,
 				newVersion: businessEvent.newLiferayVersion?.key
 					? businessEvent.newLiferayVersion?.name
 					: null,
-				targetGoLiveDate:
-					businessEvent.targetGoLiveDateTime?.split('T')[0],
-				type: businessEvent.eventType?.key
-					? businessEvent.eventType?.name
-					: null,
-			});
+				targetGoLiveDateTime: businessEvent.targetGoLiveDateTime?.split('T')[0],
+		});
 		}
 
 		const response: Response =
 			await Liferay.OAuth2Client.FromUserAgentApplication(
 				'liferay-customer-etc-spring-boot-oaua'
 			).fetch(
-				`/accounts/${accountExternalReferenceCode}/business-events`,
+				`/accounts/${accountExternalReferenceCode}/sync-business-events`,
 				{
 					body: JSON.stringify({
 						businessEvents: formattedBusinessEvents,

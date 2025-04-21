@@ -6,7 +6,9 @@
 package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.customer.constants.ExternalLinkConstants;
+import com.liferay.customer.constants.HeatTagConstants;
 import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
@@ -14,11 +16,16 @@ import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,6 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +61,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.POST,
-		path = "/accounts/{externalReferenceCode}/business-events"
+		path = "/accounts/{externalReferenceCode}/sync-business-events"
 	)
 	public ResponseEntity<String> post(
 			@AuthenticationPrincipal Jwt jwt,
@@ -72,7 +80,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			_updateZendesk(
 				_fetchZendeskOrganizationId(externalReferenceCode),
 				_getBusinessEvents(jsonArray),
-				_getAssociatedTicketIds(jsonArray));
+				_getAssociatedTicketIds(jsonArray),
+				_getHighestHeatTag(jsonArray));
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -84,6 +93,69 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	private void _checkAccountBusinessEventHeatTags(
+			String externalReferenceCode)
+		throws Exception {
+
+		int page = 1;
+
+		while (page > 0) {
+			JSONObject jsonObject = _getBusinessEventsJSONObject(
+				StringBundler.concat(
+					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
+					"and r_accountEntryToBusinessEvents_accountEntryERC eq '",
+					externalReferenceCode, "'"),
+				page, 500, "dateModified:asc");
+
+			_updateZendeskTicketHeatTag(
+				_fetchZendeskOrganizationId(externalReferenceCode),
+				_getHighestHeatTag(jsonObject.getJSONArray("items")));
+
+			if (jsonObject.getInt("lastPage") == page) {
+				page = 0;
+			}
+			else {
+				page += 1;
+			}
+		}
+	}
+
+	@Scheduled(cron = "0 0 0 * * *")
+	private void _checkBusinessEventsHeatTags() throws Exception {
+		int page = 1;
+
+		Set<String> syncedERCAccounts = new HashSet<>();
+
+		while (page > 0) {
+			JSONObject jsonObject = _getBusinessEventsJSONObject(
+				"eventStatus ne 'canceled' and eventStatus ne 'completed'",
+				page, 500, StringPool.BLANK);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject businessEventJSONObject = jsonArray.getJSONObject(i);
+
+				String externalReferenceCode =
+					businessEventJSONObject.getString(
+						"accountEntryToBusinessEventsERC");
+
+				if (!syncedERCAccounts.contains(externalReferenceCode)) {
+					_checkAccountBusinessEventHeatTags(externalReferenceCode);
+
+					syncedERCAccounts.add(externalReferenceCode);
+				}
+			}
+
+			if (jsonObject.getInt("lastPage") == page) {
+				page = 0;
+			}
+			else {
+				page += 1;
+			}
 		}
 	}
 
@@ -126,6 +198,11 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		return associatedTicketIds.toArray(new Long[0]);
 	}
 
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-customer-etc-spring-boot-oahs");
+	}
+
 	private String _getBusinessEvents(JSONArray jsonArray) {
 		List<String> businessEvents = new ArrayList<>();
 
@@ -143,7 +220,13 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 					continue;
 				}
 
-				if (Validator.isNotNull(jsonObject.optString(key))) {
+				if (key.equals("eventType")) {
+					JSONObject typeJSONObject = jsonObject.optJSONObject(key);
+
+					businessEventFieldValues.add(
+						"type: " + typeJSONObject.getString("name"));
+				}
+				else if (Validator.isNotNull(jsonObject.optString(key))) {
 					businessEventFieldValues.add(
 						key + ": " + jsonObject.getString(key));
 				}
@@ -158,9 +241,67 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		return StringUtil.merge(businessEvents, "\n\n");
 	}
 
+	private JSONObject _getBusinessEventsJSONObject(
+			String filterString, int page, int pageSize, String sortString)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("/o/c/businessevents?page=");
+		sb.append(page);
+		sb.append("&pageSize=");
+		sb.append(pageSize);
+
+		if (Validator.isNotNull(filterString)) {
+			sb.append("&filter=");
+			sb.append(filterString);
+		}
+
+		if (Validator.isNotNull(sortString)) {
+			sb.append("&sort=");
+			sb.append(sortString);
+		}
+
+		return new JSONObject(get(_getAuthorization(), sb.toString()));
+	}
+
+	private String _getHeatTag(JSONObject jsonObject) {
+		String targetGoLiveDateTime = jsonObject.getString(
+			"targetGoLiveDateTime");
+
+		String targetGoLiveLocalDateFormat = targetGoLiveDateTime.substring(
+			0, 10);
+
+		LocalDate localDate = LocalDate.parse(targetGoLiveLocalDateFormat);
+
+		long daysUntilTargetGoLive = ChronoUnit.DAYS.between(
+			LocalDate.now(), localDate);
+
+		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
+
+		return HeatTagConstants.getHeatTag(
+			daysUntilTargetGoLive, eventTypeJSONObject.getString("key"));
+	}
+
+	private String _getHighestHeatTag(JSONArray jsonArray) {
+		String highestHeatTag = StringPool.BLANK;
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String heatTag = _getHeatTag(jsonArray.getJSONObject(i));
+
+			if (HeatTagConstants.getHeatTagScore(highestHeatTag) <=
+					HeatTagConstants.getHeatTagScore(heatTag)) {
+
+				highestHeatTag = heatTag;
+			}
+		}
+
+		return highestHeatTag;
+	}
+
 	private void _updateZendesk(
 			long zendeskOrganizationId, String businessEvents,
-			Long[] associatedTicketIds)
+			Long[] associatedTicketIds, String highestHeatTag)
 		throws Exception {
 
 		_zendeskService.updateZendeskOrganization(
@@ -183,6 +324,16 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
 				Map<Long, String> customFields =
 					zendeskTicket.getCustomFields();
+
+				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
+
+				if ((HeatTagConstants.getHeatTagScore(heatTag) <=
+						HeatTagConstants.getHeatTagScore(highestHeatTag)) &&
+					!heatTag.equals(highestHeatTag)) {
+
+					customFields.put(
+						_zendeskHeatTagTicketFieldId, highestHeatTag);
+				}
 
 				customFields.put(
 					_zendeskBusinessEventTicketFieldId, businessEvents);
@@ -208,6 +359,49 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		}
 	}
 
+	private void _updateZendeskTicketHeatTag(
+			long zendeskOrganizationId, String highestHeatTag)
+		throws Exception {
+
+		ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
+
+		zendeskTicketQuery.addCriterion(
+			"organization:" + zendeskOrganizationId);
+		zendeskTicketQuery.addCriterion("status<solved");
+
+		int page = 1;
+
+		while (page > 0) {
+			zendeskTicketQuery.setPage(page);
+
+			SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
+				zendeskTicketQuery);
+
+			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
+				Map<Long, String> customFields =
+					zendeskTicket.getCustomFields();
+
+				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
+
+				if ((HeatTagConstants.getHeatTagScore(heatTag) <=
+						HeatTagConstants.getHeatTagScore(highestHeatTag)) &&
+					!heatTag.equals(highestHeatTag)) {
+
+					customFields.put(
+						_zendeskHeatTagTicketFieldId, highestHeatTag);
+
+					_zendeskService.updateZendeskTicket(
+						zendeskTicket.getZendeskTicketId(),
+						zendeskOrganizationId, zendeskTicket.getRequesterId(),
+						zendeskTicket.getStatus(), customFields,
+						zendeskTicket.getTags());
+				}
+			}
+
+			page = searchHits.getNextPage();
+		}
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		AccountBusinessEventsRestController.class);
 
@@ -217,8 +411,14 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 	@Autowired
 	private KoroneikiService _koroneikiService;
 
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
 	@Value("${liferay.customer.zendesk.business.event.ticket.field.id}")
 	private long _zendeskBusinessEventTicketFieldId;
+
+	@Value("${liferay.customer.zendesk.heat.tag.ticket.field.id}")
+	private long _zendeskHeatTagTicketFieldId;
 
 	@Autowired
 	private ZendeskService _zendeskService;

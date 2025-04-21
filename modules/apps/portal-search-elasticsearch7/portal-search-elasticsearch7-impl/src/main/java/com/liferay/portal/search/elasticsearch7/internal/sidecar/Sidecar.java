@@ -84,7 +84,9 @@ public class Sidecar {
 			_log.debug("Sidecar Elasticsearch starting");
 		}
 
-		_installElasticsearchIfNeeded();
+		String sidecarVersion = _getSidecarVersion();
+
+		_installElasticsearchIfNeeded(sidecarVersion);
 
 		ProcessChannel<Serializable> processChannel =
 			_executeSidecarMainProcess();
@@ -99,8 +101,8 @@ public class Sidecar {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Sidecar Elasticsearch ", _getNodeVersion(),
-					StringPool.SPACE, _getNodeName(), " started at ", address));
+					"Sidecar Elasticsearch ", sidecarVersion, StringPool.SPACE,
+					_getNodeName(), " started at ", address));
 		}
 
 		_address = address;
@@ -279,16 +281,13 @@ public class Sidecar {
 		return _elasticsearchConfigurationWrapper.clusterName();
 	}
 
-	private Distribution _getElasticsearchDistribution() {
-		String versionNumber = ResourceUtil.getResourceAsString(
-			getClass(), SidecarConstants.SIDECAR_VERSION_FILE_NAME);
-
-		if (versionNumber.equals(ElasticsearchDistribution.VERSION)) {
+	private Distribution _getElasticsearchDistribution(String sidecarVersion) {
+		if (sidecarVersion.equals(ElasticsearchDistribution.VERSION)) {
 			return new ElasticsearchDistribution();
 		}
 
 		throw new IllegalArgumentException(
-			"Unsupported Elasticsearch version: " + versionNumber);
+			"Unsupported Elasticsearch version: " + sidecarVersion);
 	}
 
 	private HashMap<String, String> _getEnvironment() {
@@ -456,11 +455,6 @@ public class Sidecar {
 		return "liferay_sidecar";
 	}
 
-	private String _getNodeVersion() {
-		return ResourceUtil.getResourceAsString(
-			getClass(), SidecarConstants.SIDECAR_VERSION_FILE_NAME);
-	}
-
 	private URL _getSecurityPolicyURL(URL bundleURL) {
 		try (URLClassLoader urlClassLoader = new URLClassLoader(
 				new URL[] {bundleURL})) {
@@ -525,12 +519,17 @@ public class Sidecar {
 		return arguments.toArray(new String[0]);
 	}
 
-	private void _installElasticsearchIfNeeded() {
+	private String _getSidecarVersion() {
+		return ResourceUtil.getResourceAsString(
+			getClass(), SidecarConstants.SIDECAR_VERSION_FILE_NAME);
+	}
+
+	private void _installElasticsearchIfNeeded(String sidecarVersion) {
 		ElasticsearchInstaller.builder(
 		).distributablesDirectoryPath(
 			_elasticsearchInstancePaths.getWorkPath()
 		).distribution(
-			_getElasticsearchDistribution()
+			_getElasticsearchDistribution(sidecarVersion)
 		).installationDirectoryPath(
 			_sidecarHomePath
 		).build(

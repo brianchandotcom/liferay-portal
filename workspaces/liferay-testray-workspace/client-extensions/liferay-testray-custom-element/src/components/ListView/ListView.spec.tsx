@@ -22,7 +22,7 @@ describe('ListView', () => {
 			items: [{email: 'testray@liferay.com', name: 'Testray User'}],
 			lastPage: true,
 			pageIndex: 1,
-			pageSize: 20,
+			pageSize: 50,
 			totalCount: 100,
 		}));
 
@@ -95,7 +95,7 @@ describe('ListView', () => {
 			items: [],
 			lastPage: false,
 			pageIndex: 1,
-			pageSize: 20,
+			pageSize: 50,
 			totalCount: 0,
 		}));
 

@@ -68,7 +68,7 @@ const initialState: InitialState = {
 	},
 	id: '',
 	page: 1,
-	pageSize: PAGINATION_DELTA[0],
+	pageSize: PAGINATION_DELTA[1],
 	pin: false,
 	search: '',
 	selectedRows: [],
@@ -360,7 +360,7 @@ const ListViewContextProvider: React.FC<
 					filter: JSON.stringify(formattedFilter),
 					filterSchema: filterSchemaStorage as string,
 					page: '1',
-					pageSize: '20',
+					pageSize: '50',
 				})
 			);
 		}

@@ -485,6 +485,11 @@ public interface ObjectEntryLocalService
 			Map<String, Serializable> values)
 		throws PortalException;
 
+	public ObjectEntry partialUpdateObjectEntry(
+			long userId, long objectEntryId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<ObjectEntry> searchObjectEntries(
 			long groupId, long objectDefinitionId, String keywords, int cur,

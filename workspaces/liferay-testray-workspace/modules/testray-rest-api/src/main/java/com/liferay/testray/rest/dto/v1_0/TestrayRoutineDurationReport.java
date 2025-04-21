@@ -11,8 +11,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -45,7 +43,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 			TestrayRoutineDurationReport.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getTestrayCaseFlaky() {
 		if (_testrayCaseFlakySupplier != null) {
 			testrayCaseFlaky = _testrayCaseFlakySupplier.get();
@@ -86,7 +84,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _testrayCaseFlakySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestrayCaseId() {
 		if (_testrayCaseIdSupplier != null) {
 			testrayCaseId = _testrayCaseIdSupplier.get();
@@ -127,7 +125,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayCaseIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTestrayCaseName() {
 		if (_testrayCaseNameSupplier != null) {
 			testrayCaseName = _testrayCaseNameSupplier.get();
@@ -168,7 +166,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayCaseNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getTestrayCasePriority() {
 		if (_testrayCasePrioritySupplier != null) {
 			testrayCasePriority = _testrayCasePrioritySupplier.get();
@@ -209,7 +207,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _testrayCasePrioritySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestrayCaseResultAvgDuration() {
 		if (_testrayCaseResultAvgDurationSupplier != null) {
 			testrayCaseResultAvgDuration =
@@ -254,7 +252,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayCaseResultAvgDurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getTestrayCaseResultDurations() {
 		if (_testrayCaseResultDurationsSupplier != null) {
 			testrayCaseResultDurations =
@@ -299,7 +297,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _testrayCaseResultDurationsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getTestrayCaseResultStatus() {
 		if (_testrayCaseResultStatusSupplier != null) {
 			testrayCaseResultStatus = _testrayCaseResultStatusSupplier.get();
@@ -341,7 +339,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _testrayCaseResultStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTestrayCaseTypeName() {
 		if (_testrayCaseTypeNameSupplier != null) {
 			testrayCaseTypeName = _testrayCaseTypeNameSupplier.get();
@@ -382,7 +380,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayCaseTypeNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTestrayComponentName() {
 		if (_testrayComponentNameSupplier != null) {
 			testrayComponentName = _testrayComponentNameSupplier.get();
@@ -423,7 +421,7 @@ public class TestrayRoutineDurationReport implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayComponentNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTestrayTeamName() {
 		if (_testrayTeamNameSupplier != null) {
 			testrayTeamName = _testrayTeamNameSupplier.get();
@@ -658,8 +656,8 @@ public class TestrayRoutineDurationReport implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayRoutineDurationReport",
 		name = "x-class-name"
 	)

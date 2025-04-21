@@ -11,8 +11,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -44,7 +42,7 @@ public class TestrayStatusMetric implements Serializable {
 			TestrayStatusMetric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getBlocked() {
 		if (_blockedSupplier != null) {
 			blocked = _blockedSupplier.get();
@@ -85,7 +83,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _blockedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getFailed() {
 		if (_failedSupplier != null) {
 			failed = _failedSupplier.get();
@@ -126,7 +124,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _failedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getInProgress() {
 		if (_inProgressSupplier != null) {
 			inProgress = _inProgressSupplier.get();
@@ -167,7 +165,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _inProgressSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getIncomplete() {
 		if (_incompleteSupplier != null) {
 			incomplete = _incompleteSupplier.get();
@@ -208,7 +206,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _incompleteSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getPassed() {
 		if (_passedSupplier != null) {
 			passed = _passedSupplier.get();
@@ -249,7 +247,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _passedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTestfix() {
 		if (_testfixSupplier != null) {
 			testfix = _testfixSupplier.get();
@@ -290,7 +288,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testfixSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTotal() {
 		if (_totalSupplier != null) {
 			total = _totalSupplier.get();
@@ -329,7 +327,7 @@ public class TestrayStatusMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _totalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUntested() {
 		if (_untestedSupplier != null) {
 			untested = _untestedSupplier.get();
@@ -498,8 +496,8 @@ public class TestrayStatusMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayStatusMetric",
 		name = "x-class-name"
 	)

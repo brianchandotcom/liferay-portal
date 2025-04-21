@@ -14,8 +14,14 @@ public class ContentPageEditorActionKeys extends ActionKeys {
 
 	public static final String EDIT_SEGMENTS_ENTRY = "EDIT_SEGMENTS_ENTRY";
 
+	public static final String INSTALL_FREE_BUNDLED_APPS_MARKETPLACE =
+		"INSTALL_FREE_BUNDLED_APPS_MARKETPLACE";
+
 	public static final String LOCKED_SEGMENTS_EXPERIMENT =
 		"LOCKED_SEGMENTS_EXPERIMENT";
+
+	public static final String PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE =
+		"PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE";
 
 	public static final String VIEW_MARKETPLACE = "VIEW_MARKETPLACE";
 

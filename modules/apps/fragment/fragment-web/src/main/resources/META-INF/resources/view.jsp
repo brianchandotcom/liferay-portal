@@ -80,7 +80,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 									</c:if>
 								</li>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-34938") && permissionChecker.isOmniadmin() %>'>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-34938") && PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.VIEW_APPS) %>'>
 									<li>
 										<div class="marketplace-button">
 											<react:component
@@ -100,6 +100,13 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 														"heading", LanguageUtil.get(request, "marketplace-is-now-in-fragments")
 													).put(
 														"isMarketplaceButtonVisited", GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited", "false"))
+													).put(
+														"permissions",
+														HashMapBuilder.<String, Object>put(
+															"installFreeApps", PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)
+														).put(
+															"purchaseAndInstallPaidApps", PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS)
+														).build()
 													).build()
 												%>'
 											/>

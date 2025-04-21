@@ -62,6 +62,8 @@ import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.marketplace.constants.MarketplaceActionKeys;
+import com.liferay.marketplace.constants.MarketplacePortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
@@ -88,12 +90,12 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -822,6 +824,21 @@ public class ContentPageEditorDisplayContext {
 						ActionKeys.UPDATE);
 
 					return HashMapBuilder.<String, Object>put(
+						ContentPageEditorActionKeys.
+							INSTALL_FREE_BUNDLED_APPS_MARKETPLACE,
+						() -> PortletPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							MarketplacePortletKeys.FRAGMENTS,
+							MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)
+					).put(
+						ContentPageEditorActionKeys.
+							PURCHASE_AND_INSTALL_PAID_APPS_MARKETPLACE,
+						() -> PortletPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							MarketplacePortletKeys.FRAGMENTS,
+							MarketplaceActionKeys.
+								PURCHASE_AND_INSTALL_PAID_APPS)
+					).put(
 						ContentPageEditorActionKeys.UPDATE, hasUpdatePermission
 					).put(
 						ContentPageEditorActionKeys.
@@ -863,12 +880,10 @@ public class ContentPageEditorDisplayContext {
 						}
 					).put(
 						ContentPageEditorActionKeys.VIEW_MARKETPLACE,
-						() -> {
-							PermissionChecker permissionChecker =
-								themeDisplay.getPermissionChecker();
-
-							return permissionChecker.isOmniadmin();
-						}
+						() -> PortletPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							MarketplacePortletKeys.FRAGMENTS,
+							MarketplaceActionKeys.VIEW_APPS)
 					).put(
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES,
 						() -> _portletResourcePermission.contains(

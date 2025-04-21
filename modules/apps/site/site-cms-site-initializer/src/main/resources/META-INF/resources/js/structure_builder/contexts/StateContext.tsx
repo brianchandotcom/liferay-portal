@@ -243,6 +243,7 @@ function reducer(state: State, action: Action): State {
 			const nextState = {
 				...state,
 				error: INITIAL_STATE.error,
+				history: INITIAL_STATE.history,
 				publishedFields: new Set(
 					Array.from(state.fields.values()).map((field) => field.uuid)
 				),

@@ -120,6 +120,11 @@ const RoutineArchived = () => {
 						},
 						{
 							clickable: true,
+							key: 'cpuUseTime',
+							value: i18n.translate('cpu-use-time'),
+						},
+						{
+							clickable: true,
 							key: 'product_version',
 							render: (_, {productVersion}) =>
 								productVersion?.name,

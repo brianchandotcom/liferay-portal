@@ -87,6 +87,13 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 									: testrayBuild?.gitHash,
 						},
 						{
+							title: i18n.translate('cpu-use-time'),
+							value:
+								testrayBuild?.cpuUseTime === 'null' || ''
+									? '-'
+									: testrayBuild?.cpuUseTime,
+						},
+						{
 							title: i18n.translate('execution-date'),
 							value: formatUTCDate(testrayBuild.dueDate),
 						},

@@ -1125,6 +1125,8 @@ public class TestrayManagerImpl implements TestrayManager {
 		ObjectEntry objectEntry = _addObjectEntry(
 			"Build", serviceContext, testrayCache, userId,
 			HashMapBuilder.<String, Serializable>put(
+				"cpuUseTime", propertiesMap.get("testray.total.cpu.use.time")
+			).put(
 				"description", _getTestrayBuildDescription(propertiesMap)
 			).put(
 				"dueDate",

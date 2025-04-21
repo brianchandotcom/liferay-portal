@@ -57,6 +57,7 @@ public class TestrayBuildResourceImpl extends BaseTestrayBuildResourceImpl {
 					values.get("caseResultTestFix"));
 				caseResultUntested = GetterUtil.getInteger(
 					values.get("caseResultUntested"));
+				cpuUseTime = GetterUtil.getString(values.get("cpuUseTime"));
 				dateArchived = String.valueOf(
 					GetterUtil.get(values.get("dateArchived"), null, null));
 				description = GetterUtil.getString(values.get("description"));

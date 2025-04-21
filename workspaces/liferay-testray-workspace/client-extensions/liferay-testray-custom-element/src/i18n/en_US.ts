@@ -118,6 +118,7 @@ export default {
 	'components': 'Components',
 	'confirm-password': 'Confirm Password',
 	'copy-x': 'Copy - {0}',
+	'cpu-use-time': 'CPU Use Time',
 	'create': 'Create',
 	'create-cases-if-you-want-to-link-cases-to-this-build':
 		'Create cases if you want to link cases to this build.',

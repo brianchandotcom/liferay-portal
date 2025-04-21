@@ -112,6 +112,7 @@ export type TestrayBuild = {
 	actions: ObjectActionsItems;
 	archived?: boolean;
 	buildToTasks: TestrayTask[];
+	cpuUseTime: string;
 	creator: {
 		name: string;
 	};

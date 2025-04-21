@@ -27,6 +27,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	constructor() {
 		super({
 			adapter: ({
+				cpuUseTime,
 				description,
 				dueStatus,
 				gitHash,
@@ -39,6 +40,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				templateTestrayBuildId,
 			}) => ({
 				archived: false,
+				cpuUseTime,
 				description,
 				dueStatus,
 				gitHash,

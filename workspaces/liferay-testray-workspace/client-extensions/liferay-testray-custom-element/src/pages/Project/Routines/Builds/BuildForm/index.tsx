@@ -126,6 +126,7 @@ const BuildForm = () => {
 	} = useForm<BuildFormType>({
 		defaultValues: testrayBuild
 			? {
+					cpuUseTime: testrayBuild.cpuUseTime,
 					description: testrayBuild.description,
 					factorStacks: [{}],
 					gitHash: testrayBuild.gitHash,

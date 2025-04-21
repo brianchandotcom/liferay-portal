@@ -17,6 +17,17 @@
 			"type": "Boolean"
 		},
 		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "CPU Use Time"
+			},
+			"name": "cpuUseTime",
+			"required": false,
+			"type": "String"
+		},
+		{
 			"DBType": "DateTime",
 			"indexed": true,
 			"indexedAsKeyword": false,

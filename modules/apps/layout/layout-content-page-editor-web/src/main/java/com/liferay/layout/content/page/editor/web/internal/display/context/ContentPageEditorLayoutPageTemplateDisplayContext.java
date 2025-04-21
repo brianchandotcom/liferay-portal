@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -95,6 +96,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		LayoutPermission layoutPermission,
 		PageEditorConfiguration pageEditorConfiguration,
 		boolean pageIsDisplayPage, Portal portal, PortletRequest portletRequest,
+		PortletResourcePermission portletResourcePermission,
 		PortletURLFactory portletURLFactory, RenderResponse renderResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsExperienceManager segmentsExperienceManager,
@@ -114,11 +116,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			layoutLocalService, layoutLockManager,
 			layoutPageTemplateEntryLocalService, layoutPageTemplateEntryService,
 			layoutPermission, layoutSetLocalService, pageEditorConfiguration,
-			portal, portletRequest, portletURLFactory, renderResponse,
-			segmentsConfigurationProvider, segmentsExperienceManager,
-			segmentsExperienceLocalService, segmentsExperimentRelLocalService,
-			segmentsEntryService, staging, stagingGroupHelper,
-			styleBookEntryLocalService, workflowDefinitionLinkLocalService);
+			portal, portletRequest, portletResourcePermission,
+			portletURLFactory, renderResponse, segmentsConfigurationProvider,
+			segmentsExperienceManager, segmentsExperienceLocalService,
+			segmentsExperimentRelLocalService, segmentsEntryService, staging,
+			stagingGroupHelper, styleBookEntryLocalService,
+			workflowDefinitionLinkLocalService);
 
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;

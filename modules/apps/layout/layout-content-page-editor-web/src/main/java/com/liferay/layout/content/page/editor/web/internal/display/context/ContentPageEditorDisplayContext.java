@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -88,6 +89,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -173,8 +175,9 @@ public class ContentPageEditorDisplayContext {
 		LayoutPermission layoutPermission,
 		LayoutSetLocalService layoutSetLocalService,
 		PageEditorConfiguration pageEditorConfiguration, Portal portal,
-		PortletRequest portletRequest, PortletURLFactory portletURLFactory,
-		RenderResponse renderResponse,
+		PortletRequest portletRequest,
+		PortletResourcePermission portletResourcePermission,
+		PortletURLFactory portletURLFactory, RenderResponse renderResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsExperienceManager segmentsExperienceManager,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
@@ -202,6 +205,7 @@ public class ContentPageEditorDisplayContext {
 		_layoutSetLocalService = layoutSetLocalService;
 		_pageEditorConfiguration = pageEditorConfiguration;
 		this.portal = portal;
+		_portletResourcePermission = portletResourcePermission;
 		_portletURLFactory = portletURLFactory;
 		this.renderResponse = renderResponse;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
@@ -865,6 +869,11 @@ public class ContentPageEditorDisplayContext {
 
 							return permissionChecker.isOmniadmin();
 						}
+					).put(
+						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES,
+						() -> _portletResourcePermission.contains(
+							themeDisplay.getPermissionChecker(), getGroupId(),
+							FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)
 					).build();
 				}
 			).put(
@@ -2142,6 +2151,7 @@ public class ContentPageEditorDisplayContext {
 	private Integer _layoutType;
 	private LayoutStructure _masterLayoutStructure;
 	private final PageEditorConfiguration _pageEditorConfiguration;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final PortletURLFactory _portletURLFactory;
 	private Layout _publishedLayout;
 	private String _redirect;

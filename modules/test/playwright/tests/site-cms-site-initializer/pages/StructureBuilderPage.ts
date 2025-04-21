@@ -34,10 +34,10 @@ export class StructureBuilderPage {
 
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
-	private readonly publishButton: Locator;
 	private readonly spaceCheckbox: Locator;
 	private readonly spaceSelector: Locator;
 
+	readonly publishButton: Locator;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {

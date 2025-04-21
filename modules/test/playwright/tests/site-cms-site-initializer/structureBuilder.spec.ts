@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
@@ -375,6 +376,36 @@ test.describe('Frontend validations', () => {
 			// Save
 
 			const {id} = await structureBuilderPage.saveStructure();
+
+			// Publish structure
+
+			await structureBuilderPage.publishStructure();
+
+			// Delete one field and check warning modal is show when publishing
+
+			await structureBuilderPage.deleteFields([{label: 'Text'}]);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'You removed one or more fields from the structure'
+				),
+				trigger: structureBuilderPage.publishButton,
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText(
+					'You removed one or more fields from the structure'
+				),
+				trigger: page.locator('.btn-danger'),
+			});
+
+			await waitForAlert(page, 'published successfully', {
+				timeout: 5000,
+			});
+
+			// Check the warning does not appear anymore
+
+			await structureBuilderPage.publishStructure();
 
 			// Delete structure
 

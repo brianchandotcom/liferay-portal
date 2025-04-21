@@ -13,6 +13,7 @@ export type PermissionsState = Record<PermissionKey, boolean | undefined>;
 export const INITIAL_STATE: PermissionsState = {
 	EDIT_SEGMENTS_ENTRY: false,
 	LOCKED_SEGMENTS_EXPERIMENT: false,
+	MANAGE_FRAGMENT_ENTRIES: undefined,
 	SWITCH_EDIT_MODE: true,
 	UPDATE: true,
 	UPDATE_LAYOUT_ADVANCED_OPTIONS: undefined,

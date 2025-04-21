@@ -111,7 +111,6 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				<>
 					<ClayPanel
 						collapsable
-						defaultExpanded
 						displayTitle={
 							<div className="tr-small-heading">
 								{i18n.translate('playwright-reports')}

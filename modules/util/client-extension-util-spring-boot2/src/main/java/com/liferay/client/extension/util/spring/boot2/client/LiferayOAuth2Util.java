@@ -1,9 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.client.extension.util.spring.boot2.client;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +24,68 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class LiferayOAuth2Util {
 
 	public static String getClientId(
+		String externalReferenceCode, String lxcDXPMainDomain,
+		String lxcDXPServerProtocol) {
+
+		ApplicationInfo applicationInfo = _getApplicationInfo(
+			externalReferenceCode, lxcDXPMainDomain, lxcDXPServerProtocol);
+
+		if (applicationInfo != null) {
+			return applicationInfo.client_id;
+		}
+
+		return null;
+	}
+
+	public static String getHomePageURL(
+		String externalReferenceCode, String lxcDXPMainDomain,
+		String lxcDXPServerProtocol) {
+
+		ApplicationInfo applicationInfo = _getApplicationInfo(
+			externalReferenceCode, lxcDXPMainDomain, lxcDXPServerProtocol);
+
+		if (applicationInfo != null) {
+			return applicationInfo.homePageURL;
+		}
+
+		return null;
+	}
+
+	public static OAuth2AccessToken getOAuth2AccessToken(
+		AuthorizedClientServiceOAuth2AuthorizedClientManager
+			authorizedClientServiceOAuth2AuthorizedClientManager,
+		String externalReferenceCode) {
+
+		OAuth2AuthorizeRequest.Builder oAuth2AuthorizeRequestBuilder =
+			OAuth2AuthorizeRequest.withClientRegistrationId(
+				externalReferenceCode
+			).principal(
+				externalReferenceCode
+			);
+
+		OAuth2AuthorizedClient oAuth2AuthorizedClient =
+			authorizedClientServiceOAuth2AuthorizedClientManager.authorize(
+				oAuth2AuthorizeRequestBuilder.build());
+
+		if (oAuth2AuthorizedClient == null) {
+			_log.error("Unable to get OAuth 2 authorized client");
+
+			return null;
+		}
+
+		OAuth2AccessToken oAuth2AccessToken =
+			oAuth2AuthorizedClient.getAccessToken();
+
+		if (oAuth2AccessToken == null) {
+			_log.error("Unable to get OAuth 2 access token");
+
+			return null;
+		}
+
+		return oAuth2AccessToken;
+	}
+
+	private static ApplicationInfo _getApplicationInfo(
 		String externalReferenceCode, String lxcDXPMainDomain,
 		String lxcDXPServerProtocol) {
 
@@ -61,8 +125,7 @@ public class LiferayOAuth2Util {
 			).retrieve(
 			).bodyToMono(
 				ApplicationInfo.class
-			).block(
-			).client_id;
+			).block();
 		}
 		catch (Throwable throwable) {
 			if (_log.isWarnEnabled()) {
@@ -73,45 +136,13 @@ public class LiferayOAuth2Util {
 		}
 	}
 
-	public static OAuth2AccessToken getOAuth2AccessToken(
-		AuthorizedClientServiceOAuth2AuthorizedClientManager
-			authorizedClientServiceOAuth2AuthorizedClientManager,
-		String externalReferenceCode) {
-
-		OAuth2AuthorizeRequest.Builder oAuth2AuthorizeRequestBuilder =
-			OAuth2AuthorizeRequest.withClientRegistrationId(
-				externalReferenceCode
-			).principal(
-				externalReferenceCode
-			);
-
-		OAuth2AuthorizedClient oAuth2AuthorizedClient =
-			authorizedClientServiceOAuth2AuthorizedClientManager.authorize(
-				oAuth2AuthorizeRequestBuilder.build());
-
-		if (oAuth2AuthorizedClient == null) {
-			_log.error("Unable to get OAuth 2 authorized client");
-
-			return null;
-		}
-
-		OAuth2AccessToken oAuth2AccessToken =
-			oAuth2AuthorizedClient.getAccessToken();
-
-		if (oAuth2AccessToken == null) {
-			_log.error("Unable to get OAuth 2 access token");
-
-			return null;
-		}
-
-		return oAuth2AccessToken;
-	}
-
 	private static final Log _log = LogFactory.getLog(LiferayOAuth2Util.class);
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private static class ApplicationInfo {
 
 		public String client_id;
+		public String homePageURL;
 
 	}
 

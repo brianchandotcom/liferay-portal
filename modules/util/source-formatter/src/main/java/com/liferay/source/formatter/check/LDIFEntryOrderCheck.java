@@ -98,15 +98,29 @@ public class LDIFEntryOrderCheck extends BaseFileCheck {
 		@Override
 		public int compare(String attribute1, String attribute2) {
 			if (attribute1.startsWith("dn:") &&
-				_ldifEntry.contains("changetype: modify")) {
+				(_ldifEntry.contains("changetype: modify") ||
+				 _ldifEntry.contains("changetype: modrdn"))) {
 
 				return -1;
 			}
 
 			if (attribute2.startsWith("dn:") &&
-				_ldifEntry.contains("changetype: modify")) {
+				(_ldifEntry.contains("changetype: modify") ||
+				 _ldifEntry.contains("changetype: modrdn"))) {
 
 				return 1;
+			}
+
+			if (attribute1.startsWith("deleteoldrdn:") &&
+				_ldifEntry.contains("changetype: modrdn")) {
+
+				return 1;
+			}
+
+			if (attribute2.startsWith("deleteoldrdn:") &&
+				_ldifEntry.contains("changetype: modrdn")) {
+
+				return -1;
 			}
 
 			String[] attributeValuePair1 = attribute1.split(

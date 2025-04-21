@@ -22,7 +22,7 @@ liferay-default:
         -   secretRef:
                 name: managed-service-details
     customLabels:
-        origin: liferay-aws-mp
+        origin: liferay-aws
     customVolumeMounts:
         -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
             name: liferay-configmap

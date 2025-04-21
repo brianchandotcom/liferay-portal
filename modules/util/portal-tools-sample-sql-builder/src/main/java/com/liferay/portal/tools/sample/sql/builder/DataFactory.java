@@ -240,6 +240,7 @@ import com.liferay.object.model.impl.ObjectStateFlowModelImpl;
 import com.liferay.object.model.impl.ObjectStateModelImpl;
 import com.liferay.object.model.impl.ObjectStateTransitionModelImpl;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -2486,15 +2487,10 @@ public class DataFactory {
 	public List<CommerceShippingMethodModel> newCommerceShippingMethodModels(
 		List<GroupModel> groupModels) {
 
-		List<CommerceShippingMethodModel> commerceShippingMethodModels =
-			new ArrayList<>();
-
-		for (GroupModel groupModel : groupModels) {
-			commerceShippingMethodModels.add(
-				newCommerceShippingMethodModel(groupModel.getGroupId()));
-		}
-
-		return commerceShippingMethodModels;
+		return TransformUtil.transform(
+			groupModels,
+			groupModel -> newCommerceShippingMethodModel(
+				groupModel.getGroupId()));
 	}
 
 	public List<DDMTemplateModel>

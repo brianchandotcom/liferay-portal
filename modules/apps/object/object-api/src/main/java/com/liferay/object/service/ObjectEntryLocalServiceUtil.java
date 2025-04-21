@@ -645,6 +645,15 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectDefinitionId, primaryKey, values);
 	}
 
+	public static ObjectEntry partialUpdateObjectEntry(
+			long userId, long objectEntryId, Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().partialUpdateObjectEntry(
+			userId, objectEntryId, values, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<ObjectEntry> searchObjectEntries(
 				long groupId, long objectDefinitionId, String keywords, int cur,

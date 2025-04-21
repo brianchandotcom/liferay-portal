@@ -156,6 +156,11 @@ public interface ObjectEntryService extends BaseService {
 			long groupId, long objectDefinitionId, String actionId)
 		throws PortalException;
 
+	public ObjectEntry partialUpdateObjectEntry(
+			long objectEntryId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public ObjectEntry updateObjectEntry(
 			long objectEntryId, Map<String, Serializable> values,
 			ServiceContext serviceContext)

@@ -79,17 +79,19 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 	);
 }
 
-function useCache<T extends CacheKey>(key: T): Cache[T] & {load: () => void} {
+function useCache<T extends CacheKey>(
+	key: T
+): Cache[T] & {load: () => Promise<void>} {
 	const {broadcastRef, cache, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
-	const load = useCallback(() => {
+	const load = useCallback(async () => {
 		update(key, {status: 'saving'} as Partial<Cache[T]>);
 
-		item.fetcher().then((response) => {
-			update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
-		});
+		const response = await item.fetcher();
+
+		update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
 	}, [item, key, update]);
 
 	useEffect(() => {

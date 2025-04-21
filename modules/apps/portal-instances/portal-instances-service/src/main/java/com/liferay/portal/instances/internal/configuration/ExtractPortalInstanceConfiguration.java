@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Mariano Álvaro Sáiz
  */
 @ExtendedObjectClassDefinition(
-	category = "upgrades", featureFlagKey = "LPD-11342"
+	category = "virtual-instances", featureFlagKey = "LPD-11342"
 )
 @Meta.OCD(
 	id = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",

@@ -75,6 +75,8 @@ components:
             properties:
                 testrayBuildArchived:
                     type: boolean
+                testrayBuildCPUUseTime:
+                    type: string
                 testrayBuildDueDate:
                     type: string
                 testrayBuildGitHash:

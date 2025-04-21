@@ -49,8 +49,7 @@ env:
                 fieldPath: status.podIP
 envFrom:
     -   secretRef:
-            name: liferay
-            optional: true
+            name: liferay-default
 fullnameOverride: ""
 image:
     pullPolicy: IfNotPresent

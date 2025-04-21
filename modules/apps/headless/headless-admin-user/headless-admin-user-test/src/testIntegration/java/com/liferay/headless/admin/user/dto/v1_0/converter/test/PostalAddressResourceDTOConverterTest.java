@@ -94,13 +94,6 @@ public class PostalAddressResourceDTOConverterTest {
 			_language.getCompanyAvailableLocales(
 				TestPropsValues.getCompanyId());
 
-		StringBuilder sb = new StringBuilder();
-
-		for (Locale locale : originalAvailableLocales) {
-			sb.append(locale.toString());
-			sb.append(",");
-		}
-
 		_companyLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			UnicodePropertiesBuilder.put(
@@ -118,7 +111,7 @@ public class PostalAddressResourceDTOConverterTest {
 		_companyLocalService.updatePreferences(
 			TestPropsValues.getCompanyId(),
 			UnicodePropertiesBuilder.put(
-				"locales", sb.toString()
+				"locales", StringUtil.merge(originalAvailableLocales)
 			).build());
 	}
 

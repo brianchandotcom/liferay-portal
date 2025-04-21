@@ -103,17 +103,17 @@ public class DynamicDataSourceTest {
 					"JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT", 0)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), false, false);
+				false, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false);
 			_testGetDataSource(
-				_dynamicDataSource.getReadDataSource(),
-				List.of("Returning read data source"), false, true);
+				true, _dynamicDataSource.getReadDataSource(),
+				List.of("Returning read data source"), false);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), true, false);
+				false, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), true, true);
+				true, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true);
 		}
 	}
 
@@ -125,29 +125,29 @@ public class DynamicDataSourceTest {
 					Long.MAX_VALUE)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
+				false, _dynamicDataSource.getWriteDataSource(),
 				List.of(
 					"No context HTTP session exists, skip setting the " +
 						"write data source's last used date",
 					"Returning write data source"),
-				false, false);
+				false);
 			_testGetDataSource(
-				_dynamicDataSource.getReadDataSource(),
+				true, _dynamicDataSource.getReadDataSource(),
 				List.of(
 					"No context HTTP session exists, skip getting the " +
 						"write data source's last used date",
 					"Returning read data source"),
-				false, true);
+				false);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
+				false, _dynamicDataSource.getWriteDataSource(),
 				List.of(
 					"No context HTTP session exists, skip setting the " +
 						"write data source's last used date",
 					"Returning write data source"),
-				true, false);
+				true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), true, true);
+				true, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true);
 		}
 	}
 
@@ -169,17 +169,17 @@ public class DynamicDataSourceTest {
 					Long.MAX_VALUE)) {
 
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), false, false);
+				false, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), false, true);
+				true, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), false);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), true, false);
+				false, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true);
 			_testGetDataSource(
-				_dynamicDataSource.getWriteDataSource(),
-				List.of("Returning write data source"), true, true);
+				true, _dynamicDataSource.getWriteDataSource(),
+				List.of("Returning write data source"), true);
 		}
 		finally {
 			sessionIdThreadLocal.remove();
@@ -187,8 +187,8 @@ public class DynamicDataSourceTest {
 	}
 
 	private void _testGetDataSource(
-		DataSource expectedDataSource, List<String> expectedLogMessages,
-		boolean writeDataSource, boolean currentTransactionReadOnly) {
+		boolean currentTransactionReadOnly, DataSource expectedDataSource,
+		List<String> expectedLogMessages, boolean writeDataSource) {
 
 		_writeDataSourceThreadLocal.set(writeDataSource);
 

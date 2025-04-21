@@ -67,6 +67,6 @@ public interface ConstraintResolverContext<T extends CTModel<T>> {
 	/**
 	 * Moves all changes except the primary key from the source into the target.
 	 */
-	public void mergeSourceIntoTarget();
+	public void  mergeSourceCTModelIntoTargetCTModel();
 
 }

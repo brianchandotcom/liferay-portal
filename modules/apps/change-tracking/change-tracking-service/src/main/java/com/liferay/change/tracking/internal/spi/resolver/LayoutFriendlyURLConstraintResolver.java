@@ -55,7 +55,7 @@ public class LayoutFriendlyURLConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		constraintResolverContext.mergeSourceIntoTarget();
+		constraintResolverContext. mergeSourceCTModelIntoTargetCTModel();
 	}
 
 }

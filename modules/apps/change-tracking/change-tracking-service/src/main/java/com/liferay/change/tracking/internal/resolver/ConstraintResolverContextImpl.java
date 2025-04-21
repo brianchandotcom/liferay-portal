@@ -81,7 +81,7 @@ public class ConstraintResolverContextImpl<T extends CTModel<T>>
 		return false;
 	}
 
-	public void mergeSourceIntoTarget() {
+	public void  mergeSourceCTModelIntoTargetCTModel() {
 		T sourceCTModel = getSourceCTModel();
 
 		T targetCTModel = getTargetCTModel();

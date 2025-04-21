@@ -28,6 +28,8 @@ components:
                 caseResultUntested:
                     format: int32
                     type: integer
+                cpuUseTime:
+                    type: string
                 dateArchived:
                     type: string
                 description:

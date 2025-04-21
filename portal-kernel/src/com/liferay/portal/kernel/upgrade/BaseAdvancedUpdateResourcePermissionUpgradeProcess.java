@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,19 +100,17 @@ public abstract class BaseAdvancedUpdateResourcePermissionUpgradeProcess
 	private List<String> _getResourceActionIds(
 		long actionIds, List<ResourceAction> resourceActions) {
 
-		List<String> resourceActionIds = new ArrayList<>();
+		return TransformUtil.transform(
+			resourceActions,
+			resourceAction -> {
+				long bitwiseValue = resourceAction.getBitwiseValue();
 
-		for (ResourceAction resourceAction : resourceActions) {
-			long bitwiseValue = resourceAction.getBitwiseValue();
+				if ((actionIds & bitwiseValue) != bitwiseValue) {
+					return null;
+				}
 
-			if ((actionIds & bitwiseValue) != bitwiseValue) {
-				continue;
-			}
-
-			resourceActionIds.add(resourceAction.getActionId());
-		}
-
-		return resourceActionIds;
+				return resourceAction.getActionId();
+			});
 	}
 
 }

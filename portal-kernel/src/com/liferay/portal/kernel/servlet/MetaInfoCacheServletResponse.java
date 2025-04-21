@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -13,13 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -269,19 +267,8 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	 */
 	@Override
 	public Collection<String> getHeaders(String name) {
-		Set<Header> values = _metaData._headers.get(name);
-
-		if (values == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> stringValues = new ArrayList<>();
-
-		for (Header header : values) {
-			stringValues.add(header.toString());
-		}
-
-		return stringValues;
+		return TransformUtil.transform(
+			_metaData._headers.get(name), header -> header.toString());
 	}
 
 	@Override

@@ -13,7 +13,7 @@
 	}
 
 	.sidebar-container {
-		border-right: 1px solid #9b92a5;
+		border-right: 1px solid #e7e7ed;
 		display: flex;
 		grid-area: sidebar;
 		overflow: hidden;

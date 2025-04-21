@@ -18,7 +18,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext" %><%@
@@ -58,6 +57,8 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 				className="<%= SortDisplayContext.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
+						"namespace", liferayPortletResponse.getNamespace()
+					).put(
 						"sortDisplayContext", sortDisplayContext
 					).build()
 				%>'
@@ -65,24 +66,25 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 				displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= sortDisplayContext.getSortTermDisplayContexts() %>"
 			>
-				<aui:fieldset>
-					<aui:select class="sort-term" label="sort-by" name="sortSelection">
-						<c:if test="<%= !sortDisplayContext.isAnySelected() %>">
-							<aui:option disabled="<%= true %>" label="relevance" selected="<%= true %>" />
-						</c:if>
+				<div class="form-group">
 
-						<%
-						for (SortTermDisplayContext sortTermDisplayContext : sortDisplayContext.getSortTermDisplayContexts()) {
-						%>
+					<%
+					SortTermDisplayContext selectedSortTermDisplayContext = sortDisplayContext.getSelectedSortTermDisplayContext();
+					%>
 
-							<aui:option label="<%= HtmlUtil.escapeAttribute(sortTermDisplayContext.getLabel()) %>" selected="<%= sortTermDisplayContext.isSelected() %>" value="<%= HtmlUtil.escapeAttribute(sortTermDisplayContext.getField()) %>" />
+					<label for="<portlet:namespace />sortSelectionDropdown">
+						<liferay-ui:message key="sort-by" />
+					</label>
 
-						<%
-						}
-						%>
-
-					</aui:select>
-				</aui:fieldset>
+					<clay:dropdown-menu
+						aria-label='<%= LanguageUtil.get(request, "sort-by") %>'
+						cssClass="form-control form-control-select"
+						displayType="secondary"
+						dropdownItems="<%= sortDisplayContext.getActionDropdownItems() %>"
+						id='<%= liferayPortletResponse.getNamespace() + "sortSelectionDropdown" %>'
+						label='<%= (selectedSortTermDisplayContext == null) ? "relevance" : selectedSortTermDisplayContext.getLabel() %>'
+					/>
+				</div>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>

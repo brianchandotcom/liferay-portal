@@ -98,6 +98,8 @@ public class SortPortlet extends MVCPortlet {
 
 		return _createSortDisplayContextBuilder(
 			renderRequest, sortPortletPreferences
+		).currentURL(
+			portal.getCurrentURL(renderRequest)
 		).parameterName(
 			parameterName
 		).parameterValues(

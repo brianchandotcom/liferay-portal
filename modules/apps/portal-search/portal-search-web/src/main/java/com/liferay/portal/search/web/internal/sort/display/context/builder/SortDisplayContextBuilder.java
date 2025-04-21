@@ -5,12 +5,15 @@
 
 package com.liferay.portal.search.web.internal.sort.display.context.builder;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration;
@@ -56,6 +59,8 @@ public class SortDisplayContextBuilder {
 		List<SortTermDisplayContext> sortTermDisplayContexts =
 			_buildTermDisplayContexts();
 
+		sortDisplayContext.setActionDropdownItems(
+			_getActionDropdownItems(sortTermDisplayContexts));
 		sortDisplayContext.setAnySelected(
 			isAnySelected(sortTermDisplayContexts));
 
@@ -63,11 +68,19 @@ public class SortDisplayContextBuilder {
 		sortDisplayContext.setParameterName(_parameterName);
 		sortDisplayContext.setParameterValue(getParameterValue());
 		sortDisplayContext.setRenderNothing(isRenderNothing());
+		sortDisplayContext.setSelectedSortTermDisplayContext(
+			getSelectedSortTermDisplayContext(sortTermDisplayContexts));
 		sortDisplayContext.setSortPortletInstanceConfiguration(
 			_sortPortletInstanceConfiguration);
 		sortDisplayContext.setSortTermDisplayContexts(sortTermDisplayContexts);
 
 		return sortDisplayContext;
+	}
+
+	public SortDisplayContextBuilder currentURL(String currentURL) {
+		_currentURL = currentURL;
+
+		return this;
 	}
 
 	public SortDisplayContextBuilder parameterName(String parameterName) {
@@ -111,6 +124,20 @@ public class SortDisplayContextBuilder {
 		return null;
 	}
 
+	protected SortTermDisplayContext getSelectedSortTermDisplayContext(
+		List<SortTermDisplayContext> sortTermDisplayContexts) {
+
+		for (SortTermDisplayContext sortTermDisplayContext :
+				sortTermDisplayContexts) {
+
+			if (sortTermDisplayContext.isSelected()) {
+				return sortTermDisplayContext;
+			}
+		}
+
+		return null;
+	}
+
 	protected boolean isAnySelected(
 		List<SortTermDisplayContext> sortTermDisplayContexts) {
 
@@ -120,15 +147,6 @@ public class SortDisplayContextBuilder {
 			if (sortTermDisplayContext.isSelected()) {
 				return true;
 			}
-		}
-
-		if (!sortTermDisplayContexts.isEmpty()) {
-			SortTermDisplayContext sortTermDisplayContext =
-				sortTermDisplayContexts.get(0);
-
-			sortTermDisplayContext.setSelected(true);
-
-			return true;
 		}
 
 		return false;
@@ -147,7 +165,7 @@ public class SortDisplayContextBuilder {
 	}
 
 	private SortTermDisplayContext _buildTermDisplayContext(
-		String label, String field) {
+		String label, String field, int index) {
 
 		SortTermDisplayContext sortTermDisplayContext =
 			new SortTermDisplayContext();
@@ -157,7 +175,13 @@ public class SortDisplayContextBuilder {
 			_language.get(
 				_portal.getHttpServletRequest(_renderRequest), label));
 		sortTermDisplayContext.setField(field);
-		sortTermDisplayContext.setSelected(_selectedFields.contains(field));
+
+		if (_selectedFields.isEmpty() && (index == 0)) {
+			sortTermDisplayContext.setSelected(true);
+		}
+		else {
+			sortTermDisplayContext.setSelected(_selectedFields.contains(field));
+		}
 
 		return sortTermDisplayContext;
 	}
@@ -175,12 +199,49 @@ public class SortDisplayContextBuilder {
 			sortTermDisplayContexts.add(
 				_buildTermDisplayContext(
 					jsonObject.getString("label"),
-					jsonObject.getString("field")));
+					jsonObject.getString("field"), i));
 		}
 
 		return sortTermDisplayContexts;
 	}
 
+	private List<DropdownItem> _getActionDropdownItems(
+		List<SortTermDisplayContext> sortTermDisplayContexts) {
+
+		DropdownItemListBuilder.DropdownItemListWrapper
+			dropdownItemListWrapper =
+				new DropdownItemListBuilder.DropdownItemListWrapper();
+
+		for (SortTermDisplayContext sortTermDisplayContext :
+				sortTermDisplayContexts) {
+
+			dropdownItemListWrapper.add(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						_getSortURL(sortTermDisplayContext.getField()));
+					dropdownItem.setLabel(
+						_language.get(
+							_portal.getHttpServletRequest(_renderRequest),
+							sortTermDisplayContext.getLabel()));
+
+					if (sortTermDisplayContext.isSelected()) {
+						dropdownItem.setActive(true);
+						dropdownItem.setIcon("check-small");
+					}
+				});
+		}
+
+		return dropdownItemListWrapper.build();
+	}
+
+	private String _getSortURL(String field) {
+		String sortURL = HttpComponentsUtil.removeParameter(
+			_currentURL, _parameterName);
+
+		return HttpComponentsUtil.setParameter(sortURL, _parameterName, field);
+	}
+
+	private String _currentURL;
 	private final Language _language;
 	private String _parameterName;
 	private final Portal _portal;

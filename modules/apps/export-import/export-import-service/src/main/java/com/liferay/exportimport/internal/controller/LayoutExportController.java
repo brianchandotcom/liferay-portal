@@ -228,16 +228,18 @@ public class LayoutExportController implements ExportController {
 				"end-date", String.valueOf(portletDataContext.getEndDate()));
 		}
 
-		Group group = _groupLocalService.fetchGroup(
-			portletDataContext.getGroupId());
-
 		headerElement.addAttribute(
 			"company-id", String.valueOf(portletDataContext.getCompanyId()));
 		headerElement.addAttribute(
 			"company-group-id",
 			String.valueOf(portletDataContext.getCompanyGroupId()));
+
+		Group group = _groupLocalService.fetchGroup(
+			portletDataContext.getGroupId());
+
 		headerElement.addAttribute(
 			"group-friendly-url", group.getFriendlyURL());
+
 		headerElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getGroupId()));
 		headerElement.addAttribute(

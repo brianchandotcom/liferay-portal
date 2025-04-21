@@ -434,6 +434,9 @@ public class TestrayStatusMetricResourceImpl
 				sql += "desc";
 			}
 		}
+		else {
+			sql += " order by r.name_ desc";
+		}
 
 		if (pagination != null) {
 			sql += " limit ? offset ?";

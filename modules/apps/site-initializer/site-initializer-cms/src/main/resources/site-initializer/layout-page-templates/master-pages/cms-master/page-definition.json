@@ -26,14 +26,14 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentDropZoneId": "navigationBar"
+							"fragmentDropZoneId": "topBar"
 						},
-						"id": "476e4dba-f789-9f36-c897-4323191f49c2",
+						"id": "5aeb1eb5-f96e-96cb-06b7-61e612a0485b",
 						"pageElements": [
 							{
 								"definition": {
 									"fragment": {
-										"key": "sidebar-trigger",
+										"key": "page-bar",
 										"siteKey": "CMS"
 									},
 									"fragmentConfig": {
@@ -61,9 +61,42 @@
 											}
 										}
 									],
-									"indexed": true
+									"indexed": true,
+									"widgetInstances": [
+										{
+											"widgetConfig": {
+											},
+											"widgetName": "com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet"
+										}
+									]
 								},
-								"id": "44d69802-27bb-43ac-7874-d7a91243b7fe",
+								"id": "32f64cbe-57dd-937b-1d9e-edc1de70b958",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentDropZoneId": "sidebarTrigger"
+										},
+										"id": "57750634-2ad5-dbdb-bf52-0577eeca1155",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "sidebar-trigger",
+														"siteKey": "CMS"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"id": "88b7f132-967b-ca14-4875-04240379f1e0",
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
 								"type": "Fragment"
 							}
 						],

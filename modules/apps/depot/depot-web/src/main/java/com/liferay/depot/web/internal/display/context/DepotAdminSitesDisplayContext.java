@@ -56,6 +56,8 @@ public class DepotAdminSitesDisplayContext {
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
+				dropdownItem.setDisabled(
+					_isLayoutSetPrototype(depotEntryGroupRel));
 				dropdownItem.setHref(
 					String.valueOf(
 						DepotEntryURLUtil.getUpdateSearchableActionURL(
@@ -87,6 +89,8 @@ public class DepotAdminSitesDisplayContext {
 									_currentURL.toString(),
 									_liferayPortletResponse))
 					).build());
+				dropdownItem.setDisabled(
+					_isLayoutSetPrototype(depotEntryGroupRel));
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						PortalUtil.getHttpServletRequest(

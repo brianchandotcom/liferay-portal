@@ -152,21 +152,17 @@ public class GraphQLOpenAPIParser {
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
 		Predicate<Operation> predicate, String schemaName) {
 
-		List<JavaMethodSignature> resourceJavaMethodSignatures =
-			ResourceOpenAPIParser.getJavaMethodSignatures(
-				configYAML, openAPIYAML, schemaName);
-
 		return TransformUtil.transform(
-			resourceJavaMethodSignatures,
-			resourceJavaMethodSignature -> {
-				Operation operation =
-					resourceJavaMethodSignature.getOperation();
+			ResourceOpenAPIParser.getJavaMethodSignatures(
+				configYAML, openAPIYAML, schemaName),
+			javaMethodSignature -> {
+				Operation operation = javaMethodSignature.getOperation();
 
 				if (!predicate.test(operation)) {
 					return null;
 				}
 
-				String returnType = resourceJavaMethodSignature.getReturnType();
+				String returnType = javaMethodSignature.getReturnType();
 
 				if (returnType.startsWith(
 						"com.liferay.portal.vulcan.pagination.Page<")) {
@@ -182,13 +178,13 @@ public class GraphQLOpenAPIParser {
 				}
 
 				return new JavaMethodSignature(
-					resourceJavaMethodSignature.getPath(),
-					resourceJavaMethodSignature.getPathItem(), operation,
-					resourceJavaMethodSignature.getRequestBodyMediaTypes(),
-					resourceJavaMethodSignature.getSchemaName(),
-					_getJavaMethodParameters(resourceJavaMethodSignature),
-					resourceJavaMethodSignature.getMethodName(), returnType,
-					resourceJavaMethodSignature.getParentSchemaName());
+					javaMethodSignature.getPath(),
+					javaMethodSignature.getPathItem(), operation,
+					javaMethodSignature.getRequestBodyMediaTypes(),
+					javaMethodSignature.getSchemaName(),
+					_getJavaMethodParameters(javaMethodSignature),
+					javaMethodSignature.getMethodName(), returnType,
+					javaMethodSignature.getParentSchemaName());
 			});
 	}
 

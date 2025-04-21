@@ -650,15 +650,25 @@ const FrontendDataSet = ({
 									items
 										.filter(
 											(item) =>
-												item.id !== selectedItem.id
+												item[
+													selectedItemsKey ?? 'id'
+												] !==
+												selectedItem[
+													selectedItemsKey ?? 'id'
+												]
 										)
-										.map((item) => item.id)
+										.map(
+											(item) =>
+												item[selectedItemsKey ?? 'id']
+										)
 								);
 
 								setAllItemsSelectedActive(false);
 							}
 							else {
-								selectItems(selectedItem.id);
+								selectItems(
+									selectedItem[selectedItemsKey ?? 'id']
+								);
 							}
 						}}
 						style={style}

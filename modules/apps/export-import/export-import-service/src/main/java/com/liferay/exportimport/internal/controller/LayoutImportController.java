@@ -598,11 +598,9 @@ public class LayoutImportController implements ImportController {
 			StagingGroupHelper stagingGroupHelper =
 				StagingGroupHelperUtil.getStagingGroupHelper();
 
-			String groupFriendlyUrl = headerElement.attributeValue(
-				"group-friendly-url");
-
 			boolean companyGroupFriendlyURL =
-				stagingGroupHelper.isCompanyGroupFriendlyURL(groupFriendlyUrl);
+				stagingGroupHelper.isCompanyGroupFriendlyURL(
+					headerElement.attributeValue("group-friendly-url"));
 
 			if (companyGroupFriendlyURL != stagingGroupHelper.isCompanyGroup(
 					group)) {

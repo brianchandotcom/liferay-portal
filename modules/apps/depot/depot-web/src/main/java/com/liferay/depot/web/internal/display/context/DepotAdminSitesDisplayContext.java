@@ -13,7 +13,6 @@ import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -124,21 +123,28 @@ public class DepotAdminSitesDisplayContext {
 			_getDepotEntry());
 	}
 
-	public PortletURL getItemSelectorURL() {
+	public PortletURL getItemSelectorURL() throws PortalException {
 		ItemSelector itemSelector =
 			(ItemSelector)_liferayPortletRequest.getAttribute(
 				DepotAdminWebKeys.ITEM_SELECTOR);
 
-		ItemSelectorCriterion itemSelectorCriterion =
+		SiteItemSelectorCriterion siteItemSelectorCriterion =
 			new SiteItemSelectorCriterion();
 
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
+
+		DepotEntry depotEntry = _getDepotEntry();
+
+		Group group = depotEntry.getGroup();
+
+		siteItemSelectorCriterion.setIncludeLayoutSetPrototypes(
+			!group.isStaged());
 
 		return itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			_liferayPortletResponse.getNamespace() + "selectSite",
-			itemSelectorCriterion);
+			siteItemSelectorCriterion);
 	}
 
 	public String getSiteName(DepotEntryGroupRel depotEntryGroupRel)

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -148,6 +151,12 @@ public class LiferayOAuth2ClientConfiguration {
 		for (String externalReferenceCode :
 				liferayOauthApplicationExternalReferenceCodes.split(",")) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing externalReferenceCode: " +
+						externalReferenceCode);
+			}
+
 			String clientId = _environment.getProperty(
 				externalReferenceCode + ".oauth2.headless.server.client.id");
 
@@ -158,7 +167,27 @@ public class LiferayOAuth2ClientConfiguration {
 			}
 
 			if (clientId == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get clientId for externalReferenceCode: " +
+							externalReferenceCode);
+				}
+
 				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new StringBuilder(
+					).append(
+						"Obtained client_id: "
+					).append(
+						clientId
+					).append(
+						" for externalReferenceCode "
+					).append(
+						externalReferenceCode
+					));
 			}
 
 			String clientSecret = _environment.getProperty(
@@ -166,7 +195,25 @@ public class LiferayOAuth2ClientConfiguration {
 					".oauth2.headless.server.client.secret");
 
 			if (clientSecret == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						new StringBuilder(
+						).append(
+							"Unable to get clientSecret for "
+						).append(
+							"externalReferenceCode: "
+						).append(
+							externalReferenceCode
+						).toString());
+				}
+
 				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Obtained client_secret *** for externalReferenceCode " +
+						externalReferenceCode);
 			}
 
 			String tokenURI = _environment.getProperty(
@@ -200,11 +247,18 @@ public class LiferayOAuth2ClientConfiguration {
 					ClientAuthenticationMethod.CLIENT_SECRET_POST
 				).build();
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Adding clientRegistration: " + clientRegistration);
+			}
+
 			clientRegistrations.add(clientRegistration);
 		}
 
 		return clientRegistrations;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		LiferayOAuth2ClientConfiguration.class);
 
 	@Autowired
 	private Environment _environment;

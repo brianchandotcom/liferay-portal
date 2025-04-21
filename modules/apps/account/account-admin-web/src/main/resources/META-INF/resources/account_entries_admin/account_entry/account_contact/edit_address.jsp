@@ -74,11 +74,48 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-				<aui:select label="country" name="countryId" />
+				<aui:select label="country" name="countryId" required="<%= true %>">
+					<aui:validator errorMessage='<%= LanguageUtil.get(request, "this-field-is-required") %>' name="custom">
+						function(val) {
+							if (Number(val) !== 0) {
+								return true;
+							}
+
+							return false;
+						}
+					</aui:validator>
+				</aui:select>
 
 				<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-				<aui:select label="region" name="regionId" />
+				<label class="control-label" for="<portlet:namespace />regionId">
+					<liferay-ui:message key="region" />
+
+					<span hidden id="<portlet:namespace />regionRequiredWrapper">
+						<clay:icon
+							cssClass="reference-mark text-warning"
+							symbol="asterisk"
+						/>
+
+						<span class="hide-accessible sr-only"><liferay-ui:message key="required" /></span>
+					</span>
+				</label>
+
+				<aui:select label="" name="regionId">
+					<aui:validator errorMessage='<%= LanguageUtil.get(request, "this-field-is-required") %>' name="custom">
+						function(val, fieldNode) {
+							if (fieldNode.length === 1) {
+								return true;
+							}
+
+							if (Number(val) !== 0) {
+								return true;
+							}
+
+							return false;
+						}
+					</aui:validator>
+				</aui:select>
 
 				<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 

@@ -387,7 +387,7 @@ public class TestrayStatusMetricResourceImpl
 				Long testrayProjectId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
 		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
@@ -398,24 +398,25 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, ");
-		sb.append("r.c_routineId_, r.name_, b.dueDate_ from ");
+		sb.append("r.c_routineId_, r.name_, b.dueDate_, bx.cpuUseTime_ from ");
 		sb.append("O_[%COMPANY_ID%]_Project p, O_[%COMPANY_ID%]_Routine r, ");
-		sb.append("O_[%COMPANY_ID%]_Build b where p.c_projectId_ = ? and ");
-		sb.append("r.c_routineId_ = b.r_routineToBuilds_c_routineId and ");
-		sb.append("p.c_projectId_ = r.r_routineToProjects_c_projectId and ");
-		sb.append("b.c_buildId_ = (select b2.c_buildId_ from ");
-		sb.append("O_[%COMPANY_ID%]_Build b2 where ");
-		sb.append("b2.r_routineToBuilds_c_routineId = r.c_routineId_ and ");
-		sb.append("b2.dueDate_ = (select max(b3.dueDate_) from ");
+		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Build_x bx ");
+		sb.append("where p.c_projectId_ = ? and r.c_routineId_ = ");
+		sb.append("b.r_routineToBuilds_c_routineId and p.c_projectId_ = ");
+		sb.append("r.r_routineToProjects_c_projectId and b.c_buildId_ = ");
+		sb.append("(select b2.c_buildId_ from O_[%COMPANY_ID%]_Build b2 ");
+		sb.append("where b2.r_routineToBuilds_c_routineId = r.c_routineId_ ");
+		sb.append("and b2.dueDate_ = (select max(b3.dueDate_) from ");
 		sb.append("O_[%COMPANY_ID%]_Build b3 where ");
 		sb.append("b3.r_routineToBuilds_c_routineId = r.c_routineId_ and ");
 		sb.append("exists  (select 1 from O_[%COMPANY_ID%]_CaseResult cr ");
 		sb.append("where cr.r_buildToCaseResult_c_buildId = b3.c_buildId_)) ");
-		sb.append("limit 1) group by r.c_routineId_, r.name_, b.dueDate_, ");
+		sb.append("limit 1) and b.c_buildId_ = bx.c_buildId_ group by ");
+		sb.append("r.c_routineId_, r.name_, b.dueDate_, bx.cpuUseTime_, ");
 		sb.append("b.caseresultblocked_, b.caseresultfailed_, ");
 		sb.append("b.caseresultincomplete_, b.caseresultinprogress_, ");
 		sb.append("b.caseresultpassed_, b.caseresulttestfix_, ");
-		sb.append("b.caseresultuntested_");
+		sb.append("b.caseresultuntested_ order by r.name_ ");
 
 		List<Object> params = new ArrayList<>();
 
@@ -427,15 +428,8 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		if (sorts != null) {
-			sql += " order by r.name_ ";
-
-			if (sorts[0].isReverse()) {
-				sql += "desc";
-			}
-		}
-		else {
-			sql += " order by r.name_ desc";
+		if ((sorts != null) && sorts[0].isReverse()) {
+			sql += "desc";
 		}
 
 		if (pagination != null) {
@@ -459,6 +453,18 @@ public class TestrayStatusMetricResourceImpl
 							value.get("name_"));
 						testrayStatusMetric = _getTestrayStatusMetric(value);
 
+						setTestrayBuildCPUUseTime(
+							() -> {
+								if (Validator.isNull(
+										value.get("cpuusetime_"))) {
+
+									return null;
+								}
+
+								return value.get(
+									"cpuusetime_"
+								).toString();
+							});
 						setTestrayBuildDueDate(
 							() -> {
 								if (value.get("duedate_") == null) {

@@ -361,9 +361,9 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-		Set<String> keySet = jsonObject.keySet();
+		Set<String> keys = jsonObject.keySet();
 
-		Iterator<String> iterator = keySet.iterator();
+		Iterator<String> iterator = keys.iterator();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();

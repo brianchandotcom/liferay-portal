@@ -48,9 +48,9 @@ public class MapToDDMFormValuesConverterUtil {
 		MapToDDMFormValuesConverterStrategy
 			mapToDDMFormValuesConverterStrategy = null;
 
-		Set<String> keySet = dataRecordValues.keySet();
+		Set<String> keys = dataRecordValues.keySet();
 
-		Iterator<String> iterator = keySet.iterator();
+		Iterator<String> iterator = keys.iterator();
 
 		String key = iterator.next();
 

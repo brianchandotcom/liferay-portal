@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>NAV_NESTED_LINK</td>
-	<td>//ul[contains(@class,'navbar-nav') or contains(@class,'nav-nested')]//li//*[normalize-space()='${key_navNested}']</td>
+	<td>//ul[contains(@class,'navbar-nav') or contains(@class,'nav-nested')]//li//*[contains(normalize-space(),'${key_navNested}')]</td>
 	<td></td>
 </tr>
 <tr>

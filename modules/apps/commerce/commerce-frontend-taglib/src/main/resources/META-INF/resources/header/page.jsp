@@ -184,19 +184,12 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									document
 										.querySelector('#<portlet:namespace />assign-to-me-modal-opener')
 										.addEventListener('click', (e) => {
-											Liferay.Util.openWindow({
-												dialog: {
-													destroyOnHide: true,
-													height: 430,
-													resizable: false,
-													width: 896,
-												},
-												dialogIframe: {
-													bodyCssClass: 'dialog-with-footer task-dialog',
-												},
+											Liferay.Util.openModal({
+												containerProps: {},
+												iframeBodyCssClass: 'dialog-with-footer task-dialog',
 												id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 												title: '<liferay-ui:message key="assign-to-me" />',
-												uri: '<%= HtmlUtil.escapeJS(assignToMeURL) %>',
+												url: '<%= HtmlUtil.escapeJS(assignToMeURL) %>',
 											});
 										});
 								</aui:script>
@@ -220,19 +213,12 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								document
 									.querySelector('#<portlet:namespace />assign-to-modal-opener')
 									.addEventListener('click', (e) => {
-										Liferay.Util.openWindow({
-											dialog: {
-												destroyOnHide: true,
-												height: 430,
-												resizable: false,
-												width: 896,
-											},
-											dialogIframe: {
-												bodyCssClass: 'dialog-with-footer task-dialog',
-											},
+										Liferay.Util.openModal({
+											containerProps: {},
+											iframeBodyCssClass: 'dialog-with-footer task-dialog',
 											id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 											title: '<liferay-ui:message key="assign-to-..." />',
-											uri: '<%= HtmlUtil.escapeJS(assignToURL) %>',
+											url: '<%= HtmlUtil.escapeJS(assignToURL) %>',
 										});
 									});
 

@@ -56,7 +56,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibEditRecordSetURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(request, "edit-list") + "', uri:'" + HtmlUtil.escapeJS(editRecordSetURL.toString()) + "'});";
+			String taglibEditRecordSetURL = "javascript:Liferay.Util.openModal({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(request, "edit-list") + "', url:'" + HtmlUtil.escapeJS(editRecordSetURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">
@@ -88,7 +88,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibAddFormTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getAddDDMTemplateTitle())) + "', uri:'" + HtmlUtil.escapeJS(addFormTemplateURL.toString()) + "'});";
+			String taglibAddFormTemplateURL = "javascript:Liferay.Util.openModal({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getAddDDMTemplateTitle())) + "', url:'" + HtmlUtil.escapeJS(addFormTemplateURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">
@@ -119,7 +119,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibAddDisplayTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getAddDDMTemplateTitle())) + "', uri:'" + HtmlUtil.escapeJS(addDisplayTemplateURL.toString()) + "'});";
+			String taglibAddDisplayTemplateURL = "javascript:Liferay.Util.openModal({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getAddDDMTemplateTitle())) + "', url:'" + HtmlUtil.escapeJS(addDisplayTemplateURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">
@@ -149,7 +149,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibEditDisplayDDMTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getEditDisplayDDMTemplateTitle())) + "', uri:'" + HtmlUtil.escapeJS(editDisplayTemplateURL.toString()) + "'});";
+			String taglibEditDisplayDDMTemplateURL = "javascript:Liferay.Util.openModal({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getEditDisplayDDMTemplateTitle())) + "', url:'" + HtmlUtil.escapeJS(editDisplayTemplateURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">
@@ -183,7 +183,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibEditFormDDMTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getEditFormDDMTemplateTitle())) + "', uri:'" + HtmlUtil.escapeJS(editFormTemplateURL.toString()) + "'});";
+			String taglibEditFormDDMTemplateURL = "javascript:Liferay.Util.openModal({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(HtmlUtil.escape(ddlDisplayContext.getEditFormDDMTemplateTitle())) + "', url:'" + HtmlUtil.escapeJS(editFormTemplateURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">

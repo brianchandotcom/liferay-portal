@@ -132,43 +132,31 @@ AUI.add(
 						fullScreenDialog.show();
 					}
 					else {
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									'constrain': true,
-									'cssClass':
-										'lfr-fulscreen-source-editor-dialog modal-full-screen',
-									'modal': true,
-									'toolbars.footer': [
-										{
-											label: strings.cancel,
-											on: {
-												click() {
-													fullScreenDialog.hide();
-												},
-											},
-										},
-										{
-											cssClass: 'btn-primary',
-											label: strings.done,
-											on: {
-												click() {
-													fullScreenDialog.hide();
-													instance._switchMode({
-														content:
-															fullScreenEditor.get(
-																'value'
-															),
-													});
-												},
-											},
-										},
-									],
+						Liferay.Util.openModal({
+							buttons: [
+								{
+									label: strings.cancel,
+									onClick: () => {
+										fullScreenDialog.hide();
+									},
 								},
-								title: strings.editContent,
-							},
-							(dialog) => {
-								fullScreenDialog = dialog;
+								{
+									displayType: 'primary',
+									label: strings.done,
+									onClick: () => {
+										fullScreenDialog.hide();
+										instance._switchMode({
+											content:
+												fullScreenEditor.get('value'),
+										});
+									},
+								},
+							],
+							className:
+								'lfr-fulscreen-source-editor-dialog modal-full-screen',
+							containerProps: {},
+							onOpen: ({container}) => {
+								fullScreenDialog = container;
 
 								Liferay.Util.getTop()
 									.AUI()
@@ -178,7 +166,7 @@ AUI.add(
 											fullScreenEditor =
 												new A.LiferayFullScreenSourceEditor(
 													{
-														boundingBox: dialog
+														boundingBox: container
 															.getStdModNode(
 																A.WidgetStdMod
 																	.BODY
@@ -202,8 +190,9 @@ AUI.add(
 												fullScreenEditor;
 										}
 									);
-							}
-						);
+							},
+							title: strings.editContent,
+						});
 					}
 				},
 

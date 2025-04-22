@@ -76,9 +76,7 @@ test(
 				.getByRole('menuitem', {exact: true, name: 'Configuration'})
 				.click();
 
-			const configurationIframe = page.frameLocator(
-				'iframe'
-			);
+			const configurationIframe = page.frameLocator('iframe');
 
 			await configurationIframe
 				.getByLabel('Pagination Delta', {exact: true})

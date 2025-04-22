@@ -744,6 +744,11 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				replacementCPInstanceUuid =
 					discontinuedCPInstance.getCPInstanceUuid();
 			}
+			else {
+				replacementCProductId = cpInstance.getReplacementCProductId();
+				replacementCPInstanceUuid =
+					cpInstance.getReplacementCPInstanceUuid();
+			}
 		}
 
 		int discontinuedDateMonth = 0;

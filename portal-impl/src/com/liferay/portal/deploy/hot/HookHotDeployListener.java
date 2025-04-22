@@ -140,31 +140,25 @@ public class HookHotDeployListener
 
 	public static final String[] SUPPORTED_PROPERTIES = {
 		"admin.default.group.names", "admin.default.role.names",
-		"admin.default.user.group.names",
-		"asset.publisher.asset.entry.query.processors",
-		"asset.publisher.display.styles", "auth.forward.by.last.path",
+		"admin.default.user.group.names", "auth.forward.by.last.path",
 		"auth.public.paths", "auth.verifier.pipeline", "auto.deploy.listeners",
 		"application.startup.events", "auth.failure", "auth.max.failures",
 		"auth.token.ignore.actions", "auth.token.ignore.origins",
 		"auth.token.ignore.portlets", "auth.token.impl", "auth.pipeline.post",
-		"auth.pipeline.pre", "auto.login.hooks",
-		"captcha.check.portal.create_account", "company.default.locale",
+		"auth.pipeline.pre", "auto.login.hooks", "company.default.locale",
 		"company.default.time.zone", "company.settings.form.authentication",
 		"company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "company.settings.form.social",
-		"control.panel.entry.class.default", "default.landing.page.path",
-		"default.regular.color.scheme.id", "default.regular.theme.id",
-		"dl.file.entry.drafts.enabled", "dl.store.antivirus.enabled",
-		"dl.store.antivirus.impl", "dl.store.impl",
+		"default.landing.page.path", "default.regular.color.scheme.id",
+		"default.regular.theme.id", "dl.file.entry.drafts.enabled",
+		"dl.store.antivirus.enabled", "dl.store.impl",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
 		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",
-		"hot.deploy.listeners", "javascript.fast.load",
-		"journal.article.form.add", "journal.article.form.translate",
-		"journal.article.form.update", "layout.form.add", "layout.form.update",
-		"layout.set.form.update", "layout.static.portlets.all",
-		"layout.template.cache.enabled", "layout.types",
+		"hot.deploy.listeners", "javascript.fast.load", "layout.form.add",
+		"layout.form.update", "layout.set.form.update",
+		"layout.static.portlets.all", "layout.template.cache.enabled",
 		"layout.user.private.layouts.auto.create",
 		"layout.user.private.layouts.enabled",
 		"layout.user.private.layouts.power.user.required",
@@ -198,11 +192,11 @@ public class HookHotDeployListener
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.miscellaneous", "sites.form.update.seo",
 		"social.activity.sets.bundling.enabled", "social.activity.sets.enabled",
-		"social.activity.sets.selector", "social.bookmark.*",
-		"terms.of.use.required", "theme.css.fast.load",
-		"theme.images.fast.load", "theme.jsp.override.enabled",
-		"theme.loader.new.theme.id.on.import", "theme.portlet.decorate.default",
-		"theme.portlet.sharing.default", "theme.shortcut.icon", "time.zones",
+		"social.activity.sets.selector", "terms.of.use.required",
+		"theme.css.fast.load", "theme.images.fast.load",
+		"theme.jsp.override.enabled", "theme.loader.new.theme.id.on.import",
+		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
+		"theme.shortcut.icon", "time.zones",
 		"user.notification.event.confirmation.enabled",
 		"users.email.address.generator", "users.email.address.validator",
 		"users.email.address.required", "users.form.add.identification",
@@ -211,10 +205,9 @@ public class HookHotDeployListener
 		"users.form.my.account.miscellaneous",
 		"users.form.update.identification", "users.form.update.main",
 		"users.form.update.miscellaneous", "users.full.name.generator",
-		"users.full.name.validator", "users.image.check.token",
-		"users.image.max.height", "users.image.max.width",
-		"users.screen.name.always.autogenerate", "users.screen.name.generator",
-		"users.screen.name.validator", "value.object.listener.*"
+		"users.full.name.validator", "users.screen.name.always.autogenerate",
+		"users.screen.name.generator", "users.screen.name.validator",
+		"value.object.listener.*"
 	};
 
 	public HookHotDeployListener() {
@@ -2076,12 +2069,11 @@ public class HookHotDeployListener
 		"theme.jsp.override.enabled", "theme.loader.new.theme.id.on.import",
 		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
 		"user.notification.event.confirmation.enabled",
-		"users.email.address.required", "users.image.check.token",
-		"users.screen.name.always.autogenerate"
+		"users.email.address.required", "users.screen.name.always.autogenerate"
 	};
 
 	private static final String[] _PROPS_VALUES_INTEGER = {
-		"session.max.allowed", "users.image.max.height", "users.image.max.width"
+		"session.max.allowed"
 	};
 
 	private static final String[] _PROPS_VALUES_LONG = {};
@@ -2095,11 +2087,10 @@ public class HookHotDeployListener
 		"company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "company.settings.form.social",
-		"journal.article.form.add", "journal.article.form.translate",
-		"journal.article.form.update", "layout.form.add", "layout.form.update",
-		"layout.set.form.update", "layout.static.portlets.all",
-		"login.events.post", "login.events.pre", "login.form.navigation.post",
-		"login.form.navigation.pre", "logout.events.pre", "logout.events.post",
+		"layout.form.add", "layout.form.update", "layout.set.form.update",
+		"layout.static.portlets.all", "login.events.post", "login.events.pre",
+		"login.form.navigation.post", "login.form.navigation.pre",
+		"logout.events.pre", "logout.events.post",
 		"organizations.form.add.identification", "organizations.form.add.main",
 		"organizations.form.add.miscellaneous",
 		"portlet.add.default.resource.check.whitelist",
@@ -2120,8 +2111,16 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_OBSOLETE = {
+		"asset.publisher.asset.entry.query.processors",
+		"asset.publisher.display.styles", "captcha.check.portal.create_account",
+		"control.panel.entry.class.default", "dl.store.antivirus.impl",
+		"journal.article.form.add", "journal.article.form.translate",
+		"journal.article.form.update", "layout.types",
 		"layout.user.private.layouts.modifiable",
-		"layout.user.public.layouts.modifiable"
+		"layout.user.public.layouts.modifiable",
+		"social.bookmark.display.styles", "social.bookmark.types",
+		"users.image.check.token", "users.image.max.height",
+		"users.image.max.width"
 	};
 
 	private static final String[] _PROPS_VALUES_OVERRIDE_STRING_ARRAY = {

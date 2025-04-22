@@ -77,7 +77,7 @@ test(
 				.click();
 
 			const configurationIframe = page.frameLocator(
-				'iframe[title="\\a \\9 \\9 \\9 \\9 \\9 Search Results\\a \\9 \\9 \\9 \\9  - Configuration"]'
+				'iframe'
 			);
 
 			await configurationIframe

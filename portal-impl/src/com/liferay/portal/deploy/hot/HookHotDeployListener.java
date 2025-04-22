@@ -2045,7 +2045,7 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_BOOLEAN = {
-		"auth.forward.by.last.path", "captcha.check.portal.create_account",
+		"auth.forward.by.last.path",
 		"dl.file.entry.drafts.enabled", "dl.store.antivirus.enabled",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
 		"field.enable.com.liferay.portal.kernel.model.Contact.male",

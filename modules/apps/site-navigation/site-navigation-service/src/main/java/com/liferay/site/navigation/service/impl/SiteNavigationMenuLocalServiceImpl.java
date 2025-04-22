@@ -81,6 +81,11 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu.getUserId(), SiteNavigationMenu.class.getName(),
 			siteNavigationMenu.getSiteNavigationMenuId(), false, true, true);
 
+		if (serviceContext.getModelPermissions() != null) {
+			_resourceLocalService.updateModelResources(
+				siteNavigationMenu, serviceContext);
+		}
+
 		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
 
 		return siteNavigationMenu;

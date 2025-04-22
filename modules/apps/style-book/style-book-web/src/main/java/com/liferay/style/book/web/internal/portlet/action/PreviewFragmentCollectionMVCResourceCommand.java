@@ -110,7 +110,6 @@ public class PreviewFragmentCollectionMVCResourceCommand
 				themeDisplay.getCompanyId(), "LPD-30204")) {
 
 			themeDisplay.setLayoutSet(layoutSet);
-
 			themeDisplay.setLookAndFeel(theme, layoutSet.getColorScheme());
 		}
 		else {

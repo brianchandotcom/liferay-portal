@@ -238,6 +238,8 @@ components:
             type: object
         TestrayRoutineMetric:
             properties:
+                testrayBuildCPUUseTime:
+                    type: string
                 testrayBuildDueDate:
                     type: string
                 testrayRoutineId:

@@ -998,6 +998,9 @@ public class PullRequest {
 
 			sb.append(" has FAILED.");
 		}
+		else if (testSuiteStatus == TestSuiteStatus.BYPASSED) {
+			sb.append(" was BYPASSED.");
+		}
 		else if (testSuiteStatus == TestSuiteStatus.PENDING) {
 			sb.append(" is running.");
 		}

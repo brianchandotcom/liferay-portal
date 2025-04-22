@@ -32,8 +32,9 @@ public class DepotEntryGroupRelStagedModelRepository
 
 	@Override
 	public DepotEntryGroupRel addStagedModel(
-		PortletDataContext portletDataContext,
-		DepotEntryGroupRel depotEntryGroupRel) {
+			PortletDataContext portletDataContext,
+			DepotEntryGroupRel depotEntryGroupRel)
+		throws PortalException {
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			depotEntryGroupRel);
@@ -57,14 +58,17 @@ public class DepotEntryGroupRelStagedModelRepository
 	}
 
 	@Override
-	public void deleteStagedModel(DepotEntryGroupRel depotEntryGroupRel) {
+	public void deleteStagedModel(DepotEntryGroupRel depotEntryGroupRel)
+		throws PortalException {
+
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel);
 	}
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		DepotEntryGroupRel depotEntryGroupRel =
 			fetchStagedModelByUuidAndGroupId(uuid, groupId);

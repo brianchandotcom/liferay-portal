@@ -3,55 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
-const Switcher = ({
-	accessibleProps,
-	checked,
-	disabled,
-	inline,
-	label,
-	name,
-	onBlur,
-	onChange,
-	onFocus,
-	value,
-	...otherProps
-}) => {
-	const {'data-option-reference': dataOptionReference} = otherProps;
-
+const Switcher = ({checked, inline, ...otherProps}) => {
 	return (
 		<div
 			className={classNames('lfr-ddm-form-field-checkbox-switch', {
 				'lfr-ddm-form-field-checkbox-switch-inline': inline,
 			})}
 		>
-			<label className="simple-toggle-switch toggle-switch">
-				<input
-					{...accessibleProps}
-					checked={checked}
-					className="toggle-switch-check"
-					data-option-reference={dataOptionReference}
-					disabled={disabled}
-					name={name}
-					onBlur={onBlur}
-					onChange={onChange}
-					onFocus={onFocus}
-					type="checkbox"
-					value={value}
-				/>
-
-				<span aria-hidden="true" className="toggle-switch-bar">
-					<span className="toggle-switch-handle"></span>
-				</span>
-
-				<span className="toggle-switch-label">{label}</span>
-			</label>
+			<ClayToggle toggled={checked} {...otherProps} />
 		</div>
 	);
 };

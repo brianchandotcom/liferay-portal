@@ -105,11 +105,10 @@
 			function(event) {
 				event.preventDefault();
 
-				Liferay.Util.openWindow({
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					}}
-				);
+				Liferay.Util.openModal({
+					iframeBodyCssClass: 'dialog-with-footer'
+					containerProps: {},
+				});
 			}
 		);
 	</aui:script>

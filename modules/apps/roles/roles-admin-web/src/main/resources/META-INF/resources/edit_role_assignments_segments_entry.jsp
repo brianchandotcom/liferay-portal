@@ -102,15 +102,10 @@
 	function <portlet:namespace />openViewMembersDialog(event) {
 		event.preventDefault();
 
-		Liferay.Util.openWindow({
-			dialog: {
-				constrain: true,
-				destroyOnHide: true,
-				height: 768,
-				modal: true,
-				width: 600,
-			},
-			uri: event.currentTarget.href,
+		Liferay.Util.openModal({
+			iframeBodyCssClass: '',
+			containerProps: {},
+			url: event.currentTarget.href,
 			title: '<liferay-ui:message key="members" />',
 		});
 	}

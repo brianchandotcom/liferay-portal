@@ -487,17 +487,16 @@ public class WorkflowTaskDisplayContext {
 	public String getTaglibViewDiffsURL(WorkflowTask workflowTask)
 		throws PortalException, PortletException {
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("javascript:Liferay.Util.openWindow({");
-		sb.append("dialog: {destroyOnHide: true, modal: true}, id: '");
+		sb.append("javascript:Liferay.Util.openModal({id: '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append("viewDiffs', title: '");
 		sb.append(
 			HtmlUtil.escapeJS(
 				LanguageUtil.get(
 					_workflowTaskRequestHelper.getRequest(), "diffs")));
-		sb.append("', uri:'");
+		sb.append("', url:'");
 		sb.append(
 			HtmlUtil.escapeJS(
 				PortletURLBuilder.create(

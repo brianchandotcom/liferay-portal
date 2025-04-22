@@ -486,18 +486,12 @@ if (commerceOrder != null) {
 
 <aui:script>
 	function <portlet:namespace />viewCommerceOrderShipments(uri) {
-		Liferay.Util.openWindow({
-			dialog: {
-				centered: true,
-				destroyOnClose: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog',
-			},
+		Liferay.Util.openModal({
+			containerProps: {},
+			iframeBodyCssClass: 'dialog',
 			id: 'viewCommerceOrderShipmentsDialog',
 			title: '',
-			uri: uri,
+			url: uri,
 		});
 	}
 </aui:script>

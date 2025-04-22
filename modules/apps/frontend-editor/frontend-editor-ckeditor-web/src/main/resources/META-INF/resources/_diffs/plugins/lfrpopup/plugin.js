@@ -21,15 +21,12 @@
 
 					options = A.QueryString.parse(options);
 
-					Liferay.Util.openWindow({
-						dialog: {
-							zIndex: CKEDITOR.getNextZIndex(),
-						},
-						height,
-						stack: false,
+					Liferay.Util.openModal({
+						containerProps: {},
+						iframeBodyCssClass: '',
 						title: options.title || '',
-						uri: url,
-						width,
+						url,
+						zIndex: CKEDITOR.getNextZIndex(),
 					});
 				};
 			});

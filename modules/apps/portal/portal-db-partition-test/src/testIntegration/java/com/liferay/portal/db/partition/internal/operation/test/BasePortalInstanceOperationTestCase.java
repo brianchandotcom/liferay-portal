@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -73,6 +74,21 @@ public abstract class BasePortalInstanceOperationTestCase
 				new Class<?>[] {String.class}, pid));
 	}
 
+	protected void assertConfigurationIsDeletedAfterDeploy(String pid)
+		throws Exception {
+
+		Assert.assertNull(
+			_configurationAdmin.listConfigurations(
+				"(service.pid=" + pid + ")"));
+
+		Dictionary<Object, Object> properties = ReflectionTestUtil.invoke(
+			_persistenceManager, "_getDictionary",
+			new Class<?>[] {String.class}, pid);
+
+		Assert.assertTrue(
+			(boolean)properties.get("_felix_.cm.newConfiguration"));
+	}
+
 	protected void assertLog(LogCapture logCapture, String expectedMessage) {
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -95,6 +111,23 @@ public abstract class BasePortalInstanceOperationTestCase
 		Throwable throwable = logEntry.getThrowable();
 
 		Assert.assertEquals(expectedMessage, throwable.getMessage());
+	}
+
+	protected void deployConfiguration(
+			String pid, Dictionary<String, Object> properties)
+		throws Exception {
+
+		Assert.assertNull(
+			_configurationAdmin.listConfigurations(
+				"(service.pid=" + pid + ")"));
+
+		try (AutoCloseable autoCloseable =
+				_registerOnAfterDeleteConfigurationModelListener(pid)) {
+
+			ConfigurationTestUtil.saveConfiguration(pid, properties);
+
+			_countDownLatch.await(180, TimeUnit.SECONDS);
+		}
 	}
 
 	protected void deployConfigurationFile(String pid, String content)

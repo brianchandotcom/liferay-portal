@@ -6,12 +6,15 @@
 package com.liferay.portal.db.partition.internal.operation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -45,6 +48,115 @@ public class DBPartitionCopyPortalInstanceOperationTest
 	@Override
 	public String getComponentName() {
 		return "CopyPortalInstanceOperation";
+	}
+
+	@FeatureFlags("LPD-11342")
+	@Test
+	public void testDeployConfiguration() throws Exception {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			deployConfiguration(
+				_PID,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"name", "testName"
+				).put(
+					"sourceCompanyId", _company.getCompanyId()
+				).put(
+					"virtualHostname", "testVirtualHostname"
+				).put(
+					"webId", "testWebId"
+				).build());
+
+			Assert.assertEquals(
+				companyIds.length + 1,
+				PortalInstancePool.getCompanyIds().length);
+
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
+		finally {
+			Company company = _companyLocalService.fetchCompanyByVirtualHost(
+				"testVirtualHostname");
+
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
+	@FeatureFlags("LPD-11342")
+	@Test
+	public void testDeployConfigurationExistingDestinationCompanyIdWithFF()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"CopyPortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destinationCompanyId",
+					PortalInstancePool.getDefaultCompanyId()
+				).put(
+					"name", "testName"
+				).put(
+					"sourceCompanyId", _company.getCompanyId()
+				).put(
+					"virtualHostname", "testVirtualHostname"
+				).put(
+					"webId", "testWebId"
+				).build());
+
+			assertLog(
+				logCapture,
+				"Portal instance with company ID " +
+					PortalInstancePool.getDefaultCompanyId() +
+						" already exists");
+
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
+	}
+
+	@Test
+	public void testDeployConfigurationExistingDestinationCompanyIdWithoutFF()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destinationCompanyId",
+					PortalInstancePool.getDefaultCompanyId()
+				).put(
+					"name", "testName"
+				).put(
+					"sourceCompanyId", _company.getCompanyId()
+				).put(
+					"virtualHostname", "testVirtualHostname"
+				).put(
+					"webId", "testWebId"
+				).build());
+
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
+
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
 	}
 
 	@FeatureFlags("LPD-11342")

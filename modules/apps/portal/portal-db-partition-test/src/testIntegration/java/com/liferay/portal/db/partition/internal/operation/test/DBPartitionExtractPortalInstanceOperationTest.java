@@ -6,6 +6,10 @@
 package com.liferay.portal.db.partition.internal.operation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -56,6 +60,53 @@ public class DBPartitionExtractPortalInstanceOperationTest
 		}
 
 		assertConfigurationFileIsDeletedAfterDeploy(_PID);
+	}
+
+	@FeatureFlags("LPD-11342")
+	@Test
+	public void testDeployConfigurationWithFF() throws Exception {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"ExtractPortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"extractCompanyId", 0
+				).build());
+
+			assertLog(
+				logCapture, "Portal instance with company ID 0 does not exist");
+
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
+	}
+
+	@Test
+	public void testDeployConfigurationWithoutFF() throws Exception {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"extractCompanyId", 0
+				).build());
+
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
+
+			assertConfigurationIsDeletedAfterDeploy(_PID);
+		}
 	}
 
 	private static final String _PID =

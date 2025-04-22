@@ -32,7 +32,7 @@ test.beforeEach(({page}) => {
 });
 
 test.describe('Accessibility', () => {
-	test('aria-errormessage is applied for invalid multiple selection', async ({
+	test('aria-describedby is applied for invalid multiple selection', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formsPage,
@@ -60,7 +60,7 @@ test.describe('Accessibility', () => {
 
 		await singleSelect.waitFor();
 
-		const fieldFeedbackElement = page.locator('.form-feedback-item');
+		const fieldFeedbackElement = page.locator('.field-feedback');
 
 		await expect(fieldFeedbackElement).toBeVisible();
 
@@ -71,7 +71,7 @@ test.describe('Accessibility', () => {
 		const fieldFeedbackId = await fieldFeedbackElement.getAttribute('id');
 
 		await expect(singleSelect).toHaveAttribute(
-			'aria-errormessage',
+			'aria-describedby',
 			fieldFeedbackId
 		);
 	});

@@ -536,7 +536,7 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
-		sb.append("b.cpuUseTime_, b.dueDate_, bx.importStatus_, b.gitHash_, ");
+		sb.append("bx.cpuUseTime_, b.dueDate_, bx.importStatus_, b.gitHash_, ");
 		sb.append("b.name_, b.promoted_, b.archived_, pv.name_ as ");
 		sb.append("productVersionName, (select dueStatus_ from ");
 		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
@@ -574,8 +574,8 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		sb.append("group by b.c_buildId_, bx.importstatus_, pv.name_ order ");
-		sb.append("by b.c_buildId_ desc limit ? offset ?");
+		sb.append("group by b.c_buildId_, bx.importstatus_, pv.name_, ");
+		sb.append("bx.cpuUseTime_ order by b.c_buildId_ desc limit ? offset ?");
 
 		sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",
@@ -595,7 +595,7 @@ public class TestrayStatusMetricResourceImpl
 						testrayBuildArchived = GetterUtil.getBoolean(
 							String.valueOf(value.get("archived_")));
 						testrayBuildCPUUseTime = GetterUtil.getString(
-							value.get("cpuUseTime_"));
+							value.get("cpuusetime_"));
 						testrayBuildGitHash = GetterUtil.getString(
 							value.get("githash_"));
 						testrayBuildId = GetterUtil.getLong(

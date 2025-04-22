@@ -56,6 +56,7 @@ const passwordRequiredStructure = {
 
 const buildStructure = {
 	caseIds: yup.array().of(yup.number()),
+	cpuUseTime: yup.string(),
 	description: yup.string(),
 	dueStatus: yup.string(),
 	factorStacks: yup.mixed(),

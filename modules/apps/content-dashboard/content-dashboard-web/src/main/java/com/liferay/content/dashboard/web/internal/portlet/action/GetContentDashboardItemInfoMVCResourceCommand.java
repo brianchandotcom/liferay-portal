@@ -483,12 +483,11 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList =
-				contentDashboardItem.getSpecificInformationList(locale);
+		List<ContentDashboardItem.SpecificInformation<?>> specificInformations =
+			contentDashboardItem.getSpecificInformationList(locale);
 
 		for (ContentDashboardItem.SpecificInformation specificInformation :
-				specificInformationList) {
+				specificInformations) {
 
 			jsonArray.put(specificInformation.toJSONObject(_language, locale));
 		}

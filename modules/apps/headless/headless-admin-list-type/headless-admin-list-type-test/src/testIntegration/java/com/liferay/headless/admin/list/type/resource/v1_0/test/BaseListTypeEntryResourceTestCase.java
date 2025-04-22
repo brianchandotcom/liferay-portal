@@ -1837,6 +1837,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (listTypeEntry.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (listTypeEntry.getType() == null) {
 					valid = false;
@@ -2044,6 +2052,17 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				if (!equals(
 						(Map)listTypeEntry1.getName_i18n(),
 						(Map)listTypeEntry2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeEntry1.getSystem(),
+						listTypeEntry2.getSystem())) {
 
 					return false;
 				}
@@ -2379,6 +2398,11 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			Object object = listTypeEntry.getType();
 
@@ -2477,6 +2501,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				system = RandomTestUtil.randomBoolean();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

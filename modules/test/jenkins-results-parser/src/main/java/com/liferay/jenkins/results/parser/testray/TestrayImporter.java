@@ -1646,7 +1646,7 @@ public class TestrayImporter {
 
 		Document document = DocumentHelper.createDocument();
 
-		Element element = document.addElement("code");
+		Element element = document.addElement("div");
 
 		Element titleElement = element.addElement("strong");
 

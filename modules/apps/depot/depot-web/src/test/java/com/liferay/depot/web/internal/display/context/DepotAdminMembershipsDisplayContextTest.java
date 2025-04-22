@@ -82,10 +82,10 @@ public class DepotAdminMembershipsDisplayContextTest {
 						).build()),
 					null);
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+		List<Group> groups = depotAdminMembershipsDisplayContext.getDepotGroups(
 			0, 20);
 
-		Assert.assertEquals(depots.toString(), 1, depots.size());
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 	}
 
 	@Test
@@ -111,10 +111,10 @@ public class DepotAdminMembershipsDisplayContextTest {
 						).build()),
 					null);
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+		List<Group> groups = depotAdminMembershipsDisplayContext.getDepotGroups(
 			0, 20);
 
-		Assert.assertEquals(depots.toString(), 1, depots.size());
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 	}
 
 	@Test
@@ -140,10 +140,10 @@ public class DepotAdminMembershipsDisplayContextTest {
 						).build()),
 					null);
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+		List<Group> groups = depotAdminMembershipsDisplayContext.getDepotGroups(
 			0, 20);
 
-		Assert.assertEquals(depots.toString(), 0, depots.size());
+		Assert.assertEquals(groups.toString(), 0, groups.size());
 	}
 
 	@Test
@@ -165,10 +165,10 @@ public class DepotAdminMembershipsDisplayContextTest {
 						).build()),
 					null);
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+		List<Group> groups = depotAdminMembershipsDisplayContext.getDepotGroups(
 			0, 20);
 
-		Assert.assertEquals(depots.toString(), 0, depots.size());
+		Assert.assertEquals(groups.toString(), 0, groups.size());
 	}
 
 	@Test

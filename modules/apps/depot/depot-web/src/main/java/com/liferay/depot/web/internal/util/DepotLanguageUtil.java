@@ -68,10 +68,10 @@ public class DepotLanguageUtil {
 				StringUtil.split(groupLanguageIds));
 		}
 
-		Set<Locale> depotAvailableLocalesSet = LanguageUtil.getAvailableLocales(
+		Set<Locale> depotAvailableLocales = LanguageUtil.getAvailableLocales(
 			group.getGroupId());
 
-		return depotAvailableLocalesSet.toArray(new Locale[0]);
+		return depotAvailableLocales.toArray(new Locale[0]);
 	}
 
 }

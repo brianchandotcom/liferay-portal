@@ -124,11 +124,13 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 				String newValue = _fixQuotes(value);
 
-				if (!value.equals(newValue)) {
-					return StringUtil.replaceFirst(
-						content, value, newValue,
-						getLineStartPos(content, lineNumber));
+				if (value.equals(newValue)) {
+					continue;
 				}
+
+				return StringUtil.replaceFirst(
+					content, value, newValue,
+					getLineStartPos(content, lineNumber));
 			}
 		}
 

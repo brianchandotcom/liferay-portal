@@ -21,12 +21,12 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBPartitionInsertPortalInstanceOperationTest
+public class DBPartitionImportPortalInstanceOperationTest
 	extends BasePortalInstanceOperationTestCase {
 
 	@Override
 	public String getComponentName() {
-		return "InsertPortalInstanceOperation";
+		return "ImportPortalInstanceOperation";
 	}
 
 	@FeatureFlag("LPD-11342")
@@ -34,12 +34,12 @@ public class DBPartitionInsertPortalInstanceOperationTest
 	public void testDeployConfigurationFileWithFF() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
-					"InsertPortalInstanceOperation",
+					"ImportPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfigurationFile(
 				_PID,
-				"newWebId=\"testNewWebId\"\ninsertCompanyId=L\"" +
+				"newWebId=\"testNewWebId\"\nimportCompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
 			assertLog(
@@ -61,7 +61,7 @@ public class DBPartitionInsertPortalInstanceOperationTest
 
 			deployConfigurationFile(
 				_PID,
-				"newWebId=\"testNewWebId\"\ninsertCompanyId=L\"" +
+				"newWebId=\"testNewWebId\"\nimportCompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
 			assertLogException(
@@ -79,13 +79,13 @@ public class DBPartitionInsertPortalInstanceOperationTest
 					PortalInstancePool.getDefaultCompanyId());
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
-					"InsertPortalInstanceOperation",
+					"ImportPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"insertCompanyId", PortalInstancePool.getDefaultCompanyId()
+					"importCompanyId", PortalInstancePool.getDefaultCompanyId()
 				).put(
 					"newWebId", "testNewWebId"
 				).build());
@@ -113,7 +113,7 @@ public class DBPartitionInsertPortalInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"insertCompanyId", PortalInstancePool.getDefaultCompanyId()
+					"importCompanyId", PortalInstancePool.getDefaultCompanyId()
 				).put(
 					"newWebId", "testNewWebId"
 				).build());
@@ -127,6 +127,6 @@ public class DBPartitionInsertPortalInstanceOperationTest
 
 	private static final String _PID =
 		"com.liferay.portal.instances.internal.configuration." +
-			"InsertPortalInstanceConfiguration";
+			"ImportPortalInstanceConfiguration";
 
 }

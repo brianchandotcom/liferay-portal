@@ -16,13 +16,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "virtual-instances", featureFlagKey = "LPD-11342"
 )
 @Meta.OCD(
-	id = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",
+	id = "com.liferay.portal.instances.internal.configuration.ImportPortalInstanceConfiguration",
 	localization = "content/Language",
-	name = "portal-instances-extraction-configuration-name"
+	name = "portal-instances-import-configuration-name"
 )
-public interface ExtractPortalInstanceConfiguration {
+public interface ImportPortalInstanceConfiguration {
 
-	@Meta.AD(name = "extract-company-id", type = Meta.Type.Long)
-	public long extractCompanyId();
+	@Meta.AD(name = "import-company-id", type = Meta.Type.Long)
+	public long importCompanyId();
+
+	@Meta.AD(name = "new-name", required = false)
+	public String newName();
+
+	@Meta.AD(name = "new-virtual-hostname", required = false)
+	public String newVirtualHostname();
+
+	@Meta.AD(name = "new-web-id", required = false)
+	public String newWebId();
 
 }

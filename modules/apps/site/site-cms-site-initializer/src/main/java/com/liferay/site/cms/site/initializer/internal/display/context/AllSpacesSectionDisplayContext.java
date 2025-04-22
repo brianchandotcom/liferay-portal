@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,10 +35,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AllSpacesSectionDisplayContext {
 
 	public AllSpacesSectionDisplayContext(
-		HttpServletRequest httpServletRequest, Language language) {
+		HttpServletRequest httpServletRequest, Language language,
+		Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -64,7 +67,9 @@ public class AllSpacesSectionDisplayContext {
 					"redirect",
 					StringBundler.concat(
 						_themeDisplay.getPortalURL(),
-						_themeDisplay.getPathMain(), "/cms/e/space-view"));
+						_themeDisplay.getPathMain(), _themeDisplay.getPathCms(),
+						"/e/space-settings/",
+						_portal.getClassNameId(DepotEntry.class), "/{id}"));
 				dropdownItem.putData(
 					"title", _language.get(_httpServletRequest, "new-space"));
 				dropdownItem.setIcon("forms");
@@ -89,8 +94,10 @@ public class AllSpacesSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				_themeDisplay.getPathFriendlyURLPublic() +
-					"/cms/asset-library/{id}",
+				StringBundler.concat(
+					_themeDisplay.getPathFriendlyURLPublic(),
+					_themeDisplay.getPathCms(), "/e/space-settings/",
+					_portal.getClassNameId(DepotEntry.class), "/{id}"),
 				"cog", "edit",
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),
@@ -132,6 +139,7 @@ public class AllSpacesSectionDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;
 
 }

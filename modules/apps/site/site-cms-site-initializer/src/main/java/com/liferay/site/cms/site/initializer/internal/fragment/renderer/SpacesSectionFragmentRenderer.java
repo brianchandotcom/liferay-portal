@@ -7,11 +7,14 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -102,8 +106,11 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 						"name", assetLibrary.getName()
 					).put(
 						"url",
-						themeDisplay.getPathFriendlyURLPublic() +
-							"/cms/asset-library/" + assetLibrary.getId()
+						StringBundler.concat(
+							themeDisplay.getPathFriendlyURLPublic(),
+							themeDisplay.getPathCms(), "/e/space/",
+							_portal.getClassNameId(DepotEntry.class),
+							StringPool.SLASH, assetLibrary.getId())
 					));
 				assetLibrariesCount = page.getTotalCount();
 			}
@@ -148,6 +155,9 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

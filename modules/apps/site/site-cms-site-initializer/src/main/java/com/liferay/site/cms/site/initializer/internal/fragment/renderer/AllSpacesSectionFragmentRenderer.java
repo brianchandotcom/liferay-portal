@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.AllSpacesSectionDisplayContext;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class AllSpacesSectionFragmentRenderer
 			httpServletRequest.setAttribute(
 				AllSpacesSectionDisplayContext.class.getName(),
 				new AllSpacesSectionDisplayContext(
-					httpServletRequest, _language));
+					httpServletRequest, _language, _portal));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -64,6 +65,9 @@ public class AllSpacesSectionFragmentRenderer
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

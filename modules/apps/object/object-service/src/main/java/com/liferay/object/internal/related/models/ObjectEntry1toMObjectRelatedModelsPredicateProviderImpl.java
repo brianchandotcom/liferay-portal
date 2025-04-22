@@ -13,13 +13,13 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -143,9 +143,9 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 			ObjectDefinition objectDefinition1,
 			ObjectRelationship objectRelationship) {
 
-		String columnName = StringBundler.concat(
-			"r_", objectRelationship.getName(), "_",
-			objectDefinition1.getPKObjectFieldName());
+		String columnName =
+			ObjectRelationshipUtil.getObjectRelationshipFieldName(
+				objectDefinition1, objectRelationship.getName());
 
 		Column<DynamicObjectDefinitionTable, ?> column =
 			dynamicObjectDefinitionTable.getColumn(columnName);

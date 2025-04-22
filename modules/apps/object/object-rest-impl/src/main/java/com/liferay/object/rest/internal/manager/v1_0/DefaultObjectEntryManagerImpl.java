@@ -1065,12 +1065,11 @@ public class DefaultObjectEntryManagerImpl
 						Map<String, Object> nestedObjectEntryProperties =
 							nestedObjectEntry.getProperties();
 
-						String objectRelationshipName = StringBundler.concat(
-							"r_", objectRelationship.getName(), "_",
-							objectDefinition.getPKObjectFieldName());
-
 						nestedObjectEntryProperties.put(
-							objectRelationshipName,
+							ObjectRelationshipUtil.
+								getObjectRelationshipFieldName(
+									objectDefinition,
+									objectRelationship.getName()),
 							serviceBuilderObjectEntry.getPrimaryKey());
 					}
 

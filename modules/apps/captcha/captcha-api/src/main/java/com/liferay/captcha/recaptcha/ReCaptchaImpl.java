@@ -57,11 +57,6 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	}
 
 	@Override
-	public String getTaglibPath() {
-		return _TAGLIB_PATH;
-	}
-
-	@Override
 	public void serveImage(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -74,6 +69,11 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected String getTaglibPath() {
+		return _TAGLIB_PATH;
 	}
 
 	@Override

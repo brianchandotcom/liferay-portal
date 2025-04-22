@@ -107,11 +107,6 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public String getTaglibPath() {
-		return _TAGLIB_PATH;
-	}
-
-	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
@@ -291,6 +286,10 @@ public class SimpleCaptchaImpl implements Captcha {
 		captchaBuilder.addBorder();
 
 		return captchaBuilder.build();
+	}
+
+	protected String getTaglibPath() {
+		return _TAGLIB_PATH;
 	}
 
 	protected TextProducer getTextProducer() {

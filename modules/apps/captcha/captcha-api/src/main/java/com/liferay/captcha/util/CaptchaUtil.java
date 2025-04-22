@@ -49,10 +49,6 @@ public class CaptchaUtil {
 		return captchaProvider.getCaptcha();
 	}
 
-	public static String getTaglibPath() {
-		return getCaptcha().getTaglibPath();
-	}
-
 	public static boolean isEnabled(HttpServletRequest httpServletRequest) {
 		return getCaptcha().isEnabled(httpServletRequest);
 	}

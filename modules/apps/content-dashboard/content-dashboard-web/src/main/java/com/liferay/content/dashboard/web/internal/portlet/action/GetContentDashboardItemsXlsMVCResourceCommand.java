@@ -190,18 +190,17 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			contentDashboardItem.getDescription(locale)
 		);
 
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList =
-				contentDashboardItem.getSpecificInformationList(locale);
+		List<ContentDashboardItem.SpecificInformation<?>> specificInformations =
+			contentDashboardItem.getSpecificInformationList(locale);
 
-		workbookBuilder.cell(_toString(specificInformationList, "extension"));
+		workbookBuilder.cell(_toString(specificInformations, "extension"));
 
-		workbookBuilder.cell(_toString(specificInformationList, "file-name"));
+		workbookBuilder.cell(_toString(specificInformations, "file-name"));
 
 		workbookBuilder.cell(
-			_toString(specificInformationList, "size")
+			_toString(specificInformations, "size")
 		).cell(
-			_toString(specificInformationList, "display-date")
+			_toString(specificInformations, "display-date")
 		).cell(
 			_toString(contentDashboardItem.getCreateDate())
 		);
@@ -344,16 +343,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private String _toString(
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList,
+		List<ContentDashboardItem.SpecificInformation<?>> specificInformations,
 		String fieldName) {
 
-		if (specificInformationList == null) {
+		if (specificInformations == null) {
 			return StringPool.BLANK;
 		}
 
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
+				specificInformations) {
 
 			if (Objects.equals(specificInformation.getKey(), fieldName)) {
 				return _toString(specificInformation.getValue());

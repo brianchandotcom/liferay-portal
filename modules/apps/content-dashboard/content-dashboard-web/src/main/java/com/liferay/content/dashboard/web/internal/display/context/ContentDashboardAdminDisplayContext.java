@@ -275,8 +275,8 @@ public class ContentDashboardAdminDisplayContext {
 	public List<? extends ContentDashboardItemSubtype>
 		getContentDashboardItemSubtypes() {
 
-		if (_contentDashboardItemSubtypePayloads != null) {
-			return _contentDashboardItemSubtypePayloads;
+		if (_contentDashboardItemSubtypes != null) {
+			return _contentDashboardItemSubtypes;
 		}
 
 		String[] contentDashboardItemSubtypePayloads =
@@ -285,20 +285,19 @@ public class ContentDashboardAdminDisplayContext {
 				new String[0], false);
 
 		if (ArrayUtil.isEmpty(contentDashboardItemSubtypePayloads)) {
-			_contentDashboardItemSubtypePayloads = Collections.emptyList();
+			_contentDashboardItemSubtypes = Collections.emptyList();
 		}
 		else {
-			_contentDashboardItemSubtypePayloads =
-				TransformUtil.transformToList(
-					contentDashboardItemSubtypePayloads,
-					contentDashboardItemSubtypePayload ->
-						ContentDashboardItemSubtypeUtil.
-							toContentDashboardItemSubtype(
-								_contentDashboardItemSubtypeFactoryRegistry,
-								contentDashboardItemSubtypePayload));
+			_contentDashboardItemSubtypes = TransformUtil.transformToList(
+				contentDashboardItemSubtypePayloads,
+				contentDashboardItemSubtypePayload ->
+					ContentDashboardItemSubtypeUtil.
+						toContentDashboardItemSubtype(
+							_contentDashboardItemSubtypeFactoryRegistry,
+							contentDashboardItemSubtypePayload));
 		}
 
-		return _contentDashboardItemSubtypePayloads;
+		return _contentDashboardItemSubtypes;
 	}
 
 	public String getContentPerformanceDataFetchURL(
@@ -604,8 +603,7 @@ public class ContentDashboardAdminDisplayContext {
 		_contentDashboardDropdownItemsProvider;
 	private final ContentDashboardItemSubtypeFactoryRegistry
 		_contentDashboardItemSubtypeFactoryRegistry;
-	private List<ContentDashboardItemSubtype>
-		_contentDashboardItemSubtypePayloads;
+	private List<ContentDashboardItemSubtype> _contentDashboardItemSubtypes;
 	private Map<String, Object> _data;
 	private String _dateType;
 	private String _endDateString;

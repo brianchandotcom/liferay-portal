@@ -245,9 +245,7 @@ test(
 				.getByRole('button', {name: 'Save'})
 				.click();
 
-			await configurationIframe
-				.getByRole('button', {name: 'Cancel'})
-				.click();
+			await page.press('body', 'Escape');
 
 			await page.getByLabel('Publish', {exact: true}).click();
 		});

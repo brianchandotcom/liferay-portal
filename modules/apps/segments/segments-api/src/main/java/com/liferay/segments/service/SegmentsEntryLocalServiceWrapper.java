@@ -392,6 +392,14 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<SegmentsEntry> getSegmentsEntries(
+		long[] segmentsEntryIds, int start, int end) {
+
+		return _segmentsEntryLocalService.getSegmentsEntries(
+			segmentsEntryIds, start, end);
+	}
+
+	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>

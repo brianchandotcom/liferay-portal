@@ -1439,6 +1439,646 @@ public class SegmentsEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"segmentsEntry.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
+	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
+	private FinderPath _finderPathCountBySegmentsEntryId;
+	private FinderPath _finderPathWithPaginationCountBySegmentsEntryId;
+
+	/**
+	 * Returns all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(long segmentsEntryId) {
+		return findBySegmentsEntryId(
+			segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end) {
+
+		return findBySegmentsEntryId(segmentsEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findBySegmentsEntryId(
+			segmentsEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsEntry.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath =
+						_finderPathWithoutPaginationFindBySegmentsEntryId;
+					finderArgs = new Object[] {segmentsEntryId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
+				finderArgs = new Object[] {
+					segmentsEntryId, start, end, orderByComparator
+				};
+			}
+
+			List<SegmentsEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<SegmentsEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsEntry segmentsEntry : list) {
+						if (segmentsEntryId !=
+								segmentsEntry.getSegmentsEntryId()) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
+
+				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(segmentsEntryId);
+
+					list = (List<SegmentsEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findBySegmentsEntryId_First(
+			long segmentsEntryId,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		SegmentsEntry segmentsEntry = fetchBySegmentsEntryId_First(
+			segmentsEntryId, orderByComparator);
+
+		if (segmentsEntry != null) {
+			return segmentsEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("segmentsEntryId=");
+		sb.append(segmentsEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchBySegmentsEntryId_First(
+		long segmentsEntryId,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		List<SegmentsEntry> list = findBySegmentsEntryId(
+			segmentsEntryId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findBySegmentsEntryId_Last(
+			long segmentsEntryId,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		SegmentsEntry segmentsEntry = fetchBySegmentsEntryId_Last(
+			segmentsEntryId, orderByComparator);
+
+		if (segmentsEntry != null) {
+			return segmentsEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("segmentsEntryId=");
+		sb.append(segmentsEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchBySegmentsEntryId_Last(
+		long segmentsEntryId,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		int count = countBySegmentsEntryId(segmentsEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SegmentsEntry> list = findBySegmentsEntryId(
+			segmentsEntryId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(long[] segmentsEntryIds) {
+		return findBySegmentsEntryId(
+			segmentsEntryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end) {
+
+		return findBySegmentsEntryId(segmentsEntryIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findBySegmentsEntryId(
+			segmentsEntryIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		if (segmentsEntryIds == null) {
+			segmentsEntryIds = new long[0];
+		}
+		else if (segmentsEntryIds.length > 1) {
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
+		}
+
+		if (segmentsEntryIds.length == 1) {
+			return findBySegmentsEntryId(
+				segmentsEntryIds[0], start, end, orderByComparator);
+		}
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsEntry.class)) {
+
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderArgs = new Object[] {
+						StringUtil.merge(segmentsEntryIds)
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(segmentsEntryIds), start, end,
+					orderByComparator
+				};
+			}
+
+			List<SegmentsEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<SegmentsEntry>)finderCache.getResult(
+					_finderPathWithPaginationFindBySegmentsEntryId, finderArgs,
+					this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (SegmentsEntry segmentsEntry : list) {
+						if (!ArrayUtil.contains(
+								segmentsEntryIds,
+								segmentsEntry.getSegmentsEntryId())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
+
+				if (segmentsEntryIds.length > 0) {
+					sb.append("(");
+
+					sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7);
+
+					sb.append(StringUtil.merge(segmentsEntryIds));
+
+					sb.append(")");
+
+					sb.append(")");
+				}
+
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<SegmentsEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathWithPaginationFindBySegmentsEntryId,
+							finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Removes all the segments entries where segmentsEntryId = &#63; from the database.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 */
+	@Override
+	public void removeBySegmentsEntryId(long segmentsEntryId) {
+		for (SegmentsEntry segmentsEntry :
+				findBySegmentsEntryId(
+					segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(segmentsEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of segments entries where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySegmentsEntryId(long segmentsEntryId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsEntry.class)) {
+
+			FinderPath finderPath = _finderPathCountBySegmentsEntryId;
+
+			Object[] finderArgs = new Object[] {segmentsEntryId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
+
+				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(segmentsEntryId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	/**
+	 * Returns the number of segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySegmentsEntryId(long[] segmentsEntryIds) {
+		if (segmentsEntryIds == null) {
+			segmentsEntryIds = new long[0];
+		}
+		else if (segmentsEntryIds.length > 1) {
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
+		}
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsEntry.class)) {
+
+			Object[] finderArgs = new Object[] {
+				StringUtil.merge(segmentsEntryIds)
+			};
+
+			Long count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountBySegmentsEntryId, finderArgs,
+				this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
+
+				if (segmentsEntryIds.length > 0) {
+					sb.append("(");
+
+					sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7);
+
+					sb.append(StringUtil.merge(segmentsEntryIds));
+
+					sb.append(")");
+
+					sb.append(")");
+				}
+
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(
+						_finderPathWithPaginationCountBySegmentsEntryId,
+						finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String
+		_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2 =
+			"segmentsEntry.segmentsEntryId = ?";
+
+	private static final String
+		_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7 =
+			"segmentsEntry.segmentsEntryId IN (";
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
@@ -8806,6 +9446,29 @@ public class SegmentsEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"segmentsEntryId"}, true);
+
+		_finderPathWithoutPaginationFindBySegmentsEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
+			new String[] {Long.class.getName()},
+			new String[] {"segmentsEntryId"}, true);
+
+		_finderPathCountBySegmentsEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySegmentsEntryId",
+			new String[] {Long.class.getName()},
+			new String[] {"segmentsEntryId"}, false);
+
+		_finderPathWithPaginationCountBySegmentsEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countBySegmentsEntryId",
+			new String[] {Long.class.getName()},
+			new String[] {"segmentsEntryId"}, false);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",

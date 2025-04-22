@@ -346,6 +346,12 @@ public class SegmentsEntryLocalServiceUtil {
 			groupId, source, start, end, orderByComparator);
 	}
 
+	public static List<SegmentsEntry> getSegmentsEntries(
+		long[] segmentsEntryIds, int start, int end) {
+
+		return getService().getSegmentsEntries(segmentsEntryIds, start, end);
+	}
+
 	public static List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {

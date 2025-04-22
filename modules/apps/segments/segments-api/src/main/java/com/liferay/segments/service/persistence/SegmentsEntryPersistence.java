@@ -382,6 +382,209 @@ public interface SegmentsEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId);
+
+	/**
+	 * Returns a range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	public SegmentsEntry findBySegmentsEntryId_First(
+			long segmentsEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	public SegmentsEntry fetchBySegmentsEntryId_First(
+		long segmentsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	public SegmentsEntry findBySegmentsEntryId_Last(
+			long segmentsEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last segments entry in the ordered set where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	public SegmentsEntry fetchBySegmentsEntryId_Last(
+		long segmentsEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator);
+
+	/**
+	 * Returns all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds);
+
+	/**
+	 * Returns a range of all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	public java.util.List<SegmentsEntry> findBySegmentsEntryId(
+		long[] segmentsEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Removes all the segments entries where segmentsEntryId = &#63; from the database.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 */
+	public void removeBySegmentsEntryId(long segmentsEntryId);
+
+	/**
+	 * Returns the number of segments entries where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the number of matching segments entries
+	 */
+	public int countBySegmentsEntryId(long segmentsEntryId);
+
+	/**
+	 * Returns the number of segments entries where segmentsEntryId = any &#63;.
+	 *
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the number of matching segments entries
+	 */
+	public int countBySegmentsEntryId(long[] segmentsEntryIds);
+
+	/**
 	 * Returns all the segments entries where groupId = &#63;.
 	 *
 	 * @param groupId the group ID

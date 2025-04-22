@@ -231,6 +231,19 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountBySegmentsEntryId() throws Exception {
+		_persistence.countBySegmentsEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countBySegmentsEntryId(0L);
+	}
+
+	@Test
+	public void testCountBySegmentsEntryIdArrayable() throws Exception {
+		_persistence.countBySegmentsEntryId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 

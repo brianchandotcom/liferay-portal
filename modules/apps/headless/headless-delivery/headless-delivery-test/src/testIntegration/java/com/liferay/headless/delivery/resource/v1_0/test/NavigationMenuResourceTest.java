@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -62,6 +65,7 @@ import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -69,6 +73,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -314,6 +319,7 @@ public class NavigationMenuResourceTest
 		super.testPostSiteNavigationMenu();
 
 		_testPostSiteNavigationMenuWithNavigationType();
+		_testPostSiteNavigationMenuWithPermissions();
 	}
 
 	@Override
@@ -521,6 +527,21 @@ public class NavigationMenuResourceTest
 				}
 			},
 			CustomField.class);
+	}
+
+	private com.liferay.portal.vulcan.permission.Permission[] _getPermissions(
+			long companyId, long groupId, long id, String name)
+		throws Exception {
+
+		_permissionService.checkPermission(groupId, name, id);
+
+		Collection<com.liferay.portal.vulcan.permission.Permission>
+			permissions = PermissionUtil.getPermissions(
+				companyId, _resourceActionLocalService.getResourceActions(name),
+				id, name, null);
+
+		return permissions.toArray(
+			new com.liferay.portal.vulcan.permission.Permission[0]);
 	}
 
 	private ServiceContext _getServiceContext(boolean expandoBridgeAttributes)
@@ -1038,6 +1059,42 @@ public class NavigationMenuResourceTest
 			navigationMenu.getNavigationType());
 	}
 
+	private void _testPostSiteNavigationMenuWithPermissions() throws Exception {
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		Role serviceBuilderRole1 = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		Permission permission1 = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.VIEW};
+				roleExternalReferenceCode =
+					serviceBuilderRole1.getExternalReferenceCode();
+				roleName = serviceBuilderRole1.getName();
+				roleType = RoleConstants.getTypeLabel(
+					serviceBuilderRole1.getType());
+			}
+		};
+
+		randomNavigationMenu.setPermissions(new Permission[] {permission1});
+
+		NavigationMenu postNavigationMenu =
+			testPostSiteNavigationMenu_addNavigationMenu(randomNavigationMenu);
+
+		com.liferay.portal.vulcan.permission.Permission[] permissionsArray =
+			_getPermissions(
+				TestPropsValues.getCompanyId(), testGroup.getGroupId(),
+				postNavigationMenu.getId(), SiteNavigationMenu.class.getName());
+
+		ArrayUtil.exists(
+			permissionsArray,
+			permission ->
+				Objects.equals(
+					permission.getRoleName(), serviceBuilderRole1.getName()) &&
+				(permission.getActionIds().length == 1) &&
+				Objects.equals(permission.getActionIds()[0], "VIEW"));
+	}
+
 	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;
 
@@ -1063,7 +1120,13 @@ public class NavigationMenuResourceTest
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Inject
+	private PermissionService _permissionService;
+
+	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private ResourceActions _resourceActions;

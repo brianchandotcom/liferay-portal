@@ -228,7 +228,7 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.currentLiferayVersion && (
+					{businessEvent?.currentLiferayVersion?.key && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('current-version')}
@@ -240,7 +240,7 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.newLiferayVersion && (
+					{businessEvent?.newLiferayVersion?.key && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('new-version')}

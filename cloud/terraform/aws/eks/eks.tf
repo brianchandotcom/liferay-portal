@@ -9,6 +9,9 @@ module "eks" {
 		kube-proxy={
 			most_recent=true
 		}
+		metrics-server={
+			most_recent=true
+		}
 		vpc-cni={
 			most_recent=true
 		}

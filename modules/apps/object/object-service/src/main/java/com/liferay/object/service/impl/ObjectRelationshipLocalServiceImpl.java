@@ -1085,8 +1085,9 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setSystem(system);
 
 		if (Validator.isNull(dbColumnName)) {
-			dbColumnName = StringBundler.concat(
-				"r_", name, "_", objectDefinition1.getPKObjectFieldName());
+			dbColumnName =
+				ObjectRelationshipUtil.getObjectRelationshipFieldName(
+					objectDefinition1, name);
 		}
 
 		objectField.setDBColumnName(dbColumnName);

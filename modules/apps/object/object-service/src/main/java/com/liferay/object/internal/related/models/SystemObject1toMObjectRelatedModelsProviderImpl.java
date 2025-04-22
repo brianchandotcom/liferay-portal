@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -27,7 +28,6 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -177,16 +177,13 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_getDynamicObjectDefinitionTable(
 				relatedObjectDefinition.getObjectDefinitionId());
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
 		Column<DynamicObjectDefinitionTable, Long> column =
 			(Column<DynamicObjectDefinitionTable, Long>)
 				dynamicObjectDefinitionTable.getColumn(
-					StringBundler.concat(
-						"r_", objectRelationship.getName(), "_",
-						objectDefinition.getPKObjectFieldName()));
+					ObjectRelationshipUtil.getObjectRelationshipFieldName(
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId1()),
+						objectRelationship.getName()));
 
 		if (column == null) {
 			dynamicObjectDefinitionTable =

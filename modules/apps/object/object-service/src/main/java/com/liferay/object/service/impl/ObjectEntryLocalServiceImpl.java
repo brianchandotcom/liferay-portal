@@ -816,9 +816,8 @@ public class ObjectEntryLocalServiceImpl
 			Column<DynamicObjectDefinitionTable, Long> column =
 				(Column<DynamicObjectDefinitionTable, Long>)
 					dynamicObjectDefinitionTable.getColumn(
-						StringBundler.concat(
-							"r_", objectRelationship.getName(), "_",
-							objectDefinition.getPKObjectFieldName()));
+						ObjectRelationshipUtil.getObjectRelationshipFieldName(
+							objectDefinition, objectRelationship.getName()));
 
 			if (column == null) {
 				dynamicObjectDefinitionTable =

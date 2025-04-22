@@ -485,6 +485,7 @@ export type TestrayRoutine = {
 	name: string;
 	routineToBuilds: TestrayBuild[];
 	routineToProjects?: TestrayProject;
+	testrayBuildCPUUseTime?: string;
 	testrayBuildDueDate: string;
 	testrayRoutineId?: number;
 };

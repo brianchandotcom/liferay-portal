@@ -216,6 +216,7 @@ export default {
 	'job-scheduler': 'Job Scheduler',
 	'job-scheduler-x': 'Job Scheduler {0}',
 	'key': 'Key',
+	'last-execution-total-cpu-usage': 'Last Execution Total CPU Usage',
 	'last-name': 'Last Name',
 	'last-used-date': 'Last Used Date',
 	'latest-build': 'Latest Build',

@@ -90,6 +90,13 @@ const Routines = () => {
 						},
 						{
 							clickable: true,
+							key: 'testrayBuildCPUUseTime',
+							value: i18n.translate(
+								'last-execution-total-cpu-usage'
+							),
+						},
+						{
+							clickable: true,
 							key: 'dueDate',
 							render: (_, testrayRoutine: TestrayRoutine) =>
 								testrayRoutine?.testrayBuildDueDate

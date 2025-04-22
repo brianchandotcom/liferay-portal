@@ -19,20 +19,22 @@ liferay-default:
                 s3Region="$[env:S3_BUCKET_REGION]"
                 secretKey=""
     customEnvFrom:
-        -   secretRef:
-                name: managed-service-details
+        x-liferay-aws:
+            -   secretRef:
+                    name: managed-service-details
     customLabels:
         origin: liferay-aws
     customVolumeMounts:
-        -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
-            name: liferay-configmap
-            subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
-        -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-            name: liferay-configmap
-            subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-        -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
-            name: liferay-configmap
-            subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+        x-liferay-aws:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+                name: liferay-configmap
+                subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
     portalBundleDenyList:
         -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
         -   com.liferay.portal.search.elasticsearch.monitoring.web

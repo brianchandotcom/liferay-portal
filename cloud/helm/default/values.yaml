@@ -16,22 +16,17 @@ configmap:
     annotations: {}
     data: {}
     overrideDefaults: false
-customEnv: []
-customEnvFrom: []
-customInitContainers: []
+customEnv: {}
+customEnvFrom: {}
+customInitContainers: {}
 customLabels:
     origin: liferay-cloud
-customPorts: []
-customPullSecrets: []
-customVolumeClaimTemplates: []
-customVolumeMounts: []
-customVolumes: []
-dependencies:
-    -   name: database
-        portalBundleDenyList: []
-        portalComponentDenyList: []
-        portalProperties: ""
-        source: external
+customPorts: {}
+customPullSecrets: {}
+customVolumeClaimTemplates: {}
+customVolumeMounts: {}
+customVolumes: {}
+dependencies: {}
 env:
     -   name: DNS_MEMBERSHIP_SERVICE_NAME
         value: liferay-default-headless
@@ -128,11 +123,12 @@ initContainers:
                     -   |
                             trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
 
-                            {{- range .dependencies }}
-                                {{- if eq .source "statefulset" }}
-                                    until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}
+                            {{- $liferayname := .liferayname }}
+                            {{- range $k, $v := .dependencies }}
+                                {{- if eq $v.source "statefulset" }}
+                                    until nc -vz -w 2 {{ $liferayname }}-{{ $k }} {{ (index $v.statefulset.service.ports 0).port }}
                                     do
-                                        echo "Waiting for liferay-{{ .name }}..."
+                                        echo "Waiting for {{ $liferayname }}-{{ $k }}..."
 
                                         sleep 2
                                     done

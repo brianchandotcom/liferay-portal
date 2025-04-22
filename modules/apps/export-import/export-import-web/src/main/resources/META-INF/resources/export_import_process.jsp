@@ -109,13 +109,11 @@ if (Validator.isNotNull(backURL)) {
 					}
 					%>
 
-					<div class="active progress">
-						<div class="progress-bar" style="width: <%= percentage %>%;">
-							<c:if test="<%= allProgressBarCountersTotal > 0 %>">
-								<%= percentage + StringPool.PERCENT %>
-							</c:if>
-						</div>
-					</div>
+					<clay:progressbar
+						maxValue="<%= 100 %>"
+						minValue="<%= 0 %>"
+						value="<%= percentage %>"
+					/>
 
 					<%
 					String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");

@@ -51,13 +51,13 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		}
 		%>
 
-		<div class="active progress">
-			<div class="progress-bar" style="width: <%= percentage %>%;">
-				<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
-					<%= percentage + StringPool.PERCENT %>
-				</c:if>
-			</div>
-		</div>
+		<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
+			<clay:progressbar
+				maxValue="<%= 100 %>"
+				minValue="<%= 0 %>"
+				value="<%= percentage %>"
+			/>
+		</c:if>
 
 		<%
 		String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");

@@ -124,6 +124,18 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
 
+	const handleOptionChange = useCallback(
+		(field: string, key: string, list: IOption[]) => {
+			if (key) {
+				setFieldValue(
+					field,
+					list.filter((option) => option.value === key)[0].label
+				);
+			}
+		},
+		[setFieldValue]
+	);
+
 	const handleRadioChange = (value: string) => {
 		setHasImpactingEvents(value);
 	};
@@ -151,10 +163,9 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {
 			...businessEvent,
-			currentLiferayVersion: {
-				key: businessEvent.currentLiferayVersion?.key,
-			},
-			newLiferayVersion: {key: businessEvent.newLiferayVersion?.key},
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
+			timeZone: businessEvent.timeZone?.key,
 		};
 
 		try {
@@ -399,6 +410,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									link="https://help.liferay.com/hc"
 									linkText="here"
 									name="businessEvent.eventType.key"
+									onChange={(value: string) =>
+										handleOptionChange(
+											'businessEvent.eventType.name',
+											value,
+											businessEventTypesList
+										)
+									}
 									options={[
 										emptyOption,
 										...businessEventTypesList,
@@ -415,6 +433,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											'your-current-liferay-version'
 										)}
 										name="businessEvent.currentLiferayVersion.key"
+										onChange={(value: string) =>
+											handleOptionChange(
+												'businessEvent.currentLiferayVersion.name',
+												value,
+												dxpMinorVersionsAndPortalMajorVersions
+											)
+										}
 										options={[
 											emptyOption,
 											...dxpMinorVersionsAndPortalMajorVersions,
@@ -428,6 +453,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 										badgeClassName="mt-1 mx-3"
 										label={i18n.translate('new-version')}
 										name="businessEvent.newLiferayVersion.key"
+										onChange={(value: string) =>
+											handleOptionChange(
+												'businessEvent.newLiferayVersion.name',
+												value,
+												newLiferayVersionOptions
+											)
+										}
 										options={[
 											emptyOption,
 											...newLiferayVersionOptions,
@@ -485,8 +517,18 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											id="select-businessEvent.timeZone"
 											label={i18n.translate('time-zone')}
 											name="businessEvent.timeZone.key"
+											onChange={(value: string) =>
+												handleOptionChange(
+													'businessEvent.timeZone.name',
+													value,
+													utcTimeZonesList
+												)
+											}
 											options={[
-												emptyOption,
+												{
+													...emptyOption,
+													disabled: false,
+												},
 												...utcTimeZonesList,
 											]}
 										/>

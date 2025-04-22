@@ -136,6 +136,18 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
 
+	const handleOptionChange = useCallback(
+		(field: string, key: string, list: IOption[]) => {
+			if (key) {
+				setFieldValue(
+					field,
+					list.filter((option) => option.value === key)[0].label
+				);
+			}
+		},
+		[setFieldValue]
+	);
+
 	const handleRadioChange = (value: string) => {
 		setHasImpactingEvents(value);
 	};
@@ -161,27 +173,18 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	}, []);
 
 	const handleSubmit = async () => {
-		const updatedBusinessEvent = {
-			...businessEvent,
-			currentLiferayVersion: {
-				key: businessEvent.currentLiferayVersion?.key,
-			},
-			newLiferayVersion: {key: businessEvent.newLiferayVersion?.key},
-		};
-
 		const formattedBusinessEvent = {
-			associatedTickets: updatedBusinessEvent.associatedTickets,
-			currentLiferayVersion:
-				updatedBusinessEvent.currentLiferayVersion?.key,
-			description: updatedBusinessEvent.description,
-			eventType: updatedBusinessEvent.eventType?.key,
+			associatedTickets: businessEvent.associatedTickets,
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			description: businessEvent.description,
+			eventType: businessEvent.eventType?.key,
 			lastComment: reason,
-			name: updatedBusinessEvent?.name,
-			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
+			name: businessEvent?.name,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			r_accountEntryToBusinessEvents_accountEntryId:
-				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: updatedBusinessEvent.targetGoLiveDateTime,
-			timeZone: updatedBusinessEvent.timeZone?.key,
+				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
+			timeZone: businessEvent.timeZone?.key,
 		};
 
 		try {
@@ -304,6 +307,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			setFieldValue(
 				'businessEvent.newLiferayVersion.key',
 				originalBusinessEvent.newLiferayVersion.key
+			);
+
+			setFieldValue(
+				'businessEvent.newLiferayVersion.name',
+				originalBusinessEvent.newLiferayVersion.name
 			);
 
 			return;
@@ -541,6 +549,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											groupStyle="pb-1"
 											label={i18n.translate('event-type')}
 											name="businessEvent.eventType.key"
+											onChange={(value: string) =>
+												handleOptionChange(
+													'businessEvent.eventType.name',
+													value,
+													businessEventTypesList
+												)
+											}
 											options={businessEventTypesList}
 											required
 										/>
@@ -555,6 +570,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													'your-current-liferay-version'
 												)}
 												name="businessEvent.currentLiferayVersion.key"
+												onChange={(value: string) =>
+													handleOptionChange(
+														'businessEvent.currentLiferayVersion.name',
+														value,
+														dxpMinorVersionsAndPortalMajorVersions
+													)
+												}
 												options={[
 													emptyOption,
 													...dxpMinorVersionsAndPortalMajorVersions,
@@ -574,6 +596,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													'new-version'
 												)}
 												name="businessEvent.newLiferayVersion.key"
+												onChange={(value: string) =>
+													handleOptionChange(
+														'businessEvent.newLiferayVersion.name',
+														value,
+														newLiferayVersionOptions
+													)
+												}
 												options={[
 													emptyOption,
 													...newLiferayVersionOptions,
@@ -646,7 +675,20 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 														'time-zone'
 													)}
 													name="businessEvent.timeZone.key"
-													options={utcTimeZonesList}
+													onChange={(value: string) =>
+														handleOptionChange(
+															'businessEvent.timeZone.name',
+															value,
+															utcTimeZonesList
+														)
+													}
+													options={[
+														{
+															...emptyOption,
+															disabled: false,
+														},
+														...utcTimeZonesList,
+													]}
 												/>
 											</ClayInput.GroupItem>
 

@@ -665,7 +665,26 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd",
 			"liferay-workflow-definition_7_4_0.xsd"),
-		new KeyValuePair("http://www.w3.org/2001/xml.xsd", "xml.xsd")
+		new KeyValuePair("http://www.w3.org/2001/xml.xsd", "xml.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee/jakartaee_10.xsd",
+			"jakartaee_10.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee" +
+				"/jakartaee_web_services_client_2_0.xsd",
+			"jakartaee_web_services_client_2_0.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee/jsp_3_1.xsd", "jsp_3_1.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd",
+			"web-app_6_0.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee/web-common_6_0.xsd",
+			"web-common_6_0.xsd"),
+		new KeyValuePair(
+			"https://jakarta.ee/xml/ns/jakartaee/web-fragment_6_0.xsd",
+			"web-fragment_6_0.xsd"),
+		new KeyValuePair("https://www.w3.org/2001/xml.xsd", "xml.xsd")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(EntityResolver.class);

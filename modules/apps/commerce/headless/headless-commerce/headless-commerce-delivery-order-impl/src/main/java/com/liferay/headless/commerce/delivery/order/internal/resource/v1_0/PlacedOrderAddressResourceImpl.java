@@ -17,6 +17,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,7 +79,7 @@ public class PlacedOrderAddressResourceImpl
 	)
 	@Override
 	public PlacedOrderAddress getPlacedOrderPlacedOrderBillingAddress(
-			Long placedOrderId)
+			@NestedFieldId(value = "id") Long placedOrderId)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -110,7 +111,7 @@ public class PlacedOrderAddressResourceImpl
 	)
 	@Override
 	public PlacedOrderAddress getPlacedOrderPlacedOrderShippingAddress(
-			Long placedOrderId)
+			@NestedFieldId(value = "id") Long placedOrderId)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(

@@ -56,7 +56,7 @@ export const test = mergeTests(
 	wikiPagesTest
 );
 
-export const testWithStagingInInstanceFF = mergeTests(
+export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	exportImportPagesTest,
@@ -94,7 +94,7 @@ async function getSiteHomePageScreenshot(
 	return screenshot;
 }
 
-testWithStagingInInstanceFF(
+testWithExportImportAtInstanceLevelFF(
 	'cannot import an instance scoped lar file',
 	async ({apiHelpers, companyExportImportPage, exportImportPage, page}) => {
 		const objectActionAPIClient =

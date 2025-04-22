@@ -27,7 +27,7 @@ export const test = mergeTests(
 	uiElementsPageTest
 );
 
-export const testWithStagingInInstanceFF = mergeTests(
+export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	applicationsMenuPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
@@ -87,7 +87,7 @@ test('can export at site level with old file name', async ({
 	await expectExportName(exportImportPage, 'Pages');
 });
 
-testWithStagingInInstanceFF(
+testWithExportImportAtInstanceLevelFF(
 	'can export at site level with new file name',
 	async ({exportImportPage}) => {
 		await expectExportName(exportImportPage, 'Export');

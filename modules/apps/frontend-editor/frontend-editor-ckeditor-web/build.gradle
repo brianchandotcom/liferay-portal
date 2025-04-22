@@ -9,6 +9,25 @@ task buildCKEditorPlugins(type: Copy)
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
 
+def removeBOM = {
+	line ->
+	def bytes = line.getBytes('UTF-8')
+
+	if (bytes.size() < 3) {
+		return line
+	}
+
+	int b0 = (int)bytes[0] & 0xFF;
+	int b1 = (int)bytes[1] & 0xFF;
+	int b2 = (int)bytes[2] & 0xFF;
+
+	if (b0 == 0xEF && b1 == 0xBB && b2 == 0xBF) {
+		line = new String(bytes, 3, bytes.size()-3, 'UTF-8');
+	}
+
+	return line
+}
+
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
 
@@ -19,6 +38,7 @@ buildCKEditor {
 	duplicatesStrategy = "exclude"
 
 	eachFile new StripPathSegmentsAction(2)
+	filter removeBOM
 	from npmInstall.nodeModulesDir
 	include "liferay-ckeditor/ckeditor/"
 	includeEmptyDirs = false
@@ -46,6 +66,7 @@ buildCKEditorPlugins {
 	dependsOn buildCKEditor, packageRunBuild
 
 	from new File(packageRunBuild.destinationDir, "_diffs")
+	filter removeBOM
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
 }

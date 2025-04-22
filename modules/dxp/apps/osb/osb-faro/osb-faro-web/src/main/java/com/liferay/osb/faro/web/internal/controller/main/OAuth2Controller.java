@@ -286,7 +286,8 @@ public class OAuth2Controller extends BaseFaroController {
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				throw new PortalException("Unexpected Error");
+				throw new PortalException(
+					"HTTP response status code: " + statusLine.getStatusCode());
 			}
 
 			return EntityUtils.toString(closeableHttpResponse.getEntity());

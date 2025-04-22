@@ -322,6 +322,14 @@ public class NavigationMenuResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutNavigationMenu() throws Exception {
+		super.testPutNavigationMenu();
+
+		_testPutSiteNavigationMenuWithPermissions();
+	}
+
+	@Override
 	protected boolean equals(
 		NavigationMenu navigationMenu1, NavigationMenu navigationMenu2) {
 
@@ -1072,6 +1080,55 @@ public class NavigationMenuResourceTest
 					_resourceActionLocalService.getResourceActions(
 						SiteNavigationMenu.class.getName()),
 					postNavigationMenu.getId(),
+					SiteNavigationMenu.class.getName(), null));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				permissions,
+				permission -> {
+					String[] actionIds = permission.getActionIds();
+
+					return (actionIds.length == 1) &&
+						   Objects.equals(ActionKeys.VIEW, actionIds[0]) &&
+						   Objects.equals(
+							   serviceBuilderRole.getExternalReferenceCode(),
+							   permission.getRoleExternalReferenceCode());
+				}));
+	}
+
+	private void _testPutSiteNavigationMenuWithPermissions() throws Exception {
+		NavigationMenu postNavigationMenu =
+			testPutNavigationMenu_addNavigationMenu();
+
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		Role serviceBuilderRole = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		Permission permission1 = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.VIEW};
+				roleExternalReferenceCode =
+					serviceBuilderRole.getExternalReferenceCode();
+				roleName = serviceBuilderRole.getName();
+				roleType = RoleConstants.getTypeLabel(
+					serviceBuilderRole.getType());
+			}
+		};
+
+		randomNavigationMenu.setPermissions(new Permission[] {permission1});
+
+		NavigationMenu putNavigationMenu =
+			navigationMenuResource.putNavigationMenu(
+				postNavigationMenu.getId(), randomNavigationMenu);
+
+		List<com.liferay.portal.vulcan.permission.Permission> permissions =
+			ListUtil.fromCollection(
+				PermissionUtil.getPermissions(
+					TestPropsValues.getCompanyId(),
+					_resourceActionLocalService.getResourceActions(
+						SiteNavigationMenu.class.getName()),
+					putNavigationMenu.getId(),
 					SiteNavigationMenu.class.getName(), null));
 
 		Assert.assertTrue(

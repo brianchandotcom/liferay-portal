@@ -1121,7 +1121,7 @@ test.describe('Date and Time Fragment', () => {
 
 			const row = page.locator('.fds tbody tr').first();
 
-			await expect(row).toContainText('Oct 10, 2022, 10:10 AM');
+			await expect(row).toContainText('Oct 10, 2022, 10:10:00 AM');
 		}
 	);
 });

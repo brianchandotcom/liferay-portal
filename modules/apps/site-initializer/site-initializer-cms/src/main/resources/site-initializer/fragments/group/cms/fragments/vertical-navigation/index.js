@@ -8,7 +8,7 @@
 import {VerticalNav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
-import {createRoot} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 const props = JSON.parse(
 	fragmentElement.querySelector('.vertical-navigation-props').innerHTML

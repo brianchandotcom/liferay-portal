@@ -16,6 +16,8 @@ public class ObjectRelationshipConstants {
 
 	public static final String DELETION_TYPE_PREVENT = "prevent";
 
+	public static final String OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX = "r_";
+
 	public static final String TYPE_MANY_TO_MANY = "manyToMany";
 
 	public static final String TYPE_ONE_TO_MANY = "oneToMany";

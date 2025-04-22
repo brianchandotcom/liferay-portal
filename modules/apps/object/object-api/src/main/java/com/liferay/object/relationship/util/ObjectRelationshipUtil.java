@@ -69,6 +69,15 @@ public class ObjectRelationshipUtil {
 		throw new ObjectRelationshipReverseException();
 	}
 
+	public static String getObjectRelationshipFieldName(
+		ObjectDefinition objectDefinition, String objectRelationshipName) {
+
+		return StringBundler.concat(
+			ObjectRelationshipConstants.OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX,
+			objectRelationshipName, StringPool.UNDERLINE,
+			objectDefinition.getPKObjectFieldName());
+	}
+
 	public static Set<String> getObjectRelationshipTypes(
 		ObjectDefinition objectDefinition,
 		SystemObjectDefinitionManagerRegistry

@@ -1,0 +1,4 @@
+Bundle-Name: custom-account-admin-web-fragment
+Bundle-SymbolicName: custom.account.admin.web.fragment
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.account.admin.web;bundle-version="1.0.37"

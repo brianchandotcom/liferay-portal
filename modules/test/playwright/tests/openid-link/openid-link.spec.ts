@@ -7,12 +7,14 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {loginTest} from '../../fixtures/loginTest';
 import {OpenIdInstanceSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../utils/performLogin';
 import {utilityPagesPage} from '../login-web/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
+import { liferayConfig } from '../../liferay.config';
 
 let providerName: string;
 let site: Site;
@@ -23,6 +25,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-6378': {enabled: true},
 	}),
+	loginTest(),
 	utilityPagesPage
 );
 
@@ -45,9 +48,10 @@ test.afterEach(
 		openIDInstanceSettingsPage,
 		page,
 	}) => {
-		const signInButton = page.getByRole('button', {name: 'Sign In'});
-		if (signInButton.isVisible) {
-			await performLogin(page, 'test');
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		if (page.getByRole('button', {name: 'Sign In'}).isVisible) {
+			await performLoginViaApi(page, 'test');
 		}
 
 		if (providerName) {
@@ -73,7 +77,6 @@ test.describe('OpenID connect link', () => {
 		openIDInstanceSettingsPage,
 		page,
 	}) => {
-		await performLogin(page, 'test');
 		await setupOpenIdConnection(openIDInstanceSettingsPage);
 		await performLogout(page);
 		await page
@@ -90,7 +93,6 @@ test.describe('OpenID connect link', () => {
 		openIDInstanceSettingsPage,
 		page,
 	}) => {
-		await performLogin(page, 'test');
 		site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 			templateKey: 'com.liferay.site.initializer.welcome',

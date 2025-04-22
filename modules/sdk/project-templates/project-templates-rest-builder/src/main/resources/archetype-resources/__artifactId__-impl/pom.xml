@@ -42,6 +42,8 @@
 				<version>1.0.93</version>
 #elseif(${liferayVersion.startsWith("7.3")})
 				<version>1.0.212</version>
+#elseif(${liferayVersion.startsWith("7.4")})
+				<version>1.0.407</version>
 #else
 				<version>@com.liferay.portal.tools.rest.builder.version@</version>
 #end

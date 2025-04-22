@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
@@ -114,8 +114,8 @@ public class PreviewFragmentCollectionMVCResourceCommand
 			themeDisplay.setLookAndFeel(theme, layoutSet.getColorScheme());
 		}
 		else {
-			String themeId = GetterUtil.getString(
-				httpServletRequest.getParameter("styleBookEntryThemeId"));
+			String themeId = ParamUtil.getString(
+				httpServletRequest, "styleBookEntryThemeId");
 
 			FrontendTokenDefinition frontendTokenDefinition =
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(

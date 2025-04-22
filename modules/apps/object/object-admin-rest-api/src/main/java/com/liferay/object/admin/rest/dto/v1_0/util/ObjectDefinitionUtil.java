@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.object.definitions.portlet.action.util;
+package com.liferay.object.admin.rest.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * @author Gabriel Albuquerque
  */
-public class ExportImportObjectDefinitionUtil {
+public class ObjectDefinitionUtil {
 
 	public static void prepareObjectDefinitionForExport(
 		JSONFactory jsonFactory, ObjectDefinition objectDefinition) {

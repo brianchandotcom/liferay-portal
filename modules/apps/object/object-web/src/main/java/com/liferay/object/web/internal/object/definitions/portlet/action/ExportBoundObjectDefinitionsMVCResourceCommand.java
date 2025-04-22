@@ -6,9 +6,9 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectDefinitionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitionUtil;
 import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -86,7 +86,7 @@ public class ExportBoundObjectDefinitionsMVCResourceCommand
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			ExportImportObjectDefinitionUtil.prepareObjectDefinitionForExport(
+			ObjectDefinitionUtil.prepareObjectDefinitionForExport(
 				_jsonFactory, objectDefinition);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(

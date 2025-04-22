@@ -48,11 +48,9 @@ test(
 				page.getByRole('menuitem', {exact: true, name: 'Page 4'})
 			).toBeVisible();
 
-			dropdownMenuHandler = page.getByRole('menu').filter({ hasText: '4 5 6 7 8 9 10 11 12 13 14 15' });
-			// getByText(
-			// 	'Page 4 Page 5 Page 6 Page 7'
-			// );
-			// getByLabel('Pagination').locator('div').filter({ hasText: '4 5 6 7 8 9 10 11 12 13 14 15' })
+			dropdownMenuHandler = page
+				.getByRole('menu')
+				.filter({hasText: '4 5 6 7 8 9 10 11 12 13 14 15'});
 		});
 
 		await test.step('The dropdown generates page links on scrolling in full size screens', async () => {

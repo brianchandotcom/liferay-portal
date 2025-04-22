@@ -27,7 +27,7 @@ export class WorkflowPage {
 		value: string,
 		{disable} = {disable: false}
 	) {
-		const row = await this.page.getByRole('row').filter({hasText: asset});
+		const row = this.page.getByRole('row').filter({hasText: asset});
 
 		await clickAndExpectToBeVisible({
 			target: row.getByRole('button', {name: 'Save'}),

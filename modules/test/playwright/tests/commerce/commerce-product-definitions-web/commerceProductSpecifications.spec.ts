@@ -165,14 +165,14 @@ test(
 				name: getRandomString(),
 			});
 
-		const specification =
-			await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
-
 		const product =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				catalogId: catalog.id,
 				name: {de_DE: getRandomString(), en_US: getRandomString()},
 			});
+
+		const specification =
+			await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
 
 		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 

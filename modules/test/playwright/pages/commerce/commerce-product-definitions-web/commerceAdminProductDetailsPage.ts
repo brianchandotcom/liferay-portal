@@ -148,21 +148,6 @@ export class CommerceAdminProductDetailsPage {
 		);
 	}
 
-	async addOrEditProductSpecification(
-		chooseAddOrEdit: string,
-		specificationName: string,
-		specificationValue?: string
-	) {
-		await this.addSpecification.click();
-		await (await this.menuItemSpecification(chooseAddOrEdit)).click();
-		await this.frameDropdownSpecification.click();
-		await (await this.frameChooseSpecification(specificationName)).click();
-		if (specificationValue) {
-			await this.frameChooseSpecificationValue(specificationValue);
-		}
-		await this.frameSubmitSpecification.click();
-	}
-
 	async addExistingProductSpecification(
 		chooseAddOrEdit: string,
 		specificationName: string,
@@ -175,6 +160,21 @@ export class CommerceAdminProductDetailsPage {
 		await this.addExistingSpecificationValueTextbox.fill(
 			specificationValue
 		);
+		await this.frameSubmitSpecification.click();
+	}
+
+	async addOrEditProductSpecification(
+		chooseAddOrEdit: string,
+		specificationName: string,
+		specificationValue?: string
+	) {
+		await this.addSpecification.click();
+		await (await this.menuItemSpecification(chooseAddOrEdit)).click();
+		await this.frameDropdownSpecification.click();
+		await (await this.frameChooseSpecification(specificationName)).click();
+		if (specificationValue) {
+			await this.frameChooseSpecificationValue(specificationValue);
+		}
 		await this.frameSubmitSpecification.click();
 	}
 

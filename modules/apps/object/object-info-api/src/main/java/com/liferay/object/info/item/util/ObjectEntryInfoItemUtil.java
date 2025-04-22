@@ -6,11 +6,14 @@
 package com.liferay.object.info.item.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -28,6 +31,16 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
  * @author Carolina Barbosa
  */
 public class ObjectEntryInfoItemUtil {
+
+	public static String getInfoFieldNamespace(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		return StringBundler.concat(
+			ObjectRelationship.class.getSimpleName(), StringPool.POUND,
+			objectDefinition.getName(), StringPool.POUND,
+			objectRelationship.getName());
+	}
 
 	public static ObjectEntry getObjectEntry(
 		ObjectDefinition objectDefinition,

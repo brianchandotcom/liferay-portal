@@ -22,15 +22,25 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrder;
+import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderAddress;
 import com.liferay.headless.commerce.delivery.order.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.delivery.order.client.resource.v1_0.PlacedOrderResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
@@ -82,6 +92,16 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
+
+		_country = _countryLocalService.addCountry(
+			"XY", "XYZ", true, true, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), true, true, false, _serviceContext);
+
+		_region = _regionLocalService.addRegion(
+			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
+			_serviceContext);
 	}
 
 	@Override
@@ -90,6 +110,14 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		super.testGetChannelPlacedOrdersPage();
 
 		_testGetChannelPlacedOrdersPageWithFilter();
+	}
+
+	@Override
+	@Test
+	public void testGetPlacedOrder() throws Exception {
+		super.testGetPlacedOrder();
+
+		_testGetPlacedOrderWithPlacedOrderBillingAddress();
 	}
 
 	@Ignore
@@ -355,6 +383,46 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		};
 	}
 
+	private PlacedOrderAddress _addPlacedOrderAddress() throws Exception {
+		Address address = _addressLocalService.addAddress(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+			_country.getCountryId(), 0, _region.getRegionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_serviceContext);
+
+		_addresses.add(address);
+
+		return new PlacedOrderAddress() {
+			{
+				city = address.getCity();
+				country = _country.getName();
+				countryISOCode = _country.getA2();
+				description = address.getDescription();
+				externalReferenceCode = address.getExternalReferenceCode();
+				id = address.getAddressId();
+				latitude = address.getLatitude();
+				longitude = address.getLongitude();
+				name = address.getName();
+				phoneNumber = address.getPhoneNumber();
+				region = _region.getName();
+				regionISOCode = _region.getRegionCode();
+				street1 = address.getStreet1();
+				street2 = address.getStreet2();
+				street3 = address.getStreet3();
+				subtype = address.getSubtype();
+				type = RandomTestUtil.randomString();
+				typeId = RandomTestUtil.randomInt();
+				vatNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				zip = address.getZip();
+			}
+		};
+	}
+
 	private void _testGetChannelPlacedOrdersPageWithFilter() throws Exception {
 		PlacedOrder placedOrder = _addCommerceOrder(randomPlacedOrder());
 
@@ -430,11 +498,58 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		Assert.assertEquals(1, page.getTotalCount());
 	}
 
+	private void _testGetPlacedOrderWithPlacedOrderBillingAddress()
+		throws Exception {
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		PlacedOrderResource placedOrderResource = PlacedOrderResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "placedOrderBillingAddress"
+		).build();
+
+		PlacedOrderAddress placedOrderAddress = _addPlacedOrderAddress();
+
+		PlacedOrder placedOrder = randomPlacedOrder();
+
+		placedOrder.setPlacedOrderBillingAddressId(placedOrderAddress.getId());
+
+		PlacedOrder postPlacedOrder = _addCommerceOrder(placedOrder);
+
+		PlacedOrder getPlacedOrder = placedOrderResource.getPlacedOrder(
+			postPlacedOrder.getId());
+
+		PlacedOrderAddress getPlacedOrderBillingAddress =
+			getPlacedOrder.getPlacedOrderBillingAddress();
+
+		Assert.assertNotNull(getPlacedOrderBillingAddress);
+		Assert.assertEquals(
+			getPlacedOrderBillingAddress.getExternalReferenceCode(),
+			placedOrderAddress.getExternalReferenceCode());
+		Assert.assertEquals(
+			getPlacedOrderBillingAddress.getId(), placedOrderAddress.getId());
+	}
+
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@DeleteAfterTestRun
+	private final List<Address> _addresses = new ArrayList<>();
+
+	@Inject
+	private AddressLocalService _addressLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
@@ -457,9 +572,24 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	@Inject
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
+	@DeleteAfterTestRun
+	private Country _country;
+
+	@Inject
+	private CountryLocalService _countryLocalService;
+
+	@DeleteAfterTestRun
+	private Region _region;
+
+	@Inject
+	private RegionLocalService _regionLocalService;
+
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

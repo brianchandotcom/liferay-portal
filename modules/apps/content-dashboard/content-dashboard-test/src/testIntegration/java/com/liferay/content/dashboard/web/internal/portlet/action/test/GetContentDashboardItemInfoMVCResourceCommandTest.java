@@ -220,20 +220,19 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList =
-				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
+		List<ContentDashboardItem.SpecificInformation<?>> specificInformations =
+			contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
-			String.valueOf(specificInformationList), 7,
-			specificInformationList.size());
+			String.valueOf(specificInformations), 7,
+			specificInformations.size());
 
 		JSONArray specificFieldsJSONArray = jsonObject.getJSONArray(
 			"specificFields");
 
-		for (int i = 0; i < specificInformationList.size(); i++) {
+		for (int i = 0; i < specificInformations.size(); i++) {
 			ContentDashboardItem.SpecificInformation<?> specificInformation =
-				specificInformationList.get(i);
+				specificInformations.get(i);
 
 			JSONObject specificFieldJSONObject =
 				specificFieldsJSONArray.getJSONObject(i);

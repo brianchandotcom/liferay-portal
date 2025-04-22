@@ -632,19 +632,17 @@ public class JournalArticleContentDashboardItemTest {
 			_contentDashboardItemFactory.create(
 				journalArticle.getResourcePrimKey());
 
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList =
-				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
+		List<ContentDashboardItem.SpecificInformation<?>> specificInformations =
+			contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
-			specificInformationList.toString(), 3,
-			specificInformationList.size());
+			specificInformations.toString(), 3, specificInformations.size());
 
 		ContentDashboardItem.SpecificInformation<?>
 			displayDateSpecificInformation = null;
 
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
+				specificInformations) {
 
 			if (Objects.equals(specificInformation.getKey(), "display-date")) {
 				displayDateSpecificInformation = specificInformation;
@@ -664,7 +662,7 @@ public class JournalArticleContentDashboardItemTest {
 			expirationDateSpecificInformation = null;
 
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
+				specificInformations) {
 
 			if (Objects.equals(
 					specificInformation.getKey(), "expiration-date")) {
@@ -686,7 +684,7 @@ public class JournalArticleContentDashboardItemTest {
 			reviewDateSpecificInformation = null;
 
 		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
+				specificInformations) {
 
 			if (Objects.equals(specificInformation.getKey(), "review-date")) {
 				reviewDateSpecificInformation = specificInformation;

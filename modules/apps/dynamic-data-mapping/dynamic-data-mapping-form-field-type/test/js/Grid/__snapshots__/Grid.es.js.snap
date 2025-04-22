@@ -81,13 +81,12 @@ exports[`Grid has a label 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -176,17 +175,14 @@ exports[`Grid has a tip 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
-      <div
-        id="undefined_fieldHelp"
-      >
+      <div>
         Type something
       </div>
     </div>
@@ -276,13 +272,12 @@ exports[`Grid has an id 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="Id_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="Id_fieldError"
       />
     </div>
   </div>
@@ -362,13 +357,12 @@ exports[`Grid is not editable 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -452,13 +446,12 @@ exports[`Grid is not required 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -546,13 +539,12 @@ exports[`Grid renders Label if showLabel is true 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -668,13 +660,12 @@ exports[`Grid renders columns 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -730,13 +721,12 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -782,13 +772,12 @@ exports[`Grid renders no rows when row comes empty 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -907,13 +896,12 @@ exports[`Grid renders rows 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>

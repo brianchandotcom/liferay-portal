@@ -58,13 +58,12 @@ exports[`Field Color Picker renders field disabled 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="colorPicker_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="colorPicker_fieldError"
       />
     </div>
   </div>
@@ -127,17 +126,14 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="colorPicker_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="colorPicker_fieldError"
       />
-      <div
-        id="colorPicker_fieldHelp"
-      >
+      <div>
         Helptext
       </div>
     </div>
@@ -212,17 +208,14 @@ exports[`Field Color Picker renders field with label 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="colorPicker_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="colorPicker_fieldError"
       />
-      <div
-        id="colorPicker_fieldHelp"
-      >
+      <div>
         Helptext
       </div>
     </div>

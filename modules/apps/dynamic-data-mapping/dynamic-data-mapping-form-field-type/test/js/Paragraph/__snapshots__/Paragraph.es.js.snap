@@ -21,13 +21,12 @@ exports[`Field Paragraph has a key 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
   </div>
@@ -60,13 +59,12 @@ exports[`Field Paragraph has a label 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
     <span
@@ -100,13 +98,12 @@ exports[`Field Paragraph has a placeholder 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
   </div>
@@ -134,13 +131,12 @@ exports[`Field Paragraph has a value 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
   </div>
@@ -168,13 +164,12 @@ exports[`Field Paragraph has an id 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="Id_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="Id_fieldError"
       />
     </div>
   </div>
@@ -202,13 +197,12 @@ exports[`Field Paragraph is not required 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
   </div>
@@ -236,13 +230,12 @@ exports[`Field Paragraph is readOnly 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
   </div>
@@ -275,13 +268,12 @@ exports[`Field Paragraph renders Label if showLabel is true 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="textField_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="textField_fieldError"
       />
     </div>
     <span

@@ -59,13 +59,12 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
         value="false"
       />
       <div
-        aria-hidden="true"
-        class="form-feedback-group lfr-de__field-feedback"
+        class="form-feedback-group field-feedback"
+        id="enableValidation_fieldFeedback"
       >
         <div
           aria-live="assertive"
           class="form-feedback-item"
-          id="enableValidation_fieldError"
         />
       </div>
     </div>

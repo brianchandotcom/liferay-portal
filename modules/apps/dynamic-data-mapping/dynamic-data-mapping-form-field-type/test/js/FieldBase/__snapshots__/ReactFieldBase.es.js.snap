@@ -34,13 +34,12 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -65,13 +64,12 @@ exports[`ReactFieldBase does not render the label if showLabel is false 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -101,13 +99,12 @@ exports[`ReactFieldBase renders the FieldBase with contentRenderer 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>
@@ -126,17 +123,14 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
-      <div
-        id="undefined_fieldHelp"
-      >
+      <div>
         Type something!
       </div>
     </div>
@@ -162,13 +156,12 @@ exports[`ReactFieldBase renders the FieldBase with id 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="Id_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="Id_fieldError"
       />
     </div>
   </div>
@@ -192,13 +185,12 @@ exports[`ReactFieldBase renders the FieldBase with label 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -239,13 +231,12 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -292,13 +283,12 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
     <span
@@ -323,13 +313,12 @@ exports[`ReactFieldBase renders the default markup 1`] = `
       value="false"
     />
     <div
-      aria-hidden="true"
-      class="form-feedback-group lfr-de__field-feedback"
+      class="form-feedback-group field-feedback"
+      id="undefined_fieldFeedback"
     >
       <div
         aria-live="assertive"
         class="form-feedback-item"
-        id="undefined_fieldError"
       />
     </div>
   </div>

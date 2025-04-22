@@ -296,6 +296,11 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
+		if (serviceContext.getModelPermissions() != null) {
+			_resourceLocalService.updateModelResources(
+				siteNavigationMenu, serviceContext);
+		}
+
 		if (Objects.equals(siteNavigationMenu.getName(), name)) {
 			return siteNavigationMenu;
 		}

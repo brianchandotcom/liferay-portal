@@ -801,6 +801,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			siteNavigationMenu.getGroupId(), contextHttpServletRequest, null
+		).permissions(
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), navigationMenu.getPermissions(),
+				GetterUtil.getLong(navigationMenu.getId()),
+				SiteNavigationMenu.class.getName(), _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService)
 		).build();
 
 		NavigationMenu.NavigationType navigationType =

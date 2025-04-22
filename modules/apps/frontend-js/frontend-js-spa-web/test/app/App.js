@@ -17,7 +17,6 @@ import {
 	getNodeOffset,
 	getUrlPathWithoutHash,
 } from '../../src/main/resources/META-INF/resources/util/utils';
-
 class StubScreen extends Screen {}
 StubScreen.prototype.activate = jest.fn();
 StubScreen.prototype.beforeDeactivate = jest.fn();
@@ -2015,7 +2014,7 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('navigates cancelling navigation to multiple paths after navigation is scheduled to keep only the last one', (done) => {
+	it('navigates cancelling navigation to multiple paths after navigation is scheduled to keep only the last one', (done) => {
 		const app = (this.app = new App());
 
 		class TestScreen extends Screen {
@@ -2027,7 +2026,7 @@ describe('App', function () {
 			}
 
 			evaluateScripts(surfaces) {
-				expect(app.scheduledNavigationEvent).toBeTruthy();
+				expect(app.isNavigationPending).toBeTruthy();
 
 				return super.evaluateScripts(surfaces);
 			}
@@ -2042,62 +2041,72 @@ describe('App', function () {
 			}
 
 			evaluateScripts(surfaces) {
-				expect(app.scheduledNavigationEvent).toBeTruthy();
+				expect(app.isNavigationPending).toBeTruthy();
 
 				return super.evaluateScripts(surfaces);
 			}
 		}
 
+		const startNavigateStub = jest.fn();
+		const endNavigateStub = jest.fn();
+		this.app.stopPendingNavigate_ = jest.fn();
+
+		this.app.on('startNavigate', startNavigateStub);
+		this.app.on('endNavigate', endNavigateStub);
+
 		this.app.addRoutes(new Route('/path1', TestScreen));
 		this.app.addRoutes(new Route('/path2', TestScreen2));
 		this.app.addRoutes(new Route('/path3', TestScreen2));
 
 		this.app.navigate('/path1');
+		this.app.navigate('/path2');
 
-		this.app.on('endNavigate', (event) => {
-			if (event.path === '/path3') {
-				expect(this.app.scheduledNavigationEvent).toBeFalsy();
-				expect(window.location.pathname).toBe('/path3');
-				done();
-			}
+		this.app.navigate('/path1').then(() => {
+			expect(startNavigateStub).toHaveBeenCalledTimes(3);
+			expect(endNavigateStub).toHaveBeenCalledTimes(3);
+			expect(this.app.stopPendingNavigate_).toHaveBeenCalledTimes(3);
+
+			expect(this.app.isNavigationPending).toBeFalsy();
+
+			done();
 		});
 	});
 
-	it.skip('navigates cancelling navigation to multiple paths when navigation strategy is setted up to be immediate', (done) => {
+	it('navigates cancelling previous navigation when navigation is to the same path', (done) => {
 		this.app = new App();
 
 		class TestScreen extends Screen {
 			load(path) {
-				userEvent.click(enterDocumentLinkElement('/path2'));
+				userEvent.click(enterDocumentLinkElement('/path1'));
 				exitDocumentLinkElement();
 
 				return super.load(path);
 			}
 		}
 
-		class TestScreen2 extends Screen {
-			load(path) {
-				userEvent.click(enterDocumentLinkElement('/path3'));
-				exitDocumentLinkElement();
+		const startNavigateStub = jest.fn();
+		const endNavigateStub = jest.fn();
+		this.app.stopPendingNavigate_ = jest.fn();
 
-				return super.load(path);
-			}
-		}
+		this.app.on('startNavigate', startNavigateStub);
+		this.app.on('endNavigate', endNavigateStub);
 
 		this.app.addRoutes(new Route('/path1', TestScreen));
-		this.app.addRoutes(new Route('/path2', TestScreen2));
-		this.app.addRoutes(new Route('/path3', TestScreen2));
 
 		this.app.navigate('/path1');
+		this.app.navigate('/path1');
+		this.app.navigate('/path1');
+		this.app.navigate('/path1');
 
-		expect(this.app.scheduledNavigationEvent).toBeFalsy();
+		this.app.navigate('/path1').then(() => {
+			expect(startNavigateStub).toHaveBeenCalledTimes(1);
+			expect(endNavigateStub).toHaveBeenCalledTimes(1);
 
-		this.app.on('endNavigate', (event) => {
-			if (event.path === '/path3') {
-				expect(this.app.scheduledNavigationEvent).toBeFalsy();
-				expect(window.location.pathname).toBe('/path3');
-				done();
-			}
+			expect(this.app.stopPendingNavigate_).toHaveBeenCalledTimes(1);
+
+			expect(this.app.isNavigationPending).toBeFalsy();
+
+			done();
 		});
 	});
 

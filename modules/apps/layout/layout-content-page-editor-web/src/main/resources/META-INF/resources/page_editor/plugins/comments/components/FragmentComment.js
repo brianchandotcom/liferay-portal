@@ -164,7 +164,7 @@ export default function FragmentComment({
 					/>
 				)}
 
-				{Liferay.ThemeDisplay.getUserId() === author.userId && (
+				{String(Liferay.ThemeDisplay.getUserId()) === author.userId && (
 					<ClayDropDown
 						active={dropDownActive}
 						menuElementAttrs={{

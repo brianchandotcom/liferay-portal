@@ -18,6 +18,9 @@ export class EditVirtualInstancePage {
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 	readonly virtualHostField: Locator;
+	readonly screenNameField: Locator;
+	readonly emailAddressField: Locator;
+	readonly passwordField: Locator;
 
 	constructor(page: Page) {
 		this.activeToggle = page.getByText('Active');
@@ -31,6 +34,9 @@ export class EditVirtualInstancePage {
 			'Your request completed successfully'
 		);
 		this.virtualHostField = this.page.getByLabel('Virtual Host');
+		this.screenNameField = page.getByLabel('Screen Name');
+		this.emailAddressField = page.getByLabel('Email Address');
+		this.passwordField = page.getByLabel('Password');
 	}
 
 	async editVirtualInstance(
@@ -64,6 +70,27 @@ export class EditVirtualInstancePage {
 		await this.saveButton.click();
 		await expect(await this.successMessage).toBeVisible();
 		await this.page.getByLabel('Close').click();
+	}
+
+	async checkEditVirtualInstanceFields(webId: string) {
+		await this.goto(webId);
+
+		// ID field only exists when editing a virtual instance, use it to
+		// verify the page has properly rendered and is ready for editing
+
+		await this.idField.waitFor();
+
+		await expect(this.activeToggle).toBeVisible;
+
+		await expect(this.mailDomainField).toBeVisible;
+
+		await expect(this.maxUsersField).toBeVisible;
+
+		await expect(this.virtualHostField).toBeVisible;
+
+		await expect(this.screenNameField).not.toBeVisible;
+		await expect(this.emailAddressField).not.toBeVisible;
+		await expect(this.passwordField).not.toBeVisible;
 	}
 
 	async goto(webId: string) {

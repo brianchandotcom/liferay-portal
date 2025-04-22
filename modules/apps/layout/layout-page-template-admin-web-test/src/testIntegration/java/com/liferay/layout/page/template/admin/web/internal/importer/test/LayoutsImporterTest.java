@@ -501,102 +501,29 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPD-53905")
 	public void testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField()
 		throws Exception {
 
-		JSONObject configurationJSONObject = JSONUtil.put(
-			"fieldSets",
+		_testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField(
 			JSONUtil.put(
-				JSONUtil.put(
-					"fields",
-					JSONUtil.put(
-						JSONUtil.put(
-							"label", RandomTestUtil.randomString()
-						).put(
-							"name", "itemSelector"
-						).put(
-							"type", "itemSelector"
-						).put(
-							"typeOptions",
-							JSONUtil.put("enableSelectTemplate", Boolean.FALSE)
-						)))));
+				"className", FileEntry.class.getName()
+			).put(
+				"classNameId", _portal.getClassNameId(FileEntry.class.getName())
+			).put(
+				"classTypeId", "0"
+			).put(
+				"itemSubtype", "Basic Document"
+			).put(
+				"itemType", "Document"
+			).put(
+				"title", RandomTestUtil.randomString()
+			).put(
+				"type", InfoItemItemSelectorReturnType.class.getName()
+			));
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			configurationJSONObject.toString(), RandomTestUtil.randomString(),
-			_serviceContext1);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry();
-
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
-		JSONObject freeMarkerFragmentEntryProcessorJSONObject = JSONUtil.put(
-			"className", FileEntry.class.getName()
-		).put(
-			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
-		).put(
-			"classTypeId", "0"
-		).put(
-			"itemSubtype", "Basic Document"
-		).put(
-			"itemType", "Document"
-		).put(
-			"title", RandomTestUtil.randomString()
-		).put(
-			"type", InfoItemItemSelectorReturnType.class.getName()
-		);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getConfiguration(),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"itemSelector",
-						freeMarkerFragmentEntryProcessorJSONObject)
-				).toString(),
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(), _serviceContext1);
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, null, 0, segmentsExperienceId);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
-			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
-			LayoutPageTemplateEntryTypeConstants.BASIC);
-
-		FragmentEntry curFragmentEntry = _addFragmentEntry(
-			fragmentEntry, _serviceContext2);
-
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
-				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
-
-		_assertLayoutPageTemplateEntry(
-			configurationJSONObject,
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"itemSelector",
-					freeMarkerFragmentEntryProcessorJSONObject)),
-			curFragmentEntry,
-			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
+		_testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField(
+			_jsonFactory.createJSONObject());
 	}
 
 	@Test
@@ -2000,6 +1927,90 @@ public class LayoutsImporterTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void
+			_testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField(
+				JSONObject freeMarkerFragmentEntryProcessorJSONObject)
+		throws Exception {
+
+		JSONObject configurationJSONObject = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"label", RandomTestUtil.randomString()
+						).put(
+							"name", "itemSelector"
+						).put(
+							"type", "itemSelector"
+						).put(
+							"typeOptions",
+							JSONUtil.put("enableSelectTemplate", Boolean.FALSE)
+						)))));
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			configurationJSONObject.toString(), RandomTestUtil.randomString(),
+			_serviceContext1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"itemSelector",
+						freeMarkerFragmentEntryProcessorJSONObject)
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), _serviceContext1);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, draftLayout, null, 0, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		FragmentEntry curFragmentEntry = _addFragmentEntry(
+			fragmentEntry, _serviceContext2);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+		_assertLayoutPageTemplateEntry(
+			configurationJSONObject,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector",
+					freeMarkerFragmentEntryProcessorJSONObject)),
+			curFragmentEntry,
+			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 	}
 
 	private void _updateLayoutStyleBookEntryId(

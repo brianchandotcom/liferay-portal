@@ -64,8 +64,9 @@ public interface DepotEntryGroupRelLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the depot entry group rel local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DepotEntryGroupRelLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public DepotEntryGroupRel addDepotEntryGroupRel(
-		boolean ddmStructuresAvailable, long depotEntryId, long toGroupId,
-		boolean searchable);
+			boolean ddmStructuresAvailable, long depotEntryId, long toGroupId,
+			boolean searchable)
+		throws PortalException;
 
 	/**
 	 * Adds the depot entry group rel to the database. Also notifies the appropriate model listeners.
@@ -82,10 +83,12 @@ public interface DepotEntryGroupRelLocalService
 		DepotEntryGroupRel depotEntryGroupRel);
 
 	public DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId);
+			long depotEntryId, long toGroupId)
+		throws PortalException;
 
 	public DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId, boolean searchable);
+			long depotEntryId, long toGroupId, boolean searchable)
+		throws PortalException;
 
 	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
@@ -112,11 +115,13 @@ public interface DepotEntryGroupRelLocalService
 	 *
 	 * @param depotEntryGroupRel the depot entry group rel
 	 * @return the depot entry group rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public DepotEntryGroupRel deleteDepotEntryGroupRel(
-		DepotEntryGroupRel depotEntryGroupRel);
+			DepotEntryGroupRel depotEntryGroupRel)
+		throws PortalException;
 
 	/**
 	 * Deletes the depot entry group rel with the primary key from the database. Also notifies the appropriate model listeners.

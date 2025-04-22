@@ -33,11 +33,6 @@ export class LoginInstanceSettingsPage {
 	}
 
 	async resetLoginPrompt() {
-		await this.page
-			.getByRole('button', {
-				name: 'Actions',
-			})
-			.click();
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {

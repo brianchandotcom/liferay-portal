@@ -7,12 +7,12 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 
 import CreationModalContent, {
-	AssetLibray,
+	AssetLibrary,
 } from '../../components/modal/CreationModalContent';
 
 export type AssetData = {
 	action: 'createAsset';
-	assetLibraries: AssetLibray[];
+	assetLibraries: AssetLibrary[];
 	redirect: string;
 	title: string;
 };

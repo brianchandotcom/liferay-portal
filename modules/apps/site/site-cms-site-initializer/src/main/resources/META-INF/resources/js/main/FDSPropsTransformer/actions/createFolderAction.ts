@@ -8,12 +8,12 @@ import {sub} from 'frontend-js-web';
 
 import {postScopeScopeKeyObjectEntryFolder} from '../../../api/api';
 import CreationModalContent, {
-	AssetLibray,
+	AssetLibrary,
 } from '../../components/modal/CreationModalContent';
 
 export type FolderData = {
 	action: 'createFolder';
-	assetLibraries: AssetLibray[];
+	assetLibraries: AssetLibrary[];
 };
 
 export default function createFolderAction(
@@ -27,11 +27,11 @@ export default function createFolderAction(
 			CreationModalContent({
 				...data,
 				closeModal,
-				onSubmit: async ({groupId, name}) => {
+				onSubmit: async ({groupId, name: title}) => {
 					const {errorMessage, success} =
 						await postScopeScopeKeyObjectEntryFolder(
 							groupId,
-							name,
+							title,
 							additionalProps.parentObjectEntryFolderExternalReferenceCode
 						);
 
@@ -45,7 +45,7 @@ export default function createFolderAction(
 								Liferay.Language.get(
 									'x-was-created-successfully'
 								),
-								`<strong>${name}</strong>`
+								`<strong>${title}</strong>`
 							),
 							type: 'success',
 						});

@@ -15,14 +15,14 @@ import {SpaceData} from '../../FDSPropsTransformer/actions/createSpaceAction';
 import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 
-export type AssetLibray = {
+export type AssetLibrary = {
 	groupId: string;
 	name: string;
 };
 
 type Props = {
 	action: AssetData['action'] | FolderData['action'] | SpaceData['action'];
-	assetLibraries: AssetLibray[];
+	assetLibraries: AssetLibrary[];
 	closeModal: () => void;
 	onSubmit?: (
 		values: {

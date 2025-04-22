@@ -328,21 +328,28 @@ export class PagesAdminPage {
 		parent?: string;
 		template?: string;
 	}) {
+		let trigger: Locator;
 
 		// If no parent specified, just create from toolbar
 
 		if (!parent) {
-			await this.newButton.click();
+			trigger = this.newButton;
 		}
 
 		// If parent is specified, create child page
 
 		else {
-			this.page
+			trigger = this.page
 				.locator('li', {has: this.page.getByText(parent)})
-				.getByTitle('Add Child Page')
-				.click();
+				.getByTitle('Add Child Page');
 		}
+
+		await clickAndExpectToBeVisible({
+			target: this.page.locator('.sheet-title', {
+				hasText: 'Basic Templates',
+			}),
+			trigger,
+		});
 
 		// Select template and fill name
 

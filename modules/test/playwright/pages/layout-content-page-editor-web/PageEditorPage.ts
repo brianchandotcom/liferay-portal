@@ -1424,7 +1424,9 @@ export class PageEditorPage {
 
 			if (hasMenuBar) {
 				await clickAndExpectToBeVisible({
-					target: iframe.locator('.sheet-title').getByText(entity),
+					target: iframe
+						.locator('.sheet-title')
+						.getByText(entity, {exact: true}),
 					trigger: iframe.getByRole('menuitem', {name: entity}),
 				});
 			}

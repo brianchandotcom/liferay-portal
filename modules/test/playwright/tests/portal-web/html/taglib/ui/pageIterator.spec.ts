@@ -53,11 +53,51 @@ test(
 				.waitFor({state: 'visible'});
 		});
 
+		await test.step('Configure search pagination', async () => {
+			await page
+				.locator('header')
+				.filter({hasText: 'Search Results'})
+				.click();
+
+			const searchResultsOptionsButton = page
+				.locator('header')
+				.filter({hasText: 'Search Results'})
+				.getByRole('button', {name: 'Options'});
+
+			await searchResultsOptionsButton.click();
+
+			await searchResultsOptionsButton.isVisible();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Configuration'})
+				.isVisible();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Configuration'})
+				.click();
+
+			const configurationIframe = page.frameLocator(
+				'iframe[title="\\a \\9 \\9 \\9 \\9 \\9 Search Results\\a \\9 \\9 \\9 \\9  - Configuration"]'
+			);
+
+			await configurationIframe
+				.getByLabel('Pagination Delta', {exact: true})
+				.fill('5');
+
+			await configurationIframe
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await page.press('body', 'Escape');
+
+			await page.reload();
+		});
+
 		await test.step('Check pagination button is selected and contains option role', async () => {
 			await page.getByLabel('Items per Page').click();
 
 			const paginationFourSelection = page.getByRole('option', {
-				name: '4  Entries per Page',
+				name: '20  Entries per Page',
 			});
 
 			await paginationFourSelection.click();
@@ -67,7 +107,7 @@ test(
 			await pagination.waitFor({state: 'visible'});
 
 			const paginationLinkSelected = page.locator(
-				'a[aria-selected="true"][role="option"][id="4"]'
+				'a[aria-selected="true"][role="option"][id="20"]'
 			);
 
 			await expect(paginationLinkSelected).toBeHidden();
@@ -89,6 +129,10 @@ test(
 			const paginationTranslated = page.getByLabel('Paginación');
 
 			await expect(paginationTranslated).toBeVisible();
+		});
+
+		await test.step('Go back to english site', async () => {
+			await page.goto('/en/web/guest');
 		});
 	}
 );

@@ -11,6 +11,10 @@ metadata:
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
+    {{- with .Values.autoscaling.behavior }}
+    behavior:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     maxReplicas: {{ .Values.autoscaling.maxReplicas }}
     {{- with .Values.autoscaling.metrics }}
     metrics:

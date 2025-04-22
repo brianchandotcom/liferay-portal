@@ -21,6 +21,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.info.item.ObjectEntryInfoItemFields;
+import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -234,18 +235,15 @@ public class ObjectEntryInfoItemFormProviderUtil {
 								StringPool.CLOSE_PARENTHESIS));
 					}
 
-					String namespace = StringBundler.concat(
-						ObjectRelationship.class.getSimpleName(),
-						StringPool.POUND, parentObjectDefinition.getName(),
-						StringPool.POUND, objectRelationship.getName());
-
 					unsafeConsumer.accept(
 						_getInfoFieldSet(
 							true,
 							FeatureFlagManagerUtil.isEnabled(
 								objectDefinition.getCompanyId(), "LPD-21926"),
 							fieldSetLabelMap, objectRelationship.getName(),
-							namespace, parentObjectDefinition,
+							ObjectEntryInfoItemUtil.getInfoFieldNamespace(
+								parentObjectDefinition, objectRelationship),
+							parentObjectDefinition,
 							objectDefinitionLocalService,
 							objectFieldInfoFieldConverter,
 							objectFieldLocalService,

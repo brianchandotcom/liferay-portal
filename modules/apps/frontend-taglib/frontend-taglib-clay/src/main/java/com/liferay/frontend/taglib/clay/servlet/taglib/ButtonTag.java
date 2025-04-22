@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.TagResourceBundleUtil;
@@ -275,8 +276,10 @@ public class ButtonTag extends BaseContainerTag {
 
 	protected void writeLabel(JspWriter jspWriter) throws IOException {
 		jspWriter.write(
-			LanguageUtil.get(
-				TagResourceBundleUtil.getResourceBundle(pageContext), _label));
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_label)));
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:button:";

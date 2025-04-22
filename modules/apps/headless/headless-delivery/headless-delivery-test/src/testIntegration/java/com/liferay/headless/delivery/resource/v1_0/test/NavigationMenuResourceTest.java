@@ -323,6 +323,14 @@ public class NavigationMenuResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutNavigationMenu() throws Exception {
+		super.testPutNavigationMenu();
+
+		_testPutSiteNavigationMenuWithPermissions();
+	}
+
+	@Override
 	protected boolean equals(
 		NavigationMenu navigationMenu1, NavigationMenu navigationMenu2) {
 
@@ -1085,6 +1093,46 @@ public class NavigationMenuResourceTest
 			_getPermissions(
 				TestPropsValues.getCompanyId(), testGroup.getGroupId(),
 				postNavigationMenu.getId(), SiteNavigationMenu.class.getName());
+
+		ArrayUtil.exists(
+			permissionsArray,
+			permission ->
+				Objects.equals(
+					permission.getRoleName(), serviceBuilderRole1.getName()) &&
+				(permission.getActionIds().length == 1) &&
+				Objects.equals(permission.getActionIds()[0], "VIEW"));
+	}
+
+	private void _testPutSiteNavigationMenuWithPermissions() throws Exception {
+		NavigationMenu postNavigationMenu =
+			testPutNavigationMenu_addNavigationMenu();
+
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		Role serviceBuilderRole1 = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		Permission permission1 = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.VIEW};
+				roleExternalReferenceCode =
+					serviceBuilderRole1.getExternalReferenceCode();
+				roleName = serviceBuilderRole1.getName();
+				roleType = RoleConstants.getTypeLabel(
+					serviceBuilderRole1.getType());
+			}
+		};
+
+		randomNavigationMenu.setPermissions(new Permission[] {permission1});
+
+		NavigationMenu putNavigationMenu =
+			navigationMenuResource.putNavigationMenu(
+				postNavigationMenu.getId(), randomNavigationMenu);
+
+		com.liferay.portal.vulcan.permission.Permission[] permissionsArray =
+			_getPermissions(
+				TestPropsValues.getCompanyId(), testGroup.getGroupId(),
+				putNavigationMenu.getId(), SiteNavigationMenu.class.getName());
 
 		ArrayUtil.exists(
 			permissionsArray,

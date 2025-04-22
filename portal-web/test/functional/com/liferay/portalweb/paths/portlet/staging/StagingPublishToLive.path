@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>MODAL_TITLE</td>
-	<td>//div[contains(@class,'modal-header')]//div[contains(@class,'modal-title')]</td>
+	<td>//div[contains(@class,'modal-header')]//h1[contains(@class,'modal-title')]</td>
 	<td></td>
 </tr>
 <tr>

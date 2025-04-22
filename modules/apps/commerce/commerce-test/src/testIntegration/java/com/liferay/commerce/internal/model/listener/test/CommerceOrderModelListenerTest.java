@@ -19,9 +19,12 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.payment.test.util.TestCommercePaymentMethod;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -230,9 +233,7 @@ public class CommerceOrderModelListenerTest {
 		Assert.assertEquals(
 			commerceAddress.getCommerceAddressId(),
 			commerceOrder.getBillingAddressId());
-		Assert.assertEquals(
-			_commerceShippingMethod.getCommerceShippingMethodId(),
-			commerceOrder.getCommerceShippingMethodId());
+		Assert.assertEquals(0, commerceOrder.getCommerceShippingMethodId());
 		Assert.assertEquals(
 			_commerceDeliveryTerm.getCommerceTermEntryId(),
 			commerceOrder.getDeliveryCommerceTermEntryId());
@@ -245,6 +246,22 @@ public class CommerceOrderModelListenerTest {
 		Assert.assertEquals(
 			_commercePaymentMethodGroupRel.getPaymentIntegrationKey(),
 			commerceOrder.getCommercePaymentMethodKey());
+		Assert.assertEquals(
+			StringPool.BLANK, commerceOrder.getShippingOptionName());
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			_group.getGroupId(), BigDecimal.valueOf(34.90));
+
+		CommerceTestUtil.addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE);
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			_commerceShippingMethod.getCommerceShippingMethodId(),
+			commerceOrder.getCommerceShippingMethodId());
 		Assert.assertEquals(
 			_commerceShippingFixedOption.getKey(),
 			commerceOrder.getShippingOptionName());
@@ -263,6 +280,10 @@ public class CommerceOrderModelListenerTest {
 
 	private CommerceCurrency _commerceCurrency;
 	private CommerceTermEntry _commerceDeliveryTerm;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
 
 	@Inject

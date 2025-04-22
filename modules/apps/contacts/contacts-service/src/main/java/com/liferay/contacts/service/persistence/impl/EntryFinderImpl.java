@@ -82,16 +82,16 @@ public class EntryFinderImpl
 	public List<BaseModel<?>> findByKeywords(
 		long companyId, long userId, String keywords, int start, int end) {
 
-		List<BaseModel<?>> models = new ArrayList<>();
+		List<BaseModel<?>> baseModels = new ArrayList<>();
 
 		if (Validator.isNotNull(keywords)) {
-			models.addAll(
+			baseModels.addAll(
 				_userLocalService.search(
 					companyId, keywords, keywords, keywords, keywords, keywords,
 					0, null, false, start, end,
 					UserLastNameComparator.getInstance(true)));
 
-			if (models.size() < (end - start)) {
+			if (baseModels.size() < (end - start)) {
 				int count = _userLocalService.searchCount(
 					companyId, keywords, keywords, keywords, keywords, keywords,
 					0, null, false);
@@ -102,29 +102,29 @@ public class EntryFinderImpl
 				String[] fullNames = _customSQL.keywords(keywords);
 				String[] emailAddresses = _customSQL.keywords(keywords);
 
-				models.addAll(
+				baseModels.addAll(
 					findByU_FN_EA(
 						userId, fullNames, emailAddresses, start, end));
 			}
 		}
 		else {
-			models.addAll(
+			baseModels.addAll(
 				_userLocalService.getUsers(
 					companyId, WorkflowConstants.STATUS_APPROVED, start, end,
 					UserLastNameComparator.getInstance(true)));
 
-			if (models.size() < (end - start)) {
+			if (baseModels.size() < (end - start)) {
 				int count = _userLocalService.getUsersCount(
 					companyId, WorkflowConstants.STATUS_APPROVED);
 
 				start -= count;
 				end -= count;
 
-				models.addAll(EntryUtil.findByUserId(userId, start, end));
+				baseModels.addAll(EntryUtil.findByUserId(userId, start, end));
 			}
 		}
 
-		return models;
+		return baseModels;
 	}
 
 	@Override

@@ -839,7 +839,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		if (filterBy.equals(ContactsConstants.FILTER_BY_DEFAULT) &&
 			!portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
-			List<BaseModel<?>> contacts =
+			List<BaseModel<?>> baseModels =
 				entryLocalService.searchUsersAndContacts(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					keywords, start, end);
@@ -850,16 +850,16 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 			jsonObject.put("count", contactsCount);
 
-			for (BaseModel<?> contact : contacts) {
+			for (BaseModel<?> baseModel : baseModels) {
 				JSONObject contactJSONObject = null;
 
-				if (contact instanceof User) {
+				if (baseModel instanceof User) {
 					contactJSONObject = _getUserJSONObject(
-						portletResponse, themeDisplay, (User)contact);
+						portletResponse, themeDisplay, (User)baseModel);
 				}
 				else {
 					contactJSONObject = _getEntryJSONObject(
-						portletResponse, themeDisplay, (Entry)contact,
+						portletResponse, themeDisplay, (Entry)baseModel,
 						redirect);
 				}
 
@@ -933,7 +933,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				params.put("usersGroups", ContactsUtil.getGroupId(filterBy));
 			}
 
-			List<User> usersList = null;
+			List<User> users1 = null;
 
 			if (filterBy.equals(ContactsConstants.FILTER_BY_ADMINS)) {
 				Role siteAdministratorRole = roleLocalService.getRole(
@@ -945,9 +945,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 						group.getGroupId(), siteAdministratorRole.getRoleId()
 					});
 
-				Set<User> users = new HashSet<>();
+				Set<User> users2 = new HashSet<>();
 
-				users.addAll(
+				users2.addAll(
 					userLocalService.search(
 						themeDisplay.getCompanyId(), keywords,
 						WorkflowConstants.STATUS_APPROVED, params,
@@ -961,17 +961,16 @@ public class ContactsCenterPortlet extends MVCPortlet {
 					"userGroupRole",
 					new Long[] {group.getGroupId(), siteOwnerRole.getRoleId()});
 
-				users.addAll(
+				users2.addAll(
 					userLocalService.search(
 						themeDisplay.getCompanyId(), keywords,
 						WorkflowConstants.STATUS_APPROVED, params,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 						(OrderByComparator)null));
 
-				usersList = new ArrayList<>(users);
+				users1 = new ArrayList<>(users2);
 
-				ListUtil.sort(
-					usersList, UserLastNameComparator.getInstance(true));
+				ListUtil.sort(users1, UserLastNameComparator.getInstance(true));
 			}
 			else {
 				int usersCount = userLocalService.searchCount(
@@ -980,13 +979,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 				jsonObject.put("count", usersCount);
 
-				usersList = userLocalService.search(
+				users1 = userLocalService.search(
 					themeDisplay.getCompanyId(), keywords,
 					WorkflowConstants.STATUS_APPROVED, params, start, end,
 					UserLastNameComparator.getInstance(true));
 			}
 
-			for (User user : usersList) {
+			for (User user : users1) {
 				jsonArray.put(
 					_getUserJSONObject(portletResponse, themeDisplay, user));
 			}

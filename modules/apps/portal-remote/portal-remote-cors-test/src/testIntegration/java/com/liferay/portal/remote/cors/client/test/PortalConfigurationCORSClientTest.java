@@ -220,7 +220,7 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	}
 
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
-		"Liferay.authToken\\s*=\\s*(['\"])(((?!\\1).)*)\\1;");
+		"authToken:\\s*(['\"])(((?!\\1).)*)\\1,");
 
 	private String _pAuth;
 

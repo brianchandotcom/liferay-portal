@@ -675,7 +675,7 @@ public abstract class BaseClientTestCase {
 
 	private static Set<String> _originalRestrictedHeaderSet;
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
-		"Liferay.authToken\\s*=\\s*(['\"])(((?!\\1).)*)\\1;");
+		"authToken:\\s*(['\"])(((?!\\1).)*)\\1,");
 	private static Set<String> _restrictedHeaderSet;
 
 	private BundleActivator _bundleActivator;

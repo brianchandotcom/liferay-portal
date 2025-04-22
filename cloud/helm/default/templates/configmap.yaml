@@ -16,9 +16,9 @@ data:
         {{- if .Values.portalProperties }}
         {{- .Values.portalProperties | nindent 8 }}
         {{- end }}
-        {{- range $i := .Values.dependencies }}
-        {{- if $i.portalProperties }}
-        {{- $i.portalProperties | nindent 8 }}
+        {{- range $k, $v := .Values.dependencies }}
+        {{- if $v.portalProperties }}
+        {{- $v.portalProperties | nindent 8 }}
         {{- end }}
         {{- end }}
         configuration.override.com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration_blacklistBundleSymbolicNames=[\
@@ -27,8 +27,8 @@ data:
             {{ $PREFIX }}{{ $bundle | quote }}\
             {{- $PREFIX = "," -}}
             {{- end }}
-            {{- range $i := .Values.dependencies }}
-            {{- range $bundle := $i.portalBundleDenyList }}
+            {{- range $k, $v := .Values.dependencies }}
+            {{- range $bundle := $v.portalBundleDenyList }}
             {{ $PREFIX }}{{ $bundle | quote }}\
             {{- $PREFIX = "," -}}
             {{- end }}
@@ -40,8 +40,8 @@ data:
             {{ $PREFIX }}{{ $component | quote }}\
             {{- $PREFIX = "," }}
             {{- end }}
-            {{- range $i := .Values.dependencies }}
-            {{- range $component := $i.portalComponentDenyList }}
+            {{- range $k, $v := .Values.dependencies }}
+            {{- range $component := $v.portalComponentDenyList }}
             {{ $PREFIX }}{{ $component | quote }}\
             {{- $PREFIX = "," }}
             {{- end }}
@@ -61,7 +61,7 @@ data:
         include-and-override=portal-cloud.properties
     {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
     unicast.xml: |
-        {{- tpl (.Files.Get "resources/unicast.xml") . | nindent 8 }}
+        {{- tpl (.Files.Get "resources/unicast.xml") $ | nindent 8 }}
     {{- end }}
     {{- end }}
     {{- if .Values.configmap.data }}

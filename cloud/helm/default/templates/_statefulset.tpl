@@ -111,11 +111,13 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customInitContainers }}
-                {{- if $v.containerTemplate }}
-                {{- tpl $v.containerTemplate $statefulset | nindent 16 }}
+                {{- range $entry := $v }}
+                {{- if $entry.containerTemplate }}
+                {{- tpl $entry.containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
                 -   #
-                    {{- toYaml $v | nindent 18 }}
+                    {{- toYaml $entry | nindent 18 }}
+                {{- end }}
                 {{- end }}
                 {{- end }}
             {{- end }}

@@ -9,7 +9,7 @@ import React, {ReactElement, useEffect, useState} from 'react';
 import {
 	displayCreateSuccessToast,
 	displayEditSuccessToast,
-	displayErrorToast,
+	displaySystemErrorToast,
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
@@ -119,7 +119,7 @@ const EditCategoryPage = ({
 		catch (error) {
 			console.error(error);
 
-			displayErrorToast();
+			displaySystemErrorToast();
 		}
 	}
 
@@ -137,7 +137,7 @@ const EditCategoryPage = ({
 		catch (error) {
 			console.error(error);
 
-			displayErrorToast();
+			displaySystemErrorToast();
 		}
 
 		window.location.reload();

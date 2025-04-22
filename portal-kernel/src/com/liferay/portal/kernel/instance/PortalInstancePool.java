@@ -76,6 +76,17 @@ public class PortalInstancePool {
 		}
 	}
 
+	public static long[] getCompanyIdsBySQL(Connection connection) {
+		try {
+			return _getCompanyIdsBySQL(connection);
+		}
+		catch (SQLException sqlException) {
+			_log.error("Unable to get the company IDs by SQL", sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
+	}
+
 	public static long getDefaultCompanyId() {
 		if (_cacheEnabled) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
@@ -92,6 +103,18 @@ public class PortalInstancePool {
 
 		try {
 			return _getDefaultCompanyIdBySQL();
+		}
+		catch (SQLException sqlException) {
+			_log.error(
+				"Unable to get the default company ID by SQL", sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
+	}
+
+	public static long getDefaultCompanyIdBySQL(Connection connection) {
+		try {
+			return _getDefaultCompanyIdBySQL(connection);
 		}
 		catch (SQLException sqlException) {
 			_log.error(
@@ -156,6 +179,14 @@ public class PortalInstancePool {
 	}
 
 	private static long[] _getCompanyIdsBySQL() throws SQLException {
+		try (Connection connection = DataAccess.getConnection()) {
+			return _getCompanyIdsBySQL(connection);
+		}
+	}
+
+	private static long[] _getCompanyIdsBySQL(Connection connection)
+		throws SQLException {
+
 		List<Long> companyIds = new ArrayList<>();
 
 		long defaultCompanyId = _getDefaultCompanyIdBySQL();
@@ -164,8 +195,7 @@ public class PortalInstancePool {
 			companyIds.add(defaultCompanyId);
 		}
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -182,8 +212,15 @@ public class PortalInstancePool {
 	}
 
 	private static long _getDefaultCompanyIdBySQL() throws SQLException {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (Connection connection = DataAccess.getConnection()) {
+			return _getDefaultCompanyIdBySQL(connection);
+		}
+	}
+
+	private static long _getDefaultCompanyIdBySQL(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where webId = ?")) {
 
 			preparedStatement.setString(

@@ -5,8 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectDefinitionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -15,13 +15,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,22 +91,8 @@ public class StructureBuilderDisplayContext {
 			return null;
 		}
 
-		for (ObjectAction objectAction : objectDefinition.getObjectActions()) {
-			Map<String, Object> parameters =
-				(Map<String, Object>)objectAction.getParameters();
-
-			Object object = parameters.get("predefinedValues");
-
-			if (object == null) {
-				continue;
-			}
-
-			parameters.put(
-				"predefinedValues",
-				ListUtil.toList(
-					(ArrayList<LinkedHashMap>)object,
-					_jsonFactory::createJSONObject));
-		}
+		ObjectDefinitionUtil.prepareObjectDefinitionForExport(
+			_jsonFactory, objectDefinition);
 
 		try {
 			return _jsonFactory.createJSONObject(objectDefinition.toString());

@@ -15,6 +15,27 @@ interface ObjectDefinitionSetting {
 	value: string;
 }
 
+const getSpaceExternalReferenceCodes = (
+	objectDefinitionSettings: ObjectDefinitionSetting[]
+) => {
+	for (const objectDefinitionSetting of objectDefinitionSettings) {
+		if (
+			objectDefinitionSetting.name === 'acceptAllGroups' &&
+			objectDefinitionSetting.value
+		) {
+			return [];
+		}
+		else if (
+			objectDefinitionSetting.name ===
+			'acceptedGroupExternalReferenceCodes'
+		) {
+			return objectDefinitionSetting.value.split(',');
+		}
+	}
+
+	return [];
+};
+
 const StructureScopeRenderer = ({
 	itemData,
 }: {
@@ -33,27 +54,6 @@ const StructureScopeRenderer = ({
 
 			setSpaceName(space.name);
 		}
-	};
-
-	const getSpaceExternalReferenceCodes = (
-		objectDefinitionSettings: ObjectDefinitionSetting[]
-	) => {
-		for (const objectDefinitionSetting of objectDefinitionSettings) {
-			if (
-				objectDefinitionSetting.name === 'acceptAllGroups' &&
-				objectDefinitionSetting.value
-			) {
-				return [];
-			}
-			else if (
-				objectDefinitionSetting.name ===
-				'acceptedGroupExternalReferenceCodes'
-			) {
-				return objectDefinitionSetting.value.split(',');
-			}
-		}
-
-		return [];
 	};
 
 	const spaceExternalReferenceCodes = getSpaceExternalReferenceCodes(

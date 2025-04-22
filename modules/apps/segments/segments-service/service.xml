@@ -40,6 +40,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="SegmentsEntryId" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="segmentsEntryId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>

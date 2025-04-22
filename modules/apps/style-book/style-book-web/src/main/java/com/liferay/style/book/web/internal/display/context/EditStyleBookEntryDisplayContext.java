@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.StyleBookUtil;
@@ -104,7 +103,14 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"fragmentCollectionPreviewURL", _getFragmentCollectionPreviewURL()
+			"fragmentCollectionPreviewURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setParameter(
+				"styleBookEntryThemeId", _styleBookEntry.getThemeId()
+			).setResourceID(
+				"/style_book/preview_fragment_collection"
+			).buildString()
 		).put(
 			"frontendTokenDefinition", _getFrontendTokenDefinitionJSONObject()
 		).put(
@@ -270,29 +276,20 @@ public class EditStyleBookEntryDisplayContext {
 		);
 	}
 
-	private String _getFragmentCollectionPreviewURL() {
+	private String _getFragmentCollectionPreviewURL(
+		String fragmentCollectionKey, long groupId) {
+
 		return ResourceURLBuilder.createResourceURL(
 			_renderResponse
+		).setParameter(
+			"fragmentCollectionKey", fragmentCollectionKey
+		).setParameter(
+			"groupId", groupId
 		).setParameter(
 			"styleBookEntryThemeId", _styleBookEntry.getThemeId()
 		).setResourceID(
 			"/style_book/preview_fragment_collection"
 		).buildString();
-	}
-
-	private String _getFragmentCollectionPreviewURL(
-		String fragmentCollectionKey, long groupId) {
-
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			StyleBookPortletKeys.STYLE_BOOK);
-
-		String url = HttpComponentsUtil.addParameter(
-			_getFragmentCollectionPreviewURL(), portletNamespace + "groupId",
-			groupId);
-
-		return HttpComponentsUtil.addParameter(
-			url, portletNamespace + "fragmentCollectionKey",
-			fragmentCollectionKey);
 	}
 
 	private int _getFragmentCollectionsCount() {

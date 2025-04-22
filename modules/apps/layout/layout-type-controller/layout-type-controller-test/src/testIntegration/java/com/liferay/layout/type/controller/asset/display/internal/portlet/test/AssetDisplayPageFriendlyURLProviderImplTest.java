@@ -10,7 +10,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.friendly.url.test.util.FriendlyURLSeparatorConfigurationManagerTemporarySwapper;
+import com.liferay.friendly.url.test.util.configuration.manager.temporary.swapper.FriendlyURLSeparatorConfigurationManagerTemporarySwapper;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;

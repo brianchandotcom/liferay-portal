@@ -146,7 +146,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"source database before the migration",
 			"[WARN] Company name Liferay DXP already exists in the target " +
 				"database. You must set a different value in " +
-					"InsertPortalInstanceConfiguration.config.",
+					"ImportPortalInstanceConfiguration.config.",
 			"[WARN] Module com.liferay.asset.publisher.web is not present in " +
 				"the source database",
 			"[WARN] Module com.liferay.license.manager.web is not present in " +
@@ -156,10 +156,10 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			"[WARN] Table DDMTemplate is not present in the target database",
 			"[WARN] Virtual host localhost already exists in the target " +
 				"database. You must set a different value in " +
-					"InsertPortalInstanceConfiguration.config.",
+					"ImportPortalInstanceConfiguration.config.",
 			"[WARN] Web ID liferay.com already exists in the target " +
 				"database. You must set a different value in " +
-					"InsertPortalInstanceConfiguration.config."
+					"ImportPortalInstanceConfiguration.config."
 		};
 
 		_testValidate(

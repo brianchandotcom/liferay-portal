@@ -21,12 +21,12 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBPartitionExtractPortalInstanceOperationTest
+public class DBPartitionExportPortalInstanceOperationTest
 	extends BasePortalInstanceOperationTestCase {
 
 	@Override
 	public String getComponentName() {
-		return "ExtractPortalInstanceOperation";
+		return "ExportPortalInstanceOperation";
 	}
 
 	@FeatureFlag("LPD-11342")
@@ -34,10 +34,10 @@ public class DBPartitionExtractPortalInstanceOperationTest
 	public void testDeployConfigurationFileWithFF() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
-					"ExtractPortalInstanceOperation",
+					"ExportPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfigurationFile(_PID, "extractCompanyId=L\"0\"\n");
+			deployConfigurationFile(_PID, "exportCompanyId=L\"0\"\n");
 
 			assertLog(
 				logCapture, "Portal instance with company ID 0 does not exist");
@@ -53,7 +53,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 					"BasePortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfigurationFile(_PID, "extractCompanyId=L\"0\"\n");
+			deployConfigurationFile(_PID, "exportCompanyId=L\"0\"\n");
 
 			assertLogException(
 				logCapture, "Feature flag LPD-11342 is disabled");
@@ -70,13 +70,13 @@ public class DBPartitionExtractPortalInstanceOperationTest
 					PortalInstancePool.getDefaultCompanyId());
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
-					"ExtractPortalInstanceOperation",
+					"ExportPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"extractCompanyId", 0
+					"exportCompanyId", 0
 				).build());
 
 			assertLog(
@@ -99,7 +99,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"extractCompanyId", 0
+					"exportCompanyId", 0
 				).build());
 
 			assertLogException(
@@ -111,6 +111,6 @@ public class DBPartitionExtractPortalInstanceOperationTest
 
 	private static final String _PID =
 		"com.liferay.portal.instances.internal.configuration." +
-			"ExtractPortalInstanceConfiguration";
+			"ExportPortalInstanceConfiguration";
 
 }

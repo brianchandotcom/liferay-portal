@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration;
+import com.liferay.portal.instances.internal.configuration.ExportPortalInstanceConfiguration;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,16 +41,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mariano Álvaro Sáiz
  */
 @Component(
-	configurationPid = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",
+	configurationPid = "com.liferay.portal.instances.internal.configuration.ExportPortalInstanceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ExtractPortalInstanceOperation
-	extends BasePortalInstanceOperation {
+public class ExportPortalInstanceOperation extends BasePortalInstanceOperation {
 
 	@Override
 	public String getOperationCompletedMessage(long companyId) {
 		return "Portal instance with company ID " + companyId +
-			" extracted successfully";
+			" exported successfully";
 	}
 
 	@Activate
@@ -59,14 +58,14 @@ public class ExtractPortalInstanceOperation
 			() -> {
 				FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
-				ExtractPortalInstanceConfiguration
-					extractPortalInstanceConfiguration =
+				ExportPortalInstanceConfiguration
+					exportPortalInstanceConfiguration =
 						ConfigurableUtil.createConfigurable(
-							ExtractPortalInstanceConfiguration.class,
+							ExportPortalInstanceConfiguration.class,
 							properties);
 
 				long companyId =
-					extractPortalInstanceConfiguration.extractCompanyId();
+					exportPortalInstanceConfiguration.exportCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					_log.error(
@@ -199,7 +198,7 @@ public class ExtractPortalInstanceOperation
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExtractPortalInstanceOperation.class);
+		ExportPortalInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

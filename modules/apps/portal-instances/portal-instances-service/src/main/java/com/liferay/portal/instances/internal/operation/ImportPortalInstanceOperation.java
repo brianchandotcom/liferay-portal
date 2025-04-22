@@ -7,7 +7,7 @@ package com.liferay.portal.instances.internal.operation;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.instances.internal.configuration.InsertPortalInstanceConfiguration;
+import com.liferay.portal.instances.internal.configuration.ImportPortalInstanceConfiguration;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mariano Álvaro Sáiz
  */
 @Component(
-	configurationPid = "com.liferay.portal.instances.internal.configuration.InsertPortalInstanceConfiguration",
+	configurationPid = "com.liferay.portal.instances.internal.configuration.ImportPortalInstanceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
 	service = {}
 )
-public class InsertPortalInstanceOperation extends BasePortalInstanceOperation {
+public class ImportPortalInstanceOperation extends BasePortalInstanceOperation {
 
 	@Override
 	public String getOperationCompletedMessage(long companyId) {
@@ -47,14 +47,14 @@ public class InsertPortalInstanceOperation extends BasePortalInstanceOperation {
 			() -> {
 				FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
-				InsertPortalInstanceConfiguration
-					insertPortalInstanceConfiguration =
+				ImportPortalInstanceConfiguration
+					importPortalInstanceConfiguration =
 						ConfigurableUtil.createConfigurable(
-							InsertPortalInstanceConfiguration.class,
+							ImportPortalInstanceConfiguration.class,
 							properties);
 
 				long companyId =
-					insertPortalInstanceConfiguration.insertCompanyId();
+					importPortalInstanceConfiguration.importCompanyId();
 
 				if (_hasCompany(companyId)) {
 					_log.error(
@@ -66,9 +66,9 @@ public class InsertPortalInstanceOperation extends BasePortalInstanceOperation {
 				}
 
 				return _companyLocalService.addDBPartitionCompany(
-					companyId, insertPortalInstanceConfiguration.newName(),
-					insertPortalInstanceConfiguration.newVirtualHostname(),
-					insertPortalInstanceConfiguration.newWebId());
+					companyId, importPortalInstanceConfiguration.newName(),
+					importPortalInstanceConfiguration.newVirtualHostname(),
+					importPortalInstanceConfiguration.newWebId());
 			},
 			properties);
 	}
@@ -87,7 +87,7 @@ public class InsertPortalInstanceOperation extends BasePortalInstanceOperation {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InsertPortalInstanceOperation.class);
+		ImportPortalInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

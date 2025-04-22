@@ -6,7 +6,7 @@
 package com.liferay.portal.instances.internal.component.enabler;
 
 import com.liferay.portal.instances.internal.operation.CopyPortalInstanceOperation;
-import com.liferay.portal.instances.internal.operation.InsertPortalInstanceOperation;
+import com.liferay.portal.instances.internal.operation.ImportPortalInstanceOperation;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 
 import org.osgi.service.component.ComponentContext;
@@ -25,7 +25,7 @@ public class ComponentEnabler {
 			componentContext.enableComponent(
 				CopyPortalInstanceOperation.class.getName());
 			componentContext.enableComponent(
-				InsertPortalInstanceOperation.class.getName());
+				ImportPortalInstanceOperation.class.getName());
 		}
 	}
 

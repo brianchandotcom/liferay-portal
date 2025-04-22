@@ -588,10 +588,9 @@ AUI.add(
 						title = Liferay.Language.get('process-details');
 					}
 
-					Liferay.Util.openWindow({
-						dialog: {
-							bodyContent: bodyNode,
-						},
+					Liferay.Util.openModal({
+						bodyHTML: bodyNode.outerHTML(),
+						containerProps: {},
 						title,
 					});
 				},

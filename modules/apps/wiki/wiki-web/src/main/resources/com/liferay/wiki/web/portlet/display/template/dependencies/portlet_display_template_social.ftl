@@ -251,7 +251,7 @@
 			displayType="secondary"
 			icon="print"
 			monospaced=true
-			onClick="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + printURL.toString() + "'});"
+			onClick="javascript:Liferay.Util.openModal({id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', url: '" + printURL.toString() + "'});"
 			small=true
 			title="${title}"
 		/>

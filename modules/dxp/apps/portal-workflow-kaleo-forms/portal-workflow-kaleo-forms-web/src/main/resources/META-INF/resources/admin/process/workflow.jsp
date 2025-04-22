@@ -213,13 +213,11 @@ if (Validator.isNotNull(workflowDefinition)) {
 	);
 
 	window['<portlet:namespace />editWorkflow'] = (uri) => {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
+		Liferay.Util.openModal({
+			iframeBodyCssClass: '',
+			containerProps: {},
 			title: '<liferay-ui:message key="workflow" />',
-			uri: uri,
+			url: uri,
 		});
 	};
 </aui:script>

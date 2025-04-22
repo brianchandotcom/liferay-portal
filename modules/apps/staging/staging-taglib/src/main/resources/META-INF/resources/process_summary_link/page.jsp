@@ -30,13 +30,12 @@ String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSumma
 		backgroundTaskName,
 		processSummaryURL
 	) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-			},
+		Liferay.Util.openModal({
+			iframeBodyCssClass: '',
+			containerProps: {},
 			id: '<portlet:namespace />showSummary_' + backgroundTaskId,
 			title: backgroundTaskName,
-			uri:
+			url:
 				processSummaryURL +
 				'&<portlet:namespace />backgroundTaskId=' +
 				backgroundTaskId,

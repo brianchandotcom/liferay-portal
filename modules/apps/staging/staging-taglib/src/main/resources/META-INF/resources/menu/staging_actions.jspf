@@ -22,22 +22,11 @@
 				publishGlobalLink.addEventListener('click', (event) => {
 					event.preventDefault();
 
-					Liferay.Util.openWindow({
-						dialog: {
-							constrain: true,
-							modal: true,
-							on: {
-								visibleChange: function (event) {
-									var instance = this;
-
-									if (!event.newVal) {
-										instance.destroy();
-									}
-								},
-							},
-						},
+					Liferay.Util.openModal({
+						iframeBodyCssClass: '',
+						containerProps: {},
 						title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-						uri: publishGlobalLink.getAttribute('href'),
+						url: publishGlobalLink.getAttribute('href'),
 					});
 				});
 			}
@@ -232,22 +221,11 @@
 					publishLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
-						Liferay.Util.openWindow({
-							dialog: {
-								constrain: true,
-								modal: true,
-								on: {
-									visibleChange: function (event) {
-										var instance = this;
-
-										if (!event.newVal) {
-											instance.destroy();
-										}
-									},
-								},
-							},
+						Liferay.Util.openModal({
+							iframeBodyCssClass: '',
+							containerProps: {},
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-							uri: publishLink.getAttribute('href'),
+							url: publishLink.getAttribute('href'),
 						});
 					});
 				}
@@ -260,21 +238,15 @@
 					publishToLiveLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
-						Liferay.Util.openWindow({
-							dialog: {
-								after: {
-									destroy: function (event) {
-										window.location.reload();
-									},
-								},
-								destroyOnHide: true,
+						Liferay.Util.openModal({
+							onClose: () => {
+								window.location.reload();
 							},
-							dialogIframe: {
-								bodyCssClass: 'cadmin dialog-with-footer',
-							},
+							iframeBodyCssClass: 'dialog-with-footer',
+							containerProps: {},
 							id: '<portlet:namespace />publishLatestChangesDialog',
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-							uri: publishToLiveLink.getAttribute('href'),
+							url: publishToLiveLink.getAttribute('href'),
 						});
 					});
 				}
@@ -317,13 +289,12 @@
 					layoutSetBranchesLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
-						Liferay.Util.openWindow({
-							dialog: {
-								width: 820,
-							},
+						Liferay.Util.openModal({
+							iframeBodyCssClass: 'dialog-with-footer',
+							containerProps: {},
 							id: '<portlet:namespace />layoutSetBranches',
 							title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
-							uri: layoutSetBranchesLink.getAttribute('href'),
+							url: layoutSetBranchesLink.getAttribute('href'),
 						});
 					});
 				}

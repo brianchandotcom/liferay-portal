@@ -69,10 +69,9 @@ public class PublicationsPortletURLUtil {
 		throws Exception {
 
 		return StringBundler.concat(
-			"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: ",
-			"true,}, dialogIframe: {bodyCssClass: 'dialog-with-footer'}, ",
-			"title:'", language.get(httpServletRequest, "permissions"),
-			"', uri:'",
+			"javascript:Liferay.Util.openModal({containerProps: {},",
+			"iframeBodyCssClass: 'dialog-with-footer', title:'",
+			language.get(httpServletRequest, "permissions"), "', url:'",
 			PermissionsURLTag.doTag(
 				StringPool.BLANK, CTCollection.class.getName(),
 				HtmlUtil.escape(ctCollection.getName()), null,

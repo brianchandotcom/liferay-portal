@@ -308,12 +308,22 @@ public class LayoutLocalServiceWrapper
 			if (containerType == _portal.getClassNameId(
 					FragmentEntryLink.class.getName())) {
 
-				long fragmentEntryLinkId = GetterUtil.getLong(
+				long originalFragmentEntryLinkId = GetterUtil.getLong(
 					sourceLayoutLayoutClassedModelUsage.getContainerKey());
+
+				FragmentEntryLink originalFragmentEntryLink =
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						originalFragmentEntryLinkId);
+
+				if ((originalFragmentEntryLink != null) &&
+					originalFragmentEntryLink.isDeleted()) {
+
+					continue;
+				}
 
 				FragmentEntryLink fragmentEntryLink =
 					_fragmentEntryLinkLocalService.getFragmentEntryLink(
-						sourceLayout.getGroupId(), fragmentEntryLinkId,
+						sourceLayout.getGroupId(), originalFragmentEntryLinkId,
 						targetLayout.getPlid());
 
 				if (fragmentEntryLink != null) {

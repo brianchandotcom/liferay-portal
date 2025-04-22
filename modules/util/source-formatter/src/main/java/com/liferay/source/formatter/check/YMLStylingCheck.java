@@ -31,9 +31,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 		content = content.replaceAll(
 			"(\\A|\n)( *)(description:) (?!\\|-)(.+)(\\Z|\n)",
 			"$1$2$3\n    $2$4$5");
-
 		content = content.replaceAll("(\\A|\n) *description:\n +\"\"", "");
-
 		content = content.replaceAll(
 			"(\\A|\n)( *#)@? ?(review)(\\Z|\n)", "$1$2 @$3$4");
 

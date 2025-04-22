@@ -11,7 +11,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.style.book.item.selector.criterion.StyleBookEntryItemSelectorCriterion;
+import com.liferay.style.book.item.selector.StyleBookEntryItemSelectorCriterion;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.IOException;

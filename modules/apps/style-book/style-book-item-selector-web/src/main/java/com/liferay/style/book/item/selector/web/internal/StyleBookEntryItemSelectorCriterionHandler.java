@@ -7,7 +7,7 @@ package com.liferay.style.book.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.style.book.item.selector.criterion.StyleBookEntryItemSelectorCriterion;
+import com.liferay.style.book.item.selector.StyleBookEntryItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

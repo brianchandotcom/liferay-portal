@@ -29,6 +29,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
@@ -496,6 +497,105 @@ public class LayoutsImporterTest {
 
 		_assertLayoutPageTemplateEntry(
 			fragmentEntry, fragmentEntryLink,
+			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
+	}
+
+	@Test
+	public void testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField()
+		throws Exception {
+
+		JSONObject configurationJSONObject = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"label", RandomTestUtil.randomString()
+						).put(
+							"name", "itemSelector"
+						).put(
+							"type", "itemSelector"
+						).put(
+							"typeOptions",
+							JSONUtil.put("enableSelectTemplate", Boolean.FALSE)
+						)))));
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			configurationJSONObject.toString(), RandomTestUtil.randomString(),
+			_serviceContext1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		JSONObject freeMarkerFragmentEntryProcessorJSONObject = JSONUtil.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
+		).put(
+			"classTypeId", "0"
+		).put(
+			"itemSubtype", "Basic Document"
+		).put(
+			"itemType", "Document"
+		).put(
+			"title", RandomTestUtil.randomString()
+		).put(
+			"type", InfoItemItemSelectorReturnType.class.getName()
+		);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"itemSelector",
+						freeMarkerFragmentEntryProcessorJSONObject)
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), _serviceContext1);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, draftLayout, null, 0, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		FragmentEntry curFragmentEntry = _addFragmentEntry(
+			fragmentEntry, _serviceContext2);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+		_assertLayoutPageTemplateEntry(
+			configurationJSONObject,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector",
+					freeMarkerFragmentEntryProcessorJSONObject)),
+			curFragmentEntry,
 			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 	}
 

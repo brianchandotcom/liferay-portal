@@ -306,6 +306,14 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		long[] segmentsEntryIds, int start, int end) {
+
+		return segmentsEntryPersistence.findBySegmentsEntryId(
+			segmentsEntryIds, start, end);
+	}
+
+	@Override
 	public List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {

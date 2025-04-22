@@ -3926,6 +3926,14 @@
 		"to": "${variableName}.${prefixMethodName}Preferences"
 	},
 	{
+		"from": "regex:(?<hostName>Fragment-Host:\\s+[^;]+;)bundle-version=\"[^\"]+\"",
+		"issueKey": "LPD-48184",
+		"to": "${hostName}",
+		"validExtensions": [
+			"bnd"
+		]
+	},
+	{
 		"classNames": [
 			"PortletSharedSearchSettings"
 		],

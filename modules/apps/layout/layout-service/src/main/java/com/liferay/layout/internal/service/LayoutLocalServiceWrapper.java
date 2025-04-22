@@ -1112,7 +1112,7 @@ public class LayoutLocalServiceWrapper
 		throws Exception {
 
 		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
-			new long[] {sourceSegmentsExperienceId}, targetLayout);
+			new long[] {targetSegmentsExperienceId}, targetLayout);
 
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
 

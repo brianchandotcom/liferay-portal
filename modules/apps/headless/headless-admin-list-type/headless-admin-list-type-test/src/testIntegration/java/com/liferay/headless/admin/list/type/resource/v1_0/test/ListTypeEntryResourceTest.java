@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -43,6 +44,32 @@ public class ListTypeEntryResourceTest
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"),
 				false, Collections.emptyList());
+		_systemListTypeDefinition =
+			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				true, Collections.emptyList());
+	}
+
+	@FeatureFlags("LPD-24055")
+	@Override
+	@Test
+	public void testDeleteListTypeEntry() throws Exception {
+		super.testDeleteListTypeEntry();
+
+		ListTypeEntry listTypeEntry = _addListTypeEntry(
+			_systemListTypeDefinition);
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeEntryResource.deleteListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeEntryResource.getListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
 	}
 
 	@Override
@@ -105,6 +132,7 @@ public class ListTypeEntryResourceTest
 	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
 	}
 
+	@FeatureFlags("LPD-24055")
 	@Override
 	@Test
 	public void testPostListTypeDefinitionListTypeEntry() throws Exception {
@@ -118,8 +146,15 @@ public class ListTypeEntryResourceTest
 		_assertListTypeEntryNameLocalizedMap(
 			testPostListTypeDefinitionListTypeEntry_addListTypeEntry(
 				listTypeEntry));
+
+		listTypeEntry = _addListTypeEntry(_systemListTypeDefinition);
+
+		assertEquals(
+			listTypeEntry,
+			listTypeEntryResource.getListTypeEntry(listTypeEntry.getId()));
 	}
 
+	@FeatureFlags("LPD-24055")
 	@Override
 	@Test
 	public void testPutListTypeEntry() throws Exception {
@@ -133,6 +168,15 @@ public class ListTypeEntryResourceTest
 		_assertListTypeEntryNameLocalizedMap(
 			listTypeEntryResource.putListTypeEntry(
 				listTypeEntry.getId(), listTypeEntry));
+
+		listTypeEntry = _addListTypeEntry(_systemListTypeDefinition);
+
+		listTypeEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		assertEquals(
+			listTypeEntry,
+			listTypeEntryResource.putListTypeEntry(
+				listTypeEntry.getId(), listTypeEntry));
 	}
 
 	@Override
@@ -141,6 +185,7 @@ public class ListTypeEntryResourceTest
 
 		listTypeEntry.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		listTypeEntry.setSystem(false);
 
 		return listTypeEntry;
 	}
@@ -149,7 +194,7 @@ public class ListTypeEntryResourceTest
 	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
 		throws Exception {
 
-		return _addListTypeEntry();
+		return _addListTypeEntry(_listTypeDefinition);
 	}
 
 	@Override
@@ -182,14 +227,14 @@ public class ListTypeEntryResourceTest
 	protected ListTypeEntry testGetListTypeEntry_addListTypeEntry()
 		throws Exception {
 
-		return _addListTypeEntry();
+		return _addListTypeEntry(_listTypeDefinition);
 	}
 
 	@Override
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()
 		throws Exception {
 
-		return _addListTypeEntry();
+		return _addListTypeEntry(_listTypeDefinition);
 	}
 
 	@Override
@@ -207,12 +252,15 @@ public class ListTypeEntryResourceTest
 	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
 		throws Exception {
 
-		return _addListTypeEntry();
+		return _addListTypeEntry(_listTypeDefinition);
 	}
 
-	private ListTypeEntry _addListTypeEntry() throws Exception {
+	private ListTypeEntry _addListTypeEntry(
+			ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
 		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-			_listTypeDefinition.getListTypeDefinitionId(),
+			listTypeDefinition.getListTypeDefinitionId(),
 			randomListTypeEntry());
 	}
 
@@ -229,5 +277,8 @@ public class ListTypeEntryResourceTest
 
 	@DeleteAfterTestRun
 	private ListTypeDefinition _listTypeDefinition;
+
+	@DeleteAfterTestRun
+	private ListTypeDefinition _systemListTypeDefinition;
 
 }

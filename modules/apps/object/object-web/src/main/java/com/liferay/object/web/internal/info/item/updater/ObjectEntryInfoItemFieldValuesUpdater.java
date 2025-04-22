@@ -72,7 +72,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		Map<String, Object> curProperties = ObjectEntryUtil.toProperties(
-			infoItemFieldValues);
+			themeDisplay.getCompanyId(), infoItemFieldValues);
 
 		try {
 			return ObjectEntryUtil.toObjectEntry(

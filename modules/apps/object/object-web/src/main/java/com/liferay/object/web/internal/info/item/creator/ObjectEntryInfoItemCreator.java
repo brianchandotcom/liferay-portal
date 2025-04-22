@@ -65,7 +65,7 @@ public class ObjectEntryInfoItemCreator
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			Map<String, Object> curProperties = ObjectEntryUtil.toProperties(
-				infoItemFieldValues);
+				themeDisplay.getCompanyId(), infoItemFieldValues);
 
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.addObjectEntry(

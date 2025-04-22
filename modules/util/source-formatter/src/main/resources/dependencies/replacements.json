@@ -15,6 +15,17 @@
 	},
 	{
 		"classNames": [
+			"AccountGroupRelLocalService",
+			"AccountGroupRelLocalServiceUtil",
+			"AccountGroupRelService",
+			"AccountGroupRelServiceUtil"
+		],
+		"from": "deleteCommerceAccountGroupRels(String paramName, long paramName)",
+		"issueKey": "LPD-7743",
+		"to": "deleteAccountGroupRels(param#0#, new long[] {param#1#s})"
+	},
+	{
+		"classNames": [
 			"Product"
 		],
 		"from": "getConfiguration",

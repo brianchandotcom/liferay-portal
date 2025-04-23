@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false,
 	property = {
 		"javax.portlet.name=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet",
-		"mvc.command.name=/search_experiences/get_subtype_classes"
+		"mvc.command.name=/search_experiences/get_asset_subtypes"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
+public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
@@ -62,11 +62,11 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 			String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 			JSONObject jsonObject = null;
 
-			if (cmd.equals("getSubtypeClasses")) {
-				jsonObject = _getSubtypeClassesJSONObject(resourceRequest);
+			if (cmd.equals("getAssetSubtypes")) {
+				jsonObject = _getAssetSubtypesJSONObject(resourceRequest);
 			}
-			else if (cmd.equals("getSubtypeClassesInfo")) {
-				jsonObject = _getSubtypeClassesInfoJSONObject(resourceRequest);
+			else if (cmd.equals("getAssetSubtypeInfo")) {
+				jsonObject = _getAssetSubtypeInfoJSONObject(resourceRequest);
 			}
 			else {
 				return false;
@@ -102,7 +102,7 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDDMStructureInfo(
-		JSONArray subtypeClassInfoJSONArray, String[] identifierArray,
+		JSONArray assetSubtypeInfoJSONArray, String[] identifierArray,
 		Locale locale, ResourceRequest resourceRequest) {
 
 		try {
@@ -115,10 +115,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 					_portal.getClassNameId(identifierArray[0]));
 
 			_addSubtypeClassInfo(
-				subtypeClassInfoJSONArray, identifierArray[0],
-				group.getExternalReferenceCode(), group.getName(locale),
 				ddmStructure.getExternalReferenceCode(),
-				ddmStructure.getName(locale));
+				ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
+				identifierArray[0], group.getExternalReferenceCode(),
+				group.getName(locale));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -128,7 +128,7 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDLFileEntryTypesInfo(
-		JSONArray subtypeClassInfoJSONArray, String[] identifierArray,
+		JSONArray assetSubtypeInfoJSONArray, String[] identifierArray,
 		Locale locale, ResourceRequest resourceRequest) {
 
 		try {
@@ -138,10 +138,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 						getBasicDocumentDLFileEntryType();
 
 				_addSubtypeClassInfo(
-					subtypeClassInfoJSONArray, identifierArray[0],
-					StringPool.BLANK, StringPool.BLANK,
 					basicDocumentDLFileEntryType.getExternalReferenceCode(),
-					basicDocumentDLFileEntryType.getName(locale));
+					basicDocumentDLFileEntryType.getName(locale),
+					assetSubtypeInfoJSONArray, identifierArray[0],
+					StringPool.BLANK, StringPool.BLANK);
 
 				return;
 			}
@@ -155,10 +155,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 						identifierArray[2], group.getGroupId());
 
 			_addSubtypeClassInfo(
-				subtypeClassInfoJSONArray, identifierArray[0],
-				group.getExternalReferenceCode(), group.getName(locale),
 				dlFileEntryType.getExternalReferenceCode(),
-				dlFileEntryType.getName(locale));
+				dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
+				identifierArray[0], group.getExternalReferenceCode(),
+				group.getName(locale));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -168,30 +168,87 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addSubtypeClassInfo(
-		JSONArray subtypeClassInfoJSONArray, String className,
-		String groupExternalReferenceCode, String groupLocalizedName,
-		String subtypeClassExternalReferenceCode,
-		String subtypeClassLocalizedName) {
+		String assetSubtypeExternalReferenceCode,
+		String assetSubtypeLocalizedName, JSONArray assetSubtypeInfoJSONArray,
+		String entryClassName, String groupExternalReferenceCode,
+		String groupLocalizedName) {
 
-		subtypeClassInfoJSONArray.put(
+		assetSubtypeInfoJSONArray.put(
 			JSONUtil.put(
-				"className", className
+				"assetSubtypeExternalReferenceCode",
+				assetSubtypeExternalReferenceCode
+			).put(
+				"assetSubtypeLocalizedName", assetSubtypeLocalizedName
+			).put(
+				"entryClassName", entryClassName
 			).put(
 				"groupExternalReferenceCode", groupExternalReferenceCode
 			).put(
 				"groupLocalizedName", groupLocalizedName
-			).put(
-				"subtypeClassExternalReferenceCode",
-				subtypeClassExternalReferenceCode
-			).put(
-				"subtypeClassLocalizedName", subtypeClassLocalizedName
 			));
 	}
 
-	private JSONObject _getDDMStructuresJSONObject(
-		String className, ResourceRequest resourceRequest) {
+	private JSONObject _getAssetSubtypeInfoJSONObject(
+		ResourceRequest resourceRequest) {
 
-		JSONArray subtypeClassInfoJSONArray = _jsonFactory.createJSONArray();
+		String[] assetSubtypeIdentifiers = ParamUtil.getStringValues(
+			resourceRequest, "assetSubtypeIdentifiers");
+
+		if (assetSubtypeIdentifiers == null) {
+			return null;
+		}
+
+		JSONArray assetSubtypeJSONArray = _jsonFactory.createJSONArray();
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			ParamUtil.getString(resourceRequest, "languageId"));
+
+		for (String assetSubtypeIdentifier : assetSubtypeIdentifiers) {
+			String[] assetSubtypeIdentifierArray = StringUtil.split(
+				assetSubtypeIdentifier, "&&");
+
+			String entryClassName = assetSubtypeIdentifierArray[0];
+
+			if (entryClassName.equals(DLFileEntry.class.getName())) {
+				_addDLFileEntryTypesInfo(
+					assetSubtypeJSONArray, assetSubtypeIdentifierArray, locale,
+					resourceRequest);
+			}
+			else if (entryClassName.equals(JournalArticle.class.getName())) {
+				_addDDMStructureInfo(
+					assetSubtypeJSONArray, assetSubtypeIdentifierArray, locale,
+					resourceRequest);
+			}
+		}
+
+		return JSONUtil.put("assetSubtypes", assetSubtypeJSONArray);
+	}
+
+	private JSONObject _getAssetSubtypesJSONObject(
+		ResourceRequest resourceRequest) {
+
+		String entryClassName = ParamUtil.getString(
+			resourceRequest, "entryClassName");
+
+		if (Validator.isNull(entryClassName)) {
+			return null;
+		}
+
+		if (entryClassName.equals(DLFileEntry.class.getName())) {
+			return _getDLFileEntryTypesJSONObject(
+				entryClassName, resourceRequest);
+		}
+		else if (entryClassName.equals(JournalArticle.class.getName())) {
+			return _getDDMStructuresJSONObject(entryClassName, resourceRequest);
+		}
+
+		return null;
+	}
+
+	private JSONObject _getDDMStructuresJSONObject(
+		String entryClassName, ResourceRequest resourceRequest) {
+
+		JSONArray assetSubtypeInfoJSONArray = _jsonFactory.createJSONArray();
 
 		int page = ParamUtil.getInteger(resourceRequest, "page", 1);
 		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
@@ -201,7 +258,7 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 
 		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			_portal.getCompanyId(resourceRequest), new long[0],
-			_portal.getClassNameId(className), null,
+			_portal.getClassNameId(entryClassName), null,
 			WorkflowConstants.STATUS_ANY, start, end, null);
 
 		Locale locale = LocaleUtil.fromLanguageId(
@@ -213,10 +270,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 					ddmStructure.getGroupId());
 
 				_addSubtypeClassInfo(
-					subtypeClassInfoJSONArray, className,
-					group.getExternalReferenceCode(), group.getName(locale),
 					ddmStructure.getExternalReferenceCode(),
-					ddmStructure.getName(locale));
+					ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
+					entryClassName, group.getExternalReferenceCode(),
+					group.getName(locale));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -226,20 +283,20 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return JSONUtil.put(
-			"subtypeClasses", subtypeClassInfoJSONArray
+			"assetSubtypes", assetSubtypeInfoJSONArray
 		).put(
 			"totalCount",
 			_ddmStructureLocalService.searchCount(
 				_portal.getCompanyId(resourceRequest), new long[0],
-				_portal.getClassNameId(className), null,
+				_portal.getClassNameId(entryClassName), null,
 				WorkflowConstants.STATUS_ANY)
 		);
 	}
 
 	private JSONObject _getDLFileEntryTypesJSONObject(
-		String className, ResourceRequest resourceRequest) {
+		String entryClassName, ResourceRequest resourceRequest) {
 
-		JSONArray subtypeClassInfoJSONArray = _jsonFactory.createJSONArray();
+		JSONArray assetSubtypeInfoJSONArray = _jsonFactory.createJSONArray();
 
 		int page = ParamUtil.getInteger(resourceRequest, "page", 1);
 		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
@@ -259,10 +316,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 			try {
 				if (dlFileEntryType.getGroupId() == 0) {
 					_addSubtypeClassInfo(
-						subtypeClassInfoJSONArray, className, StringPool.BLANK,
-						StringPool.BLANK,
 						dlFileEntryType.getExternalReferenceCode(),
-						dlFileEntryType.getName(locale));
+						dlFileEntryType.getName(locale),
+						assetSubtypeInfoJSONArray, entryClassName,
+						StringPool.BLANK, StringPool.BLANK);
 
 					continue;
 				}
@@ -271,10 +328,10 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 					dlFileEntryType.getGroupId());
 
 				_addSubtypeClassInfo(
-					subtypeClassInfoJSONArray, className,
-					group.getExternalReferenceCode(), group.getName(locale),
 					dlFileEntryType.getExternalReferenceCode(),
-					dlFileEntryType.getName(locale));
+					dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
+					entryClassName, group.getExternalReferenceCode(),
+					group.getName(locale));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -284,7 +341,7 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return JSONUtil.put(
-			"subtypeClasses", subtypeClassInfoJSONArray
+			"assetSubtypes", assetSubtypeInfoJSONArray
 		).put(
 			"totalCount",
 			_dlFileEntryTypeLocalService.searchCount(
@@ -292,63 +349,8 @@ public class GetSubtypeClassesMVCResourceCommand implements MVCResourceCommand {
 		);
 	}
 
-	private JSONObject _getSubtypeClassesInfoJSONObject(
-		ResourceRequest resourceRequest) {
-
-		String[] subtypeClassIdentifiers = ParamUtil.getStringValues(
-			resourceRequest, "subTypeIdentifiers");
-
-		if (subtypeClassIdentifiers == null) {
-			return null;
-		}
-
-		JSONArray subtypeClassesJSONArray = _jsonFactory.createJSONArray();
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			ParamUtil.getString(resourceRequest, "languageId"));
-
-		for (String subtypeClassIdentifier : subtypeClassIdentifiers) {
-			String[] subtypeClassIdentifierArray = StringUtil.split(
-				subtypeClassIdentifier, "&&");
-
-			String className = subtypeClassIdentifierArray[0];
-
-			if (className.equals(DLFileEntry.class.getName())) {
-				_addDLFileEntryTypesInfo(
-					subtypeClassesJSONArray, subtypeClassIdentifierArray,
-					locale, resourceRequest);
-			}
-			else if (className.equals(JournalArticle.class.getName())) {
-				_addDDMStructureInfo(
-					subtypeClassesJSONArray, subtypeClassIdentifierArray,
-					locale, resourceRequest);
-			}
-		}
-
-		return JSONUtil.put("subtypeClasses", subtypeClassesJSONArray);
-	}
-
-	private JSONObject _getSubtypeClassesJSONObject(
-		ResourceRequest resourceRequest) {
-
-		String className = ParamUtil.getString(resourceRequest, "className");
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		if (className.equals(DLFileEntry.class.getName())) {
-			return _getDLFileEntryTypesJSONObject(className, resourceRequest);
-		}
-		else if (className.equals(JournalArticle.class.getName())) {
-			return _getDDMStructuresJSONObject(className, resourceRequest);
-		}
-
-		return null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetSubtypeClassesMVCResourceCommand.class);
+		GetAssetSubtypesMVCResourceCommand.class);
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

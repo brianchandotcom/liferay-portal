@@ -64,7 +64,7 @@ public class EditSXPBlueprintDisplayContext {
 			).setParameter(
 				"languageId", _themeDisplay.getLanguageId()
 			).setResourceID(
-				"/search_experiences/get_subtype_classes"
+				"/search_experiences/get_asset_subtypes"
 			).buildString()
 		).put(
 			"isCompanyAdmin",

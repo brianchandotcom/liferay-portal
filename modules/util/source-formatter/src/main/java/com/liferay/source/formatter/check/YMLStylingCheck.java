@@ -44,6 +44,18 @@ public class YMLStylingCheck extends BaseFileCheck {
 		return _formatQuotes(content);
 	}
 
+	private String _fixBooleanValue(String s) {
+		if (_isBooleanFalse(s)) {
+			return "false";
+		}
+
+		if (_isBooleanTrue(s)) {
+			return "true";
+		}
+
+		return s;
+	}
+
 	private String _fixQuotes(String s) {
 		if (Validator.isNull(s) || (s.length() == 1)) {
 			return s;
@@ -123,12 +135,14 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 				String newValue = _fixQuotes(value);
 
+				newValue = _fixBooleanValue(newValue);
+
 				if (value.equals(newValue)) {
 					continue;
 				}
 
 				return StringUtil.replaceFirst(
-					content, value, newValue,
+					content, ": " + value, ": " + newValue,
 					getLineStartPos(content, lineNumber));
 			}
 		}
@@ -136,14 +150,30 @@ public class YMLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _isBooleanValue(String s) {
+	private boolean _isBooleanFalse(String s) {
 		if (StringUtil.equalsIgnoreCase(s, "false") ||
 			StringUtil.equalsIgnoreCase(s, "no") ||
-			StringUtil.equalsIgnoreCase(s, "on") ||
-			StringUtil.equalsIgnoreCase(s, "off") ||
+			StringUtil.equalsIgnoreCase(s, "off")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBooleanTrue(String s) {
+		if (StringUtil.equalsIgnoreCase(s, "on") ||
 			StringUtil.equalsIgnoreCase(s, "true") ||
 			StringUtil.equalsIgnoreCase(s, "yes")) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBooleanValue(String s) {
+		if (_isBooleanFalse(s) || _isBooleanTrue(s)) {
 			return true;
 		}
 

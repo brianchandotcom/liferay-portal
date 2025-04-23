@@ -11,9 +11,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -38,8 +38,8 @@ public class FragmentLayoutStructureItemImporter
 			PageElement pageElement)
 		throws Exception {
 
-		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
-			(PageFragmentInstanceDefinition)pageElement.getDefinition();
+		FragmentInstancePageElementDefinition pageFragmentInstanceDefinition =
+			(FragmentInstancePageElementDefinition)pageElement.getDefinition();
 
 		if (pageFragmentInstanceDefinition == null) {
 			return null;
@@ -75,7 +75,8 @@ public class FragmentLayoutStructureItemImporter
 	private FragmentEntryLink _addFragmentEntryLink(
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
-			PageFragmentInstanceDefinition pageFragmentInstanceDefinition)
+			FragmentInstancePageElementDefinition
+				pageFragmentInstanceDefinition)
 		throws Exception {
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
@@ -97,7 +98,7 @@ public class FragmentLayoutStructureItemImporter
 
 	private FragmentEntry _getFragmentEntry(
 		long groupId,
-		PageFragmentInstanceDefinition pageFragmentInstanceDefinition) {
+		FragmentInstancePageElementDefinition pageFragmentInstanceDefinition) {
 
 		if (pageFragmentInstanceDefinition.getFragmentReference() instanceof
 				ItemExternalReference) {

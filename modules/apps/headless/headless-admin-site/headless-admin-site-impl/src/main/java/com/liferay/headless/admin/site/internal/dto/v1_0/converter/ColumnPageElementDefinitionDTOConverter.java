@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageColumnDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.ColumnPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -20,24 +20,25 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.ColumnLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageColumnDefinitionDTOConverter
-	implements DTOConverter<ColumnLayoutStructureItem, PageColumnDefinition> {
+public class ColumnPageElementDefinitionDTOConverter
+	implements DTOConverter
+		<ColumnLayoutStructureItem, ColumnPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageColumnDefinition.class.getSimpleName();
+		return ColumnPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageColumnDefinition toDTO(
+	public ColumnPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			ColumnLayoutStructureItem columnLayoutStructureItem)
 		throws Exception {
 
-		return new PageColumnDefinition() {
+		return new ColumnPageElementDefinition() {
 			{
 				setSize(columnLayoutStructureItem::getSize);
-				setType(PageDefinition.Type.COLUMN);
+				setType(PageElementDefinition.Type.COLUMN);
 			}
 		};
 	}

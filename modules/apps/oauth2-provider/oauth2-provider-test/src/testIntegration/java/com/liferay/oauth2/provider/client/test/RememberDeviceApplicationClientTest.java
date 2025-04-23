@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -52,7 +52,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String applicationClientId = "oauthTestApplicationCode";
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -74,7 +74,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String applicationClientId = "oauthTestApplicationCodePKCE";
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -101,7 +101,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -138,7 +138,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			this::parseTokenString);
 
 		response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -169,7 +169,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -208,7 +208,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			this::parseTokenString);
 
 		response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -239,7 +239,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response1 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -272,7 +272,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNotNull(token);
 
 		Response response2 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -314,7 +314,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response1 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -349,7 +349,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNotNull(token);
 
 		Response response2 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -393,7 +393,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -428,7 +428,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNull(
 			parseAuthorizationCodeString(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -454,7 +454,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -491,7 +491,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNull(
 			parseAuthorizationCodeString(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -516,7 +516,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response1 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget1 -> webTarget1.queryParam(
 					"client_id", applicationClientId
@@ -547,7 +547,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			this::parseTokenString);
 
 		Response response2 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -580,7 +580,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNull(
 			parseAuthorizationCodeString(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -604,7 +604,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response1 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget1 -> webTarget1.queryParam(
 					"client_id", applicationClientId
@@ -637,7 +637,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			this::parseTokenString);
 
 		Response response2 = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -676,7 +676,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNull(
 			parseAuthorizationCodeString(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -700,7 +700,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", applicationClientId
@@ -737,7 +737,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNull(
 			parseAuthorizationCodeString(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -759,25 +759,25 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
 				Collections.singletonList("everything"), false);
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestApplicationCodePKCE",
+				companyId, _user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestRememberApplicationCode",
+				companyId, _user, "oauthTestRememberApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), true,
 				Collections.singletonList("everything"), false);
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestRememberApplicationCodePKCE",
+				companyId, _user, "oauthTestRememberApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), true,
 				Collections.singletonList("everything"), false);
@@ -803,6 +803,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 	}
 
 	private static final String _COOKIE_NAME_PREFIX = "OAUTH2_REMEMBER_DEVICE_";
+
+	private static User _user;
 
 	@Inject
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;

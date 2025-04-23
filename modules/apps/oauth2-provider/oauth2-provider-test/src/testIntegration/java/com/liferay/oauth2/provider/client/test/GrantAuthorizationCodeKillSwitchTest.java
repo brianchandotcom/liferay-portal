@@ -10,10 +10,10 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -44,7 +44,7 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 			"unauthorized_client",
 			parseErrorParameter(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -64,9 +64,9 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 				MapUtil.singletonDictionary(
 					"oauth2.allow.authorization.code.grant", false));
 
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated",
@@ -75,7 +75,7 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
 				Collections.singletonList("everything"));
 		}
@@ -86,5 +86,7 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new GrantKillClientCredentialsSwitchTestPreparatorBundleActivator();
 	}
+
+	private static User _user;
 
 }

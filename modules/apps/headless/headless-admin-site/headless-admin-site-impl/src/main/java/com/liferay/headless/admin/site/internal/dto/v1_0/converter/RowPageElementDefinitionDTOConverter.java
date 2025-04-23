@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.RowPageElementDefinition;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -22,21 +22,22 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.RowStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageRowDefinitionDTOConverter
-	implements DTOConverter<RowStyledLayoutStructureItem, PageRowDefinition> {
+public class RowPageElementDefinitionDTOConverter
+	implements DTOConverter
+		<RowStyledLayoutStructureItem, RowPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageRowDefinition.class.getSimpleName();
+		return RowPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageRowDefinition toDTO(
+	public RowPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			RowStyledLayoutStructureItem rowStyledLayoutStructureItem)
 		throws Exception {
 
-		return new PageRowDefinition() {
+		return new RowPageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -58,7 +59,7 @@ public class PageRowDefinitionDTOConverter
 				setNumberOfColumns(
 					rowStyledLayoutStructureItem::getNumberOfColumns);
 				setReverseOrder(rowStyledLayoutStructureItem::isReverseOrder);
-				setType(PageDefinition.Type.ROW);
+				setType(PageElementDefinition.Type.ROW);
 			}
 		};
 	}

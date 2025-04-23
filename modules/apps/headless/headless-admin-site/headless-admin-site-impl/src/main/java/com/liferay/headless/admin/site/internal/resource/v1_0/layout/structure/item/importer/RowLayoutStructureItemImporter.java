@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.RowPageElementDefinition;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -38,8 +38,8 @@ public class RowLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		PageRowDefinition pageRowDefinition =
-			(PageRowDefinition)pageElement.getDefinition();
+		RowPageElementDefinition pageRowDefinition =
+			(RowPageElementDefinition)pageElement.getDefinition();
 
 		if (pageRowDefinition == null) {
 			return rowStyledLayoutStructureItem;

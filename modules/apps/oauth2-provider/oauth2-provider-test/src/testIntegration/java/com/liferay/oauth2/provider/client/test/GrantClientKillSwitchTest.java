@@ -9,10 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -53,9 +53,9 @@ public class GrantClientKillSwitchTest extends BaseClientTestCase {
 				MapUtil.singletonDictionary(
 					"oauth2.allow.client.credentials.grant", false));
 
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated",
@@ -64,7 +64,7 @@ public class GrantClientKillSwitchTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication");
+				companyId, user, "oauthTestApplication");
 		}
 
 	}

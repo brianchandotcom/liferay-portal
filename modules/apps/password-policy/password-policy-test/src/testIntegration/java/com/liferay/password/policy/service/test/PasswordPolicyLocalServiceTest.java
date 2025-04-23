@@ -23,7 +23,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Dictionary;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -43,11 +42,6 @@ public class PasswordPolicyLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@After
-	public void tearDown() throws Exception {
-		_ldapAuthConfigurationProvider.delete(TestPropsValues.getCompanyId());
-	}
 
 	@Test
 	public void testGetDefaultPasswordPolicyWithLDAPPasswordPolicy()
@@ -180,24 +174,13 @@ public class PasswordPolicyLocalServiceTest {
 			_ldapAuthConfigurationProvider.getConfigurationProperties(
 				companyId);
 
-		Object originalPasswordPolicyEnabled = configurationProperties.put(
+		configurationProperties.put(
 			"passwordPolicyEnabled", passwordPolicyEnabled);
 
 		_ldapAuthConfigurationProvider.updateProperties(
 			companyId, configurationProperties);
 
-		return () -> {
-			if (originalPasswordPolicyEnabled != null) {
-				configurationProperties.put(
-					"passwordPolicyEnabled", originalPasswordPolicyEnabled);
-			}
-			else {
-				configurationProperties.remove("passwordPolicyEnabled");
-			}
-
-			_ldapAuthConfigurationProvider.updateProperties(
-				companyId, configurationProperties);
-		};
+		return () -> _ldapAuthConfigurationProvider.delete(companyId);
 	}
 
 	@Inject(

@@ -1723,24 +1723,13 @@ public class UserLocalServiceTest {
 			_ldapAuthConfigurationProvider.getConfigurationProperties(
 				companyId);
 
-		Object originalPasswordPolicyEnabled = configurationProperties.put(
+		configurationProperties.put(
 			"passwordPolicyEnabled", passwordPolicyEnabled);
 
 		_ldapAuthConfigurationProvider.updateProperties(
 			companyId, configurationProperties);
 
-		return () -> {
-			if (originalPasswordPolicyEnabled != null) {
-				configurationProperties.put(
-					"passwordPolicyEnabled", originalPasswordPolicyEnabled);
-			}
-			else {
-				configurationProperties.remove("passwordPolicyEnabled");
-			}
-
-			_ldapAuthConfigurationProvider.updateProperties(
-				companyId, configurationProperties);
-		};
+		return () -> _ldapAuthConfigurationProvider.delete(companyId);
 	}
 
 	private SafeCloseable _updateSecurityWithSafeCloseable(

@@ -1,0 +1,9 @@
+tutorial:
+    -   type1: false
+    -   type2: false
+    -   type3: false
+    -   type4: true
+    -   type5: true
+    -   type6: true
+    -   type7: "True"
+    -   type8: "False"

@@ -4,10 +4,9 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {openModal, openToast} from 'frontend-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
 
 import {IVocabulary} from '../categorization/types/IVocabulary';
+import {openGenericFDSDeleteConfirmationModal} from '../util/GenericOpenModalUtil';
 import VocabularyRenderer from './cell_renderers/VocabularyRenderer';
 
 export default function VocabularyFDSPropsTransformer({
@@ -15,75 +14,6 @@ export default function VocabularyFDSPropsTransformer({
 }: {
 	otherProps: any;
 }) {
-	const openConfirmationModal = (itemData: IVocabulary, loadData: any) => {
-		openModal({
-			bodyHTML: Liferay.Language.get('delete-vocabulary-confirmation'),
-			buttons: [
-				{
-					autoFocus: true,
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
-				},
-				{
-					displayType: 'danger',
-					label: Liferay.Language.get('delete'),
-					onClick: ({processClose}: {processClose: Function}) => {
-						processClose();
-
-						const deleteMethod = itemData.actions?.delete?.method;
-						const deleteURL = itemData.actions?.delete?.href;
-
-						if (deleteMethod && deleteURL) {
-							fetch(deleteURL, {
-								headers: {
-									'Accept': 'application/json',
-									'Content-Type': 'application/json',
-									'x-csrf-token': Liferay.authToken,
-								},
-								method: deleteMethod,
-							})
-								.then(() => {
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										title: Liferay.Language.get('success'),
-										type: 'success',
-									});
-
-									loadData();
-								})
-								.catch(() => {
-									openToast({
-										message: Liferay.Language.get(
-											'an-unexpected-error-occurred'
-										),
-										title: Liferay.Language.get('error'),
-										type: 'danger',
-									});
-								});
-						}
-						else {
-							openToast({
-								message: Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
-								title: Liferay.Language.get('error'),
-								type: 'danger',
-							});
-						}
-					},
-				},
-			],
-			status: 'danger',
-			title: sub(
-				Liferay.Language.get('delete-x'),
-				'"' + itemData.name + '"'
-			),
-		});
-	};
-
 	return {
 		...otherProps,
 		customRenderers: {
@@ -105,7 +35,13 @@ export default function VocabularyFDSPropsTransformer({
 			loadData: any;
 		}) {
 			if (action.data.id === 'delete') {
-				openConfirmationModal(itemData, loadData);
+				openGenericFDSDeleteConfirmationModal(
+					Liferay.Language.get('delete-vocabulary-confirmation'),
+					itemData.actions?.delete?.method,
+					itemData.actions?.delete?.href,
+					itemData.name,
+					loadData
+				);
 			}
 		},
 	};

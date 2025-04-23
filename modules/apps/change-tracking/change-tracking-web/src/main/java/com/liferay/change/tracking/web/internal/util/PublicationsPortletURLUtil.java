@@ -69,7 +69,7 @@ public class PublicationsPortletURLUtil {
 		throws Exception {
 
 		return StringBundler.concat(
-			"javascript:Liferay.Util.openModal({containerProps: {},",
+			"javascript:Liferay.Util.openModal({containerProps: {}, ",
 			"iframeBodyCssClass: 'dialog-with-footer', title:'",
 			language.get(httpServletRequest, "permissions"), "', url:'",
 			PermissionsURLTag.doTag(

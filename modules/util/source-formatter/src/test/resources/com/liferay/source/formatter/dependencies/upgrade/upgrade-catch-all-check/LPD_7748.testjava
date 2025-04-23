@@ -1,0 +1,30 @@
+
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Micaelle Silva
+ */
+public class LPD_7748 {
+
+	public void method(long companyId, String externalReferenceCode) {
+		AccountGroupLocalServiceUtil.fetchByExternalReferenceCode(123, externalReferenceCode);
+		AccountGroupLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+		AccountGroupServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+		_accountGroupLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+		_accountGroupService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupService _accountGroupService;
+
+}

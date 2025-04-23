@@ -35,56 +35,72 @@ const formatActionURL = function (
 		return '';
 	}
 
+	let fullInterpolation = false;
+
 	const replacedURL = url.replace(
 		/(?:%7B|{)(.*?)(?:%7D|})/g,
 		(match, key) => {
 			const value = getValueFromItem(item, key.split('.'));
 
-			return match.length === url.length
-				? value
-				: encodeURIComponent(value);
+			if (match.length === url.length) {
+				fullInterpolation = true;
+			}
+
+			return fullInterpolation ? value : encodeURIComponent(value);
 		}
 	);
 
-	if (target === 'link' && replacedURL.includes('?')) {
-		const redirectionURL = window.location.href;
-		const searchParams = new URLSearchParams(
-			replacedURL.slice(replacedURL.indexOf('?'))
-		);
+	const queryIndex = replacedURL.indexOf('?');
 
-		const backURL = 'backURL';
-		const redirect = 'redirect';
-		const backURLRegexp = new RegExp(backURL);
-		const redirectRegexp = new RegExp(redirect);
-
-		const p_p_id = searchParams.get('p_p_id');
-
-		if (redirectRegexp.test(url) || backURLRegexp.test(url)) {
-			for (const key of searchParams.keys()) {
-				if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
-					searchParams.set(key, redirectionURL);
-				}
-			}
-		}
-		else if (p_p_id) {
-			const backURLParam = `_${p_p_id}_${backURL}`;
-			const redirectParam = `_${p_p_id}_${redirect}`;
-
-			searchParams.set(redirectParam, redirectionURL);
-			searchParams.set(backURLParam, redirectionURL);
-		}
-
-		const updatedURL = decodeURIComponent(
-			`${replacedURL.slice(
-				0,
-				replacedURL.indexOf('?')
-			)}?${searchParams.toString()}`
-		);
-
-		return updatedURL;
+	if (target !== 'link' || queryIndex === -1 || fullInterpolation) {
+		return replacedURL;
 	}
 
-	return replacedURL;
+	const hashIndex = replacedURL.indexOf('#');
+
+	const searchParams = new URLSearchParams(
+		replacedURL.slice(
+			queryIndex,
+			hashIndex > queryIndex ? hashIndex : replacedURL.length
+		)
+	);
+
+	const backURL = 'backURL';
+	const redirect = 'redirect';
+	const backURLRegexp = new RegExp(backURL);
+	const redirectRegexp = new RegExp(redirect);
+
+	const p_p_id = searchParams.get('p_p_id');
+
+	let modifiedParams = false;
+
+	const redirectionURL = window.location.href;
+
+	if (redirectRegexp.test(url) || backURLRegexp.test(url)) {
+		for (const key of searchParams.keys()) {
+			if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
+				searchParams.set(key, redirectionURL);
+				modifiedParams = true;
+			}
+		}
+	}
+	else if (p_p_id) {
+		searchParams.set(`_${p_p_id}_${redirect}`, redirectionURL);
+		searchParams.set(`_${p_p_id}_${backURL}`, redirectionURL);
+
+		modifiedParams = true;
+	}
+
+	if (!modifiedParams) {
+		return replacedURL;
+	}
+
+	return (
+		replacedURL.slice(0, queryIndex) +
+		'?' +
+		searchParams.toString() +
+		(hashIndex > -1 ? replacedURL.slice(hashIndex) : '')
+	);
 };
 
 export default formatActionURL;

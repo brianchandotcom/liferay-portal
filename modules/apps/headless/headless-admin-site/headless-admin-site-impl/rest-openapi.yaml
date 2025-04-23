@@ -281,7 +281,7 @@ components:
                             $ref: "#/components/schemas/FragmentImage"
                             # @review
                             description:
-                                The background fragment image of the page section.
+                                The background fragment image of the container page element.
                         contentVisibility:
                             # @review
                             description:
@@ -310,16 +310,16 @@ components:
                             $ref: "#/components/schemas/FragmentLink"
                             # @review
                             description:
-                                The fragment link of the page section.
+                                The fragment link of the container page element.
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of the page section.
+                                The fragment style of the container page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of the page section.
+                                A list of fragment viewports of the container page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
@@ -328,12 +328,12 @@ components:
                         indexed:
                             # @review
                             description:
-                                A flag that indicates whether the page section is indexed or not.
+                                A flag that indicates whether the container page element is indexed or not.
                             type: boolean
                         layout:
                             # @review
                             description:
-                                the page container's layout.
+                                the container page element's layout.
                             properties:
                                 containerType:
                                     # @review
@@ -354,11 +354,11 @@ components:
                         name:
                             # @review
                             description:
-                                The custom name of a Page section.
+                                The custom name of a container page element.
                             type: string
             # @review
             description:
-                The page element definition of a section.
+                The page element definition of a container.
             type: object
         ContentPageSettings:
             allOf:
@@ -950,7 +950,7 @@ components:
                             # @review
                             description:
                                 The reference to the fragment composition that will be used to generate the page element
-                                of type section that will be added.
+                                of type container that will be added.
             # @review
             description:
                 The page element definition of a fragment composition instance.

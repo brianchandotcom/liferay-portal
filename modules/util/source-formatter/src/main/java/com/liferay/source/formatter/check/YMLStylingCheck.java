@@ -73,7 +73,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 			unquotedValue = StringUtil.replace(unquotedValue, "''", "'");
 			unquotedValue = StringUtil.replace(unquotedValue, "\"", "\\\"");
 
-			return CharPool.QUOTE + unquotedValue + CharPool.QUOTE;
+			s = CharPool.QUOTE + unquotedValue + CharPool.QUOTE;
 		}
 
 		if ((s.charAt(0) == CharPool.QUOTE) &&

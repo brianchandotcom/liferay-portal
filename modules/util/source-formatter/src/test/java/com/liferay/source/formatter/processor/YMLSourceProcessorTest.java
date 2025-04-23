@@ -38,6 +38,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testLongLinesCheck() throws Exception {
+		test("ExceedMaxLineLength.testyaml");
+	}
+
+	@Test
 	public void testSortDefinitions() throws Exception {
 		test("SortDefinitions.testyaml");
 	}
@@ -52,15 +57,6 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("SortFeatureFlags.testyaml");
 	}
 
-	//
-
-	// 	@Test
-
-	//	public void testLongLinesCheck() throws Exception {
-	//		test("ExceedMaxLineLength.testyaml");
-	//	}
-	//
-	//
 	@Test
 	public void testSortInPaths() throws Exception {
 		test("SortInPaths.testyaml");
@@ -75,13 +71,5 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testSortParameters() throws Exception {
 		test("SortParameters.testyaml");
 	}
-
-	//
-
-	// 	@Test
-
-	//	public void testStylingCheck() throws Exception {
-	//		test("StylingCheck.testyaml");
-	//	}
 
 }

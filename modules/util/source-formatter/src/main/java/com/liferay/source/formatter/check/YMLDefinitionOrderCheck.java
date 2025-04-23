@@ -15,8 +15,6 @@ import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,8 +33,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith(".travis.yml")) {
 			return content;

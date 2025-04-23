@@ -38,7 +38,7 @@ export class WorkflowTaskDetailsPage {
 		this.activitiesButton = page.getByRole('button', {name: 'Activities'});
 		this.approveMenuItem = page.getByRole('menuitem', {name: 'approve'});
 		this.assignToDialogIFRAME = page.frameLocator(
-			`iframe[name="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}assignToDialog_iframe_"]`
+			`iframe[id="${MY_WORKFLOW_TASK_PORTLET_NAMESPACE}assignToDialog_iframe_"]`
 		);
 		this.assignToMenuItem = page.locator(
 			'button[data-title="Assign to..."]'

@@ -6,20 +6,11 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageCollectionItemDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageColumnDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageCollectionDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageFormStepDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageDropZoneDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageFragmentDropZoneDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageFormDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageFormStepContainerDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -418,12 +409,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
 		pageElement.setPosition(_position++);
-		
-		PageContainerDefinition pageContainerDefinition = new PageContainerDefinition();
+
+		PageContainerDefinition pageContainerDefinition =
+			new PageContainerDefinition();
+
 		pageContainerDefinition.setType(type);
+
 		pageContainerDefinition.setIndexed(Boolean.FALSE);
+
 		pageElement.setDefinition(pageContainerDefinition);
-		
+
 		return pageElement;
 	}
 
@@ -526,7 +521,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		randomPageElement.setDefinition(
 			new PageFragmentInstanceDefinition() {
 				{
-					setType(Type.FRAGMENT);
 					setFragmentReference(
 						new DefaultFragmentReference() {
 							{
@@ -534,6 +528,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 									() -> "BASIC_COMPONENT-heading");
 							}
 						});
+					setType(Type.FRAGMENT);
 				}
 			});
 

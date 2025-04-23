@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -67,7 +66,8 @@ public class PageElementTypeUtil {
 			PageDefinition.Type.FORM_STEP_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER
 		).put(
-			PageDefinition.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
+			PageDefinition.Type.FRAGMENT,
+			LayoutDataItemTypeConstants.TYPE_FRAGMENT
 		).put(
 			PageDefinition.Type.FRAGMENT_DROP_ZONE,
 			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE

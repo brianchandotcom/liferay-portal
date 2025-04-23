@@ -31,13 +31,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class KoroneikiService {
 
-	@CacheEvict(
-		allEntries = true, value = {"externalLinks", "productPurchases"}
-	)
-	@Scheduled(cron = "0 0 * * * *")
-	public void scheduledCacheEviction() throws Exception {
-	}
-
 	@Cacheable("externalLinks")
 	public List<ExternalLink> fetchExternalLinks(
 			String accountKey, int page, int pageSize)
@@ -62,6 +55,13 @@ public class KoroneikiService {
 		}
 
 		return Collections.emptyList();
+	}
+
+	@CacheEvict(
+		allEntries = true, value = {"externalLinks", "productPurchases"}
+	)
+	@Scheduled(cron = "0 0 * * * *")
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	@Cacheable("productPurchases")

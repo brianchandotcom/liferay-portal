@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -87,6 +88,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -666,6 +668,17 @@ public class ObjectEntryDTOConverter
 
 				return scope;
 			});
+		fileEntry.setThumbnailURL(
+			() -> {
+				String thumbnailURL = _dlURLHelper.getThumbnailSrc(
+					new LiferayFileEntry(dlFileEntry), null);
+
+				if (Validator.isNull(thumbnailURL)) {
+					return null;
+				}
+
+				return thumbnailURL;
+			});
 
 		return fileEntry;
 	}
@@ -1229,6 +1242,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private AuditEventLocalService _auditEventLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

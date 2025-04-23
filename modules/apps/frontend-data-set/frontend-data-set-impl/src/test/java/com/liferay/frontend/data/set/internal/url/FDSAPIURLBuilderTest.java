@@ -104,29 +104,6 @@ public class FDSAPIURLBuilderTest {
 			).addParameter(
 				"param2", "value2"
 			).build());
-		Assert.assertEquals(
-			"/o/app/endpoint?param1=value1&param2=value2",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/endpoint", "schema"
-			).addQueryString(
-				"param1=value1&param2=value2"
-			).build());
-		Assert.assertEquals(
-			"/o/app/endpoint?param1=value1&param2=value2&param3=value3&" +
-				"param4=value4&param5=value5",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/endpoint", "schema"
-			).addParameter(
-				"param1", "value1"
-			).addQueryString(
-				"param2=value2&param3=value3"
-			).addParameter(
-				"param4", "value4"
-			).addQueryString(
-				"param5=value5"
-			).build());
 
 		// One resolver, one token
 

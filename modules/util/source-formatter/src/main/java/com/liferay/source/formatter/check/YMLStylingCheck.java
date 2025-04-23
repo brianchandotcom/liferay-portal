@@ -75,13 +75,12 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 			if (unquotedValue.contains("\\") ||
 				unquotedValue.matches("\\d+(\\.\\d*)?") ||
-				unquotedValue.matches("[Ff]alse") ||
-				unquotedValue.matches("[Tt]rue") ||
 				unquotedValue.startsWith("#") ||
 				unquotedValue.startsWith("&") ||
 				unquotedValue.startsWith("*") ||
 				unquotedValue.startsWith("[") ||
-				unquotedValue.startsWith("{")) {
+				unquotedValue.startsWith("{") ||
+				_isBooleanValue(unquotedValue)) {
 
 				return s;
 			}
@@ -135,6 +134,20 @@ public class YMLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private boolean _isBooleanValue(String s) {
+		if (StringUtil.equalsIgnoreCase(s, "false") ||
+			StringUtil.equalsIgnoreCase(s, "no") ||
+			StringUtil.equalsIgnoreCase(s, "on") ||
+			StringUtil.equalsIgnoreCase(s, "off") ||
+			StringUtil.equalsIgnoreCase(s, "true") ||
+			StringUtil.equalsIgnoreCase(s, "yes")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

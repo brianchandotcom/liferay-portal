@@ -26,6 +26,17 @@
 	},
 	{
 		"classNames": [
+			"AccountGroupLocalService",
+			"AccountGroupLocalServiceUtil",
+			"AccountGroupService",
+			"AccountGroupServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
+		"issueKey": "LPD-7748",
+		"to": "fetchAccountGroupByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
 			"Product"
 		],
 		"from": "getConfiguration",

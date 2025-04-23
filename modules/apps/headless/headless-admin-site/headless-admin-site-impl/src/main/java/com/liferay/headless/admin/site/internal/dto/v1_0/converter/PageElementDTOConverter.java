@@ -124,7 +124,13 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
 
-			return new PageCollectionItemDefinition();
+			PageCollectionItemDefinition pageCollectionItemDefinition =
+				new PageCollectionItemDefinition();
+
+			pageCollectionItemDefinition.setType(
+				PageDefinition.Type.COLLECTION_ITEM);
+
+			return pageCollectionItemDefinition;
 		}
 
 		if (Objects.equals(
@@ -147,7 +153,12 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
-			return new PageDropZoneDefinition();
+			PageDropZoneDefinition pageDropZoneDefinition =
+				new PageDropZoneDefinition();
+
+			pageDropZoneDefinition.setType(PageDefinition.Type.DROP_ZONE);
+
+			return pageDropZoneDefinition;
 		}
 
 		if (Objects.equals(
@@ -162,7 +173,12 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP)) {
 
-			return new PageFormStepDefinition();
+			PageFormStepDefinition pageFormStepDefinition =
+				new PageFormStepDefinition();
+
+			pageFormStepDefinition.setType(PageDefinition.Type.FORM_STEP);
+
+			return pageFormStepDefinition;
 		}
 
 		if (Objects.equals(

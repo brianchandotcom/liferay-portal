@@ -235,7 +235,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				references: {
 					...state.references,
 					imagesToDelete: [
-						...state.references.imagesToDelete,
+						...(state?.references?.imagesToDelete || []),
 						action.payload,
 					],
 				},
@@ -532,7 +532,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 };
 
 export const NewAppContext = createContext<
-	[NewAppInitialState, (_param: AppActions) => void]
+	[NewAppInitialState, React.Dispatch<AppActions>]
 >([newAppInitialState, () => null]);
 
 type NewAppContextProviderProps = {
@@ -566,7 +566,10 @@ export default function NewAppContextProvider({
 			})
 		)
 			.then((response) =>
-				dispatch({payload: response, type: NewAppTypes.SET_CONTEXT})
+				dispatch({
+					payload: response,
+					type: NewAppTypes.SET_CONTEXT,
+				})
 			)
 			.catch(console.error);
 	}, [productId]);

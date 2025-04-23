@@ -94,7 +94,9 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	deleteAttachmentByExternalReferenceCode(externalReferenceCode: string) {
+	static async deleteAttachmentByExternalReferenceCode(
+		externalReferenceCode: string
+	) {
 		return fetcher.delete(
 			`/o/headless-commerce-admin-catalog/v1.0/attachment/by-externalReferenceCode/${externalReferenceCode}`
 		);
@@ -144,13 +146,13 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	async getOptions() {
+	static async getOptions() {
 		return fetcher<APIResponse<CommerceOption>>(
 			'/o/headless-commerce-admin-catalog/v1.0/options'
 		);
 	}
 
-	async getProduct(
+	static async getProduct(
 		productId: string | number,
 		searchParams = new URLSearchParams()
 	) {
@@ -174,13 +176,13 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	async getProductOptions(productId: number) {
+	static async getProductOptions(productId: number) {
 		return fetcher<APIResponse<ProductOption>>(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions?nestedFields=productOptionValues`
 		);
 	}
 
-	async getProductSkus(productId: string | number) {
+	static async getProductSkus(productId: string | number) {
 		return fetcher<APIResponse<SKU>>(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus`
 		);

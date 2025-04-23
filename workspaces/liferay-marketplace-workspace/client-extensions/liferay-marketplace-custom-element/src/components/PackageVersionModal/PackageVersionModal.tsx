@@ -14,7 +14,6 @@ import useListTypeDefinition from '../../hooks/useListTypeDefinition';
 import i18n from '../../i18n';
 import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import {ActionTypes} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
-
 interface PackageVersionModal {
 	appProductId: number;
 	currentVersions: string[];
@@ -39,7 +38,28 @@ export function PackageVersionModal({
 	const {data} = useListTypeDefinition('LIFERAY-VERSIONS');
 
 	const newVersions = useMemo(() => {
-		return data?.listTypeEntries?.map((entrie) => entrie.name).reverse();
+		return data?.listTypeEntries
+			.sort((a, b) => {
+				const aKey = a.key;
+				const bKey = b.key;
+
+				const isAQuarterly = /^\d{4}Q\d$/.test(aKey);
+				const isBQuarterly = /^\d{4}Q\d$/.test(bKey);
+
+				if (isAQuarterly && isBQuarterly) {
+					return bKey.localeCompare(aKey);
+				}
+
+				if (!isAQuarterly && !isBQuarterly) {
+					const aVersion = parseFloat(a.name);
+					const bVersion = parseFloat(b.name);
+
+					return bVersion - aVersion;
+				}
+
+				return isAQuarterly ? -1 : 1;
+			})
+			.map((version) => version.name);
 	}, [data?.listTypeEntries]);
 
 	const [versions, setVersions] = useState<string[]>([]);
@@ -162,6 +182,7 @@ export function PackageVersionModal({
 								checkboxVersions.forEach((version) =>
 									handleConfirmation(version)
 								);
+
 								onClose();
 							}}
 						>

@@ -199,7 +199,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				...state,
 				buildAppPackages: {
 					...state.buildAppPackages,
-					[versionName]: files,
+					[versionName]: files ?? state.buildAppPackages[versionName],
 				},
 			};
 		}

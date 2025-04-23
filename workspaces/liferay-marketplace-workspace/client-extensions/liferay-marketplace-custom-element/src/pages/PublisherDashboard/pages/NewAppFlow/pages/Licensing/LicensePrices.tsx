@@ -8,6 +8,7 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../../context/NewAppContext';
+import {ProductType} from '../../../../../../enums/Product';
 import {LicenseTier} from '../../../../../../enums/licenseTier';
 import {LicensePrice} from '../../../Apps/AppCreationFlow/AppContext/AppManageState';
 import IconButton from '../../../Apps/AppCreationFlow/InformLicensingTermsPage/components/IconButton';
@@ -16,7 +17,7 @@ import LicensePriceCard from '../../../Apps/AppCreationFlow/InformLicensingTerms
 const LicensePrices = () => {
 	const [
 		{
-			build: {cloudCompatible},
+			build: {appType},
 			licensing: {
 				prices: {developer: developerPrices, standard: standardPrices},
 			},
@@ -74,7 +75,7 @@ const LicensePrices = () => {
 				/>
 			</Section>
 
-			{!cloudCompatible && (
+			{appType !== ProductType.CLOUD && (
 				<Section
 					label="Developer License prices"
 					tooltip="Developer licenses are limited to 5 unique addresses and should not be used for full scale production deployments."

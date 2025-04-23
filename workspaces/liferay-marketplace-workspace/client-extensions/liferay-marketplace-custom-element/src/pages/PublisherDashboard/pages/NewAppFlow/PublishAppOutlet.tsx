@@ -105,7 +105,9 @@ const PublishAppOutlet = () => {
 						<pre>
 							{JSON.stringify(
 								(function () {
-									const _context = {...context};
+									const _context: Partial<typeof context> = {
+										...context,
+									};
 
 									delete _context.references;
 									delete _context._product;

@@ -42,7 +42,7 @@ export function NewAppUploadAppPackagesComponent({
 }: NewAppUploadAppPackagesComponentProps) {
 	const [
 		{
-			build: {appType, cloudCompatible, liferayPackages},
+			build: {appType, liferayPackages},
 		},
 		dispatch,
 	] = useNewAppContext();
@@ -126,7 +126,7 @@ export function NewAppUploadAppPackagesComponent({
 					acceptFileTypes={acceptFileTypes[appType]}
 					buttonText={i18n.translate('select-a-file')}
 					description={
-						cloudCompatible
+						appType === ProductType.CLOUD
 							? i18n.translate(
 									'only-zip-files-are-allowed-max-file-size-is-500-mb'
 								)

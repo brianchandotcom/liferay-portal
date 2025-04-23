@@ -1,0 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.util.PropsValues;
+
+/**
+ * @author Nícolas Moura
+ */
+public class LPD_40678 {
+
+	public void method(DLFileEntry dlFileEntry) {
+		if (!SetUtil.fromArray(PropsValues.MIME_TYPES_WEB_IMAGES).contains(dlFileEntry.getMimeType())) {
+			return dlFileEntry;
+		}
+	}
+
+}

@@ -8,7 +8,7 @@ package com.liferay.portal.struts;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.action.ActionUtil;
+import com.liferay.portal.action.UpdatePasswordActionUtil;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.PortletActiveException;
 import com.liferay.portal.kernel.exception.UserActiveException;
@@ -136,8 +136,9 @@ public class PortalRequestProcessor {
 				(user != null) && !user.isGuestUser() &&
 				user.isPasswordReset()) {
 
-				String updatePasswordURL = ActionUtil.generateUpdatePasswordURL(
-					httpServletRequest, user);
+				String updatePasswordURL =
+					UpdatePasswordActionUtil.generateUpdatePasswordURL(
+						httpServletRequest, user);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Update password url " + updatePasswordURL);

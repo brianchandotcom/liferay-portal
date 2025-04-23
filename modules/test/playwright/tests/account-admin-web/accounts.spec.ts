@@ -94,7 +94,13 @@ test('LPD-18484 Add account contact address', async ({
 	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await accountContactAddressPage.addAddressesButton.click();
-	await editAccountContactAddressPage.updateAddress('address1', 'city');
+	await editAccountContactAddressPage.updateAddress(
+		'city',
+		'United States',
+		getRandomString(),
+		'California',
+		'address1'
+	);
 
 	await expect(
 		page.getByText('Success:Your request completed successfully.')

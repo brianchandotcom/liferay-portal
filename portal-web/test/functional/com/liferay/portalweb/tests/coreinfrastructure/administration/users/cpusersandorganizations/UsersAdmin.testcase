@@ -1333,8 +1333,10 @@ definition {
 		User.addContactInformation(
 			city = "Chicago",
 			contactType = "add-address-link",
+			country = "United States",
 			makePrimary = "true",
 			postalCode = 60606,
+			region = "Illinois",
 			street1 = "205 West Wacker Dr");
 
 		User.viewIsPrimary(primaryValue = "205 West Wacker Dr");
@@ -1342,7 +1344,9 @@ definition {
 		User.addContactInformation(
 			city = "Raleigh",
 			contactType = "add-address-link",
+			country = "United States",
 			postalCode = 27607,
+			region = "North Carolina",
 			street1 = "4000 Westchase Blvd");
 
 		User.viewNotPrimary(primaryValue = "1400 Montefino Ave");

@@ -217,7 +217,7 @@ definition {
 
 		if (isSet(userAddressRegion)) {
 			Select(
-				locator1 = "Select#REGION",
+				locator1 = "Select#NEW_REGION",
 				value1 = ${userAddressRegion});
 		}
 
@@ -283,7 +283,7 @@ definition {
 
 			if (isSet(region)) {
 				Select(
-					locator1 = "Select#REGION",
+					locator1 = "Select#NEW_REGION",
 					value1 = ${region});
 			}
 

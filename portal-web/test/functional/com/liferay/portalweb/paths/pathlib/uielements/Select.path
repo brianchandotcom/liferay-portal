@@ -206,6 +206,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_REGION</td>
+	<td>//select[contains(@id,'regionId') or contains(@id,'addressRegionId')]</td>
+	 <td></td>
+</tr>
+<tr>
 	<td>REPORT_FORMAT</td>
 	<td>//select[contains(@id,'AdminPortlet_format')]</td>
 	<td></td>

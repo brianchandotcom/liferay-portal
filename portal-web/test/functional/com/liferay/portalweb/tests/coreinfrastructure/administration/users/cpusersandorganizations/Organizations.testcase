@@ -155,6 +155,14 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "Organization Name");
 
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "United States");
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = "California");
+
 		Button.clickSave();
 
 		Alert.viewRequestFailedToComplete();
@@ -439,6 +447,14 @@ definition {
 		Organization.openOrganizationsAdmin();
 
 		Organization.gotoEdit(orgName = "Organization Name");
+
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "United States");
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = "California");
 
 		Click(
 			key_vocabularyName = "Vocabulary Name 1",
@@ -998,6 +1014,14 @@ definition {
 
 		Organization.gotoEdit(orgName = "Organization Name 1");
 
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "United States");
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = "California");
+
 		AssetCategorization.addTag(tagName = "alpha");
 
 		PortletEntry.save();
@@ -1012,6 +1036,14 @@ definition {
 		Organization.openOrganizationsAdmin();
 
 		Organization.gotoEdit(orgName = "Organization Name 2");
+
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "United States");
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = "California");
 
 		AssetCategorization.addTag(tagName = "bravo");
 

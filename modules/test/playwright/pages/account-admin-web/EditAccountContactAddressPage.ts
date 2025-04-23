@@ -7,24 +7,39 @@ import {Locator, Page} from '@playwright/test';
 
 export class EditAccountContactAddressPage {
 	readonly addressDisplay: (addressContent: string) => Promise<Locator>;
-	readonly street1Input: Locator;
 	readonly cityInput: Locator;
+	readonly countrySelect: Locator;
 	readonly page: Page;
+	readonly postalCodeInput: Locator;
+	readonly regionSelect: Locator;
 	readonly saveButton: Locator;
+	readonly street1Input: Locator;
 
 	constructor(page: Page) {
 		this.addressDisplay = async (addressContent: string) => {
 			return this.page.getByText(addressContent);
 		};
-		this.street1Input = page.getByLabel('Street 1');
 		this.cityInput = page.getByLabel('City');
+		this.countrySelect = page.getByLabel('Country');
 		this.page = page;
+		this.postalCodeInput = page.getByLabel('Postal code');
+		this.regionSelect = page.getByLabel('Region');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.street1Input = page.getByLabel('Street 1');
 	}
 
-	async updateAddress(street1Input: string, cityInput: string) {
-		await this.street1Input.fill(street1Input);
-		await this.cityInput.fill(cityInput);
+	async updateAddress(
+		city: string,
+		country: string,
+		postalCode: string,
+		region: string,
+		street1: string
+	) {
+		await this.cityInput.fill(city);
+		await this.countrySelect.selectOption(country);
+		await this.postalCodeInput.fill(postalCode);
+		await this.regionSelect.selectOption(region);
+		await this.street1Input.fill(street1);
 		await this.saveButton.click();
 	}
 }

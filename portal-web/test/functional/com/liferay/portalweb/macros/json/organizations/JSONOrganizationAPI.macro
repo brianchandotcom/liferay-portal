@@ -32,7 +32,7 @@ definition {
 			var countryId = JSONCountry.getCountryId(countryName = ${organizationCountry});
 		}
 		else {
-			var countryId = 0;
+			var countryId = JSONCountry.getCountryId(countryName = "united states");
 		}
 
 		if (isSet(organizationRegion)) {
@@ -41,7 +41,9 @@ definition {
 				regionName = ${organizationRegion});
 		}
 		else {
-			var regionId = 0;
+			var regionId = JSONCountry.getRegionId(
+				countryName = "united states",
+				regionName = "California");
 		}
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -158,6 +158,14 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "Suborganization Name Edit");
 
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "United States");
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = "California");
+
 		Button.clickSave();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");

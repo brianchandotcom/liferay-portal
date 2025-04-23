@@ -592,7 +592,7 @@ definition {
 
 		if (isSet(editedRegion)) {
 			Select(
-				locator1 = "Select#REGION",
+				locator1 = "Select#NEW_REGION",
 				value1 = ${editedRegion});
 		}
 

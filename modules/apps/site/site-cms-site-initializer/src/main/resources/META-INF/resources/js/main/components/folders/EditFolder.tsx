@@ -7,6 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {Item} from '@clayui/multi-select/lib/types';
 import ClayToolbar from '@clayui/toolbar';
+import {useFormik} from 'formik';
 import React from 'react';
 
 import {FieldPicker, FieldText} from '../forms';
@@ -20,6 +21,22 @@ interface EditFolderProps {
 
 const EditFolder: React.FC<EditFolderProps> = ({description, name, space}) => {
 	const spaceItems: Item[] = [{label: space, value: space}];
+
+	const {errors, handleChange, values} = useFormik({
+		initialValues: {
+			folderDescription: description || '',
+			folderName: name,
+			folderSpace: space,
+		},
+		onSubmit: () => {},
+		validate: (values) =>
+			validate(
+				{
+					folderName: [required],
+				},
+				values
+			),
+	});
 
 	return (
 		<div className="edit-folder">
@@ -68,11 +85,13 @@ const EditFolder: React.FC<EditFolderProps> = ({description, name, space}) => {
 					</h3>
 
 					<FieldText
+						errorMessage={errors.folderName}
 						label={Liferay.Language.get('name')}
 						name="folderName"
+						onChange={handleChange}
 						required
 						type="input"
-						value={name}
+						value={values.folderName}
 					/>
 
 					<FieldPicker
@@ -81,14 +100,15 @@ const EditFolder: React.FC<EditFolderProps> = ({description, name, space}) => {
 						label={Liferay.Language.get('space')}
 						name="folderSpace"
 						required
-						selectedKey={space}
+						selectedKey={values.folderSpace}
 					/>
 
 					<FieldText
 						label={Liferay.Language.get('description')}
 						name="folderDescription"
+						onChange={handleChange}
 						type="textarea"
-						value={description}
+						value={values.folderDescription}
 					/>
 				</ClayForm>
 			</div>

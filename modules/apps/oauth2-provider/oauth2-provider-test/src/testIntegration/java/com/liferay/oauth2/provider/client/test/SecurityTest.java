@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -62,7 +62,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"SAMEORIGIN",
 			parseXFrameOptionsHeader(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -82,7 +82,7 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_request",
 			parseErrorParameter(
 				getCodeResponse(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
@@ -99,7 +99,8 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testPreventCSRFUsingPKCE() {
 		String authorizationCode = parseAuthorizationCodeString(
 			getCodeResponse(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCodePKCE"
@@ -129,7 +130,8 @@ public class SecurityTest extends BaseClientTestCase {
 
 		String responseState = parseStateString(
 			getCodeResponse(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
@@ -148,7 +150,7 @@ public class SecurityTest extends BaseClientTestCase {
 	@Test
 	public void testPreventOpenRedirect() {
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
@@ -169,7 +171,8 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testRedirectUriMustMatch() {
 		String authorizationCode = parseAuthorizationCodeString(
 			getCodeResponse(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
@@ -195,26 +198,26 @@ public class SecurityTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
 				Collections.singletonList("everything"));
 
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestApplicationCodePKCE",
+				companyId, _user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
 
 			Company company = CompanyLocalServiceUtil.getCompany(
-				defaultCompanyId);
+				companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, company.getGuestUser(),
+				companyId, company.getGuestUser(),
 				"oauthTestApplicationDefaultUser");
 		}
 
@@ -255,5 +258,7 @@ public class SecurityTest extends BaseClientTestCase {
 	protected String parseXFrameOptionsHeader(Response response) {
 		return response.getHeaderString("x-frame-options");
 	}
+
+	private static User _user;
 
 }

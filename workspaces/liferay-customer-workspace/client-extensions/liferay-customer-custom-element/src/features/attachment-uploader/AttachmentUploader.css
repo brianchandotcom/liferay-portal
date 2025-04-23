@@ -1,9 +1,21 @@
+.attachment-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 80vh;
+}
+
 .attachment-uploader {
 	width: 37.5rem;
 
 	.attach-input ::placeholder {
 		color: var(--color-neutral-4);
 		font-size: 1rem;
+	}
+
+	.attachment-title {
+		.lexicon-icon {
+			width: 0.375rem !important;
+		}
 	}
 
 	.attachment-uploader-support-text {

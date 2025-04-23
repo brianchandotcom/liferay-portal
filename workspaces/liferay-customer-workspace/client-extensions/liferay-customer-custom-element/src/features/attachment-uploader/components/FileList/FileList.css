@@ -55,25 +55,23 @@
 			width: 4.5rem;
 		}
 
-		.file-list-item-left-content-text {
-			.file-list-item-left-content-text-container {
-				display: flex;
-				flex-direction: column;
-			}
+		.file-list-item-left-content-text-container {
+			display: flex;
+			flex-direction: column;
+		}
 
-			.file-list-item-left-content-text-file-name {
-				color: #282934;
-				font-size: 1rem;
-				font-weight: 400;
-				line-height: 1.5rem;
-			}
+		.file-list-item-left-content-text-file-name {
+			color: var(--color-neutral-10);
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5rem;
+		}
 
-			.file-list-item-left-content-text-file-size {
-				color: #6c6c75;
-				font-size: 0.813rem;
-				font-weight: 400;
-				line-height: 1rem;
-			}
+		.file-list-item-left-content-text-file-size {
+			color: var(--color-neutral-7);
+			font-size: 0.813rem;
+			font-weight: 400;
+			line-height: 1rem;
 		}
 	}
 }

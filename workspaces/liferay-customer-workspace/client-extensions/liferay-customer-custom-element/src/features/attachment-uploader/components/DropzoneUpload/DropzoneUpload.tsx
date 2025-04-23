@@ -28,29 +28,40 @@ const DropzoneUpload = ({
 			maxFiles={1}
 			onDropAccepted={(files) => onDropAccepted(files[0])}
 		>
-			{({getRootProps, isDragActive}) => (
+			{({getInputProps, getRootProps, isDragActive}) => (
 				<div
 					className={classnames('dropzone-upload-container my-4', {
 						'dropzone-upload-container-active': isDragActive,
 					})}
 					{...getRootProps()}
 				>
+					<input {...getInputProps()} />
+
 					{showDocumentIcon && (
-						<div className="dropzone-upload-document-container">
-							<ClayIcon
-								aria-label="Document icon"
-								className="dropzone-upload-document-icon"
-								symbol="document-compressed"
-							/>
+						<div className="dropzone-upload-document">
+							<div className="dropzone-upload-document-container">
+								<ClayIcon
+									aria-label="Document icon"
+									className="dropzone-upload-document-icon"
+									symbol={
+										isDragActive
+											? 'document-image'
+											: 'document-compressed'
+									}
+								/>
+							</div>
 						</div>
 					)}
 
 					<div className="d-flex dropzone-upload-text-container">
-						<span className="dropzone-upload-text">{title}</span>
+						<span className="align-items-center d-flex dropzone-upload-text justify-align-center">
+							{title}
+						</span>
 
 						<Button
 							aria-label="Select file"
 							className="btn btn-outline-primary d-flex dropzone-upload-button ml-2"
+							type="button"
 						>
 							<span>{buttonText}</span>
 						</Button>

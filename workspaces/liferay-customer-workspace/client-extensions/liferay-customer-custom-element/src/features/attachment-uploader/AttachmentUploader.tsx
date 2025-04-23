@@ -5,6 +5,7 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
@@ -34,12 +35,15 @@ const AttachmentUploader = () => {
 			const response: Response =
 				(await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
-				).fetch(`/ticket-attachments/${ticketId}/complete-upload`, {
-					body: JSON.stringify({
-						zendeskTicketCommentBody: attachment?.comment,
-					}),
-					method: 'POST',
-				})) as unknown as Response;
+				).fetch(
+					`/ticket-attachments/${ticketAttachmentId}/complete-upload`,
+					{
+						body: JSON.stringify({
+							zendeskTicketCommentBody: attachment?.comment,
+						}),
+						method: 'POST',
+					}
+				)) as unknown as Response;
 
 			if (!response.ok) {
 				throw new Error(
@@ -50,7 +54,7 @@ const AttachmentUploader = () => {
 		catch (error) {
 			console.error(error);
 		}
-	}, [attachment?.comment, ticketId]);
+	}, [attachment?.comment, ticketAttachmentId]);
 
 	const initiateUpload = async (attachment: IAttachment) => {
 		try {
@@ -60,7 +64,7 @@ const AttachmentUploader = () => {
 				).fetch('/ticket-attachments/initiate-upload', {
 					body: JSON.stringify({
 						fileName: attachment.file.name,
-						fileSize: attachment.file.size,
+						fileSize: String(attachment.file.size),
 						zendeskTicketId: ticketId,
 					}),
 					method: 'POST',
@@ -141,8 +145,6 @@ const AttachmentUploader = () => {
 
 		if (ticketAttachmentId) {
 			completeUpload();
-
-			return;
 		}
 
 		if (gcsSessionURL) {
@@ -151,23 +153,29 @@ const AttachmentUploader = () => {
 	}, [
 		attachment,
 		completeUpload,
-		uploadFileToGcs,
 		gcsSessionURL,
 		ticketAttachmentId,
+		uploadFileToGcs,
 	]);
 
 	return (
-		<div className="container-attach">
+		<div className="attachment-container mt-4">
 			<div className="attachment-uploader">
-				<div className="d-flex mt-4 text-neutral-10">
-					<h2>{i18n.translate('attach-file-to-ticket')}</h2>
+				<div className="d-flex text-neutral-10">
+					<div className="h2">
+						{`${i18n.translate('attach-file-to-ticket')} #${ticketId}`}
+					</div>
 				</div>
 
 				<div className="mt-4">
 					<div>
-						<h5 className="text-neutral-9">
+						<div className="attachment-title h5 text-neutral-9">
 							{i18n.translate('attachment')}
-						</h5>
+
+							<span className="inline-item-after reference-mark text-warning">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</div>
 
 						<span className="text-neutral-8">
 							{i18n.translate(
@@ -177,25 +185,31 @@ const AttachmentUploader = () => {
 					</div>
 
 					{!attachment && (
-						<DropzoneUpload
-							buttonText={i18n.translate('select-a-file')}
-							onDropAccepted={_handleDropzoneOnDropAccepted}
-							title={i18n.translate('drag-and-drop-to-upload-or')}
-						/>
+						<div className="dropzone-upload">
+							<DropzoneUpload
+								buttonText={i18n.translate('select-a-file')}
+								onDropAccepted={_handleDropzoneOnDropAccepted}
+								title={i18n.translate(
+									'drag-and-drop-to-upload-or'
+								)}
+							/>
+						</div>
 					)}
 
 					{!!attachment && (
-						<FileList
-							attachment={attachment}
-							onDelete={() => {
-								setAttachment(undefined);
-							}}
-						/>
+						<div className="file-list-item">
+							<FileList
+								attachment={attachment}
+								onDelete={() => {
+									setAttachment(undefined);
+								}}
+							/>
+						</div>
 					)}
 
-					<h5 className="text-neutral-9">
+					<div className="h5 text-neutral-9">
 						{i18n.translate('leave-a-comment')}
-					</h5>
+					</div>
 
 					<div className="attach-input mb-4">
 						<ClayInput

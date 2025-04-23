@@ -77,7 +77,7 @@ components:
                         collectionItemConfig:
                             # @review
                             description:
-                                The page collection item's configuration.
+                                The collection item page element's configuration.
                             type: object
             # @review
             description:
@@ -92,7 +92,7 @@ components:
                         collectionViewports:
                             # @review
                             description:
-                                A list of viewports of the page collection.
+                                A list of viewports of the collection page element.
                             items:
                                 $ref: "#/components/schemas/CollectionViewport"
                             type: array
@@ -113,18 +113,18 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of the page collection.
+                                The fragment style of the collection page element.
                         fragmentViewports:
                             # @review
                             description:
-                                The fragment viewports of the page collection.
+                                The fragment viewports of the collection page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         layout:
                             # @review
                             description:
-                                the page collection's layout.
+                                the collection page element's layout.
                             properties:
                                 align:
                                     enum: [Baseline, Center, End, None, Start, Stretch]
@@ -139,33 +139,33 @@ components:
                         listItemStyle:
                             # @review
                             description:
-                                The style of a list of items in the page collection.
+                                The style of a list of items in the collection page element.
                             type: string
                         listStyle:
                             # @review
                             description:
-                                The style of a list in the page collection.
+                                The style of a list in the collection page element.
                             type: string
                         name:
                             # @review
                             description:
-                                The custom name of a Page Collection.
+                                The custom name of a collection page element.
                             type: string
                         numberOfColumns:
                             # @review
                             description:
-                                The number of columns in the page collection.
+                                The number of columns in the collection page element.
                             type: integer
                         numberOfItems:
                             # @review
                             description:
-                                The maximum number of items to display in the page collection when pagination is
+                                The maximum number of items to display in the collection page element when pagination is
                                 disabled.
                             type: integer
                         numberOfItemsPerPage:
                             # @review
                             description:
-                                The number of items per page in the page collection.
+                                The number of items per page in the collection page element.
                             type: integer
                         numberOfPages:
                             # @review
@@ -185,7 +185,7 @@ components:
                         templateKey:
                             # @review
                             description:
-                                The page collection's template key.
+                                The collection page element's template key.
                             type: string
             # @review
             description:
@@ -240,7 +240,7 @@ components:
                         columnViewports:
                             # @review
                             description:
-                                A list of column viewports of the page column definition.
+                                A list of column viewports of the column page element.
                             items:
                                 $ref: "#/components/schemas/ColumnViewport"
                             type: array
@@ -297,12 +297,12 @@ components:
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the fragment.
+                                Custom CSS that is applied on the container page element.
                             type: string
                         customCSSViewports:
                             # @review
                             description:
-                                The custom CSS viewports of the page collection.
+                                The custom CSS viewports of the container page element.
                             items:
                                 $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
@@ -661,7 +661,7 @@ components:
                         fragmentSettings:
                             # @review
                             description:
-                                The page drop zone's allowed or unallowed fragments.
+                                The drop zone page element's allowed or unallowed fragments.
                             oneOf:
                                 -   $ref: "#/components/schemas/FragmentSettingsAllowed"
                                 -   $ref: "#/components/schemas/FragmentSettingsUnallowed"
@@ -712,7 +712,7 @@ components:
                 numberOfSteps:
                     # @review
                     description:
-                        The page form's number of steps.
+                        The form page element's number of steps.
                     type: integer
             type: object            
         FormPageElementDefinition:
@@ -722,14 +722,14 @@ components:
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS classes that are applied to the page element.
+                                A list of CSS classes that are applied to the form page element.
                             items:
                                 type: string
                             type: array
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the page element.
+                                Custom CSS that is applied on the form page element.
                             type: string
                         customCSSViewports:
                             # @review
@@ -745,11 +745,11 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of a page form.
+                                The fragment style of a form page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of a page form.
+                                A list of fragment viewports of a form page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
@@ -761,7 +761,7 @@ components:
                         layout:
                             # @review
                             description:
-                                The page form's layout.
+                                The form page element's layout.
                             properties:
                                 align:
                                     enum: [Baseline, Center, End, None, Start, Stretch]
@@ -785,7 +785,7 @@ components:
                         name:
                             # @review
                             description:
-                                The custom name of of a page form.
+                                The custom name of a form page element.
                             type: string
             # @review
             description:
@@ -798,19 +798,19 @@ components:
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS classes that are applied to the page element.
+                                A list of CSS classes that are applied to the form step container page element.
                             items:
                                 type: string
                             type: array
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the page element.
+                                Custom CSS that is applied on the form step container page element.
                             type: string
                         customCSSViewports:
                             # @review
                             description:
-                                The custom CSS viewports of the page form.
+                                The custom CSS viewports of the form step container page element.
                             items:
                                 $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
@@ -818,18 +818,18 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of a page form.
+                                The fragment style of a form step container page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of a page form.
+                                A list of fragment viewports of a form step container page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         layout:
                             # @review
                             description:
-                                The page form's layout.
+                                The form step container page element's layout.
                             properties:
                                 align:
                                     enum: [Baseline, Center, End, None, Start, Stretch]
@@ -853,7 +853,7 @@ components:
                         name:
                             # @review
                             description:
-                                The custom name of of a page form.
+                                The custom name of a form step container page element.
                             type: string
             # @review
             description:
@@ -1201,38 +1201,38 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of the page fragment instance.
+                                The fragment style of the fragment instance page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of the page fragment instance.
+                                A list of fragment viewports of the fragment instance page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         indexed:
                             # @review
                             description:
-                                A flag that indicates whether the page fragment instance is indexed or not.
+                                A flag that indicates whether the fragment instance page element is indexed or not.
                             type: boolean
                         name:
                             # @review
                             description:
-                                The custom name of a fragment instance.
+                                The custom name of a fragment instance page element.
                             type: string
                         namespace:
                             # @review
                             description:
-                                The fragment instance's namespace.
+                                The fragment instance page element's namespace.
                             type: string
                         uuid:
                             # @review
                             description:
-                                A valid external identifier to reference this fragment instance.
+                                A valid external identifier to reference this fragment instance page element.
                             type: string
                         widgetInstances:
                             # @review
                             description:
-                                A list of widget instances within the fragment instance.
+                                A list of widget instances within the fragment instance page element.
                             items:
                                 $ref: "#/components/schemas/WidgetInstance"
                             type: array
@@ -2350,19 +2350,19 @@ components:
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS classes that are applied to the page row.
+                                A list of CSS classes that are applied to the row page element.
                             items:
                                 type: string
                             type: array
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the page row.
+                                Custom CSS that is applied on the row page element.
                             type: string
                         customCSSViewports:
                             # @review
                             description:
-                                The custom CSS viewports of the page row.
+                                The custom CSS viewports of the row page element.
                             items:
                                 $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
@@ -2370,55 +2370,55 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of the page row.
+                                The fragment style of the row page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of a page row.
+                                A list of fragment viewports of a row page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         gutters:
                             # @review
                             description:
-                                A flag that indicates whether the page row has gutters.
+                                A flag that indicates whether the row page element has gutters.
                             type: boolean
                         indexed:
                             # @review
                             description:
-                                A flag that indicates whether the page row is indexed or not.
+                                A flag that indicates whether the row page element is indexed or not.
                             type: boolean
                         modulesPerRow:
                             # @review
                             description:
-                                The page row's modules per row.
+                                The row page element's modules per row.
                             type: integer
                         name:
                             # @review
                             description:
-                                The custom name of a page row.
+                                The custom name of a row page element.
                             type: string
                         numberOfColumns:
                             # @review
                             description:
-                                The page row's number of columns.
+                                The row page element's number of columns.
                             type: integer
                         reverseOrder:
                             # @review
                             description:
-                                A flag that indicates whether the page row has reverse order.
+                                A flag that indicates whether the row page element has reverse order.
                             type: boolean
                         rowViewports:
                             # @review
                             description:
-                                A list of viewports of the page row.
+                                A list of viewports of the row page element.
                             items:
                                 $ref: "#/components/schemas/RowViewport"
                             type: array
                         verticalAlignment:
                             # @review
                             description:
-                                The vertical alignment property of the page row.
+                                The vertical alignment property of the row page element.
                             type: string
             # @review
             description:
@@ -2968,19 +2968,19 @@ components:
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS classes that are applied to the element.
+                                A list of CSS classes that are applied to the widget instance page element.
                             items:
                                 type: string
                             type: array
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the fragment.
+                                Custom CSS that is applied on the widget instance page element.
                             type: string
                         customCSSViewports:
                             # @review
                             description:
-                                The custom CSS viewports of the page collection.
+                                The custom CSS viewports of the widget instance page element.
                             items:
                                 $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
@@ -2988,18 +2988,18 @@ components:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of the page widget instance.
+                                The fragment style of the widget instance page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of the page widget instance.
+                                A list of fragment viewports of the widget instance page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         name:
                             # @review
                             description:
-                                The custom name of a page widget instance.
+                                The custom name of a widget instance page element.
                             type: string
                         widgetInstance:
                             $ref: "#/components/schemas/WidgetInstance"

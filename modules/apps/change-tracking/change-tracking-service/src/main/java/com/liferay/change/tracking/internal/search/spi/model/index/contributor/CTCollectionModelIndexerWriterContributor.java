@@ -9,6 +9,8 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
@@ -37,18 +39,6 @@ public class CTCollectionModelIndexerWriterContributor
 		BatchIndexingActionable batchIndexingActionable,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		if (!CTCollectionThreadLocal.isProductionMode()) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Skip indexing of ", CTCollection.class.getName(),
-						" because this can only be performed in production ",
-						"mode"));
-			}
-
-			return;
-		}
-
 		batchIndexingActionable.setPerformActionMethod(
 			(CTCollection ctCollection) -> batchIndexingActionable.addDocuments(
 				modelIndexerWriterDocumentHelper.getDocument(ctCollection)));
@@ -56,9 +46,25 @@ public class CTCollectionModelIndexerWriterContributor
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_ctCollectionLocalService.getIndexableActionableDynamicQuery();
+
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Restricting indexable results of ",
+						CTCollection.class.getName(), " because this can only ",
+						"be performed in production mode"));
+			}
+
+			indexableActionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> dynamicQuery.add(
+					RestrictionsFactoryUtil.eq("ctCollectionId", -1L)));
+		}
+
 		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_ctCollectionLocalService.getIndexableActionableDynamicQuery());
+			getBatchIndexingActionable(indexableActionableDynamicQuery);
 	}
 
 	@Override

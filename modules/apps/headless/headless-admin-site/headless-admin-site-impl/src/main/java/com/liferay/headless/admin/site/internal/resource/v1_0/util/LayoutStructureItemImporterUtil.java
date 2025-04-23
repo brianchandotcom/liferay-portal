@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.CollectionItemLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.CollectionLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.ColumnLayoutStructureItemImporter;
@@ -33,11 +32,13 @@ public class LayoutStructureItemImporterUtil {
 		return _layoutStructureItemImporters.get(type);
 	}
 
-	private static final EnumMap<PageDefinition.Type, LayoutStructureItemImporter>
-		_layoutStructureItemImporters;
+	private static final EnumMap
+		<PageDefinition.Type, LayoutStructureItemImporter>
+			_layoutStructureItemImporters;
 
 	static {
-		_layoutStructureItemImporters = new EnumMap<>(PageDefinition.Type.class);
+		_layoutStructureItemImporters = new EnumMap<>(
+			PageDefinition.Type.class);
 
 		_layoutStructureItemImporters.put(
 			PageDefinition.Type.COLLECTION,
@@ -46,7 +47,8 @@ public class LayoutStructureItemImporterUtil {
 			PageDefinition.Type.COLLECTION_ITEM,
 			new CollectionItemLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
-			PageDefinition.Type.COLUMN, new ColumnLayoutStructureItemImporter());
+			PageDefinition.Type.COLUMN,
+			new ColumnLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageDefinition.Type.CONTAINER,
 			new ContainerLayoutStructureItemImporter());

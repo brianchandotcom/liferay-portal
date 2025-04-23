@@ -18,7 +18,6 @@ import com.liferay.headless.admin.site.dto.v1_0.PageFormStepDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentDropZoneDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -109,7 +108,8 @@ public class PageElementDTOConverter
 		};
 	}
 
-	private PageDefinition _getDefinition(LayoutStructureItem layoutStructureItem)
+	private PageDefinition _getDefinition(
+			LayoutStructureItem layoutStructureItem)
 		throws Exception {
 
 		if (Objects.equals(

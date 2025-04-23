@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
@@ -17,7 +16,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -197,27 +195,38 @@ public class PageExperienceResourceTest
 
 		pageExperience.setPageElements(
 			new PageElement[] {
-				new PageElement() {{
-					setPageElements(new PageElement[0]);
-					setPosition(0);
-					setDefinition(new PageContainerDefinition() {{
-						setType(PageDefinition.Type.CONTAINER);
-						setIndexed(true);
-					}});
-				}},
-				new PageElement() {{
-					setPageElements(new PageElement[0]);
-					setPosition(1);
-					setDefinition(new PageContainerDefinition() {{
-						setType(PageDefinition.Type.CONTAINER);
-						setIndexed(true);
-					}});
-				}}
+				new PageElement() {
+					{
+						setDefinition(
+							new PageContainerDefinition() {
+								{
+									setIndexed(true);
+									setType(PageDefinition.Type.CONTAINER);
+								}
+							});
+						setPageElements(new PageElement[0]);
+						setPosition(0);
+					}
+				},
+				new PageElement() {
+					{
+						setDefinition(
+							new PageContainerDefinition() {
+								{
+									setIndexed(true);
+									setType(PageDefinition.Type.CONTAINER);
+								}
+							});
+						setPageElements(new PageElement[0]);
+						setPosition(1);
+					}
+				}
 			});
 
 		pageExperience.setSegmentExternalReferenceCode(
 			SegmentsTestUtil.addSegmentsEntry(
-				testGroup.getGroupId()).getSegmentsEntryKey());
+				testGroup.getGroupId()
+			).getSegmentsEntryKey());
 
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());

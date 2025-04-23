@@ -204,7 +204,7 @@ public class FormConfig implements Serializable {
 	private Supplier<FormType> _formTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page form's number of steps."
+		description = "The form page element's number of steps."
 	)
 	public Integer getNumberOfSteps() {
 		if (_numberOfStepsSupplier != null) {
@@ -239,7 +239,7 @@ public class FormConfig implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The page form's number of steps.")
+	@GraphQLField(description = "The form page element's number of steps.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfSteps;
 

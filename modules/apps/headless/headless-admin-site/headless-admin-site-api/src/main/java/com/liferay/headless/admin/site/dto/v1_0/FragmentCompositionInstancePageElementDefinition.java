@@ -59,7 +59,7 @@ public class FragmentCompositionInstancePageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The reference to the fragment composition that will be used to generate the page elment of type section that will be added."
+		description = "The reference to the fragment composition that will be used to generate the page element of type container that will be added."
 	)
 	@Valid
 	public ItemExternalReference getFragmentComposition() {
@@ -99,7 +99,7 @@ public class FragmentCompositionInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The reference to the fragment composition that will be used to generate the page elment of type section that will be added."
+		description = "The reference to the fragment composition that will be used to generate the page element of type container that will be added."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ItemExternalReference fragmentComposition;

@@ -103,7 +103,7 @@ public class CollectionPageElementDefinition
 	private Supplier<CollectionReference> _collectionReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of viewports of the page collection."
+		description = "A list of viewports of the collection page element."
 	)
 	@Valid
 	public CollectionViewport[] getCollectionViewports() {
@@ -142,7 +142,9 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of viewports of the page collection.")
+	@GraphQLField(
+		description = "A list of viewports of the collection page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionViewport[] collectionViewports;
 
@@ -285,7 +287,7 @@ public class CollectionPageElementDefinition
 	private Supplier<EmptyCollectionConfig> _emptyCollectionConfigSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the page collection."
+		description = "The fragment style of the collection page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -321,7 +323,9 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of the page collection.")
+	@GraphQLField(
+		description = "The fragment style of the collection page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -329,7 +333,7 @@ public class CollectionPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment viewports of the page collection."
+		description = "The fragment viewports of the collection page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -367,7 +371,7 @@ public class CollectionPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The fragment viewports of the page collection."
+		description = "The fragment viewports of the collection page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -376,7 +380,7 @@ public class CollectionPageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the page collection's layout."
+		description = "the collection page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -412,7 +416,7 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "the page collection's layout.")
+	@GraphQLField(description = "the collection page element's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
@@ -420,7 +424,7 @@ public class CollectionPageElementDefinition
 	private Supplier<Layout> _layoutSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The style of a list of items in the page collection."
+		description = "The style of a list of items in the collection page element."
 	)
 	public String getListItemStyle() {
 		if (_listItemStyleSupplier != null) {
@@ -456,7 +460,7 @@ public class CollectionPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The style of a list of items in the page collection."
+		description = "The style of a list of items in the collection page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listItemStyle;
@@ -465,7 +469,7 @@ public class CollectionPageElementDefinition
 	private Supplier<String> _listItemStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The style of a list in the page collection."
+		description = "The style of a list in the collection page element."
 	)
 	public String getListStyle() {
 		if (_listStyleSupplier != null) {
@@ -500,7 +504,9 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The style of a list in the page collection.")
+	@GraphQLField(
+		description = "The style of a list in the collection page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listStyle;
 
@@ -508,7 +514,7 @@ public class CollectionPageElementDefinition
 	private Supplier<String> _listStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a Page Collection."
+		description = "The custom name of a collection page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -541,7 +547,7 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a Page Collection.")
+	@GraphQLField(description = "The custom name of a collection page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -549,7 +555,7 @@ public class CollectionPageElementDefinition
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of columns in the page collection."
+		description = "The number of columns in the collection page element."
 	)
 	public Integer getNumberOfColumns() {
 		if (_numberOfColumnsSupplier != null) {
@@ -584,7 +590,9 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The number of columns in the page collection.")
+	@GraphQLField(
+		description = "The number of columns in the collection page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
@@ -592,7 +600,7 @@ public class CollectionPageElementDefinition
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The maximum number of items to display in the page collection when pagination is disabled."
+		description = "The maximum number of items to display in the collection page element when pagination is disabled."
 	)
 	public Integer getNumberOfItems() {
 		if (_numberOfItemsSupplier != null) {
@@ -628,7 +636,7 @@ public class CollectionPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The maximum number of items to display in the page collection when pagination is disabled."
+		description = "The maximum number of items to display in the collection page element when pagination is disabled."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItems;
@@ -637,7 +645,7 @@ public class CollectionPageElementDefinition
 	private Supplier<Integer> _numberOfItemsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of items per page in the page collection."
+		description = "The number of items per page in the collection page element."
 	)
 	public Integer getNumberOfItemsPerPage() {
 		if (_numberOfItemsPerPageSupplier != null) {
@@ -673,7 +681,7 @@ public class CollectionPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The number of items per page in the page collection."
+		description = "The number of items per page in the collection page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItemsPerPage;
@@ -784,7 +792,7 @@ public class CollectionPageElementDefinition
 	private Supplier<PaginationType> _paginationTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page collection's template key."
+		description = "The collection page element's template key."
 	)
 	public String getTemplateKey() {
 		if (_templateKeySupplier != null) {
@@ -819,7 +827,7 @@ public class CollectionPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page collection's template key.")
+	@GraphQLField(description = "The collection page element's template key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateKey;
 

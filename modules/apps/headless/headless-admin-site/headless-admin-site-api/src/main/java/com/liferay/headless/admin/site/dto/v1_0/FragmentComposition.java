@@ -504,7 +504,7 @@ public class FragmentComposition implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment composition's page element, whose definition must be of type PageSectionDefinition."
+		description = "The fragment composition's page element, whose definition must be of type ContainerPageElementDefinition."
 	)
 	@Valid
 	public PageElement getPageElement() {
@@ -541,7 +541,7 @@ public class FragmentComposition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment composition's page element, whose definition must be of type PageSectionDefinition."
+		description = "The fragment composition's page element, whose definition must be of type ContainerPageElementDefinition."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement pageElement;

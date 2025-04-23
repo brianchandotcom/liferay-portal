@@ -36,18 +36,18 @@ paths:
         get:
             operationId: getOverviewContent
             parameters:
-                - in: query
-                  name: languageId
-                  schema:
-                      type: string
-                - in: query
-                  name: rangeKey
-                  schema:
-                      type: integer
-                - in: query
-                  name: spaceId
-                  schema:
-                      type: integer
+                -   in: query
+                    name: languageId
+                    schema:
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: spaceId
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:

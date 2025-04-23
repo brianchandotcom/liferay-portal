@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.io.IOException;
 
@@ -34,22 +35,20 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			boolean insideMultiline = false;
+			String blockStyleLeadingSpaces = null;
+			boolean insideBlockStyle = false;
 			String leadingSpaces = null;
 			String line = null;
-			String multilineLeadingSpaces = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith("{{- define ") && (sb.index() > 0)) {
 					sb.append("\n");
 				}
 
-				if (!insideMultiline) {
-					if (line.endsWith("|") || line.endsWith("|+") ||
-						line.endsWith("|-")) {
-
-						insideMultiline = true;
-						multilineLeadingSpaces = SourceUtil.getLeadingSpaces(
+				if (!insideBlockStyle) {
+					if (YMLSourceUtil.isBlockStyle(line)) {
+						insideBlockStyle = true;
+						blockStyleLeadingSpaces = SourceUtil.getLeadingSpaces(
 							line);
 					}
 
@@ -72,9 +71,9 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 				if (!Validator.isBlank(line) &&
 					(leadingSpaces.length() <=
-						multilineLeadingSpaces.length())) {
+						blockStyleLeadingSpaces.length())) {
 
-					insideMultiline = false;
+					insideBlockStyle = false;
 				}
 			}
 		}

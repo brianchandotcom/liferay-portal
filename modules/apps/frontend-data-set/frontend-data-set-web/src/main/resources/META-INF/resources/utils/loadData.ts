@@ -88,7 +88,7 @@ export async function loadData({
 
 	if (sorts && sorts.length) {
 		const updatedSorts = sorts.map((sort: TSort) => {
-			const key = sort.key?.includes(',LANG')
+			const key = sort.key?.includes(',')
 				? sort.key.split(',')[0]
 				: sort.key;
 

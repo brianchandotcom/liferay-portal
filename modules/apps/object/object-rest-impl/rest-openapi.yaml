@@ -54,6 +54,13 @@ components:
                     type: string
                 scope:
                     $ref: "#/components/schemas/Scope"
+                thumbnailURL:
+                    # @review
+                    description:
+                        optional field that specifies the thumbnail of the file to be used, can be embedded with
+                        nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)
+                    readOnly: true
+                    type: string
             type: object
         Folder:
             properties:

@@ -78,10 +78,9 @@ public abstract class BaseCMISModel {
 
 		AllowableActions allowableActions = cmisObject.getAllowableActions();
 
-		Set<Action> allowableActionsSet =
-			allowableActions.getAllowableActions();
+		Set<Action> actions = allowableActions.getAllowableActions();
 
-		return allowableActionsSet.contains(action);
+		return actions.contains(action);
 	}
 
 	protected abstract CMISRepository getCmisRepository();

@@ -130,39 +130,39 @@ public class CMISRepositoryUtil {
 		SessionFactoryImpl.newInstance();
 
 	static {
-		Set<String> defaultFilterSet = new HashSet<>();
+		Set<String> defaultFilters = new HashSet<>();
 
 		// Base
 
-		defaultFilterSet.add(PropertyIds.BASE_TYPE_ID);
-		defaultFilterSet.add(PropertyIds.CREATED_BY);
-		defaultFilterSet.add(PropertyIds.CREATION_DATE);
-		defaultFilterSet.add(PropertyIds.LAST_MODIFICATION_DATE);
-		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
-		defaultFilterSet.add(PropertyIds.NAME);
-		defaultFilterSet.add(PropertyIds.OBJECT_ID);
-		defaultFilterSet.add(PropertyIds.OBJECT_TYPE_ID);
+		defaultFilters.add(PropertyIds.BASE_TYPE_ID);
+		defaultFilters.add(PropertyIds.CREATED_BY);
+		defaultFilters.add(PropertyIds.CREATION_DATE);
+		defaultFilters.add(PropertyIds.LAST_MODIFICATION_DATE);
+		defaultFilters.add(PropertyIds.LAST_MODIFIED_BY);
+		defaultFilters.add(PropertyIds.NAME);
+		defaultFilters.add(PropertyIds.OBJECT_ID);
+		defaultFilters.add(PropertyIds.OBJECT_TYPE_ID);
 
 		// Document
 
-		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_LENGTH);
-		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_MIME_TYPE);
-		defaultFilterSet.add(PropertyIds.IS_VERSION_SERIES_CHECKED_OUT);
-		defaultFilterSet.add(PropertyIds.VERSION_LABEL);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_BY);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_ID);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_ID);
+		defaultFilters.add(PropertyIds.CONTENT_STREAM_LENGTH);
+		defaultFilters.add(PropertyIds.CONTENT_STREAM_MIME_TYPE);
+		defaultFilters.add(PropertyIds.IS_VERSION_SERIES_CHECKED_OUT);
+		defaultFilters.add(PropertyIds.VERSION_LABEL);
+		defaultFilters.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_BY);
+		defaultFilters.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_ID);
+		defaultFilters.add(PropertyIds.VERSION_SERIES_ID);
 
 		// Folder
 
-		defaultFilterSet.add(PropertyIds.PARENT_ID);
-		defaultFilterSet.add(PropertyIds.PATH);
+		defaultFilters.add(PropertyIds.PARENT_ID);
+		defaultFilters.add(PropertyIds.PATH);
 
 		// Operation context
 
 		_operationContext = new OperationContextImpl(
-			defaultFilterSet, false, true, false, IncludeRelationships.NONE,
-			null, false, "cmis:name ASC", true, 1000);
+			defaultFilters, false, true, false, IncludeRelationships.NONE, null,
+			false, "cmis:name ASC", true, 1000);
 	}
 
 }

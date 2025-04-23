@@ -824,9 +824,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Document document = (Document)session.getObject(objectId);
 
-			List<Document> documentVersions = document.getAllVersions();
+			List<Document> documents = document.getAllVersions();
 
-			document = documentVersions.get(0);
+			document = documents.get(0);
 
 			return document.getId();
 		}
@@ -1182,17 +1182,17 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Document oldVersion = null;
 
-			List<Document> documentVersions = document.getAllVersions();
+			List<Document> documents = document.getAllVersions();
 
-			for (Document currentVersion : documentVersions) {
-				String currentVersionLabel = currentVersion.getVersionLabel();
+			for (Document currentDocument : documents) {
+				String currentVersionLabel = currentDocument.getVersionLabel();
 
 				if (Validator.isNull(currentVersionLabel)) {
 					currentVersionLabel = DLFileEntryConstants.VERSION_DEFAULT;
 				}
 
 				if (currentVersionLabel.equals(version)) {
-					oldVersion = currentVersion;
+					oldVersion = currentDocument;
 
 					break;
 				}
@@ -1343,10 +1343,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 			AllowableActions allowableActions = document.getAllowableActions();
 
-			Set<Action> allowableActionsSet =
-				allowableActions.getAllowableActions();
+			Set<Action> actions = allowableActions.getAllowableActions();
 
-			if (allowableActionsSet.contains(Action.CAN_CHECK_OUT)) {
+			if (actions.contains(Action.CAN_CHECK_OUT)) {
 				checkOutDocumentObjectId = document.checkOut();
 
 				document = (Document)session.getObject(
@@ -1369,7 +1368,7 @@ public class CMISRepository extends BaseCmisRepository {
 					inputStream);
 			}
 
-			_checkUpdatable(allowableActionsSet, properties, contentStream);
+			_checkUpdatable(actions, properties, contentStream);
 
 			if (checkOutDocumentObjectId != null) {
 				boolean majorVersion = false;
@@ -1432,8 +1431,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			AllowableActions allowableActions = document.getAllowableActions();
 
-			Set<Action> allowableActionsSet =
-				allowableActions.getAllowableActions();
+			Set<Action> actions = allowableActions.getAllowableActions();
 
 			ContentStream contentStream = null;
 
@@ -1446,7 +1444,7 @@ public class CMISRepository extends BaseCmisRepository {
 					inputStream);
 			}
 
-			_checkUpdatable(allowableActionsSet, properties, contentStream);
+			_checkUpdatable(actions, properties, contentStream);
 
 			if (properties != null) {
 				document = (Document)document.updateProperties(properties);
@@ -1792,19 +1790,19 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	private void _checkUpdatable(
-			Set<Action> allowableActionsSet, Map<String, Object> properties,
+			Set<Action> actions, Map<String, Object> properties,
 			ContentStream contentStream)
 		throws PrincipalException {
 
 		if ((properties != null) &&
-			!allowableActionsSet.contains(Action.CAN_UPDATE_PROPERTIES)) {
+			!actions.contains(Action.CAN_UPDATE_PROPERTIES)) {
 
 			throw new PrincipalException.MustHavePermission(
 				0, Action.CAN_UPDATE_PROPERTIES.toString());
 		}
 
 		if ((contentStream != null) &&
-			!allowableActionsSet.contains(Action.CAN_SET_CONTENT_STREAM)) {
+			!actions.contains(Action.CAN_SET_CONTENT_STREAM)) {
 
 			throw new PrincipalException.MustHavePermission(
 				0, Action.CAN_SET_CONTENT_STREAM.toString());
@@ -1818,12 +1816,12 @@ public class CMISRepository extends BaseCmisRepository {
 			return;
 		}
 
-		List<Document> documentVersions = document.getAllVersions();
+		List<Document> documents = document.getAllVersions();
 
-		List<String> mappedIds = new ArrayList<>(documentVersions.size() + 1);
+		List<String> mappedIds = new ArrayList<>(documents.size() + 1);
 
-		for (Document version : documentVersions) {
-			mappedIds.add(version.getId());
+		for (Document currentDocument : documents) {
+			mappedIds.add(currentDocument.getId());
 		}
 
 		mappedIds.add(document.getId());
@@ -2080,10 +2078,9 @@ public class CMISRepository extends BaseCmisRepository {
 
 		AllowableActions allowableActions = document.getAllowableActions();
 
-		Set<Action> allowableActionsSet =
-			allowableActions.getAllowableActions();
+		Set<Action> actions = allowableActions.getAllowableActions();
 
-		return allowableActionsSet.contains(action);
+		return actions.contains(action);
 	}
 
 	private boolean _isAllVersionsSearchableSupported(Session session) {

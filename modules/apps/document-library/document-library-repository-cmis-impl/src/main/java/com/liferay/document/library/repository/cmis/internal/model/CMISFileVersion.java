@@ -157,13 +157,13 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 		Document document = null;
 
 		try {
-			List<Document> allVersions = _document.getAllVersions();
+			List<Document> documents = _document.getAllVersions();
 
-			if (allVersions.isEmpty()) {
+			if (documents.isEmpty()) {
 				document = _document;
 			}
 			else {
-				document = allVersions.get(0);
+				document = documents.get(0);
 			}
 		}
 		catch (CmisObjectNotFoundException cmisObjectNotFoundException) {

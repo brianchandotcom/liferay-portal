@@ -581,10 +581,9 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 
 		AllowableActions allowableActions = _document.getAllowableActions();
 
-		Set<Action> allowableActionsSet =
-			allowableActions.getAllowableActions();
+		Set<Action> actions = allowableActions.getAllowableActions();
 
-		if (allowableActionsSet.contains(Action.CAN_CHECK_IN)) {
+		if (actions.contains(Action.CAN_CHECK_IN)) {
 			return true;
 		}
 
@@ -739,16 +738,16 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 	}
 
 	protected List<Document> getAllVersions() throws PortalException {
-		if (_allVersions == null) {
+		if (_documents == null) {
 			try {
-				_allVersions = _document.getAllVersions();
+				_documents = _document.getAllVersions();
 			}
 			catch (CmisObjectNotFoundException cmisObjectNotFoundException) {
 				throw new NoSuchFileEntryException(cmisObjectNotFoundException);
 			}
 		}
 
-		return _allVersions;
+		return _documents;
 	}
 
 	@Override
@@ -769,9 +768,9 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 
 	private static final Log _log = LogFactoryUtil.getLog(CMISFileEntry.class);
 
-	private List<Document> _allVersions;
 	private final CMISRepository _cmisRepository;
 	private Document _document;
+	private List<Document> _documents;
 	private long _fileEntryId;
 	private FileVersion _latestFileVersion;
 	private final LockManager _lockManager;

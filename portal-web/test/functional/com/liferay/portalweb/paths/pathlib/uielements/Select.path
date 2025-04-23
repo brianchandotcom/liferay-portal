@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>REGION</td>
-	<td>//div[label[contains(.,'Region')]]/select</td>
+	<td>//div[label[contains(.,'Region')]]//select</td>
 	<td></td>
 </tr>
 <tr>

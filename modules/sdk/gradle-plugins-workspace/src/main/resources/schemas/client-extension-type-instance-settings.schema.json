@@ -1010,6 +1010,29 @@
 		},
 		{
 			"properties": {
+				"enabled": {
+					"default": false,
+					"title": "Enabled",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.commerce.product.configuration.CProductVersionConfiguration",
+					"title": "Product Versioning"
+				},
+				"versionThreshold": {
+					"default": 5,
+					"min": 0,
+					"title": "Versions to Retain",
+					"type": "number"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Product Versioning"
+		},
+		{
+			"properties": {
 				"allowedTargetKeys": {
 					"items": {
 						"type": "string"
@@ -4231,6 +4254,7 @@
 				"com.liferay.commerce.product.configuration.CPConfigurationListRelConfiguration",
 				"com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration",
 				"com.liferay.commerce.product.configuration.CPFriendlyURLConfiguration",
+				"com.liferay.commerce.product.configuration.CProductVersionConfiguration",
 				"com.liferay.commerce.qualifier.configuration.AccountEntryCommerceQualifierConfiguration",
 				"com.liferay.commerce.qualifier.configuration.AccountGroupCommerceQualifierConfiguration",
 				"com.liferay.commerce.qualifier.configuration.AddressCommerceQualifierConfiguration",

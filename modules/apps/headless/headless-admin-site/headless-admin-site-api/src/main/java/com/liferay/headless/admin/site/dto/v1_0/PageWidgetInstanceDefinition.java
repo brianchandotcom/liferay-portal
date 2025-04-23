@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageWidgetInstanceDefinition")
-public class PageWidgetInstanceDefinition implements Serializable {
+public class PageWidgetInstanceDefinition
+	extends PageDefinition implements Serializable {
 
 	public static PageWidgetInstanceDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
@@ -520,6 +521,22 @@ public class PageWidgetInstanceDefinition implements Serializable {
 			sb.append("\"widgetInstance\": ");
 
 			sb.append(String.valueOf(widgetInstance));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

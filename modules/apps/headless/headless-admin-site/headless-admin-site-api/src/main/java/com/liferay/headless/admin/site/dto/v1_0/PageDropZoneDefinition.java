@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageDropZoneDefinition")
-public class PageDropZoneDefinition implements Serializable {
+public class PageDropZoneDefinition
+	extends PageDefinition implements Serializable {
 
 	public static PageDropZoneDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(PageDropZoneDefinition.class, json);
@@ -149,6 +150,22 @@ public class PageDropZoneDefinition implements Serializable {
 			else {
 				sb.append(fragmentSettings);
 			}
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

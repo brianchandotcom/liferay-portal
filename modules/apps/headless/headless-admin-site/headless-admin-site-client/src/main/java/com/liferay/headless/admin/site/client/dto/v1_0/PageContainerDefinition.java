@@ -19,7 +19,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageContainerDefinition implements Cloneable, Serializable {
+public class PageContainerDefinition
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageContainerDefinition toDTO(String json) {
 		return PageContainerDefinitionSerDes.toDTO(json);

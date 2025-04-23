@@ -726,14 +726,6 @@ public abstract class BasePageElementResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (pageElement.getType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -905,16 +897,6 @@ public abstract class BasePageElementResourceTestCase {
 				if (!Objects.deepEquals(
 						pageElement1.getPosition(),
 						pageElement2.getPosition())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						pageElement1.getType(), pageElement2.getType())) {
 
 					return false;
 				}
@@ -1135,11 +1117,6 @@ public abstract class BasePageElementResourceTestCase {
 			sb.append(String.valueOf(pageElement.getPosition()));
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

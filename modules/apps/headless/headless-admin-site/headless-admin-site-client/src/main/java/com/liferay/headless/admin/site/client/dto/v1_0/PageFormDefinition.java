@@ -19,7 +19,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageFormDefinition implements Cloneable, Serializable {
+public class PageFormDefinition
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageFormDefinition toDTO(String json) {
 		return PageFormDefinitionSerDes.toDTO(json);

@@ -53,14 +53,7 @@ public class PageElementSerDes {
 
 			sb.append("\"definition\": ");
 
-			if (pageElement.getDefinition() instanceof String) {
-				sb.append("\"");
-				sb.append((String)pageElement.getDefinition());
-				sb.append("\"");
-			}
-			else {
-				sb.append(pageElement.getDefinition());
-			}
+			sb.append(String.valueOf(pageElement.getDefinition()));
 		}
 
 		if (pageElement.getExternalReferenceCode() != null) {
@@ -119,20 +112,6 @@ public class PageElementSerDes {
 			sb.append("\"position\": ");
 
 			sb.append(pageElement.getPosition());
-		}
-
-		if (pageElement.getType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(pageElement.getType());
-
-			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -194,13 +173,6 @@ public class PageElementSerDes {
 			map.put("position", String.valueOf(pageElement.getPosition()));
 		}
 
-		if (pageElement.getType() == null) {
-			map.put("type", null);
-		}
-		else {
-			map.put("type", String.valueOf(pageElement.getType()));
-		}
-
 		return map;
 	}
 
@@ -238,9 +210,6 @@ public class PageElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "position")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				return false;
-			}
 
 			return false;
 		}
@@ -252,7 +221,9 @@ public class PageElementSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "definition")) {
 				if (jsonParserFieldValue != null) {
-					pageElement.setDefinition((Object)jsonParserFieldValue);
+					pageElement.setDefinition(
+						PageDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -291,12 +262,6 @@ public class PageElementSerDes {
 				if (jsonParserFieldValue != null) {
 					pageElement.setPosition(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					pageElement.setType(
-						PageElement.Type.create((String)jsonParserFieldValue));
 				}
 			}
 		}

@@ -190,6 +190,20 @@ public class PageFormStepContainerDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (pageFormStepContainerDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageFormStepContainerDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -279,6 +293,15 @@ public class PageFormStepContainerDefinitionSerDes {
 				String.valueOf(pageFormStepContainerDefinition.getName()));
 		}
 
+		if (pageFormStepContainerDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(pageFormStepContainerDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -318,6 +341,9 @@ public class PageFormStepContainerDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -396,6 +422,13 @@ public class PageFormStepContainerDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFormStepContainerDefinition.setName(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageFormStepContainerDefinition.setType(
+						PageFormStepContainerDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

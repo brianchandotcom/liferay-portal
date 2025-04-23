@@ -1924,8 +1924,8 @@ components:
                     # @review
                     description:
                         The page element definition's type (collection, collection item, column, container, drop zone,
-                        form, form step, form step container, fragment, fragment composition, fragment drop zone, row,
-                        widget or widget section).
+                        form, form step, form step container, fragment, fragment composition, fragment drop zone, row or
+                        widget).
                     enum:
                         -   Collection
                         -   CollectionItem

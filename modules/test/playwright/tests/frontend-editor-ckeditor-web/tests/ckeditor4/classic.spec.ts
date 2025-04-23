@@ -123,7 +123,7 @@ test(
 			await astronautImage.click();
 
 			const astronautEditorImage = page
-				.getByRole('application', {name: 'Rich Text Editor,'})
+				.getByRole('application', {name: 'Rich Text Editor'})
 				.frameLocator('iframe[title="editor"]')
 				.locator('img')
 				.first();
@@ -132,14 +132,14 @@ test(
 			await astronautEditorImage.hover();
 
 			const dragAndDropButton = page
-				.getByRole('application', {name: 'Rich Text Editor,'})
+				.getByRole('application', {name: 'Rich Text Editor'})
 				.frameLocator('iframe[title="editor"]')
 				.getByTitle('Click and drag to move');
 
 			await dragAndDropButton.dragTo(ckeditorEditorBody);
 
 			const astronautImageElement = page
-				.getByRole('application', {name: 'Rich Text Editor,'})
+				.getByRole('application', {name: 'Rich Text Editor'})
 				.frameLocator('iframe[title="editor"]')
 				.locator('h1 > * > img.cke_widget_element');
 
@@ -148,7 +148,7 @@ test(
 
 		await test.step('Check image is not occupying the whole editor width', async () => {
 			const astronautImageElement = page
-				.getByRole('application', {name: 'Rich Text Editor,'})
+				.getByRole('application', {name: 'Rich Text Editor'})
 				.frameLocator('iframe[title="editor"]')
 				.locator('h1 > * > img.cke_widget_element');
 
@@ -158,7 +158,7 @@ test(
 				astronautImageElementBoundingBox.width;
 
 			const imageContainer = page
-				.getByRole('application', {name: 'Rich Text Editor,'})
+				.getByRole('application', {name: 'Rich Text Editor'})
 				.frameLocator('iframe[title="editor"]')
 				.locator('h1 > span.cke_widget_wrapper');
 

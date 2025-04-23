@@ -7,6 +7,10 @@ package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -33,6 +37,18 @@ public class CTRemoteModelIndexerWriterContributor
 		BatchIndexingActionable batchIndexingActionable,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Skip indexing of ", CTRemote.class.getName(),
+						" because this can only be performed in production ",
+						"mode."));
+			}
+
+			return;
+		}
+
 		batchIndexingActionable.setPerformActionMethod(
 			(CTRemote ctRemote) -> batchIndexingActionable.addDocuments(
 				modelIndexerWriterDocumentHelper.getDocument(ctRemote)));
@@ -49,6 +65,9 @@ public class CTRemoteModelIndexerWriterContributor
 	public long getCompanyId(CTRemote ctRemote) {
 		return ctRemote.getCompanyId();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTRemoteModelIndexerWriterContributor.class);
 
 	private final CTRemoteLocalService _ctRemoteLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory

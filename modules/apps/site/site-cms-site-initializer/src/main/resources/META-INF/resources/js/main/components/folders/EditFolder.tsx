@@ -5,10 +5,12 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
+import {Item} from '@clayui/multi-select/lib/types';
 import ClayToolbar from '@clayui/toolbar';
 import React from 'react';
 
-import {FieldText} from '../forms';
+import {FieldPicker, FieldText} from '../forms';
+import {required, validate} from '../forms/validations';
 
 interface EditFolderProps {
 	description?: string;
@@ -17,6 +19,8 @@ interface EditFolderProps {
 }
 
 const EditFolder: React.FC<EditFolderProps> = ({description, name, space}) => {
+	const spaceItems: Item[] = [{label: space, value: space}];
+
 	return (
 		<div className="edit-folder">
 			<ClayToolbar className="container-fluid" light>
@@ -71,13 +75,13 @@ const EditFolder: React.FC<EditFolderProps> = ({description, name, space}) => {
 						value={name}
 					/>
 
-					<FieldText
+					<FieldPicker
 						disabled
+						items={spaceItems}
 						label={Liferay.Language.get('space')}
 						name="folderSpace"
 						required
-						type="input"
-						value={space}
+						selectedKey={space}
 					/>
 
 					<FieldText

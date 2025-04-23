@@ -81,7 +81,7 @@ public class SystemFDSSerializer
 			return null;
 		}
 
-		return String.valueOf(systemFDSEntry.getAdditionalAPIURLParameters());
+		return systemFDSEntry.getAdditionalAPIURLParameters();
 	}
 
 	@Override
@@ -372,11 +372,6 @@ public class SystemFDSSerializer
 	}
 
 	private static final SystemFDSEntry _systemFDSEntry = new SystemFDSEntry() {
-
-		@Override
-		public String getAdditionalAPIURLParameters() {
-			return "";
-		}
 
 		public int getDefaultItemsPerPage() {
 			return SystemFDSEntry.super.getDefaultItemsPerPage();

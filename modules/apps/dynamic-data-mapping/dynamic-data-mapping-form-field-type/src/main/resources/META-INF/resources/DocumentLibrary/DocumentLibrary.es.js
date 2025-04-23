@@ -105,7 +105,6 @@ const DocumentLibrary = ({
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
 						<ClayInput
-							{...accessibleProps}
 							aria-label={Liferay.Language.get('file')}
 							className="bg-light field"
 							dir={Liferay.Language.direction[editingLanguageId]}
@@ -121,6 +120,7 @@ const DocumentLibrary = ({
 
 					<ClayInput.GroupItem append shrink>
 						<ClayButton
+							{...accessibleProps}
 							className="select-button"
 							disabled={readOnly}
 							displayType="secondary"
@@ -667,6 +667,9 @@ const Main = ({
 			) : (
 				<DocumentLibrary
 					accessibleProps={{
+						...((errorMessage || otherProps.tip) && {
+							'aria-describedby': `${id ?? name}_fieldFeedback`,
+						}),
 						'aria-required': otherProps.required,
 					}}
 					editingLanguageId={editingLanguageId}

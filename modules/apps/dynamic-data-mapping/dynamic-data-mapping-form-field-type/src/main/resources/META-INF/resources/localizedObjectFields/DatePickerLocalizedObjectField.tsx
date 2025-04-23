@@ -129,6 +129,10 @@ export default function DatePickerLocalizedObjectField(
 }
 
 export interface DatePickerLocalizedProps extends DatePickerBaseProps {
+	accessibleProps: {
+		'aria-describedby'?: string;
+		'aria-required': boolean;
+	};
 	availableLocales: AvailableLocale[];
 	fieldName: string;
 	onChange: any;

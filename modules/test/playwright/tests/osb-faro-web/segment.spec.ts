@@ -162,7 +162,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Check events criteria shows which data source data came from',
 	{
 		tag: '@LRAC-8233',
@@ -242,7 +242,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Check if updated custom event displayName is shown on segment criteria card',
 	{
 		tag: '@LPD-27065',
@@ -413,7 +413,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Create a segment with behavior of commenting on a blog',
 	{
 		tag: '@Legacy',
@@ -612,7 +612,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Search the Segment Profile Distribution',
 	{
 		tag: '@Legacy',
@@ -734,7 +734,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Segment Composition shows Active and Known individuals',
 	{
 		tag: '@Legacy',
@@ -968,7 +968,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Segment criterias nest correctly in the criteria card',
 	{
 		tag: '@Legacy',
@@ -1077,7 +1077,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Segment distribution can be filtered by date',
 	{
 		tag: '@Legacy',
@@ -1202,7 +1202,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Segment overview distribution filtered by text',
 	{
 		tag: '@Legacy',

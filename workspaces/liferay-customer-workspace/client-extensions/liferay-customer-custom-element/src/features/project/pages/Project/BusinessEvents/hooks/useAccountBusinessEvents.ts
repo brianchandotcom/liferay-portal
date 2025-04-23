@@ -51,7 +51,8 @@ export default function useAccountBusinessEvents(
 					newVersion: businessEvent.newLiferayVersion?.key
 						? businessEvent.newLiferayVersion?.name
 						: null,
-					targetGoLiveDateTime: businessEvent.targetGoLiveDateTime?.split('T')[0],
+					targetGoLiveDateTime:
+						businessEvent.targetGoLiveDateTime?.split('T')[0],
 				};
 			}
 		);
@@ -70,8 +71,9 @@ export default function useAccountBusinessEvents(
 				newVersion: businessEvent.newLiferayVersion?.key
 					? businessEvent.newLiferayVersion?.name
 					: null,
-				targetGoLiveDateTime: businessEvent.targetGoLiveDateTime?.split('T')[0],
-		});
+				targetGoLiveDateTime:
+					businessEvent.targetGoLiveDateTime?.split('T')[0],
+			});
 		}
 
 		const response: Response =

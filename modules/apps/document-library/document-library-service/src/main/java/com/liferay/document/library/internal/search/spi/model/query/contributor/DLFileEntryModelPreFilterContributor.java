@@ -174,27 +174,29 @@ public class DLFileEntryModelPreFilterContributor
 	private void _addSubtypeFilter(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		HashMap<String, List<AssetSubtypeIdentifier>> assetSubtypeIdentifiers =
-			(HashMap<String, List<AssetSubtypeIdentifier>>)
-				searchContext.getAttribute("assetSubtypeIdentifiers");
+		HashMap<String, List<AssetSubtypeIdentifier>>
+			assetSubtypeIdentifiersMap =
+				(HashMap<String, List<AssetSubtypeIdentifier>>)
+					searchContext.getAttribute("assetSubtypeIdentifiersMap");
 
-		if ((assetSubtypeIdentifiers == null) ||
-			!assetSubtypeIdentifiers.containsKey(DLFileEntry.class.getName())) {
+		if ((assetSubtypeIdentifiersMap == null) ||
+			!assetSubtypeIdentifiersMap.containsKey(
+				DLFileEntry.class.getName())) {
 
 			return;
 		}
 
 		BooleanFilter subtypeBooleanFilter = new BooleanFilter();
 
-		List<AssetSubtypeIdentifier> dlFileEntryTypeIdentifiers =
-			assetSubtypeIdentifiers.get(DLFileEntry.class.getName());
+		List<AssetSubtypeIdentifier> assetSubtypeIdentifiers =
+			assetSubtypeIdentifiersMap.get(DLFileEntry.class.getName());
 
-		for (AssetSubtypeIdentifier dlFileEntryIdentifier :
-				dlFileEntryTypeIdentifiers) {
+		for (AssetSubtypeIdentifier assetSubtypeIdentifier :
+				assetSubtypeIdentifiers) {
 
 			try {
 				String groupExternalReferenceCode =
-					dlFileEntryIdentifier.getGroupExternalReferenceCode();
+					assetSubtypeIdentifier.getGroupExternalReferenceCode();
 
 				if (groupExternalReferenceCode.equals(StringPool.BLANK)) {
 					subtypeBooleanFilter.addTerm("fileEntryTypeId", 0);
@@ -204,13 +206,13 @@ public class DLFileEntryModelPreFilterContributor
 
 				Group group =
 					_groupLocalService.getGroupByExternalReferenceCode(
-						dlFileEntryIdentifier.getGroupExternalReferenceCode(),
+						groupExternalReferenceCode,
 						searchContext.getCompanyId());
 
 				DLFileEntryType dlFileEntryType =
 					_dlFileEntryTypeLocalService.
 						getDLFileEntryTypeByExternalReferenceCode(
-							dlFileEntryIdentifier.
+							assetSubtypeIdentifier.
 								getSubtypeExternalReferenceCode(),
 							group.getGroupId());
 

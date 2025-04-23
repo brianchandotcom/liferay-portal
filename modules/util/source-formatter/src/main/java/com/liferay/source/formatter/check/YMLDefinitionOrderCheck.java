@@ -35,10 +35,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith(".travis.yml")) {
-			return content;
-		}
-
 		String trimmedContent = content.trim();
 
 		if (trimmedContent.startsWith("---") ||

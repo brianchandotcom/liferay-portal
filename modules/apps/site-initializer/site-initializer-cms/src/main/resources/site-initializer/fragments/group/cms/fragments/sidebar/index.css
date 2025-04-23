@@ -1,3 +1,8 @@
+.page-bar {
+	top: var(--control-menu-container-height);
+	z-index: 1000;
+}
+
 .sidebar-fragment {
 	--sidebar-fragment-height: calc(100vh - var(--control-menu-container-height, 0px));
 	--sidebar-fragment-width: 320px;

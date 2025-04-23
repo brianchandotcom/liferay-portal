@@ -933,7 +933,8 @@ components:
                     $ref: "#/components/schemas/PageElement"
                     # @review
                     description:
-                        The fragment composition's page element, whose definition must be of type PageSectionDefinition.
+                        The fragment composition's page element, whose definition must be of type
+                        ContainerPageElementDefinition.
                 thumbnail:
                     $ref: "#/components/schemas/ItemExternalReference"
                     # @review

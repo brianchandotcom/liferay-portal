@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.RowPageElementDefinition;
@@ -238,6 +239,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_randomPageElement(
 				new ContainerPageElementDefinition() {
 					{
+						setContentVisibility(StringPool.BLANK);
+						setHtmlProperties(new HtmlProperties());
 						setIndexed(Boolean.FALSE);
 						setType(Type.CONTAINER);
 					}
@@ -326,7 +329,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"externalReferenceCode", "parentExternalReferenceCode", "position"
+			"definition", "externalReferenceCode",
+			"parentExternalReferenceCode", "position"
 		};
 	}
 
@@ -335,6 +339,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _randomPageElement(
 			new ContainerPageElementDefinition() {
 				{
+					setContentVisibility(StringPool.BLANK);
+					setHtmlProperties(new HtmlProperties());
 					setIndexed(Boolean.FALSE);
 					setType(Type.CONTAINER);
 				}

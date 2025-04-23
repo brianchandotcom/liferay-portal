@@ -292,19 +292,22 @@ public class ObjectEntryResourceTest {
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_LIST_TYPE_ENTRY_KEY_1,
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_listTypeDefinition.isSystem());
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_LIST_TYPE_ENTRY_KEY_2,
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_listTypeDefinition.isSystem());
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_LIST_TYPE_ENTRY_KEY_3,
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			_listTypeDefinition.isSystem());
 
 		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 

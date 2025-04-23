@@ -2009,7 +2009,8 @@ public class DefaultObjectEntryManagerImplTest
 				listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				listTypeDefinition.isSystem());
 
 		ListEntry listEntry = new ListEntry() {
 			{
@@ -4596,7 +4597,8 @@ public class DefaultObjectEntryManagerImplTest
 							listTypeDefinition.getListTypeDefinitionId(),
 							RandomTestUtil.randomString(),
 							Collections.singletonMap(
-								LocaleUtil.US, RandomTestUtil.randomString()));
+								LocaleUtil.US, RandomTestUtil.randomString()),
+							listTypeDefinition.isSystem());
 
 					return Collections.singletonList(
 						new ListEntry() {
@@ -6138,7 +6140,8 @@ public class DefaultObjectEntryManagerImplTest
 				listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				listTypeDefinition.isSystem());
 
 		return listTypeEntry.getKey();
 	}

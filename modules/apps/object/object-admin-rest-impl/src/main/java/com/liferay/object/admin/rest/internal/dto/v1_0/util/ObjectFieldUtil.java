@@ -115,8 +115,8 @@ public class ObjectFieldUtil {
 
 				listTypeEntryLocalService.addListTypeEntry(
 					null, userId, listTypeDefinition.getListTypeDefinitionId(),
-					key,
-					Collections.singletonMap(LocaleUtil.getDefault(), key));
+					key, Collections.singletonMap(LocaleUtil.getDefault(), key),
+					listTypeDefinition.isSystem());
 			}
 		}
 
@@ -145,7 +145,8 @@ public class ObjectFieldUtil {
 			null, userId, listTypeDefinition.getListTypeDefinitionId(),
 			defaultObjectFieldSettingValue,
 			Collections.singletonMap(
-				LocaleUtil.getDefault(), defaultObjectFieldSettingValue));
+				LocaleUtil.getDefault(), defaultObjectFieldSettingValue),
+			listTypeDefinition.isSystem());
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries.values()) {
 			listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);

@@ -468,7 +468,8 @@ public class PostalAddressResourceTest
 				listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				listTypeDefinition.isSystem());
 
 		postalAddress.setAddressSubtype(listTypeEntry.getKey());
 
@@ -508,7 +509,8 @@ public class PostalAddressResourceTest
 				listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				listTypeDefinition.isSystem());
 
 		postalAddress.setAddressSubtype(listTypeEntry.getKey());
 

@@ -314,7 +314,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 		return _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey,
-			LocalizedMapUtil.getLocalizedMap(listTypeEntryKey));
+			LocalizedMapUtil.getLocalizedMap(listTypeEntryKey),
+			_listTypeDefinition.isSystem());
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)

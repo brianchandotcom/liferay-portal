@@ -63,13 +63,15 @@ public class MultiselectPicklistObjectFieldBusinessTypeTest {
 			listTypeDefinition.getListTypeDefinitionId(),
 			_LIST_TYPE_ENTRY_KEY_1,
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			listTypeDefinition.isSystem());
 		_listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(),
 			_LIST_TYPE_ENTRY_KEY_2,
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			listTypeDefinition.isSystem());
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(

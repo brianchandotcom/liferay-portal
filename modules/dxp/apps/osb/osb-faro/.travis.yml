@@ -21,8 +21,7 @@ jobs:
     include:
         -   name: Analysis
             script: ./gradlew checkSourceFormatting packageRunLint pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
-        -   name: Tests
-            after_success:
+        -   after_success:
                 -   test ${TRAVIS_BRANCH} = "7.1.x" &&
                     test ${TRAVIS_EVENT_TYPE} = "push" &&
                     test ${TRAVIS_REPO_SLUG} = "liferay/com-liferay-osb-faro-private" &&
@@ -31,6 +30,7 @@ jobs:
                     test ${TRAVIS_EVENT_TYPE} = "push" &&
                     test ${TRAVIS_REPO_SLUG} = "liferay/com-liferay-osb-faro-private" &&
                     ./gradlew packageRunCoveralls --no-daemon && ./gradlew pushAppDockerImage -Pdocker.image.tag=release --no-daemon
+            name: Tests
             script: ./gradlew packageRunWebpack packageRunTest test --no-daemon
 language: java
 os: linux

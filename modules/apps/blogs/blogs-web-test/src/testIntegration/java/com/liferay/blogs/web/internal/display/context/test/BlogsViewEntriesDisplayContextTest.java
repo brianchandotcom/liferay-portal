@@ -85,13 +85,18 @@ public class BlogsViewEntriesDisplayContextTest {
 		List<BlogsEntry> blogsEntries = new ArrayList<>();
 
 		for (int i = 0; i < SearchContainer.DEFAULT_DELTA; i++) {
-			blogsEntries.add(_addBlogsEntry("alpha_" + i));
+			blogsEntries.add(
+				_addBlogsEntry(RandomTestUtil.randomString(), 1900 + i));
 		}
 
-		_addBlogsEntry("alpha_" + SearchContainer.DEFAULT_DELTA);
+		_addBlogsEntry(
+			RandomTestUtil.randomString(),
+			1900 + SearchContainer.DEFAULT_DELTA);
 
 		_assertSearchContainer(
-			blogsEntries, _getSearchContainer(_getMockHttpServletRequest()));
+			blogsEntries,
+			_getSearchContainer(
+				_getMockHttpServletRequestWithOrderBy("display-date", "asc")));
 	}
 
 	@Test

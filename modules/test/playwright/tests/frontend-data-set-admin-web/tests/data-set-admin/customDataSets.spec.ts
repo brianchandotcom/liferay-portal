@@ -82,7 +82,7 @@ async function assertTableActionLabels(customDataSetsPage: CustomDataSetsPage) {
 
 	const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
-	await expect(tableItemActions).toEqual(expectedLabels);
+	expect(tableItemActions).toEqual(expectedLabels);
 }
 
 async function assertTableCellContent({
@@ -96,7 +96,7 @@ async function assertTableCellContent({
 }) {
 	await customDataSetsPage.table.bodyRows.first().waitFor();
 
-	const tableRowContent = await customDataSetsPage.table.bodyRows
+	const tableRowContent = customDataSetsPage.table.bodyRows
 		.nth(rowIndex)
 		.locator('td');
 
@@ -309,7 +309,7 @@ test('Can paginate created Data Sets', async ({
 	await assertTableRowsCount(customDataSetsPage, 1);
 
 	await test.step('Delete Data Set from current page', async () => {
-		const dataSetActionsButton = await page.getByRole('button', {
+		const dataSetActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});
 
@@ -664,11 +664,9 @@ test(
 		});
 
 		await test.step('Select the Delete Data Set action, then click Cancel button', async () => {
-			const datasetTestRow =
-				await customDataSetsPage.table.bodyRows.filter({
-					hasText:
-						tableSectionsWithSpecialCharactersDataSetConfig.name,
-				});
+			const datasetTestRow = customDataSetsPage.table.bodyRows.filter({
+				hasText: tableSectionsWithSpecialCharactersDataSetConfig.name,
+			});
 
 			await datasetTestRow
 				.first()
@@ -677,7 +675,7 @@ test(
 
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-			const deleteModal = await page.getByRole('dialog');
+			const deleteModal = page.getByRole('dialog');
 
 			await deleteModal.getByRole('button', {name: 'Cancel'}).click();
 
@@ -688,11 +686,9 @@ test(
 		});
 
 		await test.step('Select the Delete Data Set action, then click X button', async () => {
-			const datasetTestRow =
-				await customDataSetsPage.table.bodyRows.filter({
-					hasText:
-						tableSectionsWithSpecialCharactersDataSetConfig.name,
-				});
+			const datasetTestRow = customDataSetsPage.table.bodyRows.filter({
+				hasText: tableSectionsWithSpecialCharactersDataSetConfig.name,
+			});
 
 			await datasetTestRow
 				.first()
@@ -701,7 +697,7 @@ test(
 
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-			const deleteModal = await page.getByRole('dialog');
+			const deleteModal = page.getByRole('dialog');
 
 			await deleteModal.getByRole('button', {name: 'Close'}).click();
 

@@ -91,7 +91,7 @@ public class BlogsViewEntriesDisplayContextTest {
 		_addBlogsEntry("alpha_" + SearchContainer.DEFAULT_DELTA);
 
 		_assertSearchContainer(
-			_getSearchContainer(_getMockHttpServletRequest()), blogsEntries);
+			blogsEntries, _getSearchContainer(_getMockHttpServletRequest()));
 	}
 
 	@Test
@@ -107,9 +107,9 @@ public class BlogsViewEntriesDisplayContextTest {
 				ServiceContextTestUtil.getServiceContext()));
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithSearch(commentBody)),
-			Arrays.asList(blogsEntry));
+				_getMockHttpServletRequestWithSearch(commentBody)));
 	}
 
 	@Test
@@ -119,9 +119,9 @@ public class BlogsViewEntriesDisplayContextTest {
 		_addBlogsEntry(RandomTestUtil.randomString());
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithSearch(blogsEntry.getContent())),
-			Arrays.asList(blogsEntry));
+				_getMockHttpServletRequestWithSearch(blogsEntry.getContent())));
 	}
 
 	@Test
@@ -139,9 +139,9 @@ public class BlogsViewEntriesDisplayContextTest {
 		_addBlogsEntry(RandomTestUtil.randomString());
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithSearch(assetCategory.getName())),
-			Arrays.asList(blogsEntry));
+				_getMockHttpServletRequestWithSearch(assetCategory.getName())));
 	}
 
 	@Test
@@ -157,9 +157,9 @@ public class BlogsViewEntriesDisplayContextTest {
 		_addBlogsEntry(RandomTestUtil.randomString());
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithSearch(assetCategory.getName())),
-			Arrays.asList(blogsEntry));
+				_getMockHttpServletRequestWithSearch(assetCategory.getName())));
 	}
 
 	@Test
@@ -169,9 +169,9 @@ public class BlogsViewEntriesDisplayContextTest {
 		_addBlogsEntry(RandomTestUtil.randomString());
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithSearch(blogsEntry.getTitle())),
-			Arrays.asList(blogsEntry));
+				_getMockHttpServletRequestWithSearch(blogsEntry.getTitle())));
 	}
 
 	@Test
@@ -184,13 +184,13 @@ public class BlogsViewEntriesDisplayContextTest {
 			RandomTestUtil.randomString(), 1999);
 
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry3, blogsEntry1, blogsEntry2),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithOrderBy("display-date", "asc")),
-			Arrays.asList(blogsEntry3, blogsEntry1, blogsEntry2));
+				_getMockHttpServletRequestWithOrderBy("display-date", "asc")));
 		_assertSearchContainer(
+			Arrays.asList(blogsEntry2, blogsEntry1, blogsEntry3),
 			_getSearchContainer(
-				_getMockHttpServletRequestWithOrderBy("display-date", "desc")),
-			Arrays.asList(blogsEntry2, blogsEntry1, blogsEntry3));
+				_getMockHttpServletRequestWithOrderBy("display-date", "desc")));
 	}
 
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
@@ -268,8 +268,8 @@ public class BlogsViewEntriesDisplayContextTest {
 	}
 
 	private void _assertSearchContainer(
-		SearchContainer<BlogsEntry> searchContainer,
-		List<BlogsEntry> expectedBlogsEntries) {
+		List<BlogsEntry> expectedBlogsEntries,
+		SearchContainer<BlogsEntry> searchContainer) {
 
 		List<BlogsEntry> blogsEntries = searchContainer.getResults();
 

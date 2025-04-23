@@ -383,8 +383,8 @@ components:
                             type: array
             # @review
             description:
-                A page specification of a content page. A content page will contain 1 page specifications for its draft
-                layout and 1 page specifications for its published layout.
+                A page specification of a content page. A content page will contain 1 page specification for its draft
+                layout and 1 page specification for its published layout.
             type: object
         ContentPageTemplate:
             allOf:

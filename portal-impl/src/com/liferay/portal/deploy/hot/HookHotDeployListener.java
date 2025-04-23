@@ -2045,8 +2045,8 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_BOOLEAN = {
-		"auth.forward.by.last.path",
-		"dl.file.entry.drafts.enabled", "dl.store.antivirus.enabled",
+		"auth.forward.by.last.path", "dl.file.entry.drafts.enabled",
+		"dl.store.antivirus.enabled",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
 		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",

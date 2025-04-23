@@ -56,8 +56,7 @@ public class HookHotDeployListenerPropertiesTest {
 				Field propsValuesField = PropsValues.class.getField(
 					propsValuesFieldName);
 
-				Assert.assertTrue(
-					supportedPropertyNames.remove(propertyName));
+				Assert.assertTrue(supportedPropertyNames.remove(propertyName));
 				Assert.assertTrue(
 					Modifier.isFinal(propsValuesField.getModifiers()));
 			}

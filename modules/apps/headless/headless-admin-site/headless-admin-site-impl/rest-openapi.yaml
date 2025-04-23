@@ -1677,6 +1677,36 @@ components:
                         The segment's external reference code.
                     type: string
             type: object
+        FormConfig:
+            # @review
+            description:
+                The form page element definition form's configuration.
+            properties:
+                formReference:
+                    # @review
+                    description:
+                        The form reference.
+                    oneOf:
+                        -   $ref: "#/components/schemas/ClassSubtypeReference"
+                        -   $ref: "#/components/schemas/ContextReference"
+                formSuccessSubmissionResult:
+                    # @review
+                    description:
+                        The definition for the success message of the form.
+                    oneOf:
+                        -   $ref: "#/components/schemas/MessageFormSubmissionResult"
+                        -   $ref: "#/components/schemas/SitePageFormSubmissionResult"
+                        -   $ref: "#/components/schemas/URLFormSubmissionResult"
+                    type: object
+                formType:
+                    enum: [Multistep, Simple]
+                    type: string
+                numberOfSteps:
+                    # @review
+                    description:
+                        The page form's number of steps.
+                    type: integer
+            type: object            
         FormPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -1701,34 +1731,7 @@ components:
                                 $ref: "#/components/schemas/CustomCSSViewport"
                             type: array
                         formConfig:
-                            # @review
-                            description:
-                                The page form's configuration.
-                            properties:
-                                formReference:
-                                    # @review
-                                    description:
-                                        The form reference.
-                                    oneOf:
-                                        -   $ref: "#/components/schemas/ClassSubtypeReference"
-                                        -   $ref: "#/components/schemas/ContextReference"
-                                formSuccessSubmissionResult:
-                                    # @review
-                                    description:
-                                        The definition for the success message of the form.
-                                    oneOf:
-                                        -   $ref: "#/components/schemas/MessageFormSubmissionResult"
-                                        -   $ref: "#/components/schemas/SitePageFormSubmissionResult"
-                                        -   $ref: "#/components/schemas/URLFormSubmissionResult"
-                                    type: object
-                                formType:
-                                    enum: [Multistep, Simple]
-                                    type: string
-                                numberOfSteps:
-                                    # @review
-                                    description:
-                                        The page form's number of steps.
-                                    type: integer
+                            $ref: "#/components/schemas/FormConfig"
                             type: object
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"

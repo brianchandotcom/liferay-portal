@@ -128,33 +128,34 @@ public class JournalArticleModelPreFilterContributor
 			booleanFilter.addRequiredTerm("ddmStructureKey", ddmStructureKey);
 		}
 
-		HashMap<String, List<AssetSubtypeIdentifier>> assetSubtypeIdentifiers =
-			(HashMap<String, List<AssetSubtypeIdentifier>>)
-				searchContext.getAttribute("assetSubtypeIdentifiers");
+		HashMap<String, List<AssetSubtypeIdentifier>>
+			assetSubtypeIdentifiersMap =
+				(HashMap<String, List<AssetSubtypeIdentifier>>)
+					searchContext.getAttribute("assetSubtypeIdentifiersMap");
 
-		if ((assetSubtypeIdentifiers != null) &&
-			assetSubtypeIdentifiers.containsKey(
+		if ((assetSubtypeIdentifiersMap != null) &&
+			assetSubtypeIdentifiersMap.containsKey(
 				JournalArticle.class.getName())) {
 
 			BooleanFilter subtypeBooleanFilter = new BooleanFilter();
 
-			List<AssetSubtypeIdentifier> ddmStructureIdentifiers =
-				assetSubtypeIdentifiers.get(JournalArticle.class.getName());
+			List<AssetSubtypeIdentifier> assetSubtypeIdentifiers =
+				assetSubtypeIdentifiersMap.get(JournalArticle.class.getName());
 
-			for (AssetSubtypeIdentifier ddmStructureIdentifier :
-					ddmStructureIdentifiers) {
+			for (AssetSubtypeIdentifier assetSubtypeIdentifier :
+					assetSubtypeIdentifiers) {
 
 				try {
 					Group group =
 						_groupLocalService.getGroupByExternalReferenceCode(
-							ddmStructureIdentifier.
+							assetSubtypeIdentifier.
 								getGroupExternalReferenceCode(),
 							searchContext.getCompanyId());
 
 					DDMStructure ddmStructure =
 						_ddmStructureLocalService.
 							fetchStructureByExternalReferenceCode(
-								ddmStructureIdentifier.
+								assetSubtypeIdentifier.
 									getSubtypeExternalReferenceCode(),
 								group.getGroupId(),
 								_classNameLocalService.getClassNameId(

@@ -10,8 +10,8 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -50,7 +50,8 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		String token = getToken(
 			applicationClientId, null,
 			getAuthorizationCodeBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(token);
@@ -80,7 +81,8 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		String token = getToken(
 			applicationClientId, null,
 			getAuthorizationCodePKCEBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(token);
@@ -108,16 +110,16 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
 				Collections.singletonList("everything"), false);
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestApplicationCodePKCE",
+				companyId, _user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
@@ -140,5 +142,7 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		return webTarget;
 	}
+
+	private static User _user;
 
 }

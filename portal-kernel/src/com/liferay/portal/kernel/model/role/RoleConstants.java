@@ -53,7 +53,16 @@ public class RoleConstants {
 
 	public static final String POWER_USER = "Power User";
 
+	public static final String PUBLICATIONS_ADMIN = "Publications Admin";
+
+	public static final String PUBLICATIONS_EDITOR = "Publications Editor";
+
+	public static final String PUBLICATIONS_PUBLISHER =
+		"Publications Publisher";
+
 	public static final String PUBLICATIONS_USER = "Publications User";
+
+	public static final String PUBLICATIONS_VIEWER = "Publications Viewer";
 
 	public static final String SITE_ADMINISTRATOR = "Site Administrator";
 
@@ -69,7 +78,8 @@ public class RoleConstants {
 
 	public static final String[] SYSTEM_ROLES = {
 		ADMINISTRATOR, ANALYTICS_ADMINISTRATOR, GUEST, OWNER, POWER_USER,
-		PUBLICATIONS_USER, RoleConstants.USER
+		PUBLICATIONS_ADMIN, PUBLICATIONS_EDITOR, PUBLICATIONS_PUBLISHER,
+		PUBLICATIONS_USER, PUBLICATIONS_VIEWER, RoleConstants.USER
 	};
 
 	public static final String[] SYSTEM_SITE_ROLES = {

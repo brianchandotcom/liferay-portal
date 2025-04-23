@@ -83,6 +83,20 @@ public class PageColumnDefinitionSerDes {
 			sb.append(pageColumnDefinition.getSize());
 		}
 
+		if (pageColumnDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageColumnDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -120,6 +134,13 @@ public class PageColumnDefinitionSerDes {
 			map.put("size", String.valueOf(pageColumnDefinition.getSize()));
 		}
 
+		if (pageColumnDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(pageColumnDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -142,6 +163,9 @@ public class PageColumnDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "size")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -174,6 +198,13 @@ public class PageColumnDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageColumnDefinition.setSize(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageColumnDefinition.setType(
+						PageColumnDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

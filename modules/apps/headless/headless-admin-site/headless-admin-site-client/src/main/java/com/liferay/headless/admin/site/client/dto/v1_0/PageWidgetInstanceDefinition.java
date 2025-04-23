@@ -19,7 +19,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageWidgetInstanceDefinition implements Cloneable, Serializable {
+public class PageWidgetInstanceDefinition
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageWidgetInstanceDefinition toDTO(String json) {
 		return PageWidgetInstanceDefinitionSerDes.toDTO(json);

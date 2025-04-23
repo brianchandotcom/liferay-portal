@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class PageFormStepContainerDefinition
-	implements Cloneable, Serializable {
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageFormStepContainerDefinition toDTO(String json) {
 		return PageFormStepContainerDefinitionSerDes.toDTO(json);

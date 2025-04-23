@@ -56,7 +56,7 @@ public class CollectionItemPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page collection item's configuration."
+		description = "The collection item page element's configuration."
 	)
 	@Valid
 	public Object getCollectionItemConfig() {
@@ -92,7 +92,9 @@ public class CollectionItemPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page collection item's configuration.")
+	@GraphQLField(
+		description = "The collection item page element's configuration."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object collectionItemConfig;
 

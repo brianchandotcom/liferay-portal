@@ -54,7 +54,7 @@ public class RowPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of CSS classes that are applied to the page row."
+		description = "A list of CSS classes that are applied to the row page element."
 	)
 	public String[] getCssClasses() {
 		if (_cssClassesSupplier != null) {
@@ -90,7 +90,7 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of CSS classes that are applied to the page row."
+		description = "A list of CSS classes that are applied to the row page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
@@ -99,7 +99,7 @@ public class RowPageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the page row."
+		description = "Custom CSS that is applied on the row page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -134,7 +134,9 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "Custom CSS that is applied on the page row.")
+	@GraphQLField(
+		description = "Custom CSS that is applied on the row page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
@@ -142,7 +144,7 @@ public class RowPageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the page row."
+		description = "The custom CSS viewports of the row page element."
 	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
@@ -179,7 +181,9 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom CSS viewports of the page row.")
+	@GraphQLField(
+		description = "The custom CSS viewports of the row page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
@@ -187,7 +191,7 @@ public class RowPageElementDefinition
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the page row."
+		description = "The fragment style of the row page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -223,7 +227,7 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of the page row.")
+	@GraphQLField(description = "The fragment style of the row page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -231,7 +235,7 @@ public class RowPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of a page row."
+		description = "A list of fragment viewports of a row page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -268,7 +272,9 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of fragment viewports of a page row.")
+	@GraphQLField(
+		description = "A list of fragment viewports of a row page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
@@ -276,7 +282,7 @@ public class RowPageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page row has gutters."
+		description = "A flag that indicates whether the row page element has gutters."
 	)
 	public Boolean getGutters() {
 		if (_guttersSupplier != null) {
@@ -312,7 +318,7 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page row has gutters."
+		description = "A flag that indicates whether the row page element has gutters."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean gutters;
@@ -321,7 +327,7 @@ public class RowPageElementDefinition
 	private Supplier<Boolean> _guttersSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page row is indexed or not."
+		description = "A flag that indicates whether the row page element is indexed or not."
 	)
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
@@ -357,7 +363,7 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page row is indexed or not."
+		description = "A flag that indicates whether the row page element is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
@@ -366,7 +372,7 @@ public class RowPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page row's modules per row."
+		description = "The row page element's modules per row."
 	)
 	public Integer getModulesPerRow() {
 		if (_modulesPerRowSupplier != null) {
@@ -401,7 +407,7 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page row's modules per row.")
+	@GraphQLField(description = "The row page element's modules per row.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer modulesPerRow;
 
@@ -409,7 +415,7 @@ public class RowPageElementDefinition
 	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a page row."
+		description = "The custom name of a row page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -442,7 +448,7 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a page row.")
+	@GraphQLField(description = "The custom name of a row page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -450,7 +456,7 @@ public class RowPageElementDefinition
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page row's number of columns."
+		description = "The row page element's number of columns."
 	)
 	public Integer getNumberOfColumns() {
 		if (_numberOfColumnsSupplier != null) {
@@ -485,7 +491,7 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page row's number of columns.")
+	@GraphQLField(description = "The row page element's number of columns.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
@@ -493,7 +499,7 @@ public class RowPageElementDefinition
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page row has reverse order."
+		description = "A flag that indicates whether the row page element has reverse order."
 	)
 	public Boolean getReverseOrder() {
 		if (_reverseOrderSupplier != null) {
@@ -529,7 +535,7 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page row has reverse order."
+		description = "A flag that indicates whether the row page element has reverse order."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
@@ -538,7 +544,7 @@ public class RowPageElementDefinition
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of viewports of the page row."
+		description = "A list of viewports of the row page element."
 	)
 	@Valid
 	public RowViewport[] getRowViewports() {
@@ -574,7 +580,7 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of viewports of the page row.")
+	@GraphQLField(description = "A list of viewports of the row page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewport[] rowViewports;
 
@@ -582,7 +588,7 @@ public class RowPageElementDefinition
 	private Supplier<RowViewport[]> _rowViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The vertical alignment property of the page row."
+		description = "The vertical alignment property of the row page element."
 	)
 	public String getVerticalAlignment() {
 		if (_verticalAlignmentSupplier != null) {
@@ -618,7 +624,7 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The vertical alignment property of the page row."
+		description = "The vertical alignment property of the row page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;

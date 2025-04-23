@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page element definition of a section.",
+	description = "The page element definition of a container.",
 	value = "ContainerPageElementDefinition"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +55,7 @@ public class ContainerPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The background fragment image of the page section."
+		description = "The background fragment image of the container page element."
 	)
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
@@ -95,7 +95,7 @@ public class ContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The background fragment image of the page section."
+		description = "The background fragment image of the container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
@@ -104,7 +104,7 @@ public class ContainerPageElementDefinition
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Defines the content visibility of the container."
+		description = "The content visibility of the container."
 	)
 	public String getContentVisibility() {
 		if (_contentVisibilitySupplier != null) {
@@ -139,9 +139,7 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(
-		description = "Defines the content visibility of the container."
-	)
+	@GraphQLField(description = "The content visibility of the container.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentVisibility;
 
@@ -194,7 +192,7 @@ public class ContainerPageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the fragment."
+		description = "Custom CSS that is applied on the container page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -229,7 +227,9 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "Custom CSS that is applied on the fragment.")
+	@GraphQLField(
+		description = "Custom CSS that is applied on the container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
@@ -237,7 +237,7 @@ public class ContainerPageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the page collection."
+		description = "The custom CSS viewports of the container page element."
 	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
@@ -275,7 +275,7 @@ public class ContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The custom CSS viewports of the page collection."
+		description = "The custom CSS viewports of the container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
@@ -284,7 +284,7 @@ public class ContainerPageElementDefinition
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link of the page section."
+		description = "The fragment link of the container page element."
 	)
 	@Valid
 	public FragmentLink getFragmentLink() {
@@ -320,7 +320,9 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment link of the page section.")
+	@GraphQLField(
+		description = "The fragment link of the container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
@@ -328,7 +330,7 @@ public class ContainerPageElementDefinition
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the page section."
+		description = "The fragment style of the container page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -364,7 +366,9 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of the page section.")
+	@GraphQLField(
+		description = "The fragment style of the container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -372,7 +376,7 @@ public class ContainerPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of the page section."
+		description = "A list of fragment viewports of the container page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -410,7 +414,7 @@ public class ContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of the page section."
+		description = "A list of fragment viewports of the container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -462,7 +466,7 @@ public class ContainerPageElementDefinition
 	private Supplier<HtmlProperties> _htmlPropertiesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page section is indexed or not."
+		description = "A flag that indicates whether the container page element is indexed or not."
 	)
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
@@ -498,7 +502,7 @@ public class ContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page section is indexed or not."
+		description = "A flag that indicates whether the container page element is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
@@ -507,7 +511,7 @@ public class ContainerPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "the page container's layout."
+		description = "the container page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -543,7 +547,7 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "the page container's layout.")
+	@GraphQLField(description = "the container page element's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
@@ -551,7 +555,7 @@ public class ContainerPageElementDefinition
 	private Supplier<Layout> _layoutSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a Page section."
+		description = "The custom name of a container page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -584,7 +588,7 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a Page section.")
+	@GraphQLField(description = "The custom name of a container page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

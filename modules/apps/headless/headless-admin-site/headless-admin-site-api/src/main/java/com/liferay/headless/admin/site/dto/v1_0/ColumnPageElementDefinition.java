@@ -57,7 +57,7 @@ public class ColumnPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of column viewports of the page column definition."
+		description = "A list of column viewports of the column page element."
 	)
 	@Valid
 	public ColumnViewport[] getColumnViewports() {
@@ -95,7 +95,7 @@ public class ColumnPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of column viewports of the page column definition."
+		description = "A list of column viewports of the column page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewport[] columnViewports;

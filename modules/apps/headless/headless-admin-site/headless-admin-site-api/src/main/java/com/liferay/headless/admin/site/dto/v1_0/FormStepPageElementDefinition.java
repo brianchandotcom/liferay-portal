@@ -56,7 +56,7 @@ public class FormStepPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page form step's configuration."
+		description = "The form step's configuration."
 	)
 	@Valid
 	public Object getFormStepConfig() {
@@ -92,7 +92,7 @@ public class FormStepPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page form step's configuration.")
+	@GraphQLField(description = "The form step's configuration.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object formStepConfig;
 

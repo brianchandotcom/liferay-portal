@@ -14,9 +14,9 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalSer
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -65,7 +65,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 		String token = getToken(
 			"oauthTestApplicationCode", null,
 			getAuthorizationCodeBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				null),
 			this::parseTokenString);
 
 		Invocation.Builder webTarget1InvocationBuilder = authorize(
@@ -109,7 +110,7 @@ public class TOCTOUTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplicationCode", null,
 				getAuthorizationCodeBiFunction(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null, "everything.read"),
 				this::parseTokenString));
 
@@ -158,7 +159,7 @@ public class TOCTOUTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplicationCode", null,
 				getAuthorizationCodeBiFunction(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null),
 				this::parseTokenString));
 
@@ -213,12 +214,12 @@ public class TOCTOUTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			OAuth2Application oAuth2Application = createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
 				Collections.singletonList("everything.read"));
 
@@ -252,5 +253,7 @@ public class TOCTOUTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new SecurityTestPreparatorBundleActivator();
 	}
+
+	private static User _user;
 
 }

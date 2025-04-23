@@ -96,32 +96,6 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		}
 	}
 
-	private void _updateAccountHeatTags(String externalReferenceCode)
-		throws Exception {
-
-		int page = 1;
-
-		while (page > 0) {
-			JSONObject jsonObject = _getBusinessEventsJSONObject(
-				StringBundler.concat(
-					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
-					"and r_accountEntryToBusinessEvents_accountEntryERC eq '",
-					externalReferenceCode, "'"),
-				page, 500, "dateModified:asc");
-
-			_updateZendeskTickets(
-				_fetchZendeskOrganizationId(externalReferenceCode),
-				_getHighestHeatTag(jsonObject.getJSONArray("items")));
-
-			if (jsonObject.getInt("lastPage") == page) {
-				page = 0;
-			}
-			else {
-				page += 1;
-			}
-		}
-	}
-
 	@Scheduled(cron = "0 0 0 * * *")
 	public void scheduledHeatTagUpdate() throws Exception {
 		int page = 1;
@@ -202,6 +176,30 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			"liferay-customer-etc-spring-boot-oahs");
 	}
 
+	private JSONObject _getBusinessEventsJSONObject(
+			String filterString, int page, int pageSize, String sortString)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("/o/c/businessevents?page=");
+		sb.append(page);
+		sb.append("&pageSize=");
+		sb.append(pageSize);
+
+		if (Validator.isNotNull(filterString)) {
+			sb.append("&filter=");
+			sb.append(filterString);
+		}
+
+		if (Validator.isNotNull(sortString)) {
+			sb.append("&sort=");
+			sb.append(sortString);
+		}
+
+		return new JSONObject(get(_getAuthorization(), sb.toString()));
+	}
+
 	private String _getBusinessEventsSummary(JSONArray jsonArray) {
 		List<String> businessEvents = new ArrayList<>();
 
@@ -240,30 +238,6 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		return StringUtil.merge(businessEvents, "\n\n");
 	}
 
-	private JSONObject _getBusinessEventsJSONObject(
-			String filterString, int page, int pageSize, String sortString)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("/o/c/businessevents?page=");
-		sb.append(page);
-		sb.append("&pageSize=");
-		sb.append(pageSize);
-
-		if (Validator.isNotNull(filterString)) {
-			sb.append("&filter=");
-			sb.append(filterString);
-		}
-
-		if (Validator.isNotNull(sortString)) {
-			sb.append("&sort=");
-			sb.append(sortString);
-		}
-
-		return new JSONObject(get(_getAuthorization(), sb.toString()));
-	}
-
 	private String _getHeatTag(JSONObject jsonObject) {
 		String targetGoLiveDateTime = jsonObject.getString(
 			"targetGoLiveDateTime");
@@ -296,6 +270,32 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		}
 
 		return highestHeatTag;
+	}
+
+	private void _updateAccountHeatTags(String externalReferenceCode)
+		throws Exception {
+
+		int page = 1;
+
+		while (page > 0) {
+			JSONObject jsonObject = _getBusinessEventsJSONObject(
+				StringBundler.concat(
+					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
+					"and r_accountEntryToBusinessEvents_accountEntryERC eq '",
+					externalReferenceCode, "'"),
+				page, 500, "dateModified:asc");
+
+			_updateZendeskTickets(
+				_fetchZendeskOrganizationId(externalReferenceCode),
+				_getHighestHeatTag(jsonObject.getJSONArray("items")));
+
+			if (jsonObject.getInt("lastPage") == page) {
+				page = 0;
+			}
+			else {
+				page += 1;
+			}
+		}
 	}
 
 	private void _updateZendesk(

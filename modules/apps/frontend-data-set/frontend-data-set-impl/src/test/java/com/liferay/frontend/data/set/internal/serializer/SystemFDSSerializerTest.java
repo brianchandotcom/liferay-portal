@@ -90,9 +90,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testSerializeAPIURL() throws Exception {
+	public void testSerializeAdditionalAPIURLParameters() throws Exception {
 
-		// Nested fields: creator
+		// No parameters
 
 		ServiceTrackerMap
 			<String,
@@ -114,6 +114,70 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			themeDisplay
 		);
 
+		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		Assert.assertNull(
+			systemFDSSerializer.serializeAdditionalAPIURLParameters(
+				FDS_NAMES[0], httpServletRequest));
+
+		_unregisterServices();
+
+		// Parameter
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withAdditionalURLParameters(
+					API_URL_PARAMETER
+				)));
+
+		Assert.assertEquals(
+			API_URL_PARAMETER,
+			systemFDSSerializer.serializeAdditionalAPIURLParameters(
+				FDS_NAMES[0], httpServletRequest));
+
+		_unregisterServices();
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
+	public void testSerializeAPIURL() throws Exception {
+
+		// No parameters
+
+		ServiceTrackerMap
+			<String,
+			 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSAPIURLResolver>>
+				serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+					bundleContext, FDSAPIURLResolver.class,
+					"fds.rest.application.key",
+					ServiceTrackerCustomizerFactory.
+						<FDSAPIURLResolver>serviceWrapper(bundleContext));
+
+		systemFDSSerializer.fdsAPIURLResolverRegistry =
+			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		Assert.assertEquals(
+			"/o/app/endpoint",
+			systemFDSSerializer.serializeAPIURL(
+				FDS_NAMES[0], httpServletRequest));
+
+		_unregisterServices();
+
+		// Parameters
+
 		_registerServices(
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
@@ -121,52 +185,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).withAdditionalURLParameters(
 					"nestedFields=creator"
 				)));
-
-		Assert.assertEquals(
-			"/o/app/endpoint?nestedFields=creator",
-			systemFDSSerializer.serializeAPIURL(
-				FDS_NAMES[0], httpServletRequest));
-
-		_unregisterServices();
-
-		// Nested fields: creator and status
-
-		_registerServices(
-			_registerSystemFDSEntry(
-				SystemFDSEntryFactory.create(
-					FDS_NAMES[0]
-				).withAdditionalURLParameters(
-					"nestedFields=creator,status"
-				)));
-
-		Assert.assertEquals(
-			"/o/app/endpoint?nestedFields=creator,status",
-			systemFDSSerializer.serializeAPIURL(
-				FDS_NAMES[0], httpServletRequest));
-
-		_unregisterServices();
-
-		// Nested fields depth
-
-		_registerServices(
-			_registerSystemFDSEntry(
-				SystemFDSEntryFactory.create(
-					FDS_NAMES[0]
-				).withAdditionalURLParameters(
-					"nestedFields=creator,status,relation&nestedFieldsDepth=2"
-				)));
-
-		Assert.assertEquals(
-			"/o/app/endpoint?nestedFields=creator,status,relation&" +
-				"nestedFieldsDepth=2",
-			systemFDSSerializer.serializeAPIURL(
-				FDS_NAMES[0], httpServletRequest));
-
-		_unregisterServices();
-
-		// No parameters
-
-		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
 
 		Assert.assertEquals(
 			"/o/app/endpoint",

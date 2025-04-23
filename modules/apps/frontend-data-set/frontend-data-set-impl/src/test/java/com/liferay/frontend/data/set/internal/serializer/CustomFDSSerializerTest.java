@@ -95,6 +95,33 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeAdditionalAPIURLParameters() throws Exception {
+
+		// No parameters
+
+		_resetFDSSerializer();
+
+		_mockSerializeAdditionalAPIURLParameters(FDS_NAMES[0], "");
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_customFDSSerializer.serializeAdditionalAPIURLParameters(
+				FDS_NAMES[0], httpServletRequest));
+
+		// Parameter
+
+		_resetFDSSerializer();
+
+		_mockSerializeAdditionalAPIURLParameters(
+			FDS_NAMES[0], API_URL_PARAMETER);
+
+		Assert.assertEquals(
+			API_URL_PARAMETER,
+			_customFDSSerializer.serializeAdditionalAPIURLParameters(
+				FDS_NAMES[0], httpServletRequest));
+	}
+
+	@Test
 	public void testSerializeAPIURL() {
 
 		// Nested fields: creator.name
@@ -1196,6 +1223,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			"primaryItems");
 
 		return dropdownItems.size();
+	}
+
+	private void _mockSerializeAdditionalAPIURLParameters(
+		String fdsName, String additionalAPIURLParameters) {
+
+		Mockito.when(
+			_customFDSSerializer.getDataSetObjectEntryProperties(
+				fdsName, httpServletRequest)
+		).thenReturn(
+			HashMapBuilder.<String, Object>put(
+				"additionalAPIURLParameters", additionalAPIURLParameters
+			).build()
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeAdditionalAPIURLParameters(
+				fdsName, httpServletRequest)
+		).thenCallRealMethod();
 	}
 
 	private void _mockSerializeAPIURL(String fdsName, String[] fieldNames) {

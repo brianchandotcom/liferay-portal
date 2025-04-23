@@ -39,11 +39,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoogleCloudFunctionService {
 
-	@CacheEvict(allEntries = true, value = "accountUsage")
-	@Scheduled(cron = "0 0 * * * *")
-	public void scheduledCacheEviction() throws Exception {
-	}
-
 	@Cacheable("accountUsage")
 	public JSONObject fetchCustomerAccountUsage(String accountKey)
 		throws Exception {
@@ -102,6 +97,11 @@ public class GoogleCloudFunctionService {
 				}
 			}
 		}
+	}
+
+	@CacheEvict(allEntries = true, value = "accountUsage")
+	@Scheduled(cron = "0 0 * * * *")
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	private static final String _FUNCTION_CUSTOMER_USAGE_API_PATH =

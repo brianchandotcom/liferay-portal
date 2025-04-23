@@ -37,13 +37,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class JiraService extends BaseService {
 
-	@CacheEvict(
-		allEntries = true, value = {"affectedVersions", "issue", "issues"}
-	)
-	@Scheduled(cron = "0 0 0 * * *")
-	public void scheduledCacheEviction() throws Exception {
-	}
-
 	@Cacheable("affectedVersions")
 	public JSONArray getAffectedVersionsJSONArray() throws Exception {
 		try {
@@ -125,6 +118,13 @@ public class JiraService extends BaseService {
 		}
 
 		return null;
+	}
+
+	@CacheEvict(
+		allEntries = true, value = {"affectedVersions", "issue", "issues"}
+	)
+	@Scheduled(cron = "0 0 0 * * *")
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	@Cacheable("issues")

@@ -554,11 +554,16 @@ public class PageSpecificationResourceTest
 			Assert.assertEquals(
 				GetterUtil.getInteger(pageElement.getPosition()),
 				GetterUtil.getInteger(curPageElement.getPosition()));
+
+			PageElementDefinition pageElementDefinition =
+				pageElement.getDefinition();
+
+			PageElementDefinition curPageElementDefinition =
+				curPageElement.getDefinition();
+
 			Assert.assertEquals(
-				pageElement.getDefinition(
-				).getType(),
-				curPageElement.getDefinition(
-				).getType());
+				pageElementDefinition.getType(),
+				curPageElementDefinition.getType());
 
 			_assertPageElements(
 				curPageElement.getPageElements(),
@@ -1171,9 +1176,11 @@ public class PageSpecificationResourceTest
 				TransformUtil.transformToList(
 					pageExperience.getPageElements(),
 					pageElement -> {
+						PageElementDefinition pageElementDefinition =
+							pageElement.getDefinition();
+
 						if (Objects.equals(
-								pageElement.getDefinition(
-								).getType(),
+								pageElementDefinition.getType(),
 								PageElementDefinition.Type.DROP_ZONE)) {
 
 							return pageElement;

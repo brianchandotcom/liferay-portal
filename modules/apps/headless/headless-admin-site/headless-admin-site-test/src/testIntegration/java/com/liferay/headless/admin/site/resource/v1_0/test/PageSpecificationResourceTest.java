@@ -8,9 +8,12 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -553,7 +556,7 @@ public class PageSpecificationResourceTest
 				GetterUtil.getInteger(pageElement.getPosition()),
 				GetterUtil.getInteger(curPageElement.getPosition()));
 			Assert.assertEquals(
-				pageElement.getType(), curPageElement.getType());
+				pageElement.getDefinition().getType(), curPageElement.getDefinition().getType());
 
 			_assertPageElements(
 				curPageElement.getPageElements(),
@@ -923,8 +926,7 @@ public class PageSpecificationResourceTest
 				}
 			};
 
-		settings.setMasterPageItemExternalReference(
-			() -> itemExternalReference);
+		settings.setMasterPageItemExternalReference(() -> itemExternalReference);
 
 		return new Settings() {
 			{
@@ -976,7 +978,14 @@ public class PageSpecificationResourceTest
 					setParentExternalReferenceCode(
 						() -> curParentExternalReferenceCode);
 					setPosition(() -> curPosition);
-					setType(() -> PageElement.Type.CONTAINER);
+
+						setDefinition(() -> new PageContainerDefinition() {
+							{
+								setType(() -> PageDefinition.Type.CONTAINER);
+								setIndexed(() -> Boolean.FALSE);
+							}
+						});
+
 				}
 			};
 		}
@@ -1160,8 +1169,8 @@ public class PageSpecificationResourceTest
 					pageExperience.getPageElements(),
 					pageElement -> {
 						if (Objects.equals(
-								pageElement.getType(),
-								PageElement.Type.DROP_ZONE)) {
+								pageElement.getDefinition().getType(),
+								PageDefinition.Type.DROP_ZONE)) {
 
 							return pageElement;
 						}

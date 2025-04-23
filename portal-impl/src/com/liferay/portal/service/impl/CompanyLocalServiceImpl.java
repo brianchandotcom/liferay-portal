@@ -381,7 +381,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				companyId);
 
 		try {
-			DBPartitionUtil.insertDBPartition(companyId);
+			DBPartitionUtil.importDBPartition(companyId);
 		}
 		catch (Throwable throwable) {
 			safeCloseable1.close();
@@ -447,7 +447,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				_transactionAwareInvoke(
 					() -> {
-						extractCompany(companyId);
+						exportCompany(companyId);
 
 						DBPartitionUtil.removeDBPartition(companyId);
 
@@ -692,12 +692,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Company extractCompany(long companyId) throws PortalException {
+	public Company exportCompany(long companyId) throws PortalException {
 		FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
 		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new RequiredCompanyException(
-				"Select another default company before extracting company " +
+				"Select another default company before exporting company " +
 					companyId);
 		}
 
@@ -705,12 +705,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		try {
 			if (!DBPartition.isPartitionEnabled()) {
-				DBPartitionUtil.extractCompany(companyId);
+				DBPartitionUtil.exportCompany(companyId);
 
 				return company;
 			}
 
-			DBPartitionUtil.extractDBPartition(companyId);
+			DBPartitionUtil.exportDBPartition(companyId);
 		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);

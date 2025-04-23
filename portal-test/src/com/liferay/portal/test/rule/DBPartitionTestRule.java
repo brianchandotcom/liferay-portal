@@ -67,7 +67,7 @@ public class DBPartitionTestRule implements TestRule {
 					TestPropsValues.COMPANY_WEB_ID);
 			}
 			else if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
-				CompanyLocalServiceUtil.extractCompany(company.getCompanyId());
+				CompanyLocalServiceUtil.exportCompany(company.getCompanyId());
 
 				CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 

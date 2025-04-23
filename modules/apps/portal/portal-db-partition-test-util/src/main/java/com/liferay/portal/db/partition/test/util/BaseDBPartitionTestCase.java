@@ -190,22 +190,22 @@ public abstract class BaseDBPartitionTestCase {
 		db.runSQL("drop table if exists " + tableName + " cascade");
 	}
 
-	protected static void extractCompany(long companyId) throws Exception {
+	protected static void exportCompany(long companyId) throws Exception {
 		_executeOnDBPartitions(
 			new long[] {companyId},
 			currentCompanyId -> ReflectionTestUtil.invoke(
-				DBPartitionUtil.class, "_extractCompany",
+				DBPartitionUtil.class, "_exportCompany",
 				new Class<?>[] {long.class}, companyId));
 	}
 
-	protected static void extractDBPartitions() throws Exception {
-		extractDBPartitions(COMPANY_IDS);
+	protected static void exportDBPartitions() throws Exception {
+		exportDBPartitions(COMPANY_IDS);
 	}
 
-	protected static void extractDBPartitions(long[] companyIds)
+	protected static void exportDBPartitions(long[] companyIds)
 		throws Exception {
 
-		_executeOnDBPartitions(companyIds, DBPartitionUtil::extractDBPartition);
+		_executeOnDBPartitions(companyIds, DBPartitionUtil::exportDBPartition);
 	}
 
 	protected static String getCreateIndexSQL(String tableName) {
@@ -219,9 +219,9 @@ public abstract class BaseDBPartitionTestCase {
 			" (testColumn bigint primary key, companyId bigint)";
 	}
 
-	protected static String getExtractedPartitionName(long companyId) {
+	protected static String getExportedPartitionName(long companyId) {
 		return ReflectionTestUtil.invoke(
-			DBPartitionUtil.class, "_getExtractedPartitionName",
+			DBPartitionUtil.class, "_getExportedPartitionName",
 			new Class<?>[] {long.class}, companyId);
 	}
 
@@ -238,7 +238,7 @@ public abstract class BaseDBPartitionTestCase {
 		return databasePartitionSchemaNamePrefix + companyId;
 	}
 
-	protected static void insertDBPartitions() throws Exception {
+	protected static void importDBPartitions() throws Exception {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 
@@ -250,7 +250,7 @@ public abstract class BaseDBPartitionTestCase {
 				currentConnection);
 
 			for (long companyId : COMPANY_IDS) {
-				DBPartitionUtil.insertDBPartition(companyId);
+				DBPartitionUtil.importDBPartition(companyId);
 			}
 		}
 		finally {

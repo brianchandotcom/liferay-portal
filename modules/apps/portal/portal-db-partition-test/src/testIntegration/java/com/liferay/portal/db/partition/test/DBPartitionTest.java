@@ -515,10 +515,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		String[] databasePartitionSchemaNamePrefixes = {
 			ReflectionTestUtil.getFieldValue(
 				DBPartitionUtil.class,
-				"_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX"),
+				"_DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX"),
 			ReflectionTestUtil.getFieldValue(
 				DBPartitionUtil.class,
-				"_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX")
+				"_DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX")
 		};
 
 		for (String databasePartitionSchemaNamePrefix :

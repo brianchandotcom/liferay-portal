@@ -75,17 +75,16 @@ public class ExportPortalInstanceOperation extends BasePortalInstanceOperation {
 					return null;
 				}
 
-				Company company = _companyLocalService.extractCompany(
-					companyId);
+				Company company = _companyLocalService.exportCompany(companyId);
 
-				_extractConfigurations(companyId);
+				_exportConfigurations(companyId);
 
 				return company;
 			},
 			properties);
 	}
 
-	private void _extractConfigurations(long companyId) throws Exception {
+	private void _exportConfigurations(long companyId) throws Exception {
 		if (DBPartition.isPartitionEnabled()) {
 			return;
 		}
@@ -120,7 +119,7 @@ public class ExportPortalInstanceOperation extends BasePortalInstanceOperation {
 		}
 
 		for (ScopedConfiguration scopedConfiguration : scopedConfigurations) {
-			DBPartitionUtil.extractConfiguration(
+			DBPartitionUtil.exportConfiguration(
 				companyId, scopedConfiguration.getConfigurationId(),
 				scopedConfiguration.getDictionaryString());
 		}

@@ -275,7 +275,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		String pid = configuration.getPid();
 
-		companyLocalService.extractCompany(company.getCompanyId());
+		companyLocalService.exportCompany(company.getCompanyId());
 
 		try {
 			CompanyLocalServiceTestUtil.assertConfiguration(
@@ -298,7 +298,7 @@ public class CompanyLocalServiceDBPartitionTest
 				Assert.assertTrue(
 					dbPartitionDB.existsPartition(
 						connection,
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						CompanyLocalServiceTestUtil.getExportedPartitionName(
 							company.getCompanyId())));
 			}
 
@@ -327,7 +327,7 @@ public class CompanyLocalServiceDBPartitionTest
 		finally {
 			db.runSQL(
 				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
@@ -350,7 +350,7 @@ public class CompanyLocalServiceDBPartitionTest
 		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			companyLocalService.extractCompany(company.getCompanyId());
+			companyLocalService.exportCompany(company.getCompanyId());
 
 			_companyLocalService.deleteCompany(company);
 
@@ -372,7 +372,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				CompanyLocalServiceTestUtil.checkStandaloneDBPartitionTables(
 					connection, dbPartitionDB,
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId()),
 					"Company", "VirtualHost");
 			}
@@ -380,7 +380,7 @@ public class CompanyLocalServiceDBPartitionTest
 		finally {
 			db.runSQL(
 				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
@@ -403,7 +403,7 @@ public class CompanyLocalServiceDBPartitionTest
 		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			companyLocalService.extractCompany(company.getCompanyId());
+			companyLocalService.exportCompany(company.getCompanyId());
 
 			_companyLocalService.deleteCompany(company);
 
@@ -438,7 +438,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				CompanyLocalServiceTestUtil.checkStandaloneDBPartitionTables(
 					connection, dbPartitionDB,
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId()),
 					"Company", "VirtualHost");
 			}
@@ -446,7 +446,7 @@ public class CompanyLocalServiceDBPartitionTest
 		finally {
 			db.runSQL(
 				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(

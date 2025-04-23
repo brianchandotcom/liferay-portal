@@ -960,7 +960,7 @@ public class CompanyLocalServiceTest {
 
 	@FeatureFlag("LPD-11342")
 	@Test
-	public void testExtractCompany() throws Exception {
+	public void testExportCompany() throws Exception {
 		Assume.assumeTrue(_db.isSupportsDBPartition());
 
 		Company company = CompanyTestUtil.addCompany();
@@ -972,7 +972,7 @@ public class CompanyLocalServiceTest {
 
 			String pid = configuration.getPid();
 
-			_companyLocalService.extractCompany(company.getCompanyId());
+			_companyLocalService.exportCompany(company.getCompanyId());
 
 			Assert.assertTrue(
 				ArrayUtil.contains(
@@ -981,12 +981,12 @@ public class CompanyLocalServiceTest {
 			Assert.assertTrue(
 				_dbPartitionDB.existsPartition(
 					_connection,
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			CompanyLocalServiceTestUtil.checkStandaloneDBPartitionTables(
 				_connection, _dbPartitionDB,
-				CompanyLocalServiceTestUtil.getExtractedPartitionName(
+				CompanyLocalServiceTestUtil.getExportedPartitionName(
 					company.getCompanyId()),
 				"Company", "VirtualHost");
 
@@ -1004,7 +1004,7 @@ public class CompanyLocalServiceTest {
 		finally {
 			_db.runSQL(
 				_dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			_companyLocalService.deleteCompany(company);
@@ -1013,11 +1013,11 @@ public class CompanyLocalServiceTest {
 
 	@FeatureFlag("LPD-11342")
 	@Test
-	public void testExtractCompanyDefaultCompany() {
+	public void testExportCompanyDefaultCompany() {
 		Assume.assumeTrue(_db.isSupportsDBPartition());
 
 		try {
-			_companyLocalService.extractCompany(
+			_companyLocalService.exportCompany(
 				PortalInstancePool.getDefaultCompanyId());
 
 			Assert.fail();
@@ -1029,7 +1029,7 @@ public class CompanyLocalServiceTest {
 
 	@FeatureFlag("LPD-11342")
 	@Test
-	public void testExtractCompanyWhenDBPartitionUtilFails() throws Exception {
+	public void testExportCompanyWhenDBPartitionUtilFails() throws Exception {
 		Assume.assumeTrue(_db.isSupportsDBPartition());
 
 		Company company = CompanyTestUtil.addCompany();
@@ -1055,7 +1055,7 @@ public class CompanyLocalServiceTest {
 							return method.invoke(_dbPartitionDB, args);
 						}))) {
 
-			_companyLocalService.extractCompany(company.getCompanyId());
+			_companyLocalService.exportCompany(company.getCompanyId());
 
 			Assert.fail();
 		}
@@ -1071,13 +1071,13 @@ public class CompanyLocalServiceTest {
 			Assert.assertFalse(
 				_dbPartitionDB.existsPartition(
 					_connection,
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 		}
 		finally {
 			_db.runSQL(
 				_dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					CompanyLocalServiceTestUtil.getExportedPartitionName(
 						company.getCompanyId())));
 
 			_companyLocalService.deleteCompany(company);
@@ -1085,9 +1085,9 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testExtractCompanyWithoutFF() {
+	public void testExportCompanyWithoutFF() {
 		try {
-			_companyLocalService.extractCompany(
+			_companyLocalService.exportCompany(
 				PortalInstancePool.getDefaultCompanyId());
 
 			Assert.fail();

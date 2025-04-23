@@ -222,7 +222,7 @@ public class PageElementSerDes {
 			if (Objects.equals(jsonParserFieldName, "definition")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setDefinition(
-						PageDefinitionSerDes.toDTO(
+						PageElementDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

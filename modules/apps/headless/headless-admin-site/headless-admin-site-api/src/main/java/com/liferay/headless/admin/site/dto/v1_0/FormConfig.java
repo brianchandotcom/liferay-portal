@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page form's configuration.", value = "FormConfig"
+	description = "The form page element definition form's configuration.",
+	value = "FormConfig"
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormConfig")

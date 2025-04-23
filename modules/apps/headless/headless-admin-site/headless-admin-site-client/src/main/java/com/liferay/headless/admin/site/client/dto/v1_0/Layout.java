@@ -25,62 +25,34 @@ public class Layout implements Cloneable, Serializable {
 		return LayoutSerDes.toDTO(json);
 	}
 
-	public Align getAlign() {
-		return align;
+	public ContainerType getContainerType() {
+		return containerType;
 	}
 
-	public String getAlignAsString() {
-		if (align == null) {
+	public String getContainerTypeAsString() {
+		if (containerType == null) {
 			return null;
 		}
 
-		return align.toString();
+		return containerType.toString();
 	}
 
-	public void setAlign(Align align) {
-		this.align = align;
+	public void setContainerType(ContainerType containerType) {
+		this.containerType = containerType;
 	}
 
-	public void setAlign(UnsafeSupplier<Align, Exception> alignUnsafeSupplier) {
+	public void setContainerType(
+		UnsafeSupplier<ContainerType, Exception> containerTypeUnsafeSupplier) {
+
 		try {
-			align = alignUnsafeSupplier.get();
+			containerType = containerTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Align align;
-
-	public ContentDisplay getContentDisplay() {
-		return contentDisplay;
-	}
-
-	public String getContentDisplayAsString() {
-		if (contentDisplay == null) {
-			return null;
-		}
-
-		return contentDisplay.toString();
-	}
-
-	public void setContentDisplay(ContentDisplay contentDisplay) {
-		this.contentDisplay = contentDisplay;
-	}
-
-	public void setContentDisplay(
-		UnsafeSupplier<ContentDisplay, Exception>
-			contentDisplayUnsafeSupplier) {
-
-		try {
-			contentDisplay = contentDisplayUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ContentDisplay contentDisplay;
+	protected ContainerType containerType;
 
 	public FlexWrap getFlexWrap() {
 		return flexWrap;
@@ -110,35 +82,6 @@ public class Layout implements Cloneable, Serializable {
 	}
 
 	protected FlexWrap flexWrap;
-
-	public Justify getJustify() {
-		return justify;
-	}
-
-	public String getJustifyAsString() {
-		if (justify == null) {
-			return null;
-		}
-
-		return justify.toString();
-	}
-
-	public void setJustify(Justify justify) {
-		this.justify = justify;
-	}
-
-	public void setJustify(
-		UnsafeSupplier<Justify, Exception> justifyUnsafeSupplier) {
-
-		try {
-			justify = justifyUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Justify justify;
 
 	public WidthType getWidthType() {
 		return widthType;
@@ -200,17 +143,16 @@ public class Layout implements Cloneable, Serializable {
 		return LayoutSerDes.toJSON(this);
 	}
 
-	public static enum Align {
+	public static enum ContainerType {
 
-		BASELINE("Baseline"), CENTER("Center"), END("End"), NONE("None"),
-		START("Start"), STRETCH("Stretch");
+		FIXED("Fixed"), FLUID("Fluid");
 
-		public static Align create(String value) {
-			for (Align align : values()) {
-				if (Objects.equals(align.getValue(), value) ||
-					Objects.equals(align.name(), value)) {
+		public static ContainerType create(String value) {
+			for (ContainerType containerType : values()) {
+				if (Objects.equals(containerType.getValue(), value) ||
+					Objects.equals(containerType.name(), value)) {
 
-					return align;
+					return containerType;
 				}
 			}
 
@@ -226,40 +168,7 @@ public class Layout implements Cloneable, Serializable {
 			return _value;
 		}
 
-		private Align(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	public static enum ContentDisplay {
-
-		BLOCK("Block"), FLEX_COLUMN("FlexColumn"), FLEX_ROW("FlexRow");
-
-		public static ContentDisplay create(String value) {
-			for (ContentDisplay contentDisplay : values()) {
-				if (Objects.equals(contentDisplay.getValue(), value) ||
-					Objects.equals(contentDisplay.name(), value)) {
-
-					return contentDisplay;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ContentDisplay(String value) {
+		private ContainerType(String value) {
 			_value = value;
 		}
 
@@ -293,40 +202,6 @@ public class Layout implements Cloneable, Serializable {
 		}
 
 		private FlexWrap(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	public static enum Justify {
-
-		CENTER("Center"), END("End"), NONE("None"), SPACE_AROUND("SpaceAround"),
-		SPACE_BETWEEN("SpaceBetween"), START("Start");
-
-		public static Justify create(String value) {
-			for (Justify justify : values()) {
-				if (Objects.equals(justify.getValue(), value) ||
-					Objects.equals(justify.name(), value)) {
-
-					return justify;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Justify(String value) {
 			_value = value;
 		}
 

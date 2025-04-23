@@ -25,12 +25,11 @@ public class LDIFWhitespaceCheck extends WhitespaceCheck {
 
 		Matcher matcher = _attributePattern.matcher(content);
 
-		if (matcher.find()) {
-			return StringUtil.insert(
-				content, StringPool.SPACE, matcher.end() - 1);
+		if (!matcher.find()) {
+			return content;
 		}
 
-		return content;
+		return StringUtil.insert(content, StringPool.SPACE, matcher.end() - 1);
 	}
 
 	private static final Pattern _attributePattern = Pattern.compile(

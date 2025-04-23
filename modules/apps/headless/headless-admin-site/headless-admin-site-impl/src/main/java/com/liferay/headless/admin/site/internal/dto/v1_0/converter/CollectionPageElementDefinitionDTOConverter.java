@@ -9,10 +9,10 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
-import com.liferay.headless.admin.site.dto.v1_0.PageCollectionDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.CollectionPaginationUtil;
@@ -37,23 +37,23 @@ import org.osgi.service.component.annotations.Reference;
 	property = "dto.class.name=com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageCollectionDefinitionDTOConverter
+public class CollectionPageElementDefinitionDTOConverter
 	implements DTOConverter
-		<CollectionStyledLayoutStructureItem, PageCollectionDefinition> {
+		<CollectionStyledLayoutStructureItem, CollectionPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageCollectionDefinition.class.getSimpleName();
+		return CollectionPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageCollectionDefinition toDTO(
+	public CollectionPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem)
 		throws Exception {
 
-		return new PageCollectionDefinition() {
+		return new CollectionPageElementDefinition() {
 			{
 				setCollectionReference(
 					() -> _toCollectionReference(
@@ -84,7 +84,7 @@ public class PageCollectionDefinitionDTOConverter
 							getPaginationType()));
 				setTemplateKey(
 					collectionStyledLayoutStructureItem::getTemplateKey);
-				setType(PageDefinition.Type.COLLECTION);
+				setType(PageElementDefinition.Type.COLLECTION);
 			}
 		};
 	}
@@ -159,20 +159,21 @@ public class PageCollectionDefinitionDTOConverter
 		};
 	}
 
-	private static final Map<String, PageCollectionDefinition.PaginationType>
-		_internalToExternalValuesMap = HashMapBuilder.put(
-			CollectionPaginationUtil.PAGINATION_TYPE_NONE,
-			PageCollectionDefinition.PaginationType.NONE
-		).put(
-			CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC,
-			PageCollectionDefinition.PaginationType.NUMERIC
-		).put(
-			CollectionPaginationUtil.PAGINATION_TYPE_REGULAR,
-			PageCollectionDefinition.PaginationType.REGULAR
-		).put(
-			CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE,
-			PageCollectionDefinition.PaginationType.SIMPLE
-		).build();
+	private static final Map
+		<String, CollectionPageElementDefinition.PaginationType>
+			_internalToExternalValuesMap = HashMapBuilder.put(
+				CollectionPaginationUtil.PAGINATION_TYPE_NONE,
+				CollectionPageElementDefinition.PaginationType.NONE
+			).put(
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC,
+				CollectionPageElementDefinition.PaginationType.NUMERIC
+			).put(
+				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR,
+				CollectionPageElementDefinition.PaginationType.REGULAR
+			).put(
+				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE,
+				CollectionPageElementDefinition.PaginationType.SIMPLE
+			).build();
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;

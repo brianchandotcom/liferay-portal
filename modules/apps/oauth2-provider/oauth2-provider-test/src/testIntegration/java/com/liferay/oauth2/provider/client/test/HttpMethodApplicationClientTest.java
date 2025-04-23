@@ -10,9 +10,9 @@ import com.liferay.oauth2.provider.internal.test.TestApplication;
 import com.liferay.oauth2.provider.internal.test.TestHeadHandlingApplication;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -134,12 +134,12 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore",
+				companyId, user, "oauthTestApplicationBefore",
 				Arrays.asList("GET", "POST"));
 
 			registerJaxRsApplication(new TestApplication(), "methods", null);
@@ -155,15 +155,15 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter",
+				companyId, user, "oauthTestApplicationAfter",
 				Arrays.asList("GET", "POST"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWithHead",
+				companyId, user, "oauthTestApplicationWithHead",
 				Arrays.asList("HEAD"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
+				companyId, user, "oauthTestApplicationWrong",
 				Collections.singletonList("everything"));
 		}
 

@@ -1,0 +1,6 @@
+dependencies {
+	compileOnly (group: "jakarta.enterprise", name: "jakarta.enterprise.cdi-api", version: "4.1.0") {
+		exclude group: "jakarta.el", module: "jakarta.el-api"
+	}
+	compileOnly group: "jakarta.el", name: "jakarta.el-api", version: "5.0.1"
+}

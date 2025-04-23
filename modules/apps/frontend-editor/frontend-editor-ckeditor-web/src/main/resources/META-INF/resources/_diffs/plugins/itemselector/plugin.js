@@ -295,7 +295,10 @@
 
 						const imgElement = new Image();
 
-						imgElement.src = imageSrc.url;
+						imgElement.src =
+							typeof imageSrc === 'string'
+								? imageSrc
+								: imageSrc.url;
 
 						imgElement.onload = function () {
 							if (imgElement.height > editorContentHeight) {

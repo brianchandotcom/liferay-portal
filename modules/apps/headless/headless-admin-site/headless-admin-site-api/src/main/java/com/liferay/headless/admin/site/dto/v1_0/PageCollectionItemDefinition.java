@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageCollectionItemDefinition")
-public class PageCollectionItemDefinition implements Serializable {
+public class PageCollectionItemDefinition
+	extends PageDefinition implements Serializable {
 
 	public static PageCollectionItemDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
@@ -149,6 +150,22 @@ public class PageCollectionItemDefinition implements Serializable {
 			else {
 				sb.append(collectionItemConfig);
 			}
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

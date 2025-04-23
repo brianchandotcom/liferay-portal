@@ -66,6 +66,20 @@ public class PageFragmentDropZoneDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (pageFragmentDropZoneDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageFragmentDropZoneDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -98,6 +112,15 @@ public class PageFragmentDropZoneDefinitionSerDes {
 					pageFragmentDropZoneDefinition.getFragmentDropZoneId()));
 		}
 
+		if (pageFragmentDropZoneDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(pageFragmentDropZoneDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -119,6 +142,9 @@ public class PageFragmentDropZoneDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "fragmentDropZoneId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -132,6 +158,13 @@ public class PageFragmentDropZoneDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFragmentDropZoneDefinition.setFragmentDropZoneId(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentDropZoneDefinition.setType(
+						PageFragmentDropZoneDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

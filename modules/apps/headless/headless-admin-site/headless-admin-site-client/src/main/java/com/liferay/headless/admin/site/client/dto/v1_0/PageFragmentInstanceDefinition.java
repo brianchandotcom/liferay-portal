@@ -21,7 +21,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageFragmentInstanceDefinition implements Cloneable, Serializable {
+public class PageFragmentInstanceDefinition
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageFragmentInstanceDefinition toDTO(String json) {
 		return PageFragmentInstanceDefinitionSerDes.toDTO(json);

@@ -25,16 +25,16 @@ public class PageElement implements Cloneable, Serializable {
 		return PageElementSerDes.toDTO(json);
 	}
 
-	public Object getDefinition() {
+	public PageDefinition getDefinition() {
 		return definition;
 	}
 
-	public void setDefinition(Object definition) {
+	public void setDefinition(PageDefinition definition) {
 		this.definition = definition;
 	}
 
 	public void setDefinition(
-		UnsafeSupplier<Object, Exception> definitionUnsafeSupplier) {
+		UnsafeSupplier<PageDefinition, Exception> definitionUnsafeSupplier) {
 
 		try {
 			definition = definitionUnsafeSupplier.get();
@@ -44,7 +44,7 @@ public class PageElement implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object definition;
+	protected PageDefinition definition;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
@@ -134,33 +134,6 @@ public class PageElement implements Cloneable, Serializable {
 
 	protected Integer position;
 
-	public Type getType() {
-		return type;
-	}
-
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Type type;
-
 	@Override
 	public PageElement clone() throws CloneNotSupportedException {
 		return (PageElement)super.clone();
@@ -190,44 +163,6 @@ public class PageElement implements Cloneable, Serializable {
 
 	public String toString() {
 		return PageElementSerDes.toJSON(this);
-	}
-
-	public static enum Type {
-
-		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
-		COLUMN("Column"), CONTAINER("Container"), DROP_ZONE("DropZone"),
-		FORM("Form"), FORM_STEP("FormStep"),
-		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
-		FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), ROW("Row"), WIDGET("Widget");
-
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value) ||
-					Objects.equals(type.name(), value)) {
-
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 }

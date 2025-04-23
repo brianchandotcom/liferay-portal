@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFormStepContainerDefinition")
-public class PageFormStepContainerDefinition implements Serializable {
+public class PageFormStepContainerDefinition
+	extends PageDefinition implements Serializable {
 
 	public static PageFormStepContainerDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
@@ -513,6 +514,22 @@ public class PageFormStepContainerDefinition implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
 
 			sb.append("\"");
 		}

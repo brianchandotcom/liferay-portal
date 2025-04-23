@@ -70,6 +70,20 @@ public class PageFragmentCompositionInstanceDefinitionSerDes {
 						getFragmentComposition()));
 		}
 
+		if (pageFragmentCompositionInstanceDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageFragmentCompositionInstanceDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -107,6 +121,16 @@ public class PageFragmentCompositionInstanceDefinitionSerDes {
 						getFragmentComposition()));
 		}
 
+		if (pageFragmentCompositionInstanceDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(
+					pageFragmentCompositionInstanceDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -130,6 +154,9 @@ public class PageFragmentCompositionInstanceDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "fragmentComposition")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -146,6 +173,13 @@ public class PageFragmentCompositionInstanceDefinitionSerDes {
 						setFragmentComposition(
 							ItemExternalReferenceSerDes.toDTO(
 								(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentCompositionInstanceDefinition.setType(
+						PageFragmentCompositionInstanceDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

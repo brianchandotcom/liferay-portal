@@ -19,7 +19,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageColumnDefinition implements Cloneable, Serializable {
+public class PageColumnDefinition
+	extends PageDefinition implements Cloneable, Serializable {
 
 	public static PageColumnDefinition toDTO(String json) {
 		return PageColumnDefinitionSerDes.toDTO(json);

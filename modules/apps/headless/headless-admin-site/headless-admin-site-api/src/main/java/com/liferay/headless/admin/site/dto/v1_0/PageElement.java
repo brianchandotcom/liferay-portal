@@ -5,16 +5,12 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -57,7 +53,7 @@ public class PageElement implements Serializable {
 		description = "The page element's definition."
 	)
 	@Valid
-	public Object getDefinition() {
+	public PageDefinition getDefinition() {
 		if (_definitionSupplier != null) {
 			definition = _definitionSupplier.get();
 
@@ -67,7 +63,7 @@ public class PageElement implements Serializable {
 		return definition;
 	}
 
-	public void setDefinition(Object definition) {
+	public void setDefinition(PageDefinition definition) {
 		this.definition = definition;
 
 		_definitionSupplier = null;
@@ -75,7 +71,7 @@ public class PageElement implements Serializable {
 
 	@JsonIgnore
 	public void setDefinition(
-		UnsafeSupplier<Object, Exception> definitionUnsafeSupplier) {
+		UnsafeSupplier<PageDefinition, Exception> definitionUnsafeSupplier) {
 
 		_definitionSupplier = () -> {
 			try {
@@ -92,10 +88,10 @@ public class PageElement implements Serializable {
 
 	@GraphQLField(description = "The page element's definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object definition;
+	protected PageDefinition definition;
 
 	@JsonIgnore
-	private Supplier<Object> _definitionSupplier;
+	private Supplier<PageDefinition> _definitionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's external reference code. Unique within the site."
@@ -283,62 +279,6 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _positionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element's type (collection, collection item, column, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
-	)
-	@JsonGetter("type")
-	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
-
-			_typeSupplier = null;
-		}
-
-		return type;
-	}
-
-	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
-
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
-			try {
-				return typeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The page element's type (collection, collection item, column, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
-
-	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -366,7 +306,7 @@ public class PageElement implements Serializable {
 
 		sb.append("{");
 
-		Object definition = getDefinition();
+		PageDefinition definition = getDefinition();
 
 		if (definition != null) {
 			if (sb.length() > 1) {
@@ -375,18 +315,7 @@ public class PageElement implements Serializable {
 
 			sb.append("\"definition\": ");
 
-			if (definition instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)definition));
-			}
-			else if (definition instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)definition));
-				sb.append("\"");
-			}
-			else {
-				sb.append(definition);
-			}
+			sb.append(String.valueOf(definition));
 		}
 
 		String externalReferenceCode = getExternalReferenceCode();
@@ -455,22 +384,6 @@ public class PageElement implements Serializable {
 			sb.append(position);
 		}
 
-		Type type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(type);
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -482,49 +395,6 @@ public class PageElement implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
-		COLUMN("Column"), CONTAINER("Container"), DROP_ZONE("DropZone"),
-		FORM("Form"), FORM_STEP("FormStep"),
-		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
-		FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), ROW("Row"), WIDGET("Widget");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

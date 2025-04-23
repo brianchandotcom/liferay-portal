@@ -10,13 +10,17 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestPreviewURLApplication;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -54,7 +58,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws Exception {
+	public void test() throws PortalException {
 		String tokenString = getToken("oauthTestApplication");
 
 		WebTarget webTarget = getWebTarget("/preview-url");
@@ -86,7 +90,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		@Override
 		protected void prepareTest() throws Exception {
 			User user = UserTestUtil.getAdminUser(
-				PortalUtil.getDefaultCompanyId());
+				TestPropsValues.getCompanyId());
 
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 				null, user.getUserId(), user.getGroupId(), 0, "test-file.txt",
@@ -104,7 +108,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				PortalUtil.getDefaultCompanyId(), user, "oauthTestApplication",
+				TestPropsValues.getCompanyId(), user, "oauthTestApplication",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 				Arrays.asList("GET", "everything.read.documents.download"));
 		}
@@ -116,7 +120,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		return new OAuth2WebServerServletTestPreparator();
 	}
 
-	private WebTarget _getRootWebTarget(String path) {
+	private WebTarget _getRootWebTarget(String path) throws PortalException {
 		ClientBuilder clientBuilder = new ClientBuilderImpl();
 
 		Client client = clientBuilder.build();
@@ -125,7 +129,14 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
 
-		return client.target(uriBuilder.uri("http://localhost:8080" + path));
+		Company testCompany = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		return client.target(
+			uriBuilder.uri(
+				StringBundler.concat(
+					"http://", testCompany.getVirtualHostname(), ":8080",
+					path)));
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";

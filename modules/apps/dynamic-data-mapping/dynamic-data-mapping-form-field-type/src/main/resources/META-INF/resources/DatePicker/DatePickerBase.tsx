@@ -31,6 +31,7 @@ export interface DatePickerBaseProps {
 	displayErrors?: boolean;
 	errorMessage?: string;
 	htmlAutocompleteAttribute: string;
+	id?: string;
 	locale: Locale;
 	localizable: boolean;
 	localizedObjectField: boolean;
@@ -50,6 +51,7 @@ export interface DatePickerBaseProps {
 			valid: boolean;
 		}>
 	>;
+	tip?: string;
 	type: 'date' | 'date_time';
 	valid: boolean;
 	value: string | LocalizedValue<string>;
@@ -72,6 +74,7 @@ export default function DatePickerBase({
 	displayErrors,
 	errorMessage,
 	htmlAutocompleteAttribute,
+	id,
 	locale,
 	months,
 	name,
@@ -82,6 +85,7 @@ export default function DatePickerBase({
 	readOnly,
 	required,
 	setValidField,
+	tip,
 	valid,
 	weekdaysShort,
 }: DatePickerBaseProps) {
@@ -262,6 +266,9 @@ export default function DatePickerBase({
 				<ClayDatePicker
 					{...(htmlAutocompleteAttribute && {
 						autoComplete: htmlAutocompleteAttribute,
+					})}
+					{...((errorMessage || tip) && {
+						'aria-describedby': `${id ?? name}_fieldFeedback`,
 					})}
 					aria-required={required}
 					ariaLabels={{

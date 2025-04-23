@@ -38,30 +38,6 @@ public class CommerceOrderItemModelListener
 	extends BaseModelListener<CommerceOrderItem> {
 
 	@Override
-	public void onAfterCreate(CommerceOrderItem commerceOrderItem) {
-		try {
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-
-			if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
-				commerceOrder.setManuallyAdjusted(false);
-			}
-
-			if (!commerceOrder.isShippable() &&
-				commerceOrderItem.isShippable()) {
-
-				commerceOrder.setShippable(true);
-			}
-
-			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-	}
-
-	@Override
 	public void onAfterRemove(CommerceOrderItem commerceOrderItem) {
 		try {
 			if (CommerceOrderThreadLocal.isDeleteInProcess()) {

@@ -58,25 +58,26 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CustomElementCET cet = (CustomElementCET)_cetManager.getCET(
-			PortalUtil.getCompanyId(httpServletRequest),
-			_functionCaptchaImplConfiguration.
-				customElementExternalReferenceCode());
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		printWriter.write("<script");
 		printWriter.write(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		printWriter.write(" src=\"");
-		printWriter.write(themeDisplay.getPortalURL() + cet.getURLs());
-		printWriter.write("\" type=\"module\"></script>");
 
+		CustomElementCET cet = (CustomElementCET)_cetManager.getCET(
+			PortalUtil.getCompanyId(httpServletRequest),
+			_functionCaptchaImplConfiguration.
+				customElementExternalReferenceCode());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		printWriter.write(themeDisplay.getPortalURL() + cet.getURLs());
+
+		printWriter.write("\" type=\"module\"></script>");
 		printWriter.write(StringPool.LESS_THAN);
 		printWriter.write(cet.getHTMLElementName());
 		printWriter.write(" liferaywebdavurl=\"");

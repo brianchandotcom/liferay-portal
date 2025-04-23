@@ -46,8 +46,8 @@ public class EditTagsBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		Set<String> toAddTagNamesSet = _toStringSet(inputMap, "toAddTagNames");
-		Set<String> toRemoveTagNamesSet = _toStringSet(
+		Set<String> toAddTagNames = _toStringSet(inputMap, "toAddTagNames");
+		Set<String> toRemoveTagNames = _toStringSet(
 			inputMap, "toRemoveTagNames");
 
 		PermissionChecker permissionChecker =
@@ -62,22 +62,22 @@ public class EditTagsBulkSelectionAction
 
 					String[] newTagNames = new String[0];
 
-					if (SetUtil.isNotEmpty(toAddTagNamesSet)) {
+					if (SetUtil.isNotEmpty(toAddTagNames)) {
 						newTagNames = (String[])inputMap.get("toAddTagNames");
 					}
 
 					if (MapUtil.getBoolean(inputMap, "append")) {
-						Set<String> currentTagNamesSet = SetUtil.fromArray(
+						Set<String> currentTagNames = SetUtil.fromArray(
 							assetEntry.getTagNames());
 
-						currentTagNamesSet.removeAll(toRemoveTagNamesSet);
+						currentTagNames.removeAll(toRemoveTagNames);
 
-						currentTagNamesSet.addAll(toAddTagNamesSet);
+						currentTagNames.addAll(toAddTagNames);
 
-						currentTagNamesSet.removeIf(
+						currentTagNames.removeIf(
 							tagName -> !_assetHelper.isValidWord(tagName));
 
-						newTagNames = currentTagNamesSet.toArray(new String[0]);
+						newTagNames = currentTagNames.toArray(new String[0]);
 					}
 
 					_assetEntryLocalService.updateEntry(

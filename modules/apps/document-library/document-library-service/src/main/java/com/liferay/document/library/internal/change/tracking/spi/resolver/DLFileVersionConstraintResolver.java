@@ -92,11 +92,11 @@ public class DLFileVersionConstraintResolver
 			return;
 		}
 
-		List<DLFileVersion> fileVersions =
+		List<DLFileVersion> dlFileVersions =
 			_dlFileVersionLocalService.getFileVersions(
 				dlFileVersion.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 
-		fileVersions.sort(DLFileVersionVersionComparator.getInstance(true));
+		dlFileVersions.sort(DLFileVersionVersionComparator.getInstance(true));
 
 		String newFileVersion = null;
 		DLFileVersion previousFileVersion = null;
@@ -104,9 +104,11 @@ public class DLFileVersionConstraintResolver
 		Map<String, String> versionMap = new TreeMap<>(
 			new VersionNumberComparator());
 
-		for (DLFileVersion fileVersion : fileVersions) {
-			if (!constraintResolverContext.isSourceCTModel(fileVersion)) {
-				previousFileVersion = fileVersion;
+		for (DLFileVersion currentDLFileVersion : dlFileVersions) {
+			if (!constraintResolverContext.isSourceCTModel(
+					currentDLFileVersion)) {
+
+				previousFileVersion = currentDLFileVersion;
 
 				continue;
 			}
@@ -116,7 +118,7 @@ public class DLFileVersionConstraintResolver
 			}
 
 			List<String> ctVersionParts = StringUtil.split(
-				fileVersion.getVersion(), CharPool.PERIOD);
+				currentDLFileVersion.getVersion(), CharPool.PERIOD);
 			List<String> previousVersionParts = StringUtil.split(
 				previousFileVersion.getVersion(), CharPool.PERIOD);
 
@@ -152,17 +154,20 @@ public class DLFileVersionConstraintResolver
 
 			newFileVersion = sb.toString();
 
-			String oldStoreFileName = fileVersion.getStoreFileName();
+			String oldStoreFileName = currentDLFileVersion.getStoreFileName();
 
-			fileVersion.setVersion(newFileVersion);
-			fileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
+			currentDLFileVersion.setVersion(newFileVersion);
+			currentDLFileVersion.setStoreUUID(
+				String.valueOf(UUID.randomUUID()));
 
-			fileVersion = _dlFileVersionLocalService.updateDLFileVersion(
-				fileVersion);
+			currentDLFileVersion =
+				_dlFileVersionLocalService.updateDLFileVersion(
+					currentDLFileVersion);
 
-			versionMap.put(oldStoreFileName, fileVersion.getStoreFileName());
+			versionMap.put(
+				oldStoreFileName, currentDLFileVersion.getStoreFileName());
 
-			previousFileVersion = fileVersion;
+			previousFileVersion = currentDLFileVersion;
 		}
 
 		if (newFileVersion == null) {

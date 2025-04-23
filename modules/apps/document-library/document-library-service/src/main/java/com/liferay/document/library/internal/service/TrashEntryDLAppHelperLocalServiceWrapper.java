@@ -650,11 +650,12 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 		dlFileVersions = ListUtil.sort(
 			dlFileVersions, DLFileVersionVersionComparator.getInstance(false));
 
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<>();
+		List<ObjectValuePair<Long, Integer>>
+			dlFileVersionStatusObjectValuePairs = new ArrayList<>();
 
 		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
-			dlFileVersionStatusOVPs = getDLFileVersionStatuses(dlFileVersions);
+			dlFileVersionStatusObjectValuePairs = getDLFileVersionStatuses(
+				dlFileVersions);
 		}
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
@@ -704,7 +705,7 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 			userId, dlFileEntry.getGroupId(),
 			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
 			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
-			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
+			oldDLFileVersionStatus, dlFileVersionStatusObjectValuePairs,
 			UnicodePropertiesBuilder.put(
 				"fileName", dlFileEntry.getFileName()
 			).put(
@@ -872,8 +873,9 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 	protected List<ObjectValuePair<Long, Integer>> getDLFileVersionStatuses(
 		List<DLFileVersion> dlFileVersions) {
 
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<>(dlFileVersions.size());
+		List<ObjectValuePair<Long, Integer>>
+			dlFileVersionStatusObjectValuePairs = new ArrayList<>(
+				dlFileVersions.size());
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			int status = dlFileVersion.getStatus();
@@ -885,10 +887,10 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
 				new ObjectValuePair<>(dlFileVersion.getFileVersionId(), status);
 
-			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
+			dlFileVersionStatusObjectValuePairs.add(dlFileVersionStatusOVP);
 		}
 
-		return dlFileVersionStatusOVPs;
+		return dlFileVersionStatusObjectValuePairs;
 	}
 
 	protected void trashOrRestoreFolder(DLFolder dlFolder, boolean moveToTrash)

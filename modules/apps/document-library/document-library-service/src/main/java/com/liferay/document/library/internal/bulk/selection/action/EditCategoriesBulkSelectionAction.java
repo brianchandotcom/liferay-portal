@@ -46,9 +46,8 @@ public class EditCategoriesBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		Set<Long> toAddCategoryIdsSet = _toLongSet(
-			inputMap, "toAddCategoryIds");
-		Set<Long> toRemoveCategoryIdsSet = _toLongSet(
+		Set<Long> toAddCategoryIds = _toLongSet(inputMap, "toAddCategoryIds");
+		Set<Long> toRemoveCategoryIds = _toLongSet(
 			inputMap, "toRemoveCategoryIds");
 
 		PermissionChecker permissionChecker =
@@ -67,21 +66,21 @@ public class EditCategoriesBulkSelectionAction
 
 					long[] newCategoryIds = new long[0];
 
-					if (SetUtil.isNotEmpty(toAddCategoryIdsSet)) {
+					if (SetUtil.isNotEmpty(toAddCategoryIds)) {
 						newCategoryIds = ArrayUtil.toLongArray(
-							toAddCategoryIdsSet);
+							toAddCategoryIds);
 					}
 
 					if (MapUtil.getBoolean(inputMap, "append")) {
-						Set<Long> currentCategoryIdsSet = SetUtil.fromArray(
+						Set<Long> currentCategoryIds = SetUtil.fromArray(
 							assetEntry.getCategoryIds());
 
-						currentCategoryIdsSet.removeAll(toRemoveCategoryIdsSet);
+						currentCategoryIds.removeAll(toRemoveCategoryIds);
 
-						currentCategoryIdsSet.addAll(toAddCategoryIdsSet);
+						currentCategoryIds.addAll(toAddCategoryIds);
 
 						newCategoryIds = ArrayUtil.toLongArray(
-							currentCategoryIdsSet);
+							currentCategoryIds);
 					}
 
 					_assetEntryLocalService.updateEntry(

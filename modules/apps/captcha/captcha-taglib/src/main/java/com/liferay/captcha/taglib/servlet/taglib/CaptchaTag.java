@@ -7,6 +7,8 @@ package com.liferay.captcha.taglib.servlet.taglib;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -40,6 +42,10 @@ public class CaptchaTag extends IncludeTag {
 			return EVAL_PAGE;
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw new JspException(ioException);
 		}
 		finally {
@@ -105,6 +111,8 @@ public class CaptchaTag extends IncludeTag {
 
 		return url;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CaptchaTag.class);
 
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(

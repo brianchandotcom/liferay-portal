@@ -25,16 +25,17 @@ public class PageElement implements Cloneable, Serializable {
 		return PageElementSerDes.toDTO(json);
 	}
 
-	public PageDefinition getDefinition() {
+	public PageElementDefinition getDefinition() {
 		return definition;
 	}
 
-	public void setDefinition(PageDefinition definition) {
+	public void setDefinition(PageElementDefinition definition) {
 		this.definition = definition;
 	}
 
 	public void setDefinition(
-		UnsafeSupplier<PageDefinition, Exception> definitionUnsafeSupplier) {
+		UnsafeSupplier<PageElementDefinition, Exception>
+			definitionUnsafeSupplier) {
 
 		try {
 			definition = definitionUnsafeSupplier.get();
@@ -44,7 +45,7 @@ public class PageElement implements Cloneable, Serializable {
 		}
 	}
 
-	protected PageDefinition definition;
+	protected PageElementDefinition definition;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;

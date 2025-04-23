@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentDropZoneDefinition;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -39,6 +40,7 @@ public class PageFragmentDropZoneDefinitionDTOConverter
 			{
 				setFragmentDropZoneId(
 					fragmentDropZoneLayoutStructureItem::getFragmentDropZoneId);
+				setType(PageDefinition.Type.FRAGMENT_DROP_ZONE);
 			}
 		};
 	}

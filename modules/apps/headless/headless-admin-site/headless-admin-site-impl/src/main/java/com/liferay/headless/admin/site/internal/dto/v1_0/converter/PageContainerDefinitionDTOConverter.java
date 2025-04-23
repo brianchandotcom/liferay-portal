@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -63,6 +64,7 @@ public class PageContainerDefinitionDTOConverter
 						containerStyledLayoutStructureItem));
 				setIndexed(containerStyledLayoutStructureItem::isIndexed);
 				setName(containerStyledLayoutStructureItem::getName);
+				setType(PageDefinition.Type.CONTAINER);
 			}
 		};
 	}

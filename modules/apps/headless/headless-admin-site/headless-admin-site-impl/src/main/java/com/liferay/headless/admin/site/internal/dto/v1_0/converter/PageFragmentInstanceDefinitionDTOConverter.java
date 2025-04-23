@@ -12,6 +12,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -105,6 +106,7 @@ public class PageFragmentInstanceDefinitionDTOConverter
 				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
 				setName(fragmentStyledLayoutStructureItem::getName);
 				setNamespace(fragmentEntryLink::getNamespace);
+				setType(PageDefinition.Type.FRAGMENT);
 			}
 		};
 	}

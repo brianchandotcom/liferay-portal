@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.FormConfig;
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFormDefinition;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
@@ -59,6 +60,7 @@ public class PageFormDefinitionDTOConverter
 					() -> _toFormConfig(formStyledLayoutStructureItem));
 				setIndexed(formStyledLayoutStructureItem::isIndexed);
 				setName(formStyledLayoutStructureItem::getName);
+				setType(PageDefinition.Type.FORM);
 			}
 		};
 	}

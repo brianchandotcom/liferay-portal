@@ -21,16 +21,16 @@ public class CMISFullTextConjunction extends CMISJunction {
 			return StringPool.BLANK;
 		}
 
-		List<CMISCriterion> cmisCriterions = list();
+		List<CMISCriterion> cmisCriteria = list();
 
-		StringBundler sb = new StringBundler((cmisCriterions.size() * 2) + 1);
+		StringBundler sb = new StringBundler((cmisCriteria.size() * 2) + 1);
 
-		if (cmisCriterions.size() > 1) {
+		if (cmisCriteria.size() > 1) {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
-		for (int i = 0; i < cmisCriterions.size(); i++) {
-			CMISCriterion cmisCriterion = cmisCriterions.get(i);
+		for (int i = 0; i < cmisCriteria.size(); i++) {
+			CMISCriterion cmisCriterion = cmisCriteria.get(i);
 
 			if (i != 0) {
 				sb.append(" ");
@@ -39,7 +39,7 @@ public class CMISFullTextConjunction extends CMISJunction {
 			sb.append(cmisCriterion.toQueryFragment());
 		}
 
-		if (cmisCriterions.size() > 1) {
+		if (cmisCriteria.size() > 1) {
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 

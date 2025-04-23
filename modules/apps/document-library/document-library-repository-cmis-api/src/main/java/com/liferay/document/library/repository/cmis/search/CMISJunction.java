@@ -14,20 +14,20 @@ import java.util.List;
 public abstract class CMISJunction implements CMISCriterion {
 
 	public void add(CMISCriterion cmisCriterion) {
-		_cmisCriterions.add(cmisCriterion);
+		_cmisCriteria.add(cmisCriterion);
 	}
 
 	public boolean isEmpty() {
-		return _cmisCriterions.isEmpty();
+		return _cmisCriteria.isEmpty();
 	}
 
 	public List<CMISCriterion> list() {
-		return _cmisCriterions;
+		return _cmisCriteria;
 	}
 
 	@Override
 	public abstract String toQueryFragment();
 
-	private final List<CMISCriterion> _cmisCriterions = new ArrayList<>();
+	private final List<CMISCriterion> _cmisCriteria = new ArrayList<>();
 
 }

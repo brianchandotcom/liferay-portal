@@ -125,10 +125,10 @@ function EditSXPBlueprintForm({
 	const {data: subtypeClassesMap, onChangeData: setSubtypeClassesMap} =
 		useFetchData({
 			defaultValue: {},
-			getData: (response) => mapSubtypeClasses(response?.subtypeClasses),
+			getData: (response) => mapSubtypeClasses(response?.assetSubtypes),
 			resource: addParams(fetchSubtypeClassesURL, {
-				[`${namespace}cmd`]: 'getSubtypeClassesInfo',
-				[`${namespace}subTypeIdentifiers`]: (
+				[`${namespace}cmd`]: 'getAssetSubtypeInfo',
+				[`${namespace}assetSubtypeIdentifiers`]: (
 					initialConfiguration.generalConfiguration
 						?.searchableAssetTypes || []
 				).join(','),

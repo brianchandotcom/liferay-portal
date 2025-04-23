@@ -15,17 +15,17 @@ export default function mapSubtypeClasses(subtypeClasses = []) {
 
 	subtypeClasses.forEach((subtypeClass) => {
 		const {
-			className,
+			assetSubtypeExternalReferenceCode,
+			assetSubtypeLocalizedName,
+			entryClassName,
 			groupExternalReferenceCode,
 			groupLocalizedName,
-			subtypeClassExternalReferenceCode,
-			subtypeClassLocalizedName,
 		} = subtypeClass;
 
-		const value = `${className}&&${groupExternalReferenceCode}&&${subtypeClassExternalReferenceCode}`;
+		const value = `${entryClassName}&&${groupExternalReferenceCode}&&${assetSubtypeExternalReferenceCode}`;
 		const label = groupLocalizedName
-			? `${subtypeClassLocalizedName} (${groupLocalizedName})`
-			: subtypeClassLocalizedName;
+			? `${assetSubtypeLocalizedName} (${groupLocalizedName})`
+			: assetSubtypeLocalizedName;
 
 		subtypeClassesMap[value] = label;
 	});

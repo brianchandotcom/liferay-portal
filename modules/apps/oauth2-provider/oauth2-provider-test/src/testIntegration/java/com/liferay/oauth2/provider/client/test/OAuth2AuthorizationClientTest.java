@@ -10,9 +10,9 @@ import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -85,9 +85,9 @@ public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated",
@@ -98,7 +98,7 @@ public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication");
+				companyId, user, "oauthTestApplication");
 		}
 
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageFormStepContainerDefinition;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -56,6 +57,7 @@ public class PageFormStepContainerDefinitionDTOConverter
 				setCustomCSS(
 					formStepContainerStyledLayoutStructureItem::getCustomCSS);
 				setName(formStepContainerStyledLayoutStructureItem::getName);
+				setType(PageDefinition.Type.FORM_STEP_CONTAINER);
 			}
 		};
 	}

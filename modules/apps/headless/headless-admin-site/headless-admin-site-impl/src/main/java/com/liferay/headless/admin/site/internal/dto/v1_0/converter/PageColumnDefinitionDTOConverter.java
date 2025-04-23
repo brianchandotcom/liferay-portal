@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageColumnDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -36,6 +37,7 @@ public class PageColumnDefinitionDTOConverter
 		return new PageColumnDefinition() {
 			{
 				setSize(columnLayoutStructureItem::getSize);
+				setType(PageDefinition.Type.COLUMN);
 			}
 		};
 	}

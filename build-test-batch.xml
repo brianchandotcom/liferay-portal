@@ -2364,7 +2364,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="" name="aws.store.enabled" />
 		<attribute default="" name="database.partition.copy" />
 		<attribute default="" name="database.partition.enabled" />
-		<attribute default="" name="database.partition.extract.and.insert" />
+		<attribute default="" name="database.partition.export.and.import" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="refreshdependencies" />
@@ -2411,7 +2411,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<antcall target="prepare-portal-test-portal-impl-properties">
 								<param name="database.partition.copy" value="@{database.partition.copy}" />
-								<param name="database.partition.extract.and.insert" value="@{database.partition.extract.and.insert}" />
+								<param name="database.partition.export.and.import" value="@{database.partition.export.and.import}" />
 							</antcall>
 
 							<antcall target="prepare-portal-test-object-storage-salesforce-properties" />
@@ -7398,35 +7398,35 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-db-partition-extract-and-insert-mysql">
+	<target name="modules-integration-db-partition-export-and-import-mysql">
 		<run-modules-integration-test
 			database.partition.enabled="true"
-			database.partition.extract.and.insert="true"
+			database.partition.export.and.import="true"
 			database.type="mysql"
 		/>
 	</target>
 
-	<target name="modules-integration-db-partition-extract-and-insert-mysql57">
+	<target name="modules-integration-db-partition-export-and-import-mysql57">
 		<run-modules-integration-test
 			database.partition.enabled="true"
-			database.partition.extract.and.insert="true"
+			database.partition.export.and.import="true"
 			database.type="mysql"
 			database.version="5.7"
 		/>
 	</target>
 
-	<target name="modules-integration-db-partition-extract-and-insert-postgresql">
+	<target name="modules-integration-db-partition-export-and-import-postgresql">
 		<run-modules-integration-test
 			database.partition.enabled="true"
-			database.partition.extract.and.insert="true"
+			database.partition.export.and.import="true"
 			database.type="postgresql"
 		/>
 	</target>
 
-	<target name="modules-integration-db-partition-extract-and-insert-postgresql163">
+	<target name="modules-integration-db-partition-export-and-import-postgresql163">
 		<run-modules-integration-test
 			database.partition.enabled="true"
-			database.partition.extract.and.insert="true"
+			database.partition.export.and.import="true"
 			database.type="postgresql"
 			database.version="16.3"
 		/>

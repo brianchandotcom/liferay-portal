@@ -41,9 +41,9 @@ public class TestPropsValues {
 	public static final boolean DATABASE_PARTITION_COPY = GetterUtil.getBoolean(
 		TestPropsUtil.get("database.partition.copy"));
 
-	public static final boolean DATABASE_PARTITION_EXTRACT_AND_INSERT =
+	public static final boolean DATABASE_PARTITION_EXPORT_AND_IMPORT =
 		GetterUtil.getBoolean(
-			TestPropsUtil.get("database.partition.extract.and.insert"));
+			TestPropsUtil.get("database.partition.export.and.import"));
 
 	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
 		GetterUtil.getBoolean(

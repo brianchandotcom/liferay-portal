@@ -51,7 +51,7 @@ public class OpenOfficeConversionPreviewBackgroundTaskExecutor
 	private static class MimeTypesHolder {
 
 		public static String[] getMimeTypes() {
-			return _mimeTypeList.toArray(new String[0]);
+			return _mimeTypes.toArray(new String[0]);
 		}
 
 		private static void _populateMimeTypeList(String documentFamily) {
@@ -64,13 +64,15 @@ public class OpenOfficeConversionPreviewBackgroundTaskExecutor
 				String contentType = MimeTypesUtil.getExtensionContentType(
 					sourceExtension);
 
-				if (Validator.isNotNull(contentType)) {
-					_mimeTypeList.add(contentType);
+				if (Validator.isNull(contentType)) {
+					continue;
 				}
+
+				_mimeTypes.add(contentType);
 			}
 		}
 
-		private static final List<String> _mimeTypeList = new ArrayList<>();
+		private static final List<String> _mimeTypes = new ArrayList<>();
 
 		static {
 			_populateMimeTypeList("drawing");

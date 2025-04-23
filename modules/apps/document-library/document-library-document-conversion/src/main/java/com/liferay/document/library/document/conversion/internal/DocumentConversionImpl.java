@@ -182,26 +182,27 @@ public class DocumentConversionImpl implements DocumentConversion {
 	public String[] getConversions(String extension) {
 		extension = _fixExtension(extension);
 
-		String[] conversions = ConversionsHolder.getConversions(extension);
+		String[] conversions1 = ConversionsHolder.getConversions(extension);
 
-		if (conversions == null) {
-			conversions = _DEFAULT_CONVERSIONS;
+		if (conversions1 == null) {
+			return _DEFAULT_CONVERSIONS;
 		}
-		else {
-			if (ArrayUtil.contains(conversions, extension)) {
-				List<String> conversionsList = new ArrayList<>();
 
-				for (String conversion : conversions) {
-					if (!conversion.equals(extension)) {
-						conversionsList.add(conversion);
-					}
-				}
+		if (!ArrayUtil.contains(conversions1, extension)) {
+			return conversions1;
+		}
 
-				conversions = conversionsList.toArray(new String[0]);
+		List<String> conversions2 = new ArrayList<>();
+
+		for (String conversion : conversions1) {
+			if (conversion.equals(extension)) {
+				continue;
 			}
+
+			conversions2.add(conversion);
 		}
 
-		return conversions;
+		return conversions2.toArray(new String[0]);
 	}
 
 	@Override

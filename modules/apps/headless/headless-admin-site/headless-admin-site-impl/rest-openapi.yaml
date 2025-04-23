@@ -1935,9 +1935,9 @@ components:
                         -   Form
                         -   FormStep
                         -   FormStepContainer
+                        -   Fragment
                         -   FragmentComposition
                         -   FragmentDropZone
-                        -   Fragment
                         -   Row
                         -   Widget
                     type: string

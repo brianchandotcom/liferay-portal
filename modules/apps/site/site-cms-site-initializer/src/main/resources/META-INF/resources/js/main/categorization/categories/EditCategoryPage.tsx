@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
@@ -91,7 +92,23 @@ const EditCategoryPage = ({
 		setTitle('');
 	}
 
+	function validateForm() {
+		if (category.name.trim() === '') {
+			setNameInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('name')
+				)
+			);
+		}
+		else {
+			setNameInputError('');
+		}
+	}
+
 	async function handleSave() {
+		validateForm();
+
 		if (nameInputError !== '') {
 			return;
 		}
@@ -107,13 +124,39 @@ const EditCategoryPage = ({
 				displayCreateSuccessToast(category.name);
 			}
 			else {
-				await CategoryService.updateCategory(
-					categoryByCategoryIdApiUrl,
-					category
-				);
+				openModal({
+					bodyHTML: Liferay.Language.get(
+						'edit-category-confirmation'
+					),
+					buttons: [
+						{
+							autoFocus: true,
+							displayType: 'secondary',
+							label: Liferay.Language.get('cancel'),
+							type: 'cancel',
+						},
+						{
+							displayType: 'primary',
+							label: Liferay.Language.get('save'),
+							onClick: async ({processClose}) => {
+								processClose();
 
-				navigate(backURL);
-				displayEditSuccessToast(category.name);
+								await CategoryService.updateCategory(
+									categoryByCategoryIdApiUrl,
+									category
+								);
+
+								navigate(backURL);
+								displayEditSuccessToast(category.name);
+							},
+						},
+					],
+					status: 'warning',
+					title: sub(
+						Liferay.Language.get('edit-x'),
+						'"' + category.name + '"'
+					),
+				});
 			}
 		}
 		catch (error) {
@@ -124,6 +167,8 @@ const EditCategoryPage = ({
 	}
 
 	async function handleSaveAndAddAnother() {
+		validateForm();
+
 		if (nameInputError !== '') {
 			return;
 		}

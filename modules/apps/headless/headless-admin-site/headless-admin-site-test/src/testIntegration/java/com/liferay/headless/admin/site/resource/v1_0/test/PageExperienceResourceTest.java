@@ -6,6 +6,9 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -191,13 +194,30 @@ public class PageExperienceResourceTest
 
 		pageExperience.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
-		pageExperience.setPageElements(new PageElement[0]);
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			testGroup.getGroupId());
+		pageExperience.setPageElements(
+			new PageElement[] {
+				new PageElement() {{
+					setPageElements(new PageElement[0]);
+					setPosition(0);
+					setDefinition(new PageContainerDefinition() {{
+						setType(PageDefinition.Type.CONTAINER);
+						setIndexed(true);
+					}});
+				}},
+				new PageElement() {{
+					setPageElements(new PageElement[0]);
+					setPosition(1);
+					setDefinition(new PageContainerDefinition() {{
+						setType(PageDefinition.Type.CONTAINER);
+						setIndexed(true);
+					}});
+				}}
+			});
 
 		pageExperience.setSegmentExternalReferenceCode(
-			segmentsEntry.getSegmentsEntryKey());
+			SegmentsTestUtil.addSegmentsEntry(
+				testGroup.getGroupId()).getSegmentsEntryKey());
 
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());

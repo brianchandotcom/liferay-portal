@@ -21,6 +21,5 @@
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
 		<suppress checks="SQLLongNamesCheck" files=".*" />
-		<suppress checks="YMLDefinitionOrderCheck" files=".*" />
 	</source-check>
 </suppressions>

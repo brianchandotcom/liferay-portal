@@ -10052,8 +10052,8 @@ org.apache.catalina.ha.session.level=INFO]]>
 			failOnNoReplacements="true"
 			file="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/web.xml"
 		>
-			<replacetoken><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">]]></replacetoken>
-			<replacevalue><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+			<replacetoken><![CDATA[xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">]]></replacetoken>
+			<replacevalue><![CDATA[xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
 	<distributable />]]></replacevalue>
 		</replace>
 	</target>

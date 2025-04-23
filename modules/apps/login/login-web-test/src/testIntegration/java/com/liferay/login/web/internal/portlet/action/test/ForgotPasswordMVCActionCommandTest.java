@@ -73,9 +73,13 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(true, false);
 
-		List<Ticket> tickets = _processAction(true);
+		try (SafeCloseable safeCloseable =
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
-		Assert.assertTrue(tickets.isEmpty());
+			List<Ticket> tickets = _processAction();
+
+			Assert.assertTrue(tickets.isEmpty());
+		}
 	}
 
 	@Test
@@ -84,9 +88,13 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(true, false);
 
-		List<Ticket> tickets = _processAction(false);
+		try (SafeCloseable safeCloseable =
+				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
 
-		Assert.assertEquals(tickets.toString(), 1, tickets.size());
+			List<Ticket> tickets = _processAction();
+
+			Assert.assertEquals(tickets.toString(), 1, tickets.size());
+		}
 	}
 
 	@Test
@@ -95,9 +103,13 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(false, false);
 
-		List<Ticket> tickets = _processAction(true);
+		try (SafeCloseable safeCloseable =
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
-		Assert.assertEquals(tickets.toString(), 1, tickets.size());
+			List<Ticket> tickets = _processAction();
+
+			Assert.assertEquals(tickets.toString(), 1, tickets.size());
+		}
 	}
 
 	@Test
@@ -205,19 +217,7 @@ public class ForgotPasswordMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private List<Ticket> _processAction(boolean passwordPolicyEnabled)
-		throws Exception {
-
-		Dictionary<String, Object> configurationProperties =
-			_ldapAuthConfigurationProvider.getConfigurationProperties(
-				_user.getCompanyId());
-
-		Object originalPasswordPolicyEnabled = configurationProperties.put(
-			"passwordPolicyEnabled", passwordPolicyEnabled);
-
-		_ldapAuthConfigurationProvider.updateProperties(
-			_user.getCompanyId(), configurationProperties);
-
+	private List<Ticket> _processAction() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.captcha.configuration.CaptchaConfiguration",
@@ -247,18 +247,24 @@ public class ForgotPasswordMVCActionCommandTest {
 				_user.getCompanyId(), User.class.getName(), _user.getUserId(),
 				TicketConstants.TYPE_PASSWORD);
 		}
-		finally {
-			if (originalPasswordPolicyEnabled != null) {
-				configurationProperties.put(
-					"passwordPolicyEnabled", originalPasswordPolicyEnabled);
-			}
-			else {
-				configurationProperties.remove("passwordPolicyEnabled");
-			}
+	}
 
-			_ldapAuthConfigurationProvider.updateProperties(
-				_user.getCompanyId(), configurationProperties);
-		}
+	private SafeCloseable _updateLDAPAuthConfigurationWithSafeCloseable(
+		boolean passwordPolicyEnabled) {
+
+		long companyId = _user.getCompanyId();
+
+		Dictionary<String, Object> configurationProperties =
+			_ldapAuthConfigurationProvider.getConfigurationProperties(
+				companyId);
+
+		configurationProperties.put(
+			"passwordPolicyEnabled", passwordPolicyEnabled);
+
+		_ldapAuthConfigurationProvider.updateProperties(
+			companyId, configurationProperties);
+
+		return () -> _ldapAuthConfigurationProvider.delete(companyId);
 	}
 
 	@DeleteAfterTestRun

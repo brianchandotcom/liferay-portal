@@ -65,11 +65,11 @@ public class LayoutStructureItemImporterUtil {
 			PageElementDefinition.Type.FORM_STEP_CONTAINER,
 			new FormStepContainerLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
-			PageElementDefinition.Type.FRAGMENT_DROP_ZONE,
-			new FragmentDropZoneLayoutStructureItemImporter());
-		_layoutStructureItemImporters.put(
 			PageElementDefinition.Type.FRAGMENT,
 			new FragmentLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElementDefinition.Type.FRAGMENT_DROP_ZONE,
+			new FragmentDropZoneLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageElementDefinition.Type.ROW,
 			new RowLayoutStructureItemImporter());

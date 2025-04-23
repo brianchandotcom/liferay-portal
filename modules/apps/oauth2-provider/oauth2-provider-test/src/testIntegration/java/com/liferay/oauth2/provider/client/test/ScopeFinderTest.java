@@ -14,9 +14,9 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -147,17 +147,17 @@ public class ScopeFinderTest extends BaseClientTestCase {
 					() -> registerScopeFinder(scopeFinder, properties2)),
 				"annotated", properties1);
 
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestClientCredentials",
+				companyId, user, "oauthTestClientCredentials",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 				Collections.singletonList("everything.read"));
 
 			OAuth2Application oAuth2Application = createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				companyId, user, "oauthTestApplication",
 				Collections.singletonList(
 					"Liferay.Captcha.REST.everything.read"));
 

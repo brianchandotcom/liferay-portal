@@ -948,7 +948,7 @@ components:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:
-                                The reference to the fragment composition that will be used to generate the page elment
+                                The reference to the fragment composition that will be used to generate the page element
                                 of type section that will be added.
             # @review
             description:

@@ -55,7 +55,7 @@ public class FormPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of CSS classes that are applied to the page element."
+		description = "A list of CSS classes that are applied to the form page element."
 	)
 	public String[] getCssClasses() {
 		if (_cssClassesSupplier != null) {
@@ -91,7 +91,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of CSS classes that are applied to the page element."
+		description = "A list of CSS classes that are applied to the form page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
@@ -100,7 +100,7 @@ public class FormPageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the page element."
+		description = "Custom CSS that is applied on the form page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -136,7 +136,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "Custom CSS that is applied on the page element."
+		description = "Custom CSS that is applied on the form page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
@@ -232,7 +232,7 @@ public class FormPageElementDefinition
 	private Supplier<FormConfig> _formConfigSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of a page form."
+		description = "The fragment style of a form page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -268,7 +268,7 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of a page form.")
+	@GraphQLField(description = "The fragment style of a form page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -276,7 +276,7 @@ public class FormPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of a page form."
+		description = "A list of fragment viewports of a form page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -313,7 +313,9 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of fragment viewports of a page form.")
+	@GraphQLField(
+		description = "A list of fragment viewports of a form page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
@@ -366,7 +368,7 @@ public class FormPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page form's layout."
+		description = "The form page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -402,7 +404,7 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page form's layout.")
+	@GraphQLField(description = "The form page element's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
@@ -410,7 +412,7 @@ public class FormPageElementDefinition
 	private Supplier<Layout> _layoutSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of of a page form."
+		description = "The custom name of a form page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -443,7 +445,7 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of of a page form.")
+	@GraphQLField(description = "The custom name of a form page element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

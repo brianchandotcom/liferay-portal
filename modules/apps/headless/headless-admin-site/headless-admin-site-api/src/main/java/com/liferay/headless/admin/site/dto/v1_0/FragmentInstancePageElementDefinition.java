@@ -478,7 +478,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<Object> _fragmentReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the page fragment instance."
+		description = "The fragment style of the fragment instance page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -515,7 +515,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The fragment style of the page fragment instance."
+		description = "The fragment style of the fragment instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
@@ -524,7 +524,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of the page fragment instance."
+		description = "A list of fragment viewports of the fragment instance page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -562,7 +562,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of the page fragment instance."
+		description = "A list of fragment viewports of the fragment instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -571,7 +571,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page fragment instance is indexed or not."
+		description = "A flag that indicates whether the fragment instance page element is indexed or not."
 	)
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
@@ -607,7 +607,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page fragment instance is indexed or not."
+		description = "A flag that indicates whether the fragment instance page element is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
@@ -616,7 +616,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a fragment instance."
+		description = "The custom name of a fragment instance page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -649,7 +649,9 @@ public class FragmentInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a fragment instance.")
+	@GraphQLField(
+		description = "The custom name of a fragment instance page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -657,7 +659,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment instance's namespace."
+		description = "The fragment instance page element's namespace."
 	)
 	public String getNamespace() {
 		if (_namespaceSupplier != null) {
@@ -692,7 +694,9 @@ public class FragmentInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment instance's namespace.")
+	@GraphQLField(
+		description = "The fragment instance page element's namespace."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String namespace;
 
@@ -700,7 +704,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _namespaceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A valid external identifier to reference this fragment instance."
+		description = "A valid external identifier to reference this fragment instance page element."
 	)
 	public String getUuid() {
 		if (_uuidSupplier != null) {
@@ -734,7 +738,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A valid external identifier to reference this fragment instance."
+		description = "A valid external identifier to reference this fragment instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uuid;
@@ -743,7 +747,7 @@ public class FragmentInstancePageElementDefinition
 	private Supplier<String> _uuidSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of widget instances within the fragment instance."
+		description = "A list of widget instances within the fragment instance page element."
 	)
 	@Valid
 	public WidgetInstance[] getWidgetInstances() {
@@ -781,7 +785,7 @@ public class FragmentInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of widget instances within the fragment instance."
+		description = "A list of widget instances within the fragment instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance[] widgetInstances;

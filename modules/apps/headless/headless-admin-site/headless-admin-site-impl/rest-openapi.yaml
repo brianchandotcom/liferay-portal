@@ -424,6 +424,22 @@ components:
                     description:
                         The display page template's SEO settings.
             type: object
+        EmptyCollectionConfig:
+            properties:
+                displayMessage:
+                    # @review
+                    description:
+                        Whether to display a message when the collection is empty or no results match the applied
+                        filters (true by default).
+                    type: boolean
+                message_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized message to display when the collection is empty or no results match the applied
+                        filters ('No Results Found' by default).
+                    type: object
         FragmentComposition:
             # @review
             description:
@@ -1056,6 +1072,12 @@ components:
                         The old localized relative URLs to the page's rendered content.
                     type: object
             type: object
+        HtmlProperties:
+            properties:
+                htmlTag:
+                    enum: [Article, Aside, Div, Footer, Header, Nav, Section]
+                    type: string
+            type: object
         ItemExternalReference:
             # @review
             description:
@@ -1282,27 +1304,7 @@ components:
                         The localized Open Graph's titles.
                     type: object
             type: object
-
-        EmptyCollectionConfig:
-            properties:
-                displayMessage:
-                    # @review
-                    description:
-                        Whether to display a message when the collection is empty or no results match the
-                        applied filters (true by default).
-                    type: boolean
-                message_i18n:
-                    additionalProperties:
-                        type: string
-                    # @review
-                    description:
-                        The localized message to display when the collection is empty or no results match the
-                        applied filters ('No Results Found' by default).
-                    type: object
         PageCollectionDefinition:
-            # @review
-            description:
-                The definition of a Page Collection.
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1378,7 +1380,8 @@ components:
                         numberOfItems:
                             # @review
                             description:
-                                The maximum number of items to display in the page collection when pagination is disabled.
+                                The maximum number of items to display in the page collection when pagination is
+                                disabled.
                             type: integer
                         numberOfItemsPerPage:
                             # @review
@@ -1405,34 +1408,34 @@ components:
                             description:
                                 The page collection's template key.
                             type: string
+            # @review
+            description:
+                The definition of a Page Collection.
             type: object
         PageCollectionItemDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/PageDefinition"
+                -   properties:
+                        collectionItemConfig:
+                            # @review
+                            description:
+                                The page collection item's configuration.
+                            type: object
             # @review
             description:
                 The definition of a Page Collection Item.
-            allOf:
-                - $ref: "#/components/schemas/PageDefinition"
-                - properties:
-                    collectionItemConfig:
-                        # @review
-                        description:
-                            The page collection item's configuration.
-                        type: object
             type: object
         PageColumnDefinition:
-            # @review
-            description:
-                The definition of a Page Column.
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
                         columnViewports:
-                                # @review
-                                description:
-                                    A list of column viewports of the page column definition.
-                                items:
-                                    $ref: "#/components/schemas/ColumnViewport"
-                                type: array
+                            # @review
+                            description:
+                                A list of column viewports of the page column definition.
+                            items:
+                                $ref: "#/components/schemas/ColumnViewport"
+                            type: array
                         size:
                             # @review
                             description:
@@ -1440,17 +1443,11 @@ components:
                             maximum: 12
                             minimum: 1
                             type: integer
-            type: object
-        HtmlProperties:
-            type: object
-            properties:
-                htmlTag:
-                    enum: [ Article, Aside, Div, Footer, Header, Nav, Section ]
-                    type: string
-        PageContainerDefinition:
             # @review
             description:
-                The definition of a Page section.
+                The definition of a Page Column.
+            type: object
+        PageContainerDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1533,21 +1530,9 @@ components:
                             description:
                                 The custom name of a Page section.
                             type: string
-            type: object
-        PageDropZoneDefinition:
             # @review
             description:
-                Represent a definition of a Page drop zone.
-            allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
-                -   properties:
-                        fragmentSettings:
-                            # @review
-                            description:
-                                The page drop zone's allowed or unallowed fragments.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentSettingsAllowed"
-                                -   $ref: "#/components/schemas/FragmentSettingsUnallowed"
+                The definition of a Page section.
             type: object
         PageDefinition:
             # @review
@@ -1563,9 +1548,9 @@ components:
                     Form: "#/components/schemas/PageFormDefinition"
                     FormStep: "#/components/schemas/PageFormStepDefinition"
                     FormStepContainer: "#/components/schemas/PageFormStepContainerDefinition"
+                    Fragment: "#/components/schemas/PageFragmentInstanceDefinition"
                     FragmentComposition: "#/components/schemas/PageFragmentCompositionInstanceDefinition"
                     FragmentDropZone: "#/components/schemas/PageFragmentDropZoneDefinition"
-                    Fragment: "#/components/schemas/PageFragmentInstanceDefinition"
                     Row: "#/components/schemas/PageRowDefinition"
                     Widget: "#/components/schemas/PageWidgetInstanceDefinition"
                 propertyName: type
@@ -1577,20 +1562,35 @@ components:
                         step, form step container, fragment, fragment composition, fragment drop zone, row, widget or
                         widget section).
                     enum:
-                        - Collection
-                        - CollectionItem
-                        - Column
-                        - Container
-                        - DropZone
-                        - Form
-                        - FormStep
-                        - FormStepContainer
-                        - FragmentComposition
-                        - FragmentDropZone
-                        - Fragment
-                        - Row
-                        - Widget
+                        -   Collection
+                        -   CollectionItem
+                        -   Column
+                        -   Container
+                        -   DropZone
+                        -   Form
+                        -   FormStep
+                        -   FormStepContainer
+                        -   FragmentComposition
+                        -   FragmentDropZone
+                        -   Fragment
+                        -   Row
+                        -   Widget
                     type: string
+            type: object
+        PageDropZoneDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/PageDefinition"
+                -   properties:
+                        fragmentSettings:
+                            # @review
+                            description:
+                                The page drop zone's allowed or unallowed fragments.
+                            oneOf:
+                                -   $ref: "#/components/schemas/FragmentSettingsAllowed"
+                                -   $ref: "#/components/schemas/FragmentSettingsUnallowed"
+            # @review
+            description:
+                Represent a definition of a Page drop zone.
             type: object
         PageElement:
             # @review
@@ -1598,10 +1598,10 @@ components:
                 A page element.
             properties:
                 definition:
+                    $ref: "#/components/schemas/PageDefinition"
                     # @review
                     description:
                         The page element's definition.
-                    $ref: "#/components/schemas/PageDefinition"
                 externalReferenceCode:
                     description:
                         The page element's external reference code. Unique within the site.
@@ -1678,9 +1678,6 @@ components:
                     type: string
             type: object
         PageFormDefinition:
-            # @review
-            description:
-                The definition of a page form.
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1779,11 +1776,11 @@ components:
                             description:
                                 The custom name of of a page form.
                             type: string
-            type: object
-        PageFormStepContainerDefinition:
             # @review
             description:
-                The definition of a page form step container.
+                The definition of a page form.
+            type: object
+        PageFormStepContainerDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1847,11 +1844,11 @@ components:
                             description:
                                 The custom name of of a page form.
                             type: string
-            type: object
-        PageFormStepDefinition:
             # @review
             description:
-                The definition of a page form step.
+                The definition of a page form step container.
+            type: object
+        PageFormStepDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1860,11 +1857,11 @@ components:
                             description:
                                 The page form step's configuration.
                             type: object
-            type: object
-        PageFragmentCompositionInstanceDefinition:
             # @review
             description:
-                The definition of a page fragment composition instance.
+                The definition of a page form step.
+            type: object
+        PageFragmentCompositionInstanceDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1872,13 +1869,13 @@ components:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:
-                                The reference to the fragment composition that will be used to generate the page elment of type
-                                section that will be added.
-            type: object
-        PageFragmentDropZoneDefinition:
+                                The reference to the fragment composition that will be used to generate the page elment
+                                of type section that will be added.
             # @review
             description:
-                The definition of a page fragment drop zone.
+                The definition of a page fragment composition instance.
+            type: object
+        PageFragmentDropZoneDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1888,10 +1885,10 @@ components:
                                 The id of the fragment drop zone
                             type: string
                     type: object
-        PageFragmentInstanceDefinition:
             # @review
             description:
-                A definition of a page fragment instance.
+                The definition of a page fragment drop zone.
+        PageFragmentInstanceDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -1990,11 +1987,11 @@ components:
                             items:
                                 $ref: "#/components/schemas/WidgetInstance"
                             type: array
-            type: object
-        PageRowDefinition:
             # @review
             description:
-                The definition of a page row.
+                A definition of a page fragment instance.
+            type: object
+        PageRowDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -2071,6 +2068,9 @@ components:
                             description:
                                 The vertical alignment property of the page row.
                             type: string
+            # @review
+            description:
+                The definition of a page row.
             type: object
         PageRule:
             # @review
@@ -2421,9 +2421,6 @@ components:
                     type: string
             type: object
         PageWidgetInstanceDefinition:
-            # @review
-            description:
-                The definition of a page widget instance.
             allOf:
                 -   $ref: "#/components/schemas/PageDefinition"
                 -   properties:
@@ -2468,6 +2465,9 @@ components:
                             # @review
                             description:
                                 The widget instance.
+            # @review
+            description:
+                The definition of a page widget instance.
             type: object
         RowViewport:
             # @review

@@ -6,33 +6,21 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.headless.object.dto.v1_0.Collaborator;
+import com.liferay.headless.object.util.v1_0.CollaboratorUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Mikel Lorza
@@ -88,7 +76,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		return _getObjectEntryCollaboratorsPage(
 			_objectEntryLocalService.getObjectEntry(
 				externalReferenceCode, contextCompany.getCompanyId(),
-				_getGroupId(scopeKey)),
+				CollaboratorUtil.getGroupId(
+					contextCompany.getCompanyId(), _groupLocalService,
+					scopeKey)),
 			pagination);
 	}
 
@@ -121,61 +111,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			collaborators,
 			_objectEntryLocalService.getObjectEntry(
 				externalReferenceCode, contextCompany.getCompanyId(),
-				_getGroupId(scopeKey)));
-	}
-
-	private SharingEntry _addOrUpdateSharingEntry(
-			long classNameId, long classPK, Collaborator collaborator,
-			long groupId)
-		throws Exception {
-
-		long toUserId = 0;
-		long toUserGroupId = 0;
-
-		if (Objects.equals(Collaborator.Type.USER, collaborator.getType())) {
-			User user = _userLocalService.getUserByExternalReferenceCode(
-				collaborator.getExternalReferenceCode(),
-				contextCompany.getCompanyId());
-
-			toUserId = user.getUserId();
-		}
-		else {
-			UserGroup userGroup =
-				_userGroupLocalService.getUserGroupByExternalReferenceCode(
-					collaborator.getExternalReferenceCode(),
-					contextCompany.getCompanyId());
-
-			toUserGroupId = userGroup.getUserGroupId();
-		}
-
-		boolean shareable = false;
-
-		if (collaborator.getShare() != null) {
-			shareable = collaborator.getShare();
-		}
-
-		return _sharingEntryService.addOrUpdateSharingEntry(
-			null, toUserGroupId, toUserId, classNameId, classPK, groupId,
-			shareable,
-			transformToList(
-				collaborator.getActionIds(),
-				SharingEntryAction::parseFromActionId),
-			collaborator.getDateExpired(), new ServiceContext());
-	}
-
-	private long _getGroupId(String scopeKey) throws Exception {
-		Long groupId = GroupUtil.getGroupId(
-			contextCompany.getCompanyId(), scopeKey, _groupLocalService);
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		if (Objects.equals(scopeKey, "0")) {
-			return 0;
-		}
-
-		throw new NoSuchGroupException();
+				CollaboratorUtil.getGroupId(
+					contextCompany.getCompanyId(), _groupLocalService,
+					scopeKey)));
 	}
 
 	private Page<Collaborator> _getObjectEntryCollaboratorsPage(
@@ -189,7 +127,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 				_sharingEntryLocalService.getSharingEntries(
 					classNameId, objectEntry.getObjectEntryId(),
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toCollaborator),
+				sharingEntry -> CollaboratorUtil.toCollaborator(
+					contextAcceptLanguage, _collaboratorDTOConverter,
+					_dtoConverterRegistry, sharingEntry, contextUriInfo,
+					contextUser)),
 			pagination,
 			_sharingEntryLocalService.getSharingEntriesCount(
 				classNameId, objectEntry.getObjectEntryId()));
@@ -199,54 +140,15 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			Collaborator[] collaborators, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _postObjectEntryCollaboratorsPage(
+		return CollaboratorUtil.addOrUpdateCollaborators(
+			contextCompany.getCompanyId(), objectEntry.getGroupId(),
+			contextAcceptLanguage,
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), collaborators,
-			objectEntry.getGroupId());
-	}
-
-	private Page<Collaborator> _postObjectEntryCollaboratorsPage(
-			long classNameId, long classPK, Collaborator[] collaborators,
-			long groupId)
-		throws Exception {
-
-		List<SharingEntry> oldSharingEntries =
-			_sharingEntryService.getSharingEntries(
-				classNameId, classPK, groupId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		List<SharingEntry> newSharingEntries = new ArrayList<>();
-
-		List<Long> sharingEntriesIds = new ArrayList<>();
-
-		for (Collaborator collaborator : collaborators) {
-			SharingEntry sharingEntry = _addOrUpdateSharingEntry(
-				classNameId, classPK, collaborator, groupId);
-
-			newSharingEntries.add(sharingEntry);
-			sharingEntriesIds.add(sharingEntry.getSharingEntryId());
-		}
-
-		for (SharingEntry sharingEntry : oldSharingEntries) {
-			if (!sharingEntriesIds.contains(sharingEntry.getSharingEntryId())) {
-				_sharingEntryService.deleteSharingEntry(sharingEntry);
-			}
-		}
-
-		return Page.of(transform(newSharingEntries, this::_toCollaborator));
-	}
-
-	private Collaborator _toCollaborator(SharingEntry sharingEntry)
-		throws Exception {
-
-		return _collaboratorDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
-				_dtoConverterRegistry, sharingEntry.getSharingEntryId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			sharingEntry);
+			_collaboratorDTOConverter, _dtoConverterRegistry,
+			_sharingEntryService, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

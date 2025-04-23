@@ -170,3 +170,13 @@ test(
 		});
 	}
 );
+
+test(
+	'Editor voice label is human readable',
+	{tag: ['@LPD-53923']},
+	async ({page}) => {
+		const ckeVoiceLabel = page.locator('span.cke_voice_label').first();
+
+		await expect(ckeVoiceLabel).toHaveText('Rich Text Editor');
+	}
+);

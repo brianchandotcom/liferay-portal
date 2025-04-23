@@ -20,7 +20,6 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 <portlet:actionURL name="/oauth_client_admin/update_oauth_client_as_local_metadata" var="updateOAuthClientASLocalMetadataURL">
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_as_local_metadata" />
-	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateOAuthClientASLocalMetadataURL %>" id="oauth-client-as-fm" method="post" name="oauth-client-as-fm" onSubmit="event.preventDefault();">
@@ -70,7 +69,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
-					<aui:button href="<%= HtmlUtil.escape(redirect) %>" type="cancel" />
+					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</div>

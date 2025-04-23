@@ -20,7 +20,6 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 <portlet:actionURL name="/oauth_client_admin/update_oauth_client_entry" var="updateOAuthClientEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_entry" />
-	<portlet:param name="redirect" value="<%= HtmlUtil.escape(redirect) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateOAuthClientEntryURL %>" id="oauth-client-entry-fm" method="post" name="oauth-client-entry-fm" onSubmit="event.preventDefault();">
@@ -124,7 +123,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
-					<aui:button href="<%= HtmlUtil.escape(redirect) %>" type="cancel" />
+					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</div>

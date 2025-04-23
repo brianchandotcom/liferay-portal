@@ -379,6 +379,51 @@ public class FileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Scope> _scopeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)"
+	)
+	public String getThumbnailURL() {
+		if (_thumbnailURLSupplier != null) {
+			thumbnailURL = _thumbnailURLSupplier.get();
+
+			_thumbnailURLSupplier = null;
+		}
+
+		return thumbnailURL;
+	}
+
+	public void setThumbnailURL(String thumbnailURL) {
+		this.thumbnailURL = thumbnailURL;
+
+		_thumbnailURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setThumbnailURL(
+		UnsafeSupplier<String, Exception> thumbnailURLUnsafeSupplier) {
+
+		_thumbnailURLSupplier = () -> {
+			try {
+				return thumbnailURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String thumbnailURL;
+
+	@JsonIgnore
+	private Supplier<String> _thumbnailURLSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -516,6 +561,22 @@ public class FileEntry implements Serializable {
 			sb.append("\"scope\": ");
 
 			sb.append(String.valueOf(scope));
+		}
+
+		String thumbnailURL = getThumbnailURL();
+
+		if (thumbnailURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnailURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(thumbnailURL));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

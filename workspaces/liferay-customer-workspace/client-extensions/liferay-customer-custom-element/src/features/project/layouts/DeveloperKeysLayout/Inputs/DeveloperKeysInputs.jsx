@@ -13,6 +13,7 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {getListTypeDefinitions} from '~/services/liferay/graphql/queries';
 import {getDevelopmentLicenseKey} from '~/services/liferay/rest/raysource/LicenseKeys';
 import downloadFromBlob from '~/utils/downloadFromBlob';
+import sortLiferayVersions from '~/utils/sortLiferayVersions';
 import {
 	ALERT_DOWNLOAD_TYPE,
 	AUTO_CLOSE_ALERT_TIME,
@@ -60,7 +61,7 @@ const DeveloperKeysInputs = ({
 			const items = data?.listTypeDefinitions?.items[0]?.listTypeEntries;
 
 			if (items?.length) {
-				const sortedItems = [...items].sort();
+				const sortedItems = sortLiferayVersions([...items]);
 				setDxpVersions(sortedItems);
 
 				setSelectedVersion(

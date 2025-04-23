@@ -7,6 +7,7 @@ import {useMemo} from 'react';
 import {LIST_TYPES} from '~/features/project/utils/constants';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import sortLiferayVersions from '~/utils/sortLiferayVersions';
 import {IOption} from '~/utils/types';
 
 export default function useGetLiferayVersions(): {
@@ -23,7 +24,7 @@ export default function useGetLiferayVersions(): {
 
 	const dxpMajorVersions = useMemo(
 		() =>
-			(
+			sortLiferayVersions(
 				(dxpMajorVersionsData?.listTypeDefinitions?.items[0]
 					.listTypeEntries ?? []) as {
 					key: string;
@@ -40,7 +41,7 @@ export default function useGetLiferayVersions(): {
 
 	const dxpMinorVersions = useMemo(
 		() =>
-			(
+			sortLiferayVersions(
 				(dxpMinorVersionsData?.listTypeDefinitions?.items[0]
 					.listTypeEntries ?? []) as {
 					key: string;
@@ -62,7 +63,7 @@ export default function useGetLiferayVersions(): {
 
 	const dxpMinorVersionsAndPortalMajorVersions = useMemo(
 		() =>
-			(
+			sortLiferayVersions(
 				(dxpMinorVersionsAndPortalMajorVersionsData?.listTypeDefinitions
 					?.items[0].listTypeEntries ?? []) as {
 					key: string;
@@ -79,7 +80,7 @@ export default function useGetLiferayVersions(): {
 
 	const portalMajorVersions = useMemo(
 		() =>
-			(
+			sortLiferayVersions(
 				(portalMajorVersionsData?.listTypeDefinitions?.items[0]
 					.listTypeEntries ?? []) as {
 					key: string;

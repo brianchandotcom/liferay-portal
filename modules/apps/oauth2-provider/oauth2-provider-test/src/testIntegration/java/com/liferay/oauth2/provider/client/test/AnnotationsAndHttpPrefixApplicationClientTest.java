@@ -10,9 +10,9 @@ import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.internal.test.TestApplication;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -91,9 +91,9 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			Dictionary<String, Object> testApplicationProperties =
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -149,11 +149,11 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 				annotatedApplicationProperties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				companyId, user, "oauthTestApplication",
 				Arrays.asList("annotations/everything", "methods/everything"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
+				companyId, user, "oauthTestApplicationWrong",
 				Collections.singletonList("everything"));
 		}
 

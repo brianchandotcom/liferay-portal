@@ -16,12 +16,14 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -203,7 +205,12 @@ public class StyleBookEntryLocalServiceImpl
 	public StyleBookEntry fetchDefaultStyleBookEntry(
 		long groupId, String themeId) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group != null) &&
+			FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-30204")) {
+
 			return styleBookEntryPersistence.fetchByG_D_T_First(
 				groupId, true, themeId, null);
 		}
@@ -613,6 +620,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

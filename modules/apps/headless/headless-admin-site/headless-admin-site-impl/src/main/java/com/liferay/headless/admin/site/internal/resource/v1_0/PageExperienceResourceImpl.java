@@ -218,8 +218,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
 			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getDefinition(
-				).getType());
+				pageElement.getDefinition());
 
 		layoutStructureItemImporter.addLayoutStructureItem(
 			layoutStructure, layoutStructureItemImporterContext, pageElement);

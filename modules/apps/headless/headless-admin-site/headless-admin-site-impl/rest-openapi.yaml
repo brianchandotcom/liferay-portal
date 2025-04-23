@@ -1306,7 +1306,7 @@ components:
             type: object
         PageCollectionDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         collectionReference:
                             $ref: "#/components/schemas/CollectionReference"
@@ -1414,7 +1414,7 @@ components:
             type: object
         PageCollectionItemDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         collectionItemConfig:
                             # @review
@@ -1427,7 +1427,7 @@ components:
             type: object
         PageColumnDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         columnViewports:
                             # @review
@@ -1449,7 +1449,7 @@ components:
             type: object
         PageContainerDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
                             $ref: "#/components/schemas/FragmentImage"
@@ -1534,10 +1534,10 @@ components:
             description:
                 The definition of a Page section.
             type: object
-        PageDefinition:
+        PageElementDefinition:
             # @review
             description:
-                The page definition.
+                The page element definition.
             discriminator:
                 mapping:
                     Collection: "#/components/schemas/PageCollectionDefinition"
@@ -1558,7 +1558,7 @@ components:
                 type:
                     # @review
                     description:
-                        The page element's type (collection, collection item, column, container, drop zone, form, form
+                        The page element definition's type (collection, collection item, column, container, drop zone, form, form
                         step, form step container, fragment, fragment composition, fragment drop zone, row, widget or
                         widget section).
                     enum:
@@ -1579,7 +1579,7 @@ components:
             type: object
         PageDropZoneDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         fragmentSettings:
                             # @review
@@ -1598,7 +1598,7 @@ components:
                 A page element.
             properties:
                 definition:
-                    $ref: "#/components/schemas/PageDefinition"
+                    $ref: "#/components/schemas/PageElementDefinition"
                     # @review
                     description:
                         The page element's definition.
@@ -1679,7 +1679,7 @@ components:
             type: object
         PageFormDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review
@@ -1782,7 +1782,7 @@ components:
             type: object
         PageFormStepContainerDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review
@@ -1850,7 +1850,7 @@ components:
             type: object
         PageFormStepDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         formStepConfig:
                             # @review
@@ -1863,7 +1863,7 @@ components:
             type: object
         PageFragmentCompositionInstanceDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         fragmentComposition:
                             $ref: "#/components/schemas/ItemExternalReference"
@@ -1877,7 +1877,7 @@ components:
             type: object
         PageFragmentDropZoneDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         fragmentDropZoneId:
                             # @review
@@ -1890,7 +1890,7 @@ components:
                 The definition of a page fragment drop zone.
         PageFragmentInstanceDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review
@@ -1993,7 +1993,7 @@ components:
             type: object
         PageRowDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review
@@ -2422,7 +2422,7 @@ components:
             type: object
         PageWidgetInstanceDefinition:
             allOf:
-                -   $ref: "#/components/schemas/PageDefinition"
+                -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review

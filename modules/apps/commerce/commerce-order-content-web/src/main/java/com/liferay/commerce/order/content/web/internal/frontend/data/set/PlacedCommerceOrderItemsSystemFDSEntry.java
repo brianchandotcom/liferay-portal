@@ -20,11 +20,6 @@ import org.osgi.service.component.annotations.Component;
 public class PlacedCommerceOrderItemsSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
-		return null;
-	}
-
-	@Override
 	public String getDescription() {
 		return null;
 	}

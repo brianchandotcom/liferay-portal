@@ -21,11 +21,6 @@ public class PlacedCommerceOrderShipmentsSystemFDSEntry
 	implements SystemFDSEntry {
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
-		return null;
-	}
-
-	@Override
 	public String getDescription() {
 		return null;
 	}

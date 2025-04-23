@@ -12,7 +12,9 @@ import com.liferay.portal.util.PropsValues;
  */
 public interface SystemFDSEntry {
 
-	public String getAdditionalAPIURLParameters();
+	public default String getAdditionalAPIURLParameters() {
+		return null;
+	}
 
 	public default int getDefaultItemsPerPage() {
 		return PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA;

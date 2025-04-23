@@ -20,11 +20,6 @@ import org.osgi.service.component.annotations.Component;
 public class CustomInternalViewSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
-		return "";
-	}
-
-	@Override
 	public String getDescription() {
 		return "This is the custom internal view sample of a frontend data " +
 			"set.";

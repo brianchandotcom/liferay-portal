@@ -360,7 +360,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 	private void _testPatchSkuWithReplacementSku() throws Exception {
 		Sku sku1 = testPatchSku_addSku();
-
 		Sku sku2 = testPatchSku_addSku();
 
 		Sku patchSku1 = skuResource.patchSku(

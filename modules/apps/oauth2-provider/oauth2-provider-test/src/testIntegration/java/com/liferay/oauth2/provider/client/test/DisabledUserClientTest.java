@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -68,24 +68,24 @@ public class DisabledUserClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
 			User disabledUser = addUser(
-				CompanyLocalServiceUtil.getCompany(defaultCompanyId));
+				CompanyLocalServiceUtil.getCompany(companyId));
 
 			UserLocalServiceUtil.updateStatus(
 				disabledUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			User user = UserTestUtil.getAdminUser(companyId);
 
 			registerJaxRsApplication(new TestApplication(), "users", null);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				companyId, user, "oauthTestApplication",
 				Arrays.asList("GET"));
 			createOAuth2Application(
-				defaultCompanyId, disabledUser, "oauthTestApplicationDisabled",
+				companyId, disabledUser, "oauthTestApplicationDisabled",
 				Arrays.asList("GET"));
 		}
 

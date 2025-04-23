@@ -38,7 +38,7 @@ export function SearchableSubtypesModal({
 	selectedSubtypes,
 }) {
 	const [selected, setSelected] = useState(selectedSubtypes);
-	const [subtypes, setSubtypes] = useState({subtypeClasses: []});
+	const [subtypes, setSubtypes] = useState({assetSubtypes: []});
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
@@ -46,7 +46,7 @@ export function SearchableSubtypesModal({
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const {fetchSubtypeClassesURL = '', namespace} = useContext(ThemeContext);
+	const {getAssetSubtypesURL = '', namespace} = useContext(ThemeContext);
 
 	const getLabel = ({assetSubtypeLocalizedName, groupLocalizedName}) => {
 		return groupLocalizedName
@@ -68,22 +68,22 @@ export function SearchableSubtypesModal({
 		[selected]
 	);
 
-	const isInSubtypeClasses = useCallback(
+	const isInAssetSubtypes = useCallback(
 		(item) =>
-			subtypes.subtypeClasses?.some(
+			subtypes.assetSubtypes?.some(
 				(subtypeItem) => subtypeItem.value === item.value
 			),
-		[subtypes.subtypeClasses]
+		[subtypes.assetSubtypes]
 	);
 
 	const allSubtypesSelected = useMemo(
-		() => subtypes.subtypeClasses?.every((item) => isSelected(item)),
-		[subtypes.subtypeClasses, isSelected]
+		() => subtypes.assetSubtypes?.every((item) => isSelected(item)),
+		[subtypes.assetSubtypes, isSelected]
 	);
 
 	const indeterminateSelected = useMemo(
-		() => !allSubtypesSelected && subtypes.subtypeClasses?.some(isSelected),
-		[allSubtypesSelected, isSelected, subtypes.subtypeClasses]
+		() => !allSubtypesSelected && subtypes.assetSubtypes?.some(isSelected),
+		[allSubtypesSelected, isSelected, subtypes.assetSubtypes]
 	);
 
 	const _handleSelect = (item) => () => {
@@ -102,16 +102,14 @@ export function SearchableSubtypesModal({
 	const _handleSelectAll = () => {
 		setSelected(
 			allSubtypesSelected
-				? selected.filter((item) => !isInSubtypeClasses(item))
+				? selected.filter((item) => !isInAssetSubtypes(item))
 				: removeDuplicates(
 						[
 							...selected,
-							...subtypes.subtypeClasses.map(
-								({label, value}) => ({
-									label,
-									value,
-								})
-							),
+							...subtypes.assetSubtypes.map(({label, value}) => ({
+								label,
+								value,
+							})),
 						],
 						'value'
 					)
@@ -135,14 +133,14 @@ export function SearchableSubtypesModal({
 							[`${namespace}page`]: page,
 							[`${namespace}pageSize`]: pageSize,
 						},
-						fetchSubtypeClassesURL
+						getAssetSubtypesURL
 					)
 				)
 					.then((response) => response.json())
 					.then((items) => {
 						setSubtypes({
 							...items,
-							subtypeClasses: items.assetSubtypes?.map(
+							assetSubtypes: items.assetSubtypes?.map(
 								(subtype) => ({
 									...subtype,
 									label: getLabel(subtype),
@@ -166,7 +164,7 @@ export function SearchableSubtypesModal({
 				setLoading(false);
 			}
 		},
-		[className, fetchSubtypeClassesURL, namespace]
+		[className, getAssetSubtypesURL, namespace]
 	);
 
 	const _handlePageChange = (newPage) => {
@@ -318,7 +316,7 @@ export function SearchableSubtypesModal({
 						</Head>
 
 						<Body>
-							{subtypes.subtypeClasses.map((item) => {
+							{subtypes.assetSubtypes.map((item) => {
 								return (
 									<Row
 										key={item.value}
@@ -371,8 +369,7 @@ export function SearchableSubtypesModal({
 						onActiveChange={_handlePageChange}
 						onDeltaChange={_handlePageSizeChange}
 						totalItems={
-							subtypes.totalCount ||
-							subtypes.subtypeClasses.length
+							subtypes.totalCount || subtypes.assetSubtypes.length
 						}
 					/>
 				</ClayModal.Body>

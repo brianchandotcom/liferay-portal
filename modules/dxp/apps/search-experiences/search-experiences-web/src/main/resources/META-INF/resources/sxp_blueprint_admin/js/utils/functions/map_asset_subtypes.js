@@ -4,31 +4,31 @@
  */
 
 /**
- * Function to create a subtypeClasses map, used to grab the proper
+ * Function to create a assetSubtypes map, used to grab the proper
  * display names based on the values.
  *
- * @param {Array} subtypeClasses Array of objects with subtype classes
- * @return {Object} Labels of subtypeClasses mapped to the values
+ * @param {Array} assetSubtypes Array of objects with subtype classes
+ * @return {Object} Labels of assetSubtypes mapped to the values
  */
-export default function mapSubtypeClasses(subtypeClasses = []) {
-	const subtypeClassesMap = {};
+export default function mapAssetSubtypes(assetSubtypes = []) {
+	const assetSubtypesMap = {};
 
-	subtypeClasses.forEach((subtypeClass) => {
+	assetSubtypes.forEach((assetSubtype) => {
 		const {
 			assetSubtypeExternalReferenceCode,
 			assetSubtypeLocalizedName,
 			entryClassName,
 			groupExternalReferenceCode,
 			groupLocalizedName,
-		} = subtypeClass;
+		} = assetSubtype;
 
 		const value = `${entryClassName}&&${groupExternalReferenceCode}&&${assetSubtypeExternalReferenceCode}`;
 		const label = groupLocalizedName
 			? `${assetSubtypeLocalizedName} (${groupLocalizedName})`
 			: assetSubtypeLocalizedName;
 
-		subtypeClassesMap[value] = label;
+		assetSubtypesMap[value] = label;
 	});
 
-	return subtypeClassesMap;
+	return assetSubtypesMap;
 }

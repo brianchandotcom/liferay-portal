@@ -29,10 +29,10 @@ const getSelectedSubtypes = (selected, className) => {
  * state and allows for easier manipulation of the data.
  *
  * @param {*} initialSelectedTypes
- * @param {*} subtypeClassesMap
+ * @param {*} assetSubtypesMap
  * @returns {array}
  */
-const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
+const setupSelected = (initialSelectedTypes, assetSubtypesMap = {}) => {
 	const selected = [];
 
 	initialSelectedTypes.forEach((item) => {
@@ -52,7 +52,7 @@ const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
 				const subtypesArray = selected[itemIndex].subtypes || [];
 
 				subtypesArray.push({
-					label: subtypeClassesMap[item] || item,
+					label: assetSubtypesMap[item] || item,
 					value: item,
 				});
 
@@ -64,7 +64,7 @@ const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
 			else {
 				selected.push({
 					subtypes: [
-						{label: subtypeClassesMap[item] || item, value: item},
+						{label: assetSubtypesMap[item] || item, value: item},
 					],
 					type: typeClassName,
 				});
@@ -79,36 +79,36 @@ const setupSelected = (initialSelectedTypes, subtypeClassesMap = {}) => {
  * Transforms the selected types and subtypes into a flat array that
  * the backend expects for submission.
  *
- * @param {*} newSelected
+ * @param {*} selected
  * @returns {array}
  */
-const transformSelected = (newSelected) => {
-	const newSearchableAssetTypes = [];
+const transformSelected = (selected) => {
+	const searchableAssetTypes = [];
 
-	newSelected.forEach(({subtypes, type}) => {
+	selected.forEach(({subtypes, type}) => {
 		if (subtypes.length) {
-			newSearchableAssetTypes.push(...subtypes.map(({value}) => value));
+			searchableAssetTypes.push(...subtypes.map(({value}) => value));
 		}
 		else {
-			newSearchableAssetTypes.push(type);
+			searchableAssetTypes.push(type);
 		}
 	});
 
-	return newSearchableAssetTypes;
+	return searchableAssetTypes;
 };
 
 function SelectTypes({
-	onSubtypeClassesMapChange,
+	onAssetSubtypesMapChange,
 	onFrameworkConfigChange,
 	onFetchSearchableTypes,
 	searchableTypes = [],
 	initialSelectedTypes = [],
-	subtypeClassesMap,
+	assetSubtypesMap,
 }) {
 	const {locale} = useContext(ThemeContext);
 
 	const [selected, setSelected] = useState(
-		setupSelected(initialSelectedTypes, subtypeClassesMap)
+		setupSelected(initialSelectedTypes, assetSubtypesMap)
 	);
 
 	const mainSearchableTypesSorted = searchableTypes.sort((a, b) =>
@@ -148,9 +148,9 @@ function SelectTypes({
 		_handleChangeSelected(newSelected);
 
 		// If any new subtypes are in this array, they should be
-		// added to the subtypeClassesMap.
+		// added to the assetSubtypesMap.
 
-		onSubtypeClassesMapChange(subtypes);
+		onAssetSubtypesMapChange(subtypes);
 	};
 
 	const _handleChangeTypes = (types) => {

@@ -32,7 +32,7 @@ import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
-import mapSubtypeClasses from '../utils/functions/map_subtype_classes';
+import mapAssetSubtypes from '../utils/functions/map_asset_subtypes';
 import traverseAndEncodeJSONStrings from '../utils/functions/traverse_and_encode_json_strings';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
@@ -87,7 +87,7 @@ function EditSXPBlueprintForm({
 	sxpBlueprintId,
 }) {
 	const {
-		fetchSubtypeClassesURL = '',
+		getAssetSubtypesURL = '',
 		isCompanyAdmin,
 		locale,
 		namespace,
@@ -122,11 +122,11 @@ function EditSXPBlueprintForm({
 			resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
 		});
 
-	const {data: subtypeClassesMap, onChangeData: setSubtypeClassesMap} =
+	const {data: assetSubtypesMap, onChangeData: setAssetSubtypesMap} =
 		useFetchData({
 			defaultValue: {},
-			getData: (response) => mapSubtypeClasses(response?.assetSubtypes),
-			resource: addParams(fetchSubtypeClassesURL, {
+			getData: (response) => mapAssetSubtypes(response?.assetSubtypes),
+			resource: addParams(getAssetSubtypesURL, {
 				[`${namespace}cmd`]: 'getAssetSubtypeInfo',
 				[`${namespace}assetSubtypeIdentifiers`]: (
 					initialConfiguration.generalConfiguration
@@ -864,19 +864,19 @@ function EditSXPBlueprintForm({
 	};
 
 	/**
-	 * Adds new subtypeClasses to the subtypeClasses map in order to easily find
+	 * Adds new assetSubtypes to the assetSubtypes map in order to easily find
 	 * their label. This is called when updating searchableAssetTypes
 	 * selection.
 	 * @param {array} subtypes
 	 */
-	const _handleSubtypeClassesMapChange = (subtypes) => {
-		const newSubtypeClassesMap = {};
+	const _handleAssetSubtypesMapChange = (subtypes) => {
+		const newAssetSubtypesMap = {};
 
 		subtypes.forEach(({label, value}) => {
-			newSubtypeClassesMap[value] = label;
+			newAssetSubtypesMap[value] = label;
 		});
 
-		setSubtypeClassesMap({...subtypeClassesMap, ...newSubtypeClassesMap});
+		setAssetSubtypesMap({...assetSubtypesMap, ...newAssetSubtypesMap});
 	};
 
 	const _handleTabChange = (tab) => {
@@ -1020,6 +1020,7 @@ function EditSXPBlueprintForm({
 								applyIndexerClauses={
 									formik.values.applyIndexerClauses
 								}
+								assetSubtypesMap={assetSubtypesMap}
 								clauseContributorsList={[
 									...keywordQueryContributors,
 									...modelPrefilterContributors,
@@ -1039,6 +1040,9 @@ function EditSXPBlueprintForm({
 								onApplyIndexerClausesChange={
 									_handleApplyIndexerClausesChange
 								}
+								onAssetSubtypesMapChange={
+									_handleAssetSubtypesMapChange
+								}
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
 								onDeleteSXPElement={_handleDeleteSXPElement}
@@ -1046,15 +1050,11 @@ function EditSXPBlueprintForm({
 								onFrameworkConfigChange={
 									_handleFrameworkConfigChange
 								}
-								onSubtypeClassesMapChange={
-									_handleSubtypeClassesMapChange
-								}
 								openSidebar={openSidebar}
 								searchableTypes={searchableTypes?.items}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								setOpenSidebar={setOpenSidebar}
-								subtypeClassesMap={subtypeClassesMap}
 								touched={formik.touched.elementInstances}
 							/>
 						</div>

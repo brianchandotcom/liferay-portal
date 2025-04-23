@@ -56,7 +56,7 @@ public class EditSXPBlueprintDisplayContext {
 				"/sxp_blueprint_admin/get_sites"
 			).buildString()
 		).put(
-			"fetchSubtypeClassesURL",
+			"getAssetSubtypesURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse
 			).setParameter(

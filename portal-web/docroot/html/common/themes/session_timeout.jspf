@@ -9,7 +9,7 @@
 String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, request);
 %>
 
-<c:if test="<%= themeDisplay.isSignedIn() && (PropsValues.SESSION_TIMEOUT_WARNING > 0) %>">
+<c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">
 	<aui:script type="module">
 		import {Session} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web", "legacy") %>';
 

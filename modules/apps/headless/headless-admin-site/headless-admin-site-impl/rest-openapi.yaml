@@ -285,7 +285,7 @@ components:
                         contentVisibility:
                             # @review
                             description:
-                                Defines the content visibility of the container.
+                                The content visibility of the container.
                             type: string
                         cssClasses:
                             # @review

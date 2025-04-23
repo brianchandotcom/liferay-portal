@@ -58,9 +58,9 @@
 			if (publishProcessesLink) {
 				publishProcessesLink.addEventListener('click', (event) => {
 					Liferay.Util.openModal({
-						iframeBodyCssClass: '',
 						containerProps: {},
 						id: 'publishProcesses',
+						iframeBodyCssClass: '',
 						title: '<liferay-ui:message key="initial-publish-process" />',
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

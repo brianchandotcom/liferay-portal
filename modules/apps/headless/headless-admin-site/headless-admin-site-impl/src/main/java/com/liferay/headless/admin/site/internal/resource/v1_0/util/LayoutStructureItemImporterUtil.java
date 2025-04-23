@@ -27,9 +27,9 @@ import java.util.EnumMap;
 public class LayoutStructureItemImporterUtil {
 
 	public static LayoutStructureItemImporter getLayoutStructureItemImporter(
-		PageDefinition.Type type) {
+		PageDefinition pageDefinition) {
 
-		return _layoutStructureItemImporters.get(type);
+		return _layoutStructureItemImporters.get(pageDefinition.getType());
 	}
 
 	private static final EnumMap

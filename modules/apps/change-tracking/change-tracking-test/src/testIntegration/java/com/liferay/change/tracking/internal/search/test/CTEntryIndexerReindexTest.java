@@ -85,9 +85,7 @@ public class CTEntryIndexerReindexTest {
 		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.change.tracking.internal.search.spi.model.index." +
-					"contributor.CTEntryModelIndexerWriterContributor",
-				LoggerTestUtil.INFO)) {
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
 			_indexWriterHelper.reindex(
 				TestPropsValues.getUserId(), "reindex",
@@ -102,12 +100,16 @@ public class CTEntryIndexerReindexTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Skip indexing of ", CTEntry.class.getName(),
-					" because this can only be performed in production ",
-					"mode"),
+					"Restricting indexable results of ",
+					CTEntry.class.getName(), " because this can only be ",
+					"performed in production mode"),
 				logEntry.getMessage());
 		}
 	}
+
+	private static final String _LOG_NAME =
+		"com.liferay.change.tracking.internal.search.spi.model.index." +
+			"contributor.CTEntryModelIndexerWriterContributor";
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

@@ -3710,6 +3710,19 @@
 		"to": "addOrganization(null, param#0#, param#1#, param#2#, param#3#, param#4#,  _listTypeService.getListTypeId(CompanyThreadLocal.getCompanyId(), param#5#, ListTypeConstants.ORGANIZATION_STATUS), param#6#, param#7#, param#8#)"
 	},
 	{
+		"from": "MimeTypesUtil.isWebImage",
+		"issueKey": "LPD-40678",
+		"newImports": [
+			"com.liferay.portal.kernel.util.SetUtil",
+			"com.liferay.portal.util.PropsValues"
+		],
+		"to": "SetUtil.fromArray(PropsValues.MIME_TYPES_WEB_IMAGES).contains",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
 		"classNames": [
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil",

@@ -1,4 +1,4 @@
-@component-name = "portal-acceptance"
+@component-name = "portal-ci-infrastructure"
 @ignore = "true"
 definition {
 

@@ -142,7 +142,7 @@ export function SearchableSubtypesModal({
 					.then((items) => {
 						setSubtypes({
 							...items,
-							subtypeClasses: items.subtypeClasses?.map(
+							subtypeClasses: items.assetSubtypes?.map(
 								(subtype) => ({
 									...subtype,
 									label: getLabel(subtype),

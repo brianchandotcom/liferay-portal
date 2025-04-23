@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -18,11 +19,11 @@ import java.util.Set;
  */
 public class PageElementTypeUtil {
 
-	public static PageElement.Type toExternalType(String internalType) {
-		Set<PageElement.Type> externalTypes =
+	public static PageDefinition.Type toExternalType(String internalType) {
+		Set<PageDefinition.Type> externalTypes =
 			_externalToInternalValuesMap.keySet();
 
-		for (PageElement.Type externalType : externalTypes) {
+		for (PageDefinition.Type externalType : externalTypes) {
 			if (Objects.equals(
 					internalType,
 					_externalToInternalValuesMap.get(externalType))) {
@@ -34,7 +35,7 @@ public class PageElementTypeUtil {
 		throw new UnsupportedOperationException();
 	}
 
-	public static String toInternalType(PageElement.Type externalType) {
+	public static String toInternalType(PageDefinition.Type externalType) {
 		if (_externalToInternalValuesMap.containsKey(externalType)) {
 			return _externalToInternalValuesMap.get(externalType);
 		}
@@ -42,36 +43,36 @@ public class PageElementTypeUtil {
 		throw new UnsupportedOperationException();
 	}
 
-	private static final Map<PageElement.Type, String>
+	private static final Map<PageDefinition.Type, String>
 		_externalToInternalValuesMap = HashMapBuilder.put(
-			PageElement.Type.COLLECTION,
+			PageDefinition.Type.COLLECTION,
 			LayoutDataItemTypeConstants.TYPE_COLLECTION
 		).put(
-			PageElement.Type.COLLECTION_ITEM,
+			PageDefinition.Type.COLLECTION_ITEM,
 			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM
 		).put(
-			PageElement.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
+			PageDefinition.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
 		).put(
-			PageElement.Type.CONTAINER,
+			PageDefinition.Type.CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_CONTAINER
 		).put(
-			PageElement.Type.DROP_ZONE,
+			PageDefinition.Type.DROP_ZONE,
 			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
 		).put(
-			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
+			PageDefinition.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
 		).put(
-			PageElement.Type.FORM_STEP,
+			PageDefinition.Type.FORM_STEP,
 			LayoutDataItemTypeConstants.TYPE_FORM_STEP
 		).put(
-			PageElement.Type.FORM_STEP_CONTAINER,
+			PageDefinition.Type.FORM_STEP_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER
 		).put(
-			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
+			PageDefinition.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
 		).put(
-			PageElement.Type.FRAGMENT_DROP_ZONE,
+			PageDefinition.Type.FRAGMENT_DROP_ZONE,
 			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE
 		).put(
-			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
+			PageDefinition.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
 		).build();
 
 }

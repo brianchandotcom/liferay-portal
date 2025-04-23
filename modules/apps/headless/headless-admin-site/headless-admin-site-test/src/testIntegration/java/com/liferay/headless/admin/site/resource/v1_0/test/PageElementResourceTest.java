@@ -161,8 +161,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageExperiencePageElement_addPageElement(
 				randomPageElement());
 
-		postPageElement.setDefinition(() -> null);
-
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,

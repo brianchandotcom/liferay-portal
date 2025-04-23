@@ -213,17 +213,91 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		super.
 			testPostSiteSiteByExternalReferenceCodePageExperiencePageElement();
 
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageCollectionDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageCollectionItemDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageColumnDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageContainerDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageDropZoneDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormStepDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormStepContainerDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFragmentDropZoneDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFragmentInstanceDefinition();
-		_testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageRowDefinition();
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageCollectionDefinition() {
+					{
+						setType(Type.COLLECTION);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageCollectionItemDefinition() {
+					{
+						setType(Type.COLLECTION_ITEM);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageColumnDefinition() {
+					{
+						setType(Type.COLUMN);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageContainerDefinition() {
+					{
+						setIndexed(Boolean.FALSE);
+						setType(Type.CONTAINER);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageDropZoneDefinition() {
+					{
+						setType(Type.DROP_ZONE);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageFormDefinition() {
+					{
+						setType(Type.FORM);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageFormStepDefinition() {
+					{
+						setType(Type.FORM_STEP);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageFormStepContainerDefinition() {
+					{
+						setType(Type.FORM_STEP_CONTAINER);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageFragmentDropZoneDefinition() {
+					{
+						setType(Type.FRAGMENT_DROP_ZONE);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageFragmentInstanceDefinition() {
+					{
+						setFragmentReference(
+							new DefaultFragmentReference() {
+								{
+									setDefaultFragmentKey(
+										() -> "BASIC_COMPONENT-heading");
+								}
+							});
+						setType(Type.FRAGMENT);
+					}
+				}));
+		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
+			_randomPageElement(
+				new PageRowDefinition() {
+					{
+						setType(Type.ROW);
+					}
+				}));
 	}
 
 	@Override
@@ -428,160 +502,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(_position++);
 
 		return pageElement;
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageCollectionDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageCollectionDefinition() {
-				{
-					setType(Type.COLLECTION);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageCollectionItemDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageCollectionItemDefinition() {
-				{
-					setType(Type.COLLECTION_ITEM);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageColumnDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageColumnDefinition() {
-				{
-					setType(Type.COLUMN);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageContainerDefinition()
-		throws Exception {
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement());
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageDropZoneDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageDropZoneDefinition() {
-				{
-					setType(Type.DROP_ZONE);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageFormDefinition() {
-				{
-					setType(Type.FORM);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormStepContainerDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageFormStepContainerDefinition() {
-				{
-					setType(Type.FORM_STEP_CONTAINER);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFormStepDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageFormStepDefinition() {
-				{
-					setType(Type.FORM_STEP);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFragmentDropZoneDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageFragmentDropZoneDefinition() {
-				{
-					setType(Type.FRAGMENT_DROP_ZONE);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageFragmentInstanceDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageFragmentInstanceDefinition() {
-				{
-					setFragmentReference(
-						new DefaultFragmentReference() {
-							{
-								setDefaultFragmentKey(
-									() -> "BASIC_COMPONENT-heading");
-							}
-						});
-					setType(Type.FRAGMENT);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
-	}
-
-	private void _testPostSiteSiteByExternalReferenceCodePageExperiencePageElementPageRowDefinition()
-		throws Exception {
-
-		PageElement randomPageElement = _randomPageElement(
-			new PageRowDefinition() {
-				{
-					setType(Type.ROW);
-				}
-			});
-
-		_assertPostSiteSiteByExternalReferenceCodePageExperiencePageElement(
-			randomPageElement);
 	}
 
 	private Layout _draftLayout;

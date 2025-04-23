@@ -232,7 +232,10 @@ test(
 			await modal.restSchemaField.click();
 
 			await modal.restSchemaOptions
-				.getByRole('option', {name: cartDataSetConfig.restSchema})
+				.getByRole('option', {
+					exact: true,
+					name: cartDataSetConfig.restSchema,
+				})
 				.click();
 
 			await expect(modal.restEndpointField).toBeVisible();

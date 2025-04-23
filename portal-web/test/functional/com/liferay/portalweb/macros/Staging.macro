@@ -1853,7 +1853,9 @@ definition {
 
 		SelectFrameTop();
 
-		AssertTextEquals.assertPartialText(
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForElementPresent(
 			locator1 = "Message#ERROR",
 			value1 = ${validateErrorMessage});
 	}

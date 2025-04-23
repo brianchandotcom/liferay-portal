@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>ERROR</td>
-	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))][not(contains(@style,'display: none'))]</td>
+	<td>//div[(contains(@class,'upload-error-message') and contains(normalize-space(text()), '${value1}')) or (contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger')) and not(contains(@style,'display: none')))]</td>
 	<td></td>
 </tr>
 <tr>

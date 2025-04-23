@@ -11,9 +11,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -32,17 +32,18 @@ import org.osgi.service.component.annotations.Reference;
 	property = "dto.class.name=com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageFragmentInstanceDefinitionDTOConverter
+public class FragmentInstancePageElementDefinitionDTOConverter
 	implements DTOConverter
-		<FragmentStyledLayoutStructureItem, PageFragmentInstanceDefinition> {
+		<FragmentStyledLayoutStructureItem,
+		 FragmentInstancePageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageFragmentInstanceDefinition.class.getSimpleName();
+		return FragmentInstancePageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageFragmentInstanceDefinition toDTO(
+	public FragmentInstancePageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
 		throws Exception {
@@ -55,7 +56,7 @@ public class PageFragmentInstanceDefinitionDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
-		return new PageFragmentInstanceDefinition() {
+		return new FragmentInstancePageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -106,7 +107,7 @@ public class PageFragmentInstanceDefinitionDTOConverter
 				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
 				setName(fragmentStyledLayoutStructureItem::getName);
 				setNamespace(fragmentEntryLink::getNamespace);
-				setType(PageDefinition.Type.FRAGMENT);
+				setType(PageElementDefinition.Type.FRAGMENT);
 			}
 		};
 	}

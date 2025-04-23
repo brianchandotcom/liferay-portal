@@ -5,9 +5,9 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
-import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,23 +26,23 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageContainerDefinitionDTOConverter
+public class ContainerPageElementDefinitionDTOConverter
 	implements DTOConverter
-		<ContainerStyledLayoutStructureItem, PageContainerDefinition> {
+		<ContainerStyledLayoutStructureItem, ContainerPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageContainerDefinition.class.getSimpleName();
+		return ContainerPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageContainerDefinition toDTO(
+	public ContainerPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem)
 		throws Exception {
 
-		return new PageContainerDefinition() {
+		return new ContainerPageElementDefinition() {
 			{
 				setContentVisibility(
 					containerStyledLayoutStructureItem::getContentVisibility);
@@ -64,7 +64,7 @@ public class PageContainerDefinitionDTOConverter
 						containerStyledLayoutStructureItem));
 				setIndexed(containerStyledLayoutStructureItem::isIndexed);
 				setName(containerStyledLayoutStructureItem::getName);
-				setType(PageDefinition.Type.CONTAINER);
+				setType(PageElementDefinition.Type.CONTAINER);
 			}
 		};
 	}

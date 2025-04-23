@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageFormStepContainerDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FormStepContainerPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -22,24 +22,24 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageFormStepContainerDefinitionDTOConverter
+public class FormStepContainerPageElementDefinitionDTOConverter
 	implements DTOConverter
 		<FormStepContainerStyledLayoutStructureItem,
-		 PageFormStepContainerDefinition> {
+		 FormStepContainerPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageFormStepContainerDefinition.class.getSimpleName();
+		return FormStepContainerPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageFormStepContainerDefinition toDTO(
+	public FormStepContainerPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FormStepContainerStyledLayoutStructureItem
 				formStepContainerStyledLayoutStructureItem)
 		throws Exception {
 
-		return new PageFormStepContainerDefinition() {
+		return new FormStepContainerPageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -57,7 +57,7 @@ public class PageFormStepContainerDefinitionDTOConverter
 				setCustomCSS(
 					formStepContainerStyledLayoutStructureItem::getCustomCSS);
 				setName(formStepContainerStyledLayoutStructureItem::getName);
-				setType(PageDefinition.Type.FORM_STEP_CONTAINER);
+				setType(PageElementDefinition.Type.FORM_STEP_CONTAINER);
 			}
 		};
 	}

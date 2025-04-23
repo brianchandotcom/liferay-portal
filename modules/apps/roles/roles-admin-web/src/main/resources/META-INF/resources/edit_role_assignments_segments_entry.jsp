@@ -103,10 +103,10 @@
 		event.preventDefault();
 
 		Liferay.Util.openModal({
-			iframeBodyCssClass: '',
 			containerProps: {},
-			url: event.currentTarget.href,
+			iframeBodyCssClass: '',
 			title: '<liferay-ui:message key="members" />',
+			url: event.currentTarget.href,
 		});
 	}
 </aui:script>

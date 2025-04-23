@@ -1111,7 +1111,12 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		if (testrayBuildId != 0) {
 			_patchObjectEntry(
-				Collections.singletonMap("importStatus", "INPROGRESS"),
+				HashMapBuilder.<String, Serializable>put(
+					"cpuUseTime",
+					propertiesMap.get("testray.total.cpu.use.time")
+				).put(
+					"importStatus", "INPROGRESS"
+				).build(),
 				testrayBuildId, userId);
 
 			return testrayBuildId;

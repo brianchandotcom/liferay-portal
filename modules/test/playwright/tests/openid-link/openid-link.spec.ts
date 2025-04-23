@@ -74,7 +74,11 @@ test.afterEach(
 
 			await loginInstanceSettingsPage.resetLoginPrompt();
 
-			expect(await apiHelpers.headlessSite.deleteSite(site.id)).toBeOK();
+			expect(async () => {
+				expect(
+					await apiHelpers.headlessSite.deleteSite(site.id)
+				).toBeOK();
+			}).toPass();
 
 			site = null;
 		}

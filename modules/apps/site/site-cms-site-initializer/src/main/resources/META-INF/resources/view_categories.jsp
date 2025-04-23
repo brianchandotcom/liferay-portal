@@ -25,6 +25,7 @@ ViewCategoriesDisplayContext viewCategoriesDisplayContext = (ViewCategoriesDispl
 			creationMenu="<%= viewCategoriesDisplayContext.getCreationMenu() %>"
 			fdsActionDropdownItems="<%= viewCategoriesDisplayContext.getFDSActionDropdownItems() %>"
 			id="<%= CMSSiteInitializerFDSNames.CATEGORIES %>"
+			propsTransformer="{CategoryFDSPropsTransformer} from site-cms-site-initializer"
 			selectedItemsKey="id"
 			selectionType="multiple"
 		/>

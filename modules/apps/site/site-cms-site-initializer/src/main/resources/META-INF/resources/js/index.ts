@@ -5,6 +5,7 @@
 
 export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main/FDSPropsTransformer/AllSpacesFDSPropsTransformer';
+export {default as CategoryFDSPropsTransformer} from './main/FDSPropsTransformer/CategoryFDSPropsTransformer';
 export {default as ContentsFDSPropsTransformer} from './main/FDSPropsTransformer/ContentsFDSPropsTransformer';
 export {default as FilesFDSPropsTransformer} from './main/FDSPropsTransformer/FilesFDSPropsTransformer';
 export {default as StructureUsagesFDSPropsTransformer} from './main/FDSPropsTransformer/StructureUsagesFDSPropsTransformer';

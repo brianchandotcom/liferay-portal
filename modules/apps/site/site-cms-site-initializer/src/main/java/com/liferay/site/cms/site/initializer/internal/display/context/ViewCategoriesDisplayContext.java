@@ -139,12 +139,12 @@ public class ViewCategoriesDisplayContext {
 				null),
 			new FDSActionDropdownItem(
 				_getEditPermissionsUrl(), "password-policies", "permissions",
-				_language.get(_httpServletRequest, "permissions"), "get",
-				"permissions", "modal-permissions"),
+				_language.get(_httpServletRequest, "permissions"), "get", null,
+				"modal-permissions"),
 			new FDSActionDropdownItem(
 				null, "times-circle", "delete",
-				_language.get(_httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
+				_language.get(_httpServletRequest, "delete"), null, "delete",
+				null));
 	}
 
 	public long getVocabularyId() {

@@ -43,9 +43,8 @@ public class EditCategoryDisplayContext {
 	}
 
 	public String getCategoryByCategoryIdApiUrl() {
-		return StringBundler.concat(
-			"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
-			getCategoryId());
+		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/" +
+			getCategoryId();
 	}
 
 	public String getCategoryByVocabularyIdApiUrl() {

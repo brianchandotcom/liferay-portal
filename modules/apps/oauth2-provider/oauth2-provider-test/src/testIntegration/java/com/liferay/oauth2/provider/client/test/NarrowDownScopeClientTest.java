@@ -11,9 +11,9 @@ import com.liferay.oauth2.provider.internal.test.TestApplication;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -53,7 +53,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplication", null,
 				getAuthorizationCodeBiFunction(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					null, "GET"),
 				this::parseScopeString));
 
@@ -67,7 +67,8 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 		Response response = getToken(
 			"oauthTestApplication", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, "GET"),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+				"GET"),
 			Function.identity());
 
 		JSONObject jsonObject = parseJSONObject(response);
@@ -87,7 +88,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 		String scopeString = getToken(
 			"oauthTestApplication", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseScopeString);
 
 		Assert.assertEquals(
@@ -99,7 +100,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplication", null,
 				getResourceOwnerPasswordBiFunction(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 					"GET POST PUT"),
 				this::parseError));
 	}
@@ -109,9 +110,9 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			registerJaxRsApplication(
 				new TestApplication(), "methods",
@@ -120,7 +121,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				companyId, _user, "oauthTestApplication",
 				Arrays.asList(
 					GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS,
 					GrantType.RESOURCE_OWNER_PASSWORD),
@@ -133,5 +134,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new NarrowDownScopeTestPreparatorBundleActivator();
 	}
+
+	private static User _user;
 
 }

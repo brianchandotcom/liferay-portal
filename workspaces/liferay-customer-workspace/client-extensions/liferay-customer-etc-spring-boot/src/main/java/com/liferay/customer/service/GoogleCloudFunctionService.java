@@ -41,7 +41,7 @@ public class GoogleCloudFunctionService {
 
 	@CacheEvict(allEntries = true, value = "accountUsage")
 	@Scheduled(cron = "0 0 * * * *")
-	public void cacheEvict() throws Exception {
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	@Cacheable("accountUsage")

@@ -35,7 +35,7 @@ public class KoroneikiService {
 		allEntries = true, value = {"externalLinks", "productPurchases"}
 	)
 	@Scheduled(cron = "0 0 * * * *")
-	public void cacheEvict() throws Exception {
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	@Cacheable("externalLinks")

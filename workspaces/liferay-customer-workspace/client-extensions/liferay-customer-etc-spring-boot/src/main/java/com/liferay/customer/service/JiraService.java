@@ -41,7 +41,7 @@ public class JiraService extends BaseService {
 		allEntries = true, value = {"affectedVersions", "issue", "issues"}
 	)
 	@Scheduled(cron = "0 0 0 * * *")
-	public void cacheEvict() throws Exception {
+	public void scheduledCacheEviction() throws Exception {
 	}
 
 	@Cacheable("affectedVersions")

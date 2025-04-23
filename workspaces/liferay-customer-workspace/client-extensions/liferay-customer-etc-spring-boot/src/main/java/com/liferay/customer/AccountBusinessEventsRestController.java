@@ -79,7 +79,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 			_updateZendesk(
 				_fetchZendeskOrganizationId(externalReferenceCode),
-				_getBusinessEvents(jsonArray),
+				_getBusinessEventsSummary(jsonArray),
 				_getAssociatedTicketIds(jsonArray),
 				_getHighestHeatTag(jsonArray));
 
@@ -96,8 +96,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		}
 	}
 
-	private void _checkAccountBusinessEventHeatTags(
-			String externalReferenceCode)
+	private void _updateAccountHeatTags(String externalReferenceCode)
 		throws Exception {
 
 		int page = 1;
@@ -110,7 +109,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 					externalReferenceCode, "'"),
 				page, 500, "dateModified:asc");
 
-			_updateZendeskTicketHeatTag(
+			_updateZendeskTickets(
 				_fetchZendeskOrganizationId(externalReferenceCode),
 				_getHighestHeatTag(jsonObject.getJSONArray("items")));
 
@@ -124,10 +123,10 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 	}
 
 	@Scheduled(cron = "0 0 0 * * *")
-	private void _checkBusinessEventsHeatTags() throws Exception {
+	public void scheduledHeatTagUpdate() throws Exception {
 		int page = 1;
 
-		Set<String> syncedERCAccounts = new HashSet<>();
+		Set<String> syncedAccountERCs = new HashSet<>();
 
 		while (page > 0) {
 			JSONObject jsonObject = _getBusinessEventsJSONObject(
@@ -143,10 +142,10 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 					businessEventJSONObject.getString(
 						"accountEntryToBusinessEventsERC");
 
-				if (!syncedERCAccounts.contains(externalReferenceCode)) {
-					_checkAccountBusinessEventHeatTags(externalReferenceCode);
+				if (!syncedAccountERCs.contains(externalReferenceCode)) {
+					_updateAccountHeatTags(externalReferenceCode);
 
-					syncedERCAccounts.add(externalReferenceCode);
+					syncedAccountERCs.add(externalReferenceCode);
 				}
 			}
 
@@ -203,7 +202,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			"liferay-customer-etc-spring-boot-oahs");
 	}
 
-	private String _getBusinessEvents(JSONArray jsonArray) {
+	private String _getBusinessEventsSummary(JSONArray jsonArray) {
 		List<String> businessEvents = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -289,8 +288,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String heatTag = _getHeatTag(jsonArray.getJSONObject(i));
 
-			if (HeatTagConstants.getHeatTagScore(highestHeatTag) <=
-					HeatTagConstants.getHeatTagScore(heatTag)) {
+			if (HeatTagConstants.getScore(highestHeatTag) <=
+					HeatTagConstants.getScore(heatTag)) {
 
 				highestHeatTag = heatTag;
 			}
@@ -327,8 +326,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
 
-				if ((HeatTagConstants.getHeatTagScore(heatTag) <=
-						HeatTagConstants.getHeatTagScore(highestHeatTag)) &&
+				if ((HeatTagConstants.getScore(heatTag) <=
+						HeatTagConstants.getScore(highestHeatTag)) &&
 					!heatTag.equals(highestHeatTag)) {
 
 					customFields.put(
@@ -359,7 +358,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		}
 	}
 
-	private void _updateZendeskTicketHeatTag(
+	private void _updateZendeskTickets(
 			long zendeskOrganizationId, String highestHeatTag)
 		throws Exception {
 
@@ -383,8 +382,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
 
-				if ((HeatTagConstants.getHeatTagScore(heatTag) <=
-						HeatTagConstants.getHeatTagScore(highestHeatTag)) &&
+				if ((HeatTagConstants.getScore(heatTag) <=
+						HeatTagConstants.getScore(highestHeatTag)) &&
 					!heatTag.equals(highestHeatTag)) {
 
 					customFields.put(

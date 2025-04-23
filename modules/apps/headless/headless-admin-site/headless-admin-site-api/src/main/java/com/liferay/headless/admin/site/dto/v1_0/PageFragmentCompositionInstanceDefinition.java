@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PageFragmentCompositionInstanceDefinition")
-public class PageFragmentCompositionInstanceDefinition implements Serializable {
+public class PageFragmentCompositionInstanceDefinition
+	extends PageDefinition implements Serializable {
 
 	public static PageFragmentCompositionInstanceDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
@@ -144,6 +145,22 @@ public class PageFragmentCompositionInstanceDefinition implements Serializable {
 			sb.append("\"fragmentComposition\": ");
 
 			sb.append(String.valueOf(fragmentComposition));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

@@ -73,6 +73,20 @@ public class PageCollectionItemDefinitionSerDes {
 			}
 		}
 
+		if (pageCollectionItemDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageCollectionItemDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -105,6 +119,14 @@ public class PageCollectionItemDefinitionSerDes {
 					pageCollectionItemDefinition.getCollectionItemConfig()));
 		}
 
+		if (pageCollectionItemDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type", String.valueOf(pageCollectionItemDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -126,6 +148,9 @@ public class PageCollectionItemDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "collectionItemConfig")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -139,6 +164,13 @@ public class PageCollectionItemDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageCollectionItemDefinition.setCollectionItemConfig(
 						(Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionItemDefinition.setType(
+						PageCollectionItemDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

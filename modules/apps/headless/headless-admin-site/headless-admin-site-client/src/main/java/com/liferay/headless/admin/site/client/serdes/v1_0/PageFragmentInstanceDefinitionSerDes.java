@@ -364,6 +364,20 @@ public class PageFragmentInstanceDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageFragmentInstanceDefinition.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(pageFragmentInstanceDefinition.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -546,6 +560,15 @@ public class PageFragmentInstanceDefinitionSerDes {
 					pageFragmentInstanceDefinition.getWidgetInstances()));
 		}
 
+		if (pageFragmentInstanceDefinition.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(pageFragmentInstanceDefinition.getType()));
+		}
+
 		return map;
 	}
 
@@ -615,6 +638,9 @@ public class PageFragmentInstanceDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "widgetInstances")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -773,6 +799,13 @@ public class PageFragmentInstanceDefinitionSerDes {
 
 					pageFragmentInstanceDefinition.setWidgetInstances(
 						widgetInstancesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentInstanceDefinition.setType(
+						PageFragmentInstanceDefinition.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

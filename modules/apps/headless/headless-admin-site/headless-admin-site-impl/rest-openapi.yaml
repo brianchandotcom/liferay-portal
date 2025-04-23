@@ -866,7 +866,7 @@ components:
                         formStepConfig:
                             # @review
                             description:
-                                The page form step's configuration.
+                                The form step's configuration.
                             type: object
             # @review
             description:

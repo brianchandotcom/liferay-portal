@@ -27,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Felipe Franca
  */
 @RestController
-public class ObjectActionBusinessEvent extends BaseRestController {
+public class ObjectActionBusinessEventRestController
+	extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.POST, path = "/object/action/business/event"
@@ -149,6 +150,6 @@ public class ObjectActionBusinessEvent extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		ObjectActionBusinessEvent.class);
+		ObjectActionBusinessEventRestController.class);
 
 }

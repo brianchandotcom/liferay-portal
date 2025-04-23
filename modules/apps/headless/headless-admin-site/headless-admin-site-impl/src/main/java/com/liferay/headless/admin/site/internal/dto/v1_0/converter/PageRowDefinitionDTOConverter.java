@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -57,6 +58,7 @@ public class PageRowDefinitionDTOConverter
 				setNumberOfColumns(
 					rowStyledLayoutStructureItem::getNumberOfColumns);
 				setReverseOrder(rowStyledLayoutStructureItem::isReverseOrder);
+				setType(PageDefinition.Type.ROW);
 			}
 		};
 	}

@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.PageCollectionDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.CollectionPaginationUtil;
@@ -83,6 +84,7 @@ public class PageCollectionDefinitionDTOConverter
 							getPaginationType()));
 				setTemplateKey(
 					collectionStyledLayoutStructureItem::getTemplateKey);
+				setType(PageDefinition.Type.COLLECTION);
 			}
 		};
 	}

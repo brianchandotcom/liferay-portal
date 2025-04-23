@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
+import com.liferay.headless.admin.site.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
-import com.liferay.headless.admin.site.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -41,8 +41,8 @@ public class CollectionLayoutStructureItemImporter
 							pageElement, layoutStructure),
 						pageElement.getPosition());
 
-		PageCollectionDefinition pageCollectionDefinition =
-			(PageCollectionDefinition)pageElement.getDefinition();
+		CollectionPageElementDefinition pageCollectionDefinition =
+			(CollectionPageElementDefinition)pageElement.getDefinition();
 
 		if (pageCollectionDefinition == null) {
 			return collectionStyledLayoutStructureItem;
@@ -93,18 +93,18 @@ public class CollectionLayoutStructureItemImporter
 	}
 
 	private String _toPaginationType(
-		PageCollectionDefinition.PaginationType paginationType) {
+		CollectionPageElementDefinition.PaginationType paginationType) {
 
 		if (Objects.equals(
 				paginationType,
-				PageCollectionDefinition.PaginationType.NUMERIC)) {
+				CollectionPageElementDefinition.PaginationType.NUMERIC)) {
 
 			return CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC;
 		}
 
 		if (Objects.equals(
 				paginationType,
-				PageCollectionDefinition.PaginationType.REGULAR)) {
+				CollectionPageElementDefinition.PaginationType.REGULAR)) {
 
 			return CollectionPaginationUtil.PAGINATION_TYPE_REGULAR;
 		}

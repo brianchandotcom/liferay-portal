@@ -6,8 +6,8 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.FormConfig;
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageFormDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FormPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -27,21 +27,22 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.FormStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageFormDefinitionDTOConverter
-	implements DTOConverter<FormStyledLayoutStructureItem, PageFormDefinition> {
+public class FormPageElementDefinitionDTOConverter
+	implements DTOConverter
+		<FormStyledLayoutStructureItem, FormPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageFormDefinition.class.getSimpleName();
+		return FormPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageFormDefinition toDTO(
+	public FormPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
 		throws Exception {
 
-		return new PageFormDefinition() {
+		return new FormPageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -60,7 +61,7 @@ public class PageFormDefinitionDTOConverter
 					() -> _toFormConfig(formStyledLayoutStructureItem));
 				setIndexed(formStyledLayoutStructureItem::isIndexed);
 				setName(formStyledLayoutStructureItem::getName);
-				setType(PageDefinition.Type.FORM);
+				setType(PageElementDefinition.Type.FORM);
 			}
 		};
 	}

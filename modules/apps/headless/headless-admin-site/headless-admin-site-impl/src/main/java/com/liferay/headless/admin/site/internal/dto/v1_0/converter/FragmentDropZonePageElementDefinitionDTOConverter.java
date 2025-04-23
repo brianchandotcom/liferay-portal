@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageFragmentDropZoneDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentDropZonePageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -20,27 +20,28 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class PageFragmentDropZoneDefinitionDTOConverter
+public class FragmentDropZonePageElementDefinitionDTOConverter
 	implements DTOConverter
-		<FragmentDropZoneLayoutStructureItem, PageFragmentDropZoneDefinition> {
+		<FragmentDropZoneLayoutStructureItem,
+		 FragmentDropZonePageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return PageFragmentDropZoneDefinition.class.getSimpleName();
+		return FragmentDropZonePageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public PageFragmentDropZoneDefinition toDTO(
+	public FragmentDropZonePageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FragmentDropZoneLayoutStructureItem
 				fragmentDropZoneLayoutStructureItem)
 		throws Exception {
 
-		return new PageFragmentDropZoneDefinition() {
+		return new FragmentDropZonePageElementDefinition() {
 			{
 				setFragmentDropZoneId(
 					fragmentDropZoneLayoutStructureItem::getFragmentDropZoneId);
-				setType(PageDefinition.Type.FRAGMENT_DROP_ZONE);
+				setType(PageElementDefinition.Type.FRAGMENT_DROP_ZONE);
 			}
 		};
 	}

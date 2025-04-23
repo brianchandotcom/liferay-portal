@@ -25,6 +25,33 @@ export async function zipFolder(folderPath: string, zipOptions?: ZipOptions) {
 	return tempFilePath;
 }
 
+export async function checkFolderInZip(filePath: string, folderName: string): Promise<boolean> {
+	return new Promise((resolve, reject) => {
+		open(filePath, {lazyEntries: true}, (error, zip) => {
+			if (error) return reject(error);
+
+			let found = false;
+
+			zip.readEntry();
+
+			zip.on('entry', (entry) => {
+				if (entry.fileName.startsWith(folderName + '/')) {
+					found = true;
+					zip.close(); // stop early
+					return resolve(true);
+				}
+				zip.readEntry(); // keep going
+			});
+
+			zip.on('end', () => {
+				resolve(found);
+			});
+
+			zip.on('error', reject);
+		});
+	});
+}
+
 export async function unzipFile(filePath: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		open(filePath, {lazyEntries: true}, async (error, zip) => {

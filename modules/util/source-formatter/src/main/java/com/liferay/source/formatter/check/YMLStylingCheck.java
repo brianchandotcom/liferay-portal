@@ -35,12 +35,6 @@ public class YMLStylingCheck extends BaseFileCheck {
 		content = content.replaceAll(
 			"(\\A|\n)( *#)@? ?(review)(\\Z|\n)", "$1$2 @$3$4");
 
-		if (fileName.endsWith("/rest-config.yaml")) {
-			content = content.replaceAll(
-				"(\\A|\n)( *baseURI: ((['\"](?!/))|(?!['\"/])))(.*)",
-				"$1$2/$5");
-		}
-
 		return _formatQuotes(content);
 	}
 

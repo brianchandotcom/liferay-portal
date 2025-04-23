@@ -129,19 +129,20 @@ public class RepositoryBrowserTag extends IncludeTag {
 			return _allActions;
 		}
 
-		String actions = StringUtil.trim(getActions());
+		String trimmedActions = StringUtil.trim(getActions());
 
-		Set<String> actionsSet = SetUtil.fromArray(actions.split("\\s*,\\s*"));
+		Set<String> actions = SetUtil.fromArray(
+			trimmedActions.split("\\s*,\\s*"));
 
-		if (actionsSet.contains("none")) {
+		if (actions.contains("none")) {
 			return Collections.emptySet();
 		}
 
-		if (actionsSet.contains("all")) {
+		if (actions.contains("all")) {
 			return _allActions;
 		}
 
-		return actionsSet;
+		return actions;
 	}
 
 	private long _getFolderId() {

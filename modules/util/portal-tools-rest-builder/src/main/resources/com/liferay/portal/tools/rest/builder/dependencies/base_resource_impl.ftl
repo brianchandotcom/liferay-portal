@@ -539,11 +539,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 				preparePatch(${schemaVarName}, existing${schemaName});
 
-				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					<#assign javaMethodParameterName = javaMethodSignature.methodName?replace("patch", "put") />
-				<#else>
-					<#assign javaMethodParameterName = "put" + schemaName />
-				</#if>
+				<#assign javaMethodParameterName = javaMethodSignature.methodName?replace("patch", "put") />
 
 				return ${javaMethodParameterName}(
 					<#list javaMethodParameters as javaMethodParameter>

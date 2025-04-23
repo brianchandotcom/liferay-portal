@@ -115,6 +115,27 @@ describe('loadData util', () => {
 		);
 	});
 
+	it('handles simple picklist property (complex field name) when it comes as a sort parameter', async () => {
+		await loadData({
+			apiURL: '/o/products',
+			delta: 20,
+			page: 1,
+			sorts: [
+				{
+					active: true,
+					direction: 'desc',
+					key: 'gender,name',
+				},
+			],
+		});
+
+		const requestUrl = fetch.mock.calls[0][0];
+
+		expect(requestUrl).toContain(
+			'/o/products?page=1&pageSize=20&sort=gender%3Adesc'
+		);
+	});
+
 	it('requests data for a Frontend Data Set with a additional URL parameters', async () => {
 		await loadData({
 			additionalAPIURLParameters: 'nestedFields=skus',

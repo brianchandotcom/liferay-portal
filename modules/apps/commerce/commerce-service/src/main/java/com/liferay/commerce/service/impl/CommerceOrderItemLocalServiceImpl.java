@@ -248,6 +248,16 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.update(childCommerceOrderItem);
 		}
 
+		if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
+			commerceOrder.setManuallyAdjusted(false);
+		}
+
+		if (!commerceOrder.isShippable() && commerceOrderItem.isShippable()) {
+			commerceOrder.setShippable(true);
+		}
+
+		commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+
 		commerceOrderLocalService.recalculatePrice(
 			commerceOrderItem.getCommerceOrderId(), commerceContext);
 
@@ -373,7 +383,8 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.findByCPInstanceId(cpInstanceId);
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			deleteCommerceOrderItem(userId, commerceOrderItem);
+			commerceOrderItemLocalService.deleteCommerceOrderItem(
+				userId, commerceOrderItem);
 		}
 	}
 

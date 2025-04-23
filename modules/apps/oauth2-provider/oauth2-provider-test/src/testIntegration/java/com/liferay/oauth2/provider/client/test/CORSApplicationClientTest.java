@@ -10,9 +10,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -57,7 +57,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		formData.add("client_secret", "oauthTestApplicationSecret");
 		formData.add("grant_type", "password");
 		formData.add("password", PropsValues.DEFAULT_ADMIN_PASSWORD);
-		formData.add("username", "test@liferay.com");
+		formData.add("username", _user.getEmailAddress());
 
 		tokenInvocationBuilder.header("Origin", _TEST_CORS_URI);
 
@@ -75,7 +75,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Invocation.Builder invocationBuilder = authorize(
@@ -129,7 +129,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Invocation.Builder invocationBuilder = authorize(
@@ -164,12 +164,12 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationRO",
+				companyId, _user, "oauthTestApplicationRO",
 				Collections.singletonList("everything.read"));
 		}
 
@@ -181,5 +181,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 	}
 
 	private static final String _TEST_CORS_URI = "http://test-cors.com";
+
+	private static User _user;
 
 }

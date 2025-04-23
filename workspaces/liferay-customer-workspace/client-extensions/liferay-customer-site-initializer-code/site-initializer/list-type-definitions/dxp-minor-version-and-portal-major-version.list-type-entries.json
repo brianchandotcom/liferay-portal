@@ -1,130 +1,2114 @@
 [
 	{
-		"key": "dxp2025q10",
-		"name": "DXP 2025.Q1.0 (LTS)",
+		"externalReferenceCode": "DXP_2025_Q1_8_LTS",
+		"key": "dxp2025q18lts",
+		"name": "DXP 2025.Q1.8 LTS",
 		"name_i18n": {
-			"en-US": "DXP 2025.Q1.0 (LTS)"
-		},
-		"type": "string"
+			"en-US": "DXP 2025.Q1.8 LTS"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2025_Q1_7_LTS",
+		"key": "dxp2025q17lts",
+		"name": "DXP 2025.Q1.7 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.7 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_6_LTS",
+		"key": "dxp2025q16lts",
+		"name": "DXP 2025.Q1.6 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.6 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_5_LTS",
+		"key": "dxp2025q15lts",
+		"name": "DXP 2025.Q1.5 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.5 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_4_LTS",
+		"key": "dxp2025q14lts",
+		"name": "DXP 2025.Q1.4 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.4 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_3_LTS",
+		"key": "dxp2025q13lts",
+		"name": "DXP 2025.Q1.3 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.3 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_2_LTS",
+		"key": "dxp2025q12lts",
+		"name": "DXP 2025.Q1.2 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.2 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_1_LTS",
+		"key": "dxp2025q11lts",
+		"name": "DXP 2025.Q1.1 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.1 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2025_Q1_0_LTS",
+		"key": "dxp2025q10lts",
+		"name": "DXP 2025.Q1.0 LTS",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1.0 LTS"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_7",
+		"key": "dxp2024q47",
+		"name": "DXP 2024.Q4.7",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_6",
+		"key": "dxp2024q46",
+		"name": "DXP 2024.Q4.6",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_5",
+		"key": "dxp2024q45",
+		"name": "DXP 2024.Q4.5",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_4",
+		"key": "dxp2024q44",
+		"name": "DXP 2024.Q4.4",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_3",
 		"key": "dxp2024q43",
 		"name": "DXP 2024.Q4.3",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q4.3"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q4_2",
+		"key": "dxp2024q42",
+		"name": "DXP 2024.Q4.2",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_1",
+		"key": "dxp2024q41",
+		"name": "DXP 2024.Q4.1",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q4_0",
+		"key": "dxp2024q40",
+		"name": "DXP 2024.Q4.0",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4.0"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_13",
 		"key": "dxp2024q313",
 		"name": "DXP 2024.Q3.13",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q3.13"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q3_12",
+		"key": "dxp2024q312",
+		"name": "DXP 2024.Q3.12",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.12"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_11",
+		"key": "dxp2024q311",
+		"name": "DXP 2024.Q3.11",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.11"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_10",
+		"key": "dxp2024q310",
+		"name": "DXP 2024.Q3.10",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_9",
+		"key": "dxp2024q39",
+		"name": "DXP 2024.Q3.9",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.9"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_8",
+		"key": "dxp2024q38",
+		"name": "DXP 2024.Q3.8",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_7",
+		"key": "dxp2024q37",
+		"name": "DXP 2024.Q3.7",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_6",
+		"key": "dxp2024q36",
+		"name": "DXP 2024.Q3.6",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_5",
+		"key": "dxp2024q35",
+		"name": "DXP 2024.Q3.5",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_4",
+		"key": "dxp2024q34",
+		"name": "DXP 2024.Q3.4",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_3",
+		"key": "dxp2024q33",
+		"name": "DXP 2024.Q3.3",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_2",
+		"key": "dxp2024q32",
+		"name": "DXP 2024.Q3.2",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_1",
+		"key": "dxp2024q31",
+		"name": "DXP 2024.Q3.1",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q3_0",
+		"key": "dxp2024q30",
+		"name": "DXP 2024.Q3.0",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3.0"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_13",
+		"key": "dxp2024q213",
+		"name": "DXP 2024.Q2.13",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.13"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_12",
 		"key": "dxp2024q212",
 		"name": "DXP 2024.Q2.12",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q2.12"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q2_11",
+		"key": "dxp2024q211",
+		"name": "DXP 2024.Q2.11",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.11"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_10",
+		"key": "dxp2024q210",
+		"name": "DXP 2024.Q2.10",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_9",
+		"key": "dxp2024q29",
+		"name": "DXP 2024.Q2.9",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.9"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_8",
+		"key": "dxp2024q28",
+		"name": "DXP 2024.Q2.8",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_7",
+		"key": "dxp2024q27",
+		"name": "DXP 2024.Q2.7",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_6",
+		"key": "dxp2024q26",
+		"name": "DXP 2024.Q2.6",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_5",
+		"key": "dxp2024q25",
+		"name": "DXP 2024.Q2.5",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_4",
+		"key": "dxp2024q24",
+		"name": "DXP 2024.Q2.4",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_3",
+		"key": "dxp2024q23",
+		"name": "DXP 2024.Q2.3",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_2",
+		"key": "dxp2024q22",
+		"name": "DXP 2024.Q2.2",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_1",
+		"key": "dxp2024q21",
+		"name": "DXP 2024.Q2.1",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q2_0",
+		"key": "dxp2024q20",
+		"name": "DXP 2024.Q2.0",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2.0"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_16",
+		"key": "dxp2024q116",
+		"name": "DXP 2024.Q1.16",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.16"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_15",
+		"key": "dxp2024q115",
+		"name": "DXP 2024.Q1.15",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.15"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_14",
+		"key": "dxp2024q114",
+		"name": "DXP 2024.Q1.14",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.14"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_13",
+		"key": "dxp2024q113",
+		"name": "DXP 2024.Q1.13",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.13"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_12",
 		"key": "dxp2024q112",
-		"name": "DXP 2024.Q1.12 (LTS)",
+		"name": "DXP 2024.Q1.12",
 		"name_i18n": {
-			"en-US": "DXP 2024.Q1.12 (LTS)"
-		},
-		"type": "string"
+			"en-US": "DXP 2024.Q1.12"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q1_11",
+		"key": "dxp2024q111",
+		"name": "DXP 2024.Q1.11",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.11"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_10",
+		"key": "dxp2024q110",
+		"name": "DXP 2024.Q1.10",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_9",
+		"key": "dxp2024q19",
+		"name": "DXP 2024.Q1.9",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.9"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_8",
+		"key": "dxp2024q18",
+		"name": "DXP 2024.Q1.8",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_7",
+		"key": "dxp2024q17",
+		"name": "DXP 2024.Q1.7",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_6",
+		"key": "dxp2024q16",
+		"name": "DXP 2024.Q1.6",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_5",
+		"key": "dxp2024q15",
+		"name": "DXP 2024.Q1.5",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_4",
+		"key": "dxp2024q14",
+		"name": "DXP 2024.Q1.4",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_3",
+		"key": "dxp2024q13",
+		"name": "DXP 2024.Q1.3",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_2",
+		"key": "dxp2024q12",
+		"name": "DXP 2024.Q1.2",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2024_Q1_1",
 		"key": "dxp2024q11",
-		"name": "DXP 2024.Q1.1 (LTS)",
+		"name": "DXP 2024.Q1.1",
 		"name_i18n": {
-			"en-US": "DXP 2024.Q1.1 (LTS)"
-		},
-		"type": "string"
+			"en-US": "DXP 2024.Q1.1"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2023_Q4_10",
+		"key": "dxp2023q410",
+		"name": "DXP 2023.Q4.10",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_9",
 		"key": "dxp2023q49",
 		"name": "DXP 2023.Q4.9",
 		"name_i18n": {
 			"en-US": "DXP 2023.Q4.9"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2023_Q4_8",
+		"key": "dxp2023q48",
+		"name": "DXP 2023.Q4.8",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_7",
+		"key": "dxp2023q47",
+		"name": "DXP 2023.Q4.7",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_6",
+		"key": "dxp2023q46",
+		"name": "DXP 2023.Q4.6",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_5",
+		"key": "dxp2023q45",
+		"name": "DXP 2023.Q4.5",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_4",
+		"key": "dxp2023q44",
+		"name": "DXP 2023.Q4.4",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_3",
+		"key": "dxp2023q43",
+		"name": "DXP 2023.Q4.3",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_2",
+		"key": "dxp2023q42",
+		"name": "DXP 2023.Q4.2",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_1",
+		"key": "dxp2023q41",
+		"name": "DXP 2023.Q4.1",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q4_0",
+		"key": "dxp2023q40",
+		"name": "DXP 2023.Q4.0",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4.0"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_10",
+		"key": "dxp2023q310",
+		"name": "DXP 2023.Q3.10",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_9",
 		"key": "dxp2023q39",
 		"name": "DXP 2023.Q3.9",
 		"name_i18n": {
 			"en-US": "DXP 2023.Q3.9"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2023_Q3_8",
+		"key": "dxp2023q38",
+		"name": "DXP 2023.Q3.8",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_7",
+		"key": "dxp2023q37",
+		"name": "DXP 2023.Q3.7",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_6",
+		"key": "dxp2023q36",
+		"name": "DXP 2023.Q3.6",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_5",
+		"key": "dxp2023q35",
+		"name": "DXP 2023.Q3.5",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_4",
+		"key": "dxp2023q34",
+		"name": "DXP 2023.Q3.4",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_3",
+		"key": "dxp2023q33",
+		"name": "DXP 2023.Q3.3",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_2",
+		"key": "dxp2023q32",
+		"name": "DXP 2023.Q3.2",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_2023_Q3_1",
+		"key": "dxp2023q31",
+		"name": "DXP 2023.Q3.1",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3.1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U102",
+		"key": "dxp74u102",
+		"name": "DXP 7.4 U102",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U102"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U101",
+		"key": "dxp74u101",
+		"name": "DXP 7.4 U101",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U101"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U100",
+		"key": "dxp74u100",
+		"name": "DXP 7.4 U100",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U100"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U99",
+		"key": "dxp74u99",
+		"name": "DXP 7.4 U99",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U99"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U98",
+		"key": "dxp74u98",
+		"name": "DXP 7.4 U98",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U98"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U97",
+		"key": "dxp74u97",
+		"name": "DXP 7.4 U97",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U97"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U95",
+		"key": "dxp74u95",
+		"name": "DXP 7.4 U95",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U95"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U94",
+		"key": "dxp74u94",
+		"name": "DXP 7.4 U94",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U94"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U93",
+		"key": "dxp74u93",
+		"name": "DXP 7.4 U93",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U93"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U92",
+		"key": "dxp74u92",
+		"name": "DXP 7.4 U92",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U92"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U91",
+		"key": "dxp74u91",
+		"name": "DXP 7.4 U91",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U91"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U90",
+		"key": "dxp74u90",
+		"name": "DXP 7.4 U90",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U90"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U89",
+		"key": "dxp74u89",
+		"name": "DXP 7.4 U89",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U89"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U88",
+		"key": "dxp74u88",
+		"name": "DXP 7.4 U88",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U88"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U87",
+		"key": "dxp74u87",
+		"name": "DXP 7.4 U87",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U87"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U86",
+		"key": "dxp74u86",
+		"name": "DXP 7.4 U86",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U86"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U85",
+		"key": "dxp74u85",
+		"name": "DXP 7.4 U85",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U85"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U84",
+		"key": "dxp74u84",
+		"name": "DXP 7.4 U84",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U84"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U83",
+		"key": "dxp74u83",
+		"name": "DXP 7.4 U83",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U83"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U81",
+		"key": "dxp74u81",
+		"name": "DXP 7.4 U81",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U81"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U80",
+		"key": "dxp74u80",
+		"name": "DXP 7.4 U80",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U80"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U79",
+		"key": "dxp74u79",
+		"name": "DXP 7.4 U79",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U79"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U78",
+		"key": "dxp74u78",
+		"name": "DXP 7.4 U78",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U78"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U77",
+		"key": "dxp74u77",
+		"name": "DXP 7.4 U77",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U77"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U76",
+		"key": "dxp74u76",
+		"name": "DXP 7.4 U76",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U76"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U75",
+		"key": "dxp74u75",
+		"name": "DXP 7.4 U75",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U75"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U74",
+		"key": "dxp74u74",
+		"name": "DXP 7.4 U74",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U74"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U73",
+		"key": "dxp74u73",
+		"name": "DXP 7.4 U73",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U73"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U72",
+		"key": "dxp74u72",
+		"name": "DXP 7.4 U72",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U72"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U71",
+		"key": "dxp74u71",
+		"name": "DXP 7.4 U71",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U71"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U70",
+		"key": "dxp74u70",
+		"name": "DXP 7.4 U70",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U70"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U69",
+		"key": "dxp74u69",
+		"name": "DXP 7.4 U69",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U69"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U68",
+		"key": "dxp74u68",
+		"name": "DXP 7.4 U68",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U68"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U67",
+		"key": "dxp74u67",
+		"name": "DXP 7.4 U67",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U67"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U66",
+		"key": "dxp74u66",
+		"name": "DXP 7.4 U66",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U66"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U65",
+		"key": "dxp74u65",
+		"name": "DXP 7.4 U65",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U65"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U64",
+		"key": "dxp74u64",
+		"name": "DXP 7.4 U64",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U64"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U63",
+		"key": "dxp74u63",
+		"name": "DXP 7.4 U63",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U63"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U62",
+		"key": "dxp74u62",
+		"name": "DXP 7.4 U62",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U62"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U61",
+		"key": "dxp74u61",
+		"name": "DXP 7.4 U61",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U61"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U60",
+		"key": "dxp74u60",
+		"name": "DXP 7.4 U60",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U60"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U59",
+		"key": "dxp74u59",
+		"name": "DXP 7.4 U59",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U59"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U58",
+		"key": "dxp74u58",
+		"name": "DXP 7.4 U58",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U58"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U57",
+		"key": "dxp74u57",
+		"name": "DXP 7.4 U57",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U57"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U56",
+		"key": "dxp74u56",
+		"name": "DXP 7.4 U56",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U56"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U55",
+		"key": "dxp74u55",
+		"name": "DXP 7.4 U55",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U55"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U54",
+		"key": "dxp74u54",
+		"name": "DXP 7.4 U54",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U54"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U53",
+		"key": "dxp74u53",
+		"name": "DXP 7.4 U53",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U53"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U52",
+		"key": "dxp74u52",
+		"name": "DXP 7.4 U52",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U52"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U51",
+		"key": "dxp74u51",
+		"name": "DXP 7.4 U51",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U51"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U50",
+		"key": "dxp74u50",
+		"name": "DXP 7.4 U50",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U50"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U49",
+		"key": "dxp74u49",
+		"name": "DXP 7.4 U49",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U49"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U48",
+		"key": "dxp74u48",
+		"name": "DXP 7.4 U48",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U48"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U47",
+		"key": "dxp74u47",
+		"name": "DXP 7.4 U47",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U47"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U46",
+		"key": "dxp74u46",
+		"name": "DXP 7.4 U46",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U46"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U45",
+		"key": "dxp74u45",
+		"name": "DXP 7.4 U45",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U45"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U44",
+		"key": "dxp74u44",
+		"name": "DXP 7.4 U44",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U44"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U43",
+		"key": "dxp74u43",
+		"name": "DXP 7.4 U43",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U43"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U42",
+		"key": "dxp74u42",
+		"name": "DXP 7.4 U42",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U42"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U41",
+		"key": "dxp74u41",
+		"name": "DXP 7.4 U41",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U41"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U40",
+		"key": "dxp74u40",
+		"name": "DXP 7.4 U40",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U40"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U39",
+		"key": "dxp74u39",
+		"name": "DXP 7.4 U39",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U39"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U38",
+		"key": "dxp74u38",
+		"name": "DXP 7.4 U38",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U38"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U37",
+		"key": "dxp74u37",
+		"name": "DXP 7.4 U37",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U37"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U36",
+		"key": "dxp74u36",
+		"name": "DXP 7.4 U36",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U36"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U35",
+		"key": "dxp74u35",
+		"name": "DXP 7.4 U35",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U35"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U34",
+		"key": "dxp74u34",
+		"name": "DXP 7.4 U34",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U34"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U33",
+		"key": "dxp74u33",
+		"name": "DXP 7.4 U33",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U33"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U32",
+		"key": "dxp74u32",
+		"name": "DXP 7.4 U32",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U32"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U31",
+		"key": "dxp74u31",
+		"name": "DXP 7.4 U31",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U31"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U30",
+		"key": "dxp74u30",
+		"name": "DXP 7.4 U30",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U30"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U29",
+		"key": "dxp74u29",
+		"name": "DXP 7.4 U29",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U29"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U28",
+		"key": "dxp74u28",
+		"name": "DXP 7.4 U28",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U28"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U27",
+		"key": "dxp74u27",
+		"name": "DXP 7.4 U27",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U27"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U26",
+		"key": "dxp74u26",
+		"name": "DXP 7.4 U26",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U26"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U25",
+		"key": "dxp74u25",
+		"name": "DXP 7.4 U25",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U25"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U24",
+		"key": "dxp74u24",
+		"name": "DXP 7.4 U24",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U24"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U23",
+		"key": "dxp74u23",
+		"name": "DXP 7.4 U23",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U23"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U22",
+		"key": "dxp74u22",
+		"name": "DXP 7.4 U22",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U22"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U21",
+		"key": "dxp74u21",
+		"name": "DXP 7.4 U21",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U21"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U20",
+		"key": "dxp74u20",
+		"name": "DXP 7.4 U20",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U20"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U19",
+		"key": "dxp74u19",
+		"name": "DXP 7.4 U19",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U19"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U18",
+		"key": "dxp74u18",
+		"name": "DXP 7.4 U18",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U18"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U17",
+		"key": "dxp74u17",
+		"name": "DXP 7.4 U17",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U17"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U16",
+		"key": "dxp74u16",
+		"name": "DXP 7.4 U16",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U16"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U15",
+		"key": "dxp74u15",
+		"name": "DXP 7.4 U15",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U15"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_13_U112",
 		"key": "dxp7413u112",
-		"name": "DXP 7.4.13.u112",
+		"name": "DXP 7.4.13 U112",
 		"name_i18n": {
-			"en-US": "DXP 7.4.13.u112"
-		},
-		"type": "string"
+			"en-US": "DXP 7.4.13 U112"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_7_4_13_U111",
+		"key": "dxp7413u111",
+		"name": "DXP 7.4.13 U111",
+		"name_i18n": {
+			"en-US": "DXP 7.4.13 U111"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_13_U110",
+		"key": "dxp7413u110",
+		"name": "DXP 7.4.13 U110",
+		"name_i18n": {
+			"en-US": "DXP 7.4.13 U110"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U9",
+		"key": "dxp74u9",
+		"name": "DXP 7.4 U9",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U9"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U8",
+		"key": "dxp74u8",
+		"name": "DXP 7.4 U8",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U7",
+		"key": "dxp74u7",
+		"name": "DXP 7.4 U7",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U6",
+		"key": "dxp74u6",
+		"name": "DXP 7.4 U6",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U5",
+		"key": "dxp74u5",
+		"name": "DXP 7.4 U5",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U4",
+		"key": "dxp74u4",
+		"name": "DXP 7.4 U4",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U3",
+		"key": "dxp74u3",
+		"name": "DXP 7.4 U3",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U2",
+		"key": "dxp74u2",
+		"name": "DXP 7.4 U2",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_4_U1",
+		"key": "dxp74u1",
+		"name": "DXP 7.4 U1",
+		"name_i18n": {
+			"en-US": "DXP 7.4 U1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U35",
+		"key": "dxp73u35",
+		"name": "DXP 7.3 U35",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U35"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U34",
+		"key": "dxp73u34",
+		"name": "DXP 7.3 U34",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U34"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U33",
+		"key": "dxp73u33",
+		"name": "DXP 7.3 U33",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U33"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U32",
+		"key": "dxp73u32",
+		"name": "DXP 7.3 U32",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U32"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U31",
+		"key": "dxp73u31",
+		"name": "DXP 7.3 U31",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U31"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U30",
+		"key": "dxp73u30",
+		"name": "DXP 7.3 U30",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U30"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U29",
+		"key": "dxp73u29",
+		"name": "DXP 7.3 U29",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U29"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U28",
+		"key": "dxp73u28",
+		"name": "DXP 7.3 U28",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U28"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U27",
+		"key": "dxp73u27",
+		"name": "DXP 7.3 U27",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U27"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U26",
+		"key": "dxp73u26",
+		"name": "DXP 7.3 U26",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U26"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U25",
+		"key": "dxp73u25",
+		"name": "DXP 7.3 U25",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U25"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U24",
+		"key": "dxp73u24",
+		"name": "DXP 7.3 U24",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U24"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U23",
+		"key": "dxp73u23",
+		"name": "DXP 7.3 U23",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U23"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U22",
+		"key": "dxp73u22",
+		"name": "DXP 7.3 U22",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U22"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U21",
+		"key": "dxp73u21",
+		"name": "DXP 7.3 U21",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U21"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U20",
+		"key": "dxp73u20",
+		"name": "DXP 7.3 U20",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U20"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U19",
+		"key": "dxp73u19",
+		"name": "DXP 7.3 U19",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U19"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U18",
+		"key": "dxp73u18",
+		"name": "DXP 7.3 U18",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U18"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U17",
+		"key": "dxp73u17",
+		"name": "DXP 7.3 U17",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U17"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U16",
+		"key": "dxp73u16",
+		"name": "DXP 7.3 U16",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U16"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U15",
+		"key": "dxp73u15",
+		"name": "DXP 7.3 U15",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U15"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U14",
+		"key": "dxp73u14",
+		"name": "DXP 7.3 U14",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U14"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U13",
+		"key": "dxp73u13",
+		"name": "DXP 7.3 U13",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U13"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U12",
+		"key": "dxp73u12",
+		"name": "DXP 7.3 U12",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U12"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U11",
+		"key": "dxp73u11",
+		"name": "DXP 7.3 U11",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U11"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_10_U36",
 		"key": "dxp7310u36",
-		"name": "DXP 7.3.10.u36",
+		"name": "DXP 7.3.10 U36",
 		"name_i18n": {
-			"en-US": "DXP 7.3.10.u36"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3.10 U36"
+		}
 	},
 	{
-		"key": "dxp72108",
-		"name": "DXP 7.2.10.8",
+		"externalReferenceCode": "DXP_7_3_U10",
+		"key": "dxp73u10",
+		"name": "DXP 7.3 U10",
 		"name_i18n": {
-			"en-US": "DXP 7.2.10.8"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U10"
+		}
 	},
 	{
-		"key": "portal62",
-		"name": "Portal 6.2",
+		"externalReferenceCode": "DXP_7_3_U9",
+		"key": "dxp73u9",
+		"name": "DXP 7.3 U9",
 		"name_i18n": {
-			"en-US": "6.2"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U9"
+		}
 	},
 	{
-		"key": "portal61",
-		"name": "Portal 6.1",
+		"externalReferenceCode": "DXP_7_3_U8",
+		"key": "dxp73u8",
+		"name": "DXP 7.3 U8",
 		"name_i18n": {
-			"en-US": "6.1"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U8"
+		}
 	},
 	{
-		"key": "portal60",
-		"name": "Portal 6.0",
+		"externalReferenceCode": "DXP_7_3_U7",
+		"key": "dxp73u7",
+		"name": "DXP 7.3 U7",
 		"name_i18n": {
-			"en-US": "6.0"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U7"
+		}
 	},
 	{
-		"key": "portal52",
-		"name": "Portal 5.2",
+		"externalReferenceCode": "DXP_7_3_U6",
+		"key": "dxp73u6",
+		"name": "DXP 7.3 U6",
 		"name_i18n": {
-			"en-US": "Portal 5.2"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U6"
+		}
 	},
 	{
-		"key": "portal51",
-		"name": "Portal 5.1",
+		"externalReferenceCode": "DXP_7_3_U5",
+		"key": "dxp73u5",
+		"name": "DXP 7.3 U5",
 		"name_i18n": {
-			"en-US": "Portal 5.1"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3 U5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_U4",
+		"key": "dxp73u4",
+		"name": "DXP 7.3 U4",
+		"name_i18n": {
+			"en-US": "DXP 7.3 U4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_SP3",
+		"key": "dxp73sp3",
+		"name": "DXP 7.3 SP3",
+		"name_i18n": {
+			"en-US": "DXP 7.3 SP3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_FP2",
+		"key": "dxp73fp2",
+		"name": "DXP 7.3 FP2",
+		"name_i18n": {
+			"en-US": "DXP 7.3 FP2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_SP1",
+		"key": "dxp73sp1",
+		"name": "DXP 7.3 SP1",
+		"name_i18n": {
+			"en-US": "DXP 7.3 SP1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_3_GA1",
+		"key": "dxp73ga1",
+		"name": "DXP 7.3 GA1",
+		"name_i18n": {
+			"en-US": "DXP 7.3 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP18",
+		"key": "dxp72fp18",
+		"name": "DXP 7.2 FP18",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP18"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP16",
+		"key": "dxp72fp16",
+		"name": "DXP 7.2 FP16",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP16"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP15",
+		"key": "dxp72fp15",
+		"name": "DXP 7.2 FP15",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP15"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP13",
+		"key": "dxp72fp13",
+		"name": "DXP 7.2 FP13",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP13"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP12",
+		"key": "dxp72fp12",
+		"name": "DXP 7.2 FP12",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP12"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP11",
+		"key": "dxp72fp11",
+		"name": "DXP 7.2 FP11",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP11"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP10",
+		"key": "dxp72fp10",
+		"name": "DXP 7.2 FP10",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP10"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP9",
+		"key": "dxp72fp9",
+		"name": "DXP 7.2 FP9",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP9"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP8",
+		"key": "dxp72sp8",
+		"name": "DXP 7.2 SP8",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP8"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP7",
+		"key": "dxp72sp7",
+		"name": "DXP 7.2 SP7",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP7",
+		"key": "dxp72fp7",
+		"name": "DXP 7.2 FP7",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP6",
+		"key": "dxp72sp6",
+		"name": "DXP 7.2 SP6",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP6",
+		"key": "dxp72fp6",
+		"name": "DXP 7.2 FP6",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP5",
+		"key": "dxp72sp5",
+		"name": "DXP 7.2 SP5",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_FP5",
+		"key": "dxp72fp5",
+		"name": "DXP 7.2 FP5",
+		"name_i18n": {
+			"en-US": "DXP 7.2 FP5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP3",
+		"key": "dxp72sp3",
+		"name": "DXP 7.2 SP3",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_SP1",
+		"key": "dxp72sp1",
+		"name": "DXP 7.2 SP1",
+		"name_i18n": {
+			"en-US": "DXP 7.2 SP1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_2_GA1",
+		"key": "dxp72ga1",
+		"name": "DXP 7.2 GA1",
+		"name_i18n": {
+			"en-US": "DXP 7.2 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP28",
+		"key": "dxp71fp28",
+		"name": "DXP 7.1 FP28",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP28"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP27",
+		"key": "dxp71fp27",
+		"name": "DXP 7.1 FP27",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP27"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP25",
+		"key": "dxp71fp25",
+		"name": "DXP 7.1 FP25",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP25"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP24",
+		"key": "dxp71fp24",
+		"name": "DXP 7.1 FP24",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP24"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP22",
+		"key": "dxp71fp22",
+		"name": "DXP 7.1 FP22",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP22"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP21",
+		"key": "dxp71fp21",
+		"name": "DXP 7.1 FP21",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP21"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_FP19",
+		"key": "dxp71fp19",
+		"name": "DXP 7.1 FP19",
+		"name_i18n": {
+			"en-US": "DXP 7.1 FP19"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP7",
+		"key": "dxp71sp7",
+		"name": "DXP 7.1 SP7",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP7"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP6",
+		"key": "dxp71sp6",
+		"name": "DXP 7.1 SP6",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP6"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP5",
+		"key": "dxp71sp5",
+		"name": "DXP 7.1 SP5",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP5"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP4",
+		"key": "dxp71sp4",
+		"name": "DXP 7.1 SP4",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP4"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP3",
+		"key": "dxp71sp3",
+		"name": "DXP 7.1 SP3",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP3"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP2",
+		"key": "dxp71sp2",
+		"name": "DXP 7.1 SP2",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP2"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_SP1",
+		"key": "dxp71sp1",
+		"name": "DXP 7.1 SP1",
+		"name_i18n": {
+			"en-US": "DXP 7.1 SP1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_1_GA1",
+		"key": "dxp71ga1",
+		"name": "DXP 7.1 GA1",
+		"name_i18n": {
+			"en-US": "DXP 7.1 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_DE101",
+		"key": "dxp70de101",
+		"name": "DXP 7.0 DE101",
+		"name_i18n": {
+			"en-US": "DXP 7.0 DE101"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_DE100",
+		"key": "dxp70de100",
+		"name": "DXP 7.0 DE100",
+		"name_i18n": {
+			"en-US": "DXP 7.0 DE100"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_DE98",
+		"key": "dxp70de98",
+		"name": "DXP 7.0 DE98",
+		"name_i18n": {
+			"en-US": "DXP 7.0 DE98"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_DE97",
+		"key": "dxp70de97",
+		"name": "DXP 7.0 DE97",
+		"name_i18n": {
+			"en-US": "DXP 7.0 DE97"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_SP17",
+		"key": "dxp70sp17",
+		"name": "DXP 7.0 SP17",
+		"name_i18n": {
+			"en-US": "DXP 7.0 SP17"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_SP16",
+		"key": "dxp70sp16",
+		"name": "DXP 7.0 SP16",
+		"name_i18n": {
+			"en-US": "DXP 7.0 SP16"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_SP15",
+		"key": "dxp70sp15",
+		"name": "DXP 7.0 SP15",
+		"name_i18n": {
+			"en-US": "DXP 7.0 SP15"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_SP14",
+		"key": "dxp70sp14",
+		"name": "DXP 7.0 SP14",
+		"name_i18n": {
+			"en-US": "DXP 7.0 SP14"
+		}
+	},
+	{
+		"externalReferenceCode": "DXP_7_0_SP13",
+		"key": "dxp70sp13",
+		"name": "DXP 7.0 SP13",
+		"name_i18n": {
+			"en-US": "DXP 7.0 SP13"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4",
+		"key": "portal74",
+		"name": "Portal 7.4",
+		"name_i18n": {
+			"en-US": "Portal 7.4"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3",
+		"key": "portal73",
+		"name": "Portal 7.3",
+		"name_i18n": {
+			"en-US": "Portal 7.3"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_2",
+		"key": "portal72",
+		"name": "Portal 7.2",
+		"name_i18n": {
+			"en-US": "Portal 7.2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_1",
+		"key": "portal71",
+		"name": "Portal 7.1",
+		"name_i18n": {
+			"en-US": "Portal 7.1"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0",
+		"key": "portal70",
+		"name": "Portal 7.0",
+		"name_i18n": {
+			"en-US": "Portal 7.0"
+		}
 	}
 ]

@@ -1,42 +1,42 @@
 [
 	{
-		"key": "portal62",
-		"name": "Portal 6.2",
+		"externalReferenceCode": "PORTAL_7_4",
+		"key": "portal74",
+		"name": "Portal 7.4",
 		"name_i18n": {
-			"en-US": "Portal 6.2"
-		},
-		"type": "string"
+			"en-US": "Portal 7.4"
+		}
 	},
 	{
-		"key": "portal61",
-		"name": "Portal 6.1",
+		"externalReferenceCode": "PORTAL_7_3",
+		"key": "portal73",
+		"name": "Portal 7.3",
 		"name_i18n": {
-			"en-US": "Portal 6.1"
-		},
-		"type": "string"
+			"en-US": "Portal 7.3"
+		}
 	},
 	{
-		"key": "portal60",
-		"name": "Portal 6.0",
+		"externalReferenceCode": "PORTAL_7_2",
+		"key": "portal72",
+		"name": "Portal 7.2",
 		"name_i18n": {
-			"en-US": "Portal 6.0"
-		},
-		"type": "string"
+			"en-US": "Portal 7.2"
+		}
 	},
 	{
-		"key": "portal52",
-		"name": "Portal 5.2",
+		"externalReferenceCode": "PORTAL_7_1",
+		"key": "portal71",
+		"name": "Portal 7.1",
 		"name_i18n": {
-			"en-US": "Portal 5.2"
-		},
-		"type": "string"
+			"en-US": "Portal 7.1"
+		}
 	},
 	{
-		"key": "portal51",
-		"name": "Portal 5.1",
+		"externalReferenceCode": "PORTAL_7_0",
+		"key": "portal70",
+		"name": "Portal 7.0",
 		"name_i18n": {
-			"en-US": "Portal 5.1"
-		},
-		"type": "string"
+			"en-US": "Portal 7.0"
+		}
 	}
 ]

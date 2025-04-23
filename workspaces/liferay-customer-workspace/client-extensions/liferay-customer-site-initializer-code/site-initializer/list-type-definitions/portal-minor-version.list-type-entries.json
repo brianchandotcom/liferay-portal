@@ -1,0 +1,1010 @@
+[
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA107",
+		"key": "portal74ga107",
+		"name": "Portal 7.4 GA107",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA107"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA106",
+		"key": "portal74ga106",
+		"name": "Portal 7.4 GA106",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA106"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA105",
+		"key": "portal74ga105",
+		"name": "Portal 7.4 GA105",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA105"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA104",
+		"key": "portal74ga104",
+		"name": "Portal 7.4 GA104",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA104"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA103",
+		"key": "portal74ga103",
+		"name": "Portal 7.4 GA103",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA103"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA102",
+		"key": "portal74ga102",
+		"name": "Portal 7.4 GA102",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA102"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA100",
+		"key": "portal74ga100",
+		"name": "Portal 7.4 GA100",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA100"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA99",
+		"key": "portal74ga99",
+		"name": "Portal 7.4 GA99",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA99"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA98",
+		"key": "portal74ga98",
+		"name": "Portal 7.4 GA98",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA98"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA97",
+		"key": "portal74ga97",
+		"name": "Portal 7.4 GA97",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA97"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA96",
+		"key": "portal74ga96",
+		"name": "Portal 7.4 GA96",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA96"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA95",
+		"key": "portal74ga95",
+		"name": "Portal 7.4 GA95",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA95"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA94",
+		"key": "portal74ga94",
+		"name": "Portal 7.4 GA94",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA94"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA93",
+		"key": "portal74ga93",
+		"name": "Portal 7.4 GA93",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA93"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA91",
+		"key": "portal74ga91",
+		"name": "Portal 7.4 GA91",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA91"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA90",
+		"key": "portal74ga90",
+		"name": "Portal 7.4 GA90",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA90"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA89",
+		"key": "portal74ga89",
+		"name": "Portal 7.4 GA89",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA89"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA88",
+		"key": "portal74ga88",
+		"name": "Portal 7.4 GA88",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA88"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA87",
+		"key": "portal74ga87",
+		"name": "Portal 7.4 GA87",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA87"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA86",
+		"key": "portal74ga86",
+		"name": "Portal 7.4 GA86",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA86"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA85",
+		"key": "portal74ga85",
+		"name": "Portal 7.4 GA85",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA85"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA84",
+		"key": "portal74ga84",
+		"name": "Portal 7.4 GA84",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA84"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA83",
+		"key": "portal74ga83",
+		"name": "Portal 7.4 GA83",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA83"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA82",
+		"key": "portal74ga82",
+		"name": "Portal 7.4 GA82",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA82"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA81",
+		"key": "portal74ga81",
+		"name": "Portal 7.4 GA81",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA81"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA80",
+		"key": "portal74ga80",
+		"name": "Portal 7.4 GA80",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA80"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA79",
+		"key": "portal74ga79",
+		"name": "Portal 7.4 GA79",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA79"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA78",
+		"key": "portal74ga78",
+		"name": "Portal 7.4 GA78",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA78"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA77",
+		"key": "portal74ga77",
+		"name": "Portal 7.4 GA77",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA77"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA75",
+		"key": "portal74ga75",
+		"name": "Portal 7.4 GA75",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA75"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA74",
+		"key": "portal74ga74",
+		"name": "Portal 7.4 GA74",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA74"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA73",
+		"key": "portal74ga73",
+		"name": "Portal 7.4 GA73",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA73"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA71",
+		"key": "portal74ga71",
+		"name": "Portal 7.4 GA71",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA71"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA70",
+		"key": "portal74ga70",
+		"name": "Portal 7.4 GA70",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA70"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA69",
+		"key": "portal74ga69",
+		"name": "Portal 7.4 GA69",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA69"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA68",
+		"key": "portal74ga68",
+		"name": "Portal 7.4 GA68",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA68"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA67",
+		"key": "portal74ga67",
+		"name": "Portal 7.4 GA67",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA67"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA66",
+		"key": "portal74ga66",
+		"name": "Portal 7.4 GA66",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA66"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA65",
+		"key": "portal74ga65",
+		"name": "Portal 7.4 GA65",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA65"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA64",
+		"key": "portal74ga64",
+		"name": "Portal 7.4 GA64",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA64"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA63",
+		"key": "portal74ga63",
+		"name": "Portal 7.4 GA63",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA63"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA62",
+		"key": "portal74ga62",
+		"name": "Portal 7.4 GA62",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA62"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA61",
+		"key": "portal74ga61",
+		"name": "Portal 7.4 GA61",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA61"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA60",
+		"key": "portal74ga60",
+		"name": "Portal 7.4 GA60",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA60"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA59",
+		"key": "portal74ga59",
+		"name": "Portal 7.4 GA59",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA59"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA58",
+		"key": "portal74ga58",
+		"name": "Portal 7.4 GA58",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA58"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA57",
+		"key": "portal74ga57",
+		"name": "Portal 7.4 GA57",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA57"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA56",
+		"key": "portal74ga56",
+		"name": "Portal 7.4 GA56",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA56"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA55",
+		"key": "portal74ga55",
+		"name": "Portal 7.4 GA55",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA55"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA54",
+		"key": "portal74ga54",
+		"name": "Portal 7.4 GA54",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA54"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA53",
+		"key": "portal74ga53",
+		"name": "Portal 7.4 GA53",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA53"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA52",
+		"key": "portal74ga52",
+		"name": "Portal 7.4 GA52",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA52"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA50",
+		"key": "portal74ga50",
+		"name": "Portal 7.4 GA50",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA50"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA49",
+		"key": "portal74ga49",
+		"name": "Portal 7.4 GA49",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA49"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA48",
+		"key": "portal74ga48",
+		"name": "Portal 7.4 GA48",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA48"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA47",
+		"key": "portal74ga47",
+		"name": "Portal 7.4 GA47",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA47"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA46",
+		"key": "portal74ga46",
+		"name": "Portal 7.4 GA46",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA46"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA45",
+		"key": "portal74ga45",
+		"name": "Portal 7.4 GA45",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA45"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA44",
+		"key": "portal74ga44",
+		"name": "Portal 7.4 GA44",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA44"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA43",
+		"key": "portal74ga43",
+		"name": "Portal 7.4 GA43",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA43"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA42",
+		"key": "portal74ga42",
+		"name": "Portal 7.4 GA42",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA42"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA41",
+		"key": "portal74ga41",
+		"name": "Portal 7.4 GA41",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA41"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA40",
+		"key": "portal74ga40",
+		"name": "Portal 7.4 GA40",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA40"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA39",
+		"key": "portal74ga39",
+		"name": "Portal 7.4 GA39",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA39"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA38",
+		"key": "portal74ga38",
+		"name": "Portal 7.4 GA38",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA38"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA37",
+		"key": "portal74ga37",
+		"name": "Portal 7.4 GA37",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA37"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA35",
+		"key": "portal74ga35",
+		"name": "Portal 7.4 GA35",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA35"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA34",
+		"key": "portal74ga34",
+		"name": "Portal 7.4 GA34",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA34"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA33",
+		"key": "portal74ga33",
+		"name": "Portal 7.4 GA33",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA33"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA32",
+		"key": "portal74ga32",
+		"name": "Portal 7.4 GA32",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA32"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA31",
+		"key": "portal74ga31",
+		"name": "Portal 7.4 GA31",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA31"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA30",
+		"key": "portal74ga30",
+		"name": "Portal 7.4 GA30",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA30"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA29",
+		"key": "portal74ga29",
+		"name": "Portal 7.4 GA29",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA29"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA28",
+		"key": "portal74ga28",
+		"name": "Portal 7.4 GA28",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA28"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA27",
+		"key": "portal74ga27",
+		"name": "Portal 7.4 GA27",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA27"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA26",
+		"key": "portal74ga26",
+		"name": "Portal 7.4 GA26",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA26"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA25",
+		"key": "portal74ga25",
+		"name": "Portal 7.4 GA25",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA25"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA24",
+		"key": "portal74ga24",
+		"name": "Portal 7.4 GA24",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA24"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA23",
+		"key": "portal74ga23",
+		"name": "Portal 7.4 GA23",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA23"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA22",
+		"key": "portal74ga22",
+		"name": "Portal 7.4 GA22",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA22"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA21",
+		"key": "portal74ga21",
+		"name": "Portal 7.4 GA21",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA21"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA20",
+		"key": "portal74ga20",
+		"name": "Portal 7.4 GA20",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA20"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA19",
+		"key": "portal74ga19",
+		"name": "Portal 7.4 GA19",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA19"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA18",
+		"key": "portal74ga18",
+		"name": "Portal 7.4 GA18",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA18"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA16",
+		"key": "portal74ga16",
+		"name": "Portal 7.4 GA16",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA16"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA15",
+		"key": "portal74ga15",
+		"name": "Portal 7.4 GA15",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA15"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA14",
+		"key": "portal74ga14",
+		"name": "Portal 7.4 GA14",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA14"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA13",
+		"key": "portal74ga13",
+		"name": "Portal 7.4 GA13",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA13"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA12",
+		"key": "portal74ga12",
+		"name": "Portal 7.4 GA12",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA12"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA11",
+		"key": "portal74ga11",
+		"name": "Portal 7.4 GA11",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA11"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA10",
+		"key": "portal74ga10",
+		"name": "Portal 7.4 GA10",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA10"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA9",
+		"key": "portal74ga9",
+		"name": "Portal 7.4 GA9",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA9"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA8",
+		"key": "portal74ga8",
+		"name": "Portal 7.4 GA8",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA8"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA7",
+		"key": "portal74ga7",
+		"name": "Portal 7.4 GA7",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA7"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA6",
+		"key": "portal74ga6",
+		"name": "Portal 7.4 GA6",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA6"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA5",
+		"key": "portal74ga5",
+		"name": "Portal 7.4 GA5",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA5"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA4",
+		"key": "portal74ga4",
+		"name": "Portal 7.4 GA4",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA4"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_132_GA132",
+		"key": "portal743132ga132",
+		"name": "Portal 7.4.3.132 GA132",
+		"name_i18n": {
+			"en-US": "Portal 7.4.3.132 GA132"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_129_GA129",
+		"key": "portal743129ga129",
+		"name": "Portal 7.4.3.129 GA129",
+		"name_i18n": {
+			"en-US": "Portal 7.4.3.129 GA129"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_125_GA125",
+		"key": "portal743125ga125",
+		"name": "Portal 7.4.3.125 GA125",
+		"name_i18n": {
+			"en-US": "Portal 7.4.3.125 GA125"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_120_GA120",
+		"key": "portal743120ga120",
+		"name": "Portal 7.4.3.120 GA120",
+		"name_i18n": {
+			"en-US": "Portal 7.4.3.120 GA120"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA3",
+		"key": "portal74ga3",
+		"name": "Portal 7.4 GA3",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA3"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA2",
+		"key": "portal74ga2",
+		"name": "Portal 7.4 GA2",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_GA1",
+		"key": "portal74ga1",
+		"name": "Portal 7.4 GA1",
+		"name_i18n": {
+			"en-US": "Portal 7.4 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA8",
+		"key": "portal73ga8",
+		"name": "Portal 7.3 GA8",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA8"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA7",
+		"key": "portal73ga7",
+		"name": "Portal 7.3 GA7",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA7"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA6",
+		"key": "portal73ga6",
+		"name": "Portal 7.3 GA6",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA6"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA5",
+		"key": "portal73ga5",
+		"name": "Portal 7.3 GA5",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA5"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA4",
+		"key": "portal73ga4",
+		"name": "Portal 7.3 GA4",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA4"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA3",
+		"key": "portal73ga3",
+		"name": "Portal 7.3 GA3",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA3"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA2",
+		"key": "portal73ga2",
+		"name": "Portal 7.3 GA2",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_3_GA1",
+		"key": "portal73ga1",
+		"name": "Portal 7.3 GA1",
+		"name_i18n": {
+			"en-US": "Portal 7.3 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_2_GA2",
+		"key": "portal72ga2",
+		"name": "Portal 7.2 GA2",
+		"name_i18n": {
+			"en-US": "Portal 7.2 GA2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_2_GA1",
+		"key": "portal72ga1",
+		"name": "Portal 7.2 GA1",
+		"name_i18n": {
+			"en-US": "Portal 7.2 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_1_GA4",
+		"key": "portal71ga4",
+		"name": "Portal 7.1 GA4",
+		"name_i18n": {
+			"en-US": "Portal 7.1 GA4"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_1_GA3",
+		"key": "portal71ga3",
+		"name": "Portal 7.1 GA3",
+		"name_i18n": {
+			"en-US": "Portal 7.1 GA3"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_1_GA2",
+		"key": "portal71ga2",
+		"name": "Portal 7.1 GA2",
+		"name_i18n": {
+			"en-US": "Portal 7.1 GA2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_1_GA1",
+		"key": "portal71ga1",
+		"name": "Portal 7.1 GA1",
+		"name_i18n": {
+			"en-US": "Portal 7.1 GA1"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_GA112",
+		"key": "portal743ga112",
+		"name": "PORTAL 7.4.3 GA112",
+		"name_i18n": {
+			"en-US": "PORTAL 7.4.3 GA112"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_GA109",
+		"key": "portal743ga109",
+		"name": "PORTAL 7.4.3 GA109",
+		"name_i18n": {
+			"en-US": "PORTAL 7.4.3 GA109"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_4_3_GA108",
+		"key": "portal743ga108",
+		"name": "PORTAL 7.4.3 GA108",
+		"name_i18n": {
+			"en-US": "PORTAL 7.4.3 GA108"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0_GA5",
+		"key": "portal70ga5",
+		"name": "PORTAL 7.0 GA5",
+		"name_i18n": {
+			"en-US": "PORTAL 7.0 GA5"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0_GA4",
+		"key": "portal70ga4",
+		"name": "PORTAL 7.0 GA4",
+		"name_i18n": {
+			"en-US": "PORTAL 7.0 GA4"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0_GA3",
+		"key": "portal70ga3",
+		"name": "PORTAL 7.0 GA3",
+		"name_i18n": {
+			"en-US": "PORTAL 7.0 GA3"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0_GA2",
+		"key": "portal70ga2",
+		"name": "PORTAL 7.0 GA2",
+		"name_i18n": {
+			"en-US": "PORTAL 7.0 GA2"
+		}
+	},
+	{
+		"externalReferenceCode": "PORTAL_7_0_GA1",
+		"key": "portal70ga1",
+		"name": "PORTAL 7.0 GA1",
+		"name_i18n": {
+			"en-US": "PORTAL 7.0 GA1"
+		}
+	}
+]

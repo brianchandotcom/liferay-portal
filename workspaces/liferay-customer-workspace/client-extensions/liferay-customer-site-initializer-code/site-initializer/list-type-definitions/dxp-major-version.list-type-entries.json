@@ -1,98 +1,98 @@
 [
 	{
+		"externalReferenceCode": "DXP_2025_Q1_LTS",
 		"key": "dxp2025q1",
 		"name": "DXP 2025.Q1 (LTS)",
 		"name_i18n": {
 			"en-US": "DXP 2025.Q1 (LTS)"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q4",
 		"key": "dxp2024q4",
 		"name": "DXP 2024.Q4",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q4"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q3",
 		"key": "dxp2024q3",
 		"name": "DXP 2024.Q3",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q3"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q2",
 		"key": "dxp2024q2",
 		"name": "DXP 2024.Q2",
 		"name_i18n": {
 			"en-US": "DXP 2024.Q2"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2024_Q1",
 		"key": "dxp2024q1",
-		"name": "DXP 2024.Q1 (LTS)",
+		"name": "DXP 2024.Q1",
 		"name_i18n": {
-			"en-US": "DXP 2024.Q1 (LTS)"
-		},
-		"type": "string"
+			"en-US": "DXP 2024.Q1"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2023_Q4",
 		"key": "dxp2023q4",
 		"name": "DXP 2023.Q4",
 		"name_i18n": {
 			"en-US": "DXP 2023.Q4"
-		},
-		"type": "string"
+		}
 	},
 	{
+		"externalReferenceCode": "DXP_2023_Q3",
 		"key": "dxp2023q3",
 		"name": "DXP 2023.Q3",
 		"name_i18n": {
 			"en-US": "DXP 2023.Q3"
-		},
-		"type": "string"
+		}
 	},
 	{
-		"key": "74",
-		"name": "7.4",
+		"externalReferenceCode": "DXP_7_4",
+		"key": "dxp74",
+		"name": "DXP 7.4",
 		"name_i18n": {
-			"en-US": "7.4"
-		},
-		"type": "string"
+			"en-US": "DXP 7.4"
+		}
 	},
 	{
-		"key": "73",
-		"name": "7.3",
+		"externalReferenceCode": "DXP_7_3",
+		"key": "dxp73",
+		"name": "DXP 7.3",
 		"name_i18n": {
-			"en-US": "7.3"
-		},
-		"type": "string"
+			"en-US": "DXP 7.3"
+		}
 	},
 	{
-		"key": "72",
-		"name": "7.2",
+		"externalReferenceCode": "DXP_7_2",
+		"key": "dxp72",
+		"name": "DXP 7.2",
 		"name_i18n": {
-			"en-US": "7.2"
-		},
-		"type": "string"
+			"en-US": "DXP 7.2"
+		}
 	},
 	{
-		"key": "71",
-		"name": "7.1",
+		"externalReferenceCode": "DXP_7_1",
+		"key": "dxp71",
+		"name": "DXP 7.1",
 		"name_i18n": {
-			"en-US": "7.1"
-		},
-		"type": "string"
+			"en-US": "DXP 7.1"
+		}
 	},
 	{
-		"key": "70",
-		"name": "7.0",
+		"externalReferenceCode": "DXP_7_0",
+		"key": "dxp70",
+		"name": "DXP 7.0",
 		"name_i18n": {
-			"en-US": "7.0"
-		},
-		"type": "string"
+			"en-US": "DXP 7.0"
+		}
 	}
 ]

@@ -53,7 +53,7 @@ public class PageElement implements Serializable {
 		description = "The page element's definition."
 	)
 	@Valid
-	public PageDefinition getDefinition() {
+	public PageElementDefinition getDefinition() {
 		if (_definitionSupplier != null) {
 			definition = _definitionSupplier.get();
 
@@ -63,7 +63,7 @@ public class PageElement implements Serializable {
 		return definition;
 	}
 
-	public void setDefinition(PageDefinition definition) {
+	public void setDefinition(PageElementDefinition definition) {
 		this.definition = definition;
 
 		_definitionSupplier = null;
@@ -71,7 +71,8 @@ public class PageElement implements Serializable {
 
 	@JsonIgnore
 	public void setDefinition(
-		UnsafeSupplier<PageDefinition, Exception> definitionUnsafeSupplier) {
+		UnsafeSupplier<PageElementDefinition, Exception>
+			definitionUnsafeSupplier) {
 
 		_definitionSupplier = () -> {
 			try {
@@ -88,10 +89,10 @@ public class PageElement implements Serializable {
 
 	@GraphQLField(description = "The page element's definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageDefinition definition;
+	protected PageElementDefinition definition;
 
 	@JsonIgnore
-	private Supplier<PageDefinition> _definitionSupplier;
+	private Supplier<PageElementDefinition> _definitionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's external reference code. Unique within the site."
@@ -306,7 +307,7 @@ public class PageElement implements Serializable {
 
 		sb.append("{");
 
-		PageDefinition definition = getDefinition();
+		PageElementDefinition definition = getDefinition();
 
 		if (definition != null) {
 			if (sb.length() > 1) {

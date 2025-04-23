@@ -6,11 +6,11 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
@@ -968,10 +968,11 @@ public class PageSpecificationResourceTest
 			pageElements[i] = new PageElement() {
 				{
 					setDefinition(
-						() -> new PageContainerDefinition() {
+						() -> new ContainerPageElementDefinition() {
 							{
 								setIndexed(() -> Boolean.FALSE);
-								setType(() -> PageDefinition.Type.CONTAINER);
+								setType(
+									() -> PageElementDefinition.Type.CONTAINER);
 							}
 						});
 					setExternalReferenceCode(curExternalReferenceCode);
@@ -1173,7 +1174,7 @@ public class PageSpecificationResourceTest
 						if (Objects.equals(
 								pageElement.getDefinition(
 								).getType(),
-								PageDefinition.Type.DROP_ZONE)) {
+								PageElementDefinition.Type.DROP_ZONE)) {
 
 							return pageElement;
 						}

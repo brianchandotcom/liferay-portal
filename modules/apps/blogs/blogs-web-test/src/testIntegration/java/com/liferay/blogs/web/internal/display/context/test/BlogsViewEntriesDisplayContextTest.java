@@ -217,7 +217,9 @@ public class BlogsViewEntriesDisplayContextTest {
 			null, null, visibilityTypePublic, new ServiceContext());
 	}
 
-	private BlogsEntry _addBlogsEntry(long[] assetCategoryIds) throws Exception {
+	private BlogsEntry _addBlogsEntry(long[] assetCategoryIds)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "the page container's layout.", value = "Layout")
+@GraphQLName(
+	description = "the container page element's layout.", value = "Layout"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Layout")
 public class Layout implements Serializable {

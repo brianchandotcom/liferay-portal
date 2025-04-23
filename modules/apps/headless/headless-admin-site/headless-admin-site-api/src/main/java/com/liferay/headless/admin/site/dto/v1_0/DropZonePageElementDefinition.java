@@ -56,7 +56,7 @@ public class DropZonePageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page drop zone's allowed or unallowed fragments."
+		description = "The drop zone page element's allowed or unallowed fragments."
 	)
 	@Valid
 	public Object getFragmentSettings() {
@@ -93,7 +93,7 @@ public class DropZonePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The page drop zone's allowed or unallowed fragments."
+		description = "The drop zone page element's allowed or unallowed fragments."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object fragmentSettings;

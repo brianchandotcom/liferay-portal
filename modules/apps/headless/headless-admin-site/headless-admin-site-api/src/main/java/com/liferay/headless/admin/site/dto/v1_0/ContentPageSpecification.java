@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "A page specification of a content page. A content page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout.",
+	description = "A page specification of a content page. A content page will contain 1 page specification for its draft layout and 1 page specification for its published layout.",
 	value = "ContentPageSpecification"
 )
 @JsonFilter("Liferay.Vulcan")

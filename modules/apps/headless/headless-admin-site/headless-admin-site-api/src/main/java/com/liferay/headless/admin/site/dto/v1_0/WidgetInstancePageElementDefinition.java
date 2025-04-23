@@ -55,7 +55,7 @@ public class WidgetInstancePageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of CSS classes that are applied to the element."
+		description = "A list of CSS classes that are applied to the widget instance page element."
 	)
 	public String[] getCssClasses() {
 		if (_cssClassesSupplier != null) {
@@ -91,7 +91,7 @@ public class WidgetInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of CSS classes that are applied to the element."
+		description = "A list of CSS classes that are applied to the widget instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
@@ -100,7 +100,7 @@ public class WidgetInstancePageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the fragment."
+		description = "Custom CSS that is applied on the widget instance page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -135,7 +135,9 @@ public class WidgetInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "Custom CSS that is applied on the fragment.")
+	@GraphQLField(
+		description = "Custom CSS that is applied on the widget instance page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
@@ -143,7 +145,7 @@ public class WidgetInstancePageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the page collection."
+		description = "The custom CSS viewports of the widget instance page element."
 	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
@@ -181,7 +183,7 @@ public class WidgetInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The custom CSS viewports of the page collection."
+		description = "The custom CSS viewports of the widget instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
@@ -190,7 +192,7 @@ public class WidgetInstancePageElementDefinition
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of the page widget instance."
+		description = "The fragment style of the widget instance page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -227,7 +229,7 @@ public class WidgetInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "The fragment style of the page widget instance."
+		description = "The fragment style of the widget instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
@@ -236,7 +238,7 @@ public class WidgetInstancePageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of the page widget instance."
+		description = "A list of fragment viewports of the widget instance page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -274,7 +276,7 @@ public class WidgetInstancePageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of the page widget instance."
+		description = "A list of fragment viewports of the widget instance page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -283,7 +285,7 @@ public class WidgetInstancePageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a page widget instance."
+		description = "The custom name of a widget instance page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -316,7 +318,9 @@ public class WidgetInstancePageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a page widget instance.")
+	@GraphQLField(
+		description = "The custom name of a widget instance page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

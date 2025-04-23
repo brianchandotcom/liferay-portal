@@ -57,7 +57,7 @@ public class FormStepContainerPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of CSS classes that are applied to the page element."
+		description = "A list of CSS classes that are applied to the form step container page element."
 	)
 	public String[] getCssClasses() {
 		if (_cssClassesSupplier != null) {
@@ -93,7 +93,7 @@ public class FormStepContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of CSS classes that are applied to the page element."
+		description = "A list of CSS classes that are applied to the form step container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
@@ -102,7 +102,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the page element."
+		description = "Custom CSS that is applied on the form step container page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -138,7 +138,7 @@ public class FormStepContainerPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "Custom CSS that is applied on the page element."
+		description = "Custom CSS that is applied on the form step container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
@@ -147,7 +147,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the page form."
+		description = "The custom CSS viewports of the form step container page element."
 	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
@@ -184,7 +184,9 @@ public class FormStepContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom CSS viewports of the page form.")
+	@GraphQLField(
+		description = "The custom CSS viewports of the form step container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomCSSViewport[] customCSSViewports;
 
@@ -192,7 +194,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of a page form."
+		description = "The fragment style of a form step container page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -228,7 +230,9 @@ public class FormStepContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of a page form.")
+	@GraphQLField(
+		description = "The fragment style of a form step container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -236,7 +240,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of a page form."
+		description = "A list of fragment viewports of a form step container page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -273,7 +277,9 @@ public class FormStepContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "A list of fragment viewports of a page form.")
+	@GraphQLField(
+		description = "A list of fragment viewports of a form step container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
@@ -281,7 +287,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page form's layout."
+		description = "The form step container page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -317,7 +323,9 @@ public class FormStepContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page form's layout.")
+	@GraphQLField(
+		description = "The form step container page element's layout."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
@@ -325,7 +333,7 @@ public class FormStepContainerPageElementDefinition
 	private Supplier<Layout> _layoutSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of of a page form."
+		description = "The custom name of a form step container page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -358,7 +366,9 @@ public class FormStepContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of of a page form.")
+	@GraphQLField(
+		description = "The custom name of a form step container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

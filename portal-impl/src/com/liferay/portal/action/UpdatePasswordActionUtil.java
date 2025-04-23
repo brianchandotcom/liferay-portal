@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alvaro Saugar
  */
-public class ActionUtil {
+public class UpdatePasswordActionUtil {
 
 	public static String generateUpdatePasswordURL(
 			HttpServletRequest httpServletRequest, User user)

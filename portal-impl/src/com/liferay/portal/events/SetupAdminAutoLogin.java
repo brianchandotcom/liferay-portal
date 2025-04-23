@@ -5,7 +5,7 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.action.ActionUtil;
+import com.liferay.portal.action.UpdatePasswordActionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -68,7 +68,8 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 
 			httpServletRequest.setAttribute(
 				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
-				ActionUtil.generateUpdatePasswordURL(httpServletRequest, user));
+				UpdatePasswordActionUtil.generateUpdatePasswordURL(
+					httpServletRequest, user));
 
 			String[] credentials = new String[3];
 

@@ -90,7 +90,7 @@ public interface HeatTagConstants {
 		return StringPool.BLANK;
 	}
 
-	public static int getHeatTagScore(String heatTag) {
+	public static int getScore(String heatTag) {
 		if (heatTag.equals(CUSTOMER_UPGRADE)) {
 			return 5;
 		}

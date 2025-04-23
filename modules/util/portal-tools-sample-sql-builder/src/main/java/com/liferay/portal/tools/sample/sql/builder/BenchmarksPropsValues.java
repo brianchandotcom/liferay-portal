@@ -22,6 +22,10 @@ import java.util.TimeZone;
  */
 public class BenchmarksPropsValues {
 
+	public static final String ADMIN_INSTANCE_VIRTUAL_HOST_NAME =
+		PropertiesHolder._get(
+			BenchmarksPropsKeys.ADMIN_INSTANCE_VIRTUAL_HOST_NAME);
+
 	public static final String[] COMMERCE_LAYOUT_EXCLUDED_PORTLETS =
 		StringUtil.split(
 			PropertiesHolder._get(
@@ -253,9 +257,6 @@ public class BenchmarksPropsValues {
 
 	public static final boolean SEARCH_BAR_ENABLED = GetterUtil.getBoolean(
 		PropertiesHolder._get(BenchmarksPropsKeys.SEARCH_BAR_ENABLED));
-
-	public static final String VIRTUAL_HOST_NAME = PropertiesHolder._get(
-		BenchmarksPropsKeys.VIRTUAL_HOST_NAME);
 
 	private static class PropertiesHolder {
 

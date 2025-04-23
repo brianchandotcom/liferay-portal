@@ -10,6 +10,9 @@ package com.liferay.portal.tools.sample.sql.builder;
  */
 public interface BenchmarksPropsKeys {
 
+	public static final String ADMIN_INSTANCE_VIRTUAL_HOST_NAME =
+		"sample.sql.admin.instance.virtual.hostname";
+
 	public static final String COMMERCE_LAYOUT_EXCLUDED_PORTLETS =
 		"sample.sql.commerce.layout.excluded.portlets";
 
@@ -183,8 +186,5 @@ public interface BenchmarksPropsKeys {
 
 	public static final String SEARCH_BAR_ENABLED =
 		"sample.sql.search.bar.enabled";
-
-	public static final String VIRTUAL_HOST_NAME =
-		"sample.sql.virtual.hostname";
 
 }

@@ -6935,7 +6935,7 @@ public class DataFactory {
 
 		if (_webId.equals("liferay.com")) {
 			virtualHostModel.setHostname(
-				BenchmarksPropsValues.VIRTUAL_HOST_NAME);
+				BenchmarksPropsValues.ADMIN_INSTANCE_VIRTUAL_HOST_NAME);
 		}
 		else {
 			virtualHostModel.setHostname(_webId);

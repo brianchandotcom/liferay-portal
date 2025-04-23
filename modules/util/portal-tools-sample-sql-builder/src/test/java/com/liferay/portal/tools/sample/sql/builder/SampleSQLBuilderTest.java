@@ -95,6 +95,8 @@ public class SampleSQLBuilderTest {
 
 	private void _initProperties(Properties properties) {
 		properties.put(
+			BenchmarksPropsKeys.ADMIN_INSTANCE_VIRTUAL_HOST_NAME, "localhost");
+		properties.put(
 			BenchmarksPropsKeys.COMMERCE_LAYOUT_EXCLUDED_PORTLETS,
 			StringPool.BLANK);
 		properties.put(BenchmarksPropsKeys.DB_TYPE, "hypersonic");
@@ -186,7 +188,6 @@ public class SampleSQLBuilderTest {
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
 		properties.put(BenchmarksPropsKeys.SEARCH_BAR_ENABLED, "true");
-		properties.put(BenchmarksPropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 
 	private void _loadHypersonic(Connection connection, String fileName)

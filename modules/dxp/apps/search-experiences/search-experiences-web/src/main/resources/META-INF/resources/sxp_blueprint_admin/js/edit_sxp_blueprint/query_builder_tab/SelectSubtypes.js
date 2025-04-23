@@ -48,18 +48,18 @@ export function SearchableSubtypesModal({
 
 	const {fetchSubtypeClassesURL = '', namespace} = useContext(ThemeContext);
 
-	const getLabel = ({groupLocalizedName, subtypeClassLocalizedName}) => {
+	const getLabel = ({assetSubtypeLocalizedName, groupLocalizedName}) => {
 		return groupLocalizedName
-			? `${subtypeClassLocalizedName} (${groupLocalizedName})`
-			: subtypeClassLocalizedName;
+			? `${assetSubtypeLocalizedName} (${groupLocalizedName})`
+			: assetSubtypeLocalizedName;
 	};
 
 	const getValue = ({
-		className,
+		assetSubtypeExternalReferenceCode,
+		entryClassName,
 		groupExternalReferenceCode,
-		subtypeClassExternalReferenceCode,
 	}) => {
-		return `${className}&&${groupExternalReferenceCode}&&${subtypeClassExternalReferenceCode}`;
+		return `${entryClassName}&&${groupExternalReferenceCode}&&${assetSubtypeExternalReferenceCode}`;
 	};
 
 	const isSelected = useCallback(
@@ -130,8 +130,8 @@ export function SearchableSubtypesModal({
 				fetch(
 					addParams(
 						{
-							[`${namespace}cmd`]: 'getSubtypeClasses',
-							[`${namespace}className`]: className,
+							[`${namespace}cmd`]: 'getAssetSubtypes',
+							[`${namespace}entryClassName`]: className,
 							[`${namespace}page`]: page,
 							[`${namespace}pageSize`]: pageSize,
 						},
@@ -332,7 +332,7 @@ export function SearchableSubtypesModal({
 															'select-x'
 														),
 														[
-															item.subtypeClassLocalizedName,
+															item.assetSubtypeLocalizedName,
 														]
 													)}
 													checked={isSelected(item)}
@@ -343,7 +343,7 @@ export function SearchableSubtypesModal({
 
 												<span className="c-ml-2 table-list-title">
 													{
-														item.subtypeClassLocalizedName
+														item.assetSubtypeLocalizedName
 													}
 												</span>
 											</div>

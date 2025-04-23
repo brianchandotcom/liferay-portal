@@ -39,6 +39,7 @@ import {
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 import getInitialDXPAdmin from '~/utils/getInitialDXPAdmin';
 import getKebabCase from '~/utils/getKebabCase';
+import sortLiferayVersions from '~/utils/sortLiferayVersions';
 import {isLowercaseAndNumbers} from '~/utils/validations.form';
 import Layout from '../../../../components/FormLayout';
 import AdminInputs from './AdminInputs';
@@ -105,7 +106,7 @@ const SetupDXPCloudPage = ({
 					?.listTypeEntries;
 
 			if (items?.length) {
-				const sortedItems = [...items].sort();
+				const sortedItems = sortLiferayVersions([...items]);
 				setDxpVersions(sortedItems);
 
 				setSelectedVersion(

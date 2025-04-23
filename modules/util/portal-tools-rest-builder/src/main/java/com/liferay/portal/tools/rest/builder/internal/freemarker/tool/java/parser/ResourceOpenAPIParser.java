@@ -1245,10 +1245,15 @@ public class ResourceOpenAPIParser {
 
 		basePath = basePath.substring(0, lastIndexOfSlash);
 
-		if (basePath.equals("/asset-libraries/{assetLibraryId}")) {
+		if (basePath.equals("/asset-libraries/{assetLibraryId}") ||
+			basePath.equals(
+				"/asset-libraries/{assetLibraryExternalReferenceCode}")) {
+
 			return "AssetLibrary";
 		}
-		else if (basePath.equals("/sites/{siteId}")) {
+		else if (basePath.equals("/sites/{siteId}") ||
+				 basePath.equals("/sites/{siteExternalReferenceCode}")) {
+
 			return "Site";
 		}
 

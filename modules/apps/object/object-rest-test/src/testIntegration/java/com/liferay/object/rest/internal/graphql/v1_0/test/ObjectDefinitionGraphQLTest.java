@@ -1167,7 +1167,8 @@ public class ObjectDefinitionGraphQLTest {
 		ListTypeEntryLocalServiceUtil.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(), key,
-			LocalizedMapUtil.getLocalizedMap(key));
+			LocalizedMapUtil.getLocalizedMap(key),
+			listTypeDefinition.isSystem());
 	}
 
 	private ObjectDefinition _addObjectDefinition(

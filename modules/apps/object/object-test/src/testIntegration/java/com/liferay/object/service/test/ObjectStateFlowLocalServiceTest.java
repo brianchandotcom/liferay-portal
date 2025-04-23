@@ -389,7 +389,8 @@ public class ObjectStateFlowLocalServiceTest {
 		return _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), key,
-			LocalizedMapUtil.getLocalizedMap(key));
+			LocalizedMapUtil.getLocalizedMap(key),
+			_listTypeDefinition.isSystem());
 	}
 
 	private ObjectField _addObjectField(

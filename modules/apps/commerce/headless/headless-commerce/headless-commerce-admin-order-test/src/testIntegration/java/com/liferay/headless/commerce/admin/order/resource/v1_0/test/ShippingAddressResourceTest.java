@@ -326,7 +326,8 @@ public class ShippingAddressResourceTest
 				listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				listTypeDefinition.isSystem());
 
 		shippingAddress.setSubtype(listTypeEntry.getKey());
 

@@ -6,9 +6,9 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageContainerDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -198,10 +198,11 @@ public class PageExperienceResourceTest
 				new PageElement() {
 					{
 						setDefinition(
-							new PageContainerDefinition() {
+							new ContainerPageElementDefinition() {
 								{
 									setIndexed(true);
-									setType(PageDefinition.Type.CONTAINER);
+									setType(
+										PageElementDefinition.Type.CONTAINER);
 								}
 							});
 						setPageElements(new PageElement[0]);
@@ -211,10 +212,11 @@ public class PageExperienceResourceTest
 				new PageElement() {
 					{
 						setDefinition(
-							new PageContainerDefinition() {
+							new ContainerPageElementDefinition() {
 								{
 									setIndexed(true);
-									setType(PageDefinition.Type.CONTAINER);
+									setType(
+										PageElementDefinition.Type.CONTAINER);
 								}
 							});
 						setPageElements(new PageElement[0]);

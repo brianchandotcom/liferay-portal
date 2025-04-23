@@ -333,14 +333,14 @@ public class BlogsViewEntriesDisplayContextTest {
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
-		Object blogEntriesDisplayContext =
+		Object blogsViewEntriesDisplayContext =
 			mockLiferayPortletRenderRequest.getAttribute(
 				"com.liferay.blogs.web.internal.display.context." +
 					"BlogsViewEntriesDisplayContext");
 
 		return ReflectionTestUtil.invoke(
-			blogEntriesDisplayContext, "getSearchContainer", new Class<?>[0],
-			null);
+			blogsViewEntriesDisplayContext, "getSearchContainer",
+			new Class<?>[0], null);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

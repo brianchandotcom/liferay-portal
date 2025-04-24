@@ -12,9 +12,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 public class LPD_36261 {
 
-	public void method() {
-		ExpandoColumnLocalServiceUtil.fetchColumn(123, "test123");
-		_expandoColumnLocalService.fetchColumn(123, "test123");
+	public void method(long companyId, String className) {
+		ExpandoColumnLocalServiceUtil.getColumn(123, className);
+		ExpandoColumnLocalServiceUtil.fetchColumn(companyId, className);
+		_expandoColumnLocalService.fetchColumn(companyId, className);
 	}
 
 	@Reference

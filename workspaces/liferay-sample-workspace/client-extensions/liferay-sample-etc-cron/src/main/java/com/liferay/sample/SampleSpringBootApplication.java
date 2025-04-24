@@ -5,7 +5,7 @@
 
 package com.liferay.sample;
 
-import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot3.client.ClientExtensionUtilSpringBootClientComponentScan;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Import;
 /**
  * @author Gregory Amerson
  */
-@Import(ClientExtensionUtilSpringBootComponentScan.class)
+@Import(ClientExtensionUtilSpringBootClientComponentScan.class)
 @SpringBootApplication
 public class SampleSpringBootApplication {
 

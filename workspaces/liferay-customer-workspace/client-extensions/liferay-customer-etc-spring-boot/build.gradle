@@ -19,6 +19,12 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+bootRun {
+	jvmArgs([
+		'--add-opens', 'java.base/java.net=ALL-UNNAMED'
+	])
+}
+
 dependencies {
 	implementation group: "com.github.ben-manes.caffeine", name: "caffeine", version: "latest.release"
 	implementation group: "com.google.auth", name: "google-auth-library-credentials", version: "1.31.0"

@@ -112,7 +112,7 @@ export class JSONWebServicesStagingApiHelper {
 		groupId: number | string;
 		remoteAddress?: string;
 		remoteGroupId: string;
-		remotePort: number;
+		remotePort: string;
 		secureConnection?: boolean;
 		serviceContext?: Object;
 	}): Promise<void> {
@@ -126,7 +126,7 @@ export class JSONWebServicesStagingApiHelper {
 		urlSearchParams.append('remoteAddress', remoteAddress);
 		urlSearchParams.append('remoteGroupId', remoteGroupId);
 		urlSearchParams.append('remotePathContext', '');
-		urlSearchParams.append('remotePort', remotePort.toString());
+		urlSearchParams.append('remotePort', remotePort);
 		urlSearchParams.append('secureConnection', String(secureConnection));
 		urlSearchParams.append('serviceContext', serviceContextString);
 

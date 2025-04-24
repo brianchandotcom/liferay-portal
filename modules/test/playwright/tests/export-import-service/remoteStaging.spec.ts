@@ -81,7 +81,7 @@ test(
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: site.id,
 			remoteGroupId: remoteSite.id,
-			remotePort: 9080,
+			remotePort,
 		});
 
 		await remoteStagingPage.publishToLive({

@@ -10,15 +10,12 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
-import com.liferay.portal.test.rule.Inject;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,9 +32,6 @@ public class DBPartitionCopyPortalInstanceOperationTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
-
-		_company = _companyLocalService.fetchCompanyByVirtualHost(
-			TestPropsValues.COMPANY_WEB_ID);
 	}
 
 	@AfterClass
@@ -63,7 +57,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 					"destinationCompanyId=L\"",
 					PortalInstancePool.getDefaultCompanyId(), "\"\n",
 					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
+					TestPropsValues.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
 			assertLog(
@@ -87,7 +81,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 				_PID,
 				StringBundler.concat(
 					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
+					TestPropsValues.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
 			assertLogException(
@@ -116,7 +110,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 				).put(
 					"name", "testName"
 				).put(
-					"sourceCompanyId", _company.getCompanyId()
+					"sourceCompanyId", TestPropsValues.getCompanyId()
 				).put(
 					"virtualHostname", "testVirtualHostname"
 				).put(
@@ -148,7 +142,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 				HashMapDictionaryBuilder.<String, Object>put(
 					"name", "testName"
 				).put(
-					"sourceCompanyId", _company.getCompanyId()
+					"sourceCompanyId", TestPropsValues.getCompanyId()
 				).put(
 					"virtualHostname", "testVirtualHostname"
 				).put(
@@ -165,10 +159,5 @@ public class DBPartitionCopyPortalInstanceOperationTest
 	private static final String _PID =
 		"com.liferay.portal.instances.internal.configuration." +
 			"CopyPortalInstanceConfiguration";
-
-	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 }

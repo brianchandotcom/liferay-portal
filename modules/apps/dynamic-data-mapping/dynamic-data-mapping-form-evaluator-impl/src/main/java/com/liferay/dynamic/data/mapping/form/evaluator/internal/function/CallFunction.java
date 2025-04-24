@@ -172,11 +172,11 @@ public class CallFunction
 	}
 
 	protected void setDDMFormFieldOptions(
-		String field, List<KeyValuePair> options) {
+		String field, List<KeyValuePair> optionKeyValuePairs) {
 
 		UpdateFieldPropertyRequest.Builder builder =
 			UpdateFieldPropertyRequest.Builder.newBuilder(
-				field, "options", options);
+				field, "options", optionKeyValuePairs);
 
 		_ddmExpressionObserver.updateFieldProperty(builder.build());
 	}

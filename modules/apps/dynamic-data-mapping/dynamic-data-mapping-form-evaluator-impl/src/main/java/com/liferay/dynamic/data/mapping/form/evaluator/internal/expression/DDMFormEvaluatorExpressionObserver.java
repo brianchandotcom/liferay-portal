@@ -74,14 +74,14 @@ public class DDMFormEvaluatorExpressionObserver
 	protected void updateFieldProperty(
 		String fieldName, Map<String, Object> properties) {
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormEvaluatorFieldContextKeys =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		for (DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey :
-				ddmFormFieldContextKeys) {
+		for (DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey :
+				ddmFormEvaluatorFieldContextKeys) {
 
-			updateFieldProperty(ddmFormFieldContextKey, properties);
+			updateFieldProperty(ddmFormEvaluatorFieldContextKey, properties);
 		}
 	}
 

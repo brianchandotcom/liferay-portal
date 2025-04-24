@@ -37,10 +37,11 @@ public class ActionExpressionVisitor extends ExpressionVisitor<Object> {
 		String action = _functionToActionMap.get(
 			functionCallExpression.getFunctionName());
 
-		List<Expression> parameters =
+		List<Expression> parameterExpressions =
 			functionCallExpression.getParameterExpressions();
 
-		return DDMFormRuleActionFactory.create(action, parameters, this);
+		return DDMFormRuleActionFactory.create(
+			action, parameterExpressions, this);
 	}
 
 	@Override

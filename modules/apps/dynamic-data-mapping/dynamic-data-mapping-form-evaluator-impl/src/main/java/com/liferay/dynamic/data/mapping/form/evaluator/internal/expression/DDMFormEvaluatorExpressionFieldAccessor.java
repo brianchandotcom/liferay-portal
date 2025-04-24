@@ -141,16 +141,16 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	protected Object getFieldPropertyChanged(
 		String fieldName, String property) {
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormEvaluatorFieldContextKeys =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		if (SetUtil.isEmpty(ddmFormFieldContextKeys)) {
+		if (SetUtil.isEmpty(ddmFormEvaluatorFieldContextKeys)) {
 			return null;
 		}
 
 		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-			ddmFormFieldContextKeys.iterator();
+			ddmFormEvaluatorFieldContextKeys.iterator();
 
 		return getFieldPropertyChanged(iterator.next(), property);
 	}
@@ -193,16 +193,16 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	private Object _getFieldLocalizedValue(String fieldName) {
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormEvaluatorFieldContextKeys =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		if (SetUtil.isEmpty(ddmFormFieldContextKeys)) {
+		if (SetUtil.isEmpty(ddmFormEvaluatorFieldContextKeys)) {
 			return null;
 		}
 
 		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-			ddmFormFieldContextKeys.iterator();
+			ddmFormEvaluatorFieldContextKeys.iterator();
 
 		return _getFieldLocalizedValue(iterator.next());
 	}
@@ -238,12 +238,12 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	private Object _getFieldValues(String fieldName) {
 		List<Object> list = new ArrayList<>();
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormEvaluatorFieldContextKeys =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
 		for (DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey :
-				ddmFormFieldContextKeys) {
+				ddmFormEvaluatorFieldContextKeys) {
 
 			list.add(getFieldValue(ddmFormEvaluatorFieldContextKey));
 		}

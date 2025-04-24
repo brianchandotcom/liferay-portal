@@ -71,7 +71,7 @@ public class FragmentLayoutStructureItemImporter
 		fragmentStyledLayoutStructureItem.setIndexed(
 			fragmentInstancePageElementDefinition.getIndexed());
 		fragmentStyledLayoutStructureItem.setName(
-			fragmentStyledLayoutStructureItem.getName());
+			fragmentInstancePageElementDefinition.getName());
 
 		return fragmentStyledLayoutStructureItem;
 	}

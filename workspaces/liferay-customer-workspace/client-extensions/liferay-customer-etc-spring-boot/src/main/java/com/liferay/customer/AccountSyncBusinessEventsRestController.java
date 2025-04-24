@@ -57,7 +57,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jenny Chen
  */
 @RestController
-public class AccountBusinessEventsRestController extends BaseRestController {
+public class AccountSyncBusinessEventsRestController
+	extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.POST,
@@ -402,7 +403,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		AccountBusinessEventsRestController.class);
+		AccountSyncBusinessEventsRestController.class);
 
 	@Autowired
 	private BusinessEventPermission _businessEventPermission;

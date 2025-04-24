@@ -28,7 +28,7 @@ import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 import {isValidDate} from '~/utils/validations.form';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
-import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
+import useAccountSyncBusinessEvents from '../../../hooks/useAccountSyncBusinessEvents';
 import useAccountTickets from '../../../hooks/useAccountTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
@@ -118,7 +118,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
+	const {updateAccountBusinessEvents} = useAccountSyncBusinessEvents(
 		project?.accountKey || '',
 		businessEvent,
 		true,

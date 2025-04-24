@@ -183,13 +183,12 @@ public abstract class BaseObjectEntryInfoItemTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		serviceContext.setRequest(mockHttpServletRequest);
+		serviceContext.setRequest(httpServletRequest);
 
 		return serviceContext;
 	}

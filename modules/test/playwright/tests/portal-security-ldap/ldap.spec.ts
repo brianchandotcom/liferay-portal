@@ -885,6 +885,33 @@ test('LPD-47428: Verify a single LDAP user can belong to multiple User Groups im
 	});
 });
 
+test('LPD-53633: Verify new users can be imported from LDAP if Autogenerate User Password on Import and LDAP Password Policy are enabled', async ({
+	browser,
+	ldapConfigurationPage,
+	ldapServerPage,
+}) => {
+	await test.step(`Change LDAP config`, async () => {
+		await ldapConfigurationPage.updateLDAPConfiguration({
+			autogenerateUserPasswordOnImport: true,
+			enableImport: false,
+			enableUserPasswordOnImport: false,
+			userLdapPasswordPolicy: true,
+		});
+	});
+
+	await test.step('Add LDAP Server', async () => {
+		await ldapServerPage.addLdapServer({
+			defaultValues: 'OpenLDAP',
+			principal: 'cn=admin,dc=example,dc=com',
+			serverName: getRandomString(),
+		});
+	});
+
+	await test.step(`Authenticate with ${LDAP_USER_1.alternateName}`, async () => {
+		await performLogin(await browser.newPage(), LDAP_USER_1.alternateName);
+	});
+});
+
 test('smoke: Add LDAP server, verify connection, users, and groups are mapped properly, edit LDAP server, then delete LDAP server', async ({
 	ldapConfigurationPage,
 	ldapServerPage,

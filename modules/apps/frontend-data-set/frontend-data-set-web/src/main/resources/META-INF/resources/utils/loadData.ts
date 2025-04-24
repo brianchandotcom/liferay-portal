@@ -115,6 +115,8 @@ export async function loadData({
 
 			const existingFilter = url.searchParams.get('filter');
 			const existingNestedFields = url.searchParams.get('nestedFields');
+			const existingNestedFieldsDepth =
+				url.searchParams.get('nestedFieldsDepth');
 			const existingSort = url.searchParams.get('sort');
 
 			if (key === 'filter' && existingFilter) {
@@ -179,6 +181,37 @@ export async function loadData({
 				);
 
 				url.searchParams.set('nestedFields', newNestedFields.join(','));
+			}
+			else if (
+				key === 'nestedFieldsDepth' &&
+				existingNestedFieldsDepth
+			) {
+				const existingNestedFieldsDepthValue = Number(
+					existingNestedFieldsDepth
+				);
+				const additionalAPIURLParametersNestedFieldsDepthValue =
+					Number(value);
+
+				if (
+					!isNaN(existingNestedFieldsDepthValue) &&
+					!isNaN(additionalAPIURLParametersNestedFieldsDepthValue)
+				) {
+					url.searchParams.set(
+						key,
+						existingNestedFieldsDepthValue >=
+							additionalAPIURLParametersNestedFieldsDepthValue
+							? existingNestedFieldsDepth
+							: value
+					);
+				}
+				else if (
+					!isNaN(additionalAPIURLParametersNestedFieldsDepthValue)
+				) {
+					url.searchParams.append(key, existingNestedFieldsDepth);
+				}
+				else {
+					url.searchParams.append(key, value);
+				}
 			}
 			else {
 				url.searchParams.append(key, value);

@@ -57,7 +57,7 @@ module "eks" {
 	enable_irsa=true
 	node_security_group_id=aws_security_group.nodes.id
 	source="terraform-aws-modules/eks/aws"
-	subnet_ids=aws_subnet.private[*].id
+	subnet_ids=module.vpc.private_subnets
 	version="20.13.1"
-	vpc_id=aws_subnet.private[0].vpc_id
+	vpc_id=module.vpc.vpc_id
 }

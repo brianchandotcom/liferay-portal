@@ -26,17 +26,17 @@ output "oidc_provider_arn" {
 	value=module.eks.oidc_provider_arn
 }
 output "private_subnet_ids" {
-	value=aws_subnet.private[*].id
+	value=module.vpc.private_subnets
 }
 output "public_subnet_ids" {
-	value=aws_subnet.public[*].id
+	value=module.vpc.public_subnets
 }
 output "region" {
 	value=var.region
 }
 output "vpc_cidr" {
-	value=aws_vpc.main.cidr_block
+	value=var.vpc_cidr
 }
 output "vpc_id" {
-	value=aws_vpc.main.id
+	value=module.vpc.vpc_id
 }

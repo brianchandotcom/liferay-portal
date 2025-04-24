@@ -1,5 +1,8 @@
-locals {
-	availabilityZones=["${var.region}a", "${var.region}b"]
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
 }
 variable "deployment_name" {
 	default="liferay-self-hosted"

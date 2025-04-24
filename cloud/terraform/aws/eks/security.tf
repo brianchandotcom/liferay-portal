@@ -1,10 +1,10 @@
 resource "aws_security_group" "cluster" {
 	name_prefix="${var.deployment_name}-cluster-sg"
-	vpc_id=aws_vpc.main.id
+	vpc_id=module.vpc.vpc_id
 }
 resource "aws_security_group" "nodes" {
 	name_prefix="${var.deployment_name}-nodes-sg"
-	vpc_id=aws_vpc.main.id
+	vpc_id=module.vpc.vpc_id
 }
 resource "aws_vpc_security_group_egress_rule" "cluster_egress" {
 	cidr_ipv4="0.0.0.0/0"

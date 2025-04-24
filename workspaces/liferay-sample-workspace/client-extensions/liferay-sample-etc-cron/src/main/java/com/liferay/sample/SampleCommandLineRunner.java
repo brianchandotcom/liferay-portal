@@ -7,6 +7,7 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Util;
 import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
@@ -86,7 +87,15 @@ public class SampleCommandLineRunner
 
 	@Override
 	protected String getWebClientBaseURL() {
-		return _liferaySampleEtcSpringBootHomePageURL.toString();
+		String homePageURL = LiferayOAuth2Util.getHomePageURL(
+			"liferay-sample-etc-spring-boot-oauth-application-user-agent",
+			_lxcDXPMainDomain, _lxcDXPServerProtocol);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Home page URL: " + homePageURL);
+		}
+
+		return homePageURL;
 	}
 
 	private void _countMessageBoardThreads(
@@ -160,9 +169,6 @@ public class SampleCommandLineRunner
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${liferay.sample.etc.spring.boot.home.page.url}")
-	private URL _liferaySampleEtcSpringBootHomePageURL;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;

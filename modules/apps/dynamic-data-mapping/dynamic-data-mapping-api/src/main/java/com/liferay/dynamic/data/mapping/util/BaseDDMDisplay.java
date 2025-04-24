@@ -204,11 +204,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 		classPKs.add(0L);
 
-		List<DDMStructure> DDMStructures =
+		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
 				companyId, PortalUtil.getClassNameId(getStructureType()));
 
-		for (DDMStructure ddmStructure : DDMStructures) {
+		for (DDMStructure ddmStructure : ddmStructures) {
 			classPKs.add(ddmStructure.getPrimaryKey());
 		}
 

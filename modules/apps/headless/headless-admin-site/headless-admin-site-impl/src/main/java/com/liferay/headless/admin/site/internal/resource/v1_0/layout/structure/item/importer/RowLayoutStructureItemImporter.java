@@ -38,28 +38,31 @@ public class RowLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		RowPageElementDefinition pageRowDefinition =
+		RowPageElementDefinition rowPageElementDefinition =
 			(RowPageElementDefinition)pageElement.getDefinition();
 
-		if (pageRowDefinition == null) {
+		if (rowPageElementDefinition == null) {
 			return rowStyledLayoutStructureItem;
 		}
 
 		rowStyledLayoutStructureItem.setCssClasses(
-			SetUtil.fromArray(pageRowDefinition.getCssClasses()));
+			SetUtil.fromArray(rowPageElementDefinition.getCssClasses()));
 		rowStyledLayoutStructureItem.setCustomCSS(
-			pageRowDefinition.getCustomCSS());
-		rowStyledLayoutStructureItem.setGutters(pageRowDefinition.getGutters());
-		rowStyledLayoutStructureItem.setIndexed(pageRowDefinition.getIndexed());
-		rowStyledLayoutStructureItem.setName(pageRowDefinition.getName());
+			rowPageElementDefinition.getCustomCSS());
+		rowStyledLayoutStructureItem.setGutters(
+			rowPageElementDefinition.getGutters());
+		rowStyledLayoutStructureItem.setIndexed(
+			rowPageElementDefinition.getIndexed());
+		rowStyledLayoutStructureItem.setName(
+			rowPageElementDefinition.getName());
 		rowStyledLayoutStructureItem.setNumberOfColumns(
-			pageRowDefinition.getNumberOfColumns());
+			rowPageElementDefinition.getNumberOfColumns());
 		rowStyledLayoutStructureItem.setModulesPerRow(
-			pageRowDefinition.getModulesPerRow());
+			rowPageElementDefinition.getModulesPerRow());
 		rowStyledLayoutStructureItem.setReverseOrder(
-			pageRowDefinition.getReverseOrder());
+			rowPageElementDefinition.getReverseOrder());
 		rowStyledLayoutStructureItem.setVerticalAlignment(
-			pageRowDefinition.getVerticalAlignment());
+			rowPageElementDefinition.getVerticalAlignment());
 
 		return rowStyledLayoutStructureItem;
 	}

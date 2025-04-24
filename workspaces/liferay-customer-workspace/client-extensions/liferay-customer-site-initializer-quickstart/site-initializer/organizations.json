@@ -1,6 +1,22 @@
 [
 	{
-		"externalReferenceCode": "ERC-001",
+		"externalReferenceCode": "KOR-14041148",
+		"name": "Account Access EU"
+	},
+	{
+		"externalReferenceCode": "KOR-14041160",
+		"name": "Account Access US"
+	},
+	{
+		"externalReferenceCode": "KOR-104975",
 		"name": "Liferay Staff"
+	},
+	{
+		"externalReferenceCode": "KOR-14041172",
+		"name": "Systems - Provisioning"
+	},
+	{
+		"externalReferenceCode": "ERC-001",
+		"name": "Test Account"
 	}
 ]

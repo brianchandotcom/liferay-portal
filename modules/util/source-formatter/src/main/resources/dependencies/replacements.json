@@ -4233,6 +4233,19 @@
 		"to": "fetchCommercePriceEntryByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"classNames": [
+			"CommerceOrderItem",
+			"CommerceOrderItemLocalService",
+			"CommerceOrderItemLocalServiceUtil",
+			"CommerceOrderItemLocalServiceWrapper",
+			"CommerceOrderItemUtil",
+			"CommerceOrderItemWrapper"
+		],
+		"from": "regex:(?<variableName>\\w+)\\.\\s*(?<prefixMethodName>get|set|fetchBy|findBy|fetch|removeBy|countBy|fetchCommerceOrderItemBy)BookedQuantity",
+		"issueKey": "LPD-53535",
+		"to": "${variableName}.${prefixMethodName}CommerceInventoryBookedQuantity"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

@@ -697,7 +697,7 @@ components:
                     oneOf:
                         -   $ref: "#/components/schemas/ClassSubtypeReference"
                         -   $ref: "#/components/schemas/ContextReference"
-                formSuccessSubmissionResult:
+                successFormSubmissionResult:
                     # @review
                     description:
                         The definition for the success message of the form.

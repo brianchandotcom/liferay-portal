@@ -198,18 +198,18 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		List<StagedModel> importedStagedModels = getStagedModels();
 
-		Set<String> exportedUuidSet = new HashSet<>();
-		Set<String> importedUuidSet = new HashSet<>();
+		Set<String> exportedUuids = new HashSet<>();
+		Set<String> importedUuids = new HashSet<>();
 
 		for (StagedModel stagedModel : exportedStagedModels) {
-			exportedUuidSet.add(stagedModel.getUuid());
+			exportedUuids.add(stagedModel.getUuid());
 		}
 
 		for (StagedModel stagedModel : importedStagedModels) {
-			importedUuidSet.add(stagedModel.getUuid());
+			importedUuids.add(stagedModel.getUuid());
 		}
 
-		Assert.assertEquals(exportedUuidSet, importedUuidSet);
+		Assert.assertEquals(exportedUuids, importedUuids);
 	}
 
 	@Test
@@ -537,13 +537,13 @@ public abstract class BasePortletDataHandlerTestCase {
 			BundleContext bundleContext = bundle.getBundleContext();
 
 			Collection<ServiceReference<PortletDataHandler>>
-				portletDataHandlerReferences =
+				portletDataHandlerServiceReferences =
 					bundleContext.getServiceReferences(
 						PortletDataHandler.class,
 						"(javax.portlet.name=" + portletId + ")");
 
 			Iterator<ServiceReference<PortletDataHandler>> iterator =
-				portletDataHandlerReferences.iterator();
+				portletDataHandlerServiceReferences.iterator();
 
 			return bundleContext.getService(iterator.next());
 		}

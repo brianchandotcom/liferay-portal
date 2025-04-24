@@ -120,6 +120,10 @@
 		"to": ""
 	},
 	{
+		"from": "new InfoItemFormVariation(String paramName, InfoLocalizedValue<String> paramName)",
+		"issueKey": "LPD-8024"
+	},
+	{
 		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
 		"issueKey": "LPD-8025",
 		"skipParametersValidation": true,

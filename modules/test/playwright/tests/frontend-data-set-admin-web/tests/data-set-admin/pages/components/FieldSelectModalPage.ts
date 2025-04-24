@@ -48,33 +48,32 @@ export class FieldSelectModalPage {
 			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
 		);
 
-		await treeItem
-			.getByText(fieldName, {
-				exact: true,
-			})
-			.click();
+		await treeItem.filter({hasText: fieldName}).click();
 
 		const checkbox = treeItem.locator('input[type="checkbox"]');
 
 		if (expected) {
+			await checkbox.check();
 			await expect(checkbox).toBeChecked();
 		}
 		else {
+			await checkbox.uncheck();
 			await expect(checkbox).not.toBeChecked();
 		}
 	}
 
 	getFieldCheckboxByLabel(label: string) {
 		return this.fieldSelectModalContainer
-			.getByRole('treeitem', {exact: true, name: label})
-			.locator('input[type="checkbox"]');
+			.getByRole('treeitem', {name: label})
+			.locator('input[type="checkbox"]')
+			.first();
 	}
 
 	async saveAddFieldsModal() {
 		await this.addFieldsDialog.saveButton.click();
 	}
 
-	async searchAndSelectField(path: string) {
+	async searchAndSelectField(path: string, expected?: boolean) {
 		const fieldSearch = this.page
 			.getByRole('dialog', {name: 'Select Field'})
 			.getByPlaceholder('Search');
@@ -91,8 +90,14 @@ export class FieldSelectModalPage {
 
 		await this.page
 			.locator(`[data-id$=",${path}"]`)
+
+			// .first()
+
 			.getByRole('checkbox')
 			.check();
+
+		// await fieldSearch.clear();
+
 	}
 
 	async selectField({

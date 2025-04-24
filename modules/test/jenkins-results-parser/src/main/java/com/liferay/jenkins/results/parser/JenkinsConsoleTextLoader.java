@@ -13,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +24,45 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @author Peter Yoo
  */
 public class JenkinsConsoleTextLoader {
+
+	public static JenkinsConsoleTextLoader getInstance(String buildURL) {
+		synchronized (_jenkinsConsoleTextLoaders) {
+			Matcher matcher = _buildURLPattern.matcher(buildURL);
+
+			if (!matcher.find()) {
+				throw new IllegalArgumentException(
+					"Invalid Build URL " + buildURL);
+			}
+
+			String jobName = matcher.group("jobName");
+
+			jobName = jobName.replace("%28", "(");
+			jobName = jobName.replace("%29", ")");
+
+			buildURL = JenkinsResultsParserUtil.combine(
+				"https://", matcher.group("masterHostname"),
+				".liferay.com/job/", jobName, "/",
+				matcher.group("buildNumber"));
+
+			if (_jenkinsConsoleTextLoaders.containsKey(buildURL)) {
+				return _jenkinsConsoleTextLoaders.get(buildURL);
+			}
+
+			if (jobName.contains("-batch") || jobName.contains("-downstream") ||
+				jobName.contains("maintenance") ||
+				jobName.contains("-validation")) {
+
+				_jenkinsConsoleTextLoaders.put(
+					buildURL, new JenkinsConsoleTextLoader(buildURL, false));
+			}
+			else {
+				_jenkinsConsoleTextLoaders.put(
+					buildURL, new JenkinsConsoleTextLoader(buildURL, true));
+			}
+
+			return _jenkinsConsoleTextLoaders.get(buildURL);
+		}
+	}
 
 	public JenkinsConsoleTextLoader(String buildURL) {
 		this(buildURL, false);
@@ -228,5 +269,10 @@ public class JenkinsConsoleTextLoader {
 
 	private static final Pattern _anchorPattern = Pattern.compile(
 		"\\<a[^>]*\\>(?<text>[^<]*)\\</a\\>");
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		"https?://(?<masterHostname>[^/\\.]+)(.liferay.com)?/job/" +
+			"(?<jobName>[^/]+)/(?<buildNumber>\\d+)/?");
+	private static final Map<String, JenkinsConsoleTextLoader>
+		_jenkinsConsoleTextLoaders = new HashMap<>();
 
 }

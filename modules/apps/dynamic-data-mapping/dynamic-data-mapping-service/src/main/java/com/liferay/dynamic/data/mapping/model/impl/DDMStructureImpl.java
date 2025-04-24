@@ -355,7 +355,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String getUnambiguousName(
-			List<DDMStructure> structures, long groupId, Locale locale)
+			List<DDMStructure> ddmStructures, long groupId, Locale locale)
 		throws PortalException {
 
 		if (getGroupId() == groupId) {
@@ -363,7 +363,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		boolean hasAmbiguousName = ListUtil.exists(
-			structures,
+			ddmStructures,
 			structure -> {
 				if (structure.getStructureId() == getStructureId()) {
 					return false;

@@ -7,11 +7,17 @@ package com.liferay.fragment.internal.change.tracking.spi.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -57,15 +63,64 @@ public class FragmentEntryVersionConstraintResolver
 				constraintResolverContext)
 		throws PortalException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			constraintResolverContext.getTargetCTModel();
+		FragmentEntryVersion sourceFragmentEntryVersion =
+			constraintResolverContext.getSourceCTModel();
 
-		fragmentEntryVersionPersistence.removeByFragmentEntryId_Version(
-			fragmentEntryVersion.getFragmentEntryId(),
-			fragmentEntryVersion.getVersion());
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				sourceFragmentEntryVersion.getFragmentEntryId());
+
+		List<FragmentEntryVersion> fragmentEntryVersions =
+			_fragmentEntryVersionPersistence.findByFragmentEntryId(
+				fragmentEntry.getFragmentEntryId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new OrderByComparator<FragmentEntryVersion>() {
+
+					@Override
+					public int compare(
+						FragmentEntryVersion fragmentEntryVersion1,
+						FragmentEntryVersion fragmentEntryVersion2) {
+
+						int version1 = fragmentEntryVersion1.getVersion();
+						int version2 = fragmentEntryVersion2.getVersion();
+
+						int value = Integer.compare(version1, version2);
+
+						if (isAscending()) {
+							return value;
+						}
+
+						return Math.negateExact(value);
+					}
+
+					@Override
+					public String[] getOrderByFields() {
+						return new String[] {"version"};
+					}
+
+				});
+
+		for (FragmentEntryVersion fragmentEntryVersion :
+				fragmentEntryVersions) {
+
+			if (fragmentEntryVersion.getCtCollectionId() !=
+					CTCollectionThreadLocal.getCTCollectionId()) {
+
+				continue;
+			}
+
+			fragmentEntry.populateVersionModel(fragmentEntryVersion);
+
+			_fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
+
+			_fragmentEntryLocalService.deleteVersion(fragmentEntryVersion);
+		}
 	}
 
 	@Reference
-	protected FragmentEntryVersionPersistence fragmentEntryVersionPersistence;
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentEntryVersionPersistence _fragmentEntryVersionPersistence;
 
 }

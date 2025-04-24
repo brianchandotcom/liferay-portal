@@ -22,7 +22,8 @@ export class RemoteStagingPage {
 		this.page = page;
 		this.pageEditorPage = new PageEditorPage(page);
 		this.publishToRemoteLiveFrame = this.page.frameLocator(
-			'iframe[title="Publish to Remote Live"]');
+			'iframe[title="Publish to Remote Live"]'
+		);
 		this.publishToRemoteLiveButton =
 			this.publishToRemoteLiveFrame.getByRole('button', {
 				name: 'Publish to Remote Live',
@@ -44,7 +45,7 @@ export class RemoteStagingPage {
 	}) {
 		await this.page.goto(`/web${siteFriendlyUrl}${layoutFriendlyURL}`);
 		await this.pageEditorPage.publishToLiveButton.click();
-		await this.page.waitForTimeout(5000)
+		await this.page.waitForTimeout(5000);
 		await this.publishToRemoteLiveButton.click();
 		await expect(this.publishSuccessfulLabel).toBeVisible();
 	}

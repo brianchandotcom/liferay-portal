@@ -20,7 +20,7 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 
-const remotePort = '9080'
+const remotePort = '9080';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

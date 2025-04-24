@@ -21,21 +21,21 @@ function dataRemoteApiHelpersTest(port: string) {
 				remotePage,
 				liferayConfig.environment.baseUrl.replace('8080', port)
 			);
-	
+
 			try {
 				await use(dataApiHelpers);
 			}
 			finally {
-	
+
 				// @ts-ignore
-	
+
 				const adminDataApiHelpers = new DataApiHelpers(
 					remotePage,
 					liferayConfig.environment.baseUrl.replace('8080', port)
 				);
-	
+
 				adminDataApiHelpers.setData(dataApiHelpers.data);
-	
+
 				await adminDataApiHelpers.clearData();
 			}
 		},

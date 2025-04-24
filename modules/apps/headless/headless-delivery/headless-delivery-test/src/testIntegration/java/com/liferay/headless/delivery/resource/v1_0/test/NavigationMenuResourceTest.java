@@ -988,7 +988,7 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				testGroup.getGroupId(), Pagination.of(1, 10));
+				testGroup.getGroupId(), null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 		assertValid(page);

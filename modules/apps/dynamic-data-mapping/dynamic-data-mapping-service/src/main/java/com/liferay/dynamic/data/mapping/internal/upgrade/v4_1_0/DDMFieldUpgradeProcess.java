@@ -230,7 +230,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			long companyId, long contentId,
 			Map<String, DDMFieldInfo> ddmFieldInfoMap,
 			Map<String, DDMFormField> ddmFormFieldsMap,
-			List<DDMFormFieldValue> ddmFormValues,
+			List<DDMFormFieldValue> ddmFormFieldValues,
 			PreparedStatement insertDDMFieldAttributePreparedStatement,
 			PreparedStatement insertDDMFieldPreparedStatement,
 			Map<String, Long> instanceToFieldIdMap, String parentInstanceId,
@@ -238,7 +238,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			long structureVersionId)
 		throws Exception {
 
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormValues) {
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			long fieldId = increment(DDMField.class.getName());
 
 			String instanceId = ddmFormFieldValue.getInstanceId();
@@ -373,11 +373,11 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					valueString);
 
-				Set<String> keySet = jsonObject.keySet();
+				Set<String> keys = jsonObject.keySet();
 
-				if (!keySet.isEmpty()) {
+				if (!keys.isEmpty()) {
 					List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
-						new ArrayList<>(keySet.size());
+						new ArrayList<>(keys.size());
 
 					for (String key : jsonObject.keySet()) {
 						DDMFieldAttributeInfo ddmFieldAttributeInfo =

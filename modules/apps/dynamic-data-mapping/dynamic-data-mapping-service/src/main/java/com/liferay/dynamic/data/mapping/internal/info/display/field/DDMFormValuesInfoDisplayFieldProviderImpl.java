@@ -78,19 +78,19 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 			DDMFormField ddmFormField = ddmFormFields.get(entry.getKey());
 
-			List<DDMFormFieldValue> ddmFormFieldsValues = entry.getValue();
+			List<DDMFormFieldValue> ddmFormFieldValues = entry.getValue();
 
 			if ((Objects.equals(
 					ddmFormField.getType(), DDMFormFieldType.IMAGE) ||
 				 Objects.equals(ddmFormField.getType(), "image")) &&
-				(ddmFormFieldsValues.size() > 1)) {
+				(ddmFormFieldValues.size() > 1)) {
 
-				ddmFormFieldsValues = Collections.singletonList(
-					ddmFormFieldsValues.get(0));
+				ddmFormFieldValues = Collections.singletonList(
+					ddmFormFieldValues.get(0));
 			}
 
 			_addDDMFormFieldValues(
-				t, entry.getKey(), ddmFormFieldsValues, infoDisplayFieldValues,
+				t, entry.getKey(), ddmFormFieldValues, infoDisplayFieldValues,
 				locale);
 		}
 

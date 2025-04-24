@@ -907,7 +907,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	private Date[] _getDateValues(String type, String[] values) {
-		List<Date> dateValues = new ArrayList<>(values.length);
+		List<Date> dates = new ArrayList<>(values.length);
 
 		String pattern = "yyyy-MM-dd";
 
@@ -924,7 +924,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 
 			try {
-				dateValues.add(dateFormat.parse(value));
+				dates.add(dateFormat.parse(value));
 			}
 			catch (ParseException parseException) {
 				if (_log.isWarnEnabled()) {
@@ -933,7 +933,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			}
 		}
 
-		return dateValues.toArray(new Date[0]);
+		return dates.toArray(new Date[0]);
 	}
 
 	private String _getFieldName(String name) {

@@ -47,14 +47,14 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 	private void _collectChildrenStructureIds(
 		List<Long> structureIds, long parentStructureId) {
 
-		List<DDMStructure> structures =
+		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getChildrenStructures(parentStructureId);
 
-		for (DDMStructure structure : structures) {
-			structureIds.add(structure.getStructureId());
+		for (DDMStructure ddmStructure : ddmStructures) {
+			structureIds.add(ddmStructure.getStructureId());
 
 			_collectChildrenStructureIds(
-				structureIds, structure.getStructureId());
+				structureIds, ddmStructure.getStructureId());
 		}
 	}
 

@@ -86,17 +86,17 @@ public class DDMFormInstanceStagedModelRepository
 
 		Set<Long> formInstanceDDMStructureIds = new HashSet<>();
 
-		List<DDMFormInstance> formInstances =
+		List<DDMFormInstance> ddmFormInstances =
 			_ddmFormInstanceLocalService.search(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getScopeGroupId(), null, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
 				DDMFormInstanceNameComparator.getInstance(false));
 
-		for (DDMFormInstance formInstance : formInstances) {
-			formInstanceDDMStructureIds.add(formInstance.getStructureId());
+		for (DDMFormInstance ddmFormInstance : ddmFormInstances) {
+			formInstanceDDMStructureIds.add(ddmFormInstance.getStructureId());
 
-			_ddmFormInstanceLocalService.deleteFormInstance(formInstance);
+			_ddmFormInstanceLocalService.deleteFormInstance(ddmFormInstance);
 		}
 
 		_deleteDDMStructures(formInstanceDDMStructureIds);

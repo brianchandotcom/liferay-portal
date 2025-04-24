@@ -179,14 +179,14 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _collectNewActionIds(
-		Set<String> actionsIdsSet, List<ResourceAction> resourceActionList,
+		Set<String> actionsIds, List<ResourceAction> resourceActions,
 		long oldActionIds) {
 
-		for (ResourceAction resourceAction : resourceActionList) {
+		for (ResourceAction resourceAction : resourceActions) {
 			long bitwiseValue = resourceAction.getBitwiseValue();
 
 			if ((oldActionIds & bitwiseValue) == bitwiseValue) {
-				actionsIdsSet.add(
+				actionsIds.add(
 					MapUtil.getString(
 						_resourceActionIdsMap, resourceAction.getActionId()));
 			}

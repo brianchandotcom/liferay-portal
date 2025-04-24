@@ -43,8 +43,8 @@ public class DDMFormTemplateSynchonizer {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	public void setDDMFormTemplates(List<DDMTemplate> ddmFormTemplates) {
-		_ddmFormTemplates = ddmFormTemplates;
+	public void setDDMTemplates(List<DDMTemplate> ddmTemplates) {
+		_ddmTemplates = ddmTemplates;
 	}
 
 	public void synchronize() throws PortalException {
@@ -118,7 +118,7 @@ public class DDMFormTemplateSynchonizer {
 	}
 
 	protected List<DDMTemplate> getDDMFormTemplates() {
-		return _ddmFormTemplates;
+		return _ddmTemplates;
 	}
 
 	protected String serialize(DDMForm ddmForm) {
@@ -203,8 +203,8 @@ public class DDMFormTemplateSynchonizer {
 
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormSerializer _ddmFormSerializer;
-	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<>();
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
+	private List<DDMTemplate> _ddmTemplates = new ArrayList<>();
 	private final DDMForm _structureDDMForm;
 
 }

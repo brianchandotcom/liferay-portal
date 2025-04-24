@@ -103,6 +103,10 @@ public class ReinvokeRule {
 		return notificationRecipients;
 	}
 
+	public String getReinvokeBuildPriority() {
+		return reinvokeBuildPriority;
+	}
+
 	@Override
 	public int hashCode() {
 		return name.hashCode();
@@ -253,6 +257,7 @@ public class ReinvokeRule {
 	protected Integer maximumInvocationCount;
 	protected String name;
 	protected String notificationRecipients;
+	protected String reinvokeBuildPriority;
 	protected Pattern testSuiteNamePattern;
 	protected Pattern topLevelBuildJobNamePattern;
 
@@ -280,6 +285,12 @@ public class ReinvokeRule {
 
 			if (name.equals("notificationRecipients")) {
 				notificationRecipients = value;
+
+				continue;
+			}
+
+			if (name.equals("reinvokeBuildPriority")) {
+				reinvokeBuildPriority = value;
 
 				continue;
 			}

@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {dataRemoteApiHelpersTest} from '../../fixtures/dataRemoteApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -14,7 +13,6 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {remoteApiHelpersTest} from '../../fixtures/remoteApiHelpersTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
@@ -25,9 +23,7 @@ import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 const remotePort = '9080'
 
 export const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
-	remoteApiHelpersTest(remotePort),
 	dataRemoteApiHelpersTest(remotePort),
 	loginTest(),
 	featureFlagsTest({

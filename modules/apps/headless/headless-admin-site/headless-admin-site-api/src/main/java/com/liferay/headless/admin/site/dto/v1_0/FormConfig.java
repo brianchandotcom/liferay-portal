@@ -99,56 +99,6 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _formReferenceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The definition for the success message of the form."
-	)
-	@Valid
-	public Object getFormSuccessSubmissionResult() {
-		if (_formSuccessSubmissionResultSupplier != null) {
-			formSuccessSubmissionResult =
-				_formSuccessSubmissionResultSupplier.get();
-
-			_formSuccessSubmissionResultSupplier = null;
-		}
-
-		return formSuccessSubmissionResult;
-	}
-
-	public void setFormSuccessSubmissionResult(
-		Object formSuccessSubmissionResult) {
-
-		this.formSuccessSubmissionResult = formSuccessSubmissionResult;
-
-		_formSuccessSubmissionResultSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFormSuccessSubmissionResult(
-		UnsafeSupplier<Object, Exception>
-			formSuccessSubmissionResultUnsafeSupplier) {
-
-		_formSuccessSubmissionResultSupplier = () -> {
-			try {
-				return formSuccessSubmissionResultUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The definition for the success message of the form."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object formSuccessSubmissionResult;
-
-	@JsonIgnore
-	private Supplier<Object> _formSuccessSubmissionResultSupplier;
-
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("formType")
 	@Valid
@@ -246,6 +196,56 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfStepsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The definition of the result when a form submission is successful."
+	)
+	@Valid
+	public Object getSuccessFormSubmissionResult() {
+		if (_successFormSubmissionResultSupplier != null) {
+			successFormSubmissionResult =
+				_successFormSubmissionResultSupplier.get();
+
+			_successFormSubmissionResultSupplier = null;
+		}
+
+		return successFormSubmissionResult;
+	}
+
+	public void setSuccessFormSubmissionResult(
+		Object successFormSubmissionResult) {
+
+		this.successFormSubmissionResult = successFormSubmissionResult;
+
+		_successFormSubmissionResultSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSuccessFormSubmissionResult(
+		UnsafeSupplier<Object, Exception>
+			successFormSubmissionResultUnsafeSupplier) {
+
+		_successFormSubmissionResultSupplier = () -> {
+			try {
+				return successFormSubmissionResultUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The definition of the result when a form submission is successful."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object successFormSubmissionResult;
+
+	@JsonIgnore
+	private Supplier<Object> _successFormSubmissionResultSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -296,30 +296,6 @@ public class FormConfig implements Serializable {
 			}
 		}
 
-		Object formSuccessSubmissionResult = getFormSuccessSubmissionResult();
-
-		if (formSuccessSubmissionResult != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formSuccessSubmissionResult instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)formSuccessSubmissionResult));
-			}
-			else if (formSuccessSubmissionResult instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)formSuccessSubmissionResult));
-				sb.append("\"");
-			}
-			else {
-				sb.append(formSuccessSubmissionResult);
-			}
-		}
-
 		FormType formType = getFormType();
 
 		if (formType != null) {
@@ -346,6 +322,30 @@ public class FormConfig implements Serializable {
 			sb.append("\"numberOfSteps\": ");
 
 			sb.append(numberOfSteps);
+		}
+
+		Object successFormSubmissionResult = getSuccessFormSubmissionResult();
+
+		if (successFormSubmissionResult != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"successFormSubmissionResult\": ");
+
+			if (successFormSubmissionResult instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject(
+						(Map<?, ?>)successFormSubmissionResult));
+			}
+			else if (successFormSubmissionResult instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)successFormSubmissionResult));
+				sb.append("\"");
+			}
+			else {
+				sb.append(successFormSubmissionResult);
+			}
 		}
 
 		sb.append("}");

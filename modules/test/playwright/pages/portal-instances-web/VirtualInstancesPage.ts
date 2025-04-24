@@ -119,7 +119,7 @@ export class VirtualInstancesPage {
 		}
 	}
 
-	async addNewVirtualInstanceSettingAdminUser(
+	async addNewVirtualInstanceAndSetupAdminUser(
 		name: string,
 		screenName: string,
 		emailAddress: string,

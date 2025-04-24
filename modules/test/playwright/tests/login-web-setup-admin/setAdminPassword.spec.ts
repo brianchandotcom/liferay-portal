@@ -49,7 +49,7 @@ test('LPD-52714 Checking what is the first page loaded if default.admin.password
 
 	const nameInstance = getRandomString();
 
-	await virtualInstancesPage.addNewVirtualInstanceSettingAdminUser(
+	await virtualInstancesPage.addNewVirtualInstanceAndSetupAdminUser(
 		nameInstance,
 		name,
 		name + '@liferay.com',

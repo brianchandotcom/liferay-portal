@@ -73,7 +73,7 @@ export class FieldSelectModalPage {
 		await this.addFieldsDialog.saveButton.click();
 	}
 
-	async searchAndSelectField(path: string, expected?: boolean) {
+	async searchAndSelectField(path: string) {
 		const fieldSearch = this.page
 			.getByRole('dialog', {name: 'Select Field'})
 			.getByPlaceholder('Search');

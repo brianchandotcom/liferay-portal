@@ -8,15 +8,17 @@ import {test} from '@playwright/test';
 import {ApiHelpers} from '../helpers/ApiHelpers';
 import {liferayConfig} from '../liferay.config';
 
-const remoteApiHelpersTest = test.extend<{remoteApiHelpers: ApiHelpers}>({
-	remoteApiHelpers: async ({page}, use) => {
-		const apiHelpers = new ApiHelpers(
-			page,
-			liferayConfig.environment.baseUrl.replace('8080', '9080')
-		);
-
-		await use(apiHelpers);
-	},
-});
+function remoteApiHelpersTest(port: string) {
+	return test.extend<{remoteApiHelpers: ApiHelpers}>({
+		remoteApiHelpers: async ({page}, use) => {
+			const apiHelpers = new ApiHelpers(
+				page,
+				liferayConfig.environment.baseUrl.replace('8080', port)
+			);
+	
+			await use(apiHelpers);
+		}
+	});
+}
 
 export {remoteApiHelpersTest};

@@ -175,13 +175,13 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP)) {
 
-			FormStepPageElementDefinition pageFormStepDefinition =
+			FormStepPageElementDefinition formStepPageElementDefinition =
 				new FormStepPageElementDefinition();
 
-			pageFormStepDefinition.setType(
+			formStepPageElementDefinition.setType(
 				PageElementDefinition.Type.FORM_STEP);
 
-			return pageFormStepDefinition;
+			return formStepPageElementDefinition;
 		}
 
 		if (Objects.equals(

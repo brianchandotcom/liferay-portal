@@ -167,7 +167,7 @@ export async function loadData({
 				additionalAPIURLParametersNestedFieldsValueArray.forEach(
 					(additionalAPIURLParametersNestedFieldsItem) => {
 						if (
-							!existingNestedFieldsArray.includes(
+							!newNestedFields.includes(
 								additionalAPIURLParametersNestedFieldsItem
 							)
 						) {
@@ -178,10 +178,7 @@ export async function loadData({
 					}
 				);
 
-				url.searchParams.set(
-					'nestedFields',
-					existingNestedFieldsArray.concat(newNestedFields).join(',')
-				);
+				url.searchParams.set('nestedFields', newNestedFields.join(','));
 			}
 			else {
 				url.searchParams.append(key, value);

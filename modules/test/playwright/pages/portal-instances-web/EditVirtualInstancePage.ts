@@ -11,32 +11,32 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 export class EditVirtualInstancePage {
 	readonly activeToggle: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly emailAddressField: Locator;
 	readonly idField: Locator;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
 	readonly page: Page;
+	readonly passwordField: Locator;
 	readonly saveButton: Locator;
+	readonly screenNameField: Locator;
 	readonly successMessage: Locator;
 	readonly virtualHostField: Locator;
-	readonly screenNameField: Locator;
-	readonly emailAddressField: Locator;
-	readonly passwordField: Locator;
 
 	constructor(page: Page) {
 		this.activeToggle = page.getByText('Active');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.emailAddressField = page.getByLabel('Email Address');
 		this.idField = page.getByLabel('ID', {exact: true});
 		this.mailDomainField = page.getByLabel('Mail Domain');
 		this.maxUsersField = page.getByLabel('Max Users');
 		this.page = page;
+		this.passwordField = page.getByLabel('Password');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.screenNameField = page.getByLabel('Screen Name');
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
 		this.virtualHostField = this.page.getByLabel('Virtual Host');
-		this.screenNameField = page.getByLabel('Screen Name');
-		this.emailAddressField = page.getByLabel('Email Address');
-		this.passwordField = page.getByLabel('Password');
 	}
 
 	async editVirtualInstance(

@@ -1,26 +1,27 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
-
 import {DataApiHelpers} from '../helpers/ApiHelpers';
 import {liferayConfig} from '../liferay.config';
-import {RemotePage, remotePageTest} from './remotePageTest';
 
-const test = mergeTests(remotePageTest);
+import type {Page, TestType} from '@playwright/test';
 
-function dataRemoteApiHelpersTest(port: string) {
+function dataRemoteApiHelpersTest(
+	test: TestType<{remotePage: Page}, any>,
+	port: string
+) {
 	return test.extend<{
 		remoteApiHelpers: DataApiHelpers;
-		remotePage: RemotePage;
 	}>({
 		remoteApiHelpers: async ({remotePage}, use) => {
-			const dataApiHelpers = new DataApiHelpers(
-				remotePage,
-				liferayConfig.environment.baseUrl.replace('8080', port)
+			const remoteUrl = liferayConfig.environment.baseUrl.replace(
+				'8080',
+				port
 			);
+
+			const dataApiHelpers = new DataApiHelpers(remotePage, remoteUrl);
 
 			try {
 				await use(dataApiHelpers);
@@ -31,11 +32,9 @@ function dataRemoteApiHelpersTest(port: string) {
 
 				const adminDataApiHelpers = new DataApiHelpers(
 					remotePage,
-					liferayConfig.environment.baseUrl.replace('8080', port)
+					remoteUrl
 				);
-
 				adminDataApiHelpers.setData(dataApiHelpers.data);
-
 				await adminDataApiHelpers.clearData();
 			}
 		},

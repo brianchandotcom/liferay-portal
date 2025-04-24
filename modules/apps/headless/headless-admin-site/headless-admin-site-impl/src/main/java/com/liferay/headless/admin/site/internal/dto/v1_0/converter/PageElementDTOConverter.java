@@ -116,7 +116,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
-			return _pageCollectionDefinitionDTOConverter.toDTO(
+			return _collectionPageElementDefinitionDTOConverter.toDTO(
 				(CollectionStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -138,7 +138,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLUMN)) {
 
-			return _pageColumnDefinitionDTOConverter.toDTO(
+			return _columnPageElementDefinitionDTOConverter.toDTO(
 				(ColumnLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -146,7 +146,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_CONTAINER)) {
 
-			return _pageContainerDefinitionDTOConverter.toDTO(
+			return _containerPageElementDefinitionDTOConverter.toDTO(
 				(ContainerStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -167,7 +167,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM)) {
 
-			return _pageFormDefinitionDTOConverter.toDTO(
+			return _formPageElementDefinitionDTOConverter.toDTO(
 				(FormStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -188,7 +188,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER)) {
 
-			return _pageFormStepContainerDefinitionDTOConverter.toDTO(
+			return _formStepContainerPageElementDefinitionDTOConverter.toDTO(
 				(FormStepContainerStyledLayoutStructureItem)
 					layoutStructureItem);
 		}
@@ -197,7 +197,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FRAGMENT)) {
 
-			return _pageFragmentInstanceDefinitionDTOConverter.toDTO(
+			return _fragmentInstancePageElementDefinitionDTOConverter.toDTO(
 				(FragmentStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -205,7 +205,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE)) {
 
-			return _pageFragmentDropZoneDefinitionDTOConverter.toDTO(
+			return _fragmentDropZonePageElementDefinitionDTOConverter.toDTO(
 				(FragmentDropZoneLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -220,7 +220,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_ROW)) {
 
-			return _pageRowDefinitionDTOConverter.toDTO(
+			return _rowPageElementDefinitionDTOConverter.toDTO(
 				(RowStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -245,27 +245,27 @@ public class PageElementDTOConverter
 	)
 	private DTOConverter
 		<CollectionStyledLayoutStructureItem, CollectionPageElementDefinition>
-			_pageCollectionDefinitionDTOConverter;
+			_collectionPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.ColumnPageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter<ColumnLayoutStructureItem, ColumnPageElementDefinition>
-		_pageColumnDefinitionDTOConverter;
+		_columnPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.ContainerPageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter
 		<ContainerStyledLayoutStructureItem, ContainerPageElementDefinition>
-			_pageContainerDefinitionDTOConverter;
+			_containerPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FormPageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter
 		<FormStyledLayoutStructureItem, FormPageElementDefinition>
-			_pageFormDefinitionDTOConverter;
+			_formPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FormStepContainerPageElementDefinitionDTOConverter)"
@@ -273,7 +273,7 @@ public class PageElementDTOConverter
 	private DTOConverter
 		<FormStepContainerStyledLayoutStructureItem,
 		 FormStepContainerPageElementDefinition>
-			_pageFormStepContainerDefinitionDTOConverter;
+			_formStepContainerPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FragmentDropZonePageElementDefinitionDTOConverter)"
@@ -281,7 +281,7 @@ public class PageElementDTOConverter
 	private DTOConverter
 		<FragmentDropZoneLayoutStructureItem,
 		 FragmentDropZonePageElementDefinition>
-			_pageFragmentDropZoneDefinitionDTOConverter;
+			_fragmentDropZonePageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FragmentInstancePageElementDefinitionDTOConverter)"
@@ -289,12 +289,12 @@ public class PageElementDTOConverter
 	private DTOConverter
 		<FragmentStyledLayoutStructureItem,
 		 FragmentInstancePageElementDefinition>
-			_pageFragmentInstanceDefinitionDTOConverter;
+			_fragmentInstancePageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.RowPageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter<RowStyledLayoutStructureItem, RowPageElementDefinition>
-		_pageRowDefinitionDTOConverter;
+		_rowPageElementDefinitionDTOConverter;
 
 }

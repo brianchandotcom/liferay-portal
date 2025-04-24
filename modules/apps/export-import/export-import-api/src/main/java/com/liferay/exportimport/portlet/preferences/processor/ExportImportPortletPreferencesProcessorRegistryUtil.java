@@ -60,10 +60,12 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	private List<ExportImportPortletPreferencesProcessor>
 		_getExportImportPortletPreferencesProcessors() {
 
-		Collection<ExportImportPortletPreferencesProcessor> values =
-			_exportImportPortletPreferencesProcessors.values();
+		Collection<ExportImportPortletPreferencesProcessor>
+			exportImportPortletPreferencesProcessors =
+				_exportImportPortletPreferencesProcessors.values();
 
-		return ListUtil.fromCollection(values);
+		return ListUtil.fromCollection(
+			exportImportPortletPreferencesProcessors);
 	}
 
 	private static final ExportImportPortletPreferencesProcessorRegistryUtil

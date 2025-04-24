@@ -63,10 +63,11 @@ public class ExportImportContentProcessorRegistryUtil {
 	private List<ExportImportContentProcessor<String>>
 		_getExportImportContentProcessors() {
 
-		Collection<ExportImportContentProcessor<String>> values =
-			_exportImportContentProcessors.values();
+		Collection<ExportImportContentProcessor<String>>
+			exportImportContentProcessors =
+				_exportImportContentProcessors.values();
 
-		return ListUtil.fromCollection(values);
+		return ListUtil.fromCollection(exportImportContentProcessors);
 	}
 
 	private static final ExportImportContentProcessorRegistryUtil

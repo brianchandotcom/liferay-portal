@@ -61,7 +61,7 @@ export class EmailNotificationTemplatePage {
 			.getByText('Regular Roles')
 			.locator('visible=true');
 		this.richTextField = page
-			.getByRole('application', {name: 'Rich Text Editor,'})
+			.getByRole('application', {name: 'Rich Text Editor'})
 			.frameLocator('iframe')
 			.getByRole('textbox');
 		this.richTextSourceButton = page.getByTitle('Source');

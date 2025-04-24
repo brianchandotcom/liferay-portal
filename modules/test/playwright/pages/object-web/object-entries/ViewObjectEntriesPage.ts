@@ -59,7 +59,7 @@ export class ViewObjectEntriesPage {
 		this.page = page;
 		this.richTextIFrame = page
 			.getByRole('application', {
-				name: /Rich Text Editor, _com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_.*_ddm\$\$.*\$.*\$en_US/,
+				name: 'Rich Text Editor',
 			})
 			.frameLocator('iframe');
 		this.richTextInput = this.richTextIFrame.getByRole('textbox');

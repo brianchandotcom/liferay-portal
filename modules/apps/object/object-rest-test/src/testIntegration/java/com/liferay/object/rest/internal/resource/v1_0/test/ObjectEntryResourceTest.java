@@ -319,7 +319,7 @@ public class ObjectEntryResourceTest {
 							ObjectFieldSettingConstants.
 								NAME_ACCEPTED_FILE_EXTENSIONS
 						).value(
-							"txt"
+							"jpg, txt"
 						).build(),
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -772,7 +772,7 @@ public class ObjectEntryResourceTest {
 								ObjectFieldSettingConstants.
 									NAME_ACCEPTED_FILE_EXTENSIONS
 							).value(
-								"txt"
+								"jpg, txt"
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
@@ -13948,6 +13948,18 @@ public class ObjectEntryResourceTest {
 		);
 	}
 
+	private JSONObject _getFileEntryJSONObject(
+			DLFolder dlFolder,
+			com.liferay.object.rest.dto.v1_0.FileEntry fileEntry,
+			ObjectDefinition objectDefinition, String thumbnailSrc)
+		throws Exception {
+
+		JSONObject jsonObject = _getFileEntryJSONObject(
+			dlFolder, fileEntry, objectDefinition);
+
+		return jsonObject.put("thumbnailURL", thumbnailSrc);
+	}
+
 	private NestedFieldsContext _getNestedFieldsContext(String nestedFields) {
 		return new NestedFieldsContext(
 			1, null, ListUtil.fromString(nestedFields, StringPool.COMMA), null,
@@ -14492,7 +14504,7 @@ public class ObjectEntryResourceTest {
 
 		// File from URL
 
-		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
+		FileEntry customFileEntry1 = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
@@ -14512,8 +14524,8 @@ public class ObjectEntryResourceTest {
 				StringBundler.concat(
 					"http://", company.getVirtualHostname(), ":8080",
 					_dlURLHelper.getPreviewURL(
-						customFileEntry, customFileEntry.getFileVersion(), null,
-						"", false, true)),
+						customFileEntry1, customFileEntry1.getFileVersion(),
+						null, "", false, true)),
 				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -15177,7 +15189,7 @@ public class ObjectEntryResourceTest {
 
 		// File from URL
 
-		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
+		FileEntry customFileEntry1 = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
@@ -15193,12 +15205,12 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				_getFileEntryJSONObject(null, fileEntry, objectDefinition)),
 			_toFileEntry(
-				customFileEntry.getTitle(),
+				customFileEntry1.getTitle(),
 				StringBundler.concat(
 					"http://", company.getVirtualHostname(), ":8080",
 					_dlURLHelper.getPreviewURL(
-						customFileEntry, customFileEntry.getFileVersion(), null,
-						"", false, true)),
+						customFileEntry1, customFileEntry1.getFileVersion(),
+						null, "", false, true)),
 				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
@@ -15347,6 +15359,34 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null, null),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		// File from documents and media with generated thumbnail
+
+		DLFolder dlFolder3 = DLTestUtil.addDLFolder(
+			TestPropsValues.getGroupId());
+
+		FileEntry customFileEntry2 = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			dlFolder3.getFolderId(), StringUtil.randomString() + ".jpg",
+			ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null, ServiceContextTestUtil.getServiceContext());
+
+		String thumbnailSrc = _dlURLHelper.getThumbnailSrc(
+			customFileEntry2, null);
+
+		Assert.assertNotNull(thumbnailSrc);
+
+		_testPostCustomObjectEntryWithAttachmentObjectField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				_getFileEntryJSONObject(
+					dlFolder3, fileEntry, objectDefinition, thumbnailSrc)),
+			_toFileEntry(
+				customFileEntry2.getFileName(),
+				customFileEntry2.getFileEntryId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -17008,6 +17048,18 @@ public class ObjectEntryResourceTest {
 
 			fileEntry.setFolder(folder);
 		}
+
+		return fileEntry;
+	}
+
+	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
+		String fileName, Long id) {
+
+		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
+			new com.liferay.object.rest.dto.v1_0.FileEntry();
+
+		fileEntry.setName(fileName);
+		fileEntry.setId(id);
 
 		return fileEntry;
 	}

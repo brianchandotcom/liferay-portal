@@ -67,7 +67,7 @@ public interface DDL {
 	 * records is requested, the records are transformed regardless of workflow
 	 * status.
 	 *
-	 * @param  records the records to transform
+	 * @param  ddlRecords the ddlRecords to transform
 	 * @param  latestRecordVersion whether the latest version of each record is
 	 *         to be transformed regardless of its workflow status, even if the
 	 *         record is in a pending or draft state.
@@ -78,7 +78,8 @@ public interface DDL {
 	 * @see    #getRecordJSONObject(DDLRecord, boolean, Locale)
 	 */
 	public JSONArray getRecordsJSONArray(
-			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
+			List<DDLRecord> ddlRecords, boolean latestRecordVersion,
+			Locale locale)
 		throws Exception;
 
 	/**

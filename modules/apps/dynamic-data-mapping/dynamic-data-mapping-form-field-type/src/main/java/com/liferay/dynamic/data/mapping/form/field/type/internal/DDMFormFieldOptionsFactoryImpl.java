@@ -155,15 +155,15 @@ public class DDMFormFieldOptionsFactoryImpl
 					ddmFormField.getProperty("ddmDataProviderInstanceOutput"),
 					"Default-Output"));
 
-			List<KeyValuePair> keyValuesPairs =
+			List<KeyValuePair> keyValuePairs =
 				ddmDataProviderResponse.getOutput(
 					ddmDataProviderInstanceOutput, List.class);
 
-			if (keyValuesPairs == null) {
+			if (keyValuePairs == null) {
 				return ddmFormFieldOptions;
 			}
 
-			for (KeyValuePair keyValuePair : keyValuesPairs) {
+			for (KeyValuePair keyValuePair : keyValuePairs) {
 				ddmFormFieldOptions.addOptionLabel(
 					keyValuePair.getKey(),
 					ddmFormFieldRenderingContext.getLocale(),

@@ -1,0 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.trash.TrashHelper;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Micaelle Silva
+ */
+public class LPD_27178 {
+
+	public void method(Folder folder, JournalArticle journalArticle) {
+		_trashHelper.isInTrashExplicitly(folder);
+		_trashHelper.isInTrashImplicitly(folder);
+		_trashHelper.isInTrashExplicitly(journalArticle);
+		_trashHelper.isInTrashImplicitly(journalArticle);
+	}
+
+	@Reference
+	private TrashHelper _trashHelper;
+
+}

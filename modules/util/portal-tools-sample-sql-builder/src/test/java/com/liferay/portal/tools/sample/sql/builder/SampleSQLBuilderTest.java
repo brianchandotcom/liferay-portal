@@ -188,6 +188,7 @@ public class SampleSQLBuilderTest {
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
 		properties.put(BenchmarksPropsKeys.SEARCH_BAR_ENABLED, "true");
+		properties.put(BenchmarksPropsKeys.VIRTUAL_HOST_NAME_PREFIX, "liferay");
 	}
 
 	private void _loadHypersonic(Connection connection, String fileName)

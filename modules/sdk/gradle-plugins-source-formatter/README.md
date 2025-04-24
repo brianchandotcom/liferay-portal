@@ -137,7 +137,7 @@ It is possible to set the default values of the `fileExtensions`, `fileNames`,
 properties for a `FormatSourceTask` task via system properties:
 
 - `-D${task.name}.file.extensions=java,xml`
-- `-D${task.name}.file.names=README.markdown,src/main/resources/hello.txt`
+- `-D${task.name}.file.names=README.md,src/main/resources/hello.txt`
 - `-D${task.name}.format.current.branch=true`
 - `-D${task.name}.format.latest.author=true`
 - `-D${task.name}.format.local.changes=true`

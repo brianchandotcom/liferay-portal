@@ -16,7 +16,7 @@ methods. Subsequent sections guide you in describing the
 [submitting your contributions](#submitting-javadoc). This article covers the
 main points and most important rules to follow. If you're interested in an
 extensive amount of examples and more advanced information, visit the
-[Advanced Javadoc Guidelines](ADVANCED_JAVADOC_GUIDELINES.markdown).
+[Advanced Javadoc Guidelines](ADVANCED_JAVADOC_GUIDELINES.md).
 
 ## Module Comments
 
@@ -52,19 +52,19 @@ comment:
 		 additional information is not necessary if the initial paragraph provides
 		 an adequate description.
     - Usage examples or `@link` tags to where the class can be seen in use.
-- [@author tags](ADVANCED_JAVADOC_GUIDELINES.markdown#author-tags) for each
+- [@author tags](ADVANCED_JAVADOC_GUIDELINES.md#author-tags) for each
   author of the class, from first to most recent. (**required**)
-- [@see tags](ADVANCED_JAVADOC_GUIDELINES.markdown#see-tags) to other closely
+- [@see tags](ADVANCED_JAVADOC_GUIDELINES.md#see-tags) to other closely
   related classes whose Javadocs gives the reader a clearer picture of the
   purpose of this class.
-- [@since tags](ADVANCED_JAVADOC_GUIDELINES.markdown#since-tags). (as
+- [@since tags](ADVANCED_JAVADOC_GUIDELINES.md#since-tags). (as
   applicable)
-- [@deprecated tags](ADVANCED_JAVADOC_GUIDELINES.markdown#deprecated-tags).
+- [@deprecated tags](ADVANCED_JAVADOC_GUIDELINES.md#deprecated-tags).
   (as applicable)
 
 For more detailed information and examples for writing class descriptions, see
 the
-[Class Descriptions](ADVANCED_JAVADOC_GUIDELINES.markdown#class-descriptions)
+[Class Descriptions](ADVANCED_JAVADOC_GUIDELINES.md#class-descriptions)
 section. A simple example class comment is provided below:
 
 Example (class comment):
@@ -108,23 +108,23 @@ method:
 
 The following information should always be present in the following order in the Javadoc tags for the method:
 
-- [@param](ADVANCED_JAVADOC_GUIDELINES.markdown#param-tags) - The method
+- [@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags) - The method
   parameters, in order, with descriptions.
-- [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags) - All possible
+- [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags) - All possible
   return values, including `null`. If the method is void, do not include this.
-- [@throws](ADVANCED_JAVADOC_GUIDELINES.markdown#throws-tags) - The
+- [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) - The
   exceptions the method can throw, in order, with explanations of what would
   trigger them.
-- [@see](ADVANCED_JAVADOC_GUIDELINES.markdown#see-tags-for-methods) - (as
+- [@see](ADVANCED_JAVADOC_GUIDELINES.md#see-tags-for-methods) - (as
   applicable)
-- [@since](ADVANCED_JAVADOC_GUIDELINES.markdown#since-tags-for-methods) - (as
+- [@since](ADVANCED_JAVADOC_GUIDELINES.md#since-tags-for-methods) - (as
 	applicable)
-- [@deprecated](ADVANCED_JAVADOC_GUIDELINES.markdown#deprecated-tags-for-methods) -
+- [@deprecated](ADVANCED_JAVADOC_GUIDELINES.md#deprecated-tags-for-methods) -
   (as applicable)
 
 For more detailed information and examples for writing method descriptions, see
 the
-[Method Descriptions](ADVANCED_JAVADOC_GUIDELINES.markdown#method-descriptions)
+[Method Descriptions](ADVANCED_JAVADOC_GUIDELINES.md#method-descriptions)
 section. A simple class description is provided below:
 
 Example (method comments):
@@ -179,8 +179,8 @@ public String[] getPreferencesValues(
     only one shown in the class/method summary.
 
 1.  Include all relevant tags
-    ([@param](ADVANCED_JAVADOC_GUIDELINES.markdown#param-tags),
-    [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags), etc.) for
+    ([@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags),
+    [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags), etc.) for
     each method; without them, the method Javadoc is incomplete.
 
 1.  Start a method description with *Returns*, if the method returns a value.
@@ -203,25 +203,25 @@ public String[] getPreferencesValues(
     something*.
 
 1. Begin
-    [boolean parameter](ADVANCED_JAVADOC_GUIDELINES.markdown#parameter-boolean)
+    [boolean parameter](ADVANCED_JAVADOC_GUIDELINES.md#parameter-boolean)
     descriptions with *whether*.
 
 1. Punctuate every class and method description (sentence or phrase) with a
     period.
 
 1. Only punctuate an initial description (sentence or phrase) for a method tag
-    [@param](ADVANCED_JAVADOC_GUIDELINES.markdown#param-tags),
-    [@return](ADVANCED_JAVADOC_GUIDELINES.markdown#return-tags), or
-    [@throws](ADVANCED_JAVADOC_GUIDELINES.markdown#throws-tags) if it's
+    [@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags),
+    [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags), or
+    [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) if it's
     followed by a sentence(s). Write followup text in complete sentences.
 
 1. Describe exceptions (e.g.,
-	  [@throws](ADVANCED_JAVADOC_GUIDELINES.markdown#throws-tags)) in past
+	  [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags)) in past
     tense.
 
 1. Only include a class's package in an *@see* and *@link* tag if the class is
     in another package. Refer to the
-    [Javadoc Linking](ADVANCED_JAVADOC_GUIDELINES.markdown#javadoc-linking)
+    [Javadoc Linking](ADVANCED_JAVADOC_GUIDELINES.md#javadoc-linking)
     subsection for comprehensive rules and examples on linking to other
     methods/classes.
 
@@ -314,7 +314,7 @@ your Javadoc changes to the JSON interface for the class.
 ## Submitting Javadoc
 
 For more information on submitting Javadoc, see the
-[Javadoc Submission Process](JAVADOC_SUBMISSION_PROCESS.markdown) article.
+[Javadoc Submission Process](JAVADOC_SUBMISSION_PROCESS.md) article.
 
 To request **re-adding** Javadoc or comments that have been removed from a file,
 please open an [LRDOCS](https://issues.liferay.com/browse/LRDOCS) JIRA ticket:
@@ -328,4 +328,4 @@ please open an [LRDOCS](https://issues.liferay.com/browse/LRDOCS) JIRA ticket:
   and/or the Javadoc removal commit
 
 For more extensive examples and comprehensive guidelines, visit the
-[Advanced Javadoc Guidelines](ADVANCED_JAVADOC_GUIDELINES.markdown) article.
+[Advanced Javadoc Guidelines](ADVANCED_JAVADOC_GUIDELINES.md) article.

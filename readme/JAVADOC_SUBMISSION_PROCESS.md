@@ -21,7 +21,7 @@ Developers can submit Javadoc **with** code if certain precautions are followed
 (outlined below). Follow the below process for submitting Javadoc this way:
 
 1.  Write Javadoc for code areas that you have deep knowledge for. Be sure to
-    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.markdown) when
+    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.md) when
     writing Javadoc to ensure comprehensive descriptions and consistent style.
 
 2.  Insert an `@review` tag below each new Javadoc entry. This will be searched
@@ -52,7 +52,7 @@ Follow the process outlined below to provide Javadoc for code that is already
 published:
 
 1.  Write Javadoc for code areas that you have deep knowledge on. Be sure to
-    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.markdown) when
+    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.md) when
     writing Javadoc to ensure comprehensive descriptions and consistent style.
 
 2.  Send a pull request containing the new Javadoc to your team's tech writer 
@@ -70,7 +70,7 @@ and is knowledgeable enough in this area to submit Javadoc, follow the steps
 below to contribute:
 
 1.  Write Javadoc for code areas that you have deep knowledge on. Be sure to
-    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.markdown) when
+    follow the [Javadoc Guidelines](JAVADOC_GUIDELINES.md) when
     writing Javadoc to ensure comprehensive descriptions and consistent style.
 
 2.  Send a pull request containing the new Javadoc to
@@ -86,9 +86,9 @@ for providing drafted Javadoc for their areas of expertise. Below is a checklist
 to complete to ensure Javadoc is properly formatted and ready for submission:
 
 - All Javadoc should follow the
-  [Javadoc Guidelines](JAVADOC_GUIDELINES.markdown).
+  [Javadoc Guidelines](JAVADOC_GUIDELINES.md).
 - Format Javadoc using the Javadoc Formatter. See
-  [here](JAVADOC_GUIDELINES.markdown#formatting-and-building-javadoc)
+  [here](JAVADOC_GUIDELINES.md#formatting-and-building-javadoc)
   for more information.
 - Ensure no source formatting violations were introduced while editing. To check
   this, run Source Formatter on your local changes. The steps below

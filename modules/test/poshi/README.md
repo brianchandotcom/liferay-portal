@@ -1,5 +1,5 @@
 # com-liferay-poshi-runner
 
-## [Poshi Properties documentation](poshi-properties.markdown)
+## [Poshi Properties documentation](poshi-properties.md)
 
-## [Poshi Script documentation](poshi-script.markdown)
+## [Poshi Script documentation](poshi-script.md)

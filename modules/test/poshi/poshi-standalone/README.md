@@ -43,7 +43,7 @@ The `*.properties` files are explained further in the next section.
 
 ### Poshi Properties
 
-Poshi properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown). Default properties can be set in [poshi.properties](poshi.properties) and custom user properties can be set in a `poshi-ext.properties` file.
+Poshi properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.md). Default properties can be set in [poshi.properties](poshi.properties) and custom user properties can be set in a `poshi-ext.properties` file.
 
 Additionally, properties can also be set as a [Gradle JVM System Property](https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_system_properties). For example:
 
@@ -57,9 +57,9 @@ The property load order is `poshi.properties`, then `poshi-ext.properties`, foll
 
 Property Name | Default Value | Description
 ------------- | ------------- | -----------
-[`portal.url`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#portalurl) | `http://liferay.com` (from [poshi.properties](poshi.properties)) | Sets the default URL to which WebDriver opens.
-[`test.base.dir.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testbasedirname) | `src/test` (from Poshi source) | Sets the path of the main directory containing Poshi files used for the test project.
-[`test.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testname) | `PortalSmoke#Smoke` (from Poshi source) | Sets the test case(s) to run. The tests can be specified by the test case command name, the test case file's name, or a comma-delimited list of both that runs sequentially. To run sequentially, the tests must be configured with proper teardowns.
+[`portal.url`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.md#portalurl) | `http://liferay.com` (from [poshi.properties](poshi.properties)) | Sets the default URL to which WebDriver opens.
+[`test.base.dir.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.md#testbasedirname) | `src/test` (from Poshi source) | Sets the path of the main directory containing Poshi files used for the test project.
+[`test.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.md#testname) | `PortalSmoke#Smoke` (from Poshi source) | Sets the test case(s) to run. The tests can be specified by the test case command name, the test case file's name, or a comma-delimited list of both that runs sequentially. To run sequentially, the tests must be configured with proper teardowns.
 
 #### Browsers
 
@@ -120,7 +120,7 @@ poshiRunner {
 }
 ```
 
-For updated and tested versions, please see the [Poshi Runner Change Log](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/CHANGELOG.markdown)
+For updated and tested versions, please see the [Poshi Runner Change Log](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/CHANGELOG.md)
 
 ## Using Poshi
 
@@ -138,13 +138,13 @@ To run Poshi validation:
 gradlew validatePoshi
 ```
 
-To run source formatting through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.markdown):
+To run source formatting through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.md):
 
 ```
 gradlew formatSource
 ```
 
-To run source formatting only on Poshi files through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.markdown):
+To run source formatting only on Poshi files through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.md):
 
 ```
 gradlew formatPoshi

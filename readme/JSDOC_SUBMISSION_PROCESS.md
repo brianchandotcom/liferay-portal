@@ -21,7 +21,7 @@ Developers can submit JSDoc **with** code if certain precautions are followed
 (outlined below). Follow the below process for submitting JSDoc this way:
 
 1.  Write JSDoc for code areas that you have deep knowledge for. Be sure to
-    follow the [JSDoc Guidelines](JSDOC_GUIDELINES.markdown) when writing JSDoc
+    follow the [JSDoc Guidelines](JSDOC_GUIDELINES.md) when writing JSDoc
     to ensure comprehensive descriptions and consistent style.
 
 1.  Insert an `@review` tag below each new JSDoc entry. This will be searched
@@ -54,7 +54,7 @@ Follow the process outlined below to provide JSDoc for code that is already
 published:
 
 1.  Write JSDoc for code areas that you have deep knowledge on. Be sure to
-    follow the [JSDoc Guidelines](JSDOC_GUIDELINES.markdown) when
+    follow the [JSDoc Guidelines](JSDOC_GUIDELINES.md) when
     writing JSDoc to ensure comprehensive descriptions and consistent style.
 
 1.  Send a pull request containing the new JSDoc to your team's tech writer
@@ -71,9 +71,9 @@ for providing drafted JSDoc for their areas of expertise. Below is a checklist
 to complete to ensure JSDoc is properly formatted and ready for submission:
 
 - All JSDoc should follow the
-  [JSDoc Guidelines](JSDOC_GUIDELINES.markdown).
+  [JSDoc Guidelines](JSDOC_GUIDELINES.md).
 - Format JSDoc using the JSDoc Formatter. See
-  [here](JSDOC_GUIDELINES.markdown#formatting-and-building-jsdoc)
+  [here](JSDOC_GUIDELINES.md#formatting-and-building-jsdoc)
   for more information.
 - Ensure all commit descriptions start with a ticket number (e.g., *LPS-12345
   JSDoc*). If the JSDoc is also associated with an LRDOCS ticket, include

@@ -427,7 +427,7 @@ before proceeding.
 ## Submitting JSDoc
 
 For more information on submitting JSDoc, see the
-[JSDoc Submission Process](JSDOC_SUBMISSION_PROCESS.markdown) article.
+[JSDoc Submission Process](JSDOC_SUBMISSION_PROCESS.md) article.
 
 To request **re-adding** JSDoc or comments that have been removed from a file,
 please open an [LRDOCS](https://issues.liferay.com/browse/LRDOCS) JIRA ticket:

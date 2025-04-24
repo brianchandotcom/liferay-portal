@@ -583,7 +583,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 
 		_initBundle(configsDir, liferayHomeDir, password, url, userName);
 
-		_assertExists(liferayHomeDir, "README.markdown");
+		_assertExists(liferayHomeDir, "README.md");
 		_assertExists(liferayHomeDir, "empty-folder");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
@@ -592,7 +592,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 
 		_initBundle(configsDir, liferayHomeDir, password, 1, url, userName);
 
-		_assertExists(liferayHomeDir, "README.markdown");
+		_assertExists(liferayHomeDir, "README.md");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
 		_assertNotExists(liferayHomeDir, "empty-folder");
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
@@ -633,7 +633,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 					expectedProxyHit.booleanValue(), proxyHit.get());
 			}
 
-			_assertExists(liferayHomeDir, "README.markdown");
+			_assertExists(liferayHomeDir, "README.md");
 			_assertPosixFilePermissions(
 				liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
 		}

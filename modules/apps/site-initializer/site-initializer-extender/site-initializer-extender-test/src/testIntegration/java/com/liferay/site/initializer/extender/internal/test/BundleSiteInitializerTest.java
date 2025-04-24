@@ -1537,7 +1537,7 @@ public class BundleSiteInitializerTest {
 	private void _assertDLFileEntry1() throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Table of Contents.markdown");
+			"Table of Contents.md");
 
 		String string = new String(
 			StreamUtil.toByteArray(
@@ -1553,7 +1553,7 @@ public class BundleSiteInitializerTest {
 	private void _assertDLFileEntry2() throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Table of Contents.markdown");
+			"Table of Contents.md");
 
 		String string = new String(
 			StreamUtil.toByteArray(

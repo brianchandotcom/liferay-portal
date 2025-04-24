@@ -629,7 +629,7 @@ public class ModulesStructureTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path path = dirPath.resolve("README.markdown");
+					Path path = dirPath.resolve("README.md");
 
 					if (Files.exists(path)) {
 						BasicFileAttributes readmeBasicFileAttributes =

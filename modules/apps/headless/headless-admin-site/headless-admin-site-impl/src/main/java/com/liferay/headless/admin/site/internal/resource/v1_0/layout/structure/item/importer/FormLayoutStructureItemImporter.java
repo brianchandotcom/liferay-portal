@@ -42,19 +42,19 @@ public class FormLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		FormPageElementDefinition pageFormDefinition =
+		FormPageElementDefinition formPageElementDefinition =
 			(FormPageElementDefinition)pageElement.getDefinition();
 
-		if (pageFormDefinition == null) {
+		if (formPageElementDefinition == null) {
 			return formStyledLayoutStructureItem;
 		}
 
 		formStyledLayoutStructureItem.setCssClasses(
-			SetUtil.fromArray(pageFormDefinition.getCssClasses()));
+			SetUtil.fromArray(formPageElementDefinition.getCssClasses()));
 		formStyledLayoutStructureItem.setCustomCSS(
-			pageFormDefinition.getCustomCSS());
+			formPageElementDefinition.getCustomCSS());
 
-		FormConfig formConfig = pageFormDefinition.getFormConfig();
+		FormConfig formConfig = formPageElementDefinition.getFormConfig();
 
 		if (formConfig.getFormReference() instanceof ContextReference) {
 			formStyledLayoutStructureItem.setFormConfig(
@@ -77,8 +77,9 @@ public class FormLayoutStructureItemImporter
 		formStyledLayoutStructureItem.setFormType(
 			_toFormType(formConfig.getFormType()));
 		formStyledLayoutStructureItem.setIndexed(
-			pageFormDefinition.getIndexed());
-		formStyledLayoutStructureItem.setName(pageFormDefinition.getName());
+			formPageElementDefinition.getIndexed());
+		formStyledLayoutStructureItem.setName(
+			formPageElementDefinition.getName());
 		formStyledLayoutStructureItem.setNumberOfSteps(
 			formConfig.getNumberOfSteps());
 

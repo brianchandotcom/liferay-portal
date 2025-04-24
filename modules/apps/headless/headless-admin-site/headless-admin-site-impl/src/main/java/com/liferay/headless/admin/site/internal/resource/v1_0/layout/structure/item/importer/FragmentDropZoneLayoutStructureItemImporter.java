@@ -36,15 +36,17 @@ public class FragmentDropZoneLayoutStructureItemImporter
 							pageElement, layoutStructure),
 						pageElement.getPosition());
 
-		FragmentDropZonePageElementDefinition pageFragmentDropZoneDefinition =
-			(FragmentDropZonePageElementDefinition)pageElement.getDefinition();
+		FragmentDropZonePageElementDefinition
+			fragmentDropZonePageElementDefinition =
+				(FragmentDropZonePageElementDefinition)
+					pageElement.getDefinition();
 
-		if (pageFragmentDropZoneDefinition == null) {
+		if (fragmentDropZonePageElementDefinition == null) {
 			return fragmentDropZoneLayoutStructureItem;
 		}
 
 		fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
-			pageFragmentDropZoneDefinition.getFragmentDropZoneId());
+			fragmentDropZonePageElementDefinition.getFragmentDropZoneId());
 
 		return fragmentDropZoneLayoutStructureItem;
 	}

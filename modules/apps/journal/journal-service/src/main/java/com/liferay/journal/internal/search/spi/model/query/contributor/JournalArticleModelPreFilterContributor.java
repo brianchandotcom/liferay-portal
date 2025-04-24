@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -127,32 +128,34 @@ public class JournalArticleModelPreFilterContributor
 			booleanFilter.addRequiredTerm("ddmStructureKey", ddmStructureKey);
 		}
 
-		HashMap<String, List<String[]>> searchableAssetSubtypesMap =
-			(HashMap<String, List<String[]>>)searchContext.getAttribute(
-				"searchableAssetSubtypesMap");
+		HashMap<String, List<AssetSubtypeIdentifier>> assetSubtypeIdentifiers =
+			(HashMap<String, List<AssetSubtypeIdentifier>>)
+				searchContext.getAttribute("assetSubtypeIdentifiers");
 
-		if ((searchableAssetSubtypesMap != null) &&
-			searchableAssetSubtypesMap.containsKey(
+		if ((assetSubtypeIdentifiers != null) &&
+			assetSubtypeIdentifiers.containsKey(
 				JournalArticle.class.getName())) {
 
 			BooleanFilter subtypeBooleanFilter = new BooleanFilter();
 
-			List<String[]> searchableAssetSubtypeIdentifiers =
-				searchableAssetSubtypesMap.get(JournalArticle.class.getName());
+			List<AssetSubtypeIdentifier> ddmStructureIdentifiers =
+				assetSubtypeIdentifiers.get(JournalArticle.class.getName());
 
-			for (String[] searchableAssetSubtypeIdentifier :
-					searchableAssetSubtypeIdentifiers) {
+			for (AssetSubtypeIdentifier ddmStructureIdentifier :
+					ddmStructureIdentifiers) {
 
 				try {
 					Group group =
 						_groupLocalService.getGroupByExternalReferenceCode(
-							searchableAssetSubtypeIdentifier[1],
+							ddmStructureIdentifier.
+								getGroupExternalReferenceCode(),
 							searchContext.getCompanyId());
 
 					DDMStructure ddmStructure =
 						_ddmStructureLocalService.
 							fetchStructureByExternalReferenceCode(
-								searchableAssetSubtypeIdentifier[2],
+								ddmStructureIdentifier.
+									getSubtypeExternalReferenceCode(),
 								group.getGroupId(),
 								_classNameLocalService.getClassNameId(
 									JournalArticle.class));

@@ -6,30 +6,14 @@
 package com.liferay.captcha.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.captcha.BaseCaptchaTestCase;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.WindowState;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -37,13 +21,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Istvan Sajtos
  */
 @RunWith(Arquillian.class)
-public class CaptchaConfigurationTest {
+public class CaptchaConfigurationTest extends BaseCaptchaTestCase {
 
 	@ClassRule
 	@Rule
@@ -54,65 +36,6 @@ public class CaptchaConfigurationTest {
 	public void test() throws Exception {
 		_test(false, false, true);
 		_test(true, true, false);
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest()
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLayout(
-			_layoutLocalService.fetchLayout(TestPropsValues.getPlid()));
-		themeDisplay.setPlid(TestPropsValues.getPlid());
-		themeDisplay.setPortalURL("http://localhost:8080");
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
-	}
-
-	private boolean _isCaptchaRendered() throws Exception {
-		URL url = new URL(
-			PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					_getMockHttpServletRequest(), PortletKeys.LOGIN,
-					_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/login/create_account"
-			).setParameter(
-				"saveLastPath", false
-			).setPortletMode(
-				PortletMode.VIEW
-			).setWindowState(
-				WindowState.MAXIMIZED
-			).buildString());
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		Assert.assertEquals(
-			HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
-
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(httpURLConnection.getInputStream()))) {
-
-			String line;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				if (line.contains("CAPTCHA")) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private void _test(
@@ -140,11 +63,9 @@ public class CaptchaConfigurationTest {
 						systemSettingsCreateAccountCaptchaEnabled
 					).build())) {
 
-			Assert.assertEquals(expectedCaptchaRendered, _isCaptchaRendered());
+			Assert.assertEquals(
+				expectedCaptchaRendered, isCaptchaRendered("CAPTCHA"));
 		}
 	}
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 }

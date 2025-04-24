@@ -40,8 +40,7 @@ test('LPD-52714 Checking what is the first page loaded if default.admin.password
 
 	await page.getByLabel('Reenter Password').fill(password);
 
-	const signInButton = page.getByRole('button', {name: 'Save'});
-	await signInButton.click();
+	await page.getByRole('button', {name: 'Save'}).click();
 
 	await expect(page.getByLabel(`${name} ${surname}`)).toBeVisible({
 		timeout: 30 * 1000,

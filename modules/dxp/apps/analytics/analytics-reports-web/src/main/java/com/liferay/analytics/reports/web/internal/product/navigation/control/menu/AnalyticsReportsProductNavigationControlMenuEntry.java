@@ -20,6 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
@@ -28,7 +31,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -349,16 +352,39 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			Set<String> resourceNamesSet = new HashSet<>();
 
-			List<PortletPreferences> portletPreferencesList =
-				_portletPreferencesLocalService.getPortletPreferencesByPlid(
-					GetterUtil.getLong(plid));
+			Predicate predicate = null;
 
-			for (PortletPreferences portletPreferences :
-					portletPreferencesList) {
+			for (String resourceName : resourceNames.keySet()) {
+				if (predicate == null) {
+					predicate = PortletPreferencesTable.INSTANCE.portletId.like(
+						StringUtil.quote(resourceName, CharPool.PERCENT));
+				}
+				else {
+					predicate = predicate.or(
+						PortletPreferencesTable.INSTANCE.portletId.like(
+							StringUtil.quote(resourceName, CharPool.PERCENT)));
+				}
+			}
 
+			List<String> portletIds = _portletPreferencesLocalService.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					PortletPreferencesTable.INSTANCE.portletId
+				).from(
+					PortletPreferencesTable.INSTANCE
+				).where(
+					PortletPreferencesTable.INSTANCE.companyId.eq(
+						themeDisplay.getCompanyId()
+					).and(
+						PortletPreferencesTable.INSTANCE.plid.eq(
+							GetterUtil.getLong(plid))
+					).and(
+						predicate
+					)
+				));
+
+			for (String portletId : portletIds) {
 				resourceNamesSet.addAll(
-					_getResourceNames(
-						portletPreferences.getPortletId(), resourceNames));
+					_getResourceNames(portletId, resourceNames));
 			}
 
 			for (String resourceName : resourceNamesSet) {

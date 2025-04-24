@@ -51,7 +51,7 @@ downloadGems {
 			}
 		}
 
-		File readmeFile = file("README.markdown")
+		File readmeFile = file("README.md")
 
 		readmeFile.withWriter {
 			BufferedWriter bufferedWriter ->

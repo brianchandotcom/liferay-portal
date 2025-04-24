@@ -32,7 +32,7 @@ publish {
 }
 
 updateReadme {
-	match(/group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.source\.formatter", version: "(\d.+)"/, "README.markdown")
+	match(/group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.source\.formatter", version: "(\d.+)"/, "README.md")
 
 	onlyIf {
 		!project.version.endsWith("-SNAPSHOT")

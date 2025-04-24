@@ -85,7 +85,7 @@ public class LPKGDeployerTest {
 					String fileName = StringUtil.toLowerCase(
 						fileNamePath.toString());
 
-					if (fileName.endsWith(".markdown")) {
+					if (fileName.endsWith(".md")) {
 						return FileVisitResult.CONTINUE;
 					}
 

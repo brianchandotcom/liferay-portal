@@ -52,7 +52,7 @@ public class JSDocDefaultsPlugin extends BaseDefaultsPlugin<JSDocPlugin> {
 		jsDocTask.setConfiguration(
 			textResourceFactory.fromString(_CONFIG_JSON));
 
-		File readmeFile = project.file("README.markdown");
+		File readmeFile = project.file("README.md");
 
 		if (readmeFile.exists()) {
 			jsDocTask.setReadmeFile(readmeFile);

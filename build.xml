@@ -460,8 +460,8 @@ message.
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 
 		<copy
-			file="tools/osgi-marketplace-override-README.markdown"
-			tofile="${liferay.home}/osgi/marketplace/override/README.markdown"
+			file="tools/osgi-marketplace-override-README.md"
+			tofile="${liferay.home}/osgi/marketplace/override/README.md"
 		/>
 
 		<print-current-time />

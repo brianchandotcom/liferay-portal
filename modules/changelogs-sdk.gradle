@@ -26,7 +26,7 @@ File sdkDir = file("sdk")
 buildChangelogs {
 	dependsOn recordCommits
 
-	description = "Builds the changelogs for each published version in 'CHANGELOG.markdown'."
+	description = "Builds the changelogs for each published version in 'CHANGELOG.md'."
 	group = "changelogs"
 
 	doLast {
@@ -271,7 +271,7 @@ buildChangelogs {
 				}
 			}
 
-			File changelogMarkdownFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.markdown")
+			File changelogMarkdownFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.md")
 
 			changelogMarkdownFile.text = text
 

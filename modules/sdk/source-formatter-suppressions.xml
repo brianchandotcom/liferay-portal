@@ -51,7 +51,7 @@
 		<suppress checks="JavaXMLSecurityCheck" files="gradle-plugins-tlddoc-builder/src/main/java/com/liferay/gradle/plugins/tlddoc/builder/internal/util/TLDUtil\.java" />
 		<suppress checks="JSONValidationCheck" files="project-templates/.*" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="gradle-plugins-target-platform/src/gradleTest/.*" />
-		<suppress checks="MarkdownStylingCheck" files=".*/CHANGELOG\.markdown" />
+		<suppress checks="MarkdownStylingCheck" files=".*/CHANGELOG\.md" />
 		<suppress checks="PoshiStylingCheck" files="gradle-plugins-poshi-runner/samples/src/testFunctional/Click\.function" />
 		<suppress checks="PoshiStylingCheck" files="gradle-plugins-poshi-runner/samples/src/testFunctional/Open\.function" />
 		<suppress checks="PoshiStylingCheck" files="gradle-plugins-poshi-runner/samples/src/testFunctional/Smoke\.testcase" />

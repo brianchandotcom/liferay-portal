@@ -2230,8 +2230,7 @@ public interface BaseProjectTemplatesTestCase {
 	public default void writeM2TmpForMavenWorkspace(File projectDir)
 		throws Exception {
 
-		File gettingStartedFile = new File(
-			projectDir, "GETTING_STARTED.markdown");
+		File gettingStartedFile = new File(projectDir, "GETTING_STARTED.md");
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
 		if (gettingStartedFile.exists() && pomXmlFile.exists()) {

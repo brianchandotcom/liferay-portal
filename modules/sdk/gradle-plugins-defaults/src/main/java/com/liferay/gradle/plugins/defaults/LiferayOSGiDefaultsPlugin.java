@@ -4212,8 +4212,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		args.put("excludes", excludes);
 		args.put(
-			"includes",
-			Arrays.asList("**/*.gradle", "**/sdk/*/README.markdown"));
+			"includes", Arrays.asList("**/*.gradle", "**/sdk/*/README.md"));
 
 		updateFileVersionsTask.match(regex, project.fileTree(args));
 	}

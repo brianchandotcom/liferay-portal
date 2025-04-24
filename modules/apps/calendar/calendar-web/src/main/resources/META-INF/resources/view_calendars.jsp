@@ -117,13 +117,11 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 		'<portlet:namespace />importCalendar',
 		(url) => {
 			function hideMessage(messageElement) {
-				messageElement.style.display = 'none';
 				messageElement.hidden = true;
 				messageElement.classList.add('hide');
 			}
 
 			function showMessage(messageElement) {
-				messageElement.style.display = 'block';
 				messageElement.hidden = false;
 				messageElement.classList.remove('hide');
 			}

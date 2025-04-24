@@ -21,7 +21,6 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,9 +51,55 @@ public class DBPartitionCopyPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfigurationExistingDestinationCompanyId()
-		throws Exception {
+	public void testDeployConfigurationFileWithFF() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"CopyPortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
 
+			deployConfigurationFile(
+				_PID,
+				StringBundler.concat(
+					"destinationCompanyId=L\"",
+					PortalInstancePool.getDefaultCompanyId(), "\"\n",
+					"name=\"testName\"\nsourceCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+
+			assertLog(
+				logCapture,
+				"Portal instance with company ID " +
+					PortalInstancePool.getDefaultCompanyId() +
+						" already exists");
+		}
+
+		assertConfigurationFileIsDeletedAfterDeploy(_PID);
+	}
+
+	@Test
+	public void testDeployConfigurationFileWithoutFF() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfigurationFile(
+				_PID,
+				StringBundler.concat(
+					"name=\"testName\"\nsourceCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
+		}
+
+		assertConfigurationFileIsDeletedAfterDeploy(_PID);
+	}
+
+	@FeatureFlags("LPD-11342")
+	@Test
+	public void testDeployConfigurationWithFF() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId());
@@ -85,122 +130,6 @@ public class DBPartitionCopyPortalInstanceOperationTest
 						" already exists");
 
 			assertConfigurationIsDeletedAfterDeploy(_PID);
-		}
-	}
-
-	@FeatureFlags("LPD-11342")
-	@Test
-	public void testDeployConfigurationFileExistingDestinationCompanyId()
-		throws Exception {
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.instances.internal.operation." +
-					"CopyPortalInstanceOperation",
-				LoggerTestUtil.ERROR)) {
-
-			deployConfigurationFile(
-				_PID,
-				StringBundler.concat(
-					"destinationCompanyId=L\"",
-					PortalInstancePool.getDefaultCompanyId(), "\"\n",
-					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-
-			assertLog(
-				logCapture,
-				"Portal instance with company ID " +
-					PortalInstancePool.getDefaultCompanyId() +
-						" already exists");
-		}
-
-		assertConfigurationFileIsDeletedAfterDeploy(_PID);
-	}
-
-	@FeatureFlags("LPD-11342")
-	@Test
-	public void testDeployConfigurationFileWithFF() throws Exception {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
-		try {
-			deployConfigurationFile(
-				_PID,
-				StringBundler.concat(
-					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-
-			Assert.assertEquals(
-				companyIds.length + 1,
-				PortalInstancePool.getCompanyIds().length);
-
-			assertConfigurationFileIsDeletedAfterDeploy(_PID);
-		}
-		finally {
-			Company company = _companyLocalService.fetchCompanyByVirtualHost(
-				"testVirtualHostname");
-
-			if (company != null) {
-				_companyLocalService.deleteCompany(company);
-			}
-		}
-	}
-
-	@Test
-	public void testDeployConfigurationFileWithoutFF() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.instances.internal.operation." +
-					"BasePortalInstanceOperation",
-				LoggerTestUtil.ERROR)) {
-
-			deployConfigurationFile(
-				_PID,
-				StringBundler.concat(
-					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-
-			assertLogException(
-				logCapture, "Feature flag LPD-11342 is disabled");
-		}
-
-		assertConfigurationFileIsDeletedAfterDeploy(_PID);
-	}
-
-	@FeatureFlags("LPD-11342")
-	@Test
-	public void testDeployConfigurationWithFF() throws Exception {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					PortalInstancePool.getDefaultCompanyId())) {
-
-			deployConfiguration(
-				_PID,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"name", "testName"
-				).put(
-					"sourceCompanyId", _company.getCompanyId()
-				).put(
-					"virtualHostname", "testVirtualHostname"
-				).put(
-					"webId", "testWebId"
-				).build());
-
-			Assert.assertEquals(
-				companyIds.length + 1,
-				PortalInstancePool.getCompanyIds().length);
-
-			assertConfigurationIsDeletedAfterDeploy(_PID);
-		}
-		finally {
-			Company company = _companyLocalService.fetchCompanyByVirtualHost(
-				"testVirtualHostname");
-
-			if (company != null) {
-				_companyLocalService.deleteCompany(company);
-			}
 		}
 	}
 

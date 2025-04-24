@@ -237,33 +237,33 @@ public class DDLRecordLocalServiceImplTest {
 	}
 
 	protected List<Serializable> toList(boolean[] fieldValues) {
-		List<Serializable> fieldValuesList = new ArrayList<>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (boolean fieldValue : fieldValues) {
-			fieldValuesList.add(fieldValue);
+			values.add(fieldValue);
 		}
 
-		return fieldValuesList;
+		return values;
 	}
 
 	protected List<Serializable> toList(int[] fieldValues) {
-		List<Serializable> fieldValuesList = new ArrayList<>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (int fieldValue : fieldValues) {
-			fieldValuesList.add(fieldValue);
+			values.add(fieldValue);
 		}
 
-		return fieldValuesList;
+		return values;
 	}
 
 	protected List<Serializable> toList(String[] fieldValues) {
-		List<Serializable> fieldValuesList = new ArrayList<>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (String fieldValue : fieldValues) {
-			fieldValuesList.add(fieldValue);
+			values.add(fieldValue);
 		}
 
-		return fieldValuesList;
+		return values;
 	}
 
 	private final DDLRecordLocalServiceImpl _ddlRecordLocalServiceImpl =

@@ -156,12 +156,12 @@ public class DDLRecordSetServiceTest {
 		Assert.assertEquals(
 			recordSet.getVersion(), recordSetVersion.getVersion());
 
-		List<DDLRecordSetVersion> recordSetVersions =
+		List<DDLRecordSetVersion> ddlRecordSetVersions =
 			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
 				recordSetId);
 
 		Assert.assertEquals(
-			recordSetVersions.toString(), 2, recordSetVersions.size());
+			ddlRecordSetVersions.toString(), 2, ddlRecordSetVersions.size());
 
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -179,12 +179,12 @@ public class DDLRecordSetServiceTest {
 		Assert.assertEquals(
 			recordSet.getVersion(), recordSetVersion.getVersion());
 
-		recordSetVersions =
+		ddlRecordSetVersions =
 			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
 				recordSetId);
 
 		Assert.assertEquals(
-			recordSetVersions.toString(), 3, recordSetVersions.size());
+			ddlRecordSetVersions.toString(), 3, ddlRecordSetVersions.size());
 	}
 
 	@Test
@@ -229,12 +229,12 @@ public class DDLRecordSetServiceTest {
 		Assert.assertEquals(
 			recordSet.getVersion(), recordSetVersion.getVersion());
 
-		List<DDLRecordSetVersion> recordSetVersions =
+		List<DDLRecordSetVersion> ddlRecordSetVersions =
 			DDLRecordSetVersionLocalServiceUtil.getRecordSetVersions(
 				recordSetId);
 
 		Assert.assertEquals(
-			recordSetVersions.toString(), 1, recordSetVersions.size());
+			ddlRecordSetVersions.toString(), 1, ddlRecordSetVersions.size());
 	}
 
 	@Test

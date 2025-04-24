@@ -953,8 +953,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				rowName: SAMPLE_FIELD,
 			});
 
-			const deleteModal =
-				await visualizationModesPage.page.getByRole('dialog');
+			const deleteModal = visualizationModesPage.page.getByRole('dialog');
 
 			await expect(deleteModal.locator('.modal-title')).toContainText(
 				'Delete Field'
@@ -995,8 +994,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				rowName: sampleScalarField,
 			});
 
-			const editModal =
-				await visualizationModesPage.page.getByRole('dialog');
+			const editModal = visualizationModesPage.page.getByRole('dialog');
 
 			await expect(editModal.getByRole('heading')).toContainText(
 				`Edit ${sampleScalarField}`
@@ -1039,7 +1037,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				.locator(`#${rendererDropdownId}`)
 				.getByRole('option')
 				.count();
-			await expect(availbleRenderersCount).toBeGreaterThanOrEqual(10);
+			expect(availbleRenderersCount).toBeGreaterThanOrEqual(10);
 
 			await page
 				.locator(`#${rendererDropdownId}`)
@@ -1059,7 +1057,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test.skip(
+	test(
 		'Check that users can translate labels in table visualization mode.',
 		{tag: '@LPS-176516'},
 		async ({page, visualizationModesPage}) => {
@@ -1145,7 +1143,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await expect(labelInput).toBeInViewport();
 
-				const localizationButton = await page
+				const localizationButton = page
 					.locator('.input-localized')
 					.getByRole('button');
 				const languageDropdownId = await localizationButton.evaluate(
@@ -1204,7 +1202,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					rowName: SAMPLE_FIELD,
 				});
 
-				const localizationButton = await page
+				const localizationButton = page
 					.locator('.input-localized')
 					.getByRole('button');
 				const languageDropdownId = await localizationButton.evaluate(

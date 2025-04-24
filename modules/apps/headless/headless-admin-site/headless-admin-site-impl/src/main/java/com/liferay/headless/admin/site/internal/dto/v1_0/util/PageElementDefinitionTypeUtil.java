@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * @author Lourdes Fernández Besada
  */
-public class PageElementTypeUtil {
+public class PageElementDefinitionTypeUtil {
 
 	public static PageElementDefinition.Type toExternalType(
 		String internalType) {

@@ -14,5 +14,5 @@
 }
 
 .cp-required-info {
-	width: 680px;
+	max-width: var(--container-max-md);
 }

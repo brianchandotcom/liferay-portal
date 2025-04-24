@@ -547,25 +547,20 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			return;
 		}
 
-		String[] parameterStagedModelTypes = parameterMap.get(
-			"stagedModelTypes");
-
-		List<String> parameterStagedModelTypesList = ListUtil.fromArray(
-			parameterStagedModelTypes);
+		List<String> parameterStagedModelTypes = ListUtil.fromArray(
+			parameterMap.get("stagedModelTypes"));
 
 		for (StagedModelType stagedModelType : stagedModelTypes) {
 			String stagedModelTypeString = stagedModelType.toString();
 
-			if (!parameterStagedModelTypesList.contains(
-					stagedModelTypeString)) {
-
-				parameterStagedModelTypesList.add(stagedModelTypeString);
+			if (!parameterStagedModelTypes.contains(stagedModelTypeString)) {
+				parameterStagedModelTypes.add(stagedModelTypeString);
 			}
 		}
 
 		parameterMap.put(
 			"stagedModelTypes",
-			parameterStagedModelTypesList.toArray(new String[0]));
+			parameterStagedModelTypes.toArray(new String[0]));
 	}
 
 	/**

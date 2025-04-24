@@ -127,7 +127,7 @@ public class PermissionImporterImpl implements PermissionImporter {
 			long resourcePK = GetterUtil.getLong(
 				portletDataElement.attributeValue("resource-pk"));
 
-			List<KeyValuePair> permissions = new ArrayList<>();
+			List<KeyValuePair> permissionKeyValuePairs = new ArrayList<>();
 
 			List<Element> permissionsElements = portletDataElement.elements(
 				"permissions");
@@ -139,11 +139,11 @@ public class PermissionImporterImpl implements PermissionImporter {
 
 				KeyValuePair permission = new KeyValuePair(roleName, actions);
 
-				permissions.add(permission);
+				permissionKeyValuePairs.add(permission);
 			}
 
 			portletDataContext.addPermissions(
-				resourceName, resourcePK, permissions);
+				resourceName, resourcePK, permissionKeyValuePairs);
 		}
 	}
 

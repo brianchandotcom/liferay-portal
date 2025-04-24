@@ -73,11 +73,13 @@ public class PermissionExporter {
 			portletDataElement.addAttribute(
 				"resource-pk", String.valueOf(resourcePK));
 
-			List<KeyValuePair> permissions = entry.getValue();
+			List<KeyValuePair> permissionKeyValuePairs = entry.getValue();
 
-			for (KeyValuePair permission : permissions) {
-				String roleName = permission.getKey();
-				String actions = permission.getValue();
+			for (KeyValuePair permissionKeyValuePair :
+					permissionKeyValuePairs) {
+
+				String roleName = permissionKeyValuePair.getKey();
+				String actions = permissionKeyValuePair.getValue();
 
 				Element permissionsElement = portletDataElement.addElement(
 					"permissions");

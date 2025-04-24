@@ -527,11 +527,10 @@ public class StagingImpl implements Staging {
 						missingReference.getClassPK(), false));
 			}
 			else if (referrers.size() == 1) {
-				Set<Map.Entry<String, String>> referrerDisplayNames =
-					referrers.entrySet();
+				Set<Map.Entry<String, String>> entries = referrers.entrySet();
 
 				Iterator<Map.Entry<String, String>> iterator =
-					referrerDisplayNames.iterator();
+					entries.iterator();
 
 				Map.Entry<String, String> entry = iterator.next();
 

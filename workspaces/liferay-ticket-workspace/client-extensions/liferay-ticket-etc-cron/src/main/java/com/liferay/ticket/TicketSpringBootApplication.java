@@ -6,7 +6,7 @@
 package com.liferay.ticket;
 
 import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
-import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2Util;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.WebApplicationType;

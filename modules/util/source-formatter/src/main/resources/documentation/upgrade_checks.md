@@ -2,16 +2,16 @@
 
 Check | File Extensions | Description
 ----- | --------------- | -----------
-[GradleUpgradeReleaseDXPCheck](check/gradle_upgrade_release_dxp_check.markdown#gradleupgradereleasedxpcheck) | .gradle | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
+[GradleUpgradeReleaseDXPCheck](check/gradle_upgrade_release_dxp_check.md#gradleupgradereleasedxpcheck) | .gradle | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
 JSONUpgradeLiferayThemePackageJSONCheck | .ipynb, .json, or .npmbridgerc | Upgrade the `package.json` of a Liferay Theme to make it compatible with Liferay 7.4. |
 JSPUpgradeRemovedTagsCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds removed tags when upgrading. |
 JavaUpgradeModelPermissionsCheck | .java | Replace setGroupPermissions and setGuestPermissions by new implementation. |
-[PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.markdown#propertiesupgradeliferaypluginpackagefilecheck) | .eslintignore, .prettierignore, or .properties | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
+[PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.md#propertiesupgradeliferaypluginpackagefilecheck) | .eslintignore, .prettierignore, or .properties | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
 PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore, or .properties | Validates and upgrades the version in `liferay-plugin-package.properties` file. |
 UpgradeBNDDeclarativeServicesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Performs replacements on Liferay's outdated code. |
-[UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Sorts and groups imports in `LPD_XXXXX.jsp` and `LPS_XXXXX.jsp` files. |
+[UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.md#jspimportscheck) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Sorts and groups imports in `LPD_XXXXX.jsp` and `LPS_XXXXX.jsp` files. |
 UpgradeCatchAllJavaImportsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Sorts and groups imports in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
 UpgradeCatchAllJavaTermOrderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Sorts javaterms in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
 UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade. |

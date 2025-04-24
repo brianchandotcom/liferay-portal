@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
+import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import ReactFlow, {Controls, ReactFlowProvider} from 'react-flow-renderer';
 
@@ -32,7 +32,10 @@ if (ReactFlowDefault.default) {
 	ReactFlowDefault = ReactFlowDefault.default;
 }
 
-export default function WorkflowInstanceTracker({workflowInstanceId}) {
+export default function WorkflowInstanceTracker({
+	baseResourceURL,
+	workflowInstanceId,
+}) {
 	const [currentNodes, setCurrentNodes] = useState([]);
 	const [definitionElements, setDefinitionElements] = useState({});
 	const [filteredCurrentNodes, setFilteredCurrentNodes] = useState([]);
@@ -52,14 +55,16 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 				setCurrentNodes(data.currentNodeNames);
 
 				fetch(
-					`/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/${data.workflowDefinitionName}`,
+					createResourceURL(baseResourceURL, {
+						p_p_resource_id:
+							'/workflow_metrics/get_workflow_definition_info',
+						workflowDefinitionName: data.workflowDefinitionName,
+						workflowDefinitionVersion:
+							data.workflowDefinitionVersion,
+					}),
 					{
 						headers: {
 							'Accept-Language': languageId,
-						},
-						method: 'GET',
-						params: {
-							version: data.workflowDefinitionVersion,
 						},
 					}
 				)

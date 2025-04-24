@@ -12,12 +12,13 @@ import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {WorkflowInstanceTracker} from '@liferay/portal-workflow-instance-tracker-web';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
 import {remainingTimeFormat} from '../../../../shared/util/duration.es';
 import moment from '../../../../shared/util/moment.es';
+import {AppContext} from '../../../AppContext.es';
 
 function Body({
 	assetTitle,
@@ -32,6 +33,7 @@ function Body({
 	slaResults = [],
 	taskNames = [],
 }) {
+	const {baseResourceURL} = useContext(AppContext);
 	const SLAs = {notStarted: [], open: [], resolved: []};
 
 	slaResults.forEach((result) => {
@@ -241,7 +243,10 @@ function Body({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<WorkflowInstanceTracker workflowInstanceId={id} />
+						<WorkflowInstanceTracker
+							baseResourceURL={baseResourceURL}
+							workflowInstanceId={id}
+						/>
 					</ClayModal.Body>
 				</ClayModal>
 			)}

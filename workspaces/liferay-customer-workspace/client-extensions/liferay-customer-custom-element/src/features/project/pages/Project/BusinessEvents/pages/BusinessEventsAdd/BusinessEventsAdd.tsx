@@ -22,7 +22,7 @@ import {isValidDate} from '~/utils/validations.form';
 
 import Layout from '../../../../../../../components/FormLayout';
 import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
-import useAccountBusinessEvents from '../../hooks/useAccountBusinessEvents';
+import useAccountSyncBusinessEvents from '../../hooks/useAccountSyncBusinessEvents';
 import useAccountTickets from '../../hooks/useAccountTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
@@ -106,7 +106,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		start: now.getFullYear(),
 	};
 
-	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
+	const {updateAccountBusinessEvents} = useAccountSyncBusinessEvents(
 		project?.accountKey || '',
 		businessEvent,
 		false,

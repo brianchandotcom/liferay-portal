@@ -3651,7 +3651,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	protected String getEditorName(String locator) {
 		String titleAttribute = getAttribute(locator + "@title");
 
-		if (titleAttribute.contains("Rich Text Editor,")) {
+		if (titleAttribute.contains("Rich Text Editor")) {
 			int x = titleAttribute.indexOf(",");
 
 			int y = titleAttribute.indexOf(",", x + 1);

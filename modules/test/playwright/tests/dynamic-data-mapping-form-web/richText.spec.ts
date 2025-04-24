@@ -100,7 +100,7 @@ const assertRichTextContent = async (
 
 	const textArea = newTabPage
 		.getByLabel(
-			'Rich Text Editor, _com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$RichText'
+			'Rich Text Editor'
 		)
 		.getByRole('textbox');
 

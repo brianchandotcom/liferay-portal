@@ -5,6 +5,9 @@
 
 package com.liferay.sharepoint.soap.repository;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
@@ -18,6 +21,8 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharepoint.soap.repository.constants.SharepointWSConstants;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +43,13 @@ public class SharepointWSRepositoryDefiner extends BaseRepositoryDefiner {
 	@Override
 	public RepositoryConfiguration getRepositoryConfiguration() {
 		return _repositoryConfiguration;
+	}
+
+	@Override
+	public String getRepositoryTypeLabel(Locale locale) {
+		return StringBundler.concat(
+			super.getRepositoryTypeLabel(locale), " (",
+			_language.get(locale, "deprecated"), StringPool.CLOSE_PARENTHESIS);
 	}
 
 	@Override
@@ -84,6 +96,9 @@ public class SharepointWSRepositoryDefiner extends BaseRepositoryDefiner {
 	protected void deactivate() {
 		_repositoryConfiguration = null;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortalCapabilityLocator _portalCapabilityLocator;

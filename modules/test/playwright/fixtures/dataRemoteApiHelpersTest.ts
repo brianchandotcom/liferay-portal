@@ -11,32 +11,35 @@ import {RemotePage, remotePageTest} from './remotePageTest';
 
 const test = mergeTests(remotePageTest);
 
-const dataRemoteApiHelpersTest = test.extend<{
-	remoteApiHelpers: DataApiHelpers;
-	remotePage: RemotePage;
-}>({
-	remoteApiHelpers: async ({remotePage}, use) => {
-		const dataApiHelpers = new DataApiHelpers(
-			remotePage,
-			liferayConfig.environment.baseUrl.replace('8080', '9080')
-		);
-
-		try {
-			await use(dataApiHelpers);
-		}
-		finally {
-
-			// @ts-ignore
-
-			const adminDataApiHelpers = new DataApiHelpers(
+function dataRemoteApiHelpersTest(port: string) {
+	return test.extend<{
+		remoteApiHelpers: DataApiHelpers;
+		remotePage: RemotePage;
+	}>({
+		remoteApiHelpers: async ({remotePage}, use) => {
+			const dataApiHelpers = new DataApiHelpers(
 				remotePage,
-				liferayConfig.environment.baseUrl.replace('8080', '9080')
+				liferayConfig.environment.baseUrl.replace('8080', port)
 			);
+	
+			try {
+				await use(dataApiHelpers);
+			}
+			finally {
+	
+				// @ts-ignore
+	
+				const adminDataApiHelpers = new DataApiHelpers(
+					remotePage,
+					liferayConfig.environment.baseUrl.replace('8080', port)
+				);
+	
+				adminDataApiHelpers.setData(dataApiHelpers.data);
+	
+				await adminDataApiHelpers.clearData();
+			}
+		},
+	});
+}
 
-			adminDataApiHelpers.setData(dataApiHelpers.data);
-
-			await adminDataApiHelpers.clearData();
-		}
-	},
-});
 export {dataRemoteApiHelpersTest};

@@ -68,15 +68,11 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		if (isBuildQueued()) {
 			_build.setStatus("queued");
 
-			runQueued();
-
 			return;
 		}
 
 		if (isBuildRunning()) {
 			_build.setStatus("running");
-
-			runRunning();
 
 			return;
 		}
@@ -92,12 +88,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 			_build.reset();
 
-			runStarting();
-
 			return;
 		}
 
-		runReporting();
+		_build.setStatus("reporting");
 	}
 
 	protected void runQueued() {
@@ -107,8 +101,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		if (isBuildRunning()) {
 			_build.setStatus("running");
-
-			runRunning();
 
 			return;
 		}
@@ -133,7 +125,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			}
 		}
 
-		runCompleted();
+		_build.setStatus("completed");
 	}
 
 	protected void runRunning() {
@@ -144,8 +136,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		_build.setStatus("reporting");
-
-		runReporting();
 	}
 
 	protected void runStarting() {

@@ -129,7 +129,7 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 		build.setStatus("queued");
 
 		if (isBuildRunning()) {
-			runRunning();
+			build.setStatus("running");
 		}
 	}
 

@@ -27,6 +27,11 @@ public class FilesSectionCardsFDSView extends BaseCardsFDSView {
 	}
 
 	@Override
+	public String getImage() {
+		return "embedded.file.thumbnailURL";
+	}
+
+	@Override
 	public String getTitle() {
 		return "embedded.title";
 	}

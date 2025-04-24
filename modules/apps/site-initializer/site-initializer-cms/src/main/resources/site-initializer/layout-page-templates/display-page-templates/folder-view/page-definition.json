@@ -1,0 +1,14 @@
+{
+	"pageElement": {
+		"id": "e516faca-6284-cfd8-4ce1-33fc578c0da7",
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "cms-master"
+		}
+	},
+	"version": 1.1
+}

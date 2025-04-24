@@ -9,9 +9,13 @@
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.learn.LearnMessage" %><%@
+page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
@@ -21,12 +25,15 @@ page import="com.liferay.portal.search.engine.NodeInformation" %>
 
 <%@ page import="java.util.List" %>
 
+<liferay-theme:defineObjects />
+
 <%
 SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayContext)request.getAttribute(SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid
 	cssClass="container-form-lg search-engine-page-container"
+	size="lg"
 >
 	<c:choose>
 		<c:when test="<%= searchEngineDisplayContext.isMissingSearchEngine() %>">
@@ -44,6 +51,120 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 					</div>
 				</c:when>
 				<c:otherwise>
+					<c:if test="<%= searchEngineDisplayContext.isWarnAboutDeprecatedConnection() %>">
+						<div class="alert alert-inline alert-warning">
+							<div class="autofit-row">
+								<div class="autofit-col">
+									<div class="autofit-section c-mr-2">
+										<clay:icon
+											class="text-warning"
+											symbol="warning-full"
+										/>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<div class="autofit-section">
+										<strong><liferay-ui:message key="warning" /></strong>: <liferay-ui:message key="compatibility-with-elasticsearch-7-deprecation-warning" />
+									</div>
+								</div>
+
+								<div class="autofit-col">
+									<div class="autofit-section">
+
+										<%
+										LearnMessage elasticsearchEOLLearnMessage = LearnMessageUtil.getLearnMessage("elasticsearch-end-of-life", themeDisplay.getLanguageId(), "portal-search-web");
+										LearnMessage searchEngineCompatibilityLearnMessage = LearnMessageUtil.getLearnMessage("search-engine-compatibility", themeDisplay.getLanguageId(), "portal-search-web");
+										%>
+
+										<c:if test="<%= elasticsearchEOLLearnMessage.getURL() != StringPool.BLANK %>">
+											<div class="btn-group-item">
+												<clay:link
+													cssClass="btn btn-sm btn-warning"
+													displayType="warning"
+													href="<%= elasticsearchEOLLearnMessage.getURL() %>"
+													label="<%= elasticsearchEOLLearnMessage.getMessage() %>"
+													target="_blank"
+													type="button"
+												/>
+											</div>
+										</c:if>
+
+										<c:if test="<%= searchEngineCompatibilityLearnMessage.getURL() != StringPool.BLANK %>">
+											<div class="btn-group-item">
+												<clay:link
+													cssClass="alert-btn btn btn-sm btn-warning"
+													displayType="warning"
+													href="<%= searchEngineCompatibilityLearnMessage.getURL() %>"
+													label="<%= searchEngineCompatibilityLearnMessage.getMessage() %>"
+													target="_blank"
+													type="button"
+												/>
+											</div>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
+
+					<c:if test="<%= searchEngineDisplayContext.isWarnAboutSidecarConnection() %>">
+						<div class="alert alert-inline alert-warning">
+							<div class="autofit-row">
+								<div class="autofit-col">
+									<div class="autofit-section c-mr-2">
+										<clay:icon
+											class="text-warning"
+											symbol="warning-full"
+										/>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<div class="autofit-section">
+										<strong><liferay-ui:message key="warning" /></strong>: <liferay-ui:message key="sidecar-connection-not-supported-warning" />
+									</div>
+								</div>
+
+								<div class="autofit-col">
+									<div class="autofit-section">
+
+										<%
+										LearnMessage installElasticsearchLearnMessage = LearnMessageUtil.getLearnMessage("install-elasticsearch", themeDisplay.getLanguageId(), "portal-search-web");
+										LearnMessage sidecarNotSupportedLearnMessage = LearnMessageUtil.getLearnMessage("sidecar-not-supported", themeDisplay.getLanguageId(), "portal-search-web");
+										%>
+
+										<c:if test="<%= sidecarNotSupportedLearnMessage.getURL() != StringPool.BLANK %>">
+											<div class="btn-group-item">
+												<clay:link
+													cssClass="btn btn-sm btn-warning"
+													displayType="warning"
+													href="<%= sidecarNotSupportedLearnMessage.getURL() %>"
+													label="<%= sidecarNotSupportedLearnMessage.getMessage() %>"
+													target="_blank"
+													type="button"
+												/>
+											</div>
+										</c:if>
+
+										<c:if test="<%= installElasticsearchLearnMessage.getURL() != StringPool.BLANK %>">
+											<div class="btn-group-item">
+												<clay:link
+													cssClass="alert-btn btn btn-sm btn-warning"
+													displayType="warning"
+													href="<%= installElasticsearchLearnMessage.getURL() %>"
+													label="<%= installElasticsearchLearnMessage.getMessage() %>"
+													target="_blank"
+													type="button"
+												/>
+											</div>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
+
 					<clay:sheet
 						cssClass="connection-info-item connection-info-item-header"
 					>
@@ -92,9 +213,19 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 												for (String label : connectionInformation.getLabels()) {
 												%>
 
-													<clay:label
-														label="<%= label %>"
-													/>
+													<c:choose>
+														<c:when test='<%= label.equals("deprecated") || label.equals("not-supported") %>'>
+															<clay:label
+																displayType="warning"
+																label="<%= label %>"
+															/>
+														</c:when>
+														<c:otherwise>
+															<clay:label
+																label="<%= label %>"
+															/>
+														</c:otherwise>
+													</c:choose>
 
 												<%
 												}

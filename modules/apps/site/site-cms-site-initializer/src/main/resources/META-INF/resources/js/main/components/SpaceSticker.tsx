@@ -6,9 +6,9 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
-function getRandomDisplayType(): React.ComponentProps<
-	typeof ClaySticker
->['displayType'] {
+function getDisplayType(
+	char: string
+): React.ComponentProps<typeof ClaySticker>['displayType'] {
 	const validDisplayTypes: React.ComponentProps<
 		typeof ClaySticker
 	>['displayType'][] = [
@@ -24,13 +24,11 @@ function getRandomDisplayType(): React.ComponentProps<
 		'outline-9',
 	];
 
-	const randomIndex = Math.floor(Math.random() * validDisplayTypes.length);
-
-	return validDisplayTypes[randomIndex];
+	return validDisplayTypes[char.charCodeAt(0) % validDisplayTypes.length];
 }
 
 export default function SpaceSticker({
-	displayType = getRandomDisplayType(),
+	displayType,
 	name,
 	size,
 }: {
@@ -38,7 +36,10 @@ export default function SpaceSticker({
 } & Pick<React.ComponentProps<typeof ClaySticker>, 'displayType' | 'size'>) {
 	return (
 		<>
-			<ClaySticker displayType={displayType} size={size}>
+			<ClaySticker
+				displayType={displayType ?? getDisplayType(name)}
+				size={size}
+			>
 				{name.charAt(0).toUpperCase()}
 			</ClaySticker>
 

@@ -54,8 +54,8 @@ const TimePicker: React.FC<IProps> = ({
 }) => {
 	if (required) {
 		validations = validations
-			? [...validations, requiredTimeInput]
-			: [requiredTimeInput];
+			? [...validations, (value: TimeInput) => requiredTimeInput(value)]
+			: [(value: TimeInput) => requiredTimeInput(value)];
 	}
 
 	const [field, meta, helpers] = useField<TimeInput>({

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.net.URL;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,11 +53,10 @@ public class SampleCommandLineRunner
 
 		// Call another Liferay
 
-		if (_externalLiferayHomePageURLOptional.isPresent()) {
+		if (_externalLiferayHomePageURL != null) {
 			try {
 				_countMessageBoardThreads(
-					"external-liferay",
-					_externalLiferayHomePageURLOptional.get());
+					"external-liferay", _externalLiferayHomePageURL);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -165,7 +163,7 @@ public class SampleCommandLineRunner
 		SampleCommandLineRunner.class);
 
 	@Value("${external.liferay.oauth2.headless.server.home.page.url:#{null}}")
-	private Optional<URL> _externalLiferayHomePageURLOptional;
+	private URL _externalLiferayHomePageURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

@@ -90,36 +90,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfigurationFile() throws Exception {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
-		try {
-			deployConfigurationFile(
-				_PID,
-				StringBundler.concat(
-					"name=\"testName\"\nsourceCompanyId=L\"",
-					_company.getCompanyId(), "\"\nvirtualHostname=",
-					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-
-			Assert.assertEquals(
-				companyIds.length + 1,
-				PortalInstancePool.getCompanyIds().length);
-
-			assertConfigurationFileIsDeletedAfterDeploy(_PID);
-		}
-		finally {
-			Company company = _companyLocalService.fetchCompanyByVirtualHost(
-				"testVirtualHostname");
-
-			if (company != null) {
-				_companyLocalService.deleteCompany(company);
-			}
-		}
-	}
-
-	@FeatureFlags("LPD-11342")
-	@Test
-	public void testDeployConfigurationFileExistingDestinationCompanyIdWithFF()
+	public void testDeployConfigurationFileExistingDestinationCompanyId()
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -146,10 +117,37 @@ public class DBPartitionCopyPortalInstanceOperationTest
 		assertConfigurationFileIsDeletedAfterDeploy(_PID);
 	}
 
+	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfigurationFileExistingDestinationCompanyIdWithoutFF()
-		throws Exception {
+	public void testDeployConfigurationFileWithFF() throws Exception {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
 
+		try {
+			deployConfigurationFile(
+				_PID,
+				StringBundler.concat(
+					"name=\"testName\"\nsourceCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+
+			Assert.assertEquals(
+				companyIds.length + 1,
+				PortalInstancePool.getCompanyIds().length);
+
+			assertConfigurationFileIsDeletedAfterDeploy(_PID);
+		}
+		finally {
+			Company company = _companyLocalService.fetchCompanyByVirtualHost(
+				"testVirtualHostname");
+
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
+	@Test
+	public void testDeployConfigurationFileWithoutFF() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
 					"BasePortalInstanceOperation",
@@ -158,8 +156,6 @@ public class DBPartitionCopyPortalInstanceOperationTest
 			deployConfigurationFile(
 				_PID,
 				StringBundler.concat(
-					"destinationCompanyId=L\"",
-					PortalInstancePool.getDefaultCompanyId(), "\"\n",
 					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));

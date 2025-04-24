@@ -6,7 +6,7 @@
 package com.liferay.partner;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -426,10 +426,12 @@ public class DDLDisplayContext {
 	}
 
 	public JSONArray getRecordsJSONArray(
-			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
+			List<DDLRecord> ddlRecords, boolean latestRecordVersion,
+			Locale locale)
 		throws Exception {
 
-		return _ddl.getRecordsJSONArray(records, latestRecordVersion, locale);
+		return _ddl.getRecordsJSONArray(
+			ddlRecords, latestRecordVersion, locale);
 	}
 
 	public SearchContainer<?> getSearchContainer() {

@@ -12,7 +12,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,78 +54,85 @@ public class EditRolesUsersDisplayContext {
 			return _userSearch;
 		}
 
-		_userSearch = new UserSearch(
-			_renderRequest,
-			(PortletURL)_httpServletRequest.getAttribute(
-				"edit_roles.jsp-portletURL"));
+		if (GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), _getGroupId(),
+				ActionKeys.ASSIGN_USER_ROLES)) {
 
-		UserSearchTerms searchTerms =
-			(UserSearchTerms)_userSearch.getSearchTerms();
+			_userSearch = new UserSearch(
+				_renderRequest,
+				(PortletURL)_httpServletRequest.getAttribute(
+					"edit_roles.jsp-portletURL"));
 
-		LinkedHashMap<String, Object> userParams =
-			LinkedHashMapBuilder.<String, Object>put(
-				"inherit", Boolean.TRUE
-			).put(
-				"usersGroups", Long.valueOf(_getGroupId())
-			).put(
-				"userGroupRole",
-				() -> {
-					if (Objects.equals(
-							_httpServletRequest.getAttribute(
-								"edit_roles.jsp-tabs1"),
-							"current")) {
+			UserSearchTerms searchTerms =
+				(UserSearchTerms)_userSearch.getSearchTerms();
 
-						return new Long[] {
-							Long.valueOf(_getGroupId()),
-							Long.valueOf(_getRoleId())
-						};
+			LinkedHashMap<String, Object> userParams =
+				LinkedHashMapBuilder.<String, Object>put(
+					"inherit", Boolean.TRUE
+				).put(
+					"usersGroups", Long.valueOf(_getGroupId())
+				).put(
+					"userGroupRole",
+					() -> {
+						if (Objects.equals(
+								_httpServletRequest.getAttribute(
+									"edit_roles.jsp-tabs1"),
+								"current")) {
+
+							return new Long[] {
+								Long.valueOf(_getGroupId()),
+								Long.valueOf(_getRoleId())
+							};
+						}
+
+						return null;
 					}
+				).build();
 
-					return null;
-				}
-			).build();
+			if (searchTerms.isAdvancedSearch()) {
+				_userSearch.setResultsAndTotal(
+					() -> UserLocalServiceUtil.search(
+						_themeDisplay.getCompanyId(),
+						searchTerms.getFirstName(), searchTerms.getMiddleName(),
+						searchTerms.getLastName(), searchTerms.getScreenName(),
+						searchTerms.getEmailAddress(), searchTerms.getStatus(),
+						userParams, searchTerms.isAndOperator(),
+						_userSearch.getStart(), _userSearch.getEnd(),
+						_userSearch.getOrderByComparator()),
+					UserLocalServiceUtil.searchCount(
+						_themeDisplay.getCompanyId(),
+						searchTerms.getFirstName(), searchTerms.getMiddleName(),
+						searchTerms.getLastName(), searchTerms.getScreenName(),
+						searchTerms.getEmailAddress(), searchTerms.getStatus(),
+						userParams, searchTerms.isAndOperator()));
+			}
+			else {
+				_userSearch.setResultsAndTotal(
+					() -> UserLocalServiceUtil.search(
+						_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+						searchTerms.getStatus(), userParams,
+						_userSearch.getStart(), _userSearch.getEnd(),
+						_userSearch.getOrderByComparator()),
+					UserLocalServiceUtil.searchCount(
+						_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+						searchTerms.getStatus(), userParams));
+			}
 
-		if (searchTerms.isAdvancedSearch()) {
-			_userSearch.setResultsAndTotal(
-				() -> UserLocalServiceUtil.search(
-					_themeDisplay.getCompanyId(), searchTerms.getFirstName(),
-					searchTerms.getMiddleName(), searchTerms.getLastName(),
-					searchTerms.getScreenName(), searchTerms.getEmailAddress(),
-					searchTerms.getStatus(), userParams,
-					searchTerms.isAndOperator(), _userSearch.getStart(),
-					_userSearch.getEnd(), _userSearch.getOrderByComparator()),
-				UserLocalServiceUtil.searchCount(
-					_themeDisplay.getCompanyId(), searchTerms.getFirstName(),
-					searchTerms.getMiddleName(), searchTerms.getLastName(),
-					searchTerms.getScreenName(), searchTerms.getEmailAddress(),
-					searchTerms.getStatus(), userParams,
-					searchTerms.isAndOperator()));
-		}
-		else {
-			_userSearch.setResultsAndTotal(
-				() -> UserLocalServiceUtil.search(
-					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), userParams, _userSearch.getStart(),
-					_userSearch.getEnd(), _userSearch.getOrderByComparator()),
-				UserLocalServiceUtil.searchCount(
-					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), userParams));
-		}
+			Role role = _getRole();
 
-		Role role = _getRole();
-
-		if (role.getType() == RoleConstants.TYPE_SITE) {
-			_userSearch.setRowChecker(
-				new UserGroupRoleUserChecker(
-					_renderResponse, _getGroup(), role));
-		}
-		else {
-			_userSearch.setRowChecker(
-				new OrganizationRoleUserChecker(
-					_renderResponse,
-					(Organization)_httpServletRequest.getAttribute(
-						"edit_roles.jsp-organization"),
-					role));
+			if (role.getType() == RoleConstants.TYPE_SITE) {
+				_userSearch.setRowChecker(
+					new UserGroupRoleUserChecker(
+						_renderResponse, _getGroup(), role));
+			}
+			else {
+				_userSearch.setRowChecker(
+					new OrganizationRoleUserChecker(
+						_renderResponse,
+						(Organization)_httpServletRequest.getAttribute(
+							"edit_roles.jsp-organization"),
+						role));
+			}
 		}
 
 		return _userSearch;

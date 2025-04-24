@@ -154,13 +154,13 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
-			DropZonePageElementDefinition pageDropZoneDefinition =
+			DropZonePageElementDefinition dropZonePageElementDefinition =
 				new DropZonePageElementDefinition();
 
-			pageDropZoneDefinition.setType(
+			dropZonePageElementDefinition.setType(
 				PageElementDefinition.Type.DROP_ZONE);
 
-			return pageDropZoneDefinition;
+			return dropZonePageElementDefinition;
 		}
 
 		if (Objects.equals(

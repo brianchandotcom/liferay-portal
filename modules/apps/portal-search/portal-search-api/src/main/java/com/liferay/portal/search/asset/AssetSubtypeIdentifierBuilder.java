@@ -8,15 +8,14 @@ package com.liferay.portal.search.asset;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Joshua Cords
+ * @author Bryan Engler
  */
 @ProviderType
-public interface AssetSubtypeIdentifier {
+public interface AssetSubtypeIdentifierBuilder {
 
-	public String getClassName();
+	public AssetSubtypeIdentifier build();
 
-	public String getGroupExternalReferenceCode();
-
-	public String getSubtypeExternalReferenceCode();
+	public AssetSubtypeIdentifierBuilder searchableAssetType(
+		String searchableAssetType);
 
 }

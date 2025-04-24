@@ -8,9 +8,10 @@ package com.liferay.oauth2.provider.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -42,7 +43,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 	@Test
 	public void testResponseCodeLocationApplication() {
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
@@ -55,10 +56,10 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		URI locationURI = response.getLocation();
 
-		Assert.assertEquals(locationURI.getHost(), _HOST);
+		Assert.assertEquals(locationURI.getHost(), _host);
 
 		response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCodePKCE"
@@ -71,13 +72,13 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		locationURI = response.getLocation();
 
-		Assert.assertNotEquals(locationURI.toString(), _HOST);
+		Assert.assertNotEquals(locationURI.toString(), _host);
 	}
 
 	@Test
 	public void testResponseCodeLocationTrustedApplication() {
 		Response response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestTrustedApplicationCode"
@@ -90,10 +91,10 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		URI locationURI = response.getLocation();
 
-		Assert.assertNotEquals(locationURI.getHost(), _HOST);
+		Assert.assertNotEquals(locationURI.getHost(), _host);
 
 		response = getCodeResponse(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestTrustedApplicationCodePKCE"
@@ -106,7 +107,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		locationURI = response.getLocation();
 
-		Assert.assertNotEquals(locationURI.getHost(), _HOST);
+		Assert.assertNotEquals(locationURI.getHost(), _host);
 	}
 
 	public static class TrustedApplicationClientTestPreparatorBundleActivator
@@ -114,25 +115,29 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_host = CompanyLocalServiceUtil.getCompany(
+				companyId
+			).getVirtualHostname();
+
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCode",
+				companyId, _user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
 				Collections.singletonList("everything"), false);
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestApplicationCodePKCE",
+				companyId, _user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestTrustedApplicationCode",
+				companyId, _user, "oauthTestTrustedApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
 				Collections.singletonList("everything"), true);
 			createOAuth2ApplicationWithNone(
-				defaultCompanyId, user, "oauthTestTrustedApplicationCodePKCE",
+				companyId, _user, "oauthTestTrustedApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), true);
@@ -146,6 +151,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 			TrustedApplicationClientTestPreparatorBundleActivator();
 	}
 
-	private static final String _HOST = "localhost";
+	private static String _host;
+	private static User _user;
 
 }

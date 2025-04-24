@@ -708,7 +708,7 @@ components:
                 successFormSubmissionResult:
                     # @review
                     description:
-                        The definition for the success message of the form.
+                        The definition of the result when a form submission is successful.
                     oneOf:
                         -   $ref: "#/components/schemas/MessageFormSubmissionResult"
                         -   $ref: "#/components/schemas/SitePageFormSubmissionResult"

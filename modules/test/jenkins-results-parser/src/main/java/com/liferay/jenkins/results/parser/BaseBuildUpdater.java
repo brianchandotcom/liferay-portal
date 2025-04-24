@@ -286,6 +286,20 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 					message, "jenkins", "Build reinvoked",
 					reinvokeRule.notificationRecipients);
 			}
+
+			String reinvokeBuildPriority =
+				reinvokeRule.getReinvokeBuildPriority();
+
+			if ((reinvokeBuildPriority != null) &&
+				!reinvokeBuildPriority.isEmpty()) {
+
+				Map<String, String> reinvokeBuildParameters = new HashMap<>();
+
+				reinvokeBuildParameters.put(
+					"BUILD_PRIORITY", reinvokeBuildPriority);
+
+				reinvoke(reinvokeBuildParameters);
+			}
 		}
 
 		reinvoke();

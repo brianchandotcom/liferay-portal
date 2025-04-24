@@ -81,12 +81,12 @@ public abstract class BasePortalInstanceOperationTestCase
 			_configurationAdmin.listConfigurations(
 				"(service.pid=" + pid + ")"));
 
-		Dictionary<Object, Object> properties = ReflectionTestUtil.invoke(
+		Dictionary<Object, Object> dictionary = ReflectionTestUtil.invoke(
 			_persistenceManager, "_getDictionary",
 			new Class<?>[] {String.class}, pid);
 
 		Assert.assertTrue(
-			(boolean)properties.get("_felix_.cm.newConfiguration"));
+			(boolean)dictionary.get("_felix_.cm.newConfiguration"));
 	}
 
 	protected void assertLog(LogCapture logCapture, String expectedMessage) {

@@ -51,14 +51,14 @@ public class Fields implements Iterable<Field>, Serializable {
 			return Objects.equals(_fieldsMap, fields._fieldsMap);
 		}
 
-		List<Field> fieldsList1 = getFieldsList(includePrivateFields);
-		List<Field> fieldsList2 = fields.getFieldsList(includePrivateFields);
+		List<Field> fields1 = getFieldsList(includePrivateFields);
+		List<Field> fields2 = fields.getFieldsList(includePrivateFields);
 
-		if (fieldsList1.size() != fieldsList2.size()) {
+		if (fields1.size() != fields2.size()) {
 			return false;
 		}
 
-		return fieldsList1.containsAll(fieldsList2);
+		return fields1.containsAll(fields2);
 	}
 
 	public Field get(String name) {
@@ -132,13 +132,13 @@ public class Fields implements Iterable<Field>, Serializable {
 	public Iterator<Field> iterator(
 		Comparator<Field> comparator, boolean includePrivateFields) {
 
-		List<Field> fieldsList = getFieldsList(includePrivateFields);
+		List<Field> fields = getFieldsList(includePrivateFields);
 
 		if (comparator != null) {
-			Collections.sort(fieldsList, comparator);
+			Collections.sort(fields, comparator);
 		}
 
-		return fieldsList.iterator();
+		return fields.iterator();
 	}
 
 	public void put(Field field) {
@@ -150,17 +150,17 @@ public class Fields implements Iterable<Field>, Serializable {
 	}
 
 	protected List<Field> getFieldsList(boolean includePrivateFields) {
-		List<Field> fieldsList = new ArrayList<>();
+		List<Field> fields = new ArrayList<>();
 
 		for (Field field : _fieldsMap.values()) {
 			if (!includePrivateFields && field.isPrivate()) {
 				continue;
 			}
 
-			fieldsList.add(field);
+			fields.add(field);
 		}
 
-		return fieldsList;
+		return fields;
 	}
 
 	private final Map<String, Field> _fieldsMap = new HashMap<>();

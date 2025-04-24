@@ -17,9 +17,9 @@ public interface DDMFormFieldValueRenderer {
 
 	public String getSupportedDDMFormFieldType();
 
-	public String render(DDMFormFieldValue ddmFormFieldValues, Locale locale);
+	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale);
 
 	public String render(
-		List<DDMFormFieldValue> ddmFormFieldValue, Locale locale);
+		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale);
 
 }

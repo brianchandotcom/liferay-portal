@@ -44,13 +44,14 @@ public class EditCategoryDisplayContext {
 
 	public String getCategoryByCategoryIdApiUrl() {
 		return StringBundler.concat(
-			_BASE_API_URL, "/taxonomy-categories/", getCategoryId());
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+			getCategoryId());
 	}
 
 	public String getCategoryByVocabularyIdApiUrl() {
 		return StringBundler.concat(
-			_BASE_API_URL, "/taxonomy-vocabularies/", getVocabularyId(),
-			"/taxonomy-categories");
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
+			getVocabularyId(), "/taxonomy-categories");
 	}
 
 	public long getCategoryId() {
@@ -118,9 +119,6 @@ public class EditCategoryDisplayContext {
 
 		return _vocabularyId;
 	}
-
-	private static final String _BASE_API_URL =
-		"/o/headless-admin-taxonomy/v1.0";
 
 	private Long _categoryId;
 	private final HttpServletRequest _httpServletRequest;

@@ -92,8 +92,8 @@ public class ViewCategoriesDisplayContext {
 
 	public String getCategoriesByVocabularyIdApiUrl() {
 		return StringBundler.concat(
-			_BASE_API_URL, "/taxonomy-vocabularies/", getVocabularyId(),
-			"/taxonomy-categories");
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
+			getVocabularyId(), "/taxonomy-categories");
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -178,9 +178,6 @@ public class ViewCategoriesDisplayContext {
 			LiferayWindowState.POP_UP
 		).buildString();
 	}
-
-	private static final String _BASE_API_URL =
-		"/o/headless-admin-taxonomy/v1.0";
 
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final HttpServletRequest _httpServletRequest;

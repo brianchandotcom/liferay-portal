@@ -73,7 +73,7 @@ public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 		return nestedDDMFormFieldValues;
 	}
 
-	private final List<DDMFormValuesFilter> _ddmFormValuesFilters;
 	private final DDMFormValues _ddmFormValues;
+	private final List<DDMFormValuesFilter> _ddmFormValuesFilters;
 
 }

@@ -35,14 +35,15 @@ public class ColumnLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		ColumnPageElementDefinition pageColumnDefinition =
+		ColumnPageElementDefinition columnPageElementDefinition =
 			(ColumnPageElementDefinition)pageElement.getDefinition();
 
-		if (pageColumnDefinition == null) {
+		if (columnPageElementDefinition == null) {
 			return columnLayoutStructureItem;
 		}
 
-		columnLayoutStructureItem.setSize(pageColumnDefinition.getSize());
+		columnLayoutStructureItem.setSize(
+			columnPageElementDefinition.getSize());
 
 		return columnLayoutStructureItem;
 	}

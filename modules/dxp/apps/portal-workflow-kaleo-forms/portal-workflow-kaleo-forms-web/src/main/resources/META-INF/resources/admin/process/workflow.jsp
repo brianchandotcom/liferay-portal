@@ -214,8 +214,8 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 	window['<portlet:namespace />editWorkflow'] = (uri) => {
 		Liferay.Util.openModal({
-			iframeBodyCssClass: '',
 			containerProps: {},
+			iframeBodyCssClass: '',
 			title: '<liferay-ui:message key="workflow" />',
 			url: uri,
 		});

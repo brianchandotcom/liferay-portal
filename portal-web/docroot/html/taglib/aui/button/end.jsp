@@ -106,8 +106,8 @@
 				event.preventDefault();
 
 				Liferay.Util.openModal({
-					iframeBodyCssClass: 'dialog-with-footer'
 					containerProps: {},
+					iframeBodyCssClass: 'dialog-with-footer'
 				});
 			}
 		);

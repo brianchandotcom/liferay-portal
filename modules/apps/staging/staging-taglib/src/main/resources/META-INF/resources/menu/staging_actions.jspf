@@ -23,8 +23,8 @@
 					event.preventDefault();
 
 					Liferay.Util.openModal({
-						iframeBodyCssClass: '',
 						containerProps: {},
+						iframeBodyCssClass: '',
 						title: '<%= UnicodeFormatter.toString(publishMessage) %>',
 						url: publishGlobalLink.getAttribute('href'),
 					});
@@ -222,8 +222,8 @@
 						event.preventDefault();
 
 						Liferay.Util.openModal({
-							iframeBodyCssClass: '',
 							containerProps: {},
+							iframeBodyCssClass: '',
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
 							url: publishLink.getAttribute('href'),
 						});
@@ -239,12 +239,12 @@
 						event.preventDefault();
 
 						Liferay.Util.openModal({
+							containerProps: {},
+							id: '<portlet:namespace />publishLatestChangesDialog',
+							iframeBodyCssClass: 'dialog-with-footer',
 							onClose: () => {
 								window.location.reload();
 							},
-							iframeBodyCssClass: 'dialog-with-footer',
-							containerProps: {},
-							id: '<portlet:namespace />publishLatestChangesDialog',
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
 							url: publishToLiveLink.getAttribute('href'),
 						});
@@ -290,9 +290,9 @@
 						event.preventDefault();
 
 						Liferay.Util.openModal({
-							iframeBodyCssClass: 'dialog-with-footer',
 							containerProps: {},
 							id: '<portlet:namespace />layoutSetBranches',
+							iframeBodyCssClass: 'dialog-with-footer',
 							title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
 							url: layoutSetBranchesLink.getAttribute('href'),
 						});

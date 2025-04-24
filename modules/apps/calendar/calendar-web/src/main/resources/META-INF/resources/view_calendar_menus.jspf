@@ -27,8 +27,8 @@
 
 					if (calendarResourceId) {
 						Liferay.Util.openModal({
-							iframeBodyCssClass: '',
 							containerProps: {},
+							iframeBodyCssClass: '',
 							onClose: function (event) {
 								remoteServices.getResourceCalendars(
 									calendarResourceId,
@@ -104,9 +104,8 @@
 					/>
 
 					Liferay.Util.openModal({
-						iframeBodyCssClass: 'dialog-with-footer',
 						containerProps: {},
-
+						iframeBodyCssClass: 'dialog-with-footer',
 						title: '<liferay-ui:message key="permissions" />',
 						url: decodeURIComponent('<%= permissionsURL %>'),
 					});
@@ -157,8 +156,8 @@
 					</portlet:renderURL>
 
 					Liferay.Util.openModal({
-						iframeBodyCssClass: '',
 						containerProps: {},
+						iframeBodyCssClass: '',
 						onClose: function (event) {
 							<portlet:namespace />scheduler.load();
 						},
@@ -198,8 +197,8 @@
 					var activeCalendar = calendarList.activeItem;
 
 					Liferay.Util.openModal({
-						iframeBodyCssClass: '',
 						containerProps: {},
+						iframeBodyCssClass: '',
 						onClose: function (event) {
 							remoteServices.getCalendar(
 								activeCalendar.get('calendarId'),
@@ -257,11 +256,11 @@
 					var activeCalendar = calendarList.activeItem;
 
 					Liferay.Util.openModal({
+						containerProps: {},
+						iframeBodyCssClass: 'dialog-with-footer',
 						onClose: function (event) {
 							<portlet:namespace />scheduler.load();
 						},
-						iframeBodyCssClass: 'dialog-with-footer',
-						containerProps: {},
 						title: '<liferay-ui:message key="permissions" />',
 
 						<liferay-security:permissionsURL

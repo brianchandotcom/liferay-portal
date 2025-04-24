@@ -746,7 +746,9 @@ public class FreeMarkerTool {
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			Operation operation = javaMethodSignature.getOperation();
 
-			if (!Objects.equals(getHTTPMethod(operation), "post")) {
+			if (!Objects.equals(getHTTPMethod(operation), "post") ||
+				!hasParameter(javaMethodSignature, parameterName)) {
+
 				continue;
 			}
 
@@ -761,6 +763,11 @@ public class FreeMarkerTool {
 			if (parameterName.endsWith("Id")) {
 				parameterName = parameterName.substring(
 					0, parameterName.length() - 2);
+			}
+
+			if (parameterName.endsWith("ExternalReferenceCode")) {
+				parameterName = parameterName.substring(
+					0, parameterName.length() - 21);
 			}
 
 			sb.append(StringUtil.upperCaseFirstLetter(parameterName));

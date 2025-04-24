@@ -106,22 +106,23 @@ public class DDMFormInstanceVersionLocalServiceImpl
 			long formInstanceId, int status)
 		throws PortalException {
 
-		List<DDMFormInstanceVersion> formInstanceVersions =
+		List<DDMFormInstanceVersion> ddmFormInstanceVersions =
 			ddmFormInstanceVersionPersistence.findByF_S(formInstanceId, status);
 
-		if (formInstanceVersions.isEmpty()) {
+		if (ddmFormInstanceVersions.isEmpty()) {
 			throw new NoSuchFormInstanceVersionException(
 				StringBundler.concat(
 					"No form instance versions found for form instance ID ",
 					formInstanceId, " with status ", status));
 		}
 
-		formInstanceVersions = ListUtil.copy(formInstanceVersions);
+		ddmFormInstanceVersions = ListUtil.copy(ddmFormInstanceVersions);
 
 		Collections.sort(
-			formInstanceVersions, new FormInstanceVersionVersionComparator());
+			ddmFormInstanceVersions,
+			new FormInstanceVersionVersionComparator());
 
-		return formInstanceVersions.get(0);
+		return ddmFormInstanceVersions.get(0);
 	}
 
 }

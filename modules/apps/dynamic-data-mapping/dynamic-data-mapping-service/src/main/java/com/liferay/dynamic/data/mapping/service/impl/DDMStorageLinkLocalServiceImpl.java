@@ -80,11 +80,11 @@ public class DDMStorageLinkLocalServiceImpl
 
 	@Override
 	public void deleteStructureStorageLinks(long structureId) {
-		List<DDMStorageLink> storageLinks =
+		List<DDMStorageLink> ddmStorageLinks =
 			ddmStorageLinkPersistence.findByStructureId(structureId);
 
-		for (DDMStorageLink storageLink : storageLinks) {
-			deleteStorageLink(storageLink);
+		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
+			deleteStorageLink(ddmStorageLink);
 		}
 	}
 

@@ -74,14 +74,14 @@ public class DDMDataProviderInstanceLinkLocalServiceImpl
 
 	@Override
 	public void deleteDataProviderInstanceLinks(long structureId) {
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			ddmDataProviderInstanceLinkPersistence.findByStructureId(
 				structureId);
 
-		for (DDMDataProviderInstanceLink dataProviderInstanceLink :
-				dataProviderInstanceLinks) {
+		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+				ddmDataProviderInstanceLinks) {
 
-			deleteDataProviderInstanceLink(dataProviderInstanceLink);
+			deleteDataProviderInstanceLink(ddmDataProviderInstanceLink);
 		}
 	}
 

@@ -545,14 +545,14 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure versions
 
-		List<DDMStructureVersion> structureVersions =
+		List<DDMStructureVersion> ddmStructureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(
 				structure.getStructureId());
 
-		for (DDMStructureVersion structureVersion : structureVersions) {
+		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
 			try {
 				_ddmStructureLayoutPersistence.removeByStructureVersionId(
-					structureVersion.getStructureVersionId());
+					ddmStructureVersion.getStructureVersionId());
 			}
 			catch (NoSuchStructureLayoutException
 						noSuchStructureLayoutException) {
@@ -562,7 +562,7 @@ public class DDMStructureLocalServiceImpl
 				}
 			}
 
-			_ddmStructureVersionPersistence.remove(structureVersion);
+			_ddmStructureVersionPersistence.remove(ddmStructureVersion);
 		}
 
 		// Resources
@@ -635,20 +635,20 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public void deleteStructures(long groupId) throws PortalException {
-		List<DDMStructure> structures = ddmStructurePersistence.findByGroupId(
-			groupId);
+		List<DDMStructure> ddmStructures =
+			ddmStructurePersistence.findByGroupId(groupId);
 
-		_deleteStructures(structures);
+		_deleteStructures(ddmStructures);
 	}
 
 	@Override
 	public void deleteStructures(long groupId, long classNameId)
 		throws PortalException {
 
-		List<DDMStructure> structures = ddmStructurePersistence.findByG_C(
+		List<DDMStructure> ddmStructures = ddmStructurePersistence.findByG_C(
 			groupId, classNameId);
 
-		_deleteStructures(structures);
+		_deleteStructures(ddmStructures);
 	}
 
 	/**
@@ -1712,32 +1712,32 @@ public class DDMStructureLocalServiceImpl
 		return _ddmStructureVersionPersistence.update(structureVersion);
 	}
 
-	private Set<Long> _deleteStructures(List<DDMStructure> structures)
+	private Set<Long> _deleteStructures(List<DDMStructure> ddmStructures)
 		throws PortalException {
 
-		if (ListUtil.isEmpty(structures)) {
+		if (ListUtil.isEmpty(ddmStructures)) {
 			return Collections.emptySet();
 		}
 
 		Set<Long> deletedStructureIds = new HashSet<>();
 
-		for (DDMStructure structure : structures) {
-			if (deletedStructureIds.contains(structure.getStructureId())) {
+		for (DDMStructure ddmStructure : ddmStructures) {
+			if (deletedStructureIds.contains(ddmStructure.getStructureId())) {
 				continue;
 			}
 
 			if (!GroupThreadLocal.isDeleteInProcess()) {
 				List<DDMStructure> childDDMStructures =
 					ddmStructurePersistence.findByParentStructureId(
-						structure.getStructureId());
+						ddmStructure.getStructureId());
 
 				deletedStructureIds.addAll(
 					_deleteStructures(childDDMStructures));
 			}
 
-			ddmStructureLocalService.deleteStructure(structure);
+			ddmStructureLocalService.deleteStructure(ddmStructure);
 
-			deletedStructureIds.add(structure.getStructureId());
+			deletedStructureIds.add(ddmStructure.getStructureId());
 		}
 
 		return deletedStructureIds;
@@ -2072,10 +2072,10 @@ public class DDMStructureLocalServiceImpl
 						structure.getDDMForm(), _jsonDDMFormDeserializer,
 						_jsonDDMFormSerializer, _ddmTemplateLocalService);
 
-				List<DDMTemplate> templates = _getStructureTemplates(
+				List<DDMTemplate> ddmTemplates = _getStructureTemplates(
 					structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 
-				ddmFormTemplateSynchonizer.setDDMFormTemplates(templates);
+				ddmFormTemplateSynchonizer.setDDMFormTemplates(ddmTemplates);
 
 				ddmFormTemplateSynchonizer.synchronize();
 
@@ -2089,21 +2089,21 @@ public class DDMStructureLocalServiceImpl
 		Set<Long> dataProviderInstanceIds = _getDataProviderInstanceIds(
 			groupId, ddmForm);
 
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structureId);
 
-		for (DDMDataProviderInstanceLink dataProviderInstanceLink :
-				dataProviderInstanceLinks) {
+		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+				ddmDataProviderInstanceLinks) {
 
 			if (dataProviderInstanceIds.remove(
-					dataProviderInstanceLink.getDataProviderInstanceId())) {
+					ddmDataProviderInstanceLink.getDataProviderInstanceId())) {
 
 				continue;
 			}
 
 			_ddmDataProviderInstanceLinkLocalService.
-				deleteDataProviderInstanceLink(dataProviderInstanceLink);
+				deleteDataProviderInstanceLink(ddmDataProviderInstanceLink);
 		}
 
 		for (Long dataProviderInstanceId : dataProviderInstanceIds) {

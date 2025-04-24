@@ -39,21 +39,21 @@ public class DDMStructureVersionLocalServiceImpl
 	public DDMStructureVersion getLatestStructureVersion(long structureId)
 		throws PortalException {
 
-		List<DDMStructureVersion> structureVersions =
+		List<DDMStructureVersion> ddmStructureVersions =
 			ddmStructureVersionPersistence.findByStructureId(structureId);
 
-		if (structureVersions.isEmpty()) {
+		if (ddmStructureVersions.isEmpty()) {
 			throw new NoSuchStructureVersionException(
 				"No structure versions found for dynamic data mapping " +
 					"structure ID " + structureId);
 		}
 
-		structureVersions = ListUtil.copy(structureVersions);
+		ddmStructureVersions = ListUtil.copy(ddmStructureVersions);
 
 		Collections.sort(
-			structureVersions, new StructureVersionVersionComparator());
+			ddmStructureVersions, new StructureVersionVersionComparator());
 
-		return structureVersions.get(0);
+		return ddmStructureVersions.get(0);
 	}
 
 	@Override

@@ -64,11 +64,11 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 	@Override
 	public void deleteContents(long groupId) {
-		List<DDMContent> contents = ddmContentPersistence.findByGroupId(
+		List<DDMContent> ddmContents = ddmContentPersistence.findByGroupId(
 			groupId);
 
-		for (DDMContent content : contents) {
-			deleteContent(content);
+		for (DDMContent ddmContent : ddmContents) {
+			deleteContent(ddmContent);
 		}
 	}
 

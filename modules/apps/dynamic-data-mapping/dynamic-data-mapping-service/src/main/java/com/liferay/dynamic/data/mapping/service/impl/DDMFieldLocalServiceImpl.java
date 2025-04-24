@@ -349,9 +349,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		Map<String, Long> instanceToFieldIdMap = new HashMap<>();
 
-		List<Map.Entry<DDMField, DDMFieldInfo>> childrenDDMFields =
+		List<Map.Entry<DDMField, DDMFieldInfo>> childrenDDMFieldEntries =
 			new ArrayList<>();
-		List<Map.Entry<DDMField, DDMFieldInfo>> parentsDDMFields =
+		List<Map.Entry<DDMField, DDMFieldInfo>> parentsDDMFieldEntries =
 			new ArrayList<>();
 
 		for (Map.Entry<DDMField, DDMFieldInfo> entry :
@@ -362,18 +362,18 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			if ((ddmFieldInfo == null) ||
 				(ddmFieldInfo._parentInstanceId == null)) {
 
-				parentsDDMFields.add(entry);
+				parentsDDMFieldEntries.add(entry);
 			}
 			else {
-				childrenDDMFields.add(entry);
+				childrenDDMFieldEntries.add(entry);
 			}
 		}
 
 		ddmFormUpdateContext._ddmFieldEntries.clear();
 
-		ddmFormUpdateContext._ddmFieldEntries.addAll(parentsDDMFields);
+		ddmFormUpdateContext._ddmFieldEntries.addAll(parentsDDMFieldEntries);
 
-		ddmFormUpdateContext._ddmFieldEntries.addAll(childrenDDMFields);
+		ddmFormUpdateContext._ddmFieldEntries.addAll(childrenDDMFieldEntries);
 
 		for (Map.Entry<DDMField, DDMFieldInfo> entry :
 				ddmFormUpdateContext._ddmFieldEntries) {
@@ -464,9 +464,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	private void _collectDDMFieldInfos(
 		Map<String, DDMFieldInfo> ddmFieldInfoMap,
 		Map<String, DDMFormField> ddmFormFieldMap,
-		List<DDMFormFieldValue> ddmFormValues, String parentInstanceId) {
+		List<DDMFormFieldValue> ddmFormFieldValues, String parentInstanceId) {
 
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormValues) {
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldMap.get(
 				ddmFormFieldValue.getName());
 
@@ -524,11 +524,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					valueString);
 
-				Set<String> keySet = jsonObject.keySet();
+				Set<String> keys = jsonObject.keySet();
 
-				if (!keySet.isEmpty()) {
+				if (!keys.isEmpty()) {
 					List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
-						new ArrayList<>(keySet.size());
+						new ArrayList<>(keys.size());
 
 					for (String key : jsonObject.keySet()) {
 						ddmFieldAttributeInfos.add(

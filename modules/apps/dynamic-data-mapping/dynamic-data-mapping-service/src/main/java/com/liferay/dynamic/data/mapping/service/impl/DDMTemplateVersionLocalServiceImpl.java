@@ -38,20 +38,20 @@ public class DDMTemplateVersionLocalServiceImpl
 	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
 		throws PortalException {
 
-		List<DDMTemplateVersion> templateVersions =
+		List<DDMTemplateVersion> ddmTemplateVersions =
 			ddmTemplateVersionPersistence.findByTemplateId(templateId);
 
-		if (templateVersions.isEmpty()) {
+		if (ddmTemplateVersions.isEmpty()) {
 			throw new NoSuchTemplateVersionException(
 				"No template versions found for template ID " + templateId);
 		}
 
-		templateVersions = ListUtil.copy(templateVersions);
+		ddmTemplateVersions = ListUtil.copy(ddmTemplateVersions);
 
 		Collections.sort(
-			templateVersions, new TemplateVersionVersionComparator());
+			ddmTemplateVersions, new TemplateVersionVersionComparator());
 
-		return templateVersions.get(0);
+		return ddmTemplateVersions.get(0);
 	}
 
 	@Override

@@ -81,21 +81,21 @@ public class DDMStructureLinkLocalServiceImpl
 
 	@Override
 	public void deleteStructureLinks(long classNameId, long classPK) {
-		List<DDMStructureLink> structureLinks =
+		List<DDMStructureLink> ddmStructureLinks =
 			ddmStructureLinkPersistence.findByC_C(classNameId, classPK);
 
-		for (DDMStructureLink ddmStructureLink : structureLinks) {
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
 			deleteStructureLink(ddmStructureLink);
 		}
 	}
 
 	@Override
 	public void deleteStructureStructureLinks(long structureId) {
-		List<DDMStructureLink> structureLinks =
+		List<DDMStructureLink> ddmStructureLinks =
 			ddmStructureLinkPersistence.findByStructureId(structureId);
 
-		for (DDMStructureLink structureLink : structureLinks) {
-			deleteStructureLink(structureLink);
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
+			deleteStructureLink(ddmStructureLink);
 		}
 	}
 
@@ -219,17 +219,17 @@ public class DDMStructureLinkLocalServiceImpl
 			long classNameId, long classPK)
 		throws PortalException {
 
-		List<DDMStructureLink> structureLinks =
+		List<DDMStructureLink> ddmStructureLinks =
 			ddmStructureLinkPersistence.findByC_C(classNameId, classPK);
 
-		if (structureLinks.isEmpty()) {
+		if (ddmStructureLinks.isEmpty()) {
 			throw new NoSuchStructureLinkException(
 				StringBundler.concat(
 					"No DDMStructureLink found for {classNameId=", classNameId,
 					", classPK=", classPK, StringPool.CLOSE_CURLY_BRACE));
 		}
 
-		return structureLinks.get(0);
+		return ddmStructureLinks.get(0);
 	}
 
 	@Override

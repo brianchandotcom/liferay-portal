@@ -394,26 +394,27 @@ public class DDMTemplateLocalServiceImpl
 			long targetClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<DDMTemplate> targetTemplates = new ArrayList<>();
+		List<DDMTemplate> targetDDMTemplates = new ArrayList<>();
 
-		List<DDMTemplate> sourceTemplates = ddmTemplatePersistence.findByC_C_T(
-			classNameId, sourceClassPK, type);
+		List<DDMTemplate> sourceDDMTemplates =
+			ddmTemplatePersistence.findByC_C_T(
+				classNameId, sourceClassPK, type);
 
-		for (DDMTemplate sourceTemplate : sourceTemplates) {
+		for (DDMTemplate sourceDDMTemplate : sourceDDMTemplates) {
 			DDMTemplate targetTemplate = _copyTemplate(
-				userId, sourceTemplate, targetClassPK,
-				sourceTemplate.getNameMap(), sourceTemplate.getDescriptionMap(),
-				serviceContext);
+				userId, sourceDDMTemplate, targetClassPK,
+				sourceDDMTemplate.getNameMap(),
+				sourceDDMTemplate.getDescriptionMap(), serviceContext);
 
-			targetTemplates.add(targetTemplate);
+			targetDDMTemplates.add(targetTemplate);
 		}
 
 		Indexer<DDMTemplate> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DDMTemplate.class);
 
-		indexer.reindex(targetTemplates);
+		indexer.reindex(targetDDMTemplates);
 
-		return targetTemplates;
+		return targetDDMTemplates;
 	}
 
 	/**
@@ -495,11 +496,11 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public void deleteTemplates(long groupId) throws PortalException {
-		List<DDMTemplate> templates = ddmTemplatePersistence.findByGroupId(
+		List<DDMTemplate> ddmTemplates = ddmTemplatePersistence.findByGroupId(
 			groupId);
 
-		for (DDMTemplate template : templates) {
-			ddmTemplateLocalService.deleteTemplate(template);
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			ddmTemplateLocalService.deleteTemplate(ddmTemplate);
 		}
 	}
 
@@ -507,11 +508,11 @@ public class DDMTemplateLocalServiceImpl
 	public void deleteTemplates(long groupId, long classNameId)
 		throws PortalException {
 
-		List<DDMTemplate> templates = ddmTemplatePersistence.findByG_C(
+		List<DDMTemplate> ddmTemplates = ddmTemplatePersistence.findByG_C(
 			groupId, classNameId);
 
-		for (DDMTemplate template : templates) {
-			ddmTemplateLocalService.deleteTemplate(template);
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			ddmTemplateLocalService.deleteTemplate(ddmTemplate);
 		}
 	}
 

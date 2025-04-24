@@ -45,6 +45,10 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 	@Override
 	public void reinvoke() {
+		reinvoke(null);
+	}
+
+	public void reinvoke(Map<String, String> reinvokeBuildParameters) {
 		Build build = getBuild();
 
 		JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
@@ -56,7 +60,13 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		build.setJenkinsMaster(jenkinsMaster);
 
-		build.addInvocation(_invoke(jenkinsMaster));
+		if (reinvokeBuildParameters == null) {
+			build.addInvocation(_invoke(jenkinsMaster, null));
+		}
+		else {
+			build.addInvocation(
+				_invoke(jenkinsMaster, reinvokeBuildParameters));
+		}
 
 		build.reset();
 
@@ -356,6 +366,13 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 	}
 
 	private Build.Invocation _invoke(JenkinsMaster jenkinsMaster) {
+		return _invoke(jenkinsMaster, null);
+	}
+
+	private Build.Invocation _invoke(
+		JenkinsMaster jenkinsMaster,
+		Map<String, String> reinvokeBuildParameters) {
+
 		Build build = getBuild();
 
 		try {
@@ -371,6 +388,19 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 			Map<String, String> buildParameters = new HashMap<>(
 				build.getParameters());
+
+			if (reinvokeBuildParameters != null) {
+				for (Map.Entry<String, String> reinvokeBuildParameter :
+						reinvokeBuildParameters.entrySet()) {
+
+					String key = reinvokeBuildParameter.getKey();
+
+					if (buildParameters.containsKey(key)) {
+						buildParameters.put(
+							key, reinvokeBuildParameter.getValue());
+					}
+				}
+			}
 
 			for (Map.Entry<String, String> buildParameter :
 					buildParameters.entrySet()) {

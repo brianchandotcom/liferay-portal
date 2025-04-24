@@ -1,0 +1,3 @@
+Bundle-SymbolicName: jakarta.enterprise.cdi-el
+Bundle-Version: 4.1.0.LIFERAY-PATCHED-1
+Export-Package: jakarta.enterprise.inject.spi.el

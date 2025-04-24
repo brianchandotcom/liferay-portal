@@ -19,6 +19,7 @@ export const PORTLET_URLS = {
 	cmsPicklistBuilder: 'web/cms/picklist-builder',
 	cmsStructureBuilder: 'web/cms/structure-builder',
 	cmsStructures: 'web/cms/structures',
+	cmsTags: 'web/cms/categorization/view_tags',
 	cmsVocabularies: 'web/cms/categorization/view_vocabularies',
 	collections:
 		'/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet',

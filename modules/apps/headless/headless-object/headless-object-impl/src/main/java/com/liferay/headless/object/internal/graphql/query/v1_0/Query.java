@@ -5,7 +5,9 @@
 
 package com.liferay.headless.object.internal.graphql.query.v1_0;
 
+import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -40,12 +42,69 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setCollaboratorResourceComponentServiceObjects(
+		ComponentServiceObjects<CollaboratorResource>
+			collaboratorResourceComponentServiceObjects) {
+
+		_collaboratorResourceComponentServiceObjects =
+			collaboratorResourceComponentServiceObjects;
+	}
+
 	public static void setObjectEntryFolderResourceComponentServiceObjects(
 		ComponentServiceObjects<ObjectEntryFolderResource>
 			objectEntryFolderResourceComponentServiceObjects) {
 
 		_objectEntryFolderResourceComponentServiceObjects =
 			objectEntryFolderResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaborators(objectEntryFolderId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborators of an object entry folder."
+	)
+	public CollaboratorPage objectEntryFolderCollaborators(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource -> new CollaboratorPage(
+				collaboratorResource.getObjectEntryFolderCollaboratorsPage(
+					objectEntryFolderId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborators(externalReferenceCode: ___, page: ___, pageSize: ___, scopeKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborators of an object entry."
+	)
+	public CollaboratorPage
+			scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborators(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource -> new CollaboratorPage(
+				collaboratorResource.
+					getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
+						scopeKey, externalReferenceCode,
+						Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -119,6 +178,74 @@ public class Query {
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
 							objectEntryFolderResource, sortsString))));
+	}
+
+	@GraphQLTypeExtension(ObjectEntryFolder.class)
+	public class GetObjectEntryFolderCollaboratorsPageTypeExtension {
+
+		public GetObjectEntryFolderCollaboratorsPageTypeExtension(
+			ObjectEntryFolder objectEntryFolder) {
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the collaborators of an object entry folder."
+		)
+		public CollaboratorPage collaborators(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_collaboratorResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				collaboratorResource -> new CollaboratorPage(
+					collaboratorResource.getObjectEntryFolderCollaboratorsPage(
+						_objectEntryFolder.getId(),
+						Pagination.of(page, pageSize))));
+		}
+
+		private ObjectEntryFolder _objectEntryFolder;
+
+	}
+
+	@GraphQLName("CollaboratorPage")
+	public class CollaboratorPage {
+
+		public CollaboratorPage(Page collaboratorPage) {
+			actions = collaboratorPage.getActions();
+
+			facets = collaboratorPage.getFacets();
+
+			items = collaboratorPage.getItems();
+			lastPage = collaboratorPage.getLastPage();
+			page = collaboratorPage.getPage();
+			pageSize = collaboratorPage.getPageSize();
+			totalCount = collaboratorPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<Collaborator> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("ObjectEntryFolderPage")
@@ -206,6 +333,21 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			CollaboratorResource collaboratorResource)
+		throws Exception {
+
+		collaboratorResource.setContextAcceptLanguage(_acceptLanguage);
+		collaboratorResource.setContextCompany(_company);
+		collaboratorResource.setContextHttpServletRequest(_httpServletRequest);
+		collaboratorResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		collaboratorResource.setContextUriInfo(_uriInfo);
+		collaboratorResource.setContextUser(_user);
+		collaboratorResource.setGroupLocalService(_groupLocalService);
+		collaboratorResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ObjectEntryFolderResource objectEntryFolderResource)
 		throws Exception {
 
@@ -221,6 +363,8 @@ public class Query {
 		objectEntryFolderResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<CollaboratorResource>
+		_collaboratorResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectEntryFolderResource>
 		_objectEntryFolderResourceComponentServiceObjects;
 

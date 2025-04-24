@@ -8,7 +8,6 @@ package com.liferay.portal.db.partition.internal.operation.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -17,8 +16,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,15 +25,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DBPartitionCopyPortalInstanceOperationTest
 	extends BasePortalInstanceOperationTestCase {
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseDBPartitionTestCase.setUpClass();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-	}
 
 	@Override
 	public String getComponentName() {

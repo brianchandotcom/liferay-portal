@@ -3,7 +3,7 @@ Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} SOAP Connector for 
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Deprecated: false
+Liferay-Releng-Deprecated: true
 Liferay-Releng-Fix-Delivery-Method:
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true

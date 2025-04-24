@@ -140,9 +140,8 @@ public class ObjectEntryPerformanceTest {
 		try (Closeable closeable = new PerformanceTimer(
 				GetterUtil.getInteger(
 					_properties.getProperty("object.entries.get.max.time")),
-				"Get all the Object Entries by ObjectEntryLocalService with " +
-					"CustomObjectDefinitionId:" +
-						_customObjectDefinition.getObjectDefinitionId())) {
+				"Get object entries by object definition " +
+					_customObjectDefinition.getObjectDefinitionId())) {
 
 			_objectEntryLocalService.getObjectEntries(
 				0, _customObjectDefinition.getObjectDefinitionId(),
@@ -173,13 +172,13 @@ public class ObjectEntryPerformanceTest {
 			});
 
 		try {
-			_invokeHttp(null, HttpInvoker.HttpMethod.GET, _getPath(""));
+			_invoke(null, HttpInvoker.HttpMethod.GET, _getPath(""));
 		}
 		catch (ConnectException connectException) {
 			throw new Exception(
 				StringBundler.concat(
-					"\"", _VIRTUAL_HOST_NAME, "\" can not be resolved. Please ",
-					"add a mapping to /etc/hosts and rerun the test."),
+					"Unable to resolve \"", _VIRTUAL_HOST_NAME, "\". Update ",
+					"/etc/hosts and rerun the test."),
 				connectException);
 		}
 
@@ -211,21 +210,24 @@ public class ObjectEntryPerformanceTest {
 				GetterUtil.getInteger(
 					_properties.getProperty("object.entries.import.max.time")),
 				StringBundler.concat(
-					"Import all the ", _objectEntriesCount, " Object Entries ",
-					"to SampleObjectFolder by HTTP POST"))) {
+					"Import ", _objectEntriesCount, " object entries"))) {
 
-			_invokeHttp(
-				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
-				_getPath(_PATH_SUFFIX));
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			for (int i = 0; i < _objectEntriesCount; i++) {
+				jsonArray.put(JSONUtil.put("alpha", "foo"));
+			}
+
+			_invoke(
+				jsonArray.toString(), HttpInvoker.HttpMethod.POST,
+				_getPath("/o/c/foos/batch"));
 
 			List<ObjectDefinition> objectDefinitions =
-				_objectDefinitionLocalService.getCustomObjectDefinitions(
-					_CUSTOM_OBJECT_DEFINITION_STATUS);
+				_objectDefinitionLocalService.getCustomObjectDefinitions(0);
 
-			_customObjectDefinition = objectDefinitions.get(
-				_OBJECT_DEFINITION_LIST_INDEX);
+			_customObjectDefinition = objectDefinitions.get(0);
 
-			_waitForObjectEntriesCountChangedTo(
+			_waitFor(
 				0,
 				currentObjectEntriesCount ->
 					currentObjectEntriesCount < _objectEntriesCount);
@@ -235,10 +237,9 @@ public class ObjectEntryPerformanceTest {
 				GetterUtil.getInteger(
 					_properties.getProperty("object.entries.delete.max.time")),
 				StringBundler.concat(
-					"Delete all the ", _objectEntriesCount, " Object Entries ",
-					"from SampleObjectFolder by HTTP POST"))) {
+					"Delete ", _objectEntriesCount, " object entries"))) {
 
-			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
+			HttpInvoker.HttpResponse httpResponse = _invoke(
 				null, HttpInvoker.HttpMethod.GET,
 				_getPath(
 					"/o/c/foos/?fields=id&pageSize=" + _objectEntriesCount));
@@ -248,24 +249,14 @@ public class ObjectEntryPerformanceTest {
 
 			JSONArray jsonArray = (JSONArray)jsonObject.get("items");
 
-			_invokeHttp(
+			_invoke(
 				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
-				_getPath(_PATH_SUFFIX));
+				_getPath("/o/c/foos/batch"));
 
-			_waitForObjectEntriesCountChangedTo(
+			_waitFor(
 				_objectEntriesCount,
 				currentObjectEntriesCount -> currentObjectEntriesCount != 0);
 		}
-	}
-
-	private String _createObjectEntryJSON() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (int i = 0; i < _objectEntriesCount; i++) {
-			jsonArray.put(JSONUtil.put("alpha", "foo"));
-		}
-
-		return jsonArray.toString();
 	}
 
 	private String _getPath(String pathSuffix) {
@@ -273,7 +264,7 @@ public class ObjectEntryPerformanceTest {
 			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
 	}
 
-	private HttpInvoker.HttpResponse _invokeHttp(
+	private HttpInvoker.HttpResponse _invoke(
 			String bodyJSON, HttpInvoker.HttpMethod httpMethod, String path)
 		throws Exception {
 
@@ -293,21 +284,15 @@ public class ObjectEntryPerformanceTest {
 		return httpInvoker.invoke();
 	}
 
-	private void _waitForObjectEntriesCountChangedTo(
-		long currentObjectEntriesCount, Predicate<Long> condition) {
+	private void _waitFor(
+		long currentObjectEntriesCount, Predicate<Long> predicate) {
 
-		while (condition.test(currentObjectEntriesCount)) {
+		while (predicate.test(currentObjectEntriesCount)) {
 			currentObjectEntriesCount =
 				_objectEntryLocalService.getObjectEntriesCount(
 					_customObjectDefinition.getObjectDefinitionId());
 		}
 	}
-
-	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;
-
-	private static final int _OBJECT_DEFINITION_LIST_INDEX = 0;
-
-	private static final String _PATH_SUFFIX = "/o/c/foos/batch";
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 

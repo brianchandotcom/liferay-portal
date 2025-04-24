@@ -43,10 +43,9 @@ export default function CategorizationSpaces({
 	const [inputError, setInputError] = useState('');
 	const [newSelectedSpaces, setNewSelectedSpaces] = useState<number[]>([]);
 	const [selectedItems, setSelectedItems] = useState<Space[]>([]);
-
-	const initialSelectedSpaces = assetLibraries?.map(
-		(item: {id: number; name: string}) => item.id
-	);
+	const [initialSelectedSpaces, setInitialSelectedSpaces] = useState<
+		number[]
+	>([]);
 
 	useEffect(() => {
 		SpaceService.getSpaces().then((response) => {
@@ -56,8 +55,15 @@ export default function CategorizationSpaces({
 			}));
 
 			setAvailableSpaces(spaces);
+
+			const initialSelectedSpaces = assetLibraries?.map(
+				(item: {name: string}) =>
+					spaces.find((space) => space.label === item.name)?.value
+			);
+
+			setInitialSelectedSpaces(initialSelectedSpaces);
 		});
-	}, []);
+	}, [assetLibraries]);
 
 	const isChecked = (itemValue: number) => {
 		return newSelectedSpaces.includes(itemValue);
@@ -89,23 +95,14 @@ export default function CategorizationSpaces({
 		else if (assetLibraries) {
 			setCheckbox(false);
 
-			const initialSpaces = assetLibraries.map(
-				(item: {id: number; name: string}) => ({
-					label: item.name,
-					value: item.id,
-				})
-			);
-
-			setNewSelectedSpaces(
-				initialSpaces.map((item: {value: number}) => item.value)
-			);
+			setNewSelectedSpaces(initialSelectedSpaces);
 		}
-	}, [assetLibraries]);
+	}, [assetLibraries, initialSelectedSpaces]);
 
 	useEffect(() => {
 		setSelectedSpaces(newSelectedSpaces);
 
-		if (setSpaceChange) {
+		if (setSpaceChange && !checkbox) {
 			if (
 				initialSelectedSpaces?.some(
 					(item: number) => !newSelectedSpaces.includes(item)
@@ -130,6 +127,7 @@ export default function CategorizationSpaces({
 			);
 		}
 	}, [
+		checkbox,
 		initialSelectedSpaces,
 		newSelectedSpaces,
 		setSelectedSpaces,

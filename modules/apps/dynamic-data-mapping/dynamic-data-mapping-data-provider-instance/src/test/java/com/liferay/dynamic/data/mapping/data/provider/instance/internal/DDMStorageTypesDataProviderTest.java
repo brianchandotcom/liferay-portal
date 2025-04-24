@@ -49,7 +49,7 @@ public class DDMStorageTypesDataProviderTest {
 
 	@Test
 	public void testMultipleStorageAdapter() {
-		Set<String> expectedSet = new TreeSet<String>() {
+		Set<String> storageTypes = new TreeSet<String>() {
 			{
 				add("json");
 				add("txt");
@@ -57,30 +57,30 @@ public class DDMStorageTypesDataProviderTest {
 			}
 		};
 
-		_testStorageTypes(expectedSet);
+		_testStorageTypes(storageTypes);
 	}
 
 	@Test
 	public void testSingleStorageAdapter() {
-		Set<String> expectedSet = new TreeSet<String>() {
+		Set<String> storageTypes = new TreeSet<String>() {
 			{
 				add("json");
 			}
 		};
 
-		_testStorageTypes(expectedSet);
+		_testStorageTypes(storageTypes);
 	}
 
-	private void _testStorageTypes(Set<String> expectedSet) {
+	private void _testStorageTypes(Set<String> expectedStorageTypes) {
 		Mockito.when(
 			_ddmStorageAdapterRegistry.getDDMStorageAdapterTypes()
 		).thenReturn(
-			expectedSet
+			expectedStorageTypes
 		);
 
 		List<KeyValuePair> expectedKeyValuePairs = new ArrayList<>();
 
-		for (String type : expectedSet) {
+		for (String type : expectedStorageTypes) {
 			if (type.equals("json")) {
 				continue;
 			}

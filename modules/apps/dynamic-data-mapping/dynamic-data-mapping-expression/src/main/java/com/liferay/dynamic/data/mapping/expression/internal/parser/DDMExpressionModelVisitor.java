@@ -115,10 +115,10 @@ public class DDMExpressionModelVisitor
 
 		String functionName = getFunctionName(context.functionName);
 
-		List<Expression> parameters = getFunctionParameters(
+		List<Expression> parameterExpressions = getFunctionParameters(
 			context.functionParameters());
 
-		return new FunctionCallExpression(functionName, parameters);
+		return new FunctionCallExpression(functionName, parameterExpressions);
 	}
 
 	@Override
@@ -280,15 +280,15 @@ public class DDMExpressionModelVisitor
 			return Collections.emptyList();
 		}
 
-		List<Expression> parameters = new ArrayList<>();
+		List<Expression> parameterExpressions = new ArrayList<>();
 
 		for (int i = 0; i < context.getChildCount(); i += 2) {
 			Expression parameterExpression = visitChild(context, i);
 
-			parameters.add(parameterExpression);
+			parameterExpressions.add(parameterExpression);
 		}
 
-		return parameters;
+		return parameterExpressions;
 	}
 
 	protected <T> T visitChild(

@@ -119,21 +119,21 @@ This secret is created automatically when you run the Terraform auto-configurati
 
    ```bash
    helm upgrade liferay oci://[aws_chart] \
-     --create-namespace \
-     --install \
-     --namespace $(terraform output -raw deployment_namespace) \
-     --set "awsServiceAccountArn=$(terraform output -raw liferay_sa_role)" \
-     --values ../helm/values.yaml
+       --create-namespace \
+       --install \
+       --namespace $(terraform output -raw deployment_namespace) \
+       --set "awsServiceAccountArn=$(terraform output -raw liferay_sa_role)" \
+       --values ../helm/values.yaml
    ```
 
    If you have an externally created service account, use
 
    ```bash
    helm upgrade liferay oci://[aws_chart] \
-     --create-namespace \
-     --install \
-     --namespace $(terraform output -raw deployment_namespace) \
-     --set "serviceAccount.create=false" \
-     --set "serviceAccount.name=${SERVICE_ACCOUNT_NAME}" \
-     --values ../helm/values.yaml
+       --create-namespace \
+       --install \
+       --namespace $(terraform output -raw deployment_namespace) \
+       --set "serviceAccount.create=false" \
+       --set "serviceAccount.name=${SERVICE_ACCOUNT_NAME}" \
+       --values ../helm/values.yaml
    ```

@@ -41,38 +41,39 @@ public class CollectionLayoutStructureItemImporter
 							pageElement, layoutStructure),
 						pageElement.getPosition());
 
-		CollectionPageElementDefinition pageCollectionDefinition =
+		CollectionPageElementDefinition collectionPageElementDefinition =
 			(CollectionPageElementDefinition)pageElement.getDefinition();
 
-		if (pageCollectionDefinition == null) {
+		if (collectionPageElementDefinition == null) {
 			return collectionStyledLayoutStructureItem;
 		}
 
 		collectionStyledLayoutStructureItem.setDisplayAllItems(
-			pageCollectionDefinition.getDisplayAllItems());
+			collectionPageElementDefinition.getDisplayAllItems());
 		collectionStyledLayoutStructureItem.setEmptyCollectionOptions(
 			_toEmptyCollectionOptions(
-				pageCollectionDefinition.getEmptyCollectionConfig()));
+				collectionPageElementDefinition.getEmptyCollectionConfig()));
 		collectionStyledLayoutStructureItem.setDisplayAllPages(
-			pageCollectionDefinition.getDisplayAllPages());
+			collectionPageElementDefinition.getDisplayAllPages());
 		collectionStyledLayoutStructureItem.setListItemStyle(
-			pageCollectionDefinition.getListItemStyle());
+			collectionPageElementDefinition.getListItemStyle());
 		collectionStyledLayoutStructureItem.setListStyle(
-			pageCollectionDefinition.getListStyle());
+			collectionPageElementDefinition.getListStyle());
 		collectionStyledLayoutStructureItem.setNumberOfColumns(
-			pageCollectionDefinition.getNumberOfColumns());
+			collectionPageElementDefinition.getNumberOfColumns());
 		collectionStyledLayoutStructureItem.setNumberOfItems(
-			pageCollectionDefinition.getNumberOfItems());
+			collectionPageElementDefinition.getNumberOfItems());
 		collectionStyledLayoutStructureItem.setNumberOfItemsPerPage(
-			pageCollectionDefinition.getNumberOfItemsPerPage());
+			collectionPageElementDefinition.getNumberOfItemsPerPage());
 		collectionStyledLayoutStructureItem.setNumberOfPages(
-			pageCollectionDefinition.getNumberOfPages());
+			collectionPageElementDefinition.getNumberOfPages());
 		collectionStyledLayoutStructureItem.setPaginationType(
-			_toPaginationType(pageCollectionDefinition.getPaginationType()));
+			_toPaginationType(
+				collectionPageElementDefinition.getPaginationType()));
 		collectionStyledLayoutStructureItem.setTemplateKey(
-			pageCollectionDefinition.getTemplateKey());
+			collectionPageElementDefinition.getTemplateKey());
 		collectionStyledLayoutStructureItem.setName(
-			pageCollectionDefinition.getName());
+			collectionPageElementDefinition.getName());
 
 		return collectionStyledLayoutStructureItem;
 	}

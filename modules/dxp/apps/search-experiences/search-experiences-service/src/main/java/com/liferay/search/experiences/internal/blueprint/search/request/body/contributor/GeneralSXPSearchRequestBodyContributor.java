@@ -11,8 +11,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
+import com.liferay.search.experiences.internal.blueprint.search.asset.AssetSubtypeIdentifierImpl;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 
@@ -85,57 +87,53 @@ public class GeneralSXPSearchRequestBodyContributor
 			String[] searchableAssetTypes =
 				generalConfiguration.getSearchableAssetTypes();
 
-			Set<String> assetTypeNameSet = new HashSet<>();
+			HashMap<String, List<AssetSubtypeIdentifier>>
+				assetSubtypeIdentifiersMap = new HashMap<>();
+
+			Set<String> entryClassNameSet = new HashSet<>();
 
 			for (String searchableAssetType : searchableAssetTypes) {
-				String[] assetTypeIdentifier = StringUtil.split(
+				String[] assetSubtypeIdentifierParts = StringUtil.split(
 					searchableAssetType, "&&");
 
-				assetTypeNameSet.add(assetTypeIdentifier[0]);
-			}
+				String entryClassName = assetSubtypeIdentifierParts[0];
 
-			String[] assetTypeNames = assetTypeNameSet.toArray(new String[0]);
+				entryClassNameSet.add(entryClassName);
 
-			searchRequestBuilder.entryClassNames(assetTypeNames);
-			searchRequestBuilder.modelIndexerClassNames(assetTypeNames);
+				if ((assetSubtypeIdentifierParts.length != 3) ||
+					!FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
-				HashMap<String, List<String[]>> assetSubtypeNameHashMap =
-					new HashMap<>();
-
-				for (String searchableAssetType : searchableAssetTypes) {
-					String[] assetTypeIdentifier = StringUtil.split(
-						searchableAssetType, "&&");
-
-					if (assetTypeIdentifier.length <= 1) {
-						continue;
-					}
-
-					String assetTypeKey = assetTypeIdentifier[0];
-
-					List<String[]> searchableAssetSubtypeIdentifiers;
-
-					if (assetSubtypeNameHashMap.containsKey(assetTypeKey)) {
-						searchableAssetSubtypeIdentifiers =
-							assetSubtypeNameHashMap.get(assetTypeKey);
-
-						searchableAssetSubtypeIdentifiers.add(
-							assetTypeIdentifier);
-					}
-					else {
-						searchableAssetSubtypeIdentifiers = new ArrayList<>();
-
-						searchableAssetSubtypeIdentifiers.add(
-							assetTypeIdentifier);
-					}
-
-					assetSubtypeNameHashMap.put(
-						assetTypeKey, searchableAssetSubtypeIdentifiers);
+					continue;
 				}
 
+				List<AssetSubtypeIdentifier> assetSubtypeIdentifiers;
+
+				if (assetSubtypeIdentifiersMap.containsKey(entryClassName)) {
+					assetSubtypeIdentifiers = assetSubtypeIdentifiersMap.get(
+						entryClassName);
+				}
+				else {
+					assetSubtypeIdentifiers = new ArrayList<>();
+				}
+
+				assetSubtypeIdentifiers.add(
+					new AssetSubtypeIdentifierImpl(
+						assetSubtypeIdentifierParts[1],
+						assetSubtypeIdentifierParts[2]));
+
+				assetSubtypeIdentifiersMap.put(
+					entryClassName, assetSubtypeIdentifiers);
+			}
+
+			String[] entryClassNames = entryClassNameSet.toArray(new String[0]);
+
+			searchRequestBuilder.entryClassNames(entryClassNames);
+			searchRequestBuilder.modelIndexerClassNames(entryClassNames);
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
 				searchRequestBuilder.withSearchContext(
 					searchContext -> searchContext.setAttribute(
-						"searchableAssetSubtypesMap", assetSubtypeNameHashMap));
+						"assetSubtypeIdentifiers", assetSubtypeIdentifiersMap));
 			}
 		}
 

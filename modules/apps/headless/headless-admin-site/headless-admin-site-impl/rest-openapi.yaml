@@ -3629,51 +3629,6 @@ paths:
                                 $ref: "#/components/schemas/DisplayPageTemplateFolder"
             # @review
             tags: ["DisplayPageTemplateFolder"]
-    "/sites/{siteExternalReferenceCode}/display-page-template-folders/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["DisplayPageTemplateFolder"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["DisplayPageTemplateFolder"]
     "/sites/{siteExternalReferenceCode}/display-page-template-folders/{displayPageTemplateFolderExternalReferenceCode}":
         delete:
             # @review
@@ -4069,51 +4024,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DisplayPageTemplate"
             # @review
-            tags: ["DisplayPageTemplate"]
-    "/sites/{siteExternalReferenceCode}/display-page-templates/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["DisplayPageTemplate"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             tags: ["DisplayPageTemplate"]
     "/sites/{siteExternalReferenceCode}/display-page-templates/{displayPageTemplateExternalReferenceCode}":
         delete:
@@ -4799,51 +4709,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MasterPage"
             # @review
-            tags: ["MasterPage"]
-    "/sites/{siteExternalReferenceCode}/master-pages/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["MasterPage"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodeMasterPagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             tags: ["MasterPage"]
     "/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}":
         delete:
@@ -6924,51 +6789,6 @@ paths:
                                 $ref: "#/components/schemas/PageTemplateSet"
             # @review
             tags: ["PageTemplateSet"]
-    "/sites/{siteExternalReferenceCode}/page-template-sets/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["PageTemplateSet"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["PageTemplateSet"]
     "/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}":
         delete:
             # @review
@@ -7365,51 +7185,6 @@ paths:
                                 $ref: "#/components/schemas/PageTemplate"
             # @review
             tags: ["PageTemplate"]
-    "/sites/{siteExternalReferenceCode}/page-templates/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["PageTemplate"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["PageTemplate"]
     "/sites/{siteExternalReferenceCode}/page-templates/{pageTemplateExternalReferenceCode}":
         delete:
             # @review
@@ -7799,51 +7574,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SitePage"
             # @review
-            tags: ["SitePage"]
-    "/sites/{siteExternalReferenceCode}/site-pages/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodeSitePagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["SitePage"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodeSitePagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             tags: ["SitePage"]
     "/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}":
         delete:
@@ -8535,51 +8265,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UtilityPage"
             # @review
-            tags: ["UtilityPage"]
-    "/sites/{siteExternalReferenceCode}/utility-pages/permissions":
-        get:
-            operationId: getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-                -   in: query
-                    name: roleNames
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["UtilityPage"]
-        put:
-            operationId: putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage
-            parameters:
-                -   in: path
-                    name: siteExternalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json: {}
-                    application/xml: {}
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             tags: ["UtilityPage"]
     "/sites/{siteExternalReferenceCode}/utility-pages/{utilityPageExternalReferenceCode}":
         delete:

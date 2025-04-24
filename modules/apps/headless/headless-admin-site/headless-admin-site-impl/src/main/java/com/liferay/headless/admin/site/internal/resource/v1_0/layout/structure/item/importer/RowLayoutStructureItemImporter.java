@@ -53,12 +53,12 @@ public class RowLayoutStructureItemImporter
 			rowPageElementDefinition.getGutters());
 		rowStyledLayoutStructureItem.setIndexed(
 			rowPageElementDefinition.getIndexed());
+		rowStyledLayoutStructureItem.setModulesPerRow(
+			rowPageElementDefinition.getModulesPerRow());
 		rowStyledLayoutStructureItem.setName(
 			rowPageElementDefinition.getName());
 		rowStyledLayoutStructureItem.setNumberOfColumns(
 			rowPageElementDefinition.getNumberOfColumns());
-		rowStyledLayoutStructureItem.setModulesPerRow(
-			rowPageElementDefinition.getModulesPerRow());
 		rowStyledLayoutStructureItem.setReverseOrder(
 			rowPageElementDefinition.getReverseOrder());
 		rowStyledLayoutStructureItem.setVerticalAlignment(

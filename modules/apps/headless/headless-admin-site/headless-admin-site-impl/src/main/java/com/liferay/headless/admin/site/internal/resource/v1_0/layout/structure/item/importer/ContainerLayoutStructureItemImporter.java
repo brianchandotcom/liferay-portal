@@ -35,17 +35,17 @@ public class ContainerLayoutStructureItemImporter
 						pageElement, layoutStructure),
 					pageElement.getPosition());
 
-		ContainerPageElementDefinition pageContainerDefinition =
+		ContainerPageElementDefinition containerPageElementDefinition =
 			(ContainerPageElementDefinition)pageElement.getDefinition();
 
-		if (pageContainerDefinition == null) {
+		if (containerPageElementDefinition == null) {
 			return containerStyledLayoutStructureItem;
 		}
 
 		containerStyledLayoutStructureItem.setIndexed(
-			pageContainerDefinition.getIndexed());
+			containerPageElementDefinition.getIndexed());
 		containerStyledLayoutStructureItem.setName(
-			pageContainerDefinition.getName());
+			containerPageElementDefinition.getName());
 
 		return containerStyledLayoutStructureItem;
 	}

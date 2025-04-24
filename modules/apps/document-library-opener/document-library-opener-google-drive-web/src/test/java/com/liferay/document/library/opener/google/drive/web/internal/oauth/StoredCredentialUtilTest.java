@@ -195,9 +195,9 @@ public class StoredCredentialUtilTest {
 	public void testKeySet() throws Exception {
 		_forEachCompany(
 			companyId -> {
-				Set<String> keySet = StoredCredentialUtil.keySet(companyId);
+				Set<String> keys = StoredCredentialUtil.keySet(companyId);
 
-				Assert.assertTrue(keySet.isEmpty());
+				Assert.assertTrue(keys.isEmpty());
 			});
 
 		_forEachKey(StoredCredentialUtil::add);
@@ -243,10 +243,10 @@ public class StoredCredentialUtilTest {
 	public void testValues() throws Exception {
 		_forEachCompany(
 			companyId -> {
-				Collection<StoredCredential> values =
+				Collection<StoredCredential> storedCredentials =
 					StoredCredentialUtil.values(companyId);
 
-				Assert.assertTrue(values.isEmpty());
+				Assert.assertTrue(storedCredentials.isEmpty());
 			});
 
 		_forEachKey(StoredCredentialUtil::add);
@@ -291,31 +291,31 @@ public class StoredCredentialUtilTest {
 	}
 
 	private Set<String> _getCompanyKeySet(long companyId1) throws Exception {
-		Set<String> keySet = new HashSet<>();
+		Set<String> keys = new HashSet<>();
 
 		_forEachKey(
 			(companyId2, key, storedCredential) -> {
 				if (companyId1 == companyId2) {
-					keySet.add(key);
+					keys.add(key);
 				}
 			});
 
-		return keySet;
+		return keys;
 	}
 
 	private Set<StoredCredential> _getCompanyValues(long companyId1)
 		throws Exception {
 
-		Set<StoredCredential> values = new HashSet<>();
+		Set<StoredCredential> storedCredentials = new HashSet<>();
 
 		_forEachKey(
 			(companyId2, key, storedCredential) -> {
 				if (companyId1 == companyId2) {
-					values.add(storedCredential);
+					storedCredentials.add(storedCredential);
 				}
 			});
 
-		return values;
+		return storedCredentials;
 	}
 
 	private static final int _COMPANIES_COUNT = 3;

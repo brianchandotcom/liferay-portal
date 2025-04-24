@@ -22,8 +22,7 @@ export class RemoteStagingPage {
 		this.page = page;
 		this.pageEditorPage = new PageEditorPage(page);
 		this.publishToRemoteLiveFrame = this.page.frameLocator(
-			'iframe[name="_com_liferay_staging_bar_web_portlet_StagingBarPortlet_publishLatestChangesDialog_iframe_"]'
-		);
+			'iframe[title="Publish to Remote Live"]');
 		this.publishToRemoteLiveButton =
 			this.publishToRemoteLiveFrame.getByRole('button', {
 				name: 'Publish to Remote Live',

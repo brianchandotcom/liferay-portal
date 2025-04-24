@@ -153,7 +153,7 @@ public class LiferayOAuth2ClientConfiguration {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Processing externalReferenceCode: " +
+					"Processing external reference code " +
 						externalReferenceCode);
 			}
 
@@ -169,7 +169,7 @@ public class LiferayOAuth2ClientConfiguration {
 			if (clientId == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to get clientId for externalReferenceCode: " +
+						"Unable to get client ID for external reference code " +
 							externalReferenceCode);
 				}
 
@@ -197,14 +197,8 @@ public class LiferayOAuth2ClientConfiguration {
 			if (clientSecret == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						new StringBuilder(
-						).append(
-							"Unable to get clientSecret for "
-						).append(
-							"externalReferenceCode: "
-						).append(
-							externalReferenceCode
-						).toString());
+						"Unable to get client secret for external reference " +
+							"code " + externalReferenceCode);
 				}
 
 				continue;
@@ -212,7 +206,7 @@ public class LiferayOAuth2ClientConfiguration {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Obtained client_secret *** for externalReferenceCode " +
+					"Obtained client_secret for external reference code " +
 						externalReferenceCode);
 			}
 
@@ -248,7 +242,7 @@ public class LiferayOAuth2ClientConfiguration {
 				).build();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Adding clientRegistration: " + clientRegistration);
+				_log.debug("Adding client registration " + clientRegistration);
 			}
 
 			clientRegistrations.add(clientRegistration);

@@ -33,7 +33,7 @@ public class LiferayOAuth2UtilTest {
 	}
 
 	@Test
-	public void testGetClientIdOnly() {
+	public void testGetClientId() {
 		new MockServerClient(
 			"localhost", 63636
 		).when(
@@ -62,7 +62,6 @@ public class LiferayOAuth2UtilTest {
 			LiferayOAuth2Util.getClientId(
 				"foo-able-user-agent", "localhost:63636", "http"));
 		Assert.assertNull(
-			"Expected homePageURL to be null",
 			LiferayOAuth2Util.getHomePageURL(
 				"foo-able-user-agent", "localhost:63636", "http"));
 	}

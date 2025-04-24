@@ -24,9 +24,9 @@ PortletURL sharingURL = PortletURLBuilder.create(
 <aui:script sandbox="<%= true %>">
 	function showDialog(uri, title) {
 		Liferay.Util.openModal({
+			height: '475px',
 			id: 'sharingDialog',
 			iframeBodyCssClass: 'sharing-dialog',
-			height: '475px',
 			size: 'md',
 			title: title,
 			url: uri,

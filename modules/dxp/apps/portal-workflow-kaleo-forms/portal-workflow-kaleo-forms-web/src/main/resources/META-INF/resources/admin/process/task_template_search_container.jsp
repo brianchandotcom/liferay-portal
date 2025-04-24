@@ -119,8 +119,8 @@ KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayCo
 		'<portlet:namespace />editFormTemplate',
 		(uri) => {
 			Liferay.Util.openModal({
-				iframeBodyCssClass: '',
 				containerProps: {},
+				iframeBodyCssClass: '',
 				title: '<liferay-ui:message key="forms" />',
 				url: url,
 			});

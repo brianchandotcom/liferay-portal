@@ -53,10 +53,10 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	<aui:script>
 		Liferay.Util.openModal({
 			bodyHTML: '<%= errorMessages.get(0) %>',
+			center: true,
 			containerProps: {
 				className: 'commerce-modal',
 			},
-			center: true,
 			size: 'm',
 			status: 'warning',
 			title: '<liferay-ui:message key="warning" />',

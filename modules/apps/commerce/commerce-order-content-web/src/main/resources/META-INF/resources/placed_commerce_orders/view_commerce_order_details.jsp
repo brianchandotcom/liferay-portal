@@ -488,8 +488,8 @@ if (commerceOrder != null) {
 	function <portlet:namespace />viewCommerceOrderShipments(uri) {
 		Liferay.Util.openModal({
 			containerProps: {},
-			iframeBodyCssClass: 'dialog',
 			id: 'viewCommerceOrderShipmentsDialog',
+			iframeBodyCssClass: 'dialog',
 			title: '',
 			url: uri,
 		});

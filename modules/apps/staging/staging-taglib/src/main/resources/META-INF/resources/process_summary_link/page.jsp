@@ -31,9 +31,9 @@ String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSumma
 		processSummaryURL
 	) {
 		Liferay.Util.openModal({
-			iframeBodyCssClass: '',
 			containerProps: {},
 			id: '<portlet:namespace />showSummary_' + backgroundTaskId,
+			iframeBodyCssClass: '',
 			title: backgroundTaskName,
 			url:
 				processSummaryURL +

@@ -38,15 +38,18 @@ public class FragmentLayoutStructureItemImporter
 			PageElement pageElement)
 		throws Exception {
 
-		FragmentInstancePageElementDefinition pageFragmentInstanceDefinition =
-			(FragmentInstancePageElementDefinition)pageElement.getDefinition();
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition =
+				(FragmentInstancePageElementDefinition)
+					pageElement.getDefinition();
 
-		if (pageFragmentInstanceDefinition == null) {
+		if (fragmentInstancePageElementDefinition == null) {
 			return null;
 		}
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layoutStructureItemImporterContext, pageFragmentInstanceDefinition);
+			layoutStructureItemImporterContext,
+			fragmentInstancePageElementDefinition);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -61,11 +64,12 @@ public class FragmentLayoutStructureItemImporter
 					pageElement.getPosition());
 
 		fragmentStyledLayoutStructureItem.setCssClasses(
-			SetUtil.fromArray(pageFragmentInstanceDefinition.getCssClasses()));
+			SetUtil.fromArray(
+				fragmentInstancePageElementDefinition.getCssClasses()));
 		fragmentStyledLayoutStructureItem.setCustomCSS(
-			pageFragmentInstanceDefinition.getCustomCSS());
+			fragmentInstancePageElementDefinition.getCustomCSS());
 		fragmentStyledLayoutStructureItem.setIndexed(
-			pageFragmentInstanceDefinition.getIndexed());
+			fragmentInstancePageElementDefinition.getIndexed());
 		fragmentStyledLayoutStructureItem.setName(
 			fragmentStyledLayoutStructureItem.getName());
 
@@ -76,14 +80,14 @@ public class FragmentLayoutStructureItemImporter
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
 			FragmentInstancePageElementDefinition
-				pageFragmentInstanceDefinition)
+				fragmentInstancePageElementDefinition)
 		throws Exception {
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			layoutStructureItemImporterContext.getGroupId(),
-			pageFragmentInstanceDefinition);
+			fragmentInstancePageElementDefinition);
 
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			null, layoutStructureItemImporterContext.getUserId(),
@@ -98,14 +102,17 @@ public class FragmentLayoutStructureItemImporter
 
 	private FragmentEntry _getFragmentEntry(
 		long groupId,
-		FragmentInstancePageElementDefinition pageFragmentInstanceDefinition) {
+		FragmentInstancePageElementDefinition
+			fragmentInstancePageElementDefinition) {
 
-		if (pageFragmentInstanceDefinition.getFragmentReference() instanceof
-				ItemExternalReference) {
+		if (
+				fragmentInstancePageElementDefinition.
+					getFragmentReference() instanceof ItemExternalReference) {
 
 			ItemExternalReference itemExternalReference =
 				(ItemExternalReference)
-					pageFragmentInstanceDefinition.getFragmentReference();
+					fragmentInstancePageElementDefinition.
+						getFragmentReference();
 
 			FragmentEntry fragmentEntry =
 				FragmentEntryLocalServiceUtil.
@@ -120,7 +127,7 @@ public class FragmentLayoutStructureItemImporter
 
 		DefaultFragmentReference defaultFragmentReference =
 			(DefaultFragmentReference)
-				pageFragmentInstanceDefinition.getFragmentReference();
+				fragmentInstancePageElementDefinition.getFragmentReference();
 
 		return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 			defaultFragmentReference.getDefaultFragmentKey());

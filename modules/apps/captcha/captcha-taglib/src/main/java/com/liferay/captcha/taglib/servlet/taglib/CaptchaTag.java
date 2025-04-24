@@ -14,13 +14,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -37,7 +37,9 @@ public class CaptchaTag extends IncludeTag {
 
 		try {
 			captcha.render(
-				getRequest(), (HttpServletResponse)pageContext.getResponse());
+				getRequest(),
+				PipingServletResponseFactory.createPipingServletResponse(
+					pageContext));
 
 			return EVAL_PAGE;
 		}

@@ -67,15 +67,15 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		Element rootElement = document.addElement("root");
 
-		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
+		List<DDLRecord> ddlRecords = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 
-		for (DDLRecord record : records) {
+		for (DDLRecord ddlRecord : ddlRecords) {
 			Element fieldsElement = rootElement.addElement("fields");
 
-			DDLRecordVersion recordVersion = record.getRecordVersion();
+			DDLRecordVersion recordVersion = ddlRecord.getRecordVersion();
 
 			DDMStorageLink ddmStorageLink =
 				_ddmStorageLinkLocalService.getClassStorageLink(

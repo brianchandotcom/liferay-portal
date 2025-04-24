@@ -210,12 +210,12 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
 		HtmlParser htmlParser) {
 
-		List<DDMFormFieldValue> ddmForFieldValues = ddmFormFieldValuesMap.get(
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			ddmFormField.getName());
 
 		String valueString = StringPool.BLANK;
 
-		DDMFormFieldValue ddmFormFieldValue = ddmForFieldValues.get(0);
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
 		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
 			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
@@ -245,7 +245,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			}
 			else {
 				valueString = ddmFormFieldValueRenderer.render(
-					ddmForFieldValues, getLocale());
+					ddmFormFieldValues, getLocale());
 			}
 		}
 

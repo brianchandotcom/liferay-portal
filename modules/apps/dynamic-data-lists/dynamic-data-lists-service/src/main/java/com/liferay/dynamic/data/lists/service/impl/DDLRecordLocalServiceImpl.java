@@ -292,22 +292,22 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record Versions
 
-		List<DDLRecordVersion> recordVersions =
+		List<DDLRecordVersion> ddlRecordVersions =
 			_ddlRecordVersionPersistence.findByRecordId(record.getRecordId());
 
-		for (DDLRecordVersion recordVersion : recordVersions) {
-			_ddlRecordVersionPersistence.remove(recordVersion);
+		for (DDLRecordVersion ddlRecordVersion : ddlRecordVersions) {
+			_ddlRecordVersionPersistence.remove(ddlRecordVersion);
 
 			// Dynamic data mapping storage
 
 			ddmStorageEngineManager.deleteByClass(
-				recordVersion.getDDMStorageId());
+				ddlRecordVersion.getDDMStorageId());
 
 			// Workflow
 
 			deleteWorkflowInstanceLink(
 				record.getCompanyId(), record.getGroupId(),
-				recordVersion.getPrimaryKey());
+				ddlRecordVersion.getPrimaryKey());
 		}
 
 		// Asset
@@ -343,11 +343,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteRecords(long recordSetId) throws PortalException {
-		List<DDLRecord> records = ddlRecordPersistence.findByRecordSetId(
+		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
 			recordSetId);
 
-		for (DDLRecord record : records) {
-			ddlRecordLocalService.deleteRecord(record);
+		for (DDLRecord ddlRecord : ddlRecords) {
+			ddlRecordLocalService.deleteRecord(ddlRecord);
 		}
 	}
 
@@ -978,14 +978,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 				String newVersion = DDLRecordConstants.VERSION_DEFAULT;
 
-				List<DDLRecordVersion> approvedRecordVersions =
+				List<DDLRecordVersion> approvedDDLRecordVersions =
 					_ddlRecordVersionPersistence.findByR_S(
 						record.getRecordId(),
 						WorkflowConstants.STATUS_APPROVED);
 
-				if (!approvedRecordVersions.isEmpty()) {
+				if (!approvedDDLRecordVersions.isEmpty()) {
 					DDLRecordVersion approvedRecordVersion =
-						approvedRecordVersions.get(0);
+						approvedDDLRecordVersions.get(0);
 
 					newVersion = approvedRecordVersion.getVersion();
 				}
@@ -1086,7 +1086,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected List<DDLRecord> getRecords(Hits hits) throws PortalException {
-		List<DDLRecord> records = new ArrayList<>();
+		List<DDLRecord> ddlRecords = new ArrayList<>();
 
 		for (Document document : hits.toList()) {
 			long recordId = GetterUtil.getLong(
@@ -1094,7 +1094,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 					com.liferay.portal.kernel.search.Field.ENTRY_CLASS_PK));
 
 			try {
-				records.add(getRecord(recordId));
+				ddlRecords.add(getRecord(recordId));
 			}
 			catch (NoSuchRecordException noSuchRecordException) {
 				if (_log.isWarnEnabled()) {
@@ -1114,7 +1114,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			}
 		}
 
-		return records;
+		return ddlRecords;
 	}
 
 	protected String getWorkflowAssetClassName(DDLRecordSet recordSet) {

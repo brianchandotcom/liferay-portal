@@ -193,11 +193,12 @@ public class DDLImpl implements DDL {
 
 	@Override
 	public JSONArray getRecordsJSONArray(
-			List<DDLRecord> records, boolean latestRecordVersion, Locale locale)
+			List<DDLRecord> ddlRecords, boolean latestRecordVersion,
+			Locale locale)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
-			records,
+			ddlRecords,
 			record -> getRecordJSONObject(record, latestRecordVersion, locale));
 	}
 

@@ -100,24 +100,24 @@ public class DDLRecordSetStagedModelRepository
 
 		Set<Long> recordSetDDMStructureIds = new HashSet<>();
 
-		List<DDLRecordSet> recordSets = _ddlRecordSetLocalService.search(
+		List<DDLRecordSet> ddlRecordSets = _ddlRecordSetLocalService.search(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getScopeGroupId(), null, scope,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			DDLRecordSetNameComparator.getInstance(false));
 
-		for (DDLRecordSet recordSet : recordSets) {
+		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchDDMStructure(
-					recordSet.getDDMStructureId());
+					ddlRecordSet.getDDMStructureId());
 
 			if ((ddmStructure != null) &&
-				(ddmStructure.getGroupId() == recordSet.getGroupId())) {
+				(ddmStructure.getGroupId() == ddlRecordSet.getGroupId())) {
 
-				recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+				recordSetDDMStructureIds.add(ddlRecordSet.getDDMStructureId());
 			}
 
-			_ddlRecordSetLocalService.deleteRecordSet(recordSet);
+			_ddlRecordSetLocalService.deleteRecordSet(ddlRecordSet);
 		}
 
 		_deleteDDMStructures(recordSetDDMStructureIds);

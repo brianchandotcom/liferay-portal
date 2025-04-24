@@ -84,10 +84,10 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 			_createHeaderRow(ddmFormFields.values(), sheet, workbook);
 
-			List<DDLRecord> records = _ddlRecordLocalService.getRecords(
+			List<DDLRecord> ddlRecords = _ddlRecordLocalService.getRecords(
 				recordSetId, status, start, end, orderByComparator);
 
-			Iterator<DDLRecord> iterator = records.iterator();
+			Iterator<DDLRecord> iterator = ddlRecords.iterator();
 
 			int rowIndex = 1;
 

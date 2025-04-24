@@ -81,10 +81,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		sb.append(_language.get(locale, "author"));
 		sb.append(StringPool.NEW_LINE);
 
-		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
+		List<DDLRecord> ddlRecords = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
-		Iterator<DDLRecord> iterator = records.iterator();
+		Iterator<DDLRecord> iterator = ddlRecords.iterator();
 
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 

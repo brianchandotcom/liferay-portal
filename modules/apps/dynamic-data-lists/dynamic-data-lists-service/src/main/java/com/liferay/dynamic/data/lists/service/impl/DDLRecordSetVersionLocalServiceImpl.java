@@ -41,21 +41,21 @@ public class DDLRecordSetVersionLocalServiceImpl
 	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
 		throws PortalException {
 
-		List<DDLRecordSetVersion> recordSetVersions =
+		List<DDLRecordSetVersion> ddlRecordSetVersions =
 			ddlRecordSetVersionPersistence.findByRecordSetId(recordSetId);
 
-		if (recordSetVersions.isEmpty()) {
+		if (ddlRecordSetVersions.isEmpty()) {
 			throw new NoSuchRecordSetVersionException(
 				"No record set versions found for record set ID " +
 					recordSetId);
 		}
 
-		recordSetVersions = ListUtil.copy(recordSetVersions);
+		ddlRecordSetVersions = ListUtil.copy(ddlRecordSetVersions);
 
 		Collections.sort(
-			recordSetVersions, new DDLRecordSetVersionVersionComparator());
+			ddlRecordSetVersions, new DDLRecordSetVersionVersionComparator());
 
-		return recordSetVersions.get(0);
+		return ddlRecordSetVersions.get(0);
 	}
 
 	@Override

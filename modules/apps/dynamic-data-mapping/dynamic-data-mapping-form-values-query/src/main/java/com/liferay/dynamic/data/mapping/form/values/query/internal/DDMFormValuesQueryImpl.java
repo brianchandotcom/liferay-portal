@@ -21,23 +21,23 @@ public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 
 	public DDMFormValuesQueryImpl(
 		DDMFormValues ddmFormValues,
-		List<DDMFormValuesFilter> ddmFormFieldValueFilters) {
+		List<DDMFormValuesFilter> ddmFormValuesFilters) {
 
 		_ddmFormValues = ddmFormValues;
-		_ddmFormFieldValueFilters = ddmFormFieldValueFilters;
+		_ddmFormValuesFilters = ddmFormValuesFilters;
 	}
 
 	@Override
 	public List<DDMFormFieldValue> selectDDMFormFieldValues() {
 		DDMFormValuesFilter firstDDMFormValuesFilter =
-			_ddmFormFieldValueFilters.get(0);
+			_ddmFormValuesFilters.get(0);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			firstDDMFormValuesFilter.filter(_ddmFormValues);
 
-		for (int i = 1; i < _ddmFormFieldValueFilters.size(); i++) {
+		for (int i = 1; i < _ddmFormValuesFilters.size(); i++) {
 			DDMFormValuesFilter currentDDMFormValuesFilter =
-				_ddmFormFieldValueFilters.get(i);
+				_ddmFormValuesFilters.get(i);
 
 			List<DDMFormFieldValue> nestedDDMFormFieldValues =
 				_getNestedDDMFormFieldValues(ddmFormFieldValues);
@@ -73,7 +73,7 @@ public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 		return nestedDDMFormFieldValues;
 	}
 
-	private final List<DDMFormValuesFilter> _ddmFormFieldValueFilters;
+	private final List<DDMFormValuesFilter> _ddmFormValuesFilters;
 	private final DDMFormValues _ddmFormValues;
 
 }

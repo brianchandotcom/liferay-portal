@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
@@ -15,6 +17,8 @@ public interface BuildUpdater {
 	public void invoke();
 
 	public void reinvoke();
+
+	public void reinvoke(Map<String, String> reinvokeBuildParameters);
 
 	public void reset();
 

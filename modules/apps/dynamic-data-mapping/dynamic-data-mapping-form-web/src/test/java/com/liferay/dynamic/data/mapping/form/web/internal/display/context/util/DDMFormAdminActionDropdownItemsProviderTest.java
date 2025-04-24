@@ -74,40 +74,36 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 
 	@Test
 	public void testGetActionDropdownItems() {
-		List<DropdownItem> dropdownItems =
+		List<DropdownItem> actionDropdownItems =
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems();
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
-			dropdownItems, 0);
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
+			actionDropdownItems, 0);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 3, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 3, dropdownItems.size());
 
-		_assertActionDropdownItemEdit(dropdownGroupItems.get(0));
-		_assertActionDropdownItemViewEntries(dropdownGroupItems.get(1));
-		_assertActionDropdownItemShare(dropdownGroupItems.get(2));
+		_assertActionDropdownItemEdit(dropdownItems.get(0));
+		_assertActionDropdownItemViewEntries(dropdownItems.get(1));
+		_assertActionDropdownItemShare(dropdownItems.get(2));
 
-		dropdownGroupItems = _getDropdownGroupItems(dropdownItems, 1);
+		dropdownItems = _getDropdownGroupItems(actionDropdownItems, 1);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 2, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 
-		_assertActionDropdownItemDuplicate(dropdownGroupItems.get(0));
-		_assertActionDropdownItemExport(dropdownGroupItems.get(1));
+		_assertActionDropdownItemDuplicate(dropdownItems.get(0));
+		_assertActionDropdownItemExport(dropdownItems.get(1));
 
-		dropdownGroupItems = _getDropdownGroupItems(dropdownItems, 2);
+		dropdownItems = _getDropdownGroupItems(actionDropdownItems, 2);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 1, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
 
-		_assertActionDropdownItemPermissions(dropdownGroupItems.get(0));
+		_assertActionDropdownItemPermissions(dropdownItems.get(0));
 
-		dropdownGroupItems = _getDropdownGroupItems(dropdownItems, 3);
+		dropdownItems = _getDropdownGroupItems(actionDropdownItems, 3);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 1, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
 
-		_assertActionDropdownItemDelete(dropdownGroupItems.get(0));
+		_assertActionDropdownItemDelete(dropdownItems.get(0));
 	}
 
 	@Test
@@ -119,12 +115,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			3);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 0, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 0, dropdownItems.size());
 	}
 
 	@Test
@@ -137,12 +132,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			1);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 1, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
 	}
 
 	@Test
@@ -154,12 +148,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			0);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 2, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
 	@Test
@@ -171,12 +164,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			1);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 1, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
 	}
 
 	@Test
@@ -190,12 +182,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			2);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 0, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 0, dropdownItems.size());
 	}
 
 	@Test
@@ -207,24 +198,22 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			0);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 2, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
 	@Test
 	public void testGetActionDropdownItemsNotShowingShare2() throws Exception {
 		_setUpDDMFormAdminActionDropdownItemsProvider(false);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			0);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 2, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
 	@Test
@@ -238,12 +227,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			false
 		);
 
-		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
+		List<DropdownItem> dropdownItems = _getDropdownGroupItems(
 			_ddmFormAdminActionDropdownItemsProvider.getActionDropdownItems(),
 			0);
 
-		Assert.assertEquals(
-			dropdownGroupItems.toString(), 2, dropdownGroupItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
 	private static void _setUpJSONFactoryUtil() {

@@ -28,9 +28,7 @@ public class MarkdownBreakingChangesAmendmentsFileCheck
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith(
-				"readme/BREAKING_CHANGES_AMENDMENTS.markdown")) {
-
+		if (!absolutePath.endsWith("readme/BREAKING_CHANGES_AMENDMENTS.md")) {
 			return content;
 		}
 

@@ -249,7 +249,7 @@ public class SourceFormatterUtil {
 		markdownFileName = TextFormatter.format(
 			markdownFileName, TextFormatter.N);
 
-		return markdownFileName + ".markdown";
+		return markdownFileName + ".md";
 	}
 
 	public static File getPortalDir(String baseDirName, int maxDirLevel) {

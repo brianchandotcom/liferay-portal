@@ -59,7 +59,7 @@ public class LFRBuildReadmeCheck extends BaseFileCheck {
 	}
 
 	private static final String _MODULES_README_MARKDOWN_FILE_NAME =
-		"modules/README.markdown";
+		"modules/README.md";
 
 	private String _modulesReadmeMarkdownContent;
 

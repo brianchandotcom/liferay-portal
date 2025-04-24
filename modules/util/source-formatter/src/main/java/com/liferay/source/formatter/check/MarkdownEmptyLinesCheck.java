@@ -67,7 +67,7 @@ public class MarkdownEmptyLinesCheck extends BaseFileCheck {
 				}
 
 				if (!absolutePath.endsWith(
-						"readme/BREAKING_CHANGES_AMENDMENTS.markdown") &&
+						"readme/BREAKING_CHANGES_AMENDMENTS.md") &&
 					codeBlock) {
 
 					sb.append(line);

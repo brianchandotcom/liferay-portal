@@ -1419,7 +1419,7 @@
 		</check>
 		<check name="MarkdownFileExtensionCheck">
 			<category name="Styling" />
-			<description name="Finds `markdown` files with `.md` extension (use `.markdown`)." />
+			<description name="Finds `markdown` files with `.markdown` extension (use `.md`)." />
 		</check>
 		<check name="MarkdownSourceFormatterDocumentationCheck">
 			<category name="Documentation" />
@@ -1435,7 +1435,7 @@
 		</check>
 		<check name="MarkdownWhitespaceCheck">
 			<category name="Styling" />
-			<description name="Finds missing and unnecessary whitespace in `.markdown` files." />
+			<description name="Finds missing and unnecessary whitespace." />
 			<property name="allowLeadingSpaces" value="true" />
 			<property name="allowTrailingDoubleSpace" value="true" />
 		</check>

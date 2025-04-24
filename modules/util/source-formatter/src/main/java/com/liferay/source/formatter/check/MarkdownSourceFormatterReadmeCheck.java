@@ -49,7 +49,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith("/source-formatter/README.markdown")) {
+		if (!absolutePath.endsWith("/source-formatter/README.md")) {
 			return content;
 		}
 

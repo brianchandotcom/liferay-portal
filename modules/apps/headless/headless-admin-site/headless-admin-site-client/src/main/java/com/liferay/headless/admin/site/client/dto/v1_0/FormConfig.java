@@ -46,31 +46,6 @@ public class FormConfig implements Cloneable, Serializable {
 
 	protected Object formReference;
 
-	public Object getFormSuccessSubmissionResult() {
-		return formSuccessSubmissionResult;
-	}
-
-	public void setFormSuccessSubmissionResult(
-		Object formSuccessSubmissionResult) {
-
-		this.formSuccessSubmissionResult = formSuccessSubmissionResult;
-	}
-
-	public void setFormSuccessSubmissionResult(
-		UnsafeSupplier<Object, Exception>
-			formSuccessSubmissionResultUnsafeSupplier) {
-
-		try {
-			formSuccessSubmissionResult =
-				formSuccessSubmissionResultUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object formSuccessSubmissionResult;
-
 	public FormType getFormType() {
 		return formType;
 	}
@@ -120,6 +95,31 @@ public class FormConfig implements Cloneable, Serializable {
 	}
 
 	protected Integer numberOfSteps;
+
+	public Object getSuccessFormSubmissionResult() {
+		return successFormSubmissionResult;
+	}
+
+	public void setSuccessFormSubmissionResult(
+		Object successFormSubmissionResult) {
+
+		this.successFormSubmissionResult = successFormSubmissionResult;
+	}
+
+	public void setSuccessFormSubmissionResult(
+		UnsafeSupplier<Object, Exception>
+			successFormSubmissionResultUnsafeSupplier) {
+
+		try {
+			successFormSubmissionResult =
+				successFormSubmissionResultUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object successFormSubmissionResult;
 
 	@Override
 	public FormConfig clone() throws CloneNotSupportedException {

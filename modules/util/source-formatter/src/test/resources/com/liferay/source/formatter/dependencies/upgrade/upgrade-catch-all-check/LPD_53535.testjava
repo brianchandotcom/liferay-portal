@@ -1,0 +1,46 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Wilson Ferreira
+ */
+public class LPD_53535 {
+
+	public void method() {
+		_commerceOrderItemWrapper.getBookedQuantityId();
+
+		CommerceInventoryBookedQuantityLocalServiceUtil.
+			deleteCommerceInventoryBookedQuantity(
+				_commerceOrderItem.getBookedQuantityId());
+	}
+
+	public void method(long bookedQuantityId) {
+		_commerceOrderItemWrapper.setBookedQuantityId(bookedQuantityId);
+		_commerceOrderItemLocalService.fetchCommerceOrderItemByBookedQuantityId(
+			bookedQuantityId);
+		_commerceOrderItemLocalServiceWrapper.
+			fetchCommerceOrderItemByBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemLocalServiceUtil.
+			fetchCommerceOrderItemByBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.findByBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.fetchByBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.removeByBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.countByBookedQuantityId(bookedQuantityId);
+	}
+
+	private CommerceOrderItem _commerceOrderItem;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	private CommerceOrderItemLocalServiceWrapper
+		_commerceOrderItemLocalServiceWrapper;
+	private CommerceOrderItemWrapper _commerceOrderItemWrapper;
+
+}

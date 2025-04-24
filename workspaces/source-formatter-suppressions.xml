@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IllegalImportsCheck" files="liferay-sample-workspace/client-extensions/liferay-sample-etc-cron/src/main/java/com/liferay/sample/SampleCommandLineRunner\.java" />
+	</source-check>
+</suppressions>

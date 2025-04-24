@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.net.URL;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,12 +53,15 @@ public class SampleCommandLineRunner
 
 		// Call another Liferay
 
-		try {
-			_countMessageBoardThreads(
-				"external-liferay", _externalLiferayHomePageURL);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		if (_externalLiferayHomePageURLOptional.isPresent()) {
+			try {
+				_countMessageBoardThreads(
+					"external-liferay",
+					_externalLiferayHomePageURLOptional.get());
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 
 		// Call another client extension (liferay-sample-etc-spring-boot)
@@ -151,8 +155,8 @@ public class SampleCommandLineRunner
 	private static final Log _log = LogFactory.getLog(
 		SampleCommandLineRunner.class);
 
-	@Value("${external.liferay.oauth2.headless.server.home.page.url}")
-	private URL _externalLiferayHomePageURL;
+	@Value("${external.liferay.oauth2.headless.server.home.page.url:#{null}}")
+	private Optional<URL> _externalLiferayHomePageURLOptional;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

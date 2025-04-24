@@ -696,6 +696,47 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
+    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins":
+        delete:
+            description:
+                Unpins the asset library.
+            operationId: deleteAssetLibraryByExternalReferenceCodePin
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
+        put:
+            description:
+                Pins the asset library.
+            operationId: putAssetLibraryByExternalReferenceCodePin
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
     "/asset-libraries/by-external-reference-code/{externalReferenceCode}/sites":
         get:
             description:
@@ -840,6 +881,36 @@ paths:
                     description:
                         default response
             tags: ["UserGroup"]
+    "/asset-libraries/pinned-by-me":
+        get:
+            description:
+                Retrieves the pinned asset libraries.
+            operationId: getAssetLibrariesPinnedByMePage
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetLibrary"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetLibrary"
+                                type: array
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
     "/asset-libraries/{assetLibraryId}":
         delete:
             description:
@@ -915,6 +986,49 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/AssetLibrary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
+    "/asset-libraries/{assetLibraryId}/pins":
+        delete:
+            description:
+                Unpins the asset library.
+            operationId: deleteAssetLibraryPin
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
+        put:
+            description:
+                Pins the asset library.
+            operationId: putAssetLibraryPin
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

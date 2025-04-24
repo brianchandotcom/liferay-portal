@@ -28,6 +28,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:commerce-service")
 	testIntegrationImplementation project(":apps:commerce:commerce-shipping-engine-fixed-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-tax-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-tax-engine-fixed-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-term-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")

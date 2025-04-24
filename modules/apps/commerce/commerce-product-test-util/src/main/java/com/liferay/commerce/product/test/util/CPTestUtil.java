@@ -541,6 +541,18 @@ public class CPTestUtil {
 	}
 
 	public static CPInstance addCPInstanceFromCatalog(
+			long groupId, long cpTaxCategoryId, boolean taxExempt)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _addCPDefinition(
+			groupId, SimpleCPTypeConstants.NAME, true, true, cpTaxCategoryId,
+			taxExempt, ServiceContextTestUtil.getServiceContext(groupId));
+
+		return CPInstanceLocalServiceUtil.getCPInstance(
+			cpDefinition.getCPDefinitionId(), CPInstanceConstants.DEFAULT_SKU);
+	}
+
+	public static CPInstance addCPInstanceFromCatalog(
 			long groupId, long[] assetCategoryIds)
 		throws PortalException {
 
@@ -913,6 +925,23 @@ public class CPTestUtil {
 
 	private static CPDefinition _addCPDefinition(
 			long groupId, String productTypeName, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance, long cpTaxCategoryId, boolean taxExempt,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String defaultSku = null;
+
+		if (hasDefaultInstance) {
+			defaultSku = CPInstanceConstants.DEFAULT_SKU;
+		}
+
+		return _addCPDefinitionWithSku(
+			groupId, productTypeName, ignoreSKUCombinations, cpTaxCategoryId,
+			taxExempt, serviceContext, defaultSku);
+	}
+
+	private static CPDefinition _addCPDefinition(
+			long groupId, String productTypeName, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -965,6 +994,103 @@ public class CPTestUtil {
 			ignoreSKUCombinations, hasDefaultInstance,
 			ServiceContextTestUtil.getServiceContext(
 				commerceCatalog.getGroupId()));
+	}
+
+	private static CPDefinition _addCPDefinitionWithSku(
+			long groupId, String productTypeName, boolean ignoreSKUCombinations,
+			long cpTaxCategoryId, boolean taxExempt,
+			ServiceContext serviceContext, String sku)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
+
+		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> shortDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> descriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaTitleMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaKeywordsMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> metaDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> urlTitleMap =
+			RandomTestUtil.randomLocaleStringMap();
+		boolean shippable = RandomTestUtil.randomBoolean();
+		boolean freeShipping = RandomTestUtil.randomBoolean();
+		boolean shipSeparately = RandomTestUtil.randomBoolean();
+		double shippingExtraPrice = RandomTestUtil.randomDouble();
+		double width = RandomTestUtil.randomDouble();
+		double height = RandomTestUtil.randomDouble();
+		double depth = RandomTestUtil.randomDouble();
+		double weight = RandomTestUtil.randomDouble();
+		boolean telcoOrElectronics = RandomTestUtil.randomBoolean();
+		String ddmStructureKey = null;
+		boolean published = true;
+
+		long time = System.currentTimeMillis();
+
+		Date displayDate = new Date(time - Time.HOUR);
+		Date expirationDate = new Date(time + Time.DAY);
+
+		Calendar displayCal = CalendarFactoryUtil.getCalendar(
+			user.getTimeZone());
+
+		displayCal.setTime(displayDate);
+
+		int displayDateMonth = displayCal.get(Calendar.MONTH);
+		int displayDateDay = displayCal.get(Calendar.DATE);
+		int displayDateYear = displayCal.get(Calendar.YEAR);
+		int displayDateHour = displayCal.get(Calendar.HOUR);
+		int displayDateMinute = displayCal.get(Calendar.MINUTE);
+
+		if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			user.getTimeZone());
+
+		expirationCalendar.setTime(expirationDate);
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DATE);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+
+		if (expirationCalendar.get(Calendar.AM_PM) == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		CPDefinition cpDefinition =
+			CPDefinitionLocalServiceUtil.addCPDefinition(
+				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
+				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+				metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+				shippable, freeShipping, shipSeparately, shippingExtraPrice,
+				width, height, depth, weight, cpTaxCategoryId, taxExempt,
+				telcoOrElectronics, ddmStructureKey, published,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, false, sku, false, 1, null, null, 0L,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		CPDefinitionInventory cpDefinitionInventory =
+			CPDefinitionInventoryLocalServiceUtil.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpDefinition.getCPDefinitionId());
+
+		if (cpDefinitionInventory != null) {
+			cpDefinitionInventory.setBackOrders(false);
+
+			CPDefinitionInventoryLocalServiceUtil.updateCPDefinitionInventory(
+				cpDefinitionInventory);
+		}
+
+		return cpDefinition;
 	}
 
 	private static CPDefinition _addCPDefinitionWithSku(

@@ -61,23 +61,6 @@ public class FormConfigSerDes {
 			}
 		}
 
-		if (formConfig.getFormSuccessSubmissionResult() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formConfig.getFormSuccessSubmissionResult() instanceof String) {
-				sb.append("\"");
-				sb.append((String)formConfig.getFormSuccessSubmissionResult());
-				sb.append("\"");
-			}
-			else {
-				sb.append(formConfig.getFormSuccessSubmissionResult());
-			}
-		}
-
 		if (formConfig.getFormType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -100,6 +83,23 @@ public class FormConfigSerDes {
 			sb.append("\"numberOfSteps\": ");
 
 			sb.append(formConfig.getNumberOfSteps());
+		}
+
+		if (formConfig.getSuccessFormSubmissionResult() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"successFormSubmissionResult\": ");
+
+			if (formConfig.getSuccessFormSubmissionResult() instanceof String) {
+				sb.append("\"");
+				sb.append((String)formConfig.getSuccessFormSubmissionResult());
+				sb.append("\"");
+			}
+			else {
+				sb.append(formConfig.getSuccessFormSubmissionResult());
+			}
 		}
 
 		sb.append("}");
@@ -128,15 +128,6 @@ public class FormConfigSerDes {
 				"formReference", String.valueOf(formConfig.getFormReference()));
 		}
 
-		if (formConfig.getFormSuccessSubmissionResult() == null) {
-			map.put("formSuccessSubmissionResult", null);
-		}
-		else {
-			map.put(
-				"formSuccessSubmissionResult",
-				String.valueOf(formConfig.getFormSuccessSubmissionResult()));
-		}
-
 		if (formConfig.getFormType() == null) {
 			map.put("formType", null);
 		}
@@ -150,6 +141,15 @@ public class FormConfigSerDes {
 		else {
 			map.put(
 				"numberOfSteps", String.valueOf(formConfig.getNumberOfSteps()));
+		}
+
+		if (formConfig.getSuccessFormSubmissionResult() == null) {
+			map.put("successFormSubmissionResult", null);
+		}
+		else {
+			map.put(
+				"successFormSubmissionResult",
+				String.valueOf(formConfig.getSuccessFormSubmissionResult()));
 		}
 
 		return map;
@@ -173,15 +173,15 @@ public class FormConfigSerDes {
 			if (Objects.equals(jsonParserFieldName, "formReference")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "formSuccessSubmissionResult")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "formType")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfSteps")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "successFormSubmissionResult")) {
+
 				return false;
 			}
 
@@ -198,14 +198,6 @@ public class FormConfigSerDes {
 					formConfig.setFormReference((Object)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "formSuccessSubmissionResult")) {
-
-				if (jsonParserFieldValue != null) {
-					formConfig.setFormSuccessSubmissionResult(
-						(Object)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "formType")) {
 				if (jsonParserFieldValue != null) {
 					formConfig.setFormType(
@@ -217,6 +209,14 @@ public class FormConfigSerDes {
 				if (jsonParserFieldValue != null) {
 					formConfig.setNumberOfSteps(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "successFormSubmissionResult")) {
+
+				if (jsonParserFieldValue != null) {
+					formConfig.setSuccessFormSubmissionResult(
+						(Object)jsonParserFieldValue);
 				}
 			}
 		}

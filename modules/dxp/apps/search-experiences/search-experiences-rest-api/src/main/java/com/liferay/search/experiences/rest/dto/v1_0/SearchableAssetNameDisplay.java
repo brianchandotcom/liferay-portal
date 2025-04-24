@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
@@ -131,7 +130,7 @@ public class SearchableAssetNameDisplay implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getHasSubtype() {
 		if (_hasSubtypeSupplier != null) {
 			hasSubtype = _hasSubtypeSupplier.get();

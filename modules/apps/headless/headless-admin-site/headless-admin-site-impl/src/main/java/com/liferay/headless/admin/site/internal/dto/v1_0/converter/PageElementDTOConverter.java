@@ -124,13 +124,14 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
 
-			CollectionItemPageElementDefinition pageCollectionItemDefinition =
-				new CollectionItemPageElementDefinition();
+			CollectionItemPageElementDefinition
+				collectionItemPageElementDefinition =
+					new CollectionItemPageElementDefinition();
 
-			pageCollectionItemDefinition.setType(
+			collectionItemPageElementDefinition.setType(
 				PageElementDefinition.Type.COLLECTION_ITEM);
 
-			return pageCollectionItemDefinition;
+			return collectionItemPageElementDefinition;
 		}
 
 		if (Objects.equals(

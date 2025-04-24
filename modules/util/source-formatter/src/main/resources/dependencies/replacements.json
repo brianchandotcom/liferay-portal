@@ -3445,9 +3445,9 @@
 			"ExpandoColumnLocalService",
 			"ExpandoColumnLocalServiceUtil"
 		],
-		"from": "getColumn",
+		"from": "getColumn(long paramName, String paramName)",
 		"issueKey": "LPD-36261",
-		"to": "fetchColumn"
+		"to": "fetchColumn(param#0#, param#1#)"
 	},
 	{
 		"classNames": [

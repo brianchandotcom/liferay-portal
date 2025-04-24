@@ -28,8 +28,8 @@ const CardContainer: React.FC<IProps> = ({
 			<div className="align-items-center d-flex info-button justify-content-center position-absolute">
 				<PopoverIconButton
 					iconSize="xs"
-					isSubscriptionCard
 					popoverText={infoButtonText}
+					symbol="question-circle"
 				/>
 			</div>
 		)}

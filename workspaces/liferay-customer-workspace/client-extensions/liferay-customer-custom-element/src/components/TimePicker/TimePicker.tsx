@@ -9,13 +9,12 @@ import ClayTimePicker from '@clayui/time-picker';
 import {Input as TimeInput} from '@clayui/time-picker/lib';
 import classNames from 'classnames';
 import {useField} from 'formik';
-import {
-	required as requiredVaidation,
-	validate,
-} from '~/utils/validations.form';
+import {requiredTimeInput, validate} from '~/utils/validations.form';
 
 import './TimePicker.css';
 
+import PopoverIconButton from '~/features/project/components/PopoverIconButton';
+import i18n from '~/utils/I18n';
 import getIconSpriteMap from '~/utils/getIconSpriteMap';
 
 import Badge from '../Badge';
@@ -27,10 +26,13 @@ interface IProps {
 	helper?: string;
 	id?: string;
 	label?: string;
+	link?: string;
 	name: string;
 	onBlur?: () => void;
 	onChange?: (date: TimeInput) => void;
 	required?: boolean;
+	showPopover?: boolean;
+	text?: string;
 	validations?: ((value: any) => string | undefined)[];
 }
 
@@ -41,16 +43,19 @@ const TimePicker: React.FC<IProps> = ({
 	helper,
 	id,
 	label,
+	link,
 	name,
 	onBlur,
 	onChange,
 	required,
+	showPopover,
+	text,
 	validations = [],
 }) => {
 	if (required) {
 		validations = validations
-			? [...validations, (value: string) => requiredVaidation(value)]
-			: [(value: string) => requiredVaidation(value)];
+			? [...validations, requiredTimeInput]
+			: [requiredTimeInput];
 	}
 
 	const [field, meta, helpers] = useField<TimeInput>({
@@ -58,8 +63,7 @@ const TimePicker: React.FC<IProps> = ({
 		id,
 		name,
 		required,
-		validate: (value) =>
-			validate(validations, `${value?.hours}:${value?.minutes}`),
+		validate: (value) => validate(validations, value),
 	});
 
 	const getStyleStatus = () => {
@@ -85,10 +89,6 @@ const TimePicker: React.FC<IProps> = ({
 			onChange(value);
 		}
 	};
-	const defaultValue: TimeInput = {
-		hours: '--',
-		minutes: '--',
-	};
 
 	return (
 		<ClayForm.Group
@@ -103,12 +103,26 @@ const TimePicker: React.FC<IProps> = ({
 					</span>
 				)}
 
+				{showPopover && (
+					<span className="reference-mark">
+						<PopoverIconButton
+							alignPosition="top"
+							formatedHTML={i18n.sub(text || '', [
+								`<a href=${link} target="_blank">`,
+								'</a>',
+							])}
+							iconSize="xs"
+							symbol="question-circle-full"
+						/>
+					</span>
+				)}
+
 				<ClayTimePicker
 					onBlur={handleBlur}
 					onChange={handleChange}
 					spritemap={getIconSpriteMap()}
 					use12Hours={false}
-					value={field.value || defaultValue}
+					value={field.value}
 				/>
 			</label>
 

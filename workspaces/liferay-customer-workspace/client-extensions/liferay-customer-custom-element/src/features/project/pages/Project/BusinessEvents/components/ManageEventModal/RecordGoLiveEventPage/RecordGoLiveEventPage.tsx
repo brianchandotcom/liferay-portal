@@ -98,20 +98,31 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	useEffect(() => {
 		const hasError = errors && Object.keys(errors).length;
 		const hasActualGoLiveDate = values.businessEvent?.actualGoLiveDate;
+		const hasActualGoLiveTime = values.businessEvent?.actualGoLiveTime;
+		const hasTimeZone = values.businessEvent?.timeZone?.key;
 
 		const isValidDate = (date: string) => new Date(date) <= new Date();
 		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
 
 		setIsValidRecordDate(isActualGoLiveDateValid);
 
-		const hasAllRequiredFieldsFilled = Boolean(hasActualGoLiveDate);
+		const hasAllRequiredFieldsFilled =
+			Boolean(hasActualGoLiveDate) &&
+			Boolean(hasActualGoLiveTime) &&
+			Boolean(hasTimeZone);
 
 		setBaseButtonDisabled(
 			!hasAllRequiredFieldsFilled ||
 				Boolean(hasError) ||
 				!isActualGoLiveDateValid
 		);
-	}, [errors, touched, values.businessEvent?.actualGoLiveDate]);
+	}, [
+		errors,
+		touched,
+		values.businessEvent?.actualGoLiveDate,
+		values.businessEvent?.actualGoLiveTime,
+		values.businessEvent?.timeZone?.key,
+	]);
 
 	const handleSubmit = async () => {
 		const businessEventId = businessEvent.id;
@@ -208,6 +219,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 							label={i18n.translate('time-zone')}
 							name="businessEvent.timeZone.key"
 							options={utcTimeZonesOptions}
+							required
 						/>
 					</ClayInput.GroupItem>
 
@@ -222,6 +234,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 									value
 								)
 							}
+							required
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

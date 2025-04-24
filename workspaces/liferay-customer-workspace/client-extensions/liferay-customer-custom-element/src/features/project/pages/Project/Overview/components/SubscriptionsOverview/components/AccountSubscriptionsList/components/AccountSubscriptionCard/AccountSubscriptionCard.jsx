@@ -6,26 +6,22 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo, useMemo} from 'react';
+import {Skeleton, StatusTag} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/features/project/components/PopoverIconButton';
 import {getLicenseKeyPermanentStatus} from '~/features/project/containers/GenerateNewKey/utils/licenseKeyPermanentStatus';
 import {getPerpetualValidStartDate} from '~/features/project/containers/GenerateNewKey/utils/perpetualValidStartDate';
-import i18n from '~/utils/I18n';
-import {
-	Skeleton,
-	StatusTag,
-} from '~/components';
+import {getSubscriptionStatus} from '~/features/project/utils/getSubscriptionStatus';
 import {useGetAccountSubscriptionUsage} from '~/services/liferay/graphql/account-subscription-usage';
-import {
-	FORMAT_DATE_TYPES,
-} from '~/utils/constants';
-import {getSubscriptionStatus} from '~/features/project/utils/getSubscriptionStatus'
+import i18n from '~/utils/I18n';
+import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import {
 	PRODUCT_DISPLAY_EXCEPTION,
 	PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE,
 	SUBSCRIPTION_TYPES,
 } from '~/utils/constants/subscriptionCardsCount';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
+
 import useOrderItems from '../AccountSubscriptionModal/hooks/useOrderItems';
 
 import './AccountSubscriptionCard.css';
@@ -57,14 +53,16 @@ const AccountSubscriptionCard = ({
 
 	const now = new Date();
 
-	const [
-		{activePage, setActivePage},
-		itemsPerPage,
-		{data},
-	] = useOrderItems(accountSubscription.externalReferenceCode, 1000);
+	const [{data}] = useOrderItems(
+		accountSubscription.externalReferenceCode,
+		1000
+	);
 
 	data?.orderItems?.items?.map((item) => {
-		if (now > new Date(item.options?.startDate) && now < new Date(item.options?.endDate)) {
+		if (
+			now > new Date(item.options?.startDate) &&
+			now < new Date(item.options?.endDate)
+		) {
 			quantity += item.quantity;
 		}
 	});
@@ -82,21 +80,19 @@ const AccountSubscriptionCard = ({
 		PurchasedAndProvisioned: (
 			<span className="d-flex justify-content-start m-0">
 				{currentConsumption !== undefined
-					? `${currentConsumption} ${i18n.translate('of')} ${quantity
-					}`
-					: `0 ${i18n.translate('of')} ${quantity
-					}`}
+					? `${currentConsumption} ${i18n.translate('of')} ${quantity}`
+					: `0 ${i18n.translate('of')} ${quantity}`}
 			</span>
 		),
 	};
 
 	const displayQuantityOnCard = (subscriptionType, productName) => {
-		const isPurchasedAndProvisioned = SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
-			subscriptionType
-		);
-		const isPurchased = SUBSCRIPTION_TYPES.Purchased.includes(
-			subscriptionType
-		);
+		const isPurchasedAndProvisioned =
+			SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
+				subscriptionType
+			);
+		const isPurchased =
+			SUBSCRIPTION_TYPES.Purchased.includes(subscriptionType);
 
 		if (isPurchasedAndProvisioned) {
 			if (PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(productName)) {
@@ -145,9 +141,10 @@ const AccountSubscriptionCard = ({
 	};
 
 	const displayInstanceSizeOnCard = (subscriptionType, productName) => {
-		const isPurchasedAndProvisioned = SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
-			subscriptionType
-		);
+		const isPurchasedAndProvisioned =
+			SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
+				subscriptionType
+			);
 
 		if (isPurchasedAndProvisioned) {
 			return PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE.purchasedProductInstanceSize.includes(
@@ -224,22 +221,23 @@ const AccountSubscriptionCard = ({
 					) : (
 						<div className="cp-account-subscription-card-icon-info ml-auto">
 							<StatusTag
-								currentStatus={
-									getSubscriptionStatus(new Date(accountSubscription.startDate), new Date(accountSubscription.endDate))
-								}
+								currentStatus={getSubscriptionStatus(
+									new Date(accountSubscription.startDate),
+									new Date(accountSubscription.endDate)
+								)}
 							/>
 						</div>
 					)}
 
 					<div className="align-items-center cp-account-subscription-card-icon d-flex">
 						<PopoverIconButton
-							isSubscriptionCard
 							popoverLink={{
 								textLink: i18n.translate(
 									'learn-more-about-your-liferay-subscriptions-data'
 								),
 								url: theOverviewPageURL,
 							}}
+							symbol="question-circle"
 						/>
 					</div>
 				</div>
@@ -286,12 +284,12 @@ const AccountSubscriptionCard = ({
 
 								<p className="description-info-bottom">
 									{isPermanentLicenseKey &&
-										isValidPerpetualStartDate
+									isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-											FORMAT_DATE_TYPES.day2DMonthSYearN,
-											accountSubscription.startDate
-										)}
+												FORMAT_DATE_TYPES.day2DMonthSYearN,
+												accountSubscription.startDate
+											)}
 								</p>
 							</div>
 						)
@@ -308,12 +306,12 @@ const AccountSubscriptionCard = ({
 
 								<p className="description-info-bottom">
 									{isPermanentLicenseKey &&
-										isValidPerpetualStartDate
+									isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-											FORMAT_DATE_TYPES.day2DMonthSYearN,
-											accountSubscription.endDate
-										)}
+												FORMAT_DATE_TYPES.day2DMonthSYearN,
+												accountSubscription.endDate
+											)}
 								</p>
 							</div>
 						)

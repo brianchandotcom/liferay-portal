@@ -408,7 +408,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									badgeClassName="mt-1 mx-3"
 									label={i18n.translate('event-type')}
 									link="https://help.liferay.com/hc"
-									linkText="here"
 									name="businessEvent.eventType.key"
 									onChange={(value: string) =>
 										handleOptionChange(
@@ -423,7 +422,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									]}
 									required
 									showPopover
-									text="to-learn-more-about-types-of-business-events-please-click-x"
+									text="to-learn-more-about-types-of-business-events-please-click-x-here-x"
 								/>
 
 								{subscriptionGroups && !isSaasOnly && (
@@ -531,6 +530,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 												},
 												...utcTimeZonesList,
 											]}
+											required
 										/>
 									</ClayInput.GroupItem>
 
@@ -544,6 +544,9 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 													value
 												)
 											}
+											required
+											showPopover
+											text="if-unsure-please-provide-an-estimated-time"
 										/>
 									</ClayInput.GroupItem>
 								</ClayInput.Group>

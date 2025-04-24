@@ -22,7 +22,8 @@ export default function useGetUTCTimeZonesList(): {
 	const utcTimeZonesList = useMemo(
 		() =>
 			(
-				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
+				(data?.listTypeDefinitions?.items[0]?.listTypeEntries ??
+					[]) as {
 					key: string;
 					name: string;
 				}[]

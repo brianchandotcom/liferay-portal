@@ -6,6 +6,8 @@
 import {IYears} from '@clayui/date-picker/lib/types';
 import i18n from '~/utils/I18n';
 
+import {ITimeInput} from './types';
+
 const EMAIL_REGEX =
 	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const FRIENDLY_URL_REGEX = /^\/[^. "]+[0-9a-z]+[^A-Z]$/;
@@ -127,6 +129,12 @@ const required = (value: string) => {
 	}
 };
 
+const requiredTimeInput = (value: ITimeInput) => {
+	if (!value || value.hours === '--' || value.minutes === '--') {
+		return i18n.translate('this-field-is-required');
+	}
+};
+
 const validate = (
 	validations: Function[] | undefined,
 	value: string | string[]
@@ -197,6 +205,7 @@ export {
 	isValidMac,
 	maxLength,
 	required,
+	requiredTimeInput,
 	validate,
 	validateEmailsArray,
 };

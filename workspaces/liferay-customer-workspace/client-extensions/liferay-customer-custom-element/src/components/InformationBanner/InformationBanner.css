@@ -1,7 +1,7 @@
 .information-banner {
 	color: var(--color-state-info-darken-2);
 
-	a {
+	& a {
 		font-weight: 700;
 		text-decoration: underline;
 	}

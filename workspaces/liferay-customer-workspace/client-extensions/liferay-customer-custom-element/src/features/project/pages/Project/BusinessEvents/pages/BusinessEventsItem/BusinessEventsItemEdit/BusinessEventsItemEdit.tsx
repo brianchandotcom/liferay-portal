@@ -548,6 +548,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											className="mx-3"
 											groupStyle="pb-1"
 											label={i18n.translate('event-type')}
+											link="https://help.liferay.com/hc"
 											name="businessEvent.eventType.key"
 											onChange={(value: string) =>
 												handleOptionChange(
@@ -558,6 +559,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											}
 											options={businessEventTypesList}
 											required
+											showPopover
+											text="to-learn-more-about-types-of-business-events-please-click-x-here-x"
 										/>
 									</div>
 
@@ -689,6 +692,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 														},
 														...utcTimeZonesList,
 													]}
+													required
 												/>
 											</ClayInput.GroupItem>
 
@@ -705,6 +709,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 															value
 														)
 													}
+													required
+													showPopover
+													text="if-unsure-please-provide-an-estimated-time"
 												/>
 											</ClayInput.GroupItem>
 										</ClayInput.Group>

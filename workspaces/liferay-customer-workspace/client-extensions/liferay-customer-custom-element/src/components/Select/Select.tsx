@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useField} from 'formik';
 import {
-	required as requiredVaidation,
+	required as requiredValidation,
 	validate,
 } from '~/utils/validations.form';
 
@@ -32,7 +32,6 @@ interface IProps {
 	id?: string;
 	label: string;
 	link?: string;
-	linkText?: string;
 	name: string;
 	objectValue?: ISelectOption;
 	onBlur?: () => void;
@@ -52,7 +51,6 @@ const Select: React.FC<IProps> = ({
 	id,
 	label,
 	link,
-	linkText,
 	name,
 	objectValue,
 	onChange,
@@ -65,8 +63,8 @@ const Select: React.FC<IProps> = ({
 }) => {
 	if (required) {
 		validations = validations
-			? [...validations, (value: string) => requiredVaidation(value)]
-			: [(value: string) => requiredVaidation(value)];
+			? [...validations, (value: string) => requiredValidation(value)]
+			: [(value: string) => requiredValidation(value)];
 	}
 
 	const [field, meta, helpers] = useField({
@@ -132,18 +130,17 @@ const Select: React.FC<IProps> = ({
 				)}
 
 				{showPopover && (
-					<PopoverIconButton
-						alignPosition="top"
-						formatedHTML={i18n.sub(text || '', [
-							'<a href="' +
-								link +
-								'" target="_blank">' +
-								i18n.translate(linkText || '') +
+					<span className="reference-mark">
+						<PopoverIconButton
+							alignPosition="top"
+							formatedHTML={i18n.sub(text || '', [
+								`<a href=${link} target="_blank">`,
 								'</a>',
-						])}
-						iconSize="xs"
-						isSubscriptionCard
-					/>
+							])}
+							iconSize="xs"
+							symbol="question-circle-full"
+						/>
+					</span>
 				)}
 
 				<div className="position-relative">

@@ -58,9 +58,9 @@ if (wikiPage != null) {
 
 		viewRemovedAttachmentsLink.on('click', (event) => {
 			Liferay.Util.openModal({
-				iframeBodyCssClass: '',
 				containerProps: {},
 				id: '<portlet:namespace />openRemovedPageAttachments',
+				iframeBodyCssClass: '',
 				title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
 				url: '<%= viewTrashAttachmentsURL %>',
 			});

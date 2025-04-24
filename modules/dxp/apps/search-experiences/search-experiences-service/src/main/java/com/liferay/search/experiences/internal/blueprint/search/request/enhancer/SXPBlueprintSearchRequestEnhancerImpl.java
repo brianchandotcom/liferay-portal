@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.collapse.CollapseBuilderFactory;
 import com.liferay.portal.search.collapse.InnerHitBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -127,7 +128,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			new AggsSXPSearchRequestBodyContributor(
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),
-			new GeneralSXPSearchRequestBodyContributor(),
+			new GeneralSXPSearchRequestBodyContributor(
+				_assetSubtypeIdentifierBuilder),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
 				_complexQueryPartBuilderFactory, queryConverter,
@@ -526,6 +528,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
 	@Reference
 	private CollapseBuilderFactory _collapseBuilderFactory;

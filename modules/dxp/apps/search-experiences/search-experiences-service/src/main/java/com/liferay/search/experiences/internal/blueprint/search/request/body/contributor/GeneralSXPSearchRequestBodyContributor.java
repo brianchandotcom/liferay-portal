@@ -12,9 +12,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
-import com.liferay.search.experiences.internal.blueprint.search.asset.AssetSubtypeIdentifierImpl;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 
@@ -29,6 +29,12 @@ import java.util.Set;
  */
 public class GeneralSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
+
+	public GeneralSXPSearchRequestBodyContributor(
+		AssetSubtypeIdentifierBuilder assetSubtypeIdentifierBuilder) {
+
+		_assetSubtypeIdentifierBuilder = assetSubtypeIdentifierBuilder;
+	}
 
 	@Override
 	public void contribute(
@@ -93,14 +99,17 @@ public class GeneralSXPSearchRequestBodyContributor
 			Set<String> entryClassNameSet = new HashSet<>();
 
 			for (String searchableAssetType : searchableAssetTypes) {
-				String[] assetSubtypeIdentifierParts = StringUtil.split(
-					searchableAssetType, "&&");
+				AssetSubtypeIdentifier assetSubtypeIdentifier =
+					_assetSubtypeIdentifierBuilder.searchableAssetType(
+						searchableAssetType
+					).build();
 
-				String entryClassName = assetSubtypeIdentifierParts[0];
+				String entryClassName = assetSubtypeIdentifier.getClassName();
 
 				entryClassNameSet.add(entryClassName);
 
-				if ((assetSubtypeIdentifierParts.length != 3) ||
+				if ((assetSubtypeIdentifier.getSubtypeExternalReferenceCode() ==
+						null) ||
 					!FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
 
 					continue;
@@ -116,10 +125,7 @@ public class GeneralSXPSearchRequestBodyContributor
 					assetSubtypeIdentifiers = new ArrayList<>();
 				}
 
-				assetSubtypeIdentifiers.add(
-					new AssetSubtypeIdentifierImpl(
-						assetSubtypeIdentifierParts[1],
-						assetSubtypeIdentifierParts[2]));
+				assetSubtypeIdentifiers.add(assetSubtypeIdentifier);
 
 				assetSubtypeIdentifiersMap.put(
 					entryClassName, assetSubtypeIdentifiers);
@@ -155,5 +161,7 @@ public class GeneralSXPSearchRequestBodyContributor
 	public String getName() {
 		return "generalConfiguration";
 	}
+
+	private final AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
 }

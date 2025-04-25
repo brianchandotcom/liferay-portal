@@ -36,6 +36,16 @@ public class YMLSourceUtil {
 	public static List<String> splitDocuments(String content) {
 		List<String> documents = new ArrayList<>();
 
+		content = content.trim();
+
+		if (content.endsWith("\n---")) {
+			content = content.substring(0, content.length() - 4);
+		}
+
+		if (content.startsWith("---\n")) {
+			content = content.substring(4);
+		}
+
 		int x = -1;
 
 		while (true) {

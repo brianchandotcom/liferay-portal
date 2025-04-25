@@ -35,14 +35,6 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		String trimmedContent = content.trim();
-
-		if (trimmedContent.startsWith("---") ||
-			trimmedContent.endsWith("---")) {
-
-			return content;
-		}
-
 		List<String> documents = YMLSourceUtil.splitDocuments(content);
 
 		StringBundler sb = new StringBundler(documents.size() * 2);

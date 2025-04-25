@@ -24,6 +24,12 @@ public class YMLStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = content.trim();
+
+		if (content.endsWith("\n---")) {
+			content = content.substring(0, content.length() - 4);
+		}
+
 		if (content.startsWith("---\n")) {
 			content = content.substring(4);
 		}

@@ -4,6 +4,7 @@ assemble:
 liferay-sample-editor-config-contributor:
     editorConfigKeys:
         -   description
+        -   fragmentEntryLinkRichTextEditor
         -   sampleAlloyEditor
         -   sampleClassicEditor
         -   sampleLegacyEditor

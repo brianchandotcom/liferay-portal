@@ -35,7 +35,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -337,6 +341,7 @@ public class DisplayPageTemplateResourceTest
 
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithKey();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder();
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithThumbnail();
 	}
 
 	@Ignore
@@ -548,6 +553,17 @@ public class DisplayPageTemplateResourceTest
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
 	}
 
+	private FileEntry _addPortletFileEntry(long folderId) throws Exception {
+		Class<?> clazz = getClass();
+
+		return _portletFileRepository.addPortletFileEntry(
+			null, testGroup.getGroupId(), TestPropsValues.getUserId(),
+			LayoutPageTemplateEntry.class.getName(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			folderId, clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+	}
+
 	private void _assertNestedFields(DisplayPageTemplate displayPageTemplate)
 		throws Exception {
 
@@ -623,6 +639,23 @@ public class DisplayPageTemplateResourceTest
 
 			Assert.assertEquals(status, problem.getStatus());
 			Assert.assertEquals(title, problem.getTitle());
+		}
+	}
+
+	private void _assertThumbnailItemExternalReference(
+		String expectedExternalReferenceCode,
+		ItemExternalReference itemExternalReference) {
+
+		if (expectedExternalReferenceCode != null) {
+			Assert.assertEquals(
+				FileEntry.class.getName(),
+				itemExternalReference.getClassName());
+			Assert.assertEquals(
+				expectedExternalReferenceCode,
+				itemExternalReference.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertNull(itemExternalReference);
 		}
 	}
 
@@ -974,6 +1007,37 @@ public class DisplayPageTemplateResourceTest
 			postDisplayPageTemplateFolder.getExternalReferenceCode());
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithThumbnail()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		displayPageTemplate.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(FileEntry.class.getName());
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+				}
+			});
+
+		DisplayPageTemplate postDisplayPageTemplate =
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		_assertThumbnailItemExternalReference(
+			fileEntry.getExternalReferenceCode(),
+			postDisplayPageTemplate.getThumbnail());
+	}
+
 	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			DisplayPageTemplate displayPageTemplate)
 		throws Exception {
@@ -1120,6 +1184,9 @@ public class DisplayPageTemplateResourceTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;

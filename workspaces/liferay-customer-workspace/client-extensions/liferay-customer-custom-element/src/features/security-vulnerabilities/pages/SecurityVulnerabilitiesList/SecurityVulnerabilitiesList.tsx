@@ -170,7 +170,10 @@ const SecurityVulnerabilitiesList = () => {
 									[JiraEnum.AFFECTED_VERSIONS]: jiraVersions,
 								}}
 								onChange={(params) =>
-									updateSearchParams(params)
+									updateSearchParams({
+										...params,
+										[JiraEnum.PAGE]: 1,
+									})
 								}
 								params={searchParams}
 								sortOptions={SORT_OPTIONS}

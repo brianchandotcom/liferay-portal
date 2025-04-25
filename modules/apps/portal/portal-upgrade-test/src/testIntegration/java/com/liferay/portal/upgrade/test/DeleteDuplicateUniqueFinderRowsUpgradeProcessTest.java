@@ -101,6 +101,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount("PortalPreferences", true, "ownerType", "ownerId");
 
+		Collections.sort(portalPreferencesList, Collections.reverseOrder());
+
 		Assert.assertEquals(
 			portalPreferencesList.get(0),
 			_portalPreferencesLocalService.fetchPortalPreferences(1, 1));
@@ -147,6 +149,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount(
 			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
+
+		Collections.sort(portletItems, Collections.reverseOrder());
+
 		Assert.assertEquals(
 			portletItems.get(0),
 			_portletItemLocalService.getPortletItem(
@@ -200,9 +205,11 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			"SocialActivitySetting", true, "groupId", "classNameId",
 			"activityType", "name");
 
+		Collections.sort(socialActivitySettings, Collections.reverseOrder());
+
 		Assert.assertEquals(
 			socialActivitySettings.get(0),
-			_socialActivitySettingLocalService.getSocialActivitySetting(1));
+			_socialActivitySettingLocalService.getSocialActivitySetting(2));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 

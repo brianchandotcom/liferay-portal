@@ -548,7 +548,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											className="mx-3"
 											groupStyle="pb-1"
 											label={i18n.translate('event-type')}
-											link="https://help.liferay.com/hc"
+											link="https://help.liferay.com/hc/articles/36002102323597"
 											name="businessEvent.eventType.key"
 											onChange={(value: string) =>
 												handleOptionChange(

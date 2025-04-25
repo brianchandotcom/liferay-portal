@@ -407,7 +407,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 								<Select
 									badgeClassName="mt-1 mx-3"
 									label={i18n.translate('event-type')}
-									link="https://help.liferay.com/hc"
+									link="https://help.liferay.com/hc/articles/36002102323597"
 									name="businessEvent.eventType.key"
 									onChange={(value: string) =>
 										handleOptionChange(

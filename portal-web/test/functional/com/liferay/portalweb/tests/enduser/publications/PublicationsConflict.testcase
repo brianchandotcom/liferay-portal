@@ -95,6 +95,8 @@ definition {
 			AssetCategorization.addTag(tagName = "test tag");
 
 			WebContent.publishExistingWCArticleWithPermissions();
+
+			WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
 		}
 
 		task ("Switch to Production and edit web content adding the Tag created") {

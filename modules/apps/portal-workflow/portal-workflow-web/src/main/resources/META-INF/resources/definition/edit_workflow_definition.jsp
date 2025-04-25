@@ -139,7 +139,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						refresh="<%= false %>"
 					>
 						<liferay-ui:section>
-							<div style="margin-top: 1.5rem;">
+							<div class="mt-4">
 
 								<%
 								String creatorUserName = workflowDefinitionDisplayContext.getCreatorUserName(workflowDefinition);

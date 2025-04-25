@@ -260,6 +260,11 @@
 					"scope": {
 						"$ref": "#/components/schemas/Scope"
 					},
+					"thumbnailURL": {
+						"description": "optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)",
+						"readOnly": true,
+						"type": "string"
+					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.FileEntry",
 						"readOnly": true,

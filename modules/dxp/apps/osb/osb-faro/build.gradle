@@ -1,4 +1,3 @@
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
@@ -38,7 +37,6 @@ apply plugin: "com.liferay.app.docker"
 apply plugin: "com.liferay.root.defaults.plugin"
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
-task buildDocker(type: DockerBuildImage)
 task buildNexusCredentials(type: Exec)
 task checkDocker(type: DockerWaitHealthyContainer)
 task copyDatabaseConnector(type: Copy)

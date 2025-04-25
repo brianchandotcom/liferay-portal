@@ -195,7 +195,9 @@
 
 								ln -s ./build/docker/bundles/tomcat ./build/docker/bundles/tomcat-${app.server.tomcat.version}
 
-								${portal.gradlew} buildDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+								cd ./build/docker
+
+								docker build . -t ${analytics.cloud.faro.image.name}
 
 								docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
 

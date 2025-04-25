@@ -1442,7 +1442,9 @@ export class PageEditorPage {
 
 			if (hasMenuBar) {
 				await clickAndExpectToBeHidden({
-					target: iframe.locator('.sheet-title').getByText(entity),
+					target: iframe
+						.locator('.sheet-title')
+						.getByText(entity, {exact: true}),
 					trigger: entryLocator
 						? entryLocator
 						: iframe

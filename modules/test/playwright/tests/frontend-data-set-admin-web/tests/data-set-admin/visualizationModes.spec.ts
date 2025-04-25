@@ -1168,6 +1168,21 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 						.locator('.label-item')
 				).toContainText('Untranslated');
 
+				if (
+					await page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'es_AR'})
+						.locator('.label-item')
+						.isVisible()
+				) {
+					await expect(
+						page
+							.locator(`#${languageDropdownId}`)
+							.getByRole('menuitem', {name: 'es_ES'})
+							.locator('.label-item')
+					).toContainText('Untranslated');
+				}
+
 				await expect(
 					page
 						.locator(`#${languageDropdownId}`)
@@ -1191,6 +1206,25 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					.click();
 
 				await labelInput.fill(SAMPLE_FIELD_ES_ES);
+
+				await localizationButton.click();
+
+				await page.locator(`#${languageDropdownId}`).waitFor();
+
+				if (
+					await page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'es_AR'})
+						.locator('.label-item')
+						.isVisible()
+				) {
+					await page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'es_AR'})
+						.click();
+
+					await labelInput.fill(SAMPLE_FIELD_ES_ES);
+				}
 
 				await saveFromModal({page});
 			});

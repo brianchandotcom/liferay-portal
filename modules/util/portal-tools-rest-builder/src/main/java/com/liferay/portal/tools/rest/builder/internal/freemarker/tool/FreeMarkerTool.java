@@ -740,14 +740,30 @@ public class FreeMarkerTool {
 	}
 
 	public JavaMethodSignature getPostSchemaJavaMethodSignature(
-		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
-		String schemaName) {
+		List<JavaMethodSignature> javaMethodSignatures,
+		String parentSchemaParameterName, String schemaName) {
+
+		String parentSchemaName = "";
+
+		if (parentSchemaParameterName.startsWith("parent")) {
+			parentSchemaName = parentSchemaParameterName.substring(6);
+		}
+
+		if (parentSchemaParameterName.endsWith("Id")) {
+			parentSchemaName = parentSchemaParameterName.substring(
+				0, parentSchemaParameterName.length() - 2);
+		}
+
+		if (parentSchemaParameterName.endsWith("ExternalReferenceCode")) {
+			parentSchemaName = parentSchemaParameterName.substring(
+				0, parentSchemaParameterName.length() - 21);
+		}
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			Operation operation = javaMethodSignature.getOperation();
 
 			if (!Objects.equals(getHTTPMethod(operation), "post") ||
-				!hasParameter(javaMethodSignature, parameterName)) {
+				!hasParameter(javaMethodSignature, parentSchemaParameterName)) {
 
 				continue;
 			}
@@ -756,21 +772,7 @@ public class FreeMarkerTool {
 
 			sb.append(getHTTPMethod(operation));
 
-			if (parameterName.startsWith("parent")) {
-				parameterName = parameterName.substring(6);
-			}
-
-			if (parameterName.endsWith("Id")) {
-				parameterName = parameterName.substring(
-					0, parameterName.length() - 2);
-			}
-
-			if (parameterName.endsWith("ExternalReferenceCode")) {
-				parameterName = parameterName.substring(
-					0, parameterName.length() - 21);
-			}
-
-			sb.append(StringUtil.upperCaseFirstLetter(parameterName));
+			sb.append(StringUtil.upperCaseFirstLetter(parentSchemaName));
 
 			sb.append(StringUtil.upperCaseFirstLetter(schemaName));
 

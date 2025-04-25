@@ -743,20 +743,20 @@ public class FreeMarkerTool {
 		List<JavaMethodSignature> javaMethodSignatures,
 		String parentSchemaParameterName, String schemaName) {
 
-		String parentSchemaName = "";
+		String parentSchemaName = parentSchemaParameterName;
 
-		if (parentSchemaParameterName.startsWith("parent")) {
-			parentSchemaName = parentSchemaParameterName.substring(6);
+		if (parentSchemaName.startsWith("parent")) {
+			parentSchemaName = parentSchemaName.substring(6);
 		}
 
-		if (parentSchemaParameterName.endsWith("Id")) {
-			parentSchemaName = parentSchemaParameterName.substring(
-				0, parentSchemaParameterName.length() - 2);
+		if (parentSchemaName.endsWith("Id")) {
+			parentSchemaName = parentSchemaName.substring(
+				0, parentSchemaName.length() - 2);
 		}
 
-		if (parentSchemaParameterName.endsWith("ExternalReferenceCode")) {
-			parentSchemaName = parentSchemaParameterName.substring(
-				0, parentSchemaParameterName.length() - 21);
+		if (parentSchemaName.endsWith("ExternalReferenceCode")) {
+			parentSchemaName = parentSchemaName.substring(
+				0, parentSchemaName.length() - 21);
 		}
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {

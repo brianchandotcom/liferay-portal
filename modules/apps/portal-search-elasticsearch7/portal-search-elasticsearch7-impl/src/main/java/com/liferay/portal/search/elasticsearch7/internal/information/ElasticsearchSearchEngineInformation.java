@@ -13,13 +13,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
 import com.liferay.portal.search.engine.ConnectionInformation;
 import com.liferay.portal.search.engine.ConnectionInformationBuilder;
 import com.liferay.portal.search.engine.ConnectionInformationBuilderFactory;
@@ -32,7 +32,9 @@ import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -218,7 +220,7 @@ public class ElasticsearchSearchEngineInformation
 			_addConnectionInformation(
 				elasticsearchConnectionManager.getElasticsearchConnection(
 					connectionId),
-				connectionInformationList, null);
+				connectionInformationList, new LinkedHashSet<>());
 		}
 	}
 
@@ -227,13 +229,14 @@ public class ElasticsearchSearchEngineInformation
 		List<ConnectionInformation> connectionInformationList) {
 
 		_addConnectionInformation(
-			elasticsearchConnection, connectionInformationList, "read");
+			elasticsearchConnection, connectionInformationList,
+			new LinkedHashSet<>(Arrays.asList("read")));
 	}
 
 	private void _addConnectionInformation(
 		ElasticsearchConnection elasticsearchConnection,
 		List<ConnectionInformation> connectionInformationList,
-		String... labels) {
+		Set<String> labels) {
 
 		if (elasticsearchConnection == null) {
 			return;
@@ -246,7 +249,7 @@ public class ElasticsearchSearchEngineInformation
 		try {
 			_setClusterAndNodeInformation(
 				connectionInformationBuilder,
-				elasticsearchConnection.getRestHighLevelClient());
+				elasticsearchConnection.getRestHighLevelClient(), labels);
 		}
 		catch (Exception exception) {
 			connectionInformationBuilder.error(exception.toString());
@@ -256,8 +259,13 @@ public class ElasticsearchSearchEngineInformation
 			}
 		}
 
-		connectionInformationBuilder.connectionId(
-			elasticsearchConnection.getConnectionId());
+		String connectionId = elasticsearchConnection.getConnectionId();
+
+		connectionInformationBuilder.connectionId(connectionId);
+
+		if (connectionId.equals(ConnectionConstants.SIDECAR_CONNECTION_ID)) {
+			labels.add("not-supported");
+		}
 
 		try {
 			_setHealthInformation(
@@ -272,8 +280,8 @@ public class ElasticsearchSearchEngineInformation
 			}
 		}
 
-		if (ArrayUtil.isNotEmpty(labels)) {
-			connectionInformationBuilder.labels(SetUtil.fromArray(labels));
+		if (!labels.isEmpty()) {
+			connectionInformationBuilder.labels(labels);
 		}
 
 		connectionInformationList.add(connectionInformationBuilder.build());
@@ -283,7 +291,8 @@ public class ElasticsearchSearchEngineInformation
 		ElasticsearchConnection elasticsearchConnection,
 		List<ConnectionInformation> connectionInformationList) {
 
-		String[] labels = {"read", "write"};
+		Set<String> labels = new LinkedHashSet<>(
+			Arrays.asList("read", "write"));
 
 		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
 			elasticsearchConnectionManager.isCrossClusterReplicationEnabled() &&
@@ -291,7 +300,7 @@ public class ElasticsearchSearchEngineInformation
 				elasticsearchConnectionManager.getElasticsearchConnection(
 					true))) {
 
-			labels = new String[] {"write"};
+			labels.remove("read");
 		}
 
 		_addConnectionInformation(
@@ -311,7 +320,8 @@ public class ElasticsearchSearchEngineInformation
 					getConnectionInformationBuilder();
 
 			_setClusterAndNodeInformation(
-				connectionInformationBuilder, restHighLevelClient);
+				connectionInformationBuilder, restHighLevelClient,
+				new LinkedHashSet<>());
 
 			ConnectionInformation connectionInformation =
 				connectionInformationBuilder.build();
@@ -390,7 +400,7 @@ public class ElasticsearchSearchEngineInformation
 
 	private void _setClusterAndNodeInformation(
 			ConnectionInformationBuilder connectionInformationBuilder,
-			RestHighLevelClient restHighLevelClient)
+			RestHighLevelClient restHighLevelClient, Set<String> labels)
 		throws Exception {
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();
@@ -427,8 +437,15 @@ public class ElasticsearchSearchEngineInformation
 
 			nodeInformationBuilder.name(
 				GetterUtil.getString(nodeJSONObject.get("name")));
-			nodeInformationBuilder.version(
+
+			Version version = Version.parseVersion(
 				GetterUtil.getString(nodeJSONObject.get("version")));
+
+			nodeInformationBuilder.version(version.toString());
+
+			if (version.getMajor() == 7) {
+				labels.add("deprecated");
+			}
 
 			nodeInformationList.add(nodeInformationBuilder.build());
 		}

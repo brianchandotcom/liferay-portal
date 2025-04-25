@@ -187,11 +187,17 @@
 							/>
 
 							<execute-analytics-cloud dir="${analytics.cloud.faro.dir}" timeout="600000">
-								${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+								${portal.gradlew} prepareAppDockerImageInputDir -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+
+								cp -R ${app.server.parent.dir} ./build/docker/bundles
+
+								mv ./build/docker/bundles/tomcat-${app.server.tomcat.version} ./build/docker/bundles/tomcat
+
+								ln -s ./build/docker/bundles/tomcat ./build/docker/bundles/tomcat-${app.server.tomcat.version}
+
+								${portal.gradlew} buildDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
 
 								docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
-
-								docker rm ${analytics.cloud.faro.container.name}
 
 								docker save --output ${project.dir}/dist/liferay-docker-faro.tar ${analytics.cloud.faro.image.name}
 							</execute-analytics-cloud>

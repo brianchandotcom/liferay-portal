@@ -22,6 +22,10 @@ EXPOSE 8000 8080 11311
 
 HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit 1
 
+RUN rm -rf ${LIFERAY_HOME}
+
+COPY ./bundles ${LIFERAY_HOME}
+
 RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
     echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 

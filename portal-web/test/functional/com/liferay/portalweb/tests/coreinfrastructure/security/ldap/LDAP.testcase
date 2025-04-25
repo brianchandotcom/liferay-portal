@@ -59,7 +59,7 @@ definition {
 			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
-				customFieldName = "User Custom Field",
+				customFieldName = "Usercustomfield",
 				customFieldType = "Text Area",
 				customInputDataType = "Text",
 				localization = "true",
@@ -69,7 +69,7 @@ definition {
 		task ("And: User adds LDAP server with userCustomMapping and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
 
-			LDAP.addLDAPServerAndTestConnection(userCustomMappings = "user custom field=title");
+			LDAP.addLDAPServerAndTestConnection(userCustomMappings = "Usercustomfield=title");
 
 			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 		}
@@ -84,19 +84,19 @@ definition {
 			LDAP.verifyUserIsImported(userScreenName = "testUser");
 		}
 
-		task ("When: Admin changes new user custom field") {
+		task ("When: Admin changes new User Custom Field") {
 			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "testuser");
 
 			User.viewUserCustomFieldsCP(
-				customFieldName = "User Custom Field",
+				customFieldName = "Usercustomfield",
 				customFieldType = "Text Area",
 				startingValue = "attribute");
 
 			User.editUserInformation(
 				userCustomField = "Updated Custom Field",
-				userCustomFieldLabel = "user custom field",
+				userCustomFieldLabel = "Usercustomfield",
 				userCustomFieldType = "Text Area");
 
 			PortletEntry.save();

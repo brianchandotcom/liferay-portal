@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.lang.SafeCloseable;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -211,6 +213,24 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertNull(fileEntry.getDisplayDate());
 		Assert.assertNull(fileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, fileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testFileEntryShouldUploadFileWithMaxUploadSizeFromServletRequest()
+		throws Exception {
+
+		String fileName = "test.pdf";
+
+		int maxSize =
+			(int)UploadServletRequestConfigurationProviderUtil.getMaxSize();
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
+			ContentTypes.APPLICATION_OCTET_STREAM, fileName, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, new byte[maxSize], null, null,
+			null, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertNotNull(fileEntry);
 	}
 
 	@Test

@@ -55,12 +55,12 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 
 			@Override
 			protected Set<Map.Entry<String, Object>> entrySet() {
-				Set<Map.Entry<String, Object>> entrySet = new TreeSet<>(
+				Set<Map.Entry<String, Object>> entries = new TreeSet<>(
 					Comparator.comparing(Map.Entry::getKey));
 
-				entrySet.addAll(super.entrySet());
+				entries.addAll(super.entrySet());
 
-				return entrySet;
+				return entries;
 			}
 
 		};
@@ -230,12 +230,12 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 
 			@Override
 			protected Set<Map.Entry<String, Object>> entrySet() {
-				Set<Map.Entry<String, Object>> entrySet = new TreeSet<>(
+				Set<Map.Entry<String, Object>> entries = new TreeSet<>(
 					Comparator.comparing(Map.Entry::getKey));
 
-				entrySet.addAll(super.entrySet());
+				entries.addAll(super.entrySet());
 
-				return entrySet;
+				return entries;
 			}
 
 		};

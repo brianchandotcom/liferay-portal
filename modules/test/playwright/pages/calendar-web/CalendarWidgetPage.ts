@@ -22,6 +22,7 @@ export class CalendarWidgetPage {
 	readonly endTime: Locator;
 	readonly invitations: Locator;
 	readonly inviteResource: Locator;
+	readonly manageCalendarsMenuItem: Locator;
 	readonly modalRecurrencePage: ModalRecurrencePage;
 	readonly miniCalendarBase: Locator;
 	readonly miniCalendarGrid: Locator;
@@ -81,6 +82,9 @@ export class CalendarWidgetPage {
 		this.inviteResource = page
 			.frameLocator('iframe')
 			.getByTitle('Invite Resource', {exact: true});
+		this.manageCalendarsMenuItem = page.getByRole('menuitem', {
+			name: 'Manage Calendars',
+		});
 		this.modalRecurrencePage = new ModalRecurrencePage(page);
 		this.miniCalendarBase = page.locator('.yui3-calendarbase');
 		this.miniCalendarGrid = page.locator('.yui3-calendar-grid');
@@ -222,6 +226,10 @@ export class CalendarWidgetPage {
 		await this.page.waitForLoadState('networkidle');
 	}
 
+	async clickCalendarColor(calendarColorHex: string) {
+		await this.page.getByRole('radio', {name: calendarColorHex}).click();
+	}
+
 	async clickEvent(title: string) {
 		await this.page.getByText(title).click();
 	}
@@ -250,6 +258,16 @@ export class CalendarWidgetPage {
 		await this.repeatCheckbox.setChecked(true);
 
 		await this.modalRecurrencePage.addRecurrenceUntilDate(daysFromNow);
+	}
+
+	async openCalendarActionsDropdownMenu(calendarName: string) {
+		await this.page
+			.getByLabel(`Show Actions for Calendar ${calendarName}`)
+			.click();
+	}
+
+	async openCalendarGroupActionsDropdownMenu(groupName: string) {
+		await this.page.getByLabel(`Manage Calendar  ${groupName}`).click();
 	}
 
 	async setCalendarWidgetConfiguration(

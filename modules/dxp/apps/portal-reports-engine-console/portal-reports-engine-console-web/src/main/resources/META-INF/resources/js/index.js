@@ -43,9 +43,13 @@ export function reportParameters({namespace, parameters}) {
 		'.remove-existing-report'
 	);
 
-	const existingReportElement = document.querySelector('.existing-report');
+	const templateReportFileNameElement = document.querySelector(
+		'.lfr-reports__template-report-file-name'
+	);
 
-	const templateReportElement = document.querySelector('.template-report');
+	const templateReportInputElement = document.querySelector(
+		'.lfr-reports__template-report-input'
+	);
 
 	const cancelUpdateReportElement = document.querySelector(
 		'.cancel-update-template-report'
@@ -318,14 +322,14 @@ export function reportParameters({namespace, parameters}) {
 	addParameterElement.addEventListener('click', addParameter);
 
 	removeReportElement.addEventListener('click', () => {
-		existingReportElement.style.display = 'none';
-		templateReportElement.style.display = 'block';
+		templateReportFileNameElement.style.display = 'none';
+		templateReportInputElement.style.display = 'block';
 		cancelUpdateReportElement.style.display = 'block';
 	});
 
 	cancelUpdateReportElement.addEventListener('click', () => {
-		existingReportElement.style.display = 'block';
-		templateReportElement.style.display = 'none';
+		templateReportFileNameElement.style.display = 'block';
+		templateReportInputElement.style.display = 'none';
 		cancelUpdateReportElement.style.display = 'none';
 	});
 

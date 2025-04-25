@@ -3,6 +3,19 @@
 		margin-right: 5px;
 	}
 
+	.lfr-reports__template-report {
+		&-input,
+		&-name {
+			&.display-block {
+				display: block;
+			}
+
+			&.display-none {
+				display: none;
+			}
+		}
+	}
+
 	div[id$='recurrenceTypeWeeklyTable'] > .form-group {
 		display: none;
 	}

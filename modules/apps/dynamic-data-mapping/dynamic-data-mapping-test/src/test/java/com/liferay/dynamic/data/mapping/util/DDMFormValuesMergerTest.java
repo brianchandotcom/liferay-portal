@@ -142,14 +142,15 @@ public class DDMFormValuesMergerTest {
 		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
 			newDDMFormValues, existingDDMFormValues);
 
-		List<DDMFormFieldValue> mergedFormFieldValues =
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
 			mergedFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(
-			mergedFormFieldValues.toString(), 1, mergedFormFieldValues.size());
+			mergedDDMFormFieldValues.toString(), 1,
+			mergedDDMFormFieldValues.size());
 
-		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
-			0);
+		DDMFormFieldValue mergedDDMFormFieldValue =
+			mergedDDMFormFieldValues.get(0);
 
 		Value mergedValue = mergedDDMFormFieldValue.getValue();
 
@@ -248,14 +249,15 @@ public class DDMFormValuesMergerTest {
 		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
 			newDDMFormValues, existingDDMFormValues);
 
-		List<DDMFormFieldValue> mergedFormFieldValues =
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
 			mergedFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(
-			mergedFormFieldValues.toString(), 1, mergedFormFieldValues.size());
+			mergedDDMFormFieldValues.toString(), 1,
+			mergedDDMFormFieldValues.size());
 
-		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
-			0);
+		DDMFormFieldValue mergedDDMFormFieldValue =
+			mergedDDMFormFieldValues.get(0);
 
 		Value mergedValue = mergedDDMFormFieldValue.getValue();
 
@@ -304,14 +306,15 @@ public class DDMFormValuesMergerTest {
 		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
 			newDDMFormValues, existingDDMFormValues);
 
-		List<DDMFormFieldValue> mergedFormFieldValues =
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
 			mergedFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(
-			mergedFormFieldValues.toString(), 1, mergedFormFieldValues.size());
+			mergedDDMFormFieldValues.toString(), 1,
+			mergedDDMFormFieldValues.size());
 
-		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
-			0);
+		DDMFormFieldValue mergedDDMFormFieldValue =
+			mergedDDMFormFieldValues.get(0);
 
 		Value mergedValue = mergedDDMFormFieldValue.getValue();
 

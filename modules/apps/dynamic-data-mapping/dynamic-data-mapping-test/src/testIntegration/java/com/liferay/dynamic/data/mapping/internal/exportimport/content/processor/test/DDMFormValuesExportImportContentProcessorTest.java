@@ -368,10 +368,10 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			"title", journalArticle.getTitle()
 		);
 
-		List<DDMFormField> journalFormFields =
+		List<DDMFormField> journalDDMFormFields =
 			journalDDMForm.getDDMFormFields();
 
-		for (DDMFormField currentFormField : journalFormFields) {
+		for (DDMFormField journalDDMFormField : journalDDMFormFields) {
 			LocalizedValue value = new LocalizedValue();
 
 			value.addString(LocaleUtil.US, jsonObject.toString());
@@ -379,7 +379,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 			ddmFormFieldValue.setDDMFormValues(_journalDDMFormValues);
-			ddmFormFieldValue.setName(currentFormField.getName());
+			ddmFormFieldValue.setName(journalDDMFormField.getName());
 			ddmFormFieldValue.setValue(value);
 
 			_journalDDMFormValues.addDDMFormFieldValue(ddmFormFieldValue);

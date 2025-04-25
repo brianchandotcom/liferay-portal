@@ -40,8 +40,10 @@
 
 		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
 			browser.launcher.url=
+			enterprise.product.notification.enabled=false
 			javascript.single.page.application.enabled=false
 			module.framework.auto.deploy.interval=2000
+			passwords.default.policy.change.required=false
 			setup.wizard.enabled=false
 			terms.of.use.required=false
 			theme.portlet.decorate.default=false

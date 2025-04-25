@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -47,19 +45,18 @@ public class FunctionCaptchaImplTest extends BaseCaptchaTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_properties = HashMapBuilder.<String, Object>put(
-			"baseURL", "${portalURL}/o/test_" + _VIRTUAL_HOSTNAME
-		).put(
-			"name", "Test " + _VIRTUAL_HOSTNAME
-		).put(
-			"type", "customElement"
-		).put(
-			"typeSettings", new String[] {"htmlElementName=test"}
-		).build();
-
 		_cet = (CustomElementCET)_cetManager.addCET(
 			ConfigurableUtil.createConfigurable(
-				CETConfiguration.class, _properties),
+				CETConfiguration.class,
+				HashMapBuilder.<String, Object>put(
+					"baseURL", "${portalURL}/o/test_" + _VIRTUAL_HOSTNAME
+				).put(
+					"name", "Test " + _VIRTUAL_HOSTNAME
+				).put(
+					"type", "customElement"
+				).put(
+					"typeSettings", new String[] {"htmlElementName=test"}
+				).build()),
 			TestPropsValues.getCompanyId(), "LXC:test");
 
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
@@ -110,6 +107,5 @@ public class FunctionCaptchaImplTest extends BaseCaptchaTestCase {
 	private static CETManager _cetManager;
 
 	private static String _pid;
-	private static Map<String, Object> _properties;
 
 }

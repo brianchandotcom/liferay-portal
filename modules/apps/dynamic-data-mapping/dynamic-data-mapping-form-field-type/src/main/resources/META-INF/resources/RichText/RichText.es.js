@@ -58,7 +58,7 @@ const RichText = ({
 	evaluable,
 	fieldName,
 	id,
-	label,
+	label = '',
 	locale,
 	name,
 	localizedObjectField,
@@ -67,6 +67,7 @@ const RichText = ({
 	onFocus,
 	predefinedValue = '',
 	readOnly,
+	tip = '',
 	value,
 	visible,
 	...otherProps
@@ -336,6 +337,7 @@ const RichText = ({
 			name={name}
 			readOnly={readOnly}
 			style={readOnly ? {pointerEvents: 'none'} : null}
+			tip={tip}
 			visible={visible}
 		>
 			<ClayInput.Group>
@@ -362,7 +364,11 @@ const RichText = ({
 										]
 									: ''
 							}
-							editorConfig={editorConfig}
+							editorConfig={{
+								...editorConfig,
+								applicationTitle:
+									(label || tip) && `${label}, ${tip}`,
+							}}
 							name={name}
 							onBlur={onBlur}
 							onChange={(content) => handleContentChange(content)}

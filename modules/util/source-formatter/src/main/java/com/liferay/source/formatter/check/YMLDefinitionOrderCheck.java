@@ -46,9 +46,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		sb.setIndex(sb.index() - 1);
 
-		content = sb.toString();
-
-		content = _sortFeatureFlags(content);
+		content = _sortFeatureFlags(sb.toString());
 
 		if (fileName.endsWith("docker-compose.yaml")) {
 			content = _sortPorts(content);

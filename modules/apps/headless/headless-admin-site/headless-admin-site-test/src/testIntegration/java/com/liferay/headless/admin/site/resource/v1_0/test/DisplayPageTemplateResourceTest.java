@@ -406,6 +406,7 @@ public class DisplayPageTemplateResourceTest
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateContentTypeReference();
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault();
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateThumbnail();
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			randomDisplayPageTemplate());
@@ -1148,6 +1149,64 @@ public class DisplayPageTemplateResourceTest
 						testGroup.getExternalReferenceCode(),
 						displayPageTemplate.getExternalReferenceCode(),
 						displayPageTemplate));
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateThumbnail()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		displayPageTemplate.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
+
+		displayPageTemplate.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(FileEntry.class.getName());
+					setExternalReferenceCode(
+						fileEntry1.getExternalReferenceCode());
+				}
+			});
+
+		DisplayPageTemplate putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate);
+
+		_assertThumbnailItemExternalReference(
+			fileEntry1.getExternalReferenceCode(),
+			putDisplayPageTemplate.getThumbnail());
+
+		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
+
+		putDisplayPageTemplate.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(FileEntry.class.getName());
+					setExternalReferenceCode(
+						fileEntry2.getExternalReferenceCode());
+				}
+			});
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					putDisplayPageTemplate.getExternalReferenceCode(),
+					putDisplayPageTemplate);
+
+		_assertThumbnailItemExternalReference(
+			fileEntry2.getExternalReferenceCode(),
+			putDisplayPageTemplate.getThumbnail());
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

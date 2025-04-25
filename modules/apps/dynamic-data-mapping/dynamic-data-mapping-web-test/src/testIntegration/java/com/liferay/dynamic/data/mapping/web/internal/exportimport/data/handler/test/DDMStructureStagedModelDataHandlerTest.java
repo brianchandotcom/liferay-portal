@@ -433,31 +433,31 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		// Data provider instance
 
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			DDMDataProviderInstanceLinkLocalServiceUtil.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
-		List<DDMDataProviderInstanceLink> importedDataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> importedDDMDataProviderInstanceLinks =
 			DDMDataProviderInstanceLinkLocalServiceUtil.
 				getDataProviderInstanceLinks(
 					importedStructure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 1,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 1,
+			ddmDataProviderInstanceLinks.size());
 		Assert.assertEquals(
-			importedDataProviderInstanceLinks.toString(), 1,
-			importedDataProviderInstanceLinks.size());
+			importedDDMDataProviderInstanceLinks.toString(), 1,
+			importedDDMDataProviderInstanceLinks.size());
 
 		DDMDataProviderInstanceLink dataProviderInstanceLink =
-			dataProviderInstanceLinks.get(0);
+			ddmDataProviderInstanceLinks.get(0);
 
 		DDMDataProviderInstance dataProviderInstance =
 			DDMDataProviderInstanceLocalServiceUtil.getDataProviderInstance(
 				dataProviderInstanceLink.getDataProviderInstanceId());
 
 		DDMDataProviderInstanceLink importedDataProviderInstanceLink =
-			importedDataProviderInstanceLinks.get(0);
+			importedDDMDataProviderInstanceLinks.get(0);
 
 		long importedDataProviderInstanceId =
 			importedDataProviderInstanceLink.getDataProviderInstanceId();

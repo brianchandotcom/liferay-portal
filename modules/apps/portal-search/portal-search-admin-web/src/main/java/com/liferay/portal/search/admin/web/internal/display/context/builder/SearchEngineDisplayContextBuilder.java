@@ -6,7 +6,11 @@
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayContext;
+import com.liferay.portal.search.engine.ConnectionInformation;
 import com.liferay.portal.search.engine.SearchEngineInformation;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Adam Brandizzi
@@ -20,12 +24,35 @@ public class SearchEngineDisplayContextBuilder {
 		if (_searchEngineInformation != null) {
 			searchEngineDisplayContext.setClientVersionString(
 				_searchEngineInformation.getClientVersionString());
+
+			List<ConnectionInformation> connectionInformationList =
+				_searchEngineInformation.getConnectionInformationList();
+
 			searchEngineDisplayContext.setConnectionInformationList(
-				_searchEngineInformation.getConnectionInformationList());
+				connectionInformationList);
+
 			searchEngineDisplayContext.setNodesString(
 				_searchEngineInformation.getNodesString());
-			searchEngineDisplayContext.setVendorString(
-				_searchEngineInformation.getVendorString());
+
+			String vendorString = _searchEngineInformation.getVendorString();
+
+			searchEngineDisplayContext.setVendorString(vendorString);
+
+			for (ConnectionInformation connectionInformation :
+					connectionInformationList) {
+
+				Set<String> labels = connectionInformation.getLabels();
+
+				if (labels.contains("deprecated")) {
+					searchEngineDisplayContext.setWarnAboutDeprecatedConnection(
+						true);
+
+					break;
+				}
+			}
+
+			searchEngineDisplayContext.setWarnAboutSidecarConnection(
+				vendorString.endsWith("(Sidecar)"));
 		}
 		else {
 			searchEngineDisplayContext.setMissingSearchEngine(true);

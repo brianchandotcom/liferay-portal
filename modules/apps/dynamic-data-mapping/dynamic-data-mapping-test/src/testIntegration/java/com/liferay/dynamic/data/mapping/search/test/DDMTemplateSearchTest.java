@@ -169,7 +169,7 @@ public class DDMTemplateSearchTest {
 	}
 
 	protected void assertSearch() throws Exception {
-		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {TestPropsValues.getGroupId()},
 			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -178,8 +178,8 @@ public class DDMTemplateSearchTest {
 			StringPool.BLANK, StringPool.BLANK, WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(results.toString(), 1, results.size());
-		Assert.assertEquals(results.get(0), _ddmTemplate);
+		Assert.assertEquals(ddmTemplates.toString(), 1, ddmTemplates.size());
+		Assert.assertEquals(ddmTemplates.get(0), _ddmTemplate);
 	}
 
 	@DeleteAfterTestRun

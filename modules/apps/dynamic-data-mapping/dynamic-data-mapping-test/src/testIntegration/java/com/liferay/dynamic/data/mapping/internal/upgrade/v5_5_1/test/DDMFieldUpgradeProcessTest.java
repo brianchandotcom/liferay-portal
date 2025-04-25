@@ -95,11 +95,11 @@ public class DDMFieldUpgradeProcessTest {
 			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		List<DDMStructureVersion> structureVersions =
+		List<DDMStructureVersion> ddmStructureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(
 				ddmStructure.getStructureId());
 
-		DDMStructureVersion ddmStructureVersion = structureVersions.get(0);
+		DDMStructureVersion ddmStructureVersion = ddmStructureVersions.get(0);
 
 		DDMField ddmField = _addDDMField(
 			ddmStructureVersion.getStructureVersionId());

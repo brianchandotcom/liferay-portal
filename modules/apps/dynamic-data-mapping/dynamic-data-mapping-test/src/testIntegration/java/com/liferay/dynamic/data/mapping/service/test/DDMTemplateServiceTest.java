@@ -239,12 +239,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		addFormTemplate(
 			0, StringUtil.randomString(), WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.getTemplates(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, _recordSetClassNameId,
 			WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 	}
 
 	@Test
@@ -266,13 +266,13 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			0, ddmStructure.getStructureId(), StringUtil.randomString(), null,
 			null, language, script, WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates =
+		List<DDMTemplate> ddmTemplates =
 			DDMTemplateServiceUtil.getTemplatesByClassPK(
 				TestPropsValues.getCompanyId(), group.getGroupId(),
 				ddmStructure.getStructureId(), _recordSetClassNameId,
 				WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 	}
 
 	@Test
@@ -289,19 +289,19 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.getTemplates(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), childGroup.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, true, WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 2, ddmTemplates.size());
 
-		templates = DDMTemplateServiceUtil.getTemplates(
+		ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), childGroup.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, false, WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 0, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 0, ddmTemplates.size());
 
 		GroupLocalServiceUtil.deleteGroup(childGroup);
 	}
@@ -323,19 +323,19 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			structure2.getPrimaryKey(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.getTemplates(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure1.getStructureId(),
 			_recordSetClassNameId, WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 2, ddmTemplates.size());
 
-		templates = DDMTemplateServiceUtil.getTemplates(
+		ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure2.getStructureId(),
 			_recordSetClassNameId, WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 1, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 1, ddmTemplates.size());
 	}
 
 	@Test
@@ -343,37 +343,37 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		DDMStructure structure = addStructure(
 			_recordSetClassNameId, StringUtil.randomString());
 
-		List<DDMTemplate> newTemplates = new ArrayList<>(3);
+		List<DDMTemplate> newDDMTemplates = new ArrayList<>(3);
 
 		DDMTemplate template = addFormTemplate(
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		newTemplates.add(template);
+		newDDMTemplates.add(template);
 
 		template = addFormTemplate(
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		newTemplates.add(template);
+		newDDMTemplates.add(template);
 
 		template = addFormTemplate(
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		newTemplates.add(template);
+		newDDMTemplates.add(template);
 
-		List<DDMTemplate> templates =
+		List<DDMTemplate> ddmTemplates =
 			DDMTemplateServiceUtil.getTemplatesByStructureClassNameId(
 				group.getGroupId(), _recordSetClassNameId,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 
-		for (DDMTemplate newTemplate : newTemplates) {
+		for (DDMTemplate newTemplate : newDDMTemplates) {
 			Assert.assertTrue(
-				templates.toString(), templates.contains(newTemplate));
+				ddmTemplates.toString(), ddmTemplates.contains(newTemplate));
 		}
 	}
 
@@ -415,21 +415,21 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.getTemplates(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 2, ddmTemplates.size());
 
-		templates = DDMTemplateServiceUtil.getTemplates(
+		ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 			WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(templates.toString(), 1, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 1, ddmTemplates.size());
 	}
 
 	@Test
@@ -447,21 +447,21 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_DRAFT);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.getTemplates(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 2, ddmTemplates.size());
 
-		templates = DDMTemplateServiceUtil.getTemplates(
+		ddmTemplates = DDMTemplateServiceUtil.getTemplates(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			WorkflowConstants.STATUS_DRAFT);
 
-		Assert.assertEquals(templates.toString(), 1, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 1, ddmTemplates.size());
 	}
 
 	@Test
@@ -479,7 +479,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, StringPool.BLANK,
@@ -487,7 +487,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 	}
 
 	@Test
@@ -546,14 +546,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, null, StringUtil.randomString(), description,
 			type, mode, language, script, WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, name, description, type, mode, language,
 			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 	}
 
 	@Test
@@ -584,7 +584,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, null, StringUtil.randomString(), description,
 			type, mode, language, script, WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()},
 			new long[] {_structureClassNameId},
@@ -593,7 +593,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 3, ddmTemplates.size());
 	}
 
 	@Test

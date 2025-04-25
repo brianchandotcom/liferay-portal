@@ -137,12 +137,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		_ddmStructures.add(
 			addStructure(_classNameId, StringUtil.randomString()));
 
-		List<DDMStructure> structures = _ddmStructureService.getStructures(
+		List<DDMStructure> ddmStructures = _ddmStructureService.getStructures(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()}, _classNameId,
 			WorkflowConstants.STATUS_ANY);
 
-		Assert.assertEquals(structures.toString(), 3, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
 	}
 
 	@Test
@@ -312,12 +312,13 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(siteAdminUser));
 
-			List<DDMStructure> structures =
+			List<DDMStructure> ddmStructures =
 				DDMStructureUtil.filterFindByGroupId(groupIds);
 
-			Assert.assertEquals(structures.toString(), 2, structures.size());
-			Assert.assertEquals(structure1, structures.get(0));
-			Assert.assertEquals(structure2, structures.get(1));
+			Assert.assertEquals(
+				ddmStructures.toString(), 2, ddmStructures.size());
+			Assert.assertEquals(structure1, ddmStructures.get(0));
+			Assert.assertEquals(structure2, ddmStructures.get(1));
 		}
 		finally {
 			_userLocalService.deleteUser(siteAdminUser);
@@ -329,10 +330,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(siteAdminUser));
 
-			List<DDMStructure> structures =
+			List<DDMStructure> ddmStructures =
 				DDMStructureUtil.filterFindByGroupId(groupIds);
 
-			Assert.assertEquals(structures.toString(), 0, structures.size());
+			Assert.assertEquals(
+				ddmStructures.toString(), 0, ddmStructures.size());
 		}
 		finally {
 			_userLocalService.deleteUser(siteAdminUser);
@@ -348,13 +350,13 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		_ddmStructures.add(
 			addStructure(_classNameId, StringUtil.randomString()));
 
-		List<DDMStructure> structures = _ddmStructureService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()}, _classNameId,
 			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 3, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
 	}
 
 	@Test
@@ -362,27 +364,28 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		String name = StringUtil.randomString();
 		String description = StringUtil.randomString();
 
-		List<DDMStructure> expectedStructures = new ArrayList<>(3);
+		List<DDMStructure> expectedDDMStructures = new ArrayList<>(3);
 
-		expectedStructures.add(addStructure(_classNameId, name, description));
-		expectedStructures.add(
+		expectedDDMStructures.add(
+			addStructure(_classNameId, name, description));
+		expectedDDMStructures.add(
 			addStructure(_classNameId, name, StringUtil.randomString()));
-		expectedStructures.add(
+		expectedDDMStructures.add(
 			addStructure(_classNameId, StringUtil.randomString(), description));
 
-		_ddmStructures.addAll(expectedStructures);
+		_ddmStructures.addAll(expectedDDMStructures);
 
-		List<DDMStructure> structures = _ddmStructureService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), _group.getGroupId()}, _classNameId,
 			name, description, StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
 			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 3, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
 
-		for (DDMStructure ddmStructure : expectedStructures) {
-			Assert.assertTrue(structures.contains(ddmStructure));
+		for (DDMStructure ddmStructure : expectedDDMStructures) {
+			Assert.assertTrue(ddmStructures.contains(ddmStructure));
 		}
 	}
 
@@ -404,21 +407,21 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 				DDMStructureConstants.TYPE_FRAGMENT,
 				WorkflowConstants.STATUS_APPROVED));
 
-		List<DDMStructure> structures = _ddmStructureService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 
-		structures = _ddmStructureService.search(
+		ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_FRAGMENT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 	}
 
 	@Test
@@ -493,13 +496,13 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		_ddmStructures.add(structure);
 
-		List<DDMStructure> structures = _ddmStructureService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(),
 			new long[] {group.getGroupId(), group.getGroupId()}, _classNameId,
 			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 2, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 	}
 
 	@Test
@@ -520,12 +523,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(siteMemberUser));
 
-		List<DDMStructure> structures = _ddmStructureService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureService.search(
 			TestPropsValues.getCompanyId(), groupIds, _classNameId,
 			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 0, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 0, ddmStructures.size());
 	}
 
 	@Rule

@@ -86,8 +86,8 @@ public class FragmentLayoutStructureItemImporter
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			layoutStructureItemImporterContext.getGroupId(),
-			fragmentInstancePageElementDefinition);
+			fragmentInstancePageElementDefinition,
+			layoutStructureItemImporterContext.getGroupId());
 
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			null, layoutStructureItemImporterContext.getUserId(),
@@ -101,9 +101,9 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntry _getFragmentEntry(
-		long groupId,
 		FragmentInstancePageElementDefinition
-			fragmentInstancePageElementDefinition) {
+			fragmentInstancePageElementDefinition,
+		long groupId) {
 
 		if (
 				fragmentInstancePageElementDefinition.

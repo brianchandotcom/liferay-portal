@@ -59,7 +59,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	private List<YMLDefinition> _combineComments(List<String> definitions) {
 		List<YMLDefinition> ymlDefinitions = new ArrayList<>();
 
-		StringBundler commentsSB = new StringBundler();
+		StringBundler commentsSB = new StringBundler(definitions.size() * 2);
 
 		for (String definition : definitions) {
 			if (definition.matches(" *#.*")) {
@@ -96,7 +96,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		Collections.sort(ymlDefinitions, new DefinitionComparator());
 
-		StringBundler sb1 = new StringBundler(ymlDefinitions.size() * 2);
+		StringBundler sb1 = new StringBundler();
 
 		for (YMLDefinition ymlDefinition : ymlDefinitions) {
 			String precedingComments = ymlDefinition.getPrecedingComments();
@@ -311,7 +311,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		String[] lines = content.split("\n");
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(lines.length * 2);
 
 		String leadingSpaces = StringPool.BLANK;
 		int leadingSpacesLength = 0;

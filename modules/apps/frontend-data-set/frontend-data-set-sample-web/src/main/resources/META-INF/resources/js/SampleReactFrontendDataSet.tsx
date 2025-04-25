@@ -23,8 +23,8 @@ const SampleReactFrontendDataSet = (props: any) => {
 					value: 'color',
 				},
 				{
-					displayKey: 'status.label',
-					displayMapping: {
+					displayTypeKey: 'status.label',
+					displayTypeValues: {
 						approved: 'success',
 						expired: 'danger',
 					},

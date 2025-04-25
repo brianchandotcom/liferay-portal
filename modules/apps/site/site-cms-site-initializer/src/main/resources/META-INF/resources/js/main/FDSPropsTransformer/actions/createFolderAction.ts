@@ -6,7 +6,7 @@
 import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import {postScopeScopeKeyObjectEntryFolder} from '../../../api/api';
+import {postScopeScopeKeyObjectEntryFolder} from '../../../services/api';
 import CreationModalContent, {
 	AssetLibrary,
 } from '../../components/modal/CreationModalContent';

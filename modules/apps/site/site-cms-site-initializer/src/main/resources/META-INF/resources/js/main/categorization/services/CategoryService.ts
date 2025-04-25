@@ -5,7 +5,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {HEADERS_ALL_LANGUAGES} from '../../../api/api';
+import {HEADERS_ALL_LANGUAGES} from '../../../services/api';
 
 const createCategory = async (
 	categoryByVocabularyIdApiUrl: string,

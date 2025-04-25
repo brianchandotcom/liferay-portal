@@ -343,6 +343,18 @@ public class DisplayPageTemplateResourceImpl
 						displayPageTemplate.getMarkedAsDefault()));
 		}
 
+		long previewFileEntryId = _getPreviewFileEntryId(
+			groupId, displayPageTemplate.getThumbnail());
+
+		if (previewFileEntryId !=
+				layoutPageTemplateEntry.getPreviewFileEntryId()) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					previewFileEntryId);
+		}
+
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),

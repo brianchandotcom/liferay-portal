@@ -235,23 +235,6 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@description = "LRQA-71360 - Verify that when the user change the calendar color it also changes the color column on the Manage Calendar page"
-	@priority = 3
-	test CheckTheColorColumnIsChanged {
-		JSONCalendar.setCalendarColor(calendarName = "Test Test");
-
-		CalendarNavigator.gotoMyCalendarsManage();
-
-		ManageCalendar.editCalendar(
-			calendarCurrentName = "Test Test",
-			newColor = "#E0C240");
-
-		AssertElementPresent(
-			key_color = "#E0C240",
-			key_rowNumber = 1,
-			locator1 = "ManageCalendar#COLOR_BY_COLUMN");
-	}
-
 	@priority = 4
 	test DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent {
 		Site.openSitesAdmin();

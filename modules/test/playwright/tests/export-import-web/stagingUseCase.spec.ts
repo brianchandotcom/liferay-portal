@@ -49,8 +49,8 @@ async function readPropertiesFile(filePath, property){
 test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',{tag: '@LPS-167777'}, async ({
 	apiHelpers,
 	stagingConfigurationPage,
-	stagingPage
-
+	stagingPage,
+	page
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'site-' + getRandomString(),
@@ -106,6 +106,31 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		webContent
 	);
 
+	await stagingPage.goto(site.name + '-staging');await page.getByRole('link', { name: 'Custom Publish Process' }).click();
+ 
+	await stagingPage.publish(['Web Content 1 Items Web']);
+
+	await page.getByTestId('stagingType_local').check(); 
+	const l = liferayConfig;
+	let projectName = process.argv[2];
+
+	const portalSourceDir = path.resolve(__dirname, '..', '..', '..', '..', '..');
+	const bundlesDir = path.resolve(portalSourceDir, '..', 'bundles');
+
+	console.log("projectName: " + projectName + " portalSourceDir: " +portalSourceDir +" bundlesDir: " + bundlesDir);
+
+	await fs.readdir(bundlesDir, (err, files) => {
+		if (err) {
+			console.error('Error reading folder:', err);
+			return;
+		}
+		
+		console.log('Folder contents:');
+		files.forEach(file => {
+			console.log(file);
+		});
+		});		
+	
 	await stagingPage.goto(site.name + '-staging');
  
 	await stagingPage.publish(['Web Content 1 Items Web']);

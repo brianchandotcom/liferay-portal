@@ -13,7 +13,7 @@ liferay-customer-custom-element:
         about-the-overview-page-url: https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial-
         account-settings-url: https://liferay.okta.com/enduser/settings
         article-deactivate-key-url: https://help.liferay.com/hc/en-us/articles/20425297160845
-        article-deploying-activation-keys-url=: https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
+        article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
         article-getting-started-with-liferay-enterprise-search-url: https://help.liferay.com/hc/en-us/articles/13528042483597
         article-notified-when-my-activation-key-is-about-to-expire-url: https://help.liferay.com/hc/en-us/articles/19716265300493
         article-what-is-my-instance-sizing-value-url: https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1

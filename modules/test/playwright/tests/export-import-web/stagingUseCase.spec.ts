@@ -5,48 +5,54 @@
 
 import {mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
+const fs = require('fs');
 import path from 'path';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import getRandomString from '../../utils/getRandomString';
+import {loginTest} from '../../fixtures/loginTest';import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import { stagingConfigurationPageTest} from '../export-import-web/fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from '../export-import-web/fixtures/stagingPageTest';
-import {stagingConfigurationPageTest} from '../staging-configuration-web/fixtures/stagingConfigurationPageTest';
-import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
+import { liferayConfig } from '../../liferay.config';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
-	companyExportImportPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
 	loginTest(),
-	pageEditorPagesTest,
-	productMenuPageTest,
-	uiElementsPageTest,
 	stagingPageTest,
 	stagingConfigurationPageTest,
-	webContentDisplayPageTest
+	
 );
 
-test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option', async ({
+async function readPropertiesFile(filePath, property){
+	const data = fs.readFileSync(filePath, 'utf-8');
+	let propertyValue = '';
+	data.split('\n').forEach((line) => {
+		line = line.trim();
+		if (line && !line.startsWith('#')) {
+			const [key, value] = line.split('=');
+			if (key && value && key === property) {
+				propertyValue = value.trim();
+			}
+		}
+	});
+
+	return propertyValue;
+}
+
+test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',{tag: '@LPS-167777'}, async ({
 	apiHelpers,
-	page,
+	stagingConfigurationPage,
 	stagingPage,
+	page
 }) => {
-	const siteName = 'site-' + getRandomString();
-	const siteERC = 'ERC-' + getRandomString();
 	const site = await apiHelpers.headlessSite.createSite({
-		externalReferenceCode: siteERC,
-		name: siteName,
+		name: 'site-' + getRandomString(),
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
@@ -56,17 +62,13 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		title: getRandomString(),
 	});
 
-	const basicWebContentStructureId =
-		await getBasicWebContentStructureId(apiHelpers);
-
-	const webContentTitle = getRandomString();
 	const webContentContent = getRandomString();
 
 	let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
 		content: webContentContent,
-		ddmStructureId: basicWebContentStructureId,
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
 		groupId: site.id,
-		titleMap: {en_US: webContentTitle},
+		titleMap: {en_US: getRandomString()},
 	});
 
 	apiHelpers.data.push({
@@ -84,39 +86,23 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 
 	const document = await apiHelpers.headlessDelivery.postDocument(
 		stagingSite.id,
-		createReadStream(path.join(__dirname, '/dependencies/Document_1.jpg')),
+		createReadStream(path.join(__dirname, '/dependencies/Document.jpg')),
 		{
-			fileName: 'Document_1.jpg',
-			title: 'Document_1.jpg',
+			fileName: 'Document.jpg',
+			title: 'Document.jpg',
 		}
 	);
 
 	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
 		{
-			content: `<img alt="" data-fileentryid="${document.id}" src="/documents/d${stagingSite.friendlyUrlPath}/Document_1-jpg">&nbsp;<br>${webContentContent}`,
+			content: `<img alt="" data-fileentryid="${document.id}" src="/documents/d${stagingSite.friendlyUrlPath}/Document-jpg">&nbsp;<br>${webContentContent}`,
 		},
 		stagingSite.id,
 		webContent
 	);
 
-	await page.goto(`/web${stagingSite.friendlyUrlPath}`);
-
-	await page.goto(
-		`/group/${site.name}/~/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.staging.configuration.StagingConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration`
-	);
-	await page
-		.getByLabel(
-			'Delete temporary LAR during a successful staging publish process'
-		)
-		.uncheck();
-
-	if (
-		await page.getByRole('button', {name: 'Save'}).isVisible({timeout: 200})
-	) {
-		await page.getByRole('button', {name: 'Save'}).click();
-	}
-
-	await page.getByRole('button', {name: 'Update'}).click();
+	await stagingConfigurationPage.goto(site.name);
+	await stagingConfigurationPage.disableTemporaryLARdeletion();
 
 	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
 		{title: getRandomString()},
@@ -124,18 +110,32 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		webContent
 	);
 
+	await stagingPage.goto(site.name + '-staging');await page.getByRole('link', { name: 'Custom Publish Process' }).click();
+ 
+	await stagingPage.publish(['Web Content 1 Items Web']);
+
+	await page.getByTestId('stagingType_local').check(); 
+	const l = liferayConfig;
+	let projectName = process.argv[2];
+
+	const portalSourceDir = path.resolve(__dirname, '..', '..', '..', '..', '..');
+	const bundlesDir = path.resolve(portalSourceDir, '..', 'bundles');
+
+	console.log("projectName: " + projectName + " portalSourceDir: " +portalSourceDir +" bundlesDir: " + bundlesDir);
+
+	await fs.readdir(bundlesDir, (err, files) => {
+		if (err) {
+			console.error('Error reading folder:', err);
+			return;
+		}
+		
+		console.log('Folder contents:');
+		files.forEach(file => {
+			console.log(file);
+		});
+		});		
+	
 	await stagingPage.goto(site.name + '-staging');
+	
 
-	await page.getByRole('link', {name: 'Custom Publish Process'}).click();
-	await page
-		.getByText('Web Content 1 Items Web')
-		.getByRole('button', {name: 'Change'})
-		.click();
-
-	await page
-		.getByRole('radio', {exact: true, name: 'Include If Modified'})
-		.click();
-	await page
-		.getByRole('button', {exact: true, name: 'Publish to Live'})
-		.click();
 });

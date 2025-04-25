@@ -37,6 +37,29 @@ export class StagingPage {
 		}
 	}
 
+	async publish(includeIfModified?: string[]) {
+		await this.page
+			.getByRole('link', {name: 'Custom Publish Process'})
+			.click();
+
+		for (const i in includeIfModified) {
+			await this.page
+				.getByText(includeIfModified[i])
+				.getByRole('button', {name: 'Change'})
+				.click();
+
+			await this.page
+				.getByRole('radio', {exact: true, name: 'Include If Modified'})
+				.click();
+		}
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Publish to Live'})
+			.click();
+
+		await this.page.locator('span').filter({ hasText: 'In Progress' }).waitFor({ state: 'hidden' });
+	}
+
 	async goto(siteKey: string) {
 		await this.page.goto(
 			`/group/${siteKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet`

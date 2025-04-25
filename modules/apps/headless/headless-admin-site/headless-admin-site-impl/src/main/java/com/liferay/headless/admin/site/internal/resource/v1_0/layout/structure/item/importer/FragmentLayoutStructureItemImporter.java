@@ -48,8 +48,8 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layoutStructureItemImporterContext,
-			fragmentInstancePageElementDefinition);
+			fragmentInstancePageElementDefinition,
+			layoutStructureItemImporterContext);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -77,10 +77,10 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext,
 			FragmentInstancePageElementDefinition
-				fragmentInstancePageElementDefinition)
+					fragmentInstancePageElementDefinition,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
 		throws Exception {
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();

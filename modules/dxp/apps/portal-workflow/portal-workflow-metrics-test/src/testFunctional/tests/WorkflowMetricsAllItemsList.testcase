@@ -2836,7 +2836,7 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_GO_TO_SUBMISSION_PAGE_TOOLTIP");
 	}
 
-	@description = "Verify that when the user make changes in the Workflow, the Track Approval displays the correct version"
+	@description = "Verify that when the user updates the Workflow definition, the Track Approval still displays the version of the Workflow instance"
 	@priority = 4
 	test TrackApprovalDisplayCorrectVersionAfterChange {
 		property test.liferay.virtual.instance = "false";
@@ -2888,7 +2888,7 @@ definition {
 
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
-		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "created,Review changed,update,approved");
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"

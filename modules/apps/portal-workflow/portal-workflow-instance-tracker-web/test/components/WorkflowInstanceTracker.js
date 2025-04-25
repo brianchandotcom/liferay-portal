@@ -101,6 +101,11 @@ Object.defineProperties(window.HTMLElement.prototype, {
 	},
 });
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	createResourceURL: jest.fn(() => 'http://localhost:8080?p_p_id=unitTest'),
+}));
+
 describe('The WorkflowInstanceTracker component should', () => {
 	let container;
 	let queryAllByText;
@@ -113,7 +118,9 @@ describe('The WorkflowInstanceTracker component should', () => {
 
 		window.SVGElement.prototype.getBBox = () => ({});
 
-		const renderResult = render(<WorkflowInstanceTracker />);
+		const renderResult = render(
+			<WorkflowInstanceTracker baseResourceURL="http://localhost:8080?p_p_id=unitTest" />
+		);
 
 		container = renderResult.container;
 		queryAllByText = renderResult.queryAllByText;

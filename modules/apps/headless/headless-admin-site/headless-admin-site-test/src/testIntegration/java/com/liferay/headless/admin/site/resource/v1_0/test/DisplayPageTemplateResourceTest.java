@@ -1207,6 +1207,18 @@ public class DisplayPageTemplateResourceTest
 		_assertThumbnailItemExternalReference(
 			fileEntry2.getExternalReferenceCode(),
 			putDisplayPageTemplate.getThumbnail());
+
+		putDisplayPageTemplate.setThumbnail(() -> null);
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					putDisplayPageTemplate.getExternalReferenceCode(),
+					putDisplayPageTemplate);
+
+		_assertThumbnailItemExternalReference(
+			null, putDisplayPageTemplate.getThumbnail());
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

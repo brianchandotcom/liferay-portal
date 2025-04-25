@@ -108,15 +108,15 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeAdditionalAPIURLParameters(
 				FDS_NAMES[0], httpServletRequest));
 
-		// Parameter
+		// Parameters
 
 		_resetFDSSerializer();
 
 		_mockSerializeAdditionalAPIURLParameters(
-			FDS_NAMES[0], API_URL_PARAMETER);
+			FDS_NAMES[0], API_URL_PARAMETERS);
 
 		Assert.assertEquals(
-			API_URL_PARAMETER,
+			API_URL_PARAMETERS,
 			_customFDSSerializer.serializeAdditionalAPIURLParameters(
 				FDS_NAMES[0], httpServletRequest));
 	}

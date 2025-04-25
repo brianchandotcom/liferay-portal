@@ -122,18 +122,18 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_unregisterServices();
 
-		// Parameter
+		// Parameters
 
 		_registerServices(
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
 					FDS_NAMES[0]
 				).withAdditionalURLParameters(
-					API_URL_PARAMETER
+					API_URL_PARAMETERS
 				)));
 
 		Assert.assertEquals(
-			API_URL_PARAMETER,
+			API_URL_PARAMETERS,
 			systemFDSSerializer.serializeAdditionalAPIURLParameters(
 				FDS_NAMES[0], httpServletRequest));
 

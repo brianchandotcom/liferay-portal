@@ -188,7 +188,7 @@ public abstract class BaseFDSSerializerTestCase {
 			resourceBundleLoader);
 	}
 
-	protected static final String API_URL_PARAMETER =
+	protected static final String API_URL_PARAMETERS =
 		RandomTestUtil.randomString();
 
 	protected static final String[] CONTENT_RENDERERS =

@@ -345,6 +345,8 @@ definition {
 
 		WebContent.publishExistingWCArticleWithPermissions();
 
+		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
+
 		PublicationsNavigator.openPublicationsAdmin();
 
 		PublicationsNavigator.gotoPublish(
@@ -635,6 +637,8 @@ definition {
 			pageType = "Pages");
 
 		WebContent.publishExistingWCArticleWithPermissions();
+
+		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
 
 		var portalURL = PropsUtil.get("portal.url");
 

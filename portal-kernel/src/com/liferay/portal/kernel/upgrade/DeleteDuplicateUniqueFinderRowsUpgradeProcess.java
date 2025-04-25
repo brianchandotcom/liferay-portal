@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -19,7 +18,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +48,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 		List<String[]> duplicateColumnValuesList =
 			_getDuplicateColumnValuesList();
 
-		_primaryKeyColumnNames = getPrimaryKeyColumnNames(
+		primaryKeyColumnNames = getPrimaryKeyColumnNames(
 			connection, _tableName);
 
 		for (String[] duplicateColumnValues : duplicateColumnValuesList) {
@@ -69,9 +67,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 				sb.append("delete from ");
 				sb.append(_tableName);
 				sb.append(" where ");
-
-				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
-					connection, _tableName);
 
 				for (String primaryKeyColumnName : primaryKeyColumnNames) {
 					sb.append(primaryKeyColumnName);
@@ -144,15 +139,20 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 			sb.append(_orderByClause);
 		}
 		else {
-			for (String primaryKeyColumnName : _primaryKeyColumnNames) {
-				if (Objects.equals(primaryKeyColumnName, dbInspector.normalizeName("ctCollectionId"))) {
-				continue;
+			for (String primaryKeyColumnName : primaryKeyColumnNames) {
+				if (Objects.equals(
+						primaryKeyColumnName,
+						dbInspector.normalizeName("ctCollectionId"))) {
+
+					continue;
 				}
+
 				sb.append(primaryKeyColumnName);
 
 				sb.append(" ASC ");
 				sb.append(", ");
 			}
+
 			sb.setIndex(sb.index() - 1);
 		}
 
@@ -210,6 +210,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 		return duplicateRows;
 	}
 
+	protected String[] primaryKeyColumnNames;
+
 	private List<String[]> _getDuplicateColumnValuesList() throws Exception {
 		List<String[]> duplicateColumnValuesList = new ArrayList<>();
 
@@ -244,8 +246,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess.class);
-
-	protected String[] _primaryKeyColumnNames;
 
 	private final String[] _columnNames;
 	private final String _orderByClause;

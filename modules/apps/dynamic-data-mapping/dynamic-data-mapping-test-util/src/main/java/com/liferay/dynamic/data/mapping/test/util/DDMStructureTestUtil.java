@@ -178,13 +178,13 @@ public class DDMStructureTestUtil {
 
 	public static DDMForm getSampleDDMForm(
 		String name, String dataType, String indexType, boolean repeatable,
-		String type, Locale[] availableLocales, Locale defaultLocale) {
+		String type, Locale[] availableLocalesArray, Locale defaultLocale) {
 
 		DDMForm ddmForm = new DDMForm();
 
-		Set<Locale> availableLocalesSet = SetUtil.fromArray(availableLocales);
+		Set<Locale> availableLocales = SetUtil.fromArray(availableLocalesArray);
 
-		ddmForm.setAvailableLocales(availableLocalesSet);
+		ddmForm.setAvailableLocales(availableLocales);
 
 		ddmForm.setDefaultLocale(defaultLocale);
 
@@ -200,7 +200,7 @@ public class DDMStructureTestUtil {
 		label.addString(
 			defaultLocale, "Field_" + LocaleUtil.toLanguageId(defaultLocale));
 
-		for (Locale locale : availableLocalesSet) {
+		for (Locale locale : availableLocales) {
 			label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
 		}
 

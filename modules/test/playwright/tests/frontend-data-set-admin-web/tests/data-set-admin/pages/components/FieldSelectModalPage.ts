@@ -90,14 +90,8 @@ export class FieldSelectModalPage {
 
 		await this.page
 			.locator(`[data-id$=",${path}"]`)
-
-			// .first()
-
 			.getByRole('checkbox')
 			.check();
-
-		// await fieldSearch.clear();
-
 	}
 
 	async selectField({

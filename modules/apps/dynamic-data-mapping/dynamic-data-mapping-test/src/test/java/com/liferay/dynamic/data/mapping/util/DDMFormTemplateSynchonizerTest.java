@@ -435,7 +435,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		}
 
 		@Override
-		protected List<DDMTemplate> getDDMFormTemplates() {
+		protected List<DDMTemplate> getDDMTemplates() {
 			return ListUtil.fromArray(_createDDMTemplate, _editDDMTemplate);
 		}
 

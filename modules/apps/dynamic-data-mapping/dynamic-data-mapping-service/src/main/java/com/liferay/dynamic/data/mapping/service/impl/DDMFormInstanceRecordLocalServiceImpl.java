@@ -606,14 +606,14 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				String newVersion = _VERSION_DEFAULT;
 
 				List<DDMFormInstanceRecordVersion>
-					ddmFormInstanceRecordVersions =
+					approvedDDMFormInstanceRecordVersions =
 						_ddmFormInstanceRecordVersionPersistence.findByF_S(
 							formInstanceRecord.getFormInstanceRecordId(),
 							WorkflowConstants.STATUS_APPROVED);
 
-				if (!ddmFormInstanceRecordVersions.isEmpty()) {
+				if (!approvedDDMFormInstanceRecordVersions.isEmpty()) {
 					DDMFormInstanceRecordVersion firstApprovedVersion =
-						ddmFormInstanceRecordVersions.get(0);
+						approvedDDMFormInstanceRecordVersions.get(0);
 
 					newVersion = firstApprovedVersion.getVersion();
 				}

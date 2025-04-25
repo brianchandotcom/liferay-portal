@@ -2072,10 +2072,9 @@ public class DDMStructureLocalServiceImpl
 						structure.getDDMForm(), _jsonDDMFormDeserializer,
 						_jsonDDMFormSerializer, _ddmTemplateLocalService);
 
-				List<DDMTemplate> ddmTemplates = _getStructureTemplates(
-					structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
-
-				ddmFormTemplateSynchonizer.setDDMFormTemplates(ddmTemplates);
+				ddmFormTemplateSynchonizer.setDDMTemplates(
+					_getStructureTemplates(
+						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM));
 
 				ddmFormTemplateSynchonizer.synchronize();
 

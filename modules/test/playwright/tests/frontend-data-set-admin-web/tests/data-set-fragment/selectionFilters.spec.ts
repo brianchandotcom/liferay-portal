@@ -233,7 +233,7 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 			fieldName: 'renderer',
 			label_i18n: {en_US: filterLabel},
 			source: picklist.externalReferenceCode,
-			sourceType: 'PICKLIST',
+			sourceType: 'OBJECT_PICKLIST',
 		});
 	});
 
@@ -332,7 +332,7 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 				label_i18n: {en_US: filterLabel},
 				multiple: false,
 				source: picklist.externalReferenceCode,
-				sourceType: 'PICKLIST',
+				sourceType: 'OBJECT_PICKLIST',
 			});
 	});
 

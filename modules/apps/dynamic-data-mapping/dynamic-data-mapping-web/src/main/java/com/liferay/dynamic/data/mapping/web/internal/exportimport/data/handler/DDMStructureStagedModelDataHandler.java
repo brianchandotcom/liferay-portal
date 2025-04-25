@@ -496,7 +496,7 @@ public class DDMStructureStagedModelDataHandler
 			Element structureElement)
 		throws Exception {
 
-		Set<Long> ddmDataProviderInstanceIdsSet = new HashSet<>();
+		Set<Long> ddmDataProviderInstanceIds = new HashSet<>();
 
 		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
@@ -516,16 +516,15 @@ public class DDMStructureStagedModelDataHandler
 				portletDataContext, structure, ddmDataProviderInstance,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 
-			ddmDataProviderInstanceIdsSet.add(
+			ddmDataProviderInstanceIds.add(
 				ddmDataProviderInstance.getDataProviderInstanceId());
 		}
 
-		String ddmDataProviderInstanceIds = ArrayUtil.toString(
-			ddmDataProviderInstanceIdsSet.toArray(new Long[0]),
-			StringPool.BLANK);
-
 		structureElement.addAttribute(
-			_DDM_DATA_PROVIDER_INSTANCE_IDS, ddmDataProviderInstanceIds);
+			_DDM_DATA_PROVIDER_INSTANCE_IDS,
+			ArrayUtil.toString(
+				ddmDataProviderInstanceIds.toArray(new Long[0]),
+				StringPool.BLANK));
 	}
 
 	private void _exportDDMForm(

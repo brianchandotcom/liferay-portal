@@ -481,32 +481,43 @@ test(
 	}
 );
 
-test('Fragment collection preview applies the theme in which the style book is based on', async ({
-	page,
-	site,
-	styleBooksPage,
-}) => {
-	await test.step('Create a style book based on the Dialect theme', async () => {
-		await styleBooksPage.goto(site.friendlyUrlPath);
+const themeScopedTest = mergeTests(
+	featureFlagsTest({
+		'LPD-30204': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest(),
+	styleBookPageTest
+);
 
-		await styleBooksPage.create('New style book', 'Dialect Theme');
-	});
+themeScopedTest(
+	'Fragment collection preview applies the theme in which the style book is based on',
+	async ({page, site, styleBooksPage}) => {
+		await test.step('Create a style book based on the Dialect theme', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
 
-	await test.step("Assert that the tokens applied to the preview page of the 'Basic Components' fragment collection are from the dialect theme", async () => {
-		await styleBooksPage.previewFragmentCollection('Basic Components');
+			await styleBooksPage.create('New style book', 'Dialect Theme');
+		});
 
-		const previewIframe = page.frameLocator(
-			'iframe.style-book-editor__page-preview-frame'
-		);
+		await test.step("Assert that the tokens applied to the preview page of the 'Basic Components' fragment collection are from the dialect theme", async () => {
+			await styleBooksPage.previewFragmentCollection('Basic Components');
 
-		const firstButton = previewIframe
-			.getByRole('link', {
-				name: 'Go Somewhere',
-			})
-			.first();
+			const previewIframe = page.frameLocator(
+				'iframe.style-book-editor__page-preview-frame'
+			);
 
-		await firstButton.waitFor();
+			const firstButton = previewIframe
+				.getByRole('link', {
+					name: 'Go Somewhere',
+				})
+				.first();
 
-		expect(firstButton).toHaveCSS('background-color', 'rgb(89, 36, 235)');
-	});
-});
+			await firstButton.waitFor();
+
+			expect(firstButton).toHaveCSS(
+				'background-color',
+				'rgb(89, 36, 235)'
+			);
+		});
+	}
+);

@@ -43,11 +43,11 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
+import com.liferay.object.service.ObjectLayoutTabLocalService;
 import com.liferay.object.service.base.ObjectRelationshipLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectActionPersistence;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
-import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -399,7 +399,7 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.getObjectDefinitionId1(),
 			objectDefinition2.getObjectFolderId());
 
-		_objectLayoutTabPersistence.removeByObjectRelationshipId(
+		_objectLayoutTabLocalService.deleteObjectRelationshipObjectLayoutTabs(
 			objectRelationship.getObjectRelationshipId());
 
 		if (Objects.equals(
@@ -431,8 +431,9 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship reverseObjectRelationship =
 				fetchReverseObjectRelationship(objectRelationship, true);
 
-			_objectLayoutTabPersistence.removeByObjectRelationshipId(
-				reverseObjectRelationship.getObjectRelationshipId());
+			_objectLayoutTabLocalService.
+				deleteObjectRelationshipObjectLayoutTabs(
+					reverseObjectRelationship.getObjectRelationshipId());
 
 			objectRelationshipPersistence.remove(
 				reverseObjectRelationship.getObjectRelationshipId());
@@ -2400,7 +2401,7 @@ public class ObjectRelationshipLocalServiceImpl
 	private ObjectFolderItemLocalService _objectFolderItemLocalService;
 
 	@Reference
-	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
+	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
 
 	@Reference
 	private RelatedInfoCollectionProviderFactory

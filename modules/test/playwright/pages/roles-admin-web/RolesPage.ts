@@ -23,6 +23,7 @@ export class RolesPage {
 	readonly roleCell: (value: string, exact?: boolean) => Locator;
 	readonly rolesTable: DataTablePage;
 	readonly siteRolesLink: Locator;
+	readonly statusText: (value: string) => Locator;
 	readonly userLink: Locator;
 
 	constructor(page: Page) {
@@ -65,6 +66,7 @@ export class RolesPage {
 			exact: true,
 			name: 'Site Roles',
 		});
+		this.statusText = (value) => page.getByText(value, {exact: true});
 		this.userLink = page.getByRole('link', {exact: true, name: 'User'});
 	}
 

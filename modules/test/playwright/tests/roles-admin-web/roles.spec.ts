@@ -25,6 +25,7 @@ import {setupBookmark} from './utils/bookmarks';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-47858': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -211,8 +212,8 @@ test(
 );
 
 test(
-	'Can search a role',
-	{tag: ['@LPD-50065']},
+	'Can search a role and view its status',
+	{tag: ['@LPD-50065', '@LPD-54172']},
 	async ({apiHelpers, rolesPage}) => {
 		const role1 = await apiHelpers.headlessAdminUser.postRole({
 			name: `A${getRandomString()}`,
@@ -247,8 +248,17 @@ test(
 		await expect(
 			rolesPage.rolesTable.cell(role2.name_i18n['en-US'])
 		).toHaveCount(0);
+		await expect(rolesPage.rolesTable.cell('Approved')).toBeVisible();
+
+		await rolesPage.rolesTable.changeView('List');
+
+		await expect(
+			rolesPage.rolesTable.valueLink(role1.name_i18n['en-US'])
+		).toBeVisible();
+		await expect(rolesPage.statusText('Approved')).toBeVisible();
 
 		await rolesPage.rolesTable.search(role2.name);
+		await rolesPage.rolesTable.changeView('Table');
 
 		await expect(
 			rolesPage.rolesTable.cell(role1.name_i18n['en-US'])

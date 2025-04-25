@@ -34,6 +34,14 @@ public class SearchEngineDisplayContext {
 		return _missingSearchEngine;
 	}
 
+	public boolean isWarnAboutDeprecatedConnection() {
+		return _warnAboutDeprecatedConnection;
+	}
+
+	public boolean isWarnAboutSidecarConnection() {
+		return _warnAboutSidecarConnection;
+	}
+
 	public void setClientVersionString(String clientVersionString) {
 		_clientVersionString = clientVersionString;
 	}
@@ -56,10 +64,24 @@ public class SearchEngineDisplayContext {
 		_vendorString = vendorString;
 	}
 
+	public void setWarnAboutDeprecatedConnection(
+		boolean warnAboutDeprecatedConnection) {
+
+		_warnAboutDeprecatedConnection = warnAboutDeprecatedConnection;
+	}
+
+	public void setWarnAboutSidecarConnection(
+		boolean warnAboutSidecarConnection) {
+
+		_warnAboutSidecarConnection = warnAboutSidecarConnection;
+	}
+
 	private String _clientVersionString;
 	private List<ConnectionInformation> _connectionInformationList;
 	private boolean _missingSearchEngine;
 	private String _nodesString;
 	private String _vendorString;
+	private boolean _warnAboutDeprecatedConnection;
+	private boolean _warnAboutSidecarConnection;
 
 }

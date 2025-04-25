@@ -47,12 +47,13 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		sb.setIndex(sb.index() - 1);
 
 		content = _sortFeatureFlags(sb.toString());
+		content = _sortPathParameters(content);
 
 		if (fileName.endsWith("docker-compose.yaml")) {
 			content = _sortPorts(content);
 		}
 
-		return _sortPathParameters(content);
+		return content ;
 	}
 
 	private List<YMLDefinition> _combineComments(List<String> definitions) {

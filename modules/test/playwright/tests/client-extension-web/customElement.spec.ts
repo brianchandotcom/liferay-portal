@@ -233,14 +233,6 @@ test.describe('Client Extension admin', () => {
 				clientExtensionsPage.newCustomElementFormModal.nameInput
 			).toHaveValue(ptTranslationName);
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.locator('.input-localized-palette-container'),
-				trigger:
-					clientExtensionsPage.newCustomElementFormModal
-						.localizedNameButton,
-			});
-
 			await page
 				.getByRole('button', {name: 'Current translation is'})
 				.click();

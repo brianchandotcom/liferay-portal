@@ -5,7 +5,7 @@
 
 package com.liferay.customer.service;
 
-import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;

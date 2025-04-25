@@ -255,7 +255,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 															<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
 														</c:if>
 
-														<input id="<portlet:namespace />upload" style="display: none;" type="file" />
+														<input class="d-none" id="<portlet:namespace />upload" type="file" />
 
 														<div class="lfr-template-editor-wrapper" id="<portlet:namespace />editorWrapper"></div>
 													</div>

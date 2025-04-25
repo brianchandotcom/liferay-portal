@@ -98,36 +98,38 @@ public class DDMStructureManagerTest {
 
 	@Test
 	public void testGetClassStructures() throws Exception {
-		List<DDMStructure> structures = _ddmStructureManager.getClassStructures(
-			_group.getCompanyId(), _classNameId);
+		List<DDMStructure> ddmStructures =
+			_ddmStructureManager.getClassStructures(
+				_group.getCompanyId(), _classNameId);
 
-		int initialSize = structures.size();
+		int initialSize = ddmStructures.size();
 
 		addStructure();
 
-		structures = _ddmStructureManager.getClassStructures(
+		ddmStructures = _ddmStructureManager.getClassStructures(
 			_group.getCompanyId(), _classNameId);
 
 		Assert.assertEquals(
-			structures.toString(), initialSize + 1, structures.size());
+			ddmStructures.toString(), initialSize + 1, ddmStructures.size());
 	}
 
 	@Test
 	public void testGetClassStructuresWithCompanyAndClassNameId()
 		throws Exception {
 
-		List<DDMStructure> structures = _ddmStructureManager.getClassStructures(
-			_group.getCompanyId(), _classNameId);
+		List<DDMStructure> ddmStructures =
+			_ddmStructureManager.getClassStructures(
+				_group.getCompanyId(), _classNameId);
 
-		int initialSize = structures.size();
+		int initialSize = ddmStructures.size();
 
 		addStructure();
 
-		structures = _ddmStructureManager.getClassStructures(
+		ddmStructures = _ddmStructureManager.getClassStructures(
 			_group.getCompanyId(), _classNameId);
 
 		Assert.assertEquals(
-			structures.toString(), initialSize + 1, structures.size());
+			ddmStructures.toString(), initialSize + 1, ddmStructures.size());
 	}
 
 	@Test

@@ -3,16 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
+import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
+import {StyleBooksPage} from '../../pages/style-book-web/StyleBooksPage';
 import getRandomString from '../../utils/getRandomString';
 import {
 	disableSystemFeatureFlag,
@@ -21,11 +25,13 @@ import {
 
 const test = mergeTests(
 	apiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	masterPagesPagesTest,
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	productMenuPageTest,
@@ -138,7 +144,7 @@ test(
 			);
 
 			expect(
-				await previewIframe.getByRole('heading', {
+				previewIframe.getByRole('heading', {
 					name: 'Banner Title Example',
 				})
 			).toBeVisible();
@@ -480,6 +486,185 @@ test(
 		});
 	}
 );
+
+test.describe('Cannot preview style book', () => {
+	async function addHeadingAndPublishChanges(pageEditorPage: PageEditorPage) {
+		await test.step('Add a default heading component and publish the changes', async () => {
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await pageEditorPage.publishPage();
+		});
+	}
+
+	async function addStyleBook(site: Site, styleBooksPage: StyleBooksPage) {
+		await test.step('Add a style book', async () => {
+			await styleBooksPage.goto(site.friendlyUrlPath);
+
+			await styleBooksPage.create(getRandomString());
+		});
+	}
+
+	async function previewAndAssertDefaultHeading(
+		invalidPreviewTypes: string[],
+		page: Page,
+		previewType: string
+	) {
+		await page.getByRole('button', {name: previewType}).click();
+
+		expect(page.getByRole('menuitem', {name: 'Fragments'})).toBeVisible();
+
+		for (const invalidPreviewType of invalidPreviewTypes) {
+			expect(
+				page.getByRole('menuitem', {name: invalidPreviewType})
+			).not.toBeVisible();
+		}
+
+		await page.getByRole('menuitem', {name: previewType}).click();
+
+		const previewIframe = page.frameLocator(
+			'iframe.style-book-editor__page-preview-frame'
+		);
+
+		const heading = previewIframe
+			.getByRole('heading', {name: 'Heading Example'})
+			.first();
+
+		await heading.waitFor();
+	}
+
+	async function updateHeadingContentWithouPublish(
+		pageEditorPage: PageEditorPage
+	) {
+		await test.step('Update the heading content but does not publish the changes', async () => {
+			await pageEditorPage.editTextEditable(
+				await pageEditorPage.getFragmentId('Heading'),
+				'element-text',
+				getRandomString()
+			);
+
+			await pageEditorPage.waitForChangesSaved();
+		});
+	}
+
+	test('On draft master pages', async ({
+		apiHelpers,
+		masterPagesPage,
+		page,
+		pageEditorPage,
+		site,
+		styleBooksPage,
+	}) => {
+		const name = getRandomString();
+
+		await test.step('Add Heading fragment to draft master page', async () => {
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+				{
+					groupId: site.id,
+					name,
+					type: 'master-layout',
+				}
+			);
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+		});
+
+		await masterPagesPage.editMaster(name);
+
+		await addHeadingAndPublishChanges(pageEditorPage);
+
+		await masterPagesPage.editMaster(name);
+
+		await updateHeadingContentWithouPublish(pageEditorPage);
+
+		await addStyleBook(site, styleBooksPage);
+
+		await test.step("Assert only 'Fragments' and 'Masters' are available", async () => {
+			await previewAndAssertDefaultHeading(
+				['Display Page Templates', 'Pages', 'Page Templates'],
+				page,
+				'Masters'
+			);
+		});
+	});
+
+	test('On draft content pages', async ({
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		site,
+		styleBooksPage,
+	}) => {
+		const name = getRandomString();
+
+		await test.step('Add Heading fragment to draft content page', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.createNewPage({
+				draft: true,
+				name,
+				template: 'Blank',
+			});
+		});
+
+		await addHeadingAndPublishChanges(pageEditorPage);
+
+		await pagesAdminPage.editPage(name);
+
+		await updateHeadingContentWithouPublish(pageEditorPage);
+
+		await addStyleBook(site, styleBooksPage);
+
+		await test.step("Assert that only 'Fragments' and 'Pages' are available", async () => {
+			await previewAndAssertDefaultHeading(
+				['Display Page Templates', 'Masters', 'Page Templates'],
+				page,
+				'Pages'
+			);
+		});
+	});
+
+	test('On draft display page templates', async ({
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+		styleBooksPage,
+	}) => {
+		const pageName = getRandomString();
+
+		await test.step('Create a display page template', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Document',
+				contentType: 'Document',
+				name: pageName,
+			});
+		});
+
+		await displayPageTemplatesPage.editTemplate(pageName);
+
+		await test.step('Add a default heading component and publish the changes', async () => {
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await displayPageTemplatesPage.publishTemplate();
+		});
+
+		await displayPageTemplatesPage.editTemplate(pageName);
+
+		await updateHeadingContentWithouPublish(pageEditorPage);
+
+		await addStyleBook(site, styleBooksPage);
+
+		await test.step("Assert that only 'Display Page Templates' and 'Fragments' are available", async () => {
+			await previewAndAssertDefaultHeading(
+				['Masters', 'Pages', 'Page Templates'],
+				page,
+				'Display Page Templates'
+			);
+		});
+	});
+});
 
 const themeScopedTest = mergeTests(
 	featureFlagsTest({

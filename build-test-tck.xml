@@ -204,13 +204,8 @@
 			</else>
 		</if>
 
-		<get-browser-property property.name="browser.docker.image" />
-
 		<if>
-			<and>
-				<isset property="browser.docker.image" />
-				<isset property="env.JENKINS_HOME" />
-			</and>
+			<isset property="env.JENKINS_HOME" />
 			<then>
 				<stop-docker-browser />
 
@@ -218,11 +213,7 @@
 
 				<get-browser-property property.name="browser.host" />
 
-				<exec dir="${tck.home}" executable="mvn" failonerror="true">
-					<env key="JAVA_HOME" value="${java.jdk.home}" />
-					<env key="JAVA_OPTS" value="${java.jdk.opts}" />
-					<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.webDriver.url=http://${browser.host}:4444 -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test" />
-				</exec>
+				<var name="chrome.properties" value="-Dtest.browser.webDriver.url=http://${browser.host}:4444" />
 			</then>
 			<else>
 				<prepare-chrome-driver />
@@ -230,13 +221,15 @@
 				<propertycopy from="browser.${browser.type[tck]}.version" name="tck.browser.version" silent="true" />
 				<propertycopy from="browser.${browser.type[tck]}.bin.file[${tck.browser.version}]" name="tck.browser.bin.file" silent="true" />
 
-				<exec dir="${tck.home}" executable="mvn" failonerror="true">
-					<env key="JAVA_HOME" value="${java.jdk.home}" />
-					<env key="JAVA_OPTS" value="${java.jdk.opts}" />
-					<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary=${tck.browser.bin.file} -Dtest.browser.webDriver=${project.dir}/tools/tck/../selenium/chromedriver -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test" />
-				</exec>
+				<var name="chrome.properties" value="-Dtest.browser.binary=${tck.browser.bin.file} -Dtest.browser.webDriver=${project.dir}/tools/tck/../selenium/chromedriver" />
 			</else>
 		</if>
+
+		<exec dir="${tck.home}" executable="mvn" failonerror="true">
+			<env key="JAVA_HOME" value="${java.jdk.home}" />
+			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+			<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} ${chrome.properties} -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test" />
+		</exec>
 
 		<if>
 			<available file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml" />

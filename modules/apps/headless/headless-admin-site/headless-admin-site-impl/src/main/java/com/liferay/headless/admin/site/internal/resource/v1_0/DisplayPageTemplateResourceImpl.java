@@ -375,6 +375,11 @@ public class DisplayPageTemplateResourceImpl
 			existingDisplayPageTemplate.setParentFolder(
 				displayPageTemplate::getParentFolder);
 		}
+
+		if (displayPageTemplate.getThumbnail() != null) {
+			existingDisplayPageTemplate.setThumbnail(
+				displayPageTemplate::getThumbnail);
+		}
 	}
 
 	private DisplayPageTemplate _addDisplayPageTemplate(

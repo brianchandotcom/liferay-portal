@@ -5,7 +5,7 @@
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {openSelectionModal} from 'frontend-js-components-web';
-import {debounce} from 'frontend-js-web';
+import {debounce, loadEditorClientExtensions} from 'frontend-js-web';
 
 import {SPACE_KEY_CODE} from '../config/constants/keyboardCodes';
 import {config} from '../config/index';
@@ -80,139 +80,173 @@ export default function getAlloyEditorProcessor(
 
 			element.addEventListener('keyup', keyupHandler);
 
-			_editor = AlloyEditor.editable(editorWrapper, {
-				...editorConfig,
+			const initEditor = (editorConfig) => {
+				_editor = AlloyEditor.editable(editorWrapper, {
+					...editorConfig,
 
-				documentBrowseLinkCallback: (
-					editor,
-					url,
-					changeLinkCallback
-				) => {
-					openSelectionModal({
-						onSelect: changeLinkCallback,
-						selectEventName: editorName + 'selectItem',
-						title: Liferay.Language.get('select-item'),
+					documentBrowseLinkCallback: (
+						editor,
 						url,
-					});
-				},
-
-				documentBrowseLinkUrl:
-					editorConfig.documentBrowseLinkUrl.replace(
-						'_EDITOR_NAME_',
-						editorName
-					),
-
-				filebrowserImageBrowseLinkUrl:
-					editorConfig.filebrowserImageBrowseLinkUrl.replace(
-						'_EDITOR_NAME_',
-						editorName
-					),
-
-				filebrowserImageBrowseUrl:
-					editorConfig.filebrowserImageBrowseUrl.replace(
-						'_EDITOR_NAME_',
-						editorName
-					),
-
-				title: '',
-			});
-
-			const nativeEditor = _editor.get('nativeEditor');
-
-			// For the cases where we open the selector we need to make sure that
-			// the editor is destroyed. Since we cannot rely on the blur event for these cases
-			// (it is ignored) we have to setup an additional listener.
-
-			const onClickOutside = (event) => {
-				if (
-					!event.target.closest(`[name="${editorName}"]`) &&
-					(event.target.closest('.page-editor__toolbar') ||
-						event.target.closest('.page-editor__wrapper'))
-				) {
-					onBlurEditor();
-				}
-			};
-
-			const onBlurEditor = () => {
-				if (_callbacks.changeCallback) {
-					_callbacks
-						.changeCallback(nativeEditor.getData())
-						.then(() => {
-							if (_callbacks.destroyCallback) {
-								_callbacks.destroyCallback();
-							}
-						})
-						.catch(() => {
-							if (_callbacks.destroyCallback) {
-								_callbacks.destroyCallback();
-							}
+						changeLinkCallback
+					) => {
+						openSelectionModal({
+							onSelect: changeLinkCallback,
+							selectEventName: editorName + 'selectItem',
+							title: Liferay.Language.get('select-item'),
+							url,
 						});
-				}
-				else if (_callbacks.destroyCallback) {
-					requestAnimationFrame(() => _callbacks.destroyCallback());
-				}
+					},
+
+					documentBrowseLinkUrl:
+						editorConfig.documentBrowseLinkUrl.replace(
+							'_EDITOR_NAME_',
+							editorName
+						),
+
+					filebrowserImageBrowseLinkUrl:
+						editorConfig.filebrowserImageBrowseLinkUrl.replace(
+							'_EDITOR_NAME_',
+							editorName
+						),
+
+					filebrowserImageBrowseUrl:
+						editorConfig.filebrowserImageBrowseUrl.replace(
+							'_EDITOR_NAME_',
+							editorName
+						),
+
+					title: '',
+				});
+
+				const nativeEditor = _editor.get('nativeEditor');
+
+				// For the cases where we open the selector we need to make sure that
+				// the editor is destroyed. Since we cannot rely on the blur event for these cases
+				// (it is ignored) we have to setup an additional listener.
+
+				const onClickOutside = (event) => {
+					if (
+						!event.target.closest(`[name="${editorName}"]`) &&
+						(event.target.closest('.page-editor__toolbar') ||
+							event.target.closest('.page-editor__wrapper'))
+					) {
+						onBlurEditor();
+					}
+				};
+
+				const onBlurEditor = () => {
+					if (_callbacks.changeCallback) {
+						_callbacks
+							.changeCallback(nativeEditor.getData())
+							.then(() => {
+								if (_callbacks.destroyCallback) {
+									_callbacks.destroyCallback();
+								}
+							})
+							.catch(() => {
+								if (_callbacks.destroyCallback) {
+									_callbacks.destroyCallback();
+								}
+							});
+					}
+					else if (_callbacks.destroyCallback) {
+						requestAnimationFrame(() =>
+							_callbacks.destroyCallback()
+						);
+					}
+				};
+
+				_eventHandlers = [
+					{
+						removeListener: () =>
+							document.removeEventListener(
+								'click',
+								onClickOutside
+							),
+					},
+					nativeEditor.on('key', (event) => {
+						if (
+							(event.data.keyCode === ENTER_KEYCODE ||
+								event.data.keyCode === SHIFT_ENTER_KEYCODE) &&
+							_element &&
+							(_element.getAttribute('type') === 'text' ||
+								_element.dataset.lfrEditableType === 'text')
+						) {
+							event.cancel();
+						}
+						else if (event.data.keyCode === ESCAPE_KEYCODE) {
+							onBlurEditor();
+						}
+					}),
+					nativeEditor.on('blur', () => {
+						if (_editor._mainUI.state.hidden) {
+							onBlurEditor();
+						}
+						else {
+
+							// Ignoring the blur event, because we don't want to destroy the editor
+							// when opening a selector (image or link).
+
+							document.addEventListener('click', onClickOutside);
+						}
+					}),
+
+					nativeEditor.on('instanceReady', (event) => {
+						event.editor.dataProcessor.htmlFilter.addRules({
+							elements: {
+								img(element) {
+									element.attributes.alt = '';
+								},
+							},
+						});
+
+						nativeEditor.focus();
+
+						if (clickPosition) {
+							_selectRange(clickPosition, nativeEditor);
+						}
+						else {
+							nativeEditor.execCommand('selectAll');
+						}
+					}),
+
+					nativeEditor.on(
+						'saveSnapshot',
+						debounce(() => {
+							if (_callbacks.changeCallback) {
+								_callbacks.changeCallback(
+									nativeEditor.getData()
+								);
+							}
+						}, 100)
+					),
+				];
 			};
 
-			_eventHandlers = [
-				{
-					removeListener: () =>
-						document.removeEventListener('click', onClickOutside),
-				},
-				nativeEditor.on('key', (event) => {
-					if (
-						(event.data.keyCode === ENTER_KEYCODE ||
-							event.data.keyCode === SHIFT_ENTER_KEYCODE) &&
-						_element &&
-						(_element.getAttribute('type') === 'text' ||
-							_element.dataset.lfrEditableType === 'text')
-					) {
-						event.cancel();
-					}
-					else if (event.data.keyCode === ESCAPE_KEYCODE) {
-						onBlurEditor();
-					}
-				}),
-				nativeEditor.on('blur', () => {
-					if (_editor._mainUI.state.hidden) {
-						onBlurEditor();
-					}
-					else {
+			const editorTransformerURLs = editorConfig.editorTransformerURLs;
 
-						// Ignoring the blur event, because we don't want to destroy the editor
-						// when opening a selector (image or link).
+			if (editorTransformerURLs) {
+				const loadingIndicator = document.createElement('span');
 
-						document.addEventListener('click', onClickOutside);
-					}
-				}),
+				loadingIndicator.classList.add('loading-animation');
+				loadingIndicator.setAttribute('aria-hidden', true);
 
-				nativeEditor.on('instanceReady', (event) => {
-					event.editor.dataProcessor.htmlFilter.addRules({
-						elements: {
-							img(element) {
-								element.attributes.alt = '';
-							},
-						},
-					});
+				_element.appendChild(loadingIndicator);
 
-					nativeEditor.focus();
-
-					if (clickPosition) {
-						_selectRange(clickPosition, nativeEditor);
-					}
-					else {
-						nativeEditor.execCommand('selectAll');
-					}
-				}),
-
-				nativeEditor.on(
-					'saveSnapshot',
-					debounce(() => {
-						if (_callbacks.changeCallback) {
-							_callbacks.changeCallback(nativeEditor.getData());
+				loadEditorClientExtensions({
+					config: editorConfig,
+					onLoad: ({transformedConfig}) => {
+						if (loadingIndicator) {
+							loadingIndicator.remove();
 						}
-					}, 100)
-				),
-			];
+
+						initEditor(transformedConfig);
+					},
+				});
+			}
+			else {
+				initEditor(editorConfig);
+			}
 		},
 
 		/**

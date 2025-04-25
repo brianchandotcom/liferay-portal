@@ -50,33 +50,11 @@ public class FunctionCaptchaImplTest extends BaseCaptchaTestCase {
 		_properties = HashMapBuilder.<String, Object>put(
 			"baseURL", "${portalURL}/o/test_" + _VIRTUAL_HOSTNAME
 		).put(
-			"buildTimestamp", System.currentTimeMillis()
-		).put(
-			"description", ""
-		).put(
-			"dxp.lxc.liferay.com.virtualInstanceId", _VIRTUAL_HOSTNAME
-		).put(
 			"name", "Test " + _VIRTUAL_HOSTNAME
-		).put(
-			"projectId", "test"
-		).put(
-			"projectName", "test"
-		).put(
-			"properties", new String[] {""}
-		).put(
-			"sourceCodeURL", ""
 		).put(
 			"type", "customElement"
 		).put(
-			"typeSettings",
-			new String[] {
-				"friendlyURLMapping=test", "htmlElementName=test",
-				"instanceable=false",
-				"portletCategoryName=category.client-extensions",
-				"urls=index.js", "useESM=false"
-			}
-		).put(
-			"webContextPath", "/test_" + _VIRTUAL_HOSTNAME
+			"typeSettings", new String[] {"htmlElementName=test"}
 		).build();
 
 		_cet = (CustomElementCET)_cetManager.addCET(

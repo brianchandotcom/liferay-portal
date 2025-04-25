@@ -190,14 +190,18 @@ export function SearchableSubtypesModal({
 				{Liferay.Language.get('select-subtypes')}
 			</ClayModal.Header>
 
-			{loading && <ClayLoadingIndicator />}
-
-			{error ? (
-				<ClayModal.Body>
+			<ClayModal.Body>
+				{loading ? (
+					<ClayLoadingIndicator />
+				) : error || !subtypes.assetSubtypes?.length ? (
 					<ClayEmptyState
-						description={Liferay.Language.get(
-							'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-						)}
+						description={
+							error
+								? Liferay.Language.get(
+										'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+									)
+								: ''
+						}
 						imgSrc="/o/admin-theme/images/states/empty_state.svg"
 						title={Liferay.Language.get('no-items-were-found')}
 					>
@@ -208,172 +212,178 @@ export function SearchableSubtypesModal({
 							{Liferay.Language.get('refresh')}
 						</ClayButton>
 					</ClayEmptyState>
-				</ClayModal.Body>
-			) : (
-				<ClayModal.Body>
-					<nav
-						className={getCN(
-							'management-bar navbar navbar-expand-md',
-							{
-								'management-bar-light': !(
-									allSubtypesSelected && indeterminateSelected
-								),
-								'management-bar-primary navbar-nowrap':
-									allSubtypesSelected ||
-									indeterminateSelected,
-							},
-							'border-light',
-							'border',
-							'rounded-top',
-							'border-bottom-0'
-						)}
-					>
-						<ClayLayout.ContainerFluid size={false}>
-							<ManagementToolbar.ItemList expand>
-								<ManagementToolbar.Item>
-									<ClayCheckbox
-										aria-label={Liferay.Language.get(
-											'select-all'
-										)}
-										checked={allSubtypesSelected}
-										indeterminate={indeterminateSelected}
-										onChange={_handleSelectAll}
-									/>
-								</ManagementToolbar.Item>
-
-								<ManagementToolbar.Item>
-									{!!selected.length && (
-										<span className="c-ml-2 component-text">
-											{subtypes.totalCount
-												? sub(
-														Liferay.Language.get(
-															'x-of-x-selected'
-														),
-														[
-															selected.length,
-															subtypes.totalCount,
-														]
-													)
-												: sub(
-														Liferay.Language.get(
-															'x-selected'
-														),
-														[selected.length]
-													)}
-										</span>
-									)}
-
-									<ClayButton
-										displayType="link"
-										onClick={_handleSelectAll}
-										size="sm"
-									>
-										<span className="component-text">
-											{allSubtypesSelected
-												? Liferay.Language.get(
-														'deselect-all'
-													)
-												: Liferay.Language.get(
-														'select-all'
-													)}
-										</span>
-									</ClayButton>
-								</ManagementToolbar.Item>
-							</ManagementToolbar.ItemList>
-						</ClayLayout.ContainerFluid>
-					</nav>
-
-					<Table
-						className="rounded-0 table-bordered"
-						columnsVisibility={false}
-					>
-						<Head
-							className="rounded-0"
-							items={[
+				) : (
+					<>
+						<nav
+							className={getCN(
+								'management-bar navbar navbar-expand-md',
 								{
-									id: 'name',
-									name: Liferay.Language.get('name'),
-									width: '30%',
+									'management-bar-light': !(
+										allSubtypesSelected &&
+										indeterminateSelected
+									),
+									'management-bar-primary navbar-nowrap':
+										allSubtypesSelected ||
+										indeterminateSelected,
 								},
-								{
-									id: 'site',
-									name: Liferay.Language.get('site'),
-									width: 'auto',
-								},
-							]}
-						>
-							{(column) => (
-								<Cell
-									className={getCN({
-										'table-cell-expand': column.expand,
-									})}
-									key={column.id}
-									width={column.width}
-								>
-									{column.name}
-								</Cell>
+								'border-light',
+								'border',
+								'rounded-top',
+								'border-bottom-0'
 							)}
-						</Head>
+						>
+							<ClayLayout.ContainerFluid size={false}>
+								<ManagementToolbar.ItemList expand>
+									<ManagementToolbar.Item>
+										<ClayCheckbox
+											aria-label={Liferay.Language.get(
+												'select-all'
+											)}
+											checked={allSubtypesSelected}
+											indeterminate={
+												indeterminateSelected
+											}
+											onChange={_handleSelectAll}
+										/>
+									</ManagementToolbar.Item>
 
-						<Body>
-							{subtypes.assetSubtypes.map((item) => {
-								return (
-									<Row
-										key={item.value}
-										onClick={_handleSelect(item)}
-									>
-										<Cell>
-											<div className="d-flex">
-												<ClayCheckbox
-													aria-label={sub(
-														Liferay.Language.get(
-															'select-x'
-														),
-														[
-															item.assetSubtypeLocalizedName,
-														]
-													)}
-													checked={isSelected(item)}
-													onChange={_handleSelect(
-														item
-													)}
-												/>
-
-												<span className="c-ml-2 table-list-title">
-													{
-														item.assetSubtypeLocalizedName
-													}
-												</span>
-											</div>
-										</Cell>
-
-										<Cell>
-											<span>
-												{item.groupLocalizedName}
+									<ManagementToolbar.Item>
+										{!!selected.length && (
+											<span className="c-ml-2 component-text">
+												{subtypes.totalCount
+													? sub(
+															Liferay.Language.get(
+																'x-of-x-selected'
+															),
+															[
+																selected.length,
+																subtypes.totalCount,
+															]
+														)
+													: sub(
+															Liferay.Language.get(
+																'x-selected'
+															),
+															[selected.length]
+														)}
 											</span>
-										</Cell>
-									</Row>
-								);
-							})}
-						</Body>
-					</Table>
+										)}
 
-					<ClayPaginationBarWithBasicItems
-						active={page}
-						activeDelta={pageSize}
-						ellipsisBuffer={3}
-						ellipsisProps={{
-							'aria-label': Liferay.Language.get('more'),
-							'title': Liferay.Language.get('more'),
-						}}
-						onActiveChange={_handlePageChange}
-						onDeltaChange={_handlePageSizeChange}
-						totalItems={
-							subtypes.totalCount || subtypes.assetSubtypes.length
-						}
-					/>
-				</ClayModal.Body>
-			)}
+										<ClayButton
+											displayType="link"
+											onClick={_handleSelectAll}
+											size="sm"
+										>
+											<span className="component-text">
+												{allSubtypesSelected
+													? Liferay.Language.get(
+															'deselect-all'
+														)
+													: Liferay.Language.get(
+															'select-all'
+														)}
+											</span>
+										</ClayButton>
+									</ManagementToolbar.Item>
+								</ManagementToolbar.ItemList>
+							</ClayLayout.ContainerFluid>
+						</nav>
+
+						<Table
+							className="rounded-0 table-bordered"
+							columnsVisibility={false}
+						>
+							<Head
+								className="rounded-0"
+								items={[
+									{
+										id: 'name',
+										name: Liferay.Language.get('name'),
+										width: '30%',
+									},
+									{
+										id: 'site',
+										name: Liferay.Language.get('site'),
+										width: 'auto',
+									},
+								]}
+							>
+								{(column) => (
+									<Cell
+										className={getCN({
+											'table-cell-expand': column.expand,
+										})}
+										key={column.id}
+										width={column.width}
+									>
+										{column.name}
+									</Cell>
+								)}
+							</Head>
+
+							<Body>
+								{subtypes.assetSubtypes.map((item) => {
+									return (
+										<Row
+											key={item.value}
+											onClick={_handleSelect(item)}
+										>
+											<Cell>
+												<div className="d-flex">
+													<ClayCheckbox
+														aria-label={sub(
+															Liferay.Language.get(
+																'select-x'
+															),
+															[
+																item.assetSubtypeLocalizedName,
+															]
+														)}
+														checked={isSelected(
+															item
+														)}
+														onChange={_handleSelect(
+															item
+														)}
+													/>
+
+													<span className="c-ml-2 table-list-title">
+														{
+															item.assetSubtypeLocalizedName
+														}
+													</span>
+												</div>
+											</Cell>
+
+											<Cell>
+												<span>
+													{item.groupLocalizedName}
+												</span>
+											</Cell>
+										</Row>
+									);
+								})}
+							</Body>
+						</Table>
+
+						<ClayPaginationBarWithBasicItems
+							active={page}
+							activeDelta={pageSize}
+							ellipsisBuffer={3}
+							ellipsisProps={{
+								'aria-label': Liferay.Language.get('more'),
+								'title': Liferay.Language.get('more'),
+							}}
+							onActiveChange={_handlePageChange}
+							onDeltaChange={_handlePageSizeChange}
+							totalItems={
+								subtypes.totalCount ||
+								subtypes.assetSubtypes.length
+							}
+						/>
+					</>
+				)}
+			</ClayModal.Body>
 
 			<ClayModal.Footer
 				last={

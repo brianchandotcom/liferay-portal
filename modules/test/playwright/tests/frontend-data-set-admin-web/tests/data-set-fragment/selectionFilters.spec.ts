@@ -479,98 +479,102 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 	});
 });
 
-test('Selection filter of type "Object Picklist" using a "Multiselect Picklist" type field', async ({
-	dataSetFragmentPage,
-	dataSetManagerApiHelpers,
-	layout,
-	picklistApiHelpers,
-}) => {
-	const filterLabel = 'picklist';
-	const picklistDataSetERC = getRandomString();
-	const picklistDataSetLabel = getRandomString();
+test(
+	'Selection filter of type "Object Picklist" using a "Multiselect Picklist" type field',
+	{tag: '@LPD-53174'},
+	async ({
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = 'picklist';
+		const picklistDataSetERC = getRandomString();
+		const picklistDataSetLabel = getRandomString();
 
-	await test.step('Create a new data set for FieldType', async () => {
-		dataSetERCs.push(picklistDataSetERC);
+		await test.step('Create a new data set for FieldType', async () => {
+			dataSetERCs.push(picklistDataSetERC);
 
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: picklistDataSetERC,
-			label: picklistDataSetLabel,
-			restApplication: `/${apiHeadlessURL}`,
-			restSchema: apiHeadlessName,
-		});
-	});
-
-	await test.step('Add fields, so FDS has something to show', async () => {
-		await dataSetManagerApiHelpers.createDataSetTableSection({
-			dataSetERC: picklistDataSetERC,
-			fieldName: 'picklist',
-			label_i18n: {en_US: 'Picklist'},
-		});
-	});
-
-	await test.step('Create a selection filter with the picklist', async () => {
-		const picklist = await picklistApiHelpers.getPicklist(picklistName);
-
-		await dataSetManagerApiHelpers.createDataSetSelectionFilter({
-			dataSetERC: picklistDataSetERC,
-			fieldName: 'picklist[]name',
-			label_i18n: {en_US: filterLabel},
-			multiple: true,
-			source: picklist.externalReferenceCode,
-			sourceType: 'OBJECT_PICKLIST',
-		});
-	});
-
-	await test.step('Configure Data Set fragment', async () => {
-		await dataSetFragmentPage.configureDataSetFragment({
-			dataSetLabel: picklistDataSetLabel,
-			layout,
-		});
-	});
-
-	await test.step(`Select ${filterLabel} filter`, async () => {
-		await dataSetFragmentPage.selectFilter(filterLabel);
-	});
-
-	await test.step('Configure and apply filter', async () => {
-		await expect(
-			dataSetFragmentPage.filterItem.getByRole('checkbox', {
-				name: picklistDefaultOptionLabel,
-			})
-		).toBeVisible();
-		await expect(
-			dataSetFragmentPage.filterItem.getByRole('checkbox', {
-				name: picklistDefaultOptionLabel,
-			})
-		).toBeVisible();
-
-		await dataSetFragmentPage.filterItem
-			.getByRole('checkbox', {name: picklistDefaultOptionLabel})
-			.check();
-
-		await dataSetFragmentPage.addFilterButton.click();
-	});
-
-	await test.step('Check that the filter works', async () => {
-		await dataSetFragmentPage.filterResumeButton.waitFor({
-			state: 'visible',
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: picklistDataSetERC,
+				label: picklistDataSetLabel,
+				restApplication: `/${apiHeadlessURL}`,
+				restSchema: apiHeadlessName,
+			});
 		});
 
-		await expect(
-			dataSetFragmentPage.page.getByRole('button', {
-				name: `${filterLabel}: ${picklistDefaultOptionLabel}`,
-			})
-		).toBeVisible();
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC: picklistDataSetERC,
+				fieldName: 'picklist',
+				label_i18n: {en_US: 'Picklist'},
+			});
+		});
 
-		const rows = await dataSetFragmentPage.table.bodyRows.all();
+		await test.step('Create a selection filter with the picklist', async () => {
+			const picklist = await picklistApiHelpers.getPicklist(picklistName);
 
-		for (const row of rows) {
-			await expect(row.locator('td:first-child')).toHaveText(
-				'[{"key":"default","name":"Default"}]'
-			);
-		}
-	});
-});
+			await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+				dataSetERC: picklistDataSetERC,
+				fieldName: 'picklist[]name',
+				label_i18n: {en_US: filterLabel},
+				multiple: true,
+				source: picklist.externalReferenceCode,
+				sourceType: 'OBJECT_PICKLIST',
+			});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel: picklistDataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step(`Select ${filterLabel} filter`, async () => {
+			await dataSetFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
+			await expect(
+				dataSetFragmentPage.filterItem.getByRole('checkbox', {
+					name: picklistDefaultOptionLabel,
+				})
+			).toBeVisible();
+			await expect(
+				dataSetFragmentPage.filterItem.getByRole('checkbox', {
+					name: picklistDefaultOptionLabel,
+				})
+			).toBeVisible();
+
+			await dataSetFragmentPage.filterItem
+				.getByRole('checkbox', {name: picklistDefaultOptionLabel})
+				.check();
+
+			await dataSetFragmentPage.addFilterButton.click();
+		});
+
+		await test.step('Check that the filter works', async () => {
+			await dataSetFragmentPage.filterResumeButton.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				dataSetFragmentPage.page.getByRole('button', {
+					name: `${filterLabel}: ${picklistDefaultOptionLabel}`,
+				})
+			).toBeVisible();
+
+			const rows = await dataSetFragmentPage.table.bodyRows.all();
+
+			for (const row of rows) {
+				await expect(row.locator('td:first-child')).toHaveText(
+					'[{"key":"default","name":"Default"}]'
+				);
+			}
+		});
+	}
+);
 
 test('Selection filter of type "API REST Application" is displayed in fragment @LPD-10754', async ({
 	dataSetFragmentPage,
@@ -767,7 +771,7 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 
 test(
 	'Selection filter of type "API REST Application" with a composed field name is displayed in the fragment',
-	{tag: '@25905'},
+	{tag: '@LPD-25905'},
 	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
 		const filterLabel = getRandomString();
 		const customDataSetLabel = getRandomString();

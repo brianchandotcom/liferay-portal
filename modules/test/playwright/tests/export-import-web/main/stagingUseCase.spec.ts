@@ -7,10 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {exportImportConfig} from './export_import.config';
@@ -19,15 +20,84 @@ import {stagingPageTest} from './fixtures/stagingPageTest';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
 	loginTest(),
+	pageViewModePagesTest,
+	stagingConfigurationPageTest,
 	stagingPageTest,
-	stagingConfigurationPageTest
+	webContentDisplayPageTest
 );
+
+test('Staging publish template with smoke', async ({
+	apiHelpers,
+	page,
+	stagingPage,
+	webContentDisplayPage,
+	widgetPagePage,
+}) => {
+	const siteName = 'site-' + getRandomString();
+	const siteERC = 'ERC-' + getRandomString();
+	const site = await apiHelpers.headlessSite.createSite({
+		externalReferenceCode: siteERC,
+		name: siteName,
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {type: 'portlet'},
+		title: getRandomString(),
+	});
+
+	const webContentTitle = getRandomString();
+
+	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
+		content: getRandomString(),
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+		groupId: site.id,
+		titleMap: {en_US: webContentTitle},
+	});
+
+	apiHelpers.data.push({
+		id: `${site.id}_${webContent.articleId}`,
+		type: 'webContent',
+	});
+
+	await stagingPage.goto(site.name);
+	await stagingPage.enableLocalStaging();
+
+	const stagingSite =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+			`${site.friendlyUrlPath}-staging`
+		);
+
+	await widgetPagePage.goto(layout, stagingSite.friendlyUrlPath);
+
+	await widgetPagePage.addPortlet(
+		'Web Content Display',
+		'Content Management'
+	);
+
+	await webContentDisplayPage.addWebContentWithDisplay({
+		pageType: 'widget',
+		webContentName: webContentTitle,
+	});
+
+	await stagingPage.goto(site.name + '-staging');
+
+	const templateName = getRandomString();
+
+	await stagingPage.addTemplate(templateName);
+	await stagingPage.publishTemplate(templateName);
+
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+	expect(page.getByText(webContentTitle, {exact: true})).toBeVisible();
+});
 
 test(
 	'Non modified referred content cannot publish to live when enable include if modified option',

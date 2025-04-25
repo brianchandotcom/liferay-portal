@@ -2034,67 +2034,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test StagingWithPublishTemplateSmoke {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-
-		task ("Given: User add a new Web Content and WC Display widget to the staging site") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Site Name (Staging)",
-				layoutName = "Staging Test Page",
-				site = "false",
-				widgetName = "Web Content Display");
-
-			Navigator.gotoStagedSitePage(
-				pageName = "Staging Test Page",
-				siteName = "Site Name");
-
-			WebContentDisplayPortlet.add(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("When: User add new pubish template") {
-			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
-
-			Staging.addPublishTemplate(
-				publishTemplateDescription = "Publish Template Description",
-				publishTemplateName = "Publish Template Name");
-
-			Staging.savePublishTemplate(
-				publishTemplateDescription = "Publish Template Description",
-				publishTemplateName = "Publish Template Name");
-		}
-
-		task ("And: publish staging site based on the template") {
-			Navigator.gotoStagedSitePage(
-				pageName = "Staging Test Page",
-				siteName = "Site Name");
-
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLivePublishTemplate(
-				publishTemplateName = "Publish Template Name",
-				siteName = "Site Name");
-		}
-
-		task ("Then: the WC will be visible in the WC display widget on the live site") {
-			Navigator.gotoSitePage(
-				pageName = "Staging Test Page",
-				siteName = "Site Name");
-
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-	}
-
 	@description = "This is a use case for LPS-98473."
 	@priority = 3
 	test SubscribeWebContentWithStaging {

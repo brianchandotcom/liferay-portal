@@ -39,6 +39,35 @@ export class StagingPage {
 		}
 	}
 
+	async addTemplate(templateName: string) {
+		await this.page.getByLabel('Options').click();
+		await this.page
+			.getByRole('menuitem', {name: 'Publish Templates'})
+			.click();
+		await this.page.getByRole('link', {exact: true, name: 'New'}).click();
+		await this.page.getByLabel('Title Required').fill(templateName);
+		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.page.getByText(templateName).waitFor({state: 'visible'});
+	}
+
+	async publishTemplate(templateName: string) {
+		await this.page
+			.locator(`tr:has-text("${templateName}")`)
+			.getByRole('button')
+			.click();
+		await this.page.getByRole('menuitem', {name: 'Publish'}).click();
+		await this.page.getByRole('button', {name: 'Publish to Live'}).click();
+		await expect(
+			await this.page
+				.locator('.list-group-item div')
+				.filter({hasText: templateName})
+				.getByTestId('processResult')
+				.getByText('Successful')
+		).toBeVisible({
+			timeout: 60 * 1000,
+		});
+	}
+
 	async publish(includeIfModified?: string[], title?: string) {
 		if (!title) {
 			title = getRandomString();

@@ -382,7 +382,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_REMOVE_SELECTED</td>
-	<td>//div[contains(@class,'searchable-types')]//tr[.//p[contains(@class,'table-list-title') and contains(.,'${key_assetType}')]]//button[@aria-label='Delete']</td>
+	<td>//div[contains(@class,'searchable-types')]//li[contains(@class,'list-group-item') and contains(.,'${key_assetType}')]//button[@aria-label='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -397,7 +397,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED</td>
-	<td>//div[contains(@class,'searchable-types')]//p[contains(@class,'table-list-title') and contains(.,'${key_assetType}')]</td>
+	<td>//div[contains(@class,'searchable-types')]//li[contains(@class,'list-group-item') and contains(.,'${key_assetType}')]</td>
 	<td></td>
 </tr>
 <tr>

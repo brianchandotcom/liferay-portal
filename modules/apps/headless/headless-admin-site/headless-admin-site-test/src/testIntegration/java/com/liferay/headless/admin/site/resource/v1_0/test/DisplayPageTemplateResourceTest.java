@@ -299,17 +299,35 @@ public class DisplayPageTemplateResourceTest
 							testGroup.getGroupId()));
 				}
 			},
-			Boolean.FALSE);
+			Boolean.FALSE, null);
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			null, postDisplayPageTemplate.getExternalReferenceCode(), null,
-			Boolean.FALSE);
+			Boolean.FALSE, null);
 
 		_updateLayoutPageTemplateEntryStatus(
 			postDisplayPageTemplate.getExternalReferenceCode());
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			null, postDisplayPageTemplate.getExternalReferenceCode(), null,
-			Boolean.TRUE);
+			Boolean.TRUE, null);
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			null, postDisplayPageTemplate.getExternalReferenceCode(), null,
+			null,
+			new ItemExternalReference() {
+				{
+					setClassName(FileEntry.class.getName());
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+				}
+			});
 
 		_assertProblemException(
 			"NOT_FOUND", null,
@@ -878,7 +896,8 @@ public class DisplayPageTemplateResourceTest
 			ClassSubtypeReference classSubtypeReference,
 			String displayPageTemplateExternalReferenceCode,
 			DisplayPageTemplateFolder displayPageTemplateFolder,
-			Boolean markedAsDefault)
+			Boolean markedAsDefault,
+			ItemExternalReference thumbnailItemExternalReference)
 		throws Exception {
 
 		DisplayPageTemplate getDisplayPageTemplate =
@@ -896,6 +915,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateExternalReferenceCode);
 		randomDisplayPageTemplate.setMarkedAsDefault(markedAsDefault);
 		randomDisplayPageTemplate.setParentFolder(displayPageTemplateFolder);
+		randomDisplayPageTemplate.setThumbnail(thumbnailItemExternalReference);
 
 		DisplayPageTemplate patchDisplayPageTemplate =
 			displayPageTemplateResource.
@@ -936,6 +956,15 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertEquals(
 			markedAsDefault, patchDisplayPageTemplate.getMarkedAsDefault());
+
+		if (thumbnailItemExternalReference == null) {
+			thumbnailItemExternalReference =
+				getDisplayPageTemplate.getThumbnail();
+		}
+
+		Assert.assertEquals(
+			thumbnailItemExternalReference,
+			patchDisplayPageTemplate.getThumbnail());
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithKey()

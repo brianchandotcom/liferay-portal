@@ -30,10 +30,12 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderEmai
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderPhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountEntityModel;
+import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -53,6 +55,8 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.File;
@@ -77,6 +81,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -433,65 +438,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_getType(account), _getStatus(account),
 			_createServiceContext(account));
 
-		long defaultBillingAddressId = _getDefaultBillingAddressId(account, 0);
-
-		if (defaultBillingAddressId > 0) {
-			_accountEntryLocalService.updateDefaultBillingAddressId(
-				accountEntry.getAccountEntryId(), defaultBillingAddressId);
-		}
-
-		long defaultShippingAddressId = _getDefaultShippingAddressId(
-			account, 0);
-
-		if (defaultShippingAddressId > 0) {
-			_accountEntryLocalService.updateDefaultShippingAddressId(
-				accountEntry.getAccountEntryId(), defaultShippingAddressId);
-		}
-
-		long[] organizationIds = _getOrganizationIds(account);
-
-		if (organizationIds != null) {
-			_accountEntryOrganizationRelLocalService.
-				setAccountEntryOrganizationRels(
-					accountEntry.getAccountEntryId(), organizationIds);
-		}
-
-		_accountEntryUserRelLocalService.setAccountEntryUserRels(
-			accountEntry.getAccountEntryId(),
-			_getAccountUserAccountIds(account));
-
-		_addAddresses(accountEntry.getAccountEntryId(), account);
-
-		AccountContactInformation accountContactInformation =
-			account.getAccountContactInformation();
-
-		if (accountContactInformation != null) {
-			UsersAdminUtil.updateAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getContactAddresses(account, null));
-			UsersAdminUtil.updateEmailAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getEmailAddresses(account, null));
-			UsersAdminUtil.updatePhones(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getPhones(account, null));
-			UsersAdminUtil.updateWebsites(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-				_getWebsites(account, null));
-
-			_addOrUpdateContact(
-				0, contextUser.getUserId(), AccountEntry.class.getName(),
-				accountEntry.getAccountEntryId(), null, null, null, null, 0, 0,
-				true, 0, 1, 1970,
-				GetterUtil.getString(accountContactInformation.getSms()),
-				GetterUtil.getString(accountContactInformation.getFacebook()),
-				GetterUtil.getString(accountContactInformation.getJabber()),
-				GetterUtil.getString(accountContactInformation.getSkype()),
-				GetterUtil.getString(accountContactInformation.getTwitter()),
-				null);
-		}
-
-		return _toAccount(accountEntry);
+		return _toAccount(
+			_updateNestedResources(
+				account, accountEntry, accountEntry.getAccountEntryId()));
 	}
 
 	@Override
@@ -661,19 +610,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		serviceContext.setUserId(contextUser.getUserId());
 
 		return serviceContext;
-	}
-
-	private long[] _getAccountUserAccountIds(Account account) {
-		UserAccount[] userAccounts = account.getAccountUserAccounts();
-
-		if (userAccounts == null) {
-			return new long[0];
-		}
-
-		Long[] userAccountIds = transform(
-			userAccounts, userAccount -> userAccount.getId(), Long.class);
-
-		return ArrayUtil.toArray(userAccountIds);
 	}
 
 	private List<Address> _getContactAddresses(
@@ -1152,16 +1088,16 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		if (accountContactInformation != null) {
 			UsersAdminUtil.updateAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				AccountEntry.class.getName(), accountId,
 				_getContactAddresses(account, accountEntry));
 			UsersAdminUtil.updateEmailAddresses(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				AccountEntry.class.getName(), accountId,
 				_getEmailAddresses(account, accountEntry));
 			UsersAdminUtil.updatePhones(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				AccountEntry.class.getName(), accountId,
 				_getPhones(account, accountEntry));
 			UsersAdminUtil.updateWebsites(
-				AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+				AccountEntry.class.getName(), accountId,
 				_getWebsites(account, accountEntry));
 
 			Contact contact = accountEntry.fetchContact();
@@ -1206,7 +1142,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			}
 		}
 
-		return accountEntry;
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return accountEntry;
+		}
+
+		return ResourcePermissionUtil.setResourcePermissions(
+			accountEntry, accountEntry.getCompanyId(), account.getPermissions(),
+			_resourcePermissionLocalService, _roleLocalService,
+			_roleTypeContributorProvider, contextUser.getUserId());
 	}
 
 	@Reference
@@ -1275,5 +1218,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 }

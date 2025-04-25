@@ -319,13 +319,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		DDMStructure structure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.DEFAULT.getValue());
 
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 1,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 1,
+			ddmDataProviderInstanceLinks.size());
 	}
 
 	@Test
@@ -502,11 +502,11 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 	public void testGetStructures() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.getStructures(
-			structure.getGroupId());
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(structure.getGroupId());
 
 		Assert.assertTrue(
-			structures.toString(), structures.contains(structure));
+			ddmStructures.toString(), ddmStructures.contains(structure));
 	}
 
 	@Test
@@ -666,9 +666,9 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			structure.getStructureId(), "Test Form Template",
 			WorkflowConstants.STATUS_APPROVED);
 
-		List<DDMTemplate> templates = structure.getTemplates();
+		List<DDMTemplate> ddmTemplates = structure.getTemplates();
 
-		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplates.toString(), 2, ddmTemplates.size());
 	}
 
 	@Test
@@ -684,13 +684,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			read("test-structure.xsd"), StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_DRAFT);
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 2, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 	}
 
 	@Test
@@ -699,13 +699,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addStructure(_classNameId, StringUtil.randomString());
 		addStructure(_classNameId, StringUtil.randomString());
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 3, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
 	}
 
 	@Test
@@ -713,14 +713,14 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addStructure(_classNameId, StringUtil.randomString(), "Contact");
 		addStructure(_classNameId, StringUtil.randomString(), "Event");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, "Contact", null,
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		DDMStructure structure = structures.get(0);
+		DDMStructure structure = ddmStructures.get(0);
 
 		Assert.assertEquals(
 			"Contact", structure.getDescription(group.getDefaultLanguageId()));
@@ -739,13 +739,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			read("test-structure.xsd"), StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_DRAFT);
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_DRAFT, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 	}
 
 	@Test
@@ -754,15 +754,15 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		addStructure(_classNameId, "Event");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			structure.getCompanyId(), new long[] {structure.getGroupId()},
 			structure.getClassNameId(), "Event",
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
-		Assert.assertEquals(structures.toString(), 2, structures.size());
-		Assert.assertEquals("Events", getStructureName(structures.get(0)));
-		Assert.assertEquals("Event", getStructureName(structures.get(1)));
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
+		Assert.assertEquals("Events", getStructureName(ddmStructures.get(0)));
+		Assert.assertEquals("Event", getStructureName(ddmStructures.get(1)));
 	}
 
 	@Test
@@ -771,15 +771,15 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		addStructure(_classNameId, "To Doing");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			structure.getCompanyId(), new long[] {structure.getGroupId()},
 			structure.getClassNameId(), "To Do",
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
-		Assert.assertEquals(structures.toString(), 2, structures.size());
-		Assert.assertEquals("To Do", getStructureName(structures.get(0)));
-		Assert.assertEquals("To Doing", getStructureName(structures.get(1)));
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
+		Assert.assertEquals("To Do", getStructureName(ddmStructures.get(0)));
+		Assert.assertEquals("To Doing", getStructureName(ddmStructures.get(1)));
 	}
 
 	@Test
@@ -787,14 +787,14 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addStructure(_classNameId, "Contact");
 		addStructure(_classNameId, "Event");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, "Contact", null, null,
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals("Contact", getStructureName(structures.get(0)));
+		Assert.assertEquals("Contact", getStructureName(ddmStructures.get(0)));
 	}
 
 	@Test
@@ -802,14 +802,14 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addStructure(_classNameId, "Contact", "Contact");
 		addStructure(_classNameId, "Event", "Event");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, "Contact", "Event", null,
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 2, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
 	}
 
 	@Test
@@ -817,43 +817,43 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		addStructure(_classNameId, "Contact", "Contact");
 		addStructure(_classNameId, "Event", "Event");
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, "Contact", "Event", null,
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
-		Assert.assertEquals("Contact", getStructureName(structures.get(0)));
-		Assert.assertEquals("Event", getStructureName(structures.get(1)));
+		Assert.assertEquals("Contact", getStructureName(ddmStructures.get(0)));
+		Assert.assertEquals("Event", getStructureName(ddmStructures.get(1)));
 	}
 
 	@Test
 	public void testSearchByNonexistingStorageType() throws Exception {
 		addStructure(_classNameId, StringUtil.randomString());
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, "NonExistingStorageType",
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 0, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 0, ddmStructures.size());
 	}
 
 	@Test
 	public void testSearchByStorageType() throws Exception {
 		addStructure(_classNameId, StringUtil.randomString());
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, StorageType.DEFAULT.toString(),
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 	}
 
 	@Test
@@ -870,21 +870,21 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			DDMStructureConstants.TYPE_FRAGMENT,
 			WorkflowConstants.STATUS_APPROVED);
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 
-		structures = _ddmStructureLocalService.search(
+		ddmStructures = _ddmStructureLocalService.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			_classNameId, null, null, null, DDMStructureConstants.TYPE_FRAGMENT,
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 	}
 
 	@Test
@@ -958,14 +958,14 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		PermissionThreadLocal.setPermissionChecker(
 			permissionCheckerFactory.create(user));
 
-		List<DDMStructure> structures = _ddmStructureLocalService.search(
+		List<DDMStructure> ddmStructures = _ddmStructureLocalService.search(
 			structure.getCompanyId(),
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(group.getGroupId()),
 			structure.getClassNameId(), "Global", WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			StructureIdComparator.getInstance(true));
 
-		Assert.assertEquals(structures.toString(), 0, structures.size());
+		Assert.assertEquals(ddmStructures.toString(), 0, ddmStructures.size());
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 
@@ -1045,13 +1045,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		DDMStructure structure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.DEFAULT.getValue());
 
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 2,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 2,
+			ddmDataProviderInstanceLinks.size());
 
 		// Remove one of the data provider instance links
 
@@ -1062,23 +1062,23 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		ddmStructureTestHelper.updateStructure(
 			structure.getStructureId(), ddmForm);
 
-		dataProviderInstanceLinks =
+		ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 1,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 1,
+			ddmDataProviderInstanceLinks.size());
 
 		_ddmStructureLocalService.deleteStructure(structure);
 
-		dataProviderInstanceLinks =
+		ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 0,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 0,
+			ddmDataProviderInstanceLinks.size());
 	}
 
 	@Test
@@ -1119,13 +1119,13 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		DDMStructure structure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.DEFAULT.getValue());
 
-		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 2,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 2,
+			ddmDataProviderInstanceLinks.size());
 
 		// Remove one of the data provider instance links
 
@@ -1138,23 +1138,23 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		ddmStructureTestHelper.updateStructure(
 			structure.getStructureId(), ddmForm);
 
-		dataProviderInstanceLinks =
+		ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 1,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 1,
+			ddmDataProviderInstanceLinks.size());
 
 		_ddmStructureLocalService.deleteStructure(structure);
 
-		dataProviderInstanceLinks =
+		ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
 		Assert.assertEquals(
-			dataProviderInstanceLinks.toString(), 0,
-			dataProviderInstanceLinks.size());
+			ddmDataProviderInstanceLinks.toString(), 0,
+			ddmDataProviderInstanceLinks.size());
 	}
 
 	@Test
@@ -1168,9 +1168,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMForm ddmFormAfterUpdate = structureAfterUpdate.getDDMForm();
 
-		List<DDMFormField> ddmFormField = ddmFormAfterUpdate.getDDMFormFields();
+		List<DDMFormField> ddmFormFields =
+			ddmFormAfterUpdate.getDDMFormFields();
 
-		DDMFormField textField = ddmFormField.get(0);
+		DDMFormField textField = ddmFormFields.get(0);
 
 		Assert.assertEquals(StringPool.BLANK, textField.getIndexType());
 	}
@@ -1188,10 +1189,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMForm ddmFormAfterUpdate = structureAfterUpdate.getDDMForm();
 
-		List<DDMFormField> ddmFormFieldAfterUpdate =
+		List<DDMFormField> ddmFormFields =
 			ddmFormAfterUpdate.getDDMFormFields();
 
-		DDMFormField textFieldAfterUpdate = ddmFormFieldAfterUpdate.get(0);
+		DDMFormField textFieldAfterUpdate = ddmFormFields.get(0);
 
 		Assert.assertEquals("text", textFieldAfterUpdate.getIndexType());
 	}
@@ -1209,10 +1210,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMForm ddmFormAfterUpdate = structureAfterUpdate.getDDMForm();
 
-		List<DDMFormField> ddmFormFieldAfterUpdate =
+		List<DDMFormField> ddmFormFields =
 			ddmFormAfterUpdate.getDDMFormFields();
 
-		DDMFormField textFieldAfterUpdate = ddmFormFieldAfterUpdate.get(0);
+		DDMFormField textFieldAfterUpdate = ddmFormFields.get(0);
 
 		Assert.assertEquals("none", textFieldAfterUpdate.getIndexType());
 	}

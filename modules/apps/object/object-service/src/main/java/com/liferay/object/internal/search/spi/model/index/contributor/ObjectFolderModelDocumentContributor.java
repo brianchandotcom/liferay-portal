@@ -24,9 +24,9 @@ public class ObjectFolderModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, ObjectFolder objectFolder) {
+		document.addText(Field.NAME, objectFolder.getName());
 		document.addLocalizedKeyword(
 			"localized_label", objectFolder.getLabelMap(), true, true);
-		document.addText(Field.NAME, objectFolder.getName());
 		document.addKeyword("objectFolderId", objectFolder.getObjectFolderId());
 
 		document.remove(Field.USER_NAME);

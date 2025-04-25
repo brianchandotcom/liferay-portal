@@ -151,6 +151,7 @@ const SecurityVulnerabilitiesList = () => {
 							onChange={(keywords) =>
 								updateSearchParams({
 									[JiraEnum.KEYWORDS]: keywords,
+									[JiraEnum.PAGE]: 1,
 								})
 							}
 						/>

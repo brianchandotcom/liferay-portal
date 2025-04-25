@@ -3,6 +3,7 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7" />
+		<Logger level="WARN" name="com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine" />
 		<Logger level="WARN" name="com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexHelper" />
 		<Logger level="WARN" name="com.liferay.portal.search.elasticsearch7.internal.index.MappingsHelperImpl" />
 		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch7.internal.sidecar" />

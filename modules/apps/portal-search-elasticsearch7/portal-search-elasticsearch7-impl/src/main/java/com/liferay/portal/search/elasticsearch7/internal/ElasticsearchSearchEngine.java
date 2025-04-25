@@ -63,6 +63,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
@@ -353,6 +354,35 @@ public class ElasticsearchSearchEngine
 	}
 
 	private void _checkNodeVersions() {
+		List<ConnectionInformation> connectionInformationList =
+			_searchEngineInformation.getConnectionInformationList();
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(
+				connectionInformationList.size());
+
+			for (ConnectionInformation connectionInformation :
+					connectionInformationList) {
+
+				Set<String> labels = connectionInformation.getLabels();
+
+				if (labels.contains("deprecated")) {
+					sb.append(connectionInformation.getConnectionId());
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+			}
+
+			if (sb.length() > 0) {
+				sb.setIndex(sb.index() - 1);
+
+				_log.warn(
+					StringBundler.concat(
+						"Connecting to Elasticsearch 7 nodes is now ",
+						"deprecated. Upgrade the Elasticsearch nodes ",
+						"corresponding to the following connection IDs: ", sb));
+			}
+		}
+
 		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			return;
 		}
@@ -369,9 +399,6 @@ public class ElasticsearchSearchEngine
 		}
 
 		Version minimumVersion = Version.parseVersion(minimumVersionString);
-
-		List<ConnectionInformation> connectionInformationList =
-			_searchEngineInformation.getConnectionInformationList();
 
 		for (ConnectionInformation connectionInformation :
 				connectionInformationList) {

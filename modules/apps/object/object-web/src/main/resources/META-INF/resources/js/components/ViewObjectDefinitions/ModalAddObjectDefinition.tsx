@@ -17,7 +17,11 @@ import {
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
-import {FeatureIndicator} from 'frontend-js-components-web';
+import {
+	FeatureIndicator,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -53,6 +57,8 @@ export function ModalAddObjectDefinition({
 	const {observer, onClose} = useModal({
 		onClose: () => handleOnClose(),
 	});
+
+	const [showProxyWarning, setShowProxyWarning] = useState<boolean>(false);
 
 	const objectDefinitionStorageTypesSortedByLabel = [
 		...objectDefinitionsStorageTypes,
@@ -199,34 +205,66 @@ export function ModalAddObjectDefinition({
 						/>
 
 						{Liferay.FeatureFlags['LPS-135430'] && (
-							<div className="lfr__object-web-modal-add-object-definition-storage-type">
-								<SingleSelect<LabelValueObject>
-									items={
-										objectDefinitionStorageTypesSortedByLabel
-									}
-									label={Liferay.Language.get('storage-type')}
-									onSelectionChange={(value) => {
-										setValues({
-											...values,
-											storageType: value as string,
-										});
-									}}
-									selectedKey={values.storageType}
-									tooltip={Liferay.Language.get(
-										'object-definition-storage-type-tooltip'
-									)}
-								/>
-
-								<div className="lfr__object-web-modal-add-object-definition-storage-type-beta">
-									<FeatureIndicator
-										interactive
-										learnResourceContext={
-											learnResourceContext
+							<>
+								<div className="lfr__object-web-modal-add-object-definition-storage-type">
+									<SingleSelect<LabelValueObject>
+										items={
+											objectDefinitionStorageTypesSortedByLabel
 										}
-										type="beta"
+										label={Liferay.Language.get(
+											'storage-type'
+										)}
+										onSelectionChange={(value) => {
+											setValues({
+												...values,
+												storageType: value as string,
+											});
+
+											if (value !== 'default') {
+												setShowProxyWarning(true);
+											}
+										}}
+										selectedKey={values.storageType}
+										tooltip={Liferay.Language.get(
+											'object-definition-storage-type-tooltip'
+										)}
 									/>
+
+									<div className="lfr__object-web-modal-add-object-definition-storage-type-beta">
+										<FeatureIndicator
+											interactive
+											learnResourceContext={
+												learnResourceContext
+											}
+											type="beta"
+										/>
+									</div>
 								</div>
-							</div>
+
+								{showProxyWarning && (
+									<ClayAlert
+										displayType="info"
+										onClose={() =>
+											setShowProxyWarning(false)
+										}
+										title={`${Liferay.Language.get('info')}:`}
+									>
+										{Liferay.Language.get(
+											'proxy-objects-have-some-known-limitations'
+										)}
+										&nbsp;
+										<LearnResourcesContext.Provider
+											value={learnResourceContext}
+										>
+											<LearnMessage
+												className="alert-link"
+												resource="object-web"
+												resourceKey="managing-data-from-external-systems"
+											/>
+										</LearnResourcesContext.Provider>
+									</ClayAlert>
+								)}
+							</>
 						)}
 					</ClayModal.Body>
 

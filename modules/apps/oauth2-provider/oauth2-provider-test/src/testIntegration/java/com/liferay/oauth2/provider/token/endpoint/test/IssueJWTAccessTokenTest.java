@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.internal.test.PasswordAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.util.PropsValues;
 
@@ -32,11 +35,13 @@ import org.osgi.framework.BundleActivator;
 public class IssueJWTAccessTokenTest extends BaseTokenEndpointTestCase {
 
 	@Test
-	public void testIssuedJWTAccessToken() {
+	public void testIssuedJWTAccessToken() throws Exception {
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
+
 		_verifyJWTAccessToken(
 			getAccessToken(
 				new PasswordAuthorizationGrant(
-					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+					user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 				clientAuthentications.get(TEST_CLIENT_ID_1)));
 	}
 

@@ -825,8 +825,9 @@ public class CustomFDSSerializer
 		return (Boolean)properties.get("active");
 	}
 
-	private Boolean _isCollection(String fieldName) {
-		return fieldName.contains(StringPool.OPEN_BRACKET);
+	private Boolean _isCollection(String fieldName, String sourceType) {
+		return fieldName.contains(StringPool.OPEN_BRACKET) &&
+			   Objects.equals(sourceType, "OBJECT_PICKLIST");
 	}
 
 	private JSONObject _serializeFilter(
@@ -980,7 +981,8 @@ public class CustomFDSSerializer
 			"entityFieldType",
 			() -> {
 				if (_isCollection(
-						String.valueOf(properties.get("fieldName")))) {
+						String.valueOf(properties.get("fieldName")),
+						sourceType)) {
 
 					return FDSEntityFieldTypes.COLLECTION;
 				}

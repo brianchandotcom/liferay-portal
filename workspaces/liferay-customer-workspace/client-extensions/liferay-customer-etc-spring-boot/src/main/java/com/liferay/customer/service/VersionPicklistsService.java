@@ -7,7 +7,6 @@ package com.liferay.customer.service;
 
 import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,7 +35,7 @@ import org.springframework.stereotype.Component;
 public class VersionPicklistsService extends BaseService {
 
 	@Scheduled(cron = "${liferay.customer.version.picklists.cron}")
-	public void updatePicklists() throws Exception {
+	public void scheduledPicklistsUpdate() throws Exception {
 		if (_log.isInfoEnabled()) {
 			_log.info("Updating version picklists");
 		}
@@ -152,10 +151,6 @@ public class VersionPicklistsService extends BaseService {
 			String name, String externalReferenceCode, List<String> values)
 		throws Exception {
 
-		String listTypeDefinitionsAPI = StringBundler.concat(
-			_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
-			_lxcCustomerVersionPicklistsAPI);
-
 		JSONArray listTypeEntriesJSONArray = new JSONArray();
 
 		for (String value : values) {
@@ -209,13 +204,12 @@ public class VersionPicklistsService extends BaseService {
 		JSONObject listTypeDefinitionJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				listTypeDefinitionsAPI +
-					"/list-type-definitions/by-external-reference-code/" +
-						externalReferenceCode));
+				"/o/headless-admin-list-type/v1.0/list-type-definitions" +
+					"/by-external-reference-code/" + externalReferenceCode));
 
 		put(
 			_getAuthorization(), transformedPicklistJSONObject.toString(),
-			listTypeDefinitionsAPI + "/list-type-definitions/" +
+			"/o/headless-admin-list-type/v1.0/list-type-definitions/" +
 				listTypeDefinitionJSONObject.getInt("id"));
 
 		if (_log.isInfoEnabled()) {
@@ -246,14 +240,5 @@ public class VersionPicklistsService extends BaseService {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${liferay.customer.version.picklists.api}")
-	private String _lxcCustomerVersionPicklistsAPI;
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
 
 }

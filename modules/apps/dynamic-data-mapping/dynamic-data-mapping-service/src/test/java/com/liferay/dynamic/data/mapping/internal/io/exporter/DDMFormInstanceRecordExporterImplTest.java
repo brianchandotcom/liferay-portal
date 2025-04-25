@@ -645,10 +645,10 @@ public class DDMFormInstanceRecordExporterImplTest {
 			ddmStructureVersion
 		);
 
-		List<DDMStructureVersion> structureVersions =
+		List<DDMStructureVersion> ddmStructureVersions =
 			ddmFormInstanceRecordExporterImpl.getStructureVersions(1);
 
-		Assert.assertEquals(ddmStructureVersion, structureVersions.get(0));
+		Assert.assertEquals(ddmStructureVersion, ddmStructureVersions.get(0));
 
 		InOrder inOrder = Mockito.inOrder(
 			_ddmFormInstanceVersionLocalService, ddmFormInstanceVersion);

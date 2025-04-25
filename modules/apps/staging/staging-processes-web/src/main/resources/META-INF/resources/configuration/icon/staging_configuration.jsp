@@ -24,9 +24,9 @@ PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, liveGroup,
 <aui:script>
 	function <portlet:namespace />openStagingConfigurationPortlet() {
 		var configurationDialog = Liferay.Util.openModal({
+			containerProps: {},
 			id: 'stagingConfiguration',
 			iframeBodyCssClass: '',
-			containerProps: {},
 			onClose: () => {
 				document.location.href =
 					'<%= HtmlUtil.escapeJS(portletURL.toString()) %>';

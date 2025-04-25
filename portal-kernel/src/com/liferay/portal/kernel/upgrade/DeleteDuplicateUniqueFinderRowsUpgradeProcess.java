@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Jorge Avalos
@@ -47,6 +49,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		List<String[]> duplicateColumnValuesList =
 			_getDuplicateColumnValuesList();
+
+		_primaryKeyColumnNames = getPrimaryKeyColumnNames(
+			connection, _tableName);
 
 		for (String[] duplicateColumnValues : duplicateColumnValuesList) {
 			List<Map<String, String>> duplicateRows = getDuplicateRows(
@@ -131,16 +136,30 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 
 		sb.setIndex(sb.index() - 1);
 
+		sb.append("order by ");
+
+		DBInspector dbInspector = new DBInspector(connection);
+
 		if (_orderByClause != null) {
-			sb.append("order by ");
 			sb.append(_orderByClause);
+		}
+		else {
+			for (String primaryKeyColumnName : _primaryKeyColumnNames) {
+				if (Objects.equals(primaryKeyColumnName, dbInspector.normalizeName("ctCollectionId"))) {
+				continue;
+				}
+				sb.append(primaryKeyColumnName);
+
+				sb.append(" ASC ");
+				sb.append(", ");
+			}
+			sb.setIndex(sb.index() - 1);
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
-			DBInspector dbInspector = new DBInspector(connection);
 			int parameterIndex = 1;
 
 			for (int i = 0; i < _columnNames.length; i++) {
@@ -188,10 +207,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 			}
 		}
 
-		if (_orderByClause == null) {
-			Collections.reverse(duplicateRows);
-		}
-
 		return duplicateRows;
 	}
 
@@ -229,6 +244,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess.class);
+
+	protected String[] _primaryKeyColumnNames;
 
 	private final String[] _columnNames;
 	private final String _orderByClause;

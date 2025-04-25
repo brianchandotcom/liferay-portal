@@ -42,10 +42,21 @@ public class GoogleCloudStorageService extends BaseService {
 	public void deleteObject(String bucketName, String objectName)
 		throws Exception {
 
-		delete(
-			"Bearer " + _getAccessToken(), "",
-			StringBundler.concat(
-				"/storage/v1/b/", bucketName, "/o/", objectName));
+		WebClient.create(
+			getWebClientBaseURL()
+		).delete(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				"/storage/v1/b/{bucketName}/o/{objectName}"
+			).build(
+				bucketName, objectName
+			)
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + _getAccessToken()
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 	}
 
 	public String getDownloadURL(String bucketName, String objectName)

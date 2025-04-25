@@ -40,6 +40,30 @@ export class UsersAndOrganizationsPage {
 	readonly activateButton: Locator;
 	readonly activateUserMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly assignOrganizationRolesIFrame: FrameLocator;
+	readonly assignOrganizationRolesMenuItem: Locator;
+	readonly assignOrganizationRolesSearchBarButton: Locator;
+	readonly assignOrganizationRolesTable: Locator;
+	readonly assignOrganizationRolesTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly assignOrganizationRolesTableRowLink: (
+		roleName: string
+	) => Promise<Locator>;
+	readonly assignOrganizationRolesUserCell: (
+		userName: string
+	) => Promise<Locator>;
+	readonly assignOrganizationRolesUserTable: Locator;
+	readonly assignOrganizationRolesUserTableCell: (
+		userName: string
+	) => Promise<Locator>;
+	readonly assignOrganizationRolesUserTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
 	readonly assignUsersIFrame: FrameLocator;
 	readonly assignUsersMenuItem: Locator;
 	readonly assignUsersTable: Locator;
@@ -143,6 +167,80 @@ export class UsersAndOrganizationsPage {
 			name: 'Activate',
 		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.assignOrganizationRolesIFrame = page.frameLocator(
+			'iframe[title="Assign Organization Roles"]'
+		);
+		this.assignOrganizationRolesMenuItem = page.getByRole('menuitem', {
+			name: 'Assign Organization Roles',
+		});
+		this.assignOrganizationRolesSearchBarButton =
+			this.assignOrganizationRolesIFrame.getByRole('button', {
+				name: 'Search for',
+			});
+		this.assignOrganizationRolesTable =
+			this.assignOrganizationRolesIFrame.locator(
+				'#_com_liferay_roles_selector_web_portlet_RolesSelectorPortlet_rolesSearchContainer'
+			);
+		this.assignOrganizationRolesTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.assignOrganizationRolesTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.assignOrganizationRolesTableRowLink = async (roleName: string) => {
+			const assignOrganizationRolesTableRow =
+				await this.assignOrganizationRolesTableRow(0, roleName, true);
+
+			if (
+				assignOrganizationRolesTableRow &&
+				assignOrganizationRolesTableRow.column
+			) {
+				return assignOrganizationRolesTableRow.column.getByRole(
+					'link',
+					{
+						name: roleName,
+					}
+				);
+			}
+
+			throw new Error(`Cannot locate role row with name ${roleName}`);
+		};
+		this.assignOrganizationRolesUserCell = async (userName: string) => {
+			return page.getByRole('cell', {
+				exact: true,
+				name: userName,
+			});
+		};
+		this.assignOrganizationRolesUserTable =
+			this.assignOrganizationRolesIFrame.locator(
+				'#_com_liferay_roles_selector_web_portlet_RolesSelectorPortlet_usersSearchContainer'
+			);
+		this.assignOrganizationRolesUserTableCell = async (
+			userName: string
+		) => {
+			return this.assignOrganizationRolesUserTable.getByRole('cell', {
+				exact: true,
+				name: userName,
+			});
+		};
+		this.assignOrganizationRolesUserTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.assignOrganizationRolesUserTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
 		this.assignUsersIFrame = page.frameLocator('iframe[id="modalIframe"]');
 		this.assignUsersMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Users',

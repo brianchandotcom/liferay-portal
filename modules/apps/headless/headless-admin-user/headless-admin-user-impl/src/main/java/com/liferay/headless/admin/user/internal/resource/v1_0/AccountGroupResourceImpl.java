@@ -18,14 +18,12 @@ import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountGroupEntityModel;
+import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -37,10 +35,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
@@ -51,12 +47,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -423,58 +416,6 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			contextUser);
 	}
 
-	private com.liferay.account.model.AccountGroup _setResourcePermissions(
-			Permission permission,
-			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup)
-		throws Exception {
-
-		String[] actionIds = permission.getActionIds();
-		String externalReferenceCode =
-			permission.getRoleExternalReferenceCode();
-		String name = permission.getRoleName();
-
-		if (ArrayUtil.isEmpty(actionIds) ||
-			Validator.isNull(externalReferenceCode) || Validator.isNull(name)) {
-
-			return serviceBuilderAccountGroup;
-		}
-
-		String className = StringPool.BLANK;
-
-		List<RoleTypeContributor> roleTypeContributors = ListUtil.filter(
-			_roleTypeContributorProvider.getRoleTypeContributors(),
-			roleTypeContributor -> {
-				if (Validator.isNull(permission.getRoleType())) {
-					return false;
-				}
-
-				return StringUtil.equals(
-					roleTypeContributor.getTypeLabel(),
-					permission.getRoleType());
-			});
-
-		if (ListUtil.isNotEmpty(roleTypeContributors)) {
-			RoleTypeContributor roleTypeContributor = roleTypeContributors.get(
-				0);
-
-			className = roleTypeContributor.getClassName();
-		}
-
-		Role role = _roleLocalService.getOrAddIncompleteRole(
-			externalReferenceCode, serviceBuilderAccountGroup.getCompanyId(),
-			contextUser.getUserId(), className, 0, name,
-			RoleConstants.getLabelType(permission.getRoleType()));
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			serviceBuilderAccountGroup.getCompanyId(),
-			com.liferay.account.model.AccountGroup.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(serviceBuilderAccountGroup.getAccountGroupId()),
-			role.getRoleId(), actionIds);
-
-		return serviceBuilderAccountGroup;
-	}
-
 	private AccountGroup _toAccountGroup(
 			com.liferay.account.model.AccountGroup accountGroup)
 		throws Exception {
@@ -522,16 +463,12 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			}
 		}
 
-		Permission[] permissions = accountGroup.getPermissions();
-
-		if (ArrayUtil.isNotEmpty(permissions)) {
-			for (Permission permission : permissions) {
-				serviceBuilderAccountGroup = _setResourcePermissions(
-					permission, serviceBuilderAccountGroup);
-			}
-		}
-
-		return serviceBuilderAccountGroup;
+		return ResourcePermissionUtil.setResourcePermissions(
+			serviceBuilderAccountGroup,
+			serviceBuilderAccountGroup.getCompanyId(),
+			accountGroup.getPermissions(), _resourcePermissionLocalService,
+			_roleLocalService, _roleTypeContributorProvider,
+			contextUser.getUserId());
 	}
 
 	@Reference

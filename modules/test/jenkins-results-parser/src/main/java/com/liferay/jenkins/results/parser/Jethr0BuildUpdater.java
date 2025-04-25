@@ -64,9 +64,14 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 
 	@Override
 	public void reinvoke() {
+		reinvoke(null);
+	}
+
+	@Override
+	public void reinvoke(Map<String, String> reinvokeBuildParameters) {
 		Build build = getBuild();
 
-		_invoke(build.getMaximumSlavesPerHost(), 24);
+		_invoke(build.getMaximumSlavesPerHost(), 24, reinvokeBuildParameters);
 	}
 
 	protected Jethr0BuildUpdater(Build build, long jethr0JobId) {
@@ -162,7 +167,14 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 		return JenkinsMaster.getInstance(matcher.group("masterHostname"));
 	}
 
-	private void _invoke(int maximumSlavesPerHost, int minimumSlaveRAM) {
+	private void _invoke(int maxiumSlavesPerHost, int minimumSlaveRAM) {
+		_invoke(maxiumSlavesPerHost, minimumSlaveRAM, null);
+	}
+
+	private void _invoke(
+		int maximumSlavesPerHost, int minimumSlaveRAM,
+		Map<String, String> reinvokeBuildParameters) {
+
 		Build build = getBuild();
 
 		Map<String, String> buildParameters = new HashMap<>(
@@ -172,6 +184,10 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 		buildParameters.put(
 			"MAX_NODE_COUNT", String.valueOf(maximumSlavesPerHost));
 		buildParameters.put("MIN_NODE_RAM", String.valueOf(minimumSlaveRAM));
+
+		if (reinvokeBuildParameters != null) {
+			buildParameters.putAll(reinvokeBuildParameters);
+		}
 
 		if (_jethr0BuildId > 0) {
 			_jethr0Client.createBuildRun(_jethr0BuildId);

@@ -1026,9 +1026,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const rendererButton = page.getByRole('button', {name: 'Default'});
 			await expect(rendererButton).toBeInViewport();
 
-			const rendererDropdownId = await rendererButton.evaluate((node) => {
-				return node.getAttribute('aria-controls');
-			});
+			const rendererDropdownId =
+				await rendererButton.getAttribute('aria-controls');
+
 			await rendererButton.click();
 
 			await page.locator(`#${rendererDropdownId}`).waitFor();
@@ -1146,52 +1146,46 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				const localizationButton = page
 					.locator('.input-localized')
 					.getByRole('button');
-				const languageDropdownId = await localizationButton.evaluate(
-					(node) => node.getAttribute('aria-controls')
-				);
+				const languageDropdownId =
+					await localizationButton.getAttribute('aria-controls');
+				const languageDropdown = page.locator(`#${languageDropdownId}`);
 
 				await localizationButton.click();
 
-				await page.locator(`#${languageDropdownId}`).waitFor();
+				await languageDropdown.waitFor();
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'en_US'})
 						.locator('.label-item')
 				).toContainText('Default');
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'es_ES'})
 						.locator('.label-item')
 				).toContainText('Untranslated');
 
 				if (
-					await page
-						.locator(`#${languageDropdownId}`)
+					await languageDropdown
 						.getByRole('menuitem', {name: 'es_AR'})
 						.locator('.label-item')
 						.isVisible()
 				) {
 					await expect(
-						page
-							.locator(`#${languageDropdownId}`)
+						languageDropdown
 							.getByRole('menuitem', {name: 'es_ES'})
 							.locator('.label-item')
 					).toContainText('Untranslated');
 				}
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'pt_BR'})
 						.locator('.label-item')
 				).toContainText('Untranslated');
 
-				await page
-					.locator(`#${languageDropdownId}`)
+				await languageDropdown
 					.getByRole('menuitem', {name: 'pt_BR'})
 					.click();
 
@@ -1199,27 +1193,24 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await localizationButton.click();
 
-				await page.locator(`#${languageDropdownId}`).waitFor();
-				await page
-					.locator(`#${languageDropdownId}`)
+				await languageDropdown.waitFor();
+				await languageDropdown
 					.getByRole('menuitem', {name: 'es_ES'})
 					.click();
 
 				await labelInput.fill(SAMPLE_FIELD_ES_ES);
 
-				await localizationButton.click();
-
-				await page.locator(`#${languageDropdownId}`).waitFor();
-
 				if (
-					await page
-						.locator(`#${languageDropdownId}`)
+					await languageDropdown
 						.getByRole('menuitem', {name: 'es_AR'})
 						.locator('.label-item')
 						.isVisible()
 				) {
-					await page
-						.locator(`#${languageDropdownId}`)
+					await localizationButton.click();
+
+					await languageDropdown.waitFor();
+
+					await languageDropdown
 						.getByRole('menuitem', {name: 'es_AR'})
 						.click();
 
@@ -1239,37 +1230,33 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				const localizationButton = page
 					.locator('.input-localized')
 					.getByRole('button');
-				const languageDropdownId = await localizationButton.evaluate(
-					(node) => node.getAttribute('aria-controls')
-				);
+				const languageDropdownId =
+					await localizationButton.getAttribute('aria-controls');
+				const languageDropdown = page.locator(`#${languageDropdownId}`);
 
 				await localizationButton.click();
 
-				await page.locator(`#${languageDropdownId}`).waitFor();
+				await languageDropdown.waitFor();
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'en_US'})
 						.locator('.label-item')
 				).toContainText('Default');
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'es_ES'})
 						.locator('.label-item')
 				).toContainText('Translated');
 
 				await expect(
-					page
-						.locator(`#${languageDropdownId}`)
+					languageDropdown
 						.getByRole('menuitem', {name: 'pt_BR'})
 						.locator('.label-item')
 				).toContainText('Translated');
 
-				await page
-					.locator(`#${languageDropdownId}`)
+				await languageDropdown
 					.getByRole('menuitem', {name: 'pt_BR'})
 					.click();
 

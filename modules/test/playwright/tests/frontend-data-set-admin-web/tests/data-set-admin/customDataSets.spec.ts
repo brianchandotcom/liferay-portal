@@ -284,16 +284,13 @@ test('Can paginate created Data Sets', async ({
 
 		await itemsPerPageButton.click();
 
-		const dropdownId = await itemsPerPageButton.evaluate((node) =>
-			node.getAttribute('aria-controls')
-		);
+		const dropdownId =
+			await itemsPerPageButton.getAttribute('aria-controls');
+		const dropdown = page.locator(`#${dropdownId}`);
 
-		await page.locator(`#${dropdownId}`).waitFor();
+		await dropdown.waitFor();
 
-		await page
-			.locator(`#${dropdownId}`)
-			.getByRole('option', {name: '4 Items'})
-			.click();
+		await dropdown.getByRole('option', {name: '4 Items'}).click();
 
 		await expect(itemsPerPageButton).toContainText('4 Items');
 	});
@@ -315,16 +312,13 @@ test('Can paginate created Data Sets', async ({
 
 		dataSetActionsButton.click();
 
-		const actionsDropdownId = await dataSetActionsButton.evaluate((node) =>
-			node.getAttribute('aria-controls')
-		);
+		const actionsDropdownId =
+			await dataSetActionsButton.getAttribute('aria-controls');
+		const actionsDropdown = page.locator(`#${actionsDropdownId}`);
 
-		await page.locator(`#${actionsDropdownId}`).waitFor();
+		await actionsDropdown.waitFor();
 
-		await page
-			.locator(`#${actionsDropdownId}`)
-			.getByRole('menuitem', {name: 'Delete'})
-			.click();
+		await actionsDropdown.getByRole('menuitem', {name: 'Delete'}).click();
 
 		await page.getByRole('dialog').waitFor({state: 'visible'});
 

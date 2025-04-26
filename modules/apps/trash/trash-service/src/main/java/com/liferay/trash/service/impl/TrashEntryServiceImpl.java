@@ -5,6 +5,7 @@
 
 package com.liferay.trash.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,9 +34,7 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.model.impl.TrashEntryImpl;
 import com.liferay.trash.service.base.TrashEntryServiceBaseImpl;
-import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -532,28 +531,28 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		return TransformUtil.transform(entries, entry -> {
-			String className = entry.getClassName();
-			long classPK = entry.getClassPK();
+		return TransformUtil.transform(
+			entries,
+			entry -> {
+				String className = entry.getClassName();
+				long classPK = entry.getClassPK();
 
-			try {
-				TrashHandler trashHandler =
+				try {
+					TrashHandler trashHandler =
 						TrashHandlerRegistryUtil.getTrashHandler(className);
 
-				if (trashHandler.hasTrashPermission(
-						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
+					if (trashHandler.hasTrashPermission(
+							permissionChecker, 0, classPK, ActionKeys.VIEW)) {
 
-					return entry;
+						return entry;
+					}
 				}
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 
-			return null;
-
-		});
-
+				return null;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

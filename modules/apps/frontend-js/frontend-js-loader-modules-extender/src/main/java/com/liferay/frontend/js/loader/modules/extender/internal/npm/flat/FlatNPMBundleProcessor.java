@@ -742,9 +742,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			return jsonObject;
 		}
 
-		Set<Map.Entry<URL, JSONObject>> entrySet = jsonObjects.entrySet();
+		Set<Map.Entry<URL, JSONObject>> entries = jsonObjects.entrySet();
 
-		Iterator<Map.Entry<URL, JSONObject>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<URL, JSONObject>> iterator = entries.iterator();
 
 		while (iterator.hasNext()) {
 			Map.Entry<URL, JSONObject> entry = iterator.next();

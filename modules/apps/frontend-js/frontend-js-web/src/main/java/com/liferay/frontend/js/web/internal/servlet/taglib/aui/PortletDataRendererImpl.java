@@ -135,12 +135,12 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		// Write AUI prologue
 
-		Set<String> auiUseSet = _computeAUIUseSet(portletDatas);
+		Set<String> auiUses = _computeAUIUseSet(portletDatas);
 
-		if (!auiUseSet.isEmpty()) {
+		if (!auiUses.isEmpty()) {
 			writer.write("AUI().use(\n");
 
-			for (String auiUse : auiUseSet) {
+			for (String auiUse : auiUses) {
 				writer.write("  '");
 				writer.write(auiUse);
 				writer.write("',\n");
@@ -156,7 +156,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		// Write AUI epilogue
 
-		if (!auiUseSet.isEmpty()) {
+		if (!auiUses.isEmpty()) {
 			writer.write("});\n");
 		}
 
@@ -219,15 +219,15 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 	private Set<String> _computeAUIUseSet(
 		Collection<PortletData> portletDatas) {
 
-		Set<String> auiUseSet = new HashSet<>();
+		Set<String> auiUses = new HashSet<>();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
-				auiUseSet.addAll(jsFragment.getAUIUses());
+				auiUses.addAll(jsFragment.getAUIUses());
 			}
 		}
 
-		return auiUseSet;
+		return auiUses;
 	}
 
 	private Map<ESImport, ESImport> _computeESImportsMap(

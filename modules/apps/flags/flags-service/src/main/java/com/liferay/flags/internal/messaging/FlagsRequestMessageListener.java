@@ -171,10 +171,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Recipients
 
-		Set<User> recipients = _getRecipients(
+		Set<User> users = _getRecipients(
 			companyId, serviceContext.getScopeGroupId());
 
-		for (User recipient : recipients) {
+		for (User user : users) {
 			try {
 				_notify(
 					reporterUser.getUserId(), group, reporterEmailAddress,
@@ -182,8 +182,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					reportedURL, flagsRequest.getClassPK(),
 					flagsRequest.getContentTitle(), contentType,
 					flagsRequest.getContentURL(), reason, fromName, fromAddress,
-					recipient.getFullName(), recipient.getEmailAddress(),
-					subject, body, serviceContext);
+					user.getFullName(), user.getEmailAddress(), subject, body,
+					serviceContext);
 			}
 			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
@@ -210,7 +210,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	private Set<User> _getRecipients(long companyId, long groupId)
 		throws Exception {
 
-		Set<User> recipients = new LinkedHashSet<>();
+		Set<User> users = new LinkedHashSet<>();
 
 		List<String> roleNames = new ArrayList<>();
 
@@ -237,7 +237,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					groupId, role.getRoleId());
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				recipients.add(userGroupRole.getUser());
+				users.add(userGroupRole.getUser());
 			}
 
 			List<UserGroupGroupRole> userGroupGroupRoles =
@@ -246,20 +246,20 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 						groupId, role.getRoleId());
 
 			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
-				recipients.addAll(
+				users.addAll(
 					_userLocalService.getUserGroupUsers(
 						userGroupGroupRole.getUserGroupId()));
 			}
 		}
 
-		if (recipients.isEmpty()) {
+		if (users.isEmpty()) {
 			Role role = _roleLocalService.getRole(
 				companyId, RoleConstants.ADMINISTRATOR);
 
-			recipients.addAll(_userLocalService.getRoleUsers(role.getRoleId()));
+			users.addAll(_userLocalService.getRoleUsers(role.getRoleId()));
 		}
 
-		return recipients;
+		return users;
 	}
 
 	private void _notify(

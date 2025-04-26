@@ -1591,6 +1591,11 @@ public abstract class BaseBuild implements Build {
 	public void reset() {
 		consoleReadCursor = 0;
 		_duration = null;
+
+		if (_jenkinsConsoleTextLoader != null) {
+			_jenkinsConsoleTextLoader.deleteCacheFile();
+		}
+
 		_jenkinsConsoleTextLoader = null;
 		_jenkinsMaster = null;
 		_jenkinsSlave = null;

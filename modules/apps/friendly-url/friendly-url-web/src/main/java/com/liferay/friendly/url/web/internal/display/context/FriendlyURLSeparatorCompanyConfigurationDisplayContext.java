@@ -67,7 +67,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		Map<String, String[]> parameters =
 			_httpServletRequest.getParameterMap();
 
-		List<JSONObject> list = TransformUtil.transform(
+		List<JSONObject> jsonObjects = TransformUtil.transform(
 			FriendlyURLResolverRegistryUtil.
 				getFriendlyURLResolversAsCollection(),
 			friendlyURLResolver -> {
@@ -116,11 +116,11 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 			});
 
 		Collections.sort(
-			list,
+			jsonObjects,
 			Comparator.comparing(jsonObject -> jsonObject.getString("label")));
 
 		_configurableFriendlyURLSeparatorsJSONArray = JSONUtil.toJSONArray(
-			list, jsonObject -> jsonObject);
+			jsonObjects, jsonObject -> jsonObject);
 
 		return _configurableFriendlyURLSeparatorsJSONArray;
 	}

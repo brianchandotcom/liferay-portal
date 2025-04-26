@@ -3151,11 +3151,19 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private void _archiveConsoleLog() {
-		if (!Objects.equals(getResult(), "SUCCESS") &&
-			Objects.equals(getStatus(), "completed")) {
+		if (!Objects.equals(getStatus(), "completed") ||
+			JenkinsResultsParserUtil.isNullOrEmpty(getConsoleText())) {
 
-			_archive(getConsoleText(), true, "consoleText");
+			return;
 		}
+
+		File archiveFile = getArchiveFile("consoleText");
+
+		if (archiveFile.exists()) {
+			return;
+		}
+
+		_jenkinsConsoleTextLoader.moveCacheFileToArchiveFile(archiveFile);
 	}
 
 	private void _archiveMarkerFile() {

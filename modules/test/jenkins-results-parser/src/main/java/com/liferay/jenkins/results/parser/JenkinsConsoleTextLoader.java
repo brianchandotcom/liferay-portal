@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -84,6 +85,15 @@ public class JenkinsConsoleTextLoader {
 	}
 
 	public String getConsoleText() {
+		if ((_archiveFile != null) && _archiveFile.exists()) {
+			try {
+				return JenkinsResultsParserUtil.read(_archiveFile);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
 		if (buildURL.startsWith("file:") || buildURL.contains("mirrors")) {
 			try {
 				return JenkinsResultsParserUtil.toString(
@@ -120,6 +130,33 @@ public class JenkinsConsoleTextLoader {
 
 	public boolean hasMoreData() {
 		return hasMoreData;
+	}
+
+	public void moveCacheFileToArchiveFile(File archiveFile) {
+		if ((archiveFile == null) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(getConsoleText())) {
+
+			return;
+		}
+
+		try {
+			File cacheFile = JenkinsResultsParserUtil.getCacheFile(
+				consoleLogFileKey);
+
+			JenkinsResultsParserUtil.move(cacheFile, archiveFile);
+
+			System.out.println("Moved " + cacheFile + " to " + archiveFile);
+
+			if (!archiveFile.exists()) {
+				throw new RuntimeException(
+					"Unable to move " + cacheFile + " to " + archiveFile);
+			}
+
+			_archiveFile = archiveFile;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected synchronized void update() {
@@ -274,5 +311,7 @@ public class JenkinsConsoleTextLoader {
 			"(?<jobName>[^/]+)/(?<buildNumber>\\d+)/?");
 	private static final Map<String, JenkinsConsoleTextLoader>
 		_jenkinsConsoleTextLoaders = new HashMap<>();
+
+	private File _archiveFile;
 
 }

@@ -30,10 +30,12 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			content = content.substring(0, content.length() - 1);
 		}
 
-		return _removeWhitespace(content);
+		return _formatWhitespaceAroundBracketAndCurlyBrace(content);
 	}
 
-	private String _removeWhitespace(String content) throws IOException {
+	private String _formatWhitespaceAroundBracketAndCurlyBrace(String content)
+		throws IOException {
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

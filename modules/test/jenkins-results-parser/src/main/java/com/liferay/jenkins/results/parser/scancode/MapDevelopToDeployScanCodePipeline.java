@@ -122,11 +122,12 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 	}
 
 	protected MapDevelopToDeployScanCodePipeline(
-		String buildURL, String pipelineName) {
+		String buildURL, String releaseBuildURL, String pipelineName) {
 
-		super(buildURL, pipelineName);
+		super(buildURL, releaseBuildURL, pipelineName);
 
 		_buildURL = buildURL;
+		_releaseBuildURL = releaseBuildURL;
 		_pipelineName = pipelineName;
 	}
 
@@ -135,5 +136,6 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 
 	private final String _buildURL;
 	private final String _pipelineName;
+	private final String _releaseBuildURL;
 
 }

@@ -799,11 +799,13 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	private List<String> _getSelectedOptions(
 		List<OptionInfoFieldType> optionInfoFieldTypes,
-		List<KeyLocalizedLabelPair> values) {
+		List<KeyLocalizedLabelPair> keyLocalizedLabelPairs) {
 
 		List<String> selectedOptions = new ArrayList<>();
 
-		for (KeyLocalizedLabelPair keyLocalizedLabelPair : values) {
+		for (KeyLocalizedLabelPair keyLocalizedLabelPair :
+				keyLocalizedLabelPairs) {
+
 			for (OptionInfoFieldType optionInfoFieldType :
 					optionInfoFieldTypes) {
 
@@ -950,10 +952,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				return defaultValue;
 			}
 
-			List<KeyLocalizedLabelPair> values =
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 				(List<KeyLocalizedLabelPair>)value;
 
-			if (ListUtil.isEmpty(values)) {
+			if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
 				return defaultValue;
 			}
 
@@ -962,7 +964,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 					MultiselectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(optionInfoFieldTypes, values),
+				_getSelectedOptions(
+					optionInfoFieldTypes, keyLocalizedLabelPairs),
 				StringPool.BLANK);
 		}
 
@@ -989,10 +992,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				return defaultValue;
 			}
 
-			List<KeyLocalizedLabelPair> values =
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 				(List<KeyLocalizedLabelPair>)value;
 
-			if (ListUtil.isEmpty(values)) {
+			if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
 				return defaultValue;
 			}
 
@@ -1001,7 +1004,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 					PicklistMultiselectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(optionInfoFieldTypes, values),
+				_getSelectedOptions(
+					optionInfoFieldTypes, keyLocalizedLabelPairs),
 				StringPool.BLANK);
 		}
 
@@ -1012,10 +1016,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				return defaultValue;
 			}
 
-			List<KeyLocalizedLabelPair> values =
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 				(List<KeyLocalizedLabelPair>)value;
 
-			if (ListUtil.isEmpty(values)) {
+			if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
 				return defaultValue;
 			}
 
@@ -1024,7 +1028,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 					PicklistSelectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(optionInfoFieldTypes, values),
+				_getSelectedOptions(
+					optionInfoFieldTypes, keyLocalizedLabelPairs),
 				StringPool.BLANK);
 		}
 
@@ -1033,10 +1038,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				return defaultValue;
 			}
 
-			List<KeyLocalizedLabelPair> values =
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 				(List<KeyLocalizedLabelPair>)value;
 
-			if (ListUtil.isEmpty(values)) {
+			if (ListUtil.isEmpty(keyLocalizedLabelPairs)) {
 				return defaultValue;
 			}
 
@@ -1045,7 +1050,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 					SelectInfoFieldType.OPTIONS);
 
 			return ListUtil.toString(
-				_getSelectedOptions(optionInfoFieldTypes, values),
+				_getSelectedOptions(
+					optionInfoFieldTypes, keyLocalizedLabelPairs),
 				StringPool.BLANK);
 		}
 

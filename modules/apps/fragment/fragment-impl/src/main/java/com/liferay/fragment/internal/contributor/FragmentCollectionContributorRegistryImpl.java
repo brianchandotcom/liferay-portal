@@ -337,12 +337,12 @@ public class FragmentCollectionContributorRegistryImpl
 						_layoutServiceContextHelper.
 							getServiceContextAutoCloseable(company)) {
 
-					Set<String> fragmentEntriesSet = fragmentEntries.keySet();
+					Set<String> keys = fragmentEntries.keySet();
 
 					List<FragmentEntryLink> fragmentEntryLinks =
 						_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 							company.getCompanyId(),
-							fragmentEntriesSet.toArray(new String[0]));
+							keys.toArray(new String[0]));
 
 					for (FragmentEntryLink fragmentEntryLink :
 							fragmentEntryLinks) {

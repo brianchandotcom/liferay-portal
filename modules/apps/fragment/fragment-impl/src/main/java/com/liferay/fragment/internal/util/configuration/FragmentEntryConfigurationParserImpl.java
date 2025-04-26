@@ -149,13 +149,13 @@ public class FragmentEntryConfigurationParserImpl
 			return configurationDefaultValuesJSONObject;
 		}
 
-		List<FragmentConfigurationField> configurationFields =
+		List<FragmentConfigurationField> fragmentConfigurationFields =
 			getFragmentConfigurationFields(configuration);
 
-		for (FragmentConfigurationField configurationField :
-				configurationFields) {
+		for (FragmentConfigurationField fragmentConfigurationField :
+				fragmentConfigurationFields) {
 
-			String name = configurationField.getName();
+			String name = fragmentConfigurationField.getName();
 
 			Object object = configurationValuesJSONObject.get(name);
 
@@ -166,7 +166,7 @@ public class FragmentEntryConfigurationParserImpl
 			configurationDefaultValuesJSONObject.put(
 				name,
 				getFieldValue(
-					configurationField, locale,
+					fragmentConfigurationField, locale,
 					configurationValuesJSONObject.getString(name)));
 		}
 

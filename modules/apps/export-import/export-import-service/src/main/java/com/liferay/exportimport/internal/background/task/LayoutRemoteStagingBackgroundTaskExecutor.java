@@ -204,9 +204,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		List<Layout> layouts = new ArrayList<>();
 
 		if (layoutIdMap != null) {
-			Set<Map.Entry<Long, Boolean>> entrySet = layoutIdMap.entrySet();
+			Set<Map.Entry<Long, Boolean>> entries = layoutIdMap.entrySet();
 
-			for (Map.Entry<Long, Boolean> entry : entrySet) {
+			for (Map.Entry<Long, Boolean> entry : entries) {
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 
 				Layout layout = null;
@@ -224,7 +224,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 						_log.debug(noSuchLayoutException);
 					}
 
-					entrySet.remove(plid);
+					entries.remove(plid);
 
 					continue;
 				}
@@ -248,11 +248,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 				boolean includeChildren = entry.getValue();
 
-				if (includeChildren) {
-					for (Layout childLayout : layout.getAllChildren()) {
-						if (!layouts.contains(childLayout)) {
-							layouts.add(childLayout);
-						}
+				if (!includeChildren) {
+					continue;
+				}
+
+				for (Layout childLayout : layout.getAllChildren()) {
+					if (!layouts.contains(childLayout)) {
+						layouts.add(childLayout);
 					}
 				}
 			}

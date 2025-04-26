@@ -359,9 +359,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		List<Layout> layouts = new ArrayList<>();
 
-		Set<Map.Entry<Long, Boolean>> entrySet = layoutIdMap.entrySet();
+		Set<Map.Entry<Long, Boolean>> entries = layoutIdMap.entrySet();
 
-		for (Map.Entry<Long, Boolean> entry : entrySet) {
+		for (Map.Entry<Long, Boolean> entry : entries) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 
 			Layout layout = null;
@@ -380,7 +380,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					_log.debug(noSuchLayoutException);
 				}
 
-				entrySet.remove(plid);
+				entries.remove(plid);
 
 				continue;
 			}
@@ -428,11 +428,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			boolean includeChildren = entry.getValue();
 
-			if (includeChildren) {
-				for (Layout childLayout : layout.getAllChildren()) {
-					if (!layouts.contains(childLayout)) {
-						layouts.add(childLayout);
-					}
+			if (!includeChildren) {
+				continue;
+			}
+
+			for (Layout childLayout : layout.getAllChildren()) {
+				if (!layouts.contains(childLayout)) {
+					layouts.add(childLayout);
 				}
 			}
 		}

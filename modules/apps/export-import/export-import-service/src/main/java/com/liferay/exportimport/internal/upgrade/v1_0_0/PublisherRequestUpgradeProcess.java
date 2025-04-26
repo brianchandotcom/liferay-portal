@@ -115,12 +115,12 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 				localStaging = false;
 			}
 
-			List<SchedulerResponse> scheduledJobs =
+			List<SchedulerResponse> schedulerResponses =
 				_schedulerEngineHelper.getScheduledJobs(
 					_getSchedulerGroupName(group.getGroupId(), localStaging),
 					StorageType.PERSISTED);
 
-			for (SchedulerResponse schedulerResponse : scheduledJobs) {
+			for (SchedulerResponse schedulerResponse : schedulerResponses) {
 				if (localStaging) {
 					_updateScheduledLocalPublication(schedulerResponse);
 				}

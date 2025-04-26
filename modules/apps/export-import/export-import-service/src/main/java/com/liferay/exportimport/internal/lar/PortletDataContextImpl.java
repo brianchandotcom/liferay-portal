@@ -268,7 +268,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModelType... stagedModelTypes) {
 
 		for (StagedModelType stagedModelType : stagedModelTypes) {
-			_deletionSystemEventModelTypes.add(stagedModelType);
+			_deletionSystemEventStagedModelTypes.add(stagedModelType);
 		}
 	}
 
@@ -306,7 +306,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			ExportImportPermissionUtil.getRoleIdsToActionIds(
 				_companyId, resourceName, resourcePK);
 
-		List<KeyValuePair> permissions = new ArrayList<>();
+		List<KeyValuePair> permissionKeyValuePairs = new ArrayList<>();
 
 		for (Map.Entry<Long, Set<String>> entry :
 				roleIdsToActionIds.entrySet()) {
@@ -334,25 +334,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 			KeyValuePair permission = new KeyValuePair(
 				roleName, StringUtil.merge(entry.getValue()));
 
-			permissions.add(permission);
+			permissionKeyValuePairs.add(permission);
 		}
 
-		if (permissions.isEmpty()) {
+		if (permissionKeyValuePairs.isEmpty()) {
 			return;
 		}
 
 		_permissionsMap.put(
 			_getPrimaryKeyString(resourceName, (Serializable)resourcePK),
-			permissions);
+			permissionKeyValuePairs);
 	}
 
 	@Override
 	public void addPermissions(
-		String resourceName, long resourcePK, List<KeyValuePair> permissions) {
+		String resourceName, long resourcePK,
+		List<KeyValuePair> permissionKeyValuePairs) {
 
 		_permissionsMap.put(
 			_getPrimaryKeyString(resourceName, (Serializable)resourcePK),
-			permissions);
+			permissionKeyValuePairs);
 	}
 
 	@Override
@@ -730,7 +731,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Set<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return _deletionSystemEventModelTypes;
+		return _deletionSystemEventStagedModelTypes;
 	}
 
 	@Override
@@ -1370,10 +1371,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		List<KeyValuePair> permissions = _permissionsMap.get(
+		List<KeyValuePair> permissionKeyValuePairs = _permissionsMap.get(
 			_getPrimaryKeyString(resourceName, (Serializable)resourcePK));
 
-		if (permissions == null) {
+		if (permissionKeyValuePairs == null) {
 			return;
 		}
 
@@ -1383,8 +1384,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		Map<Long, String[]> importedRoleIdsToActionIds = new HashMap<>();
 
-		for (KeyValuePair permission : permissions) {
-			String roleName = permission.getKey();
+		for (KeyValuePair permissionKeyValuePair : permissionKeyValuePairs) {
+			String roleName = permissionKeyValuePair.getKey();
 
 			Team team = null;
 
@@ -1435,7 +1436,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 				continue;
 			}
 
-			String[] actionIds = StringUtil.split(permission.getValue());
+			String[] actionIds = StringUtil.split(
+				permissionKeyValuePair.getValue());
 
 			importedRoleIdsToActionIds.put(role.getRoleId(), actionIds);
 		}
@@ -2748,7 +2750,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;
-	private final Set<StagedModelType> _deletionSystemEventModelTypes =
+	private final Set<StagedModelType> _deletionSystemEventStagedModelTypes =
 		new HashSet<>();
 	private Date _endDate;
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =

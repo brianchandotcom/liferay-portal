@@ -338,7 +338,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		if (_infoItemItemSelectorCriterion.isMultiSelection()) {
 			JournalRowChecker journalRowChecker = new JournalRowChecker(
-				JournalArticleLocalServiceUtil.fetchJournalArticle(
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
 					_infoItemItemSelectorCriterion.getRefererClassPK()),
 				_portletResponse);
 

@@ -130,11 +130,12 @@ public class SystemEventTest {
 			StagingUtil.publishLayouts(
 				TestPropsValues.getUserId(), _exportImportConfiguration);
 
-			List<JournalArticle> articles =
+			List<JournalArticle> journalArticles =
 				JournalArticleLocalServiceUtil.getArticles(
 					_liveGroup.getGroupId());
 
-			Assert.assertEquals(articles.toString(), 1, articles.size());
+			Assert.assertEquals(
+				journalArticles.toString(), 1, journalArticles.size());
 
 			JournalArticleLocalServiceUtil.deleteArticle(
 				_stagingGroup.getGroupId(), journalArticle.getArticleId(),
@@ -158,7 +159,7 @@ public class SystemEventTest {
 				JournalArticleLocalServiceUtil.getArticlesCount(
 					_liveGroup.getGroupId()));
 
-			journalArticle = articles.get(0);
+			journalArticle = journalArticles.get(0);
 
 			return journalArticle.getResourcePrimKey();
 		}
@@ -212,10 +213,11 @@ public class SystemEventTest {
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _exportImportConfiguration);
 
-		List<JournalArticle> articles =
+		List<JournalArticle> journalArticles =
 			JournalArticleLocalServiceUtil.getArticles(_liveGroup.getGroupId());
 
-		Assert.assertEquals(articles.toString(), 1, articles.size());
+		Assert.assertEquals(
+			journalArticles.toString(), 1, journalArticles.size());
 
 		JournalArticleLocalServiceUtil.deleteArticle(
 			_stagingGroup.getGroupId(), journalArticle.getArticleId(),
@@ -237,7 +239,7 @@ public class SystemEventTest {
 			JournalArticleLocalServiceUtil.getArticlesCount(
 				_liveGroup.getGroupId()));
 
-		JournalArticle firstJournalArticle = articles.get(0);
+		JournalArticle firstJournalArticle = journalArticles.get(0);
 
 		Assert.assertNull(
 			SystemEventLocalServiceUtil.fetchSystemEvent(

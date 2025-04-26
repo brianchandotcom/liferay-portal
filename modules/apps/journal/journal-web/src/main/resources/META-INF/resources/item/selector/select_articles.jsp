@@ -50,7 +50,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 			%>
 
 			<c:choose>
-				<c:when test="<%= (curArticle != null) && !journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>">
+				<c:when test="<%= curArticle != null %>">
 
 					<%
 					row.setCssClass("articles " + row.getCssClass());

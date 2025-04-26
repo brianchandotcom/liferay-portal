@@ -11,7 +11,7 @@ package com.liferay.jenkins.results.parser.scancode;
 public class ScanCodePipelineFactory {
 
 	public static ScanCodePipeline newPipeline(
-		String buildURL, String pipelineName) {
+		String buildURL, String releaseBuildURL, String pipelineName) {
 
 		if (pipelineName.equals("analyze_docker_image")) {
 			return new AnalyzeDockerImageScanCodePipeline(
@@ -22,7 +22,7 @@ public class ScanCodePipelineFactory {
 		}
 		else if (pipelineName.equals("map_deploy_to_develop")) {
 			return new MapDevelopToDeployScanCodePipeline(
-				buildURL, pipelineName);
+				buildURL, releaseBuildURL, pipelineName);
 		}
 
 		return new DefaultScanCodePipeline(buildURL, pipelineName);

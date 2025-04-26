@@ -24,9 +24,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _fixEmptyLines(content);
-
-		return _removeEmptyLinesAroundDocumentSeparator(content);
+		return _fixEmptyLines(content);
 	}
 
 	private String _fixEmptyLines(String content) throws IOException {
@@ -83,20 +81,6 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
-	}
-
-	private String _removeEmptyLinesAroundDocumentSeparator(String content) {
-		String trimmedContent = content.trim();
-
-		if (trimmedContent.startsWith("---")) {
-			return trimmedContent.substring(4);
-		}
-
-		if (trimmedContent.endsWith("---")) {
-			return trimmedContent.substring(0, trimmedContent.length() - 3);
-		}
-
-		return content;
 	}
 
 }

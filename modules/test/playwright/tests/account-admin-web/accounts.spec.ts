@@ -638,8 +638,9 @@ test('LPS-195988 An account name should be limited to 250 characters', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountsTable.newButton.click();
+	await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
+	await accountsPage.accountsTable.newButton.click();
 	await editAccountPage.createAccount(apiHelpers, {name});
 	await editAccountPage.backButton.click();
 
@@ -673,8 +674,9 @@ test('LPS-195988 The account external reference code should be unique', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountsTable.newButton.click();
+	await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
+	await accountsPage.accountsTable.newButton.click();
 	await editAccountPage.accountNameInput.fill(getRandomString());
 	await editAccountPage.externalReferenceCodeInput.fill(
 		account.externalReferenceCode
@@ -696,6 +698,8 @@ test('LPS-195988 Can create different type of accounts', async ({
 }) => {
 	await accountsPage.goto();
 
+	await expect(accountsPage.accountsTable.searchInput).toBeEditable();
+
 	const accounts = [
 		{name: getRandomString(), type: 'business'},
 		{name: getRandomString(), type: 'guest'},
@@ -705,7 +709,6 @@ test('LPS-195988 Can create different type of accounts', async ({
 
 	for (const {name, type} of accounts) {
 		await accountsPage.accountsTable.newButton.click();
-
 		await editAccountPage.createAccount(apiHelpers, {name, type});
 		await editAccountPage.backButton.click();
 
@@ -818,9 +821,10 @@ test('LPS-195988 Multiple accounts can be added with the same domain', async ({
 	try {
 		await accountsPage.goto();
 
+		await expect(accountsPage.accountsTable.searchInput).toBeEditable();
+
 		for (const {domains, name, type} of accounts) {
 			await accountsPage.accountsTable.newButton.click();
-
 			await editAccountPage.createAccount(apiHelpers, {
 				domains,
 				name,
@@ -868,8 +872,9 @@ test('LPS-195988 A business account can have more than one domain', async ({
 	try {
 		await accountsPage.goto();
 
-		await accountsPage.accountsTable.newButton.click();
+		await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
+		await accountsPage.accountsTable.newButton.click();
 		await editAccountPage.createAccount(apiHelpers, {domains, name, type});
 
 		for (const domain of domains) {
@@ -907,6 +912,8 @@ test('LPS-195988 Domain validation is not present in Person Accounts', async ({
 
 	try {
 		await accountsPage.goto();
+
+		await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
 		await accountsPage.accountsTable.newButton.click();
 
@@ -986,8 +993,9 @@ test('LPS-157661 An account avatar can be added in creation', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountsTable.newButton.click();
+	await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
+	await accountsPage.accountsTable.newButton.click();
 	await editAccountPage.createAccount(apiHelpers, {
 		avatar: path.join(__dirname, '/dependencies/liferay.png'),
 		name,
@@ -1356,6 +1364,8 @@ test(
 
 		await accountsPage.goto();
 
+		await expect(accountsPage.accountsTable.searchInput).toBeEditable();
+
 		await accountsPage.accountsTable.newButton.click();
 
 		await expect(editAccountPage.detailsTab).not.toBeVisible();
@@ -1393,13 +1403,14 @@ test(
 
 		await editAccountPage.backButton.click();
 
+		await expect(accountsPage.accountsTable.searchInput).toBeEditable();
+
 		account = {
 			name: getRandomString(),
 			type: 'person',
 		};
 
 		await accountsPage.accountsTable.newButton.click();
-
 		await editAccountPage.createAccount(apiHelpers, account);
 
 		await expect(editAccountPage.detailsTab).toBeVisible();
@@ -1501,6 +1512,8 @@ test('LPD-47225 Smoke test', async ({
 	};
 
 	await accountsPage.goto();
+
+	await expect(accountsPage.accountsTable.searchInput).toBeEditable();
 
 	await accountsPage.accountsTable.newButton.click();
 	await editAccountPage.createAccount(apiHelpers, account);

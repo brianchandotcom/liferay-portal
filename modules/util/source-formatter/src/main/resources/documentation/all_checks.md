@@ -68,6 +68,7 @@ ConstructorGlobalVariableDeclarationCheck | [Performance](performance_checks.md#
 ConsumerTypeAnnotationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on classes with @ConsumerType annotation. |
 ContractionsCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds contractions in Strings (such as `can't` or `you're`). |
 [CopyrightCheck](check/copyright_check.md#copyrightcheck) | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Validates `copyright` header. |
+[CreatingThreadsForDBAccessCheck](check/creating_threads_for_db_access_check.md#creatingthreadsfordbaccesscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `CompanyInheritableThreadLocalCallable` should be used when creating threads for DB access. |
 [CreationMenuBuilderCheck](check/builder_check.md#buildercheck) | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Checks that `CreationMenuBuilder` is used when possible. |
 DTOEnumCreationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks the creation of DTO enum. |
 DatabaseMetaDataCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks usages of `java.sql.DatabaseMetaData`. |

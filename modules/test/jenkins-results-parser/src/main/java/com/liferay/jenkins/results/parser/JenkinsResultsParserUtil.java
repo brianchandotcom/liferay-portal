@@ -203,7 +203,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void appendToCacheFile(String key, String content) {
-		File cacheFile = _getCacheFile(key);
+		File cacheFile = getCacheFile(key);
 
 		boolean cacheFileCreated = false;
 
@@ -1620,7 +1620,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static BufferedReader getCachedFileBufferedReader(String key) {
-		File cachedTextFile = _getCacheFile(key);
+		File cachedTextFile = getCacheFile(key);
 
 		if (!cachedTextFile.exists()) {
 			return null;
@@ -1638,7 +1638,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getCachedText(String key) {
-		File cachedTextFile = _getCacheFile(key);
+		File cachedTextFile = getCacheFile(key);
 
 		if (!cachedTextFile.exists()) {
 			return null;
@@ -1652,8 +1652,16 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static File getCacheFile(String key) {
+		String fileName = combine(
+			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
+			String.valueOf(key.hashCode()), ".txt");
+
+		return new File(fileName);
+	}
+
 	public static long getCacheFileSize(String key) {
-		File cacheFile = _getCacheFile(key);
+		File cacheFile = getCacheFile(key);
 
 		if ((cacheFile == null) || !cacheFile.exists()) {
 			return 0;
@@ -4611,7 +4619,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void saveToCacheFile(String key, String text) {
-		File cacheFile = _getCacheFile(key);
+		File cacheFile = getCacheFile(key);
 
 		if (isNullOrEmpty(text)) {
 			if (cacheFile.exists()) {
@@ -4913,7 +4921,7 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Loading " + url);
 				}
 
-				File cachedFile = _getCacheFile(
+				File cachedFile = getCacheFile(
 					_generateToStringCacheKey(url, postContent));
 
 				if ((cachedFile != null) && cachedFile.exists()) {
@@ -6474,14 +6482,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return key;
-	}
-
-	private static File _getCacheFile(String key) {
-		String fileName = combine(
-			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
-			String.valueOf(key.hashCode()), ".txt");
-
-		return new File(fileName);
 	}
 
 	private static String _getCanonicalPath(File canonicalFile) {

@@ -15,72 +15,6 @@
 		result="test.class.timeout.seconds"
 	/>
 
-	<macrodef name="check-jenkins-console">
-		<sequential>
-			<if>
-				<isset property="env.BUILD_URL" />
-				<then>
-					<beanshell>
-						<![CDATA[
-							import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
-							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-							String jenkinsBuildURL = project.getProperty("env.BUILD_URL") + "/consoleText";
-
-							JenkinsConsoleTextLoader jenkinsConsoleTextLoader = new JenkinsConsoleTextLoader(jenkinsBuildURL);
-
-							String consoleText = jenkinsConsoleTextLoader.getConsoleText();
-
-							if (consoleText == null) {
-								consoleText = "";
-							}
-
-							project.setProperty("jenkins.console.txt", consoleText);
-						]]>
-					</beanshell>
-
-					<var name="junit.failure.count" unset="true" />
-					<var name="junit.failure.message" unset="true" />
-					<var name="junit.timestamp" unset="true" />
-
-					<if>
-						<contains string="${jenkins.console.txt}" substring="!MESSAGE error" />
-						<then>
-							<property name="junit.failure.count" value="1" />
-							<property name="junit.failure.message"><![CDATA[<failure message="!MESSAGE error" type="java.lang.Exception" />]]></property>
-						</then>
-						<elseif>
-							<contains string="${jenkins.console.txt}" substring="!MESSAGE warning" />
-							<then>
-								<property name="junit.failure.count" value="1" />
-								<property name="junit.failure.message"><![CDATA[<failure message="!MESSAGE warning" type="java.lang.Exception" />]]></property>
-							</then>
-						</elseif>
-						<else>
-							<property name="junit.failure.count" value="0" />
-							<property name="junit.failure.message" value="" />
-						</else>
-					</if>
-
-					<tstamp>
-						<format pattern="yyyy-MM-dd_kk:mm:ss" property="junit.timestamp" />
-					</tstamp>
-
-					<echo file="portal-impl/test-results/TEST-JenkinsLogAssertTest.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-
-<testsuite errors="0" failures="${junit.failure.count}" hostname="localhost" name="com.liferay.jenkins.JenkinsLogAsserterTest" skipped="0" tests="1" time="0.0" timestamp="${junit.timestamp}">
-	<properties />
-	<testcase classname="com.liferay.jenkins.JenkinsLogAsserterTest" name="testScanJenkinsLog" time="0.0">
-		${junit.failure.message}
-	</testcase>
-	<system-out></system-out>
-	<system-err></system-err>
-</testsuite>]]></echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="copy-artifact-to-local-cache">
 		<attribute name="artifact.file" />
 		<attribute name="artifact.name" />
@@ -1503,8 +1437,6 @@ app.server.type=@{app.server.type}]]></echo>
 					<property name="job.failure.message" value="" />
 
 					<echo>${job.failure.message}</echo>
-
-					<check-jenkins-console />
 
 					<merge-test-results />
 

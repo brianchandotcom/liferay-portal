@@ -84,6 +84,19 @@ public class JenkinsConsoleTextLoader {
 		serverLogSize = 0;
 	}
 
+	public void deleteCacheFile() {
+		File cacheFile = JenkinsResultsParserUtil.getCacheFile(
+			consoleLogFileKey);
+
+		if ((cacheFile == null) || !cacheFile.exists()) {
+			return;
+		}
+
+		cacheFile.delete();
+
+		System.out.println("Deleted " + cacheFile);
+	}
+
 	public String getConsoleText() {
 		if ((_archiveFile != null) && _archiveFile.exists()) {
 			try {

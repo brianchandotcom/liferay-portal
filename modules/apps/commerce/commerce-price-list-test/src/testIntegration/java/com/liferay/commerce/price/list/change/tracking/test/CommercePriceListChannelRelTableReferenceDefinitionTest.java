@@ -16,8 +16,10 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -49,14 +51,17 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_group = GroupTestUtil.addGroup();
+
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			group.getGroupId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
 		_commercePriceList = CommercePriceListTestUtil.addCommercePriceList(
-			group.getGroupId(), false,
+			_commerceChannel.getGroupId(), false,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 	}
 
@@ -67,7 +72,7 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 				TestPropsValues.getUserId(),
 				_commercePriceList.getCommercePriceListId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private CommerceChannel _commerceChannel;
@@ -80,5 +85,7 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 	@Inject
 	private CommercePriceListChannelRelLocalService
 		_commercePriceListChannelRelLocalService;
+
+	private Group _group;
 
 }

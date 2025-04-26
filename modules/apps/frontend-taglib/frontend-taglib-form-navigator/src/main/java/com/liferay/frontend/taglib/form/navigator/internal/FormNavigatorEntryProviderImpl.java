@@ -234,12 +234,12 @@ public class FormNavigatorEntryProviderImpl
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		List<FormNavigatorEntry<T>> formNavigationEntries =
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
 			_getConfigurationFormNavigatorEntries(
 				formNavigatorId, categoryKey, formModelBean);
 
-		if (formNavigationEntries != null) {
-			return formNavigationEntries;
+		if (formNavigatorEntries != null) {
+			return formNavigatorEntries;
 		}
 
 		return (List)_formNavigatorEntries.getService(

@@ -158,18 +158,18 @@ public class FrontendTokenDefinitionRegistryImpl
 	public List<FrontendTokenDefinition> getFrontendTokenDefinitions(
 		long companyId) {
 
-		List<FrontendTokenDefinition> frontendTokenDefinitionsList =
+		List<FrontendTokenDefinition> frontendTokenDefinitions =
 			new ArrayList<>(_frontendTokenDefinitions.values());
 
-		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
 			_frontendTokenDefinitionsMap.get(companyId);
 
-		if (frontendTokenDefinitions != null) {
-			frontendTokenDefinitionsList.addAll(
-				frontendTokenDefinitions.values());
+		if (frontendTokenDefinitionsMap != null) {
+			frontendTokenDefinitions.addAll(
+				frontendTokenDefinitionsMap.values());
 		}
 
-		return frontendTokenDefinitionsList;
+		return frontendTokenDefinitions;
 	}
 
 	@Activate

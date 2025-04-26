@@ -97,7 +97,7 @@ public class ThemeContributorExtender
 	@Override
 	public void modifiedService(
 		ServiceReference<ServletContext> serviceReference,
-		Collection<ServiceRegistration<?>> service) {
+		Collection<ServiceRegistration<?>> serviceRegistrations) {
 	}
 
 	@Override

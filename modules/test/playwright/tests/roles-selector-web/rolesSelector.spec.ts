@@ -66,10 +66,6 @@ test(
 			user2.emailAddress
 		);
 
-		const authToken = await page.evaluate(() => Liferay.authToken);
-		const portletName =
-			'_com_liferay_roles_selector_web_portlet_RolesSelectorPortlet_';
-
 		const companyId = await page.evaluate(() => {
 			return Liferay.ThemeDisplay.getCompanyId();
 		});
@@ -77,6 +73,9 @@ test(
 			companyId,
 			`${org2.name} LFR_ORGANIZATION`
 		);
+		const authToken = await page.evaluate(() => Liferay.authToken);
+		const portletName =
+			'_com_liferay_roles_selector_web_portlet_RolesSelectorPortlet_';
 
 		const urlSearchParams = new URLSearchParams();
 		urlSearchParams.append('p_p_auth', authToken);
@@ -113,7 +112,6 @@ test(
 		await (
 			await usersAndOrganizationsPage.organizationActionsMenu(org1.name)
 		).click();
-
 		await usersAndOrganizationsPage.assignOrganizationRolesMenuItem.click();
 		await (
 			await usersAndOrganizationsPage.assignOrganizationRolesTableRowLink(

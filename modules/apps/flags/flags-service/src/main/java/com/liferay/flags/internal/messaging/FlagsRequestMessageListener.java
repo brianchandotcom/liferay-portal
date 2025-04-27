@@ -169,7 +169,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			FlagsRequestMessageListener.class.getClassLoader(),
 			flagsGroupServiceConfiguration.emailBody());
 
-		// Recipients
+		// Users
 
 		Set<User> users = _getRecipients(
 			companyId, serviceContext.getScopeGroupId());

@@ -307,14 +307,15 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 	private <P> List<ServiceReferenceServiceTuple<P, P>>
 		_filterServiceReferenceServiceTuples(
 			InfoItemServiceFilter infoItemServiceFilter,
-			List<ServiceReferenceServiceTuple<P, P>> serviceReferenceTuples) {
+			List<ServiceReferenceServiceTuple<P, P>>
+				serviceReferenceServiceTuples) {
 
 		try {
 			Filter filter = FrameworkUtil.createFilter(
 				infoItemServiceFilter.getFilterString());
 
 			return ListUtil.filter(
-				serviceReferenceTuples,
+				serviceReferenceServiceTuples,
 				serviceReferenceTuple -> filter.match(
 					serviceReferenceTuple.getServiceReference()));
 		}

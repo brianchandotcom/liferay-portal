@@ -35,7 +35,7 @@ public class CategoriesInfoFilterProvider
 	}
 
 	private long[][] _getAssetCategoryIds(Map<String, String[]> values) {
-		Set<long[]> assetCategoryIdsSet = new HashSet<>();
+		Set<long[]> assetCategoryIds = new HashSet<>();
 
 		for (Map.Entry<String, String[]> entry : values.entrySet()) {
 			if (!StringUtil.startsWith(
@@ -46,14 +46,13 @@ public class CategoriesInfoFilterProvider
 				continue;
 			}
 
-			assetCategoryIdsSet.add(
+			assetCategoryIds.add(
 				ArrayUtil.filter(
 					GetterUtil.getLongValues(entry.getValue()),
 					categoryId -> categoryId != 0));
 		}
 
-		return assetCategoryIdsSet.toArray(
-			new long[assetCategoryIdsSet.size()][]);
+		return assetCategoryIds.toArray(new long[assetCategoryIds.size()][]);
 	}
 
 }

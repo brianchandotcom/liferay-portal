@@ -102,8 +102,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			portalPreferencesList.get(0),
 			_portalPreferencesLocalService.fetchPortalPreferences(1, 1));
 
-		IndexUpdaterUtil.updatePortalIndexes();
-
 		_assertIndexes("PortalPreferences", indexMetadatas);
 	}
 
@@ -143,8 +141,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			portletItems.get(0),
 			_portletItemLocalService.getPortletItem(
 				1, "1", "1", PortletItem.class.getName()));
-
-		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("PortletItem", indexMetadatas);
 	}
@@ -188,8 +184,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			socialActivitySettings.get(0),
 			_socialActivitySettingLocalService.getSocialActivitySetting(2));
 
-		IndexUpdaterUtil.updatePortalIndexes();
-
 		_assertIndexes("SocialActivitySetting", indexMetadatas);
 	}
 
@@ -218,8 +212,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		Assert.assertEquals(
 			tickets.get(0), _ticketLocalService.fetchTicket("key_"));
-
-		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndexes("Ticket", indexMetadatas);
 	}
@@ -254,6 +246,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	private void _assertIndexes(
 			String tableName, List<IndexMetadata> indexMetadatas)
 		throws Exception {
+
+		IndexUpdaterUtil.updatePortalIndexes();
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			Assert.assertTrue(

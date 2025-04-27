@@ -154,11 +154,11 @@ public class JournalHelperImpl implements JournalHelper {
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
 			folderId);
 
-		List<JournalFolder> folders = folder.getAncestors();
+		List<JournalFolder> journalFolders = folder.getAncestors();
 
-		Collections.reverse(folders);
+		Collections.reverse(journalFolders);
 
-		StringBundler sb = new StringBundler((folders.size() * 3) + 5);
+		StringBundler sb = new StringBundler((journalFolders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
@@ -166,14 +166,14 @@ public class JournalHelperImpl implements JournalHelper {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		for (JournalFolder curFolder : folders) {
+		for (JournalFolder journalFolder : journalFolders) {
 			if (permissionChecker.hasPermission(
-					curFolder.getGroupId(), JournalFolder.class.getName(),
-					curFolder.getFolderId(), ActionKeys.VIEW)) {
+					journalFolder.getGroupId(), JournalFolder.class.getName(),
+					journalFolder.getFolderId(), ActionKeys.VIEW)) {
 
 				sb.append(StringPool.RAQUO_CHAR);
 				sb.append(StringPool.SPACE);
-				sb.append(curFolder.getName());
+				sb.append(journalFolder.getName());
 				sb.append(StringPool.SPACE);
 			}
 			else {
@@ -228,7 +228,8 @@ public class JournalHelperImpl implements JournalHelper {
 	public List<JournalArticle> getArticles(Hits hits) throws PortalException {
 		List<Document> documents = hits.toList();
 
-		List<JournalArticle> articles = new ArrayList<>(documents.size());
+		List<JournalArticle> journalArticles = new ArrayList<>(
+			documents.size());
 
 		for (Document document : documents) {
 			String articleId = document.get(Field.ARTICLE_ID);
@@ -240,7 +241,7 @@ public class JournalHelperImpl implements JournalHelper {
 					groupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
 			if (article == null) {
-				articles = null;
+				journalArticles = null;
 
 				Indexer<JournalArticle> indexer =
 					IndexerRegistryUtil.getIndexer(JournalArticle.class);
@@ -250,12 +251,12 @@ public class JournalHelperImpl implements JournalHelper {
 
 				indexer.delete(companyId, document.getUID());
 			}
-			else if (articles != null) {
-				articles.add(article);
+			else if (journalArticles != null) {
+				journalArticles.add(article);
 			}
 		}
 
-		return articles;
+		return journalArticles;
 	}
 
 	@Override

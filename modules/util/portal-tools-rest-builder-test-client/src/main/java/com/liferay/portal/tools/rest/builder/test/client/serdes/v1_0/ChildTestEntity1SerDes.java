@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
+import com.liferay.portal.tools.rest.builder.test.client.constant.v1_0.StringTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
@@ -184,6 +185,16 @@ public class ChildTestEntity1SerDes {
 			sb.append("\"");
 		}
 
+		if (childTestEntity1.getStringTestEntity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntity\": ");
+
+			sb.append(String.valueOf(childTestEntity1.getStringTestEntity()));
+		}
+
 		if (childTestEntity1.getTestEntities() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -314,6 +325,15 @@ public class ChildTestEntity1SerDes {
 			map.put("self", String.valueOf(childTestEntity1.getSelf()));
 		}
 
+		if (childTestEntity1.getStringTestEntity() == null) {
+			map.put("stringTestEntity", null);
+		}
+		else {
+			map.put(
+				"stringTestEntity",
+				String.valueOf(childTestEntity1.getStringTestEntity()));
+		}
+
 		if (childTestEntity1.getTestEntities() == null) {
 			map.put("testEntities", null);
 		}
@@ -376,6 +396,9 @@ public class ChildTestEntity1SerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
@@ -449,6 +472,12 @@ public class ChildTestEntity1SerDes {
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity1.setSelf((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity1.setStringTestEntity(
+						StringTestEntity.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {

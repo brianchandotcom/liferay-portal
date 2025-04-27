@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
+import com.liferay.portal.tools.rest.builder.test.client.constant.v1_0.StringTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.TestEntitySerDes;
 
@@ -209,6 +210,28 @@ public abstract class TestEntity implements Cloneable, Serializable {
 	}
 
 	protected String self;
+
+	public StringTestEntity getStringTestEntity() {
+		return stringTestEntity;
+	}
+
+	public void setStringTestEntity(StringTestEntity stringTestEntity) {
+		this.stringTestEntity = stringTestEntity;
+	}
+
+	public void setStringTestEntity(
+		UnsafeSupplier<StringTestEntity, Exception>
+			stringTestEntityUnsafeSupplier) {
+
+		try {
+			stringTestEntity = stringTestEntityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected StringTestEntity stringTestEntity;
 
 	public TestEntity getTestEntities() {
 		return testEntities;

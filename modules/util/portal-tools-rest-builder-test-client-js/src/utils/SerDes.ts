@@ -28,6 +28,7 @@
 	import {Schema} from '../models/Schema';
 	import {SiteTestEntity} from '../models/SiteTestEntity';
 	import {Sort} from '../models/Sort';
+	import {StringTestEntity} from '../models/StringTestEntity';
 	import {TestEntity} from '../models/TestEntity';
 	import {TestEntityAddress} from '../models/TestEntityAddress';
 	import {UnreferencedTestEntity} from '../models/UnreferencedTestEntity';
@@ -90,6 +91,7 @@ const typeMap: {[index: string]: any} = {
 	Schema,
 	SiteTestEntity,
 	Sort,
+	StringTestEntity,
 	TestEntity,
 	TestEntityAddress,
 	UnreferencedTestEntity,

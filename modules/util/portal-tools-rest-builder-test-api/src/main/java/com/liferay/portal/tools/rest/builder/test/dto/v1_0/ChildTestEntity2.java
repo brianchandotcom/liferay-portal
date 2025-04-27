@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.rest.builder.test.constant.v1_0.StringTestEntity;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -267,6 +268,18 @@ public class ChildTestEntity2 extends TestEntity implements Serializable {
 			sb.append(_escape(self));
 
 			sb.append("\"");
+		}
+
+		StringTestEntity stringTestEntity = getStringTestEntity();
+
+		if (stringTestEntity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntity\": ");
+
+			sb.append(String.valueOf(stringTestEntity));
 		}
 
 		TestEntity testEntities = getTestEntities();

@@ -4,6 +4,7 @@
  */
 
 			import {NestedTestEntity} from './NestedTestEntity';
+			import {StringTestEntity} from './StringTestEntity';
 
 /**
  * @author Alejandro Tardín
@@ -23,6 +24,7 @@
 			"name"?: string;
 			"nestedTestEntity"?: NestedTestEntity;
 			"self"?: string;
+			"stringTestEntity"?: StringTestEntity;
 			"testEntities"?: TestEntity;
 			"type"?: 'ChildTestEntity1' | 'ChildTestEntity2' | 'ChildTestEntity3';
 
@@ -77,6 +79,11 @@
 			baseName: "self",
 			name: "self",
 			type: "string",
+		},
+		{
+			baseName: "stringTestEntity",
+			name: "stringTestEntity",
+			type: "StringTestEntity",
 		},
 		{
 			baseName: "testEntities",

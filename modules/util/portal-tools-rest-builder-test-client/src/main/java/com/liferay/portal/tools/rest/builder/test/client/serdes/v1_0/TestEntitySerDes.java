@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
+import com.liferay.portal.tools.rest.builder.test.client.constant.v1_0.StringTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity3;
@@ -159,6 +160,15 @@ public class TestEntitySerDes {
 			map.put("self", String.valueOf(testEntity.getSelf()));
 		}
 
+		if (testEntity.getStringTestEntity() == null) {
+			map.put("stringTestEntity", null);
+		}
+		else {
+			map.put(
+				"stringTestEntity",
+				String.valueOf(testEntity.getStringTestEntity()));
+		}
+
 		if (testEntity.getTestEntities() == null) {
 			map.put("testEntities", null);
 		}
@@ -217,6 +227,9 @@ public class TestEntitySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
@@ -312,6 +325,12 @@ public class TestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setSelf((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setStringTestEntity(
+						StringTestEntity.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {

@@ -43,6 +43,7 @@
 	export {Schema} from './models/Schema';
 	export {SiteTestEntity} from './models/SiteTestEntity';
 	export {Sort} from './models/Sort';
+	export {StringTestEntity} from './models/StringTestEntity';
 	export {TestEntity} from './models/TestEntity';
 	export {TestEntityAddress} from './models/TestEntityAddress';
 	export {UnreferencedTestEntity} from './models/UnreferencedTestEntity';

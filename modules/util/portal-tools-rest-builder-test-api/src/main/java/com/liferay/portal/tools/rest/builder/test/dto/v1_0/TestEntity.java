@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.rest.builder.test.constant.v1_0.StringTestEntity;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -445,6 +446,49 @@ public abstract class TestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
+	public StringTestEntity getStringTestEntity() {
+		if (_stringTestEntitySupplier != null) {
+			stringTestEntity = _stringTestEntitySupplier.get();
+
+			_stringTestEntitySupplier = null;
+		}
+
+		return stringTestEntity;
+	}
+
+	public void setStringTestEntity(StringTestEntity stringTestEntity) {
+		this.stringTestEntity = stringTestEntity;
+
+		_stringTestEntitySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStringTestEntity(
+		UnsafeSupplier<StringTestEntity, Exception>
+			stringTestEntityUnsafeSupplier) {
+
+		_stringTestEntitySupplier = () -> {
+			try {
+				return stringTestEntityUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected StringTestEntity stringTestEntity;
+
+	@JsonIgnore
+	private Supplier<StringTestEntity> _stringTestEntitySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
 	public TestEntity getTestEntities() {
 		if (_testEntitiesSupplier != null) {
 			testEntities = _testEntitiesSupplier.get();
@@ -697,6 +741,18 @@ public abstract class TestEntity implements Serializable {
 			sb.append(_escape(self));
 
 			sb.append("\"");
+		}
+
+		StringTestEntity stringTestEntity = getStringTestEntity();
+
+		if (stringTestEntity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntity\": ");
+
+			sb.append(String.valueOf(stringTestEntity));
 		}
 
 		TestEntity testEntities = getTestEntities();

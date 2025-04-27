@@ -69,7 +69,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	@Test
 	public void testUpgradePortalPreferences() throws Exception {
 		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
-			"PortalPreferences", "ownerType");
+			"PortalPreferences", "ownerId");
 
 		List<PortalPreferences> portalPreferencesList = new ArrayList<>();
 

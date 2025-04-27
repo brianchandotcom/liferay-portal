@@ -21,19 +21,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Jorge Avalos
  */
 public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 	extends UpgradeProcess {
-
-	public DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-		String tableName, String[] columnNames) {
-
-		this(tableName, columnNames, null);
-	}
 
 	public DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 		String tableName, String[] columnNames, String orderByClause) {
@@ -47,9 +40,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		List<String[]> duplicateColumnValuesList =
 			_getDuplicateColumnValuesList();
-
-		primaryKeyColumnNames = getPrimaryKeyColumnNames(
-			connection, _tableName);
 
 		for (String[] duplicateColumnValues : duplicateColumnValuesList) {
 			List<Map<String, String>> duplicateRows = getDuplicateRows(
@@ -67,6 +57,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 				sb.append("delete from ");
 				sb.append(_tableName);
 				sb.append(" where ");
+
+				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+					connection, _tableName);
 
 				for (String primaryKeyColumnName : primaryKeyColumnNames) {
 					sb.append(primaryKeyColumnName);
@@ -132,34 +125,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 		sb.setIndex(sb.index() - 1);
 
 		sb.append("order by ");
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		if (_orderByClause != null) {
-			sb.append(_orderByClause);
-		}
-		else {
-			for (String primaryKeyColumnName : primaryKeyColumnNames) {
-				if (Objects.equals(
-						primaryKeyColumnName,
-						dbInspector.normalizeName("ctCollectionId"))) {
-
-					continue;
-				}
-
-				sb.append(primaryKeyColumnName);
-
-				sb.append(" ASC ");
-				sb.append(", ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-		}
+		sb.append(_orderByClause);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			DBInspector dbInspector = new DBInspector(connection);
 			int parameterIndex = 1;
 
 			for (int i = 0; i < _columnNames.length; i++) {
@@ -209,8 +181,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 
 		return duplicateRows;
 	}
-
-	protected String[] primaryKeyColumnNames;
 
 	private List<String[]> _getDuplicateColumnValuesList() throws Exception {
 		List<String[]> duplicateColumnValuesList = new ArrayList<>();

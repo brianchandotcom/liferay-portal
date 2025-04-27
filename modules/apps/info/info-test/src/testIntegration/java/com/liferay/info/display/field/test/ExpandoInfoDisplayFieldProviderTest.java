@@ -212,11 +212,11 @@ public class ExpandoInfoDisplayFieldProviderTest {
 	private Object _getValue(String expandoColumnName, Locale locale)
 		throws Exception {
 
-		List<InfoFieldValue<Object>> infoDisplayFieldsValues =
+		List<InfoFieldValue<Object>> infoFieldsValues =
 			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 				User.class.getName(), TestPropsValues.getUser());
 
-		for (InfoFieldValue<Object> infoFieldValue : infoDisplayFieldsValues) {
+		for (InfoFieldValue<Object> infoFieldValue : infoFieldsValues) {
 			InfoField<?> infoField = infoFieldValue.getInfoField();
 
 			if (Objects.equals(

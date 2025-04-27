@@ -1,7 +1,11 @@
 package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 <#list allSchemas?keys as schemaName>
-	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+	<#if globalEnumSchemas[schemaName]??>
+		import ${configYAML.apiPackagePath}.constant.${escapedVersion}.${schemaName};
+	<#else>
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+	</#if>
 </#list>
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;

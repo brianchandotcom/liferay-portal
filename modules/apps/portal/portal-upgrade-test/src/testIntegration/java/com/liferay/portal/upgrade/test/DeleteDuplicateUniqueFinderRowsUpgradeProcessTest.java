@@ -114,7 +114,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			1);
 
 		portletItem1.setGroupId(1);
-		portletItem1.setName("1");
+		portletItem1.setName("Test");
 		portletItem1.setPortletId("1");
 		portletItem1.setClassNameId(
 			ClassNameLocalServiceUtil.getClassNameId(
@@ -140,7 +140,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		Assert.assertEquals(
 			portletItems.get(0),
 			_portletItemLocalService.getPortletItem(
-				1, "1", "1", PortletItem.class.getName()));
+				1, "Test", "1", PortletItem.class.getName()));
 
 		_assertIndexes("PortletItem", indexMetadatas);
 	}
@@ -156,7 +156,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		socialActivitySetting1.setGroupId(1);
 		socialActivitySetting1.setClassNameId(1);
 		socialActivitySetting1.setActivityType(1);
-		socialActivitySetting1.setName("1");
+		socialActivitySetting1.setName("Test");
 
 		List<SocialActivitySetting> socialActivitySettings = new ArrayList<>();
 

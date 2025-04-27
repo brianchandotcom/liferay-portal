@@ -67,9 +67,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortalPreferencesTable()
-		throws Exception {
-
+	public void testUpgradePortalPreferences() throws Exception {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "PortalPreferences", "ownerType");
 
@@ -114,9 +112,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortletItemTable()
-		throws Exception {
-
+	public void testUpgradePortletItem() throws Exception {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "PortletItem", "groupId");
 
@@ -165,9 +161,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnSocialActivitySettingTable()
-		throws Exception {
-
+	public void testUpgradeSocialActivitySetting() throws Exception {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "SocialActivitySetting", "groupId");
 
@@ -219,7 +213,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnTicketTable() throws Exception {
+	public void testUpgradeTicket() throws Exception {
 		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
 			_connection, "Ticket", "key_");
 
@@ -254,7 +248,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	private void _assertCount(
-			String tableName, boolean duplicatesRemoved, String... columns)
+			String tableName, boolean duplicatesRemoved, String... columnNames)
 		throws Exception {
 
 		_companyLocalService.forEachCompany(
@@ -263,7 +257,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 						_connection.prepareStatement(
 							StringBundler.concat(
 								"select count(*) from ", tableName,
-								" group by ", String.join(", ", columns),
+								" group by ", String.join(", ", columnNames),
 								" having count(*) > 1"));
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 

@@ -45,17 +45,17 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 
 	@Override
 	public List<JournalFolder> getAncestors() throws PortalException {
-		List<JournalFolder> ancestors = new ArrayList<>();
+		List<JournalFolder> journalFolders = new ArrayList<>();
 
 		JournalFolder folder = this;
 
 		while (!folder.isRoot()) {
 			folder = folder.getParentFolder();
 
-			ancestors.add(folder);
+			journalFolders.add(folder);
 		}
 
-		return ancestors;
+		return journalFolders;
 	}
 
 	@Override

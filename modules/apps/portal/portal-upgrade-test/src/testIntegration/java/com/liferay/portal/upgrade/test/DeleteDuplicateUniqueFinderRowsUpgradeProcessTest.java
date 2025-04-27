@@ -71,13 +71,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
 			"PortalPreferences", "ownerId");
 
-		List<PortalPreferences> portalPreferencesList = new ArrayList<>();
-
 		PortalPreferences portalPreferences1 =
 			_portalPreferencesLocalService.createPortalPreferences(1);
 
 		portalPreferences1.setOwnerId(1);
 		portalPreferences1.setOwnerType(1);
+
+		List<PortalPreferences> portalPreferencesList = new ArrayList<>();
 
 		portalPreferencesList.add(
 			_portalPreferencesLocalService.addPortalPreferences(
@@ -220,27 +220,22 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			String tableName, String[] columnNames, boolean duplicatesRemoved)
 		throws Exception {
 
-		_companyLocalService.forEachCompany(
-			company -> {
-				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
-							StringBundler.concat(
-								"select count(*) from ", tableName,
-								" group by ", String.join(", ", columnNames),
-								" having count(*) > 1"));
-					ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				StringBundler.concat(
+					"select count(*) from ", tableName, " group by ",
+					String.join(", ", columnNames), " having count(*) > 1"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					if (!duplicatesRemoved) {
-						Assert.assertTrue(resultSet.next());
+			if (!duplicatesRemoved) {
+				Assert.assertTrue(resultSet.next());
 
-						Assert.assertEquals(2, resultSet.getInt(1));
+				Assert.assertEquals(2, resultSet.getInt(1));
 
-						return;
-					}
+				return;
+			}
 
-					Assert.assertFalse(resultSet.next());
-				}
-			});
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	private void _assertIndexes(

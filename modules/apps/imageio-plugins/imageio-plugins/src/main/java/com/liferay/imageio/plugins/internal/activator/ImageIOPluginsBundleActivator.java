@@ -28,16 +28,16 @@ public class ImageIOPluginsBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		_register(ImageReaderSpi.class, _imageReaderSpiSet);
-		_register(ImageWriterSpi.class, _imageWriterSpiSet);
+		_register(ImageReaderSpi.class, _imageReaderSpis);
+		_register(ImageWriterSpi.class, _imageWriterSpis);
 
 		orderImageReaderSpis();
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
-		_unregister(_imageReaderSpiSet);
-		_unregister(_imageWriterSpiSet);
+		_unregister(_imageReaderSpis);
+		_unregister(_imageWriterSpis);
 	}
 
 	protected void orderImageReaderSpis() {
@@ -96,7 +96,7 @@ public class ImageIOPluginsBundleActivator implements BundleActivator {
 		registeredProviders.clear();
 	}
 
-	private final Set<ImageReaderSpi> _imageReaderSpiSet = new HashSet<>();
-	private final Set<ImageWriterSpi> _imageWriterSpiSet = new HashSet<>();
+	private final Set<ImageReaderSpi> _imageReaderSpis = new HashSet<>();
+	private final Set<ImageWriterSpi> _imageWriterSpis = new HashSet<>();
 
 }

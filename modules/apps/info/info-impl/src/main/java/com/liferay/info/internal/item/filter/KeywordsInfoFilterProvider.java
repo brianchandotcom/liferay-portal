@@ -34,7 +34,7 @@ public class KeywordsInfoFilterProvider
 	}
 
 	private String _getKeywords(Map<String, String[]> values) {
-		Set<String> keywordsSet = new HashSet<>();
+		Set<String> keywords = new HashSet<>();
 
 		for (Map.Entry<String, String[]> entry : values.entrySet()) {
 			if (!StringUtil.startsWith(
@@ -45,10 +45,10 @@ public class KeywordsInfoFilterProvider
 				continue;
 			}
 
-			Collections.addAll(keywordsSet, entry.getValue());
+			Collections.addAll(keywords, entry.getValue());
 		}
 
-		return StringUtil.merge(keywordsSet, StringPool.SPACE);
+		return StringUtil.merge(keywords, StringPool.SPACE);
 	}
 
 }

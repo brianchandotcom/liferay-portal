@@ -36,7 +36,7 @@ public class TagsInfoFilterProvider
 	}
 
 	private String[][] _getAssetTagNames(Map<String, String[]> values) {
-		Set<String[]> assetTagIdSet = new HashSet<>();
+		Set<String[]> assetTagIds = new HashSet<>();
 
 		for (Map.Entry<String, String[]> entry : values.entrySet()) {
 			if (!StringUtil.startsWith(
@@ -46,13 +46,13 @@ public class TagsInfoFilterProvider
 				continue;
 			}
 
-			assetTagIdSet.add(
+			assetTagIds.add(
 				ArrayUtil.filter(
 					GetterUtil.getStringValues(entry.getValue()),
 					tagName -> !Objects.isNull(tagName)));
 		}
 
-		return assetTagIdSet.toArray(new String[assetTagIdSet.size()][]);
+		return assetTagIds.toArray(new String[assetTagIds.size()][]);
 	}
 
 }

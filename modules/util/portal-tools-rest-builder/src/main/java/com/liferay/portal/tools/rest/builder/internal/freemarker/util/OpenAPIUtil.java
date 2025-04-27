@@ -209,9 +209,10 @@ public class OpenAPIUtil {
 					propertySchemas = schema.getPropertySchemas();
 				}
 
-				if (propertySchemas == null ) {
-					if (schema.getEnumValues() != null &&
+				if (propertySchemas == null) {
+					if ((schema.getEnumValues() != null) &&
 						_isGlobalEnum(entry.getKey(), components)) {
+
 						String schemaName = StringUtil.upperCaseFirstLetter(
 							entry.getKey());
 
@@ -220,9 +221,10 @@ public class OpenAPIUtil {
 						}
 
 						allSchemas.put(schemaName, schema);
+
 						continue;
 					}
-				
+
 					List<Schema> allOfSchemas = schema.getAllOfSchemas();
 
 					if (allOfSchemas == null) {
@@ -288,15 +290,6 @@ public class OpenAPIUtil {
 		}
 
 		return allSchemas;
-	}
-
-	private static boolean _isGlobalEnum(String schemaName, Components components) {
-		// Check if this schema is defined directly under components.schemas
-		// and not inside another schema's properties
-		Map<String, Schema> topLevelSchemas = components.getSchemas();
-
-		// If the schema exists at the top level with the exact name, it's global
-		return topLevelSchemas.containsKey(schemaName);
 	}
 
 	public static Map<String, Schema> getGlobalEnumSchemas(
@@ -384,6 +377,14 @@ public class OpenAPIUtil {
 		}
 
 		return false;
+	}
+
+	private static boolean _isGlobalEnum(
+		String schemaName, Components components) {
+
+		Map<String, Schema> topLevelSchemas = components.getSchemas();
+
+		return topLevelSchemas.containsKey(schemaName);
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

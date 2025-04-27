@@ -92,14 +92,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			_portalPreferencesLocalService.addPortalPreferences(
 				portalPreferences2));
 
-		String[] columnNames = {"ownerType", "ownerId"};
-
-		_assertCount("PortalPreferences", columnNames, false);
-
 		_runUpgrade(
-			"PortalPreferences", columnNames, "portalPreferencesId asc");
-
-		_assertCount("PortalPreferences", columnNames, true);
+			"PortalPreferences", new String[] {"ownerType", "ownerId"},
+			"portalPreferencesId asc");
 
 		Collections.sort(portalPreferencesList, Collections.reverseOrder());
 
@@ -137,13 +132,10 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		portletItems.add(_portletItemLocalService.addPortletItem(portletItem2));
 
-		String[] columnNames = {"groupId", "classNameId", "portletId", "name"};
-
-		_assertCount("PortletItem", columnNames, false);
-
-		_runUpgrade("PortletItem", columnNames, "portletItemId asc");
-
-		_assertCount("PortletItem", columnNames, true);
+		_runUpgrade(
+			"PortletItem",
+			new String[] {"groupId", "classNameId", "portletId", "name"},
+			"portletItemId asc");
 
 		Collections.sort(portletItems, Collections.reverseOrder());
 
@@ -185,16 +177,10 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			_socialActivitySettingLocalService.addSocialActivitySetting(
 				socialActivitySetting2));
 
-		String[] columnNames = {
-			"groupId", "classNameId", "activityType", "name"
-		};
-
-		_assertCount("SocialActivitySetting", columnNames, false);
-
 		_runUpgrade(
-			"SocialActivitySetting", columnNames, "activitySettingId asc");
-
-		_assertCount("SocialActivitySetting", columnNames, true);
+			"SocialActivitySetting",
+			new String[] {"groupId", "classNameId", "activityType", "name"},
+			"activitySettingId asc");
 
 		Collections.sort(socialActivitySettings, Collections.reverseOrder());
 
@@ -226,13 +212,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		tickets.add(_ticketLocalService.addTicket(ticket2));
 
-		String[] columnNames = {"key_"};
-
-		_assertCount("Ticket", columnNames, false);
-
-		_runUpgrade("Ticket", columnNames, "ticketId asc");
-
-		_assertCount("Ticket", columnNames, true);
+		_runUpgrade("Ticket", new String[] {"key_"}, "ticketId asc");
 
 		Collections.sort(tickets, Collections.reverseOrder());
 
@@ -296,12 +276,14 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	private void _runUpgrade(
-			String tableName, String[] columns, String orderByClause)
+			String tableName, String[] columnNames, String orderByClause)
 		throws Exception {
+
+		_assertCount(tableName, columnNames, false);
 
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess =
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-				tableName, columns, orderByClause);
+				tableName, columnNames, orderByClause);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
@@ -313,6 +295,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		finally {
 			EntityCacheUtil.clearCache();
 		}
+
+		_assertCount(tableName, columnNames, true);
 	}
 
 	@Inject

@@ -39,7 +39,7 @@ public abstract class BaseItemSelectorCriterionHandler
 			return Collections.emptyList();
 		}
 
-		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
+		List<ItemSelectorView<T>> filteredItemSelectorViews = new ArrayList<>();
 
 		for (ItemSelectorView<T> itemSelectorView : itemSelectorViews) {
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
@@ -51,14 +51,14 @@ public abstract class BaseItemSelectorCriterionHandler
 				if (_isItemSelectorViewSupported(
 						itemSelectorView, desiredItemSelectorReturnType)) {
 
-					filteredItemSelectedViews.add(itemSelectorView);
+					filteredItemSelectorViews.add(itemSelectorView);
 
 					break;
 				}
 			}
 		}
 
-		return (List)Collections.unmodifiableList(filteredItemSelectedViews);
+		return (List)Collections.unmodifiableList(filteredItemSelectorViews);
 	}
 
 	protected void activate(BundleContext bundleContext) {

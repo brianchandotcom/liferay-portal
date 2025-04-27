@@ -92,13 +92,14 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			_portalPreferencesLocalService.addPortalPreferences(
 				portalPreferences2));
 
-		_assertCount("PortalPreferences", false, "ownerType", "ownerId");
+		String[] columnNames = {"ownerType", "ownerId"};
+
+		_assertCount("PortalPreferences", columnNames, false);
 
 		_runUpgrade(
-			"PortalPreferences", new String[] {"ownerType", "ownerId"},
-			"portalPreferencesId asc");
+			"PortalPreferences", columnNames, "portalPreferencesId asc");
 
-		_assertCount("PortalPreferences", true, "ownerType", "ownerId");
+		_assertCount("PortalPreferences", columnNames, true);
 
 		Collections.sort(portalPreferencesList, Collections.reverseOrder());
 
@@ -136,17 +137,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		portletItems.add(_portletItemLocalService.addPortletItem(portletItem2));
 
-		_assertCount(
-			"PortletItem", false, "groupId", "classNameId", "portletId",
-			"name");
+		String[] columnNames = {"groupId", "classNameId", "portletId", "name"};
 
-		_runUpgrade(
-			"PortletItem",
-			new String[] {"groupId", "classNameId", "portletId", "name"},
-			"portletItemId asc");
+		_assertCount("PortletItem", columnNames, false);
 
-		_assertCount(
-			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
+		_runUpgrade("PortletItem", columnNames, "portletItemId asc");
+
+		_assertCount("PortletItem", columnNames, true);
 
 		Collections.sort(portletItems, Collections.reverseOrder());
 
@@ -188,18 +185,16 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			_socialActivitySettingLocalService.addSocialActivitySetting(
 				socialActivitySetting2));
 
-		_assertCount(
-			"SocialActivitySetting", false, "groupId", "classNameId",
-			"activityType", "name");
+		String[] columnNames = {
+			"groupId", "classNameId", "activityType", "name"
+		};
+
+		_assertCount("SocialActivitySetting", columnNames, false);
 
 		_runUpgrade(
-			"SocialActivitySetting",
-			new String[] {"groupId", "classNameId", "activityType", "name"},
-			"activitySettingId asc");
+			"SocialActivitySetting", columnNames, "activitySettingId asc");
 
-		_assertCount(
-			"SocialActivitySetting", true, "groupId", "classNameId",
-			"activityType", "name");
+		_assertCount("SocialActivitySetting", columnNames, true);
 
 		Collections.sort(socialActivitySettings, Collections.reverseOrder());
 
@@ -231,11 +226,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		tickets.add(_ticketLocalService.addTicket(ticket2));
 
-		_assertCount("Ticket", false, "key_");
+		String[] columnNames = {"key_"};
 
-		_runUpgrade("Ticket", new String[] {"key_"}, "ticketId asc");
+		_assertCount("Ticket", columnNames, false);
 
-		_assertCount("Ticket", true, "key_");
+		_runUpgrade("Ticket", columnNames, "ticketId asc");
+
+		_assertCount("Ticket", columnNames, true);
 
 		Collections.sort(tickets, Collections.reverseOrder());
 
@@ -248,7 +245,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	private void _assertCount(
-			String tableName, boolean duplicatesRemoved, String... columnNames)
+			String tableName, String[] columnNames, boolean duplicatesRemoved)
 		throws Exception {
 
 		_companyLocalService.forEachCompany(

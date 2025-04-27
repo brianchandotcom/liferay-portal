@@ -68,8 +68,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradePortalPreferences() throws Exception {
-		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
-			_connection, "PortalPreferences", "ownerType");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"PortalPreferences", "ownerType");
 
 		List<PortalPreferences> portalPreferencesList = new ArrayList<>();
 
@@ -114,8 +114,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradePortletItem() throws Exception {
-		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
-			_connection, "PortletItem", "groupId");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"PortletItem", "groupId");
 
 		PortletItem portletItem1 = _portletItemLocalService.createPortletItem(
 			1);
@@ -159,8 +159,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeSocialActivitySetting() throws Exception {
-		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
-			_connection, "SocialActivitySetting", "groupId");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"SocialActivitySetting", "groupId");
 
 		SocialActivitySetting socialActivitySetting1 =
 			_socialActivitySettingLocalService.createSocialActivitySetting(1);
@@ -209,8 +209,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeTicket() throws Exception {
-		List<IndexMetadata> indexMetadatas = _db.dropIndexes(
-			_connection, "Ticket", "key_");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"Ticket", "key_");
 
 		Ticket ticket1 = _ticketLocalService.createTicket(1);
 
@@ -279,6 +279,20 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			Assert.assertTrue(
 				_dbInspector.hasIndex(tableName, indexMetadata.getIndexName()));
 		}
+	}
+
+	private List<IndexMetadata> _dropUniqueIndexes(
+			String tableName, String columnName)
+		throws Exception {
+
+		List<IndexMetadata> indexMetadatas = _db.getIndexMetadatas(
+			_connection, tableName, columnName, true);
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			_db.runSQL(_connection, indexMetadata.getDropSQL());
+		}
+
+		return indexMetadatas;
 	}
 
 	private void _runUpgrade(

@@ -240,10 +240,10 @@ public class JournalArticleModelValidator
 		}
 
 		if (!ExportImportThreadLocal.isImportInProcess() || autoArticleId) {
-			List<JournalArticle> articles =
+			List<JournalArticle> journalArticles =
 				_journalArticlePersistence.findByG_A(groupId, articleId);
 
-			if (!articles.isEmpty()) {
+			if (!journalArticles.isEmpty()) {
 				throw new DuplicateArticleIdException(
 					StringBundler.concat(
 						"{groupId=", groupId, ", articleId=", articleId,
@@ -522,10 +522,11 @@ public class JournalArticleModelValidator
 			return;
 		}
 
-		List<JournalArticle> articles = _journalArticlePersistence.findByG_ERC(
-			groupId, externalReferenceCode);
+		List<JournalArticle> journalArticles =
+			_journalArticlePersistence.findByG_ERC(
+				groupId, externalReferenceCode);
 
-		if (!articles.isEmpty()) {
+		if (!journalArticles.isEmpty()) {
 			throw new DuplicateArticleExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate journal article external reference code ",

@@ -62,20 +62,21 @@ public class JournalFolderModelValidator
 			}
 		}
 
-		List<JournalFolder> folders = _journalFolderPersistence.findByG_P(
-			folder.getGroupId(), folder.getFolderId());
+		List<JournalFolder> journalFolders =
+			_journalFolderPersistence.findByG_P(
+				folder.getGroupId(), folder.getFolderId());
 
-		if (folders.isEmpty()) {
+		if (journalFolders.isEmpty()) {
 			return;
 		}
 
-		for (JournalFolder curFolder : folders) {
-			if (curFolder.getRestrictionType() !=
+		for (JournalFolder journalFolder : journalFolders) {
+			if (journalFolder.getRestrictionType() !=
 					JournalFolderConstants.
 						RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
 				validateArticleDDMStructures(
-					curFolder.getFolderId(), ddmStructureIds);
+					journalFolder.getFolderId(), ddmStructureIds);
 			}
 		}
 	}

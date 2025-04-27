@@ -66,14 +66,14 @@ public class TokensTransformerListener extends BaseTransformerListener {
 			return s;
 		}
 
-		List<String> escapedKeysList = null;
-		List<String> escapedValuesList = null;
+		List<String> escapedKeys = null;
+		List<String> escapedValues = null;
 
-		List<String> keysList = null;
-		List<String> valuesList = null;
+		List<String> keys = null;
+		List<String> values = null;
 
-		List<String> tempEscapedKeysList = null;
-		List<String> tempEscapedValuesList = null;
+		List<String> tempEscapedKeys = null;
+		List<String> tempEscapedValues = null;
 
 		boolean hasKey = false;
 
@@ -85,12 +85,12 @@ public class TokensTransformerListener extends BaseTransformerListener {
 			}
 
 			if (!hasKey) {
-				escapedKeysList = new ArrayList<>();
-				escapedValuesList = new ArrayList<>();
-				keysList = new ArrayList<>();
-				valuesList = new ArrayList<>();
-				tempEscapedKeysList = new ArrayList<>();
-				tempEscapedValuesList = new ArrayList<>();
+				escapedKeys = new ArrayList<>();
+				escapedValues = new ArrayList<>();
+				keys = new ArrayList<>();
+				values = new ArrayList<>();
+				tempEscapedKeys = new ArrayList<>();
+				tempEscapedValues = new ArrayList<>();
 
 				hasKey = true;
 			}
@@ -105,14 +105,14 @@ public class TokensTransformerListener extends BaseTransformerListener {
 				JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN, key,
 				JournalTransformerListenerKeys.TEMP_ESCAPED_AT_CLOSE);
 
-			escapedKeysList.add(escapedKey);
-			escapedValuesList.add(tempEscapedKey);
+			escapedKeys.add(escapedKey);
+			escapedValues.add(tempEscapedKey);
 
-			keysList.add(actualKey);
-			valuesList.add(GetterUtil.getString(entry.getValue()));
+			keys.add(actualKey);
+			values.add(GetterUtil.getString(entry.getValue()));
 
-			tempEscapedKeysList.add(tempEscapedKey);
-			tempEscapedValuesList.add(actualKey);
+			tempEscapedKeys.add(tempEscapedKey);
+			tempEscapedValues.add(actualKey);
 		}
 
 		if (!hasKey) {
@@ -120,16 +120,15 @@ public class TokensTransformerListener extends BaseTransformerListener {
 		}
 
 		s = StringUtil.replace(
-			s, escapedKeysList.toArray(new String[0]),
-			escapedValuesList.toArray(new String[0]));
+			s, escapedKeys.toArray(new String[0]),
+			escapedValues.toArray(new String[0]));
 
 		s = StringUtil.replace(
-			s, keysList.toArray(new String[0]),
-			valuesList.toArray(new String[0]));
+			s, keys.toArray(new String[0]), values.toArray(new String[0]));
 
 		s = StringUtil.replace(
-			s, tempEscapedKeysList.toArray(new String[0]),
-			tempEscapedValuesList.toArray(new String[0]));
+			s, tempEscapedKeys.toArray(new String[0]),
+			tempEscapedValues.toArray(new String[0]));
 
 		return s;
 	}

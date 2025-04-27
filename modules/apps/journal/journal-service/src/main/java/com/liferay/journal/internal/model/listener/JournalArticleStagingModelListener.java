@@ -147,7 +147,7 @@ public class JournalArticleStagingModelListener
 					StagingConstants.
 						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
-			List<JournalArticle> journalArticleResourceArticles =
+			List<JournalArticle> journalArticles =
 				_journalArticleLocalService.getArticlesByResourcePrimKey(
 					journalArticle.getResourcePrimKey());
 
@@ -159,14 +159,12 @@ public class JournalArticleStagingModelListener
 						getStagedModelDataHandler(
 							JournalArticle.class.getName());
 
-			for (JournalArticle journalArticleResourceArticle :
-					journalArticleResourceArticles) {
-
+			for (JournalArticle currentJournalArticle : journalArticles) {
 				if (ArrayUtil.contains(
 						stagedModelDataHandler.getExportableStatuses(),
-						journalArticleResourceArticle.getStatus())) {
+						currentJournalArticle.getStatus())) {
 
-					classPKs.add(journalArticleResourceArticle.getId());
+					classPKs.add(currentJournalArticle.getId());
 				}
 			}
 

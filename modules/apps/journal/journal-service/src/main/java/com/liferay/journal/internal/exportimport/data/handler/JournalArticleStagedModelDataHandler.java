@@ -190,15 +190,15 @@ public class JournalArticleStagedModelDataHandler
 		try {
 			JournalFolder folder = article.getFolder();
 
-			List<JournalFolder> ancestorFolders = folder.getAncestors();
+			List<JournalFolder> journalFolders = folder.getAncestors();
 
 			StringBundler sb = new StringBundler(
-				(4 * ancestorFolders.size()) + 5);
+				(4 * journalFolders.size()) + 5);
 
-			Collections.reverse(ancestorFolders);
+			Collections.reverse(journalFolders);
 
-			for (JournalFolder ancestorFolder : ancestorFolders) {
-				sb.append(ancestorFolder.getName());
+			for (JournalFolder journalFolder : journalFolders) {
+				sb.append(journalFolder.getName());
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.GREATER_THAN);
 				sb.append(StringPool.SPACE);
@@ -634,10 +634,11 @@ public class JournalArticleStagedModelDataHandler
 
 		boolean autoArticleId = false;
 
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			portletDataContext.getScopeGroupId(), articleId);
+		List<JournalArticle> journalArticles =
+			_journalArticleLocalService.getArticles(
+				portletDataContext.getScopeGroupId(), articleId);
 
-		if (!articles.isEmpty()) {
+		if (!journalArticles.isEmpty()) {
 			autoArticleId = true;
 		}
 
@@ -1691,39 +1692,41 @@ public class JournalArticleStagedModelDataHandler
 		boolean expireAllArticleVersions = _isExpireAllArticleVersions(
 			article.getCompanyId());
 
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			article.getGroupId(), article.getArticleId());
+		List<JournalArticle> journalArticles =
+			_journalArticleLocalService.getArticles(
+				article.getGroupId(), article.getArticleId());
 
-		for (JournalArticle curArticle : articles) {
+		for (JournalArticle journalArticle : journalArticles) {
 			boolean update = false;
 
 			if ((article.isApproved() || article.isExpired()) &&
 				(article.getExpirationDate() != null) &&
 				expireAllArticleVersions &&
 				!Objects.equals(
-					curArticle.getExpirationDate(),
+					journalArticle.getExpirationDate(),
 					article.getExpirationDate())) {
 
 				Date expirationDate = article.getExpirationDate();
 
-				curArticle.setExpirationDate(expirationDate);
+				journalArticle.setExpirationDate(expirationDate);
 
 				if (expirationDate.before(new Date())) {
-					curArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+					journalArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
 				}
 
 				update = true;
 			}
 
-			if (curArticle.getFolderId() != article.getFolderId()) {
-				curArticle.setFolderId(article.getFolderId());
-				curArticle.setTreePath(article.getTreePath());
+			if (journalArticle.getFolderId() != article.getFolderId()) {
+				journalArticle.setFolderId(article.getFolderId());
+				journalArticle.setTreePath(article.getTreePath());
 
 				update = true;
 			}
 
 			if (update) {
-				_journalArticleLocalService.updateJournalArticle(curArticle);
+				_journalArticleLocalService.updateJournalArticle(
+					journalArticle);
 			}
 		}
 	}

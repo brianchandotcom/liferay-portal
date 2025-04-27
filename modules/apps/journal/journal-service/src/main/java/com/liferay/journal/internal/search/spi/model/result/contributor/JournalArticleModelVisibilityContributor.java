@@ -25,11 +25,11 @@ public class JournalArticleModelVisibilityContributor
 
 	@Override
 	public boolean isVisible(long classPK, int status) {
-		List<JournalArticle> articles =
+		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.getArticlesByResourcePrimKey(classPK);
 
-		for (JournalArticle article : articles) {
-			if (isVisible(article.getStatus(), status)) {
+		for (JournalArticle journalArticle : journalArticles) {
+			if (isVisible(journalArticle.getStatus(), status)) {
 				return true;
 			}
 		}

@@ -47,19 +47,19 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 		List<Node> imageNodes = xPath.selectNodes(contentDocument);
 
 		for (Node imageNode : imageNodes) {
-			Element imageEl = (Element)imageNode;
+			Element imageElement = (Element)imageNode;
 
-			List<Element> dynamicContentEls = imageEl.elements(
+			List<Element> dynamicContentElements = imageElement.elements(
 				"dynamic-content");
 
-			for (Element dynamicContentEl : dynamicContentEls) {
+			for (Element dynamicContentElement : dynamicContentElements) {
 				String data =
 					_journalArticleImageUpgradeHelper.getDocumentLibraryValue(
-						dynamicContentEl.getText());
+						dynamicContentElement.getText());
 
-				dynamicContentEl.clearContent();
+				dynamicContentElement.clearContent();
 
-				dynamicContentEl.addCDATA(data);
+				dynamicContentElement.addCDATA(data);
 			}
 		}
 

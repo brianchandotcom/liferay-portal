@@ -80,7 +80,7 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 			return;
 		}
 
-		List<JournalArticle> articles = ListUtil.filter(
+		List<JournalArticle> journalArticles = ListUtil.filter(
 			journalArticleLocalService.getArticles(
 				ctArticle.getGroupId(), ctArticle.getArticleId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -89,12 +89,12 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 				article.getCtCollectionId() == ctArticle.getCtCollectionId());
 
 		double currentVersion = MathUtil.format(
-			latestVersion + (0.1 * articles.size()), 1, 1);
+			latestVersion + (0.1 * journalArticles.size()), 1, 1);
 
 		CTPersistence ctPersistence =
 			journalArticleLocalService.getCTPersistence();
 
-		for (JournalArticle article : articles) {
+		for (JournalArticle article : journalArticles) {
 			article.setVersion(currentVersion);
 
 			journalArticleLocalService.updateJournalArticle(article);

@@ -608,15 +608,16 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(32, 0, 0),
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
-				"PortalPreferences", new String[] {"ownerType", "ownerId"}),
+				"PortalPreferences", new String[] {"ownerType", "ownerId"},
+				"portalPreferencesId asc"),
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"PortletItem",
-				new String[] {"groupId", "classNameId", "portletId", "name"}),
+				new String[] {"groupId", "classNameId", "portletId", "name"},
+				"portletItemId asc"),
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"SocialActivitySetting",
-				new String[] {
-					"groupId", "classNameId", "activityType", "name"
-				}),
+				new String[] {"groupId", "classNameId", "activityType", "name"},
+				"activitySettingId asc"),
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"Ticket", new String[] {"key_"}, "ticketId asc"));
 	}

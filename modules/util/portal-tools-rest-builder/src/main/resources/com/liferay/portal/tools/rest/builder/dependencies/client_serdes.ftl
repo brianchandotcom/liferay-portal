@@ -9,7 +9,9 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 </#list>
 
 <#list allSchemas?keys as schemaName>
+	<#if !globalEnumSchemas[schemaName]??>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
+	</#if>
 </#list>
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
@@ -402,9 +404,9 @@ public class ${schemaName}SerDes {
 							}
 
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyName}Array);
-						<#elseif allExternalSchemas?keys?seq_contains(propertyType) || allSchemas?keys?seq_contains(propertyType)>
+						<#elseif allExternalSchemas?keys?seq_contains(propertyType) || (allSchemas?keys?seq_contains(propertyType) && !globalEnumSchemas?keys?seq_contains(propertyType))>
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyType}SerDes.toDTO((String)jsonParserFieldValue));
-						<#elseif propertyType?ends_with("[]") && (allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || allSchemas?keys?seq_contains(propertyType?remove_ending("[]")))>
+						<#elseif propertyType?ends_with("[]") && (allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || (allSchemas?keys?seq_contains(propertyType?remove_ending("[]")) && !globalEnumSchemas?keys?seq_contains(propertyType?remove_ending("[]"))))>
 							Object[] jsonParserFieldValues = (Object[])jsonParserFieldValue;
 
 							${propertyType?remove_ending("[]")}[] ${propertyName}Array = new ${propertyType?remove_ending("[]")}[jsonParserFieldValues.length];
@@ -414,6 +416,8 @@ public class ${schemaName}SerDes {
 							}
 
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyName}Array);
+						<#elseif globalEnumSchemas?keys?seq_contains(propertyType)>
+							${schemaVarName}.set${capitalizedPropertyName}(${propertyType}.create((String)jsonParserFieldValue));
 						<#elseif enumSchemas?keys?seq_contains(properties[propertyName])>
 							${schemaVarName}.set${capitalizedPropertyName}(${schemaName}.${propertyType}.create((String)jsonParserFieldValue));
 						<#else>

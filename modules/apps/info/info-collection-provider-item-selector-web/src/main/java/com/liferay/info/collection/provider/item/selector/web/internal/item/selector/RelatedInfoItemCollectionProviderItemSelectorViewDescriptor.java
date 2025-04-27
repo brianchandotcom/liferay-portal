@@ -67,12 +67,12 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 				"there-are-no-related-items-collection-providers");
 
 		List<RelatedInfoItemCollectionProvider<?, ?>>
-			relatedInfoItemCollectionProviderList = new ArrayList<>(
+			filteredRelatedInfoItemCollectionProviders = new ArrayList<>(
 				infoCollectionProviders);
 
 		if (Validator.isNotNull(getSelectedItemType())) {
-			relatedInfoItemCollectionProviderList = ListUtil.filter(
-				relatedInfoItemCollectionProviderList,
+			filteredRelatedInfoItemCollectionProviders = ListUtil.filter(
+				filteredRelatedInfoItemCollectionProviders,
 				relatedInfoItemCollectionProvider -> Objects.equals(
 					relatedInfoItemCollectionProvider.
 						getCollectionItemClassName(),
@@ -82,8 +82,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
-			relatedInfoItemCollectionProviderList = ListUtil.filter(
-				relatedInfoItemCollectionProviderList,
+			filteredRelatedInfoItemCollectionProviders = ListUtil.filter(
+				filteredRelatedInfoItemCollectionProviders,
 				relatedInfoItemCollectionProvider -> {
 					String label = StringUtil.toLowerCase(
 						relatedInfoItemCollectionProvider.getLabel(
@@ -94,7 +94,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		}
 
 		searchContainer.setResultsAndTotal(
-			relatedInfoItemCollectionProviderList);
+			filteredRelatedInfoItemCollectionProviders);
 
 		return searchContainer;
 	}

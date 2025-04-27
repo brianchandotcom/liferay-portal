@@ -65,14 +65,14 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 				portletRequest, portletURL, null,
 				"there-are-no-info-collection-providers");
 
-		List<InfoCollectionProvider<?>> infoCollectionProviderList =
+		List<InfoCollectionProvider<?>> filteredInfoCollectionProviders =
 			new ArrayList<>(infoCollectionProviders);
 
 		String itemType = ParamUtil.getString(httpServletRequest, "itemType");
 
 		if (Validator.isNotNull(itemType)) {
-			infoCollectionProviderList = ListUtil.filter(
-				infoCollectionProviderList,
+			filteredInfoCollectionProviders = ListUtil.filter(
+				filteredInfoCollectionProviders,
 				infoCollectionProvider -> Objects.equals(
 					infoCollectionProvider.getCollectionItemClassName(),
 					itemType));
@@ -81,8 +81,8 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
-			infoCollectionProviderList = ListUtil.filter(
-				infoCollectionProviderList,
+			filteredInfoCollectionProviders = ListUtil.filter(
+				filteredInfoCollectionProviders,
 				infoCollectionProvider -> {
 					String label = StringUtil.toLowerCase(
 						infoCollectionProvider.getLabel(
@@ -92,7 +92,7 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 				});
 		}
 
-		searchContainer.setResultsAndTotal(infoCollectionProviderList);
+		searchContainer.setResultsAndTotal(filteredInfoCollectionProviders);
 
 		return searchContainer;
 	}

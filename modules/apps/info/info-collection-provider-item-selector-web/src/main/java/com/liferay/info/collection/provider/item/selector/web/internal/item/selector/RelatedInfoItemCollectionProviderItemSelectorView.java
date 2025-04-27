@@ -82,14 +82,14 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 				relatedInfoItemCollectionProviderItemSelectorCriterion) {
 
 		List<RelatedInfoItemCollectionProvider<?, ?>>
-			itemRelatedItemsProviders = new ArrayList<>();
+			relatedInfoItemCollectionProviders = new ArrayList<>();
 
 		List<String> itemTypes =
 			relatedInfoItemCollectionProviderItemSelectorCriterion.
 				getSourceItemTypes();
 
 		for (String itemType : itemTypes) {
-			itemRelatedItemsProviders.addAll(
+			relatedInfoItemCollectionProviders.addAll(
 				ListUtil.filter(
 					_infoItemServiceRegistry.getAllInfoItemServices(
 						(Class<RelatedInfoItemCollectionProvider<?, ?>>)
@@ -98,7 +98,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 					RelatedInfoItemCollectionProvider::isAvailable));
 		}
 
-		return Collections.unmodifiableList(itemRelatedItemsProviders);
+		return Collections.unmodifiableList(relatedInfoItemCollectionProviders);
 	}
 
 	private static final List<ItemSelectorReturnType>

@@ -97,7 +97,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_assertCount("PortalPreferences", false, "ownerType", "ownerId");
 
 		_runUpgrade(
-			"PortalPreferences", new String[] {"ownerType", "ownerId"}, null);
+			"PortalPreferences", new String[] {"ownerType", "ownerId"},
+			"portalPreferencesId asc");
 
 		_assertCount("PortalPreferences", true, "ownerType", "ownerId");
 
@@ -145,7 +146,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_runUpgrade(
 			"PortletItem",
-			new String[] {"groupId", "classNameId", "portletId", "name"}, null);
+			new String[] {"groupId", "classNameId", "portletId", "name"},
+			"portletItemId asc");
 
 		_assertCount(
 			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
@@ -199,7 +201,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_runUpgrade(
 			"SocialActivitySetting",
 			new String[] {"groupId", "classNameId", "activityType", "name"},
-			null);
+			"activitySettingId asc");
 
 		_assertCount(
 			"SocialActivitySetting", true, "groupId", "classNameId",

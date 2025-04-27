@@ -271,6 +271,12 @@ public class RESTBuilder {
 
 			Set<Map.Entry<String, Schema>> set = new HashSet<>(
 				allSchemas.entrySet());
+			
+			// Create a set of schema names that are enums, to avoid duplicate processing
+			Set<String> enumSchemaNames = new HashSet<>();
+			for (Map.Entry<String, Schema> entry : globalEnumSchemas.entrySet()) {
+				enumSchemaNames.add(entry.getKey());
+			}
 
 			for (Map.Entry<String, Schema> entry : set) {
 				Schema schema = entry.getValue();
@@ -279,13 +285,16 @@ public class RESTBuilder {
 				_putSchema(
 					context, escapedVersion, javaDataTypeMap, schema,
 					schemaName, new HashSet<>());
+				
+				// Skip creating DTO files for schemas that are enums
+				if (!enumSchemaNames.contains(schemaName)) {
+					_createDTOFile(context, escapedVersion, schemaName);
 
-				_createDTOFile(context, escapedVersion, schemaName);
-
-				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					_createClientDTOFile(context, escapedVersion, schemaName);
-					_createClientSerDesFile(
-						context, escapedVersion, schemaName);
+					if (Validator.isNotNull(_configYAML.getClientDir())) {
+						_createClientDTOFile(context, escapedVersion, schemaName);
+						_createClientSerDesFile(
+							context, escapedVersion, schemaName);
+					}
 				}
 			}
 

@@ -24,7 +24,7 @@ SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = Accoun
 	filterManageableAccountEntries);
 
 if (accountGroupId > 0) {
-	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(liferayPortletResponse, accountGroupId));
+	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(accountGroupId, liferayPortletResponse));
 }
 else if (ParamUtil.getLong(request, "userId") > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new UserAccountEntryRowChecker(liferayPortletResponse, ParamUtil.getLong(request, "userId")));

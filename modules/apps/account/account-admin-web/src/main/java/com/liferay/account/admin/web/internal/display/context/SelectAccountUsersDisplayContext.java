@@ -5,8 +5,8 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
-import com.liferay.account.admin.web.internal.dao.search.AccountUserRowChecker;
-import com.liferay.account.admin.web.internal.dao.search.SelectAccountRoleUserRowChecker;
+import com.liferay.account.admin.web.internal.dao.search.AccountEntryAccountRoleUserRowChecker;
+import com.liferay.account.admin.web.internal.dao.search.AccountEntryUserRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -41,11 +41,11 @@ public class SelectAccountUsersDisplayContext {
 			_liferayPortletRequest, "accountRoleId");
 
 		if (accountRoleId > 0) {
-			return new SelectAccountRoleUserRowChecker(
-				_liferayPortletResponse, _accountEntryId, accountRoleId);
+			return new AccountEntryAccountRoleUserRowChecker(
+				_accountEntryId, accountRoleId, _liferayPortletResponse);
 		}
 
-		return new AccountUserRowChecker(
+		return new AccountEntryUserRowChecker(
 			_accountEntryId, _liferayPortletResponse);
 	}
 

@@ -10,7 +10,7 @@
 <%
 SearchContainer<AccountRoleDisplay> accountRoleDisplaySearchContainer = AccountRoleDisplaySearchContainerFactory.create(ParamUtil.getLong(request, "accountEntryId"), liferayPortletRequest, liferayPortletResponse);
 
-accountRoleDisplaySearchContainer.setRowChecker(new SelectAccountUserAccountRoleRowChecker(liferayPortletResponse, ParamUtil.getLong(liferayPortletRequest, "accountEntryId"), ParamUtil.getLong(liferayPortletRequest, "accountUserIds")));
+accountRoleDisplaySearchContainer.setRowChecker(new AccountEntryUserAccountRoleRowChecker(ParamUtil.getLong(liferayPortletRequest, "accountEntryId"), liferayPortletResponse, ParamUtil.getLong(liferayPortletRequest, "accountUserIds")));
 %>
 
 <clay:management-toolbar

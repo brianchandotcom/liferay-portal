@@ -21,7 +21,7 @@ import javax.portlet.PortletResponse;
 public class AccountGroupAccountEntryRowChecker extends EmptyOnClickRowChecker {
 
 	public AccountGroupAccountEntryRowChecker(
-		PortletResponse portletResponse, long accountGroupId) {
+		long accountGroupId, PortletResponse portletResponse) {
 
 		super(portletResponse);
 

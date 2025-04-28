@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -16,17 +16,16 @@ import javax.portlet.PortletResponse;
 /**
  * @author Albert Lee
  */
-public class SelectAccountUserAccountRoleRowChecker
+public class AccountEntryUserAccountRoleRowChecker
 	extends EmptyOnClickRowChecker {
 
-	public SelectAccountUserAccountRoleRowChecker(
-		PortletResponse portletResponse, long accountEntryId,
-		long accountUserId) {
+	public AccountEntryUserAccountRoleRowChecker(
+		long accountEntryId, PortletResponse portletResponse, long userId) {
 
 		super(portletResponse);
 
 		_accountEntryId = accountEntryId;
-		_accountUserId = accountUserId;
+		_userId = userId;
 	}
 
 	@Override
@@ -37,11 +36,11 @@ public class SelectAccountUserAccountRoleRowChecker
 			AccountEntryLocalServiceUtil.fetchAccountEntry(_accountEntryId);
 
 		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-			_accountUserId, accountEntry.getAccountEntryGroupId(),
+			_userId, accountEntry.getAccountEntryGroupId(),
 			accountRoleDisplay.getRoleId());
 	}
 
 	private final long _accountEntryId;
-	private final long _accountUserId;
+	private final long _userId;
 
 }

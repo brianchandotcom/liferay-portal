@@ -88,8 +88,8 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 					searchContainer.getOrderByType())));
 
 		searchContainer.setRowChecker(
-			new SelectAccountOrganizationRowChecker(
-				liferayPortletResponse, accountEntryId));
+			new AccountEntryOrganizationRowChecker(
+				accountEntryId, liferayPortletResponse));
 
 		return searchContainer;
 	}

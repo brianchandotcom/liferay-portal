@@ -7,6 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayCreateSuccessToast,
 	displayEditSuccessToast,
@@ -14,7 +15,9 @@ import {
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
+import CategorizationPermissionService from '../services/CategorizationPermissionService';
 import CategoryService from '../services/CategoryService';
+import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import EditCategoryGeneralInfoTab from './components/EditCategoryGeneralInfoTab';
 
 interface Props {
@@ -47,6 +50,8 @@ const EditCategoryPage = ({
 			[defaultLanguageId]: '',
 		},
 	});
+	const [categoryPermissions, setCategoryPermissions] =
+		useState<IPermissionItem[]>(DEFAULT_PERMISSIONS);
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const [title, setTitle] = useState<string>('');
 
@@ -117,9 +122,17 @@ const EditCategoryPage = ({
 
 		try {
 			if (isCreateNew) {
-				await CategoryService.createCategory(
+				const response = await CategoryService.createCategory(
 					categoryByVocabularyIdApiUrl,
 					category
+				);
+
+				await CategorizationPermissionService.putPermissions(
+					categoryPermissionsApiUrl.replace(
+						'{taxonomyCategoryId}',
+						response.id
+					),
+					categoryPermissions
 				);
 
 				navigate(backURL);
@@ -209,7 +222,9 @@ const EditCategoryPage = ({
 				locales={locales}
 				nameInputError={nameInputError}
 				setCategory={setCategory}
+				setCategoryPermissions={setCategoryPermissions}
 				setNameInputError={setNameInputError}
+				showPermissions={isCreateNew}
 				spritemap={spritemap}
 			/>
 		);

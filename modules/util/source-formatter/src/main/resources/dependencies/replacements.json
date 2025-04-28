@@ -2340,6 +2340,14 @@
 		"to": "CPTaxCategoryNameComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "XMLUtil.formatXML(String param)",
+		"issueKey": "LPD-27744",
+		"newImports": [
+			"com.liferay.portal.kernel.xml.SAXReaderUtil"
+		],
+		"to": "SAXReaderUtil.read(param#0#).formattedString()"
+	},
+	{
 		"from": "new CommercePriceEntryUOMCreateDateComparator()",
 		"issueKey": "LPD-28067",
 		"skipParametersValidation": true,

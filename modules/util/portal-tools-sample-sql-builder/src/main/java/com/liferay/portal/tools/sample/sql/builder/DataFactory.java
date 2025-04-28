@@ -2577,7 +2577,10 @@ public class DataFactory {
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMPANY_COUNT; i++) {
 			companyModels.add(
-				_newCompanyModel(StringBundler.concat("liferay", i, ".com")));
+				_newCompanyModel(
+					StringBundler.concat(
+						BenchmarksPropsValues.VIRTUAL_HOST_NAME_PREFIX, i,
+						".com")));
 		}
 
 		return companyModels;

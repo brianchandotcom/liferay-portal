@@ -354,6 +354,10 @@ public class ElasticsearchSearchEngine
 	}
 
 	private void _checkNodeVersions() {
+		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
+			return;
+		}
+
 		List<ConnectionInformation> connectionInformationList =
 			_searchEngineInformation.getConnectionInformationList();
 
@@ -381,10 +385,6 @@ public class ElasticsearchSearchEngine
 						"deprecated. Upgrade the Elasticsearch nodes ",
 						"corresponding to the following connection IDs: ", sb));
 			}
-		}
-
-		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
-			return;
 		}
 
 		String minimumVersionString =

@@ -513,15 +513,15 @@ public class JSONStorageEntryLocalServiceImpl
 	private void _updateJSONArray(
 		long companyId, long classNameId, long classPK,
 		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
-		List<?> jsonArrayList, long parentJSONStorageEntryId) {
+		List<?> jsonArrays, long parentJSONStorageEntryId) {
 
 		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			parentJSONStorageEntryId);
 
-		int length = jsonArrayList.size();
+		int length = jsonArrays.size();
 
 		for (int i = 0; i < length; i++) {
-			Object value = jsonArrayList.get(i);
+			Object value = jsonArrays.get(i);
 
 			JSONStorageEntry jsonStorageEntry = null;
 
@@ -614,12 +614,12 @@ public class JSONStorageEntryLocalServiceImpl
 			new HashMap<>();
 
 		for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-			List<JSONStorageEntry> values =
+			List<JSONStorageEntry> newJSONStorageEntries =
 				jsonStorageEntriesMap.computeIfAbsent(
 					jsonStorageEntry.getParentJSONStorageEntryId(),
 					key -> new ArrayList<>());
 
-			values.add(jsonStorageEntry);
+			newJSONStorageEntries.add(jsonStorageEntry);
 		}
 
 		JSONDeserializer<?> jsonDeserializer =

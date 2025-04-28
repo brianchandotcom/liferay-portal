@@ -25,12 +25,16 @@ portletDisplay.setURLBack(
 renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getLabel(locale, true), false));
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div id="<portlet:namespace />EditObjectDefinition">
 	<react:component
 		module="{EditObjectDetails} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"backURL", portletDisplay.getURLBack()
+			).put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(

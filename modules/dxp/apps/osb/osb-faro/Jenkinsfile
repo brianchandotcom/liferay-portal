@@ -1,3 +1,7 @@
+@Library('WorkflowCiSharedLib') _
+
+def osbFaroImage
+
 pipeline {
 	agent {
 		kubernetes {
@@ -79,13 +83,25 @@ pipeline {
 			steps {
 				dir("modules/dxp/apps/osb/osb-faro/osb-faro-docker/cloud") {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbFaroImage = docker.build(
-								"${IMAGE_NAME}:${IMAGE_TAG_SUFFIX}",
-								"${DOCKER_BUILD_ARGS}")
+						osbFaroImage = docker.build(
+							"${IMAGE_NAME}:${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
+					}
+				}
+			}
+		}
 
-                            osbFaroImage.push()
-                        }
+		stage('Prisma Cloud Scan') {
+			steps {
+				prismaScanImage([osbFaroImage.imageName()])
+			}
+		}
+
+		stage("Push Docker Image") {
+			steps {
+				script {
+					withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+						osbFaroImage.push()
 					}
 				}
 			}

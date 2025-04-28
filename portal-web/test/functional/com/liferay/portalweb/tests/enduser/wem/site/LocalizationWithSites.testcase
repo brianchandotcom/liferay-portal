@@ -243,6 +243,7 @@ definition {
 				navItem = "Organizaciones",
 				newButton = "Nuevo",
 				orgName = "Organization Name",
+				regionName = "California",
 				saveButton = "Guardar");
 		}
 

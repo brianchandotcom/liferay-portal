@@ -252,7 +252,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithLocalizedCountryCP(navItem = null, localizedOption = null, orgName = null, countryName = null, saveButton = null) {
+	macro addWithLocalizedCountryCP(navItem = null, localizedOption = null, orgName = null, countryName = null, regionName = null, saveButton = null) {
 		Navigator.gotoNavItem(navItem = ${navItem});
 
 		Button.click(button = ${newButton});
@@ -269,6 +269,10 @@ definition {
 			key_countryName = ${countryName},
 			locator1 = "UsersAndOrganizations#ORGANIZATION_COUNTRY_NAME",
 			value1 = ${countryName});
+
+		Select(
+			locator1 = "Select#NEW_REGION",
+			value1 = ${regionName});
 
 		AssertClick(
 			key_saveButton = ${saveButton},

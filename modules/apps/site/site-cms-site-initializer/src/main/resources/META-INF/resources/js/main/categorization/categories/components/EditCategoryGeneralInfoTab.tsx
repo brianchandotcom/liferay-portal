@@ -10,13 +10,18 @@ import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {IPermissionItem} from '../../../components/forms/PermissionsTable';
+import PermissionsFormGroup from '../../components/PermissionsFormGroup';
+
 interface Props {
 	category: TaxonomyCategory;
 	defaultLanguageId: string;
 	locales: any[];
 	nameInputError: string;
 	setCategory: Function;
+	setCategoryPermissions: Function;
 	setNameInputError: Function;
+	showPermissions: boolean;
 	spritemap: string;
 }
 
@@ -26,7 +31,9 @@ const EditCategoryGeneralInfoTab = ({
 	locales,
 	nameInputError,
 	setCategory,
+	setCategoryPermissions,
 	setNameInputError,
+	showPermissions,
 	spritemap,
 }: Props) => {
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
@@ -148,6 +155,14 @@ const EditCategoryGeneralInfoTab = ({
 					/>
 				</div>
 			</ClayForm.Group>
+
+			{showPermissions && (
+				<PermissionsFormGroup
+					onChange={(newPermissions: IPermissionItem[]) => {
+						setCategoryPermissions(newPermissions);
+					}}
+				/>
+			)}
 		</div>
 	);
 };

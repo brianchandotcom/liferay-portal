@@ -15,7 +15,9 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationSpaces from '../components/CategorizationSpaces';
+import PermissionsFormGroup from '../components/PermissionsFormGroup';
 import {IVocabulary} from '../types/IVocabulary';
 
 const VISIBILITY_OPTIONS = [
@@ -36,6 +38,8 @@ export default function EditGeneralInfo({
 	onChangeVocabulary,
 	setNameInputError,
 	setSpaceInputError,
+	setVocabularyPermissions,
+	showPermissions,
 	spritemap,
 	vocabulary,
 }: {
@@ -45,6 +49,8 @@ export default function EditGeneralInfo({
 	onChangeVocabulary: Function;
 	setNameInputError: Function;
 	setSpaceInputError: (value: string) => void;
+	setVocabularyPermissions: Function;
+	showPermissions: boolean;
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
@@ -226,6 +232,14 @@ export default function EditGeneralInfo({
 					setSpaceInputError={setSpaceInputError}
 				/>
 			</ClayForm.Group>
+
+			{showPermissions && (
+				<PermissionsFormGroup
+					onChange={(newPermissions: IPermissionItem[]) => {
+						setVocabularyPermissions(newPermissions);
+					}}
+				/>
+			)}
 		</div>
 	);
 }

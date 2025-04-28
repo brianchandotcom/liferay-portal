@@ -12,8 +12,11 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
+import CategorizationPermissionService from '../services/CategorizationPermissionService';
 import VocabularyService from '../services/VocabularyService';
 import {IVocabulary} from '../types/IVocabulary';
+import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';
 import EditGeneralInfo from './EditGeneralInfo';
@@ -31,7 +34,7 @@ export default function EditVocabulary({
 	siteId,
 	spritemap,
 	vocabularyId,
-	vocabularyPermissionsApiUrl,
+	vocabularyPermissionsAPIURL,
 }: {
 	assetTypes: AssetType[];
 	backURL: string;
@@ -40,7 +43,7 @@ export default function EditVocabulary({
 	siteId: number;
 	spritemap: string;
 	vocabularyId: number;
-	vocabularyPermissionsApiUrl: string;
+	vocabularyPermissionsAPIURL: string;
 }) {
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL
@@ -69,6 +72,8 @@ export default function EditVocabulary({
 			[defaultLanguageId.replace('_', '-')]: '',
 		},
 	});
+	const [vocabularyPermissions, setVocabularyPermissions] =
+		useState<IPermissionItem[]>(DEFAULT_PERMISSIONS);
 
 	const changeType = '';
 	const isNew = Number(vocabularyId) === 0;
@@ -126,7 +131,16 @@ export default function EditVocabulary({
 			}
 
 			if (isNew) {
-				await VocabularyService.createVocabulary(vocabulary);
+				const response =
+					await VocabularyService.createVocabulary(vocabulary);
+
+				await CategorizationPermissionService.putPermissions(
+					vocabularyPermissionsAPIURL.replace(
+						'{taxonomyVocabularyId}',
+						response.id
+					),
+					vocabularyPermissions
+				);
 			}
 			else {
 				await VocabularyService.updateVocabulary(siteId, vocabulary);
@@ -262,6 +276,10 @@ export default function EditVocabulary({
 									onChangeVocabulary={setVocabulary}
 									setNameInputError={setNameInputError}
 									setSpaceInputError={setSpaceInputError}
+									setVocabularyPermissions={
+										setVocabularyPermissions
+									}
+									showPermissions={isNew}
 									spritemap={spritemap}
 									vocabulary={vocabulary}
 								/>

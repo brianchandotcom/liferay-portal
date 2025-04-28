@@ -210,21 +210,6 @@ public class OpenAPIUtil {
 				}
 
 				if (propertySchemas == null) {
-					if ((schema.getEnumValues() != null) &&
-						_isGlobalEnum(entry.getKey(), components)) {
-
-						String schemaName = StringUtil.upperCaseFirstLetter(
-							entry.getKey());
-
-						if (items != null) {
-							schemaName = formatSingular(configYAML, schemaName);
-						}
-
-						allSchemas.put(schemaName, schema);
-
-						continue;
-					}
-
 					List<Schema> allOfSchemas = schema.getAllOfSchemas();
 
 					if (allOfSchemas == null) {
@@ -292,7 +277,7 @@ public class OpenAPIUtil {
 		return allSchemas;
 	}
 
-	public static Map<String, Schema> getGlobalEnumSchemas(
+	public static Map<String, Schema> getEnumSchemas(
 		ConfigYAML configYAML, Map<String, Schema> schemas) {
 
 		Map<String, Schema> globalEnumSchemas = new TreeMap<>();
@@ -328,6 +313,14 @@ public class OpenAPIUtil {
 		}
 
 		return globalEnumSchemas;
+	}
+
+	public static Map<String, Schema> getGlobalEnumSchemas(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML) {
+
+		Components components = openAPIYAML.getComponents();
+
+		return getEnumSchemas(configYAML, components.getSchemas());
 	}
 
 	private static void _addExternalReference(
@@ -377,14 +370,6 @@ public class OpenAPIUtil {
 		}
 
 		return false;
-	}
-
-	private static boolean _isGlobalEnum(
-		String schemaName, Components components) {
-
-		Map<String, Schema> topLevelSchemas = components.getSchemas();
-
-		return topLevelSchemas.containsKey(schemaName);
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

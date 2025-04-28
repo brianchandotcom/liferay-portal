@@ -402,9 +402,9 @@ public class ${schemaName}SerDes {
 							}
 
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyName}Array);
-						<#elseif allExternalSchemas?keys?seq_contains(propertyType) || (allSchemas?keys?seq_contains(propertyType) && !globalEnumSchemas?keys?seq_contains(propertyType))>
+						<#elseif allExternalSchemas?keys?seq_contains(propertyType) || allSchemas?keys?seq_contains(propertyType)>
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyType}SerDes.toDTO((String)jsonParserFieldValue));
-						<#elseif propertyType?ends_with("[]") && (allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || (allSchemas?keys?seq_contains(propertyType?remove_ending("[]")) && !globalEnumSchemas?keys?seq_contains(propertyType?remove_ending("[]"))))>
+						<#elseif propertyType?ends_with("[]") && (allExternalSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || allSchemas?keys?seq_contains(propertyType?remove_ending("[]")))>
 							Object[] jsonParserFieldValues = (Object[])jsonParserFieldValue;
 
 							${propertyType?remove_ending("[]")}[] ${propertyName}Array = new ${propertyType?remove_ending("[]")}[jsonParserFieldValues.length];

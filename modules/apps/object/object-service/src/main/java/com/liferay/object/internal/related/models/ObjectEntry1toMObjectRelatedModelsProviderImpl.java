@@ -81,7 +81,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationship.getObjectFieldId2());
 
 			for (ObjectEntry objectEntry : relatedModels) {
-				_objectEntryService.updateObjectEntry(
+				_objectEntryService.partialUpdateObjectEntry(
 					objectEntry.getObjectEntryId(),
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getName(), 0
@@ -103,14 +103,9 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			long primaryKey2)
 		throws PortalException {
 
-		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
-			primaryKey2);
-
-		_objectEntryService.updateObjectEntry(
+		_objectEntryService.partialUpdateObjectEntry(
 			primaryKey2,
-			HashMapBuilder.<String, Serializable>putAll(
-				objectEntry.getValues()
-			).put(
+			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					ObjectRelationship objectRelationship =
 						_objectRelationshipLocalService.getObjectRelationship(

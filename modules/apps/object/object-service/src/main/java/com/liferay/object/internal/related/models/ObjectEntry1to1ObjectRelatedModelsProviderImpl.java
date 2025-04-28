@@ -75,7 +75,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 					deletionType,
 					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)) {
 
-			_objectEntryService.updateObjectEntry(
+			_objectEntryService.partialUpdateObjectEntry(
 				objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					() -> {

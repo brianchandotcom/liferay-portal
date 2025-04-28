@@ -22,6 +22,7 @@ interface Props {
 	categoryByCategoryIdApiUrl: string;
 	categoryByVocabularyIdApiUrl: string;
 	categoryId: number;
+	categoryPermissionsApiUrl: string;
 	defaultLanguageId: string;
 	isCreateNew: boolean;
 	locales: any[];
@@ -34,6 +35,7 @@ const EditCategoryPage = ({
 	categoryByCategoryIdApiUrl,
 	categoryByVocabularyIdApiUrl,
 	categoryId,
+	categoryPermissionsApiUrl,
 	defaultLanguageId,
 	isCreateNew,
 	locales,

@@ -127,6 +127,14 @@
 	},
 	{
 		"classNames": [
+			"TemplateManagerUtil"
+		],
+		"from": "destroy(ClassLoader paramName)",
+		"issueKey": "LPD-8036",
+		"to": ""
+	},
+	{
+		"classNames": [
 			"LayoutItemSelectorCriterion"
 		],
 		"from": "setShowHiddenPages(boolean paramName)",

@@ -12,7 +12,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {gotoPage, setItemsPerPage} from '../../../utils/pagination';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -191,7 +191,7 @@ test(
 		const threadsLinks = page.getByRole('link', {
 			name: /Thread with headline #\d+/,
 		});
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < 21; i++) {
 			await apiHelpers.headlessDelivery.postMessageBoardThread({
 				articleBody: getRandomString(),
 				headline: 'Thread with headline #' + i,
@@ -201,14 +201,14 @@ test(
 
 		await messageBoardsPage.goto(site.friendlyUrlPath);
 
-		await setItemsPerPage(page, 4);
-		await expect(threadsLinks).toHaveCount(4);
+		await setItemsPerPage(page, 20);
+		await expect(threadsLinks).toHaveCount(20);
 
-		await gotoPage(page, 2);
+		await nextPage(page);
 		await expect(threadsLinks).toHaveCount(1);
 
-		await setItemsPerPage(page, 8);
-		await expect(threadsLinks).toHaveCount(5);
+		await setItemsPerPage(page, 40);
+		await expect(threadsLinks).toHaveCount(21);
 	}
 );
 
@@ -219,7 +219,7 @@ test(
 		const threadsLinks = page.getByRole('link', {
 			name: /Thread with headline #\d+/,
 		});
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < 21; i++) {
 			await apiHelpers.headlessDelivery.postMessageBoardThread({
 				articleBody: getRandomString(),
 				headline: 'Thread with headline #' + i,
@@ -228,13 +228,13 @@ test(
 		}
 		await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 
-		await setItemsPerPage(page, 4);
-		await expect(threadsLinks).toHaveCount(4);
+		await setItemsPerPage(page, 20);
+		await expect(threadsLinks).toHaveCount(20);
 
-		await gotoPage(page, 2);
+		await nextPage(page);
 		await expect(threadsLinks).toHaveCount(1);
 
-		await setItemsPerPage(page, 8);
-		await expect(threadsLinks).toHaveCount(5);
+		await setItemsPerPage(page, 40);
+		await expect(threadsLinks).toHaveCount(21);
 	}
 );

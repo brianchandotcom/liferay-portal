@@ -372,6 +372,7 @@
 
 		<!-- Other fields -->
 
+		<column name="objectDefinitionId" type="long" />
 		<column name="objectEntryId" type="long" />
 		<column name="content" type="String" />
 		<column name="version" type="int" />
@@ -379,6 +380,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ObjectDefinitionId" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+		</finder>
 		<finder name="ObjectEntryId" return-type="Collection">
 			<finder-column name="objectEntryId" />
 		</finder>

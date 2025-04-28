@@ -39,7 +39,7 @@ public class FragmentDropZoneLayoutStructureItemImporter
 		FragmentDropZonePageElementDefinition
 			fragmentDropZonePageElementDefinition =
 				(FragmentDropZonePageElementDefinition)
-					pageElement.getDefinition();
+					pageElement.getPageElementDefinition();
 
 		if (fragmentDropZonePageElementDefinition == null) {
 			return fragmentDropZoneLayoutStructureItem;

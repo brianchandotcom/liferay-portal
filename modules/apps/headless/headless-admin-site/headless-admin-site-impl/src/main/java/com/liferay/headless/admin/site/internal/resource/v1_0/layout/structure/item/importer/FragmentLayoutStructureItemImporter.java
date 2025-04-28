@@ -41,7 +41,7 @@ public class FragmentLayoutStructureItemImporter
 		FragmentInstancePageElementDefinition
 			fragmentInstancePageElementDefinition =
 				(FragmentInstancePageElementDefinition)
-					pageElement.getDefinition();
+					pageElement.getPageElementDefinition();
 
 		if (fragmentInstancePageElementDefinition == null) {
 			return null;

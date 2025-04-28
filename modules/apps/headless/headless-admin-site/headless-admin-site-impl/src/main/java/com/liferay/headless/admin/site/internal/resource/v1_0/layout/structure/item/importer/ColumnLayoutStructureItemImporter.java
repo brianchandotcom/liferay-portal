@@ -36,7 +36,7 @@ public class ColumnLayoutStructureItemImporter
 					pageElement.getPosition());
 
 		ColumnPageElementDefinition columnPageElementDefinition =
-			(ColumnPageElementDefinition)pageElement.getDefinition();
+			(ColumnPageElementDefinition)pageElement.getPageElementDefinition();
 
 		if (columnPageElementDefinition == null) {
 			return columnLayoutStructureItem;

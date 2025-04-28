@@ -75,9 +75,9 @@ public class PageElementDTOConverter
 
 		return new PageElement() {
 			{
-				setDefinition(
-					() -> _getPageElementDefinition(layoutStructureItem));
 				setExternalReferenceCode(layoutStructureItem::getItemId);
+				setPageElementDefinition(
+					() -> _getPageElementDefinition(layoutStructureItem));
 				setPageElements(
 					() -> _getPageElements(
 						dtoConverterContext, layoutStructure,

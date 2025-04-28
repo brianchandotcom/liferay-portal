@@ -39,7 +39,7 @@ public class RowLayoutStructureItemImporter
 					pageElement.getPosition());
 
 		RowPageElementDefinition rowPageElementDefinition =
-			(RowPageElementDefinition)pageElement.getDefinition();
+			(RowPageElementDefinition)pageElement.getPageElementDefinition();
 
 		if (rowPageElementDefinition == null) {
 			return rowStyledLayoutStructureItem;

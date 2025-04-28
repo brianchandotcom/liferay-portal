@@ -27,7 +27,7 @@ public class LayoutStructureUtil {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
 			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getDefinition());
+				pageElement.getPageElementDefinition());
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemImporter.addLayoutStructureItem(

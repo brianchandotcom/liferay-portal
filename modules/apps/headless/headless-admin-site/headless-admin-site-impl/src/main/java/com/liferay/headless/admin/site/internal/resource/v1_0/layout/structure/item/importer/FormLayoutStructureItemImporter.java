@@ -43,7 +43,7 @@ public class FormLayoutStructureItemImporter
 					pageElement.getPosition());
 
 		FormPageElementDefinition formPageElementDefinition =
-			(FormPageElementDefinition)pageElement.getDefinition();
+			(FormPageElementDefinition)pageElement.getPageElementDefinition();
 
 		if (formPageElementDefinition == null) {
 			return formStyledLayoutStructureItem;

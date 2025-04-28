@@ -8,10 +8,10 @@ import {fetch} from 'frontend-js-web';
 import {HEADERS_ALL_LANGUAGES} from '../../../services/api';
 
 const createCategory = async (
-	categoryByVocabularyIdApiUrl: string,
+	categoryByVocabularyIdAPIURL: string,
 	category: TaxonomyCategory
 ) => {
-	const response = await fetch(categoryByVocabularyIdApiUrl, {
+	const response = await fetch(categoryByVocabularyIdAPIURL, {
 		body: JSON.stringify(category),
 		headers: HEADERS_ALL_LANGUAGES,
 		method: 'POST',
@@ -28,10 +28,10 @@ const createCategory = async (
 };
 
 const getCategory = async (
-	categoryByCategoryIdApiUrl: string,
+	categoryByCategoryIdAPIURL: string,
 	categoryId: number
 ) => {
-	const response = await fetch(categoryByCategoryIdApiUrl, {
+	const response = await fetch(categoryByCategoryIdAPIURL, {
 		headers: HEADERS_ALL_LANGUAGES,
 		method: 'GET',
 	});
@@ -47,10 +47,10 @@ const getCategory = async (
 };
 
 const updateCategory = async (
-	categoryByCategoryIdApiUrl: string,
+	categoryByCategoryIdAPIURL: string,
 	category: TaxonomyCategory
 ) => {
-	const response = await fetch(categoryByCategoryIdApiUrl, {
+	const response = await fetch(categoryByCategoryIdAPIURL, {
 		body: JSON.stringify(category),
 		headers: HEADERS_ALL_LANGUAGES,
 		method: 'PATCH',

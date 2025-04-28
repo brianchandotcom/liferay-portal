@@ -7,6 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayCreateSuccessToast,
 	displayEditSuccessToast,
@@ -14,15 +15,17 @@ import {
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
+import CategorizationPermissionService from '../services/CategorizationPermissionService';
 import CategoryService from '../services/CategoryService';
+import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import EditCategoryGeneralInfoTab from './components/EditCategoryGeneralInfoTab';
 
 interface Props {
 	backURL: string | URL;
-	categoryByCategoryIdApiUrl: string;
-	categoryByVocabularyIdApiUrl: string;
+	categoryByCategoryIdAPIURL: string;
+	categoryByVocabularyIdAPIURL: string;
 	categoryId: number;
-	categoryPermissionsApiUrl: string;
+	categoryPermissionsAPIURL: string;
 	defaultLanguageId: string;
 	isCreateNew: boolean;
 	locales: any[];
@@ -32,10 +35,10 @@ interface Props {
 
 const EditCategoryPage = ({
 	backURL,
-	categoryByCategoryIdApiUrl,
-	categoryByVocabularyIdApiUrl,
+	categoryByCategoryIdAPIURL,
+	categoryByVocabularyIdAPIURL,
 	categoryId,
-	categoryPermissionsApiUrl,
+	categoryPermissionsAPIURL,
 	defaultLanguageId,
 	isCreateNew,
 	locales,
@@ -47,6 +50,8 @@ const EditCategoryPage = ({
 			[defaultLanguageId]: '',
 		},
 	});
+	const [categoryPermissions, setCategoryPermissions] =
+		useState<IPermissionItem[]>(DEFAULT_PERMISSIONS);
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const [title, setTitle] = useState<string>('');
 
@@ -58,7 +63,7 @@ const EditCategoryPage = ({
 			else {
 				try {
 					const fetchedData = await CategoryService.getCategory(
-						categoryByCategoryIdApiUrl,
+						categoryByCategoryIdAPIURL,
 						categoryId
 					);
 
@@ -117,9 +122,17 @@ const EditCategoryPage = ({
 
 		try {
 			if (isCreateNew) {
-				await CategoryService.createCategory(
-					categoryByVocabularyIdApiUrl,
+				const response = await CategoryService.createCategory(
+					categoryByVocabularyIdAPIURL,
 					category
+				);
+
+				await CategorizationPermissionService.putPermissions(
+					categoryPermissionsAPIURL.replace(
+						'{taxonomyCategoryId}',
+						response.id
+					),
+					categoryPermissions
 				);
 
 				navigate(backURL);
@@ -144,7 +157,7 @@ const EditCategoryPage = ({
 								processClose();
 
 								await CategoryService.updateCategory(
-									categoryByCategoryIdApiUrl,
+									categoryByCategoryIdAPIURL,
 									category
 								);
 
@@ -177,7 +190,7 @@ const EditCategoryPage = ({
 
 		try {
 			await CategoryService.createCategory(
-				categoryByVocabularyIdApiUrl,
+				categoryByVocabularyIdAPIURL,
 				category
 			);
 		}
@@ -209,7 +222,9 @@ const EditCategoryPage = ({
 				locales={locales}
 				nameInputError={nameInputError}
 				setCategory={setCategory}
+				setCategoryPermissions={setCategoryPermissions}
 				setNameInputError={setNameInputError}
+				showPermissions={isCreateNew}
 				spritemap={spritemap}
 			/>
 		);

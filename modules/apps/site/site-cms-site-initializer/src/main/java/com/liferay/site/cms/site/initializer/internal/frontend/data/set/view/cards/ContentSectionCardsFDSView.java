@@ -6,18 +6,10 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.cards;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
-import com.liferay.frontend.data.set.view.cards.FDSCardSchema;
-import com.liferay.frontend.data.set.view.cards.FDSCardSchemaBuilder;
-import com.liferay.frontend.data.set.view.cards.FDSCardSchemaBuilderFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mikel Lorza
@@ -26,7 +18,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
 	service = FDSView.class
 )
-public class ContentSectionCardsFDSView extends BaseCardsFDSView {
+public class ContentSectionCardsFDSView extends BaseSectionCardsFDSView {
 
 	@Override
 	public String getDescription() {
@@ -34,41 +26,8 @@ public class ContentSectionCardsFDSView extends BaseCardsFDSView {
 	}
 
 	@Override
-	public FDSCardSchema getFDSCardSchema(Locale locale) {
-		FDSCardSchemaBuilder fdsCardSchemaBuilder =
-			_fdsCardSchemaBuilderFactory.create();
-
-		return fdsCardSchemaBuilder.add(
-			"embedded.status.label",
-			HashMapBuilder.put(
-				"approved", "success"
-			).put(
-				"denied", "danger"
-			).put(
-				"draft", "secondary"
-			).put(
-				"expired", "danger"
-			).put(
-				"in-trash", "info"
-			).put(
-				"inactive", "secondary"
-			).put(
-				"incomplete", "warning"
-			).put(
-				"pending", "info"
-			).put(
-				"scheduled", "info"
-			).build(),
-			"embedded.status.label_i18n"
-		).build();
-	}
-
-	@Override
 	public String getTitle() {
 		return "embedded.title";
 	}
-
-	@Reference
-	private FDSCardSchemaBuilderFactory _fdsCardSchemaBuilderFactory;
 
 }

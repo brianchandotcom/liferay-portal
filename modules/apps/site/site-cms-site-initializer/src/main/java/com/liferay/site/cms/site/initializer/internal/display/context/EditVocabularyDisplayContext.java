@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -111,7 +112,23 @@ public class EditVocabularyDisplayContext {
 		).put(
 			"vocabularyId",
 			ParamUtil.getLong(_httpServletRequest, "vocabularyId")
+		).put(
+			"vocabularyPermissionsApiUrl", getVocabularyPermissionsApiUrl()
 		).build();
+	}
+
+	public String getVocabularyPermissionsApiUrl() {
+		long vocabularyId = ParamUtil.getLong(
+			_httpServletRequest, "vocabularyId");
+
+		if (vocabularyId == 0) {
+			return "/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies" +
+				"/{taxonomyVocabularyId}/permissions";
+		}
+
+		return StringBundler.concat(
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
+			vocabularyId, "/permissions");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

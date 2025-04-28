@@ -63,6 +63,17 @@ public class EditCategoryDisplayContext {
 		return _categoryId;
 	}
 
+	public String getCategoryPermissionsApiUrl() {
+		if (getCategoryId() == 0) {
+			return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories" +
+				"/{taxonomyCategoryId}/permissions";
+		}
+
+		return StringBundler.concat(
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+			getCategoryId(), "/permissions");
+	}
+
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"backURL",
@@ -79,6 +90,8 @@ public class EditCategoryDisplayContext {
 			"categoryByVocabularyIdApiUrl", getCategoryByVocabularyIdApiUrl()
 		).put(
 			"categoryId", getCategoryId()
+		).put(
+			"categoryPermissionsApiUrl", getCategoryPermissionsApiUrl()
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale())

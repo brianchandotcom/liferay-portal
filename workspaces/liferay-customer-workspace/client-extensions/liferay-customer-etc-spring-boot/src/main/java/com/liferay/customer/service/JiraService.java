@@ -109,7 +109,11 @@ public class JiraService extends BaseService {
 	public JSONObject getIssueJSONObject(String issueKey) throws Exception {
 		try {
 			JSONObject jsonObject = new JSONObject(
-				get(_getCredentials(), _URL_REST_API_2 + "/issue/" + issueKey));
+				get(
+					_getCredentials(),
+					StringBundler.concat(
+						_URL_REST_API_2, "/issue/", issueKey,
+						"?expand=renderedFields")));
 
 			return _transformIssue(jsonObject);
 		}
@@ -339,7 +343,8 @@ public class JiraService extends BaseService {
 					StringBundler.concat(
 						_URL_REST_API_2, "/search?jql=", jql, "&fields=",
 						StringUtil.merge(returnFields), "&maxResults=",
-						maxResults, "&startAt=", startAt)));
+						maxResults, "&startAt=", startAt,
+						"&expand=renderedFields")));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -355,13 +360,18 @@ public class JiraService extends BaseService {
 		return new JSONObject(
 		).put(
 			"fields",
-			_transformIssueFields(issueJSONObject.getJSONObject("fields"))
+			_transformIssueFields(
+				issueJSONObject.getJSONObject("fields"),
+				issueJSONObject.getJSONObject("renderedFields"))
 		).put(
 			"key", issueJSONObject.getString(_FIELD_ISSUE_KEY)
 		);
 	}
 
-	private JSONObject _transformIssueFields(JSONObject issueFieldsJSONObject) {
+	private JSONObject _transformIssueFields(
+		JSONObject issueFieldsJSONObject,
+		JSONObject issueRenderedFieldsJSONObject) {
+
 		return new JSONObject(
 		).put(
 			"affectedVersionsDetails",
@@ -386,7 +396,7 @@ public class JiraService extends BaseService {
 				issueFieldsJSONObject.getJSONArray(_FIELD_COMPONENTS))
 		).put(
 			"customerPortalDescription",
-			issueFieldsJSONObject.optString(
+			issueRenderedFieldsJSONObject.optString(
 				_jiraSecurityVulnerabilityFieldCustomerPortalDescription)
 		).put(
 			"customerPortalSummary",

@@ -78,7 +78,7 @@ public class FragmentLayoutStructureItemImporter
 
 	private FragmentEntryLink _addFragmentEntryLink(
 			FragmentInstancePageElementDefinition
-					fragmentInstancePageElementDefinition,
+				fragmentInstancePageElementDefinition,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext)
 		throws Exception {

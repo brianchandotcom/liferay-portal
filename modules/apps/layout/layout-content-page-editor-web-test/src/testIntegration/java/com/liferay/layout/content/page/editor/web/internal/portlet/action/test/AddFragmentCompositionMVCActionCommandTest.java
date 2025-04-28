@@ -34,6 +34,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -366,6 +368,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-53905")
 	public void testAddFragmentCompositionWithItemSelectorTypeFragmentConfigurationField()
 		throws Exception {
 
@@ -404,106 +407,26 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		Layout draftLayout = _layout.fetchDraftLayout();
+		_testAddFragmentCompositionWithItemSelectorTypeFragmentConfigurationField(
+			fragmentCollection, fragmentEntry,
+			JSONUtil.put(
+				"className", FileEntry.class.getName()
+			).put(
+				"classNameId", _portal.getClassNameId(FileEntry.class.getName())
+			).put(
+				"classTypeId", "0"
+			).put(
+				"itemSubtype", "Basic Document"
+			).put(
+				"itemType", "Document"
+			).put(
+				"title", RandomTestUtil.randomString()
+			).put(
+				"type", InfoItemItemSelectorReturnType.class.getName()
+			));
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
-		JSONObject freeMarkerFragmentEntryProcessorJSONObject = JSONUtil.put(
-			"className", FileEntry.class.getName()
-		).put(
-			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
-		).put(
-			"classTypeId", "0"
-		).put(
-			"itemSubtype", "Basic Document"
-		).put(
-			"itemType", "Document"
-		).put(
-			"title", RandomTestUtil.randomString()
-		).put(
-			"type", InfoItemItemSelectorReturnType.class.getName()
-		);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getConfiguration(),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"itemSelector",
-						freeMarkerFragmentEntryProcessorJSONObject)
-				).toString(),
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(), _serviceContext);
-
-		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
-			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider, segmentsExperienceId);
-
-		String containerItemId = addItemJSONObject.getString("addedItemId");
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, containerItemId, 0,
-			segmentsExperienceId);
-
-		FragmentComposition fragmentComposition = _testAddFragmentComposition(
-			fragmentCollection, containerItemId,
-			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
-				_company, _group, draftLayout));
-
-		JSONObject fragmentCompositionDataJSONObject =
-			fragmentComposition.getDataJSONObject();
-
-		JSONArray pageElementsJSONArray =
-			fragmentCompositionDataJSONObject.getJSONArray("pageElements");
-
-		Assert.assertEquals(
-			pageElementsJSONArray.toString(), 1,
-			pageElementsJSONArray.length());
-
-		JSONObject pageElementJSONObject = pageElementsJSONArray.getJSONObject(
-			0);
-
-		Assert.assertEquals(
-			"Fragment", pageElementJSONObject.getString("type"));
-
-		JSONObject definitionJSONObject = pageElementJSONObject.getJSONObject(
-			"definition");
-
-		JSONObject fragmentJSONObject = definitionJSONObject.getJSONObject(
-			"fragment");
-
-		Assert.assertEquals(
-			_group.getGroupKey(), fragmentJSONObject.getString("siteKey"));
-		Assert.assertEquals(
-			fragmentEntry.getFragmentEntryKey(),
-			fragmentJSONObject.getString("key"));
-
-		JSONObject fragmentConfigJSONObject =
-			definitionJSONObject.getJSONObject("fragmentConfig");
-
-		JSONObject itemSelectorJSONObject =
-			fragmentConfigJSONObject.getJSONObject("itemSelector");
-
-		itemSelectorJSONObject = itemSelectorJSONObject.getJSONObject(
-			"_jsonObject");
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(
-				itemSelectorJSONObject.getBoolean("empty"), Boolean.TRUE));
-
-		itemSelectorJSONObject = itemSelectorJSONObject.getJSONObject("map");
-
-		Assert.assertEquals(
-			freeMarkerFragmentEntryProcessorJSONObject.toString(),
-			itemSelectorJSONObject.toString());
+		_testAddFragmentCompositionWithItemSelectorTypeFragmentConfigurationField(
+			fragmentCollection, fragmentEntry, _jsonFactory.createJSONObject());
 	}
 
 	@Test
@@ -689,6 +612,101 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		return fragmentComposition;
 	}
 
+	private void
+			_testAddFragmentCompositionWithItemSelectorTypeFragmentConfigurationField(
+				FragmentCollection fragmentCollection,
+				FragmentEntry fragmentEntry, JSONObject jsonObject)
+		throws Exception {
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("itemSelector", jsonObject)
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), _serviceContext);
+
+		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
+		String containerItemId = addItemJSONObject.getString("addedItemId");
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, draftLayout, containerItemId, 0,
+			segmentsExperienceId);
+
+		FragmentComposition fragmentComposition = _testAddFragmentComposition(
+			fragmentCollection, containerItemId,
+			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+				_company, _group, draftLayout));
+
+		JSONObject fragmentCompositionDataJSONObject =
+			fragmentComposition.getDataJSONObject();
+
+		JSONArray pageElementsJSONArray =
+			fragmentCompositionDataJSONObject.getJSONArray("pageElements");
+
+		Assert.assertEquals(
+			pageElementsJSONArray.toString(), 1,
+			pageElementsJSONArray.length());
+
+		JSONObject pageElementJSONObject = pageElementsJSONArray.getJSONObject(
+			0);
+
+		Assert.assertEquals(
+			"Fragment", pageElementJSONObject.getString("type"));
+
+		JSONObject definitionJSONObject = pageElementJSONObject.getJSONObject(
+			"definition");
+
+		JSONObject fragmentJSONObject = definitionJSONObject.getJSONObject(
+			"fragment");
+
+		Assert.assertEquals(
+			_group.getGroupKey(), fragmentJSONObject.getString("siteKey"));
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryKey(),
+			fragmentJSONObject.getString("key"));
+
+		JSONObject fragmentConfigJSONObject =
+			definitionJSONObject.getJSONObject("fragmentConfig");
+
+		JSONObject itemSelectorJSONObject =
+			fragmentConfigJSONObject.getJSONObject("itemSelector");
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			Assert.assertNull(itemSelectorJSONObject);
+
+			return;
+		}
+
+		itemSelectorJSONObject = itemSelectorJSONObject.getJSONObject(
+			"_jsonObject");
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(
+				itemSelectorJSONObject.getBoolean("empty"), Boolean.TRUE));
+
+		itemSelectorJSONObject = itemSelectorJSONObject.getJSONObject("map");
+
+		Assert.assertEquals(
+			jsonObject.toString(), itemSelectorJSONObject.toString());
+	}
+
 	private Company _company;
 
 	@Inject
@@ -711,6 +729,9 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

@@ -205,6 +205,10 @@ components:
                     $ref: "#/components/schemas/NestedTestEntity"
                 self:
                     type: string
+                stringTestEntities:
+                    items:
+                        $ref: "#/components/schemas/StringTestEntity"
+                    type: array
                 stringTestEntity:
                     $ref: "#/components/schemas/StringTestEntity"
                 testEntities:

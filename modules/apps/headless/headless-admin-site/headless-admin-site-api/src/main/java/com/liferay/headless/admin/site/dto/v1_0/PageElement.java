@@ -50,51 +50,6 @@ public class PageElement implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element's definition."
-	)
-	@Valid
-	public PageElementDefinition getDefinition() {
-		if (_definitionSupplier != null) {
-			definition = _definitionSupplier.get();
-
-			_definitionSupplier = null;
-		}
-
-		return definition;
-	}
-
-	public void setDefinition(PageElementDefinition definition) {
-		this.definition = definition;
-
-		_definitionSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDefinition(
-		UnsafeSupplier<PageElementDefinition, Exception>
-			definitionUnsafeSupplier) {
-
-		_definitionSupplier = () -> {
-			try {
-				return definitionUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The page element's definition.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElementDefinition definition;
-
-	@JsonIgnore
-	private Supplier<PageElementDefinition> _definitionSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's external reference code. Unique within the site."
 	)
 	public String getExternalReferenceCode() {
@@ -138,6 +93,53 @@ public class PageElement implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page element's definition."
+	)
+	@Valid
+	public PageElementDefinition getPageElementDefinition() {
+		if (_pageElementDefinitionSupplier != null) {
+			pageElementDefinition = _pageElementDefinitionSupplier.get();
+
+			_pageElementDefinitionSupplier = null;
+		}
+
+		return pageElementDefinition;
+	}
+
+	public void setPageElementDefinition(
+		PageElementDefinition pageElementDefinition) {
+
+		this.pageElementDefinition = pageElementDefinition;
+
+		_pageElementDefinitionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPageElementDefinition(
+		UnsafeSupplier<PageElementDefinition, Exception>
+			pageElementDefinitionUnsafeSupplier) {
+
+		_pageElementDefinitionSupplier = () -> {
+			try {
+				return pageElementDefinitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The page element's definition.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PageElementDefinition pageElementDefinition;
+
+	@JsonIgnore
+	private Supplier<PageElementDefinition> _pageElementDefinitionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the page elements this page element has."
@@ -307,18 +309,6 @@ public class PageElement implements Serializable {
 
 		sb.append("{");
 
-		PageElementDefinition definition = getDefinition();
-
-		if (definition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"definition\": ");
-
-			sb.append(String.valueOf(definition));
-		}
-
 		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
@@ -333,6 +323,19 @@ public class PageElement implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		PageElementDefinition pageElementDefinition =
+			getPageElementDefinition();
+
+		if (pageElementDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageElementDefinition\": ");
+
+			sb.append(String.valueOf(pageElementDefinition));
 		}
 
 		PageElement[] pageElements = getPageElements();

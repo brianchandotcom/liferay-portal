@@ -682,8 +682,10 @@ public abstract class BasePageElementResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("definition", additionalAssertFieldName)) {
-				if (pageElement.getDefinition() == null) {
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (pageElement.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -691,9 +693,9 @@ public abstract class BasePageElementResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
+					"pageElementDefinition", additionalAssertFieldName)) {
 
-				if (pageElement.getExternalReferenceCode() == null) {
+				if (pageElement.getPageElementDefinition() == null) {
 					valid = false;
 				}
 
@@ -845,10 +847,12 @@ public abstract class BasePageElementResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("definition", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						pageElement1.getDefinition(),
-						pageElement2.getDefinition())) {
+						pageElement1.getExternalReferenceCode(),
+						pageElement2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -857,11 +861,11 @@ public abstract class BasePageElementResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
+					"pageElementDefinition", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						pageElement1.getExternalReferenceCode(),
-						pageElement2.getExternalReferenceCode())) {
+						pageElement1.getPageElementDefinition(),
+						pageElement2.getPageElementDefinition())) {
 
 					return false;
 				}
@@ -1011,11 +1015,6 @@ public abstract class BasePageElementResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("definition")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = pageElement.getExternalReferenceCode();
 
@@ -1060,6 +1059,11 @@ public abstract class BasePageElementResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("pageElementDefinition")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("pageElements")) {

@@ -46,16 +46,6 @@ public class PageElementSerDes {
 
 		sb.append("{");
 
-		if (pageElement.getDefinition() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"definition\": ");
-
-			sb.append(String.valueOf(pageElement.getDefinition()));
-		}
-
 		if (pageElement.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -68,6 +58,16 @@ public class PageElementSerDes {
 			sb.append(_escape(pageElement.getExternalReferenceCode()));
 
 			sb.append("\"");
+		}
+
+		if (pageElement.getPageElementDefinition() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageElementDefinition\": ");
+
+			sb.append(String.valueOf(pageElement.getPageElementDefinition()));
 		}
 
 		if (pageElement.getPageElements() != null) {
@@ -133,13 +133,6 @@ public class PageElementSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageElement.getDefinition() == null) {
-			map.put("definition", null);
-		}
-		else {
-			map.put("definition", String.valueOf(pageElement.getDefinition()));
-		}
-
 		if (pageElement.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -147,6 +140,15 @@ public class PageElementSerDes {
 			map.put(
 				"externalReferenceCode",
 				String.valueOf(pageElement.getExternalReferenceCode()));
+		}
+
+		if (pageElement.getPageElementDefinition() == null) {
+			map.put("pageElementDefinition", null);
+		}
+		else {
+			map.put(
+				"pageElementDefinition",
+				String.valueOf(pageElement.getPageElementDefinition()));
 		}
 
 		if (pageElement.getPageElements() == null) {
@@ -191,11 +193,11 @@ public class PageElementSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "definition")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
+						jsonParserFieldName, "pageElementDefinition")) {
 
 				return false;
 			}
@@ -219,19 +221,19 @@ public class PageElementSerDes {
 			PageElement pageElement, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "definition")) {
-				if (jsonParserFieldValue != null) {
-					pageElement.setDefinition(
-						PageElementDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pageElementDefinition")) {
+
+				if (jsonParserFieldValue != null) {
+					pageElement.setPageElementDefinition(
+						PageElementDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {

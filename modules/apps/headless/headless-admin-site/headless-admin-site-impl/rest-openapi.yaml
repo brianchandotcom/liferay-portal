@@ -1872,15 +1872,15 @@ components:
             description:
                 A page element.
             properties:
+                externalReferenceCode:
+                    description:
+                        The page element's external reference code. Unique within the site.
+                    type: string
                 pageElementDefinition:
                     $ref: "#/components/schemas/PageElementDefinition"
                     # @review
                     description:
                         The page element's definition.
-                externalReferenceCode:
-                    description:
-                        The page element's external reference code. Unique within the site.
-                    type: string
                 pageElements:
                     # @review
                     description:

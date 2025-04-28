@@ -1872,7 +1872,7 @@ components:
             description:
                 A page element.
             properties:
-                definition:
+                pageElementDefinition:
                     $ref: "#/components/schemas/PageElementDefinition"
                     # @review
                     description:

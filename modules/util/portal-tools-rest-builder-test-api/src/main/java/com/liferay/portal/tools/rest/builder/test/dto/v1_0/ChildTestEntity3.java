@@ -208,6 +208,28 @@ public class ChildTestEntity3 extends TestEntity implements Serializable {
 			sb.append("\"");
 		}
 
+		StringTestEntity[] stringTestEntities = getStringTestEntities();
+
+		if (stringTestEntities != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntities\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < stringTestEntities.length; i++) {
+				sb.append(String.valueOf(stringTestEntities[i]));
+
+				if ((i + 1) < stringTestEntities.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		StringTestEntity stringTestEntity = getStringTestEntity();
 
 		if (stringTestEntity != null) {

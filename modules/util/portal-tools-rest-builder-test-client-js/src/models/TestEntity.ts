@@ -24,6 +24,7 @@
 			"name"?: string;
 			"nestedTestEntity"?: NestedTestEntity;
 			"self"?: string;
+			"stringTestEntities"?: Array<StringTestEntity>;
 			"stringTestEntity"?: StringTestEntity;
 			"testEntities"?: TestEntity;
 			"type"?: 'ChildTestEntity1' | 'ChildTestEntity2' | 'ChildTestEntity3';
@@ -79,6 +80,11 @@
 			baseName: "self",
 			name: "self",
 			type: "string",
+		},
+		{
+			baseName: "stringTestEntities",
+			name: "stringTestEntities",
+			type: "Array<StringTestEntity>",
 		},
 		{
 			baseName: "stringTestEntity",

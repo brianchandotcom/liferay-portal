@@ -185,6 +185,30 @@ public class ChildTestEntity1SerDes {
 			sb.append("\"");
 		}
 
+		if (childTestEntity1.getStringTestEntities() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntities\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < childTestEntity1.getStringTestEntities().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						childTestEntity1.getStringTestEntities()[i]));
+
+				if ((i + 1) < childTestEntity1.getStringTestEntities().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (childTestEntity1.getStringTestEntity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -325,6 +349,15 @@ public class ChildTestEntity1SerDes {
 			map.put("self", String.valueOf(childTestEntity1.getSelf()));
 		}
 
+		if (childTestEntity1.getStringTestEntities() == null) {
+			map.put("stringTestEntities", null);
+		}
+		else {
+			map.put(
+				"stringTestEntities",
+				String.valueOf(childTestEntity1.getStringTestEntities()));
+		}
+
 		if (childTestEntity1.getStringTestEntity() == null) {
 			map.put("stringTestEntity", null);
 		}
@@ -396,6 +429,11 @@ public class ChildTestEntity1SerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "stringTestEntities")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
@@ -472,6 +510,14 @@ public class ChildTestEntity1SerDes {
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity1.setSelf((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "stringTestEntities")) {
+
+				if (jsonParserFieldValue != null) {
+					childTestEntity1.setStringTestEntities(
+						(StringTestEntity[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {

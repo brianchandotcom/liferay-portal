@@ -160,6 +160,15 @@ public class TestEntitySerDes {
 			map.put("self", String.valueOf(testEntity.getSelf()));
 		}
 
+		if (testEntity.getStringTestEntities() == null) {
+			map.put("stringTestEntities", null);
+		}
+		else {
+			map.put(
+				"stringTestEntities",
+				String.valueOf(testEntity.getStringTestEntities()));
+		}
+
 		if (testEntity.getStringTestEntity() == null) {
 			map.put("stringTestEntity", null);
 		}
@@ -227,6 +236,11 @@ public class TestEntitySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "stringTestEntities")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
@@ -325,6 +339,14 @@ public class TestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setSelf((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "stringTestEntities")) {
+
+				if (jsonParserFieldValue != null) {
+					testEntity.setStringTestEntities(
+						(StringTestEntity[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {

@@ -446,6 +446,49 @@ public abstract class TestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
+	public StringTestEntity[] getStringTestEntities() {
+		if (_stringTestEntitiesSupplier != null) {
+			stringTestEntities = _stringTestEntitiesSupplier.get();
+
+			_stringTestEntitiesSupplier = null;
+		}
+
+		return stringTestEntities;
+	}
+
+	public void setStringTestEntities(StringTestEntity[] stringTestEntities) {
+		this.stringTestEntities = stringTestEntities;
+
+		_stringTestEntitiesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStringTestEntities(
+		UnsafeSupplier<StringTestEntity[], Exception>
+			stringTestEntitiesUnsafeSupplier) {
+
+		_stringTestEntitiesSupplier = () -> {
+			try {
+				return stringTestEntitiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected StringTestEntity[] stringTestEntities;
+
+	@JsonIgnore
+	private Supplier<StringTestEntity[]> _stringTestEntitiesSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
 	public StringTestEntity getStringTestEntity() {
 		if (_stringTestEntitySupplier != null) {
 			stringTestEntity = _stringTestEntitySupplier.get();
@@ -741,6 +784,28 @@ public abstract class TestEntity implements Serializable {
 			sb.append(_escape(self));
 
 			sb.append("\"");
+		}
+
+		StringTestEntity[] stringTestEntities = getStringTestEntities();
+
+		if (stringTestEntities != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stringTestEntities\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < stringTestEntities.length; i++) {
+				sb.append(String.valueOf(stringTestEntities[i]));
+
+				if ((i + 1) < stringTestEntities.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		StringTestEntity stringTestEntity = getStringTestEntity();

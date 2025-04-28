@@ -211,6 +211,28 @@ public abstract class TestEntity implements Cloneable, Serializable {
 
 	protected String self;
 
+	public StringTestEntity[] getStringTestEntities() {
+		return stringTestEntities;
+	}
+
+	public void setStringTestEntities(StringTestEntity[] stringTestEntities) {
+		this.stringTestEntities = stringTestEntities;
+	}
+
+	public void setStringTestEntities(
+		UnsafeSupplier<StringTestEntity[], Exception>
+			stringTestEntitiesUnsafeSupplier) {
+
+		try {
+			stringTestEntities = stringTestEntitiesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected StringTestEntity[] stringTestEntities;
+
 	public StringTestEntity getStringTestEntity() {
 		return stringTestEntity;
 	}

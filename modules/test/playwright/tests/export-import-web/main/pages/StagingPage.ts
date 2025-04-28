@@ -57,7 +57,6 @@ export class StagingPage {
 			.getByRole('button', {exact: true, name: 'Publish to Live'})
 			.click();
 
-		await this.page.locator('span').filter({ hasText: 'In Progress' }).waitFor({ state: 'hidden' });
 	}
 
 	async goto(siteKey: string) {

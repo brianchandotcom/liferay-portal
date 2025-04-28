@@ -85,6 +85,7 @@ export class JournalEditArticlePage {
 				.frameLocator(`iframe[title="Select ${assetType}"]`)
 				.getByLabel('Not Visible to Guest Users')
 				.locator('use')
+				.first()
 		).toBeVisible({timeout: 1000});
 	}
 

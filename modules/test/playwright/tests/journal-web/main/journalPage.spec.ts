@@ -241,3 +241,49 @@ test(
 		await expect(page.getByRole('button', {name: 'Delete'})).toBeDisabled();
 	}
 );
+
+test(
+	'Current item checkbox is disabled in Related Assets',
+	{
+		tag: '@LPD-54293',
+	},
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const webContentTitles = [
+			'First Web Content',
+			'Second Web Content',
+			'Third Web Content',
+		];
+
+		for (const title of webContentTitles) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: title},
+			});
+		}
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('link', {name: 'First Web Content'}).click();
+
+		await journalEditArticlePage.openRelatedAsset('Basic Web Content');
+
+		await journalEditArticlePage.changeViewInRelatedAssetPopUp(
+			'Basic Web Content',
+			'list'
+		);
+
+		const relatedAssetsFrame = page.frameLocator(
+			`iframe[title="Select Basic Web Content"]`
+		);
+
+		const relatedAssetItems = relatedAssetsFrame.locator(
+			'dd:has(input[type="checkbox"]:not([disabled]))'
+		);
+
+		await expect(relatedAssetItems).toHaveCount(2);
+	}
+);

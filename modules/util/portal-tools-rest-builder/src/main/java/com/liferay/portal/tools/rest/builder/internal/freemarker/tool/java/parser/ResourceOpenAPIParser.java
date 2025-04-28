@@ -736,8 +736,8 @@ public class ResourceOpenAPIParser {
 			Schema referenceSchema = schemas.get(referenceName);
 
 			if (referenceSchema == null) {
-				Map<String, Schema> enumSchemas =
-					OpenAPIUtil.getGlobalEnumSchemas(configYAML, schemas);
+				Map<String, Schema> enumSchemas = OpenAPIUtil.getEnumSchemas(
+					configYAML, schemas);
 
 				referenceSchema = enumSchemas.get(referenceName);
 			}

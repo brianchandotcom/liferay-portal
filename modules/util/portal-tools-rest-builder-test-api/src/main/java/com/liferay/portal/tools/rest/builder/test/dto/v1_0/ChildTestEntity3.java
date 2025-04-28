@@ -220,7 +220,7 @@ public class ChildTestEntity3 extends TestEntity implements Serializable {
 			sb.append("[");
 
 			for (int i = 0; i < stringTestEntities.length; i++) {
-				sb.append(String.valueOf(stringTestEntities[i]));
+				sb.append(stringTestEntities[i]);
 
 				if ((i + 1) < stringTestEntities.length) {
 					sb.append(", ");
@@ -239,7 +239,7 @@ public class ChildTestEntity3 extends TestEntity implements Serializable {
 
 			sb.append("\"stringTestEntity\": ");
 
-			sb.append(String.valueOf(stringTestEntity));
+			sb.append(stringTestEntity);
 		}
 
 		TestEntity testEntities = getTestEntities();

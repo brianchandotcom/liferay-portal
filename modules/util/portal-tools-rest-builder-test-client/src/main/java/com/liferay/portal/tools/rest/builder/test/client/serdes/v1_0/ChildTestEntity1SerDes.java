@@ -197,9 +197,7 @@ public class ChildTestEntity1SerDes {
 			for (int i = 0; i < childTestEntity1.getStringTestEntities().length;
 				 i++) {
 
-				sb.append(
-					String.valueOf(
-						childTestEntity1.getStringTestEntities()[i]));
+				sb.append(childTestEntity1.getStringTestEntities()[i]);
 
 				if ((i + 1) < childTestEntity1.getStringTestEntities().length) {
 					sb.append(", ");
@@ -216,7 +214,7 @@ public class ChildTestEntity1SerDes {
 
 			sb.append("\"stringTestEntity\": ");
 
-			sb.append(String.valueOf(childTestEntity1.getStringTestEntity()));
+			sb.append(childTestEntity1.getStringTestEntity());
 		}
 
 		if (childTestEntity1.getTestEntities() != null) {

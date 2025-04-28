@@ -5,8 +5,8 @@
 
 export const exportImportConfig = {
 	environment: {
-		tomcatTempDir: process.env.tomcat_dir
-			? process.env.tomcat_dir
+		tomcatTempDir: process.env.TOMCAT_DIR
+			? process.env.TOMCAT_DIR
 			: '/home/me/Projects/eng/bundles/tomcat-9.0.102/temp'
 	}
 };

@@ -5,9 +5,7 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 </#list>
 
 <#list allSchemas?keys as schemaName>
-	<#if !globalEnumSchemas[schemaName]??>
-		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
-	</#if>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 </#list>
 
 import com.liferay.portal.kernel.change.tracking.CTAware;

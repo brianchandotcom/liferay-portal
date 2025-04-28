@@ -1564,7 +1564,13 @@ public class WabProcessor {
 
 			_processExcludedJSPs(analyzer);
 
-			analyzer.setProperties(pluginPackageProperties);
+			for (String stringPropertyName :
+					pluginPackageProperties.stringPropertyNames()) {
+
+				analyzer.setProperty(
+					stringPropertyName,
+					pluginPackageProperties.getProperty(stringPropertyName));
+			}
 
 			_processBeans(analyzer);
 

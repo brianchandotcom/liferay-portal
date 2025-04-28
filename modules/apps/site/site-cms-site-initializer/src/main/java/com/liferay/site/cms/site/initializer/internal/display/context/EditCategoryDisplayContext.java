@@ -42,12 +42,12 @@ public class EditCategoryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getCategoryByCategoryIdApiUrl() {
+	public String getCategoryByCategoryIdAPIURL() {
 		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/" +
 			getCategoryId();
 	}
 
-	public String getCategoryByVocabularyIdApiUrl() {
+	public String getCategoryByVocabularyIdAPIURL() {
 		return StringBundler.concat(
 			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
 			getVocabularyId(), "/taxonomy-categories");
@@ -63,6 +63,17 @@ public class EditCategoryDisplayContext {
 		return _categoryId;
 	}
 
+	public String getCategoryPermissionsAPIURL() {
+		if (getCategoryId() == 0) {
+			return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories" +
+				"/{taxonomyCategoryId}/permissions";
+		}
+
+		return StringBundler.concat(
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+			getCategoryId(), "/permissions");
+	}
+
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"backURL",
@@ -74,11 +85,13 @@ public class EditCategoryDisplayContext {
 					_themeDisplay),
 				"vocabularyId", getVocabularyId())
 		).put(
-			"categoryByCategoryIdApiUrl", getCategoryByCategoryIdApiUrl()
+			"categoryByCategoryIdAPIURL", getCategoryByCategoryIdAPIURL()
 		).put(
-			"categoryByVocabularyIdApiUrl", getCategoryByVocabularyIdApiUrl()
+			"categoryByVocabularyIdAPIURL", getCategoryByVocabularyIdAPIURL()
 		).put(
 			"categoryId", getCategoryId()
+		).put(
+			"categoryPermissionsAPIURL", getCategoryPermissionsAPIURL()
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale())

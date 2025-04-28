@@ -31,6 +31,7 @@ export default function EditVocabulary({
 	siteId,
 	spritemap,
 	vocabularyId,
+	vocabularyPermissionsApiUrl,
 }: {
 	assetTypes: AssetType[];
 	backURL: string;
@@ -39,6 +40,7 @@ export default function EditVocabulary({
 	siteId: number;
 	spritemap: string;
 	vocabularyId: number;
+	vocabularyPermissionsApiUrl: string;
 }) {
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL

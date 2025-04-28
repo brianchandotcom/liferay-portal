@@ -31,7 +31,6 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -636,8 +635,8 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		randomAccountGroup.setPermissions(
 			new Permission[] {permission1, permission2});
 
-		_waitForFinish(
-			"COMPLETED", true,
+		waitForFinish(
+			"COMPLETED",
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
 					"items",
@@ -793,33 +792,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 			Assert.assertEquals(
 				"The account group name is invalid", problem.getTitle());
-		}
-	}
-
-	private JSONObject _waitForFinish(
-			String expectedExecuteStatus, boolean importTask,
-			JSONObject jsonObject)
-		throws Exception {
-
-		String endpoint = StringBundler.concat(
-			"headless-batch-engine/v1.0/",
-			importTask ? "import-task" : "export-task",
-			"/by-external-reference-code/");
-
-		while (true) {
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null, endpoint + jsonObject.getString("externalReferenceCode"),
-				Http.Method.GET);
-
-			String executeStatus = jsonObject.getString("executeStatus");
-
-			if (StringUtil.equals(executeStatus, "COMPLETED") ||
-				StringUtil.equals(executeStatus, "FAILED")) {
-
-				Assert.assertEquals(expectedExecuteStatus, executeStatus);
-
-				return jsonObject;
-			}
 		}
 	}
 

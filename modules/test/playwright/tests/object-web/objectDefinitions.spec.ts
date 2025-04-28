@@ -446,6 +446,79 @@ test.describe('Manage object definitions through Model Builder', () => {
 		).toBeVisible();
 	});
 
+	test('object definition remains in its folder after external reference code edit and new object definition creation', async ({
+		apiHelpers,
+		modalAddObjectDefinitionPage,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		await modelBuilderDiagramPage.goto({
+			objectFolderName: objectFolder.name,
+		});
+
+		await modelBuilderObjectDefinitionNodePage.clickObjectDefinitionActionsButton(
+			objectDefinition1.label['en-us'],
+			modelBuilderDiagramPage.objectDefinitionNodes
+		);
+
+		await modelBuilderObjectDefinitionNodePage.editObjectDefinitionExternalReferenceCodeButton.click();
+
+		const objectDefinitionExternalReferenceCode =
+			'ObjectDefinition' + getRandomInt();
+
+		await modelBuilderObjectDefinitionNodePage.modalEditObjectDefinitionExternalReferenceCodeInput.fill(
+			objectDefinitionExternalReferenceCode
+		);
+
+		await page.getByRole('button', {name: 'save'}).click();
+
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+
+		await modelBuilderLeftSidebarPage.createNewObjectDefinitionButton.click();
+
+		const objectDefinition2 =
+			await modalAddObjectDefinitionPage.createObjectDefinition(
+				objectDefinitionLabel
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		await waitForAlert(
+			page,
+			`Success:${objectDefinitionLabel} was created successfully.`
+		);
+
+		await page.reload();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition1.label['en_US'],
+			})
+		).toBeVisible();
+	});
+
 	test('see object definition details', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

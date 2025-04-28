@@ -16,8 +16,10 @@ export class ModelBuilderObjectDefinitionNodePage {
 	readonly addObjectFieldOrRelationshipButton: Locator;
 	readonly addObjectRelationshipButton: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
+	readonly editObjectDefinitionExternalReferenceCodeButton: Locator;
 	readonly newObjectFieldSaveButton: Locator;
 	readonly newObjectRelationshipSaveButton: Locator;
+	readonly modalEditObjectDefinitionExternalReferenceCodeInput: Locator;
 	readonly modalDeleteObjectDefinitionTextField: Locator;
 	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
 	readonly objectFieldBusinessTypeSelect: Locator;
@@ -47,9 +49,14 @@ export class ModelBuilderObjectDefinitionNodePage {
 		this.deleteObjectDefinitionOption = page.getByRole('menuitem', {
 			name: 'Delete Object',
 		});
+		this.editObjectDefinitionExternalReferenceCodeButton = page
+			.getByText('Edit ERC')
+			.last();
 		this.modalDeleteObjectDefinitionConfirmationButton = page
 			.getByRole('dialog')
 			.getByRole('button', {exact: true, name: 'Delete'});
+		this.modalEditObjectDefinitionExternalReferenceCodeInput =
+			page.getByLabel('External Reference Code' + 'Mandatory');
 		this.modalDeleteObjectDefinitionTextField = page.getByPlaceholder(
 			'Confirm Object Definition Name'
 		);

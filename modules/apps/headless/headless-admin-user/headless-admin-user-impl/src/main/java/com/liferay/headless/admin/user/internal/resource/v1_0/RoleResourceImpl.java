@@ -8,10 +8,12 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.RoleEntityModel;
+import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -20,7 +22,9 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -256,6 +260,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		_addResourcePermission(role, serviceBuilderRole);
 
+		serviceBuilderRole = _updateNestedResources(role, serviceBuilderRole);
+
 		return _roleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				true, _getActions(serviceBuilderRole.getRoleId()),
@@ -337,6 +343,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		_addResourcePermission(role, serviceBuilderRole);
+
+		serviceBuilderRole = _updateNestedResources(role, serviceBuilderRole);
 
 		return _roleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -444,6 +452,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 
 		_addResourcePermission(role, serviceBuilderRole);
+
+		serviceBuilderRole = _updateNestedResources(role, serviceBuilderRole);
 
 		return _roleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -572,6 +582,21 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		return titleMap;
 	}
 
+	private com.liferay.portal.kernel.model.Role _updateNestedResources(
+			Role role, com.liferay.portal.kernel.model.Role serviceBuilderRole)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return serviceBuilderRole;
+		}
+
+		return ResourcePermissionUtil.setResourcePermissions(
+			serviceBuilderRole, serviceBuilderRole.getCompanyId(),
+			role.getPermissions(), _resourcePermissionLocalService,
+			_roleLocalService, _roleTypeContributorProvider,
+			contextUser.getUserId());
+	}
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
@@ -581,6 +606,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private OrganizationService _organizationService;
 
 	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
 	private ResourcePermissionService _resourcePermissionService;
 
 	@Reference(
@@ -588,6 +616,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	)
 	private DTOConverter<com.liferay.portal.kernel.model.Role, Role>
 		_roleDTOConverter;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"

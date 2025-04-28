@@ -558,15 +558,15 @@ public class PageSpecificationResourceTest
 				pageElementDefinition.getType(),
 				curPageElementDefinition.getType());
 
+			_assertPageElements(
+				curPageElement.getPageElements(),
+				pageElement.getPageElements());
 			Assert.assertEquals(
 				pageElement.getParentExternalReferenceCode(),
 				curPageElement.getParentExternalReferenceCode());
 			Assert.assertEquals(
 				GetterUtil.getInteger(pageElement.getPosition()),
 				GetterUtil.getInteger(curPageElement.getPosition()));
-			_assertPageElements(
-				curPageElement.getPageElements(),
-				pageElement.getPageElements());
 		}
 	}
 

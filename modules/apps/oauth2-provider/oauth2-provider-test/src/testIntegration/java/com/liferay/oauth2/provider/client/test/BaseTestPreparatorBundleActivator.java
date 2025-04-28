@@ -370,7 +370,7 @@ public abstract class BaseTestPreparatorBundleActivator
 
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.addOAuth2Application(
-				companyId, user.getUserId(), user.getLogin(),
+				companyId, user.getUserId(), user.getFullName(),
 				allowedGrantTypesList, clientAuthenticationMethod,
 				user.getUserId(), clientId, 0, clientSecret,
 				"test oauth application",

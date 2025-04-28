@@ -43,59 +43,60 @@ public class VersionPicklistsService extends BaseService {
 		JSONArray releasesJSONArray = new JSONArray(
 			get(StringPool.BLANK, _liferayCustomerVersionPicklistsReleasesURL));
 
-		Map<String, List<String>> versions = _extractVersions(
+		Map<String, List<String>> versionsMap = _extractVersionsMap(
 			releasesJSONArray);
 
-		List<String> dxpMajorVersions = versions.get("dxpMajor");
-		List<String> dxpMinorVersions = versions.get("dxpMinor");
-		List<String> portalMajorVersions = versions.get("portalMajor");
-		List<String> portalMinorVersions = versions.get("portalMinor");
+		List<String> dxpMajorVersionsMap = versionsMap.get("dxpMajor");
+		List<String> dxpMinorVersionsMap = versionsMap.get("dxpMinor");
+		List<String> portalMajorVersionsMap = versionsMap.get("portalMajor");
+		List<String> portalMinorVersionsMap = versionsMap.get("portalMinor");
 
-		List<String> dxpMinorVersionsAndPortalMajorVersions = new ArrayList<>();
+		List<String> dxpMinorVersionsMapAndPortalMajorVersionsMap =
+			new ArrayList<>();
 
-		dxpMinorVersionsAndPortalMajorVersions.addAll(dxpMinorVersions);
-		dxpMinorVersionsAndPortalMajorVersions.addAll(portalMajorVersions);
+		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
+			dxpMinorVersionsMap);
+		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
+			portalMajorVersionsMap);
 
-		_updatePicklist(
-			"DXP Major Version", _liferayCustomerVersionPicklistsDXPMajorERC,
-			dxpMajorVersions);
+		_updateListTypeDefinition(
+			_liferayCustomerVersionPicklistsDXPMajorERC, "DXP Major Version",
+			dxpMajorVersionsMap);
 
-		_updatePicklist(
-			"DXP Minor Version", _liferayCustomerVersionPicklistsDXPMinorERC,
-			dxpMinorVersions);
+		_updateListTypeDefinition(
+			_liferayCustomerVersionPicklistsDXPMinorERC, "DXP Minor Version",
+			dxpMinorVersionsMap);
 
-		_updatePicklist(
-			"DXP Minor Version and Portal Major Version",
+		_updateListTypeDefinition(
 			_liferayCustomerVersionPicklistsDXPMinorPortalMajorERC,
-			dxpMinorVersionsAndPortalMajorVersions);
+			"DXP Minor Version and Portal Major Version",
+			dxpMinorVersionsMapAndPortalMajorVersionsMap);
 
-		_updatePicklist(
-			"Portal Major Version",
+		_updateListTypeDefinition(
 			_liferayCustomerVersionPicklistsPortalMajorERC,
-			portalMajorVersions);
+			"Portal Major Version", portalMajorVersionsMap);
 
-		_updatePicklist(
-			"Portal Minor Version",
+		_updateListTypeDefinition(
 			_liferayCustomerVersionPicklistsPortalMinorERC,
-			portalMinorVersions);
+			"Portal Minor Version", portalMinorVersionsMap);
 	}
 
-	private void _addVersionIfAbsentAndSort(
-		Map<String, List<String>> versions, String key, String version) {
+	private void _addVersion(
+		Map<String, List<String>> versionsMap, String key, String version) {
 
-		List<String> versionList = versions.get(key);
+		List<String> versions = versionsMap.get(key);
 
-		if ((versionList != null) && !versionList.contains(version)) {
-			versionList.add(version);
+		if ((versions != null) && !versions.contains(version)) {
+			versions.add(version);
 
-			Collections.sort(versionList);
+			Collections.sort(versions);
 		}
 	}
 
-	private Map<String, List<String>> _extractVersions(
+	private Map<String, List<String>> _extractVersionsMap(
 		JSONArray releasesJSONArray) {
 
-		Map<String, List<String>> versions =
+		Map<String, List<String>> versionsMap =
 			HashMapBuilder.<String, List<String>>put(
 				"dxpMajor", new ArrayList<>()
 			).put(
@@ -133,13 +134,11 @@ public class VersionPicklistsService extends BaseService {
 						productGroupVersion;
 			}
 
-			_addVersionIfAbsentAndSort(
-				versions, product + "Major", productGroupVersion);
-			_addVersionIfAbsentAndSort(
-				versions, product + "Minor", productVersion);
+			_addVersion(versionsMap, product + "Major", productGroupVersion);
+			_addVersion(versionsMap, product + "Minor", productVersion);
 		}
 
-		return versions;
+		return versionsMap;
 	}
 
 	private String _getAuthorization() {
@@ -147,9 +146,15 @@ public class VersionPicklistsService extends BaseService {
 			"liferay-customer-etc-spring-boot-oahs");
 	}
 
-	private void _updatePicklist(
-			String name, String externalReferenceCode, List<String> values)
+	private void _updateListTypeDefinition(
+			String externalReferenceCode, String name, List<String> values)
 		throws Exception {
+
+		JSONObject listTypeDefinitionJSONObject = new JSONObject(
+			get(
+				_getAuthorization(),
+				"/o/headless-admin-list-type/v1.0/list-type-definitions" +
+					"/by-external-reference-code/" + externalReferenceCode));
 
 		JSONArray listTypeEntriesJSONArray = new JSONArray();
 
@@ -158,62 +163,52 @@ public class VersionPicklistsService extends BaseService {
 				continue;
 			}
 
-			JSONObject listTypeEntryJSONObject = new JSONObject();
-
-			JSONObject listTypeEntryNameI18nJSONObject = new JSONObject();
-
-			listTypeEntryNameI18nJSONObject.put("en-US", value);
-
-			listTypeEntryJSONObject.put(
-				"externalReferenceCode",
-				value.toUpperCase(
-				).replaceAll(
-					"[^A-Z0-9]", "_"
-				)
-			).put(
-				"key",
-				value.toLowerCase(
-				).replaceAll(
-					"[^a-z0-9]", ""
-				)
-			).put(
-				"name", value
-			).put(
-				"name_i18n", listTypeEntryNameI18nJSONObject
-			);
-
-			listTypeEntriesJSONArray.put(listTypeEntryJSONObject);
+			listTypeEntriesJSONArray.put(
+				new JSONObject(
+				).put(
+					"externalReferenceCode",
+					value.toUpperCase(
+					).replaceAll(
+						"[^A-Z0-9]", "_"
+					)
+				).put(
+					"key",
+					value.toLowerCase(
+					).replaceAll(
+						"[^a-z0-9]", ""
+					)
+				).put(
+					"name", value
+				).put(
+					"name_i18n",
+					new JSONObject(
+					).put(
+						"en-US", value
+					)
+				));
 		}
 
-		JSONObject transformedPicklistJSONObject = new JSONObject();
-
-		JSONObject nameI18nJSONObject = new JSONObject();
-
-		nameI18nJSONObject.put("en-US", name);
-
-		transformedPicklistJSONObject.put(
-			"externalReferenceCode", externalReferenceCode
-		).put(
-			"listTypeEntries", listTypeEntriesJSONArray
-		).put(
-			"name", name
-		).put(
-			"name_i18n", nameI18nJSONObject
-		);
-
-		JSONObject listTypeDefinitionJSONObject = new JSONObject(
-			get(
-				_getAuthorization(),
-				"/o/headless-admin-list-type/v1.0/list-type-definitions" +
-					"/by-external-reference-code/" + externalReferenceCode));
-
 		put(
-			_getAuthorization(), transformedPicklistJSONObject.toString(),
+			_getAuthorization(),
+			new JSONObject(
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"listTypeEntries", listTypeEntriesJSONArray
+			).put(
+				"name", name
+			).put(
+				"name_i18n",
+				new JSONObject(
+				).put(
+					"en-US", name
+				)
+			).toString(),
 			"/o/headless-admin-list-type/v1.0/list-type-definitions/" +
 				listTypeDefinitionJSONObject.getInt("id"));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Updated picklist: " + externalReferenceCode);
+			_log.info("Updated list type definition " + externalReferenceCode);
 		}
 	}
 

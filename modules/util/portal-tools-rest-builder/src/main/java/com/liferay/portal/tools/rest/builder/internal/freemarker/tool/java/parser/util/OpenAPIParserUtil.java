@@ -394,7 +394,7 @@ public class OpenAPIParserUtil {
 		}
 
 		Map<String, Schema> globalEnumSchemas =
-			OpenAPIUtil.getGlobalEnumSchemas(configYAML, allSchemas);
+			OpenAPIUtil.getGlobalEnumSchemas(configYAML, openAPIYAML);
 
 		for (String schemaName : globalEnumSchemas.keySet()) {
 			javaDataTypeMap.put(

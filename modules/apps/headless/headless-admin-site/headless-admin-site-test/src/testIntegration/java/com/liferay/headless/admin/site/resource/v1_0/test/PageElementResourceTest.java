@@ -327,7 +327,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"definition", "externalReferenceCode",
+			"externalReferenceCode", "pageElementDefinition",
 			"parentExternalReferenceCode", "position"
 		};
 	}

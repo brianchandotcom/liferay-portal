@@ -15,8 +15,10 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -388,7 +390,10 @@ public abstract class BaseSegmentsEntryProvider
 
 				String key = StringBundler.concat(
 					"customField/_", expandoColumn.getColumnId(),
-					StringPool.UNDERLINE, expandoColumn.getName());
+					StringPool.UNDERLINE,
+					StringUtil.replace(
+						expandoColumn.getName(), CharPool.SPACE,
+						CharPool.UNDERLINE));
 
 				if (expandoValue != null) {
 					expandoValues.put(key, expandoValue.getData());

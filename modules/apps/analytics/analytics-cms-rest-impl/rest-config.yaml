@@ -1,0 +1,12 @@
+apiDir: ../analytics-cms-rest-api/src/main/java
+apiPackagePath: com.liferay.analytics.cms.rest
+application:
+    baseURI: /analytics-cms-rest
+    className: AnalyticsCMSRESTApplication
+    name: Liferay.Analytics.CMS.REST
+author: Rachael Koestartyo
+clientDir: ../analytics-cms-rest-client/src/main/java
+compatibilityVersion: 9
+forcePredictableOperationId: true
+generateBatch: false
+testDir: ../analytics-cms-rest-test/src/testIntegration/java

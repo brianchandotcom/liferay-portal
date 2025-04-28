@@ -316,8 +316,8 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 
 			return ListUtil.filter(
 				serviceReferenceServiceTuples,
-				serviceReferenceTuple -> filter.match(
-					serviceReferenceTuple.getServiceReference()));
+				serviceReferenceServiceTuple -> filter.match(
+					serviceReferenceServiceTuple.getServiceReference()));
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			throw new RuntimeException(

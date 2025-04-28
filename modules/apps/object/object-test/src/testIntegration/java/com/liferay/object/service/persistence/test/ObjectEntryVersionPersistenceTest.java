@@ -130,6 +130,8 @@ public class ObjectEntryVersionPersistenceTest {
 
 		newObjectEntryVersion.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectEntryVersion.setObjectDefinitionId(RandomTestUtil.nextLong());
+
 		newObjectEntryVersion.setObjectEntryId(RandomTestUtil.nextLong());
 
 		newObjectEntryVersion.setContent(RandomTestUtil.randomString());
@@ -170,6 +172,9 @@ public class ObjectEntryVersionPersistenceTest {
 				existingObjectEntryVersion.getModifiedDate()),
 			Time.getShortTimestamp(newObjectEntryVersion.getModifiedDate()));
 		Assert.assertEquals(
+			existingObjectEntryVersion.getObjectDefinitionId(),
+			newObjectEntryVersion.getObjectDefinitionId());
+		Assert.assertEquals(
 			existingObjectEntryVersion.getObjectEntryId(),
 			newObjectEntryVersion.getObjectEntryId());
 		Assert.assertEquals(
@@ -199,6 +204,13 @@ public class ObjectEntryVersionPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByObjectDefinitionId() throws Exception {
+		_persistence.countByObjectDefinitionId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectDefinitionId(0L);
 	}
 
 	@Test
@@ -245,7 +257,8 @@ public class ObjectEntryVersionPersistenceTest {
 			"ObjectEntryVersion", "mvccVersion", true, "uuid", true,
 			"objectEntryVersionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectEntryId", true, "version", true, "status", true);
+			"objectDefinitionId", true, "objectEntryId", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -554,6 +567,8 @@ public class ObjectEntryVersionPersistenceTest {
 		objectEntryVersion.setCreateDate(RandomTestUtil.nextDate());
 
 		objectEntryVersion.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectEntryVersion.setObjectDefinitionId(RandomTestUtil.nextLong());
 
 		objectEntryVersion.setObjectEntryId(RandomTestUtil.nextLong());
 

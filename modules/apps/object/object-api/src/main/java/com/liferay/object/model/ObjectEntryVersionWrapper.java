@@ -42,6 +42,7 @@ public class ObjectEntryVersionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryId", getObjectEntryId());
 		attributes.put("content", getContent());
 		attributes.put("version", getVersion());
@@ -99,6 +100,12 @@ public class ObjectEntryVersionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long objectDefinitionId = (Long)attributes.get("objectDefinitionId");
+
+		if (objectDefinitionId != null) {
+			setObjectDefinitionId(objectDefinitionId);
 		}
 
 		Long objectEntryId = (Long)attributes.get("objectEntryId");
@@ -179,6 +186,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the object definition ID of this object entry version.
+	 *
+	 * @return the object definition ID of this object entry version
+	 */
+	@Override
+	public long getObjectDefinitionId() {
+		return model.getObjectDefinitionId();
 	}
 
 	/**
@@ -324,6 +341,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	 * Sets the object definition ID of this object entry version.
+	 *
+	 * @param objectDefinitionId the object definition ID of this object entry version
+	 */
+	@Override
+	public void setObjectDefinitionId(long objectDefinitionId) {
+		model.setObjectDefinitionId(objectDefinitionId);
 	}
 
 	/**

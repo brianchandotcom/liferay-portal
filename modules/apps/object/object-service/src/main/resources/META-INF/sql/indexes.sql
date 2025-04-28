@@ -37,6 +37,7 @@ create index IX_772D12BC on ObjectEntryFolder (groupId, companyId, treePath[$COL
 create unique index IX_8EC73DF1 on ObjectEntryFolder (groupId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_56A855AD on ObjectEntryFolder (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_9811B7EC on ObjectEntryVersion (objectDefinitionId);
 create unique index IX_50DA0035 on ObjectEntryVersion (objectEntryId, version);
 create index IX_5C2CDBC9 on ObjectEntryVersion (uuid_[$COLUMN_LENGTH:75$]);
 

@@ -48,6 +48,10 @@ public class ObjectEntryVersionTable
 	public final Column<ObjectEntryVersionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Long> objectDefinitionId =
+		createColumn(
+			"objectDefinitionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Long> objectEntryId =
 		createColumn(
 			"objectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

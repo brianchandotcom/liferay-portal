@@ -69,7 +69,7 @@ public class ObjectEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,6 +87,8 @@ public class ObjectEntryVersionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", objectDefinitionId=");
+		sb.append(objectDefinitionId);
 		sb.append(", objectEntryId=");
 		sb.append(objectEntryId);
 		sb.append(", content=");
@@ -139,6 +141,7 @@ public class ObjectEntryVersionCacheModel
 			objectEntryVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectEntryVersionImpl.setObjectDefinitionId(objectDefinitionId);
 		objectEntryVersionImpl.setObjectEntryId(objectEntryId);
 
 		if (content == null) {
@@ -171,6 +174,8 @@ public class ObjectEntryVersionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		objectDefinitionId = objectInput.readLong();
 
 		objectEntryId = objectInput.readLong();
 		content = (String)objectInput.readObject();
@@ -207,6 +212,8 @@ public class ObjectEntryVersionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(objectDefinitionId);
+
 		objectOutput.writeLong(objectEntryId);
 
 		if (content == null) {
@@ -229,6 +236,7 @@ public class ObjectEntryVersionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long objectDefinitionId;
 	public long objectEntryId;
 	public String content;
 	public int version;

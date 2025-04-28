@@ -69,8 +69,9 @@ public class ObjectEntryVersionModelImpl
 		{"objectEntryVersionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"objectEntryId", Types.BIGINT}, {"content", Types.CLOB},
-		{"version", Types.INTEGER}, {"status", Types.INTEGER}
+		{"objectDefinitionId", Types.BIGINT}, {"objectEntryId", Types.BIGINT},
+		{"content", Types.CLOB}, {"version", Types.INTEGER},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,6 +86,7 @@ public class ObjectEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
@@ -92,7 +94,7 @@ public class ObjectEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectEntryId LONG,content TEXT null,version INTEGER,status INTEGER)";
+		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryId LONG,content TEXT null,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntryVersion";
 
@@ -118,26 +120,32 @@ public class ObjectEntryVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTENTRYID_COLUMN_BITMASK = 2L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long OBJECTENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTENTRYVERSIONID_COLUMN_BITMASK = 16L;
+	public static final long OBJECTENTRYVERSIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -266,6 +274,9 @@ public class ObjectEntryVersionModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", ObjectEntryVersion::getModifiedDate);
 			attributeGetterFunctions.put(
+				"objectDefinitionId",
+				ObjectEntryVersion::getObjectDefinitionId);
+			attributeGetterFunctions.put(
 				"objectEntryId", ObjectEntryVersion::getObjectEntryId);
 			attributeGetterFunctions.put(
 				"content", ObjectEntryVersion::getContent);
@@ -323,6 +334,10 @@ public class ObjectEntryVersionModelImpl
 				"modifiedDate",
 				(BiConsumer<ObjectEntryVersion, Date>)
 					ObjectEntryVersion::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<ObjectEntryVersion, Long>)
+					ObjectEntryVersion::setObjectDefinitionId);
 			attributeSetterBiConsumers.put(
 				"objectEntryId",
 				(BiConsumer<ObjectEntryVersion, Long>)
@@ -519,6 +534,31 @@ public class ObjectEntryVersionModelImpl
 
 	@JSON
 	@Override
+	public long getObjectDefinitionId() {
+		return _objectDefinitionId;
+	}
+
+	@Override
+	public void setObjectDefinitionId(long objectDefinitionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_objectDefinitionId = objectDefinitionId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalObjectDefinitionId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+	}
+
+	@JSON
+	@Override
 	public long getObjectEntryId() {
 		return _objectEntryId;
 	}
@@ -675,6 +715,7 @@ public class ObjectEntryVersionModelImpl
 		objectEntryVersionImpl.setUserName(getUserName());
 		objectEntryVersionImpl.setCreateDate(getCreateDate());
 		objectEntryVersionImpl.setModifiedDate(getModifiedDate());
+		objectEntryVersionImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectEntryVersionImpl.setObjectEntryId(getObjectEntryId());
 		objectEntryVersionImpl.setContent(getContent());
 		objectEntryVersionImpl.setVersion(getVersion());
@@ -706,6 +747,8 @@ public class ObjectEntryVersionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectEntryVersionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectEntryVersionImpl.setObjectDefinitionId(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
 		objectEntryVersionImpl.setObjectEntryId(
 			this.<Long>getColumnOriginalValue("objectEntryId"));
 		objectEntryVersionImpl.setContent(
@@ -835,6 +878,9 @@ public class ObjectEntryVersionModelImpl
 			objectEntryVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		objectEntryVersionCacheModel.objectDefinitionId =
+			getObjectDefinitionId();
+
 		objectEntryVersionCacheModel.objectEntryId = getObjectEntryId();
 
 		objectEntryVersionCacheModel.content = getContent();
@@ -920,6 +966,7 @@ public class ObjectEntryVersionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _objectDefinitionId;
 	private long _objectEntryId;
 	private String _content;
 	private int _version;
@@ -964,6 +1011,7 @@ public class ObjectEntryVersionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("objectEntryId", _objectEntryId);
 		_columnOriginalValues.put("content", _content);
 		_columnOriginalValues.put("version", _version);
@@ -1007,13 +1055,15 @@ public class ObjectEntryVersionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("objectEntryId", 256L);
+		columnBitmasks.put("objectDefinitionId", 256L);
 
-		columnBitmasks.put("content", 512L);
+		columnBitmasks.put("objectEntryId", 512L);
 
-		columnBitmasks.put("version", 1024L);
+		columnBitmasks.put("content", 1024L);
 
-		columnBitmasks.put("status", 2048L);
+		columnBitmasks.put("version", 2048L);
+
+		columnBitmasks.put("status", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -149,6 +149,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
 		<field name="objectEntryId" type="long" />
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />

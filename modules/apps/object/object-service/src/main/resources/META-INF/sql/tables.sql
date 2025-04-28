@@ -129,6 +129,7 @@ create table ObjectEntryVersion (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	objectDefinitionId LONG,
 	objectEntryId LONG,
 	content TEXT null,
 	version INTEGER,

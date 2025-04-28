@@ -196,6 +196,20 @@ public interface ObjectEntryVersionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the object definition ID of this object entry version.
+	 *
+	 * @return the object definition ID of this object entry version
+	 */
+	public long getObjectDefinitionId();
+
+	/**
+	 * Sets the object definition ID of this object entry version.
+	 *
+	 * @param objectDefinitionId the object definition ID of this object entry version
+	 */
+	public void setObjectDefinitionId(long objectDefinitionId);
+
+	/**
 	 * Returns the object entry ID of this object entry version.
 	 *
 	 * @return the object entry ID of this object entry version

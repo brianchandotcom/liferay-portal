@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/accounts/{externalReferenceCode}/usage")
 @RestController
-public class AccountUsageRestController extends BaseRestController {
+public class AccountsUsageRestController extends BaseRestController {
 
 	@GetMapping
 	public ResponseEntity<String> get(
@@ -90,7 +90,7 @@ public class AccountUsageRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		AccountUsageRestController.class);
+		AccountsUsageRestController.class);
 
 	@Autowired
 	private GoogleCloudFunctionService _googleCloudFunctionService;

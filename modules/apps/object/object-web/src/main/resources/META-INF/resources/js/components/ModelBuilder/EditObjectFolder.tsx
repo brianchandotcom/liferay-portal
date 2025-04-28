@@ -472,6 +472,36 @@ export default function EditObjectFolder({
 								return element;
 							}) as Elements<ObjectDefinitionNodeData>;
 
+							const updatedSelectedObjectFolderItems =
+								selectedObjectFolder.objectFolderItems.map(
+									(objectFolderItem) => {
+										if (
+											objectFolderItem.objectDefinitionExternalReferenceCode ===
+											selectedObjectDefinitionNode.data
+												?.externalReferenceCode
+										) {
+											return {
+												...objectFolderItem,
+												objectDefinitionExternalReferenceCode:
+													externalReferenceCode,
+											};
+										}
+
+										return objectFolderItem;
+									}
+								);
+
+							dispatch({
+								payload: {
+									updatedSelectedObjectFolder: {
+										...selectedObjectFolder,
+										objectFolderItems:
+											updatedSelectedObjectFolderItems,
+									},
+								},
+								type: TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS,
+							});
+
 							dispatch({
 								payload: {
 									newElements: updatedElements,

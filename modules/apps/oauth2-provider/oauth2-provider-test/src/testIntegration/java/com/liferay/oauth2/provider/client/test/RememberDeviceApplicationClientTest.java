@@ -408,7 +408,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		NewCookie newCookie = newCookies.get(cookieName);
 
-		_revokeOAuth2AuthorizationByAccessToken(
+		revokeOAuth2AuthorizationByAccessToken(
 			getToken(
 				applicationClientId, null,
 				(clientId, tokenInvocationBuilder) -> {
@@ -471,7 +471,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		NewCookie newCookie = newCookies.get(cookieName);
 
-		_revokeOAuth2AuthorizationByAccessToken(
+		revokeOAuth2AuthorizationByAccessToken(
 			getToken(
 				applicationClientId, null,
 				(clientId, tokenInvocationBuilder) -> {
@@ -800,14 +800,6 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			StringPool.TRUE);
 
 		return multivaluedMap;
-	}
-
-	private void _revokeOAuth2AuthorizationByAccessToken(String token)
-		throws PortalException {
-
-		_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
-			_oAuth2AuthorizationLocalService.
-				getOAuth2AuthorizationByAccessTokenContent(token));
 	}
 
 	private static final String _COOKIE_NAME_PREFIX = "OAUTH2_REMEMBER_DEVICE_";

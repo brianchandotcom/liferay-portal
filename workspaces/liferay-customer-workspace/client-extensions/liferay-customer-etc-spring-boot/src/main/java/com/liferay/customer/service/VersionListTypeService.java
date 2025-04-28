@@ -32,16 +32,16 @@ import org.springframework.stereotype.Component;
  * @author Ryan Schuhler
  */
 @Component
-public class VersionPicklistsService extends BaseService {
+public class VersionListTypeService extends BaseService {
 
-	@Scheduled(cron = "${liferay.customer.version.picklists.cron}")
-	public void scheduledPicklistsUpdate() throws Exception {
+	@Scheduled(cron = "${liferay.customer.version.list.type.cron}")
+	public void scheduledListTypeUpdate() throws Exception {
 		if (_log.isInfoEnabled()) {
-			_log.info("Updating version picklists");
+			_log.info("Updating version list types");
 		}
 
 		JSONArray releasesJSONArray = new JSONArray(
-			get(StringPool.BLANK, _liferayCustomerVersionPicklistsReleasesURL));
+			get(StringPool.BLANK, _liferayCustomerVersionListTypeReleasesURL));
 
 		Map<String, List<String>> versionsMap = _extractVersionsMap(
 			releasesJSONArray);
@@ -60,24 +60,24 @@ public class VersionPicklistsService extends BaseService {
 			portalMajorVersionsMap);
 
 		_updateListTypeDefinition(
-			_liferayCustomerVersionPicklistsDXPMajorERC, "DXP Major Version",
+			_liferayCustomerVersionListTypeDXPMajorERC, "DXP Major Version",
 			dxpMajorVersionsMap);
 
 		_updateListTypeDefinition(
-			_liferayCustomerVersionPicklistsDXPMinorERC, "DXP Minor Version",
+			_liferayCustomerVersionListTypeDXPMinorERC, "DXP Minor Version",
 			dxpMinorVersionsMap);
 
 		_updateListTypeDefinition(
-			_liferayCustomerVersionPicklistsDXPMinorPortalMajorERC,
+			_liferayCustomerVersionListTypeDXPMinorPortalMajorERC,
 			"DXP Minor Version and Portal Major Version",
 			dxpMinorVersionsMapAndPortalMajorVersionsMap);
 
 		_updateListTypeDefinition(
-			_liferayCustomerVersionPicklistsPortalMajorERC,
+			_liferayCustomerVersionListTypePortalMajorERC,
 			"Portal Major Version", portalMajorVersionsMap);
 
 		_updateListTypeDefinition(
-			_liferayCustomerVersionPicklistsPortalMinorERC,
+			_liferayCustomerVersionListTypePortalMinorERC,
 			"Portal Minor Version", portalMinorVersionsMap);
 	}
 
@@ -213,25 +213,25 @@ public class VersionPicklistsService extends BaseService {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		VersionPicklistsService.class);
+		VersionListTypeService.class);
 
-	@Value("${liferay.customer.version.picklists.dxp.major.erc}")
-	private String _liferayCustomerVersionPicklistsDXPMajorERC;
+	@Value("${liferay.customer.version.list.type.dxp.major.erc}")
+	private String _liferayCustomerVersionListTypeDXPMajorERC;
 
-	@Value("${liferay.customer.version.picklists.dxp.minor.erc}")
-	private String _liferayCustomerVersionPicklistsDXPMinorERC;
+	@Value("${liferay.customer.version.list.type.dxp.minor.erc}")
+	private String _liferayCustomerVersionListTypeDXPMinorERC;
 
-	@Value("${liferay.customer.version.picklists.dxp.minor.portal.major.erc}")
-	private String _liferayCustomerVersionPicklistsDXPMinorPortalMajorERC;
+	@Value("${liferay.customer.version.list.type.dxp.minor.portal.major.erc}")
+	private String _liferayCustomerVersionListTypeDXPMinorPortalMajorERC;
 
-	@Value("${liferay.customer.version.picklists.portal.major.erc}")
-	private String _liferayCustomerVersionPicklistsPortalMajorERC;
+	@Value("${liferay.customer.version.list.type.portal.major.erc}")
+	private String _liferayCustomerVersionListTypePortalMajorERC;
 
-	@Value("${liferay.customer.version.picklists.portal.minor.erc}")
-	private String _liferayCustomerVersionPicklistsPortalMinorERC;
+	@Value("${liferay.customer.version.list.type.portal.minor.erc}")
+	private String _liferayCustomerVersionListTypePortalMinorERC;
 
-	@Value("${liferay.customer.version.picklists.releases.url}")
-	private String _liferayCustomerVersionPicklistsReleasesURL;
+	@Value("${liferay.customer.version.list.type.releases.url}")
+	private String _liferayCustomerVersionListTypeReleasesURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

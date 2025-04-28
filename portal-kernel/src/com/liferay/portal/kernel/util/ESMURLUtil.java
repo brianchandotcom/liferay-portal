@@ -13,6 +13,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  */
 public class ESMURLUtil {
 
+	public static String buildExportsURL(
+		ThemeDisplay themeDisplay, String contextPath, String exportModule) {
+
+		exportModule = exportModule.replaceAll("/", "\\$");
+
+		return StringBundler.concat(
+			themeDisplay.getPathContext(), "/o/", contextPath,
+			"/__liferay__/exports/", exportModule, ".js");
+	}
+
 	public static String buildURL(
 		ThemeDisplay themeDisplay, String contextPath) {
 

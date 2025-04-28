@@ -77,27 +77,71 @@ Map<String, Object> data = new HashMap<String, Object>();
 	</div>
 </div>
 
-<aui:script use="liferay-input-move-boxes">
-	new Liferay.InputMoveBoxes(
-		{
-			contentBox: '#<%= randomNamespace %>input-move-boxes',
+<aui:script type="module">
+	import React from '<%= ESMURLUtil.buildExportsURL(themeDisplay, "frontend-js-react-web", "react") %>';
+	import {ClayDualListBox} from '<%= ESMURLUtil.buildExportsURL(themeDisplay, "frontend-taglib-clay", "@clayui/form") %>';
+	import {render} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-react-web") %>';
 
-			<c:if test="<%= leftBoxMaxItems != null %>">
-				leftBoxMaxItems: <%= leftBoxMaxItems %>,
-			</c:if>
+	function main({initialItems}) {
+		const [items, setItems] = React.useState(initialItems);
 
-			<c:if test="<%= rightBoxMaxItems != null %>">
-				rightBoxMaxItems: <%= rightBoxMaxItems %>,
-			</c:if>
-
-			strings: {
-				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", leftTitle, false) %>',
-				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", leftTitle, false) %>',
-				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
-				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
-				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", rightTitle, false) %>',
-				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", rightTitle, false) %>'
+		return React.createElement(
+			ClayDualListBox,
+			{
+				items: items,
+				left: {
+					id: '<portlet:namespace /><%= leftBoxName %>',
+					label: '<%= leftTitle %>'
+				},
+				leftMaxItems: <%= leftBoxMaxItems %>,
+				onItemsChange: (newItems) => {
+					setItems(newItems);
+				},
+				right: {
+					id: '<portlet:namespace /><%= rightBoxName %>',
+					label: '<%= rightTitle %>'
+				},
+				rightMaxItems: <%= rightBoxMaxItems %>,
 			}
-		}
-	).render();
+		);
+	}
+
+	render(
+		main,
+		{
+			initialItems: [
+				[
+					<%
+					for (int i = 0; i < leftList.size(); i++) {
+						KeyValuePair kvp = (KeyValuePair)leftList.get(i);
+					%>
+
+						{
+							label: '<%= HtmlUtil.escapeJS(kvp.getValue()) %>',
+							value: '<%= HtmlUtil.escapeJS(kvp.getKey()) %>'
+						},
+					<%
+					}
+					%>
+
+				],
+				[
+					<%
+					for (int i = 0; i < rightList.size(); i++) {
+						KeyValuePair kvp = (KeyValuePair)rightList.get(i);
+					%>
+
+						{
+							label: '<%= HtmlUtil.escapeJS(kvp.getValue()) %>',
+							value: '<%= HtmlUtil.escapeJS(kvp.getKey()) %>'
+						},
+					<%
+					}
+					%>
+
+				]
+			]
+		},
+		document.querySelector('#<%= randomNamespace %>input-move-boxes')
+	);
 </aui:script>

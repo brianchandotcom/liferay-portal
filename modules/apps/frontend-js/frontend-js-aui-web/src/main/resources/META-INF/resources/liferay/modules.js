@@ -11,8 +11,6 @@
 
 	const COMBINE = LiferayAUI.getCombine();
 
-	const PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
-
 	const PATH_JAVASCRIPT = '/o/frontend-js-aui-web';
 
 	window.YUI_config = {
@@ -25,17 +23,6 @@
 		comboBase: LiferayAUI.getComboPath(),
 		filter: 'min', // If you need to debug this file, replace this with 'raw'
 		groups: {
-			editor: {
-				base: PATH_EDITOR_CKEDITOR,
-				combine: COMBINE,
-				modules: {
-					'inline-editor-ckeditor': {
-						path: 'ckeditor/main.js',
-					},
-				},
-				root: PATH_EDITOR_CKEDITOR,
-			},
-
 			liferay: {
 				base:
 					Liferay.ThemeDisplay.getCDNBaseURL() +
@@ -63,10 +50,6 @@
 						path: 'form.js',
 						requires: ['aui-base', 'aui-form-validator'],
 					},
-					'liferay-inline-editor-base': {
-						path: 'inline_editor_base.js',
-						requires: ['aui-base', 'aui-overlay-base-deprecated'],
-					},
 					'liferay-input-localized': {
 						path: 'input_localized.js',
 						requires: [
@@ -75,32 +58,6 @@
 							'aui-event-input',
 							'aui-palette',
 							'aui-set',
-						],
-					},
-					'liferay-input-move-boxes': {
-						path: 'input_move_boxes.js',
-						plugins: {
-							'liferay-input-move-boxes-touch': {
-								condition: {
-									name: 'liferay-input-move-boxes-touch',
-									test(A) {
-										return (
-											A.UA.touchEnabled && !!A.UA.mobile
-										);
-									},
-									trigger: 'liferay-input-move-boxes',
-								},
-							},
-						},
-						requires: ['aui-base', 'aui-toolbar'],
-					},
-					'liferay-input-move-boxes-touch': {
-						path: 'input_move_boxes_touch.js',
-						requires: [
-							'aui-base',
-							'aui-template-deprecated',
-							'liferay-input-move-boxes',
-							'sortable',
 						],
 					},
 					'liferay-layout': {

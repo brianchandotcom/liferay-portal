@@ -5,6 +5,7 @@
 
 import {Input, SidebarCategory} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {ElementType, useState} from 'react';
 
 import {AutoIncrementFormBase} from '../../AutoIncrementFormBase';
@@ -37,6 +38,7 @@ interface BasicInfoTabProps {
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
 	objectDefinition?: ObjectDefinition;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
@@ -57,6 +59,7 @@ export function BasicInfoTab({
 	errors,
 	filterOperators,
 	handleChange,
+	learnResources,
 	modelBuilder = false,
 	objectDefinition,
 	objectFieldBusinessTypes,
@@ -205,6 +208,7 @@ export function BasicInfoTab({
 				title={Liferay.Language.get('translation-options')}
 			>
 				<TranslationOptionsContainer
+					learnResources={learnResources}
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}
 					onSubmit={onSubmit}

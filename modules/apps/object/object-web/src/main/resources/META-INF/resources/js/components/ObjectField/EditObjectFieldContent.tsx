@@ -175,6 +175,7 @@ export function EditObjectFieldContent({
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
+								learnResources={learnResources}
 								modelBuilder={modelBuilder}
 								objectDefinition={objectDefinition}
 								objectFieldBusinessTypes={
@@ -226,6 +227,7 @@ export function EditObjectFieldContent({
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}
+					learnResources={learnResources}
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}
 					objectFieldBusinessTypes={objectFieldBusinessTypes}

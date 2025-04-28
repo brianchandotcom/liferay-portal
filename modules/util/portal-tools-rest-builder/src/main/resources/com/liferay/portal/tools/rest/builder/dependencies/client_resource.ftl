@@ -7,15 +7,11 @@ import ${configYAML.apiPackagePath}.client.aggregation.Aggregation;
 </#list>
 
 <#list allExternalSchemas?keys as externalSchemaName>
-	<#if !globalEnumSchemas[externalSchemaName]??>
-		import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${externalSchemaName};
-	</#if>
+	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${externalSchemaName};
 </#list>
 
 <#list allSchemas?keys as schemaName>
-	<#if !globalEnumSchemas[schemaName]??>
-		import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
-	</#if>
+	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 </#list>
 
 import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
@@ -26,15 +22,11 @@ import ${configYAML.apiPackagePath}.client.permission.Permission;
 import ${configYAML.apiPackagePath}.client.problem.Problem;
 
 <#list allExternalSchemas?keys as schemaName>
-	<#if !globalEnumSchemas[schemaName]??>
-		import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
-	</#if>
+	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
 <#list allSchemas?keys as schemaName>
-	<#if !globalEnumSchemas[schemaName]??>
-		import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
-	</#if>
+	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
 import java.io.File;

@@ -9,9 +9,7 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 </#list>
 
 <#list allSchemas?keys as schemaName>
-	<#if !globalEnumSchemas[schemaName]??>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
-	</#if>
 </#list>
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;

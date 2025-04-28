@@ -570,6 +570,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.9.1", "10.10.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectDefinition", "enableObjectEntryVersioning BOOLEAN"));
+
+		registry.register(
+			"10.10.0", "10.11.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntryVersion", "objectDefinitionId LONG"));
 	}
 
 	@Reference

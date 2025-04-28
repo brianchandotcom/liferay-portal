@@ -155,7 +155,7 @@ export default function ({
 
 	return {
 		dispose() {
-			onRemoveSite.dispose();
+			onRemoveSite.detach();
 			selectDelegate.dispose();
 		},
 	};

@@ -197,7 +197,7 @@ public class PageExperienceResourceTest
 			new PageElement[] {
 				new PageElement() {
 					{
-						setDefinition(
+						setPageElementDefinition(
 							new ContainerPageElementDefinition() {
 								{
 									setIndexed(true);
@@ -211,7 +211,7 @@ public class PageExperienceResourceTest
 				},
 				new PageElement() {
 					{
-						setDefinition(
+						setPageElementDefinition(
 							new ContainerPageElementDefinition() {
 								{
 									setIndexed(true);

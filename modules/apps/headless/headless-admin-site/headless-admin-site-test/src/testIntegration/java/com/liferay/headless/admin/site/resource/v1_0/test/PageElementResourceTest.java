@@ -500,7 +500,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		PageElement pageElement = super.randomPageElement();
 
-		pageElement.setDefinition(pageElementDefinition);
+		pageElement.setPageElementDefinition(pageElementDefinition);
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
 		pageElement.setPosition(_position++);

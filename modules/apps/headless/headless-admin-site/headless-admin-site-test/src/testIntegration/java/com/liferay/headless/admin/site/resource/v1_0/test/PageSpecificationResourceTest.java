@@ -549,10 +549,10 @@ public class PageSpecificationResourceTest
 				expectedPageElements);
 
 			PageElementDefinition pageElementDefinition =
-				pageElement.getDefinition();
+				pageElement.getPageElementDefinition();
 
 			PageElementDefinition curPageElementDefinition =
-				curPageElement.getDefinition();
+				curPageElement.getPageElementDefinition();
 
 			Assert.assertEquals(
 				pageElementDefinition.getType(),
@@ -971,7 +971,8 @@ public class PageSpecificationResourceTest
 
 			pageElements[i] = new PageElement() {
 				{
-					setDefinition(
+					setExternalReferenceCode(curExternalReferenceCode);
+					setPageElementDefinition(
 						() -> new ContainerPageElementDefinition() {
 							{
 								setIndexed(() -> Boolean.FALSE);
@@ -979,7 +980,6 @@ public class PageSpecificationResourceTest
 									() -> PageElementDefinition.Type.CONTAINER);
 							}
 						});
-					setExternalReferenceCode(curExternalReferenceCode);
 					setPageElements(
 						() -> {
 							if (!RandomTestUtil.randomBoolean()) {
@@ -1176,7 +1176,7 @@ public class PageSpecificationResourceTest
 					pageExperience.getPageElements(),
 					pageElement -> {
 						PageElementDefinition pageElementDefinition =
-							pageElement.getDefinition();
+							pageElement.getPageElementDefinition();
 
 						if (Objects.equals(
 								pageElementDefinition.getType(),

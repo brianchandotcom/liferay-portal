@@ -10,6 +10,7 @@ import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -659,6 +660,19 @@ public abstract class BaseClientTestCase {
 
 	protected String parseTokenString(Response response) {
 		return parseJsonField(response, "access_token");
+	}
+
+	protected void revokeOAuth2AuthorizationByAccessToken(String token)
+		throws PortalException {
+
+		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService =
+			_bundleContext.getService(
+				_bundleContext.getServiceReference(
+					OAuth2AuthorizationLocalService.class));
+
+		oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			oAuth2AuthorizationLocalService.
+				getOAuth2AuthorizationByAccessTokenContent(token));
 	}
 
 	protected OAuth2Authorization updateOAuth2Authorization(

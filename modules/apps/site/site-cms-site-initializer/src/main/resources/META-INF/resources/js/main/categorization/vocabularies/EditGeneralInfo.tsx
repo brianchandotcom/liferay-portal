@@ -13,7 +13,7 @@ import ClayForm, {
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationSpaces from '../components/CategorizationSpaces';
@@ -32,24 +32,28 @@ const VISIBILITY_OPTIONS = [
 ];
 
 export default function EditGeneralInfo({
+	assetLibraries,
 	defaultLanguageId,
 	isNew,
 	locales,
 	nameInputError,
 	onChangeVocabulary,
 	setNameInputError,
+	setSpaceChange,
 	setSpaceInputError,
 	setVocabularyPermissions,
 	showPermissions,
 	spritemap,
 	vocabulary,
 }: {
+	assetLibraries: AssetLibraryType[];
 	defaultLanguageId: string;
 	isNew: boolean;
 	locales: any[];
 	nameInputError: string;
 	onChangeVocabulary: Function;
 	setNameInputError: Function;
+	setSpaceChange: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
 	setVocabularyPermissions: Function;
 	showPermissions: boolean;
@@ -59,9 +63,14 @@ export default function EditGeneralInfo({
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 
-	const assetLibraries = selectedSpaces.map((number) => ({
-		id: number,
-	}));
+	useEffect(() => {
+		onChangeVocabulary(() => ({
+			...vocabulary,
+			assetLibraries: selectedSpaces.map((number) => ({
+				id: number,
+			})),
+		}));
+	}, [selectedSpaces]);
 
 	const getLanguageLabel = (languageId: string) => {
 		return languageId.replace('_', '-');
@@ -97,7 +106,6 @@ export default function EditGeneralInfo({
 			...vocabulary,
 			...(languageId === defaultLanguageId && {
 				name: newName,
-				siteId: assetLibraries,
 			}),
 			name_i18n: {
 				...vocabulary.name_i18n,
@@ -241,8 +249,10 @@ export default function EditGeneralInfo({
 				</div>
 
 				<CategorizationSpaces
+					assetLibraries={assetLibraries}
 					checkboxText="vocabulary"
 					setSelectedSpaces={setSelectedSpaces}
+					setSpaceChange={setSpaceChange}
 					setSpaceInputError={setSpaceInputError}
 				/>
 			</ClayForm.Group>

@@ -13,25 +13,28 @@ const CONFIRMATION_MESSAGES = {
 	SPACES: 'remove-space-from-vocabulary-confirmation',
 };
 export default function ConfirmChangesModal({
-	changeType,
+	assetTypeChange,
 	observer,
 	onOpenChange,
 	onSave,
+	spaceChange,
 }: {
-	changeType: string;
+	assetTypeChange: boolean;
 	observer: any;
 	onOpenChange: (value: boolean) => void;
 	onSave: Function;
+	spaceChange: boolean;
 }) {
 	const getConfirmationMessage = () => {
-		if (changeType === 'assetTypes') {
+		if (assetTypeChange && spaceChange) {
+			return CONFIRMATION_MESSAGES.BOTH;
+		}
+		else if (assetTypeChange) {
 			return CONFIRMATION_MESSAGES.ASSET_TYPES;
 		}
-		else if (changeType === 'spaces') {
+		else if (spaceChange) {
 			return CONFIRMATION_MESSAGES.SPACES;
 		}
-
-		return CONFIRMATION_MESSAGES.BOTH;
 	};
 
 	return (

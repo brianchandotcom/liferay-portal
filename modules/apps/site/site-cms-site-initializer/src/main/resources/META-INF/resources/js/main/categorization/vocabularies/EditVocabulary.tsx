@@ -46,14 +46,24 @@ export default function EditVocabulary({
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL
 	);
-	const [spaceInputError, setSpaceInputError] = useState('');
+	const [assetLibraries, setAssetLibraries] = useState<AssetLibraryType[]>(
+		[
+			{
+				id: -1,
+				name: 'All Spaces',
+			},
+	]);
+	const assetTypeChange = false;
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const {observer, onOpenChange, open} = useModal();
+	const [spaceChange, setSpaceChange] = useState(false);
+	const [spaceInputError, setSpaceInputError] = useState('');
 	const [title, setTitle] = useState<string>('');
 	const [vocabulary, setVocabulary] = useState<IVocabulary>({
 		assetLibraries: [
 			{
 				id: -1,
+				name: 'All Spaces',
 			},
 		],
 		assetTypes: [
@@ -78,7 +88,6 @@ export default function EditVocabulary({
 	const [vocabularyPermissions, setVocabularyPermissions] =
 		useState<IPermissionItem[]>(DEFAULT_PERMISSIONS);
 
-	const changeType = '';
 	const isNew = Number(vocabularyId) === 0;
 
 	useEffect(() => {
@@ -91,6 +100,7 @@ export default function EditVocabulary({
 					const fetchedData =
 						await VocabularyService.fetchVocabulary(vocabularyId);
 
+					setAssetLibraries(fetchedData.assetLibraries);
 					setTitle(fetchedData.name);
 					setVocabulary(fetchedData);
 				}
@@ -273,12 +283,14 @@ export default function EditVocabulary({
 						<ClayLayout.Col md={9} sm={12}>
 							{activeVerticalNavKey === 'general' && (
 								<EditGeneralInfo
+									assetLibraries={assetLibraries}
 									defaultLanguageId={defaultLanguageId}
 									isNew={isNew}
 									locales={locales}
 									nameInputError={nameInputError}
 									onChangeVocabulary={setVocabulary}
 									setNameInputError={setNameInputError}
+									setSpaceChange={setSpaceChange}
 									setSpaceInputError={setSpaceInputError}
 									setVocabularyPermissions={
 										setVocabularyPermissions
@@ -299,12 +311,13 @@ export default function EditVocabulary({
 				</ClayLayout.ContainerFluid>
 
 				<>
-					{changeType && open && (
+					{(assetTypeChange || spaceChange) && open && (
 						<ConfirmChangesModal
-							changeType={changeType}
+							assetTypeChange={assetTypeChange}
 							observer={observer}
 							onOpenChange={onOpenChange}
 							onSave={_handleSave}
+							spaceChange={spaceChange}
 						/>
 					)}
 				</>

@@ -78,9 +78,9 @@ Map<String, Object> data = new HashMap<String, Object>();
 </div>
 
 <aui:script type="module">
-	import React from '<%= ESMURLUtil.buildExportsURL(themeDisplay, "frontend-js-react-web", "react") %>';
-	import {ClayDualListBox} from '<%= ESMURLUtil.buildExportsURL(themeDisplay, "frontend-taglib-clay", "@clayui/form") %>';
-	import {render} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-react-web") %>';
+	import React from '<%= FrontendESMUtil.buildExportsURL(themeDisplay, "frontend-js-react-web", "react") %>';
+	import {ClayDualListBox} from '<%= FrontendESMUtil.buildExportsURL(themeDisplay, "frontend-taglib-clay", "@clayui/form") %>';
+	import {render} from '<%= FrontendESMUtil.buildURL(themeDisplay, "frontend-js-react-web") %>';
 
 	function main({initialItems}) {
 		const [items, setItems] = React.useState(initialItems);

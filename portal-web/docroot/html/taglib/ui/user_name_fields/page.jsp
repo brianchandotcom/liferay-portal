@@ -22,7 +22,7 @@
 </aui:select>
 
 <aui:script type="module">
-	import {UserNameFields} from '<%= ESMURLUtil.buildURL(themeDisplay, "users-admin-web") %>';
+	import {UserNameFields} from '<%= FrontendESMUtil.buildURL(themeDisplay, "users-admin-web") %>';
 
 	Liferay.component(
 		'<portlet:namespace />UserNameFields',

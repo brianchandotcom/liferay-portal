@@ -14,7 +14,7 @@
 <c:if test="<%= collapsible %>">
 	<aui:script type="module">
 		function storeTask(id, value) {
-			import('<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web") %>').then(
+			import('<%= FrontendESMUtil.buildURL(themeDisplay, "frontend-js-web") %>').then(
 				({setSessionValue}) => setSessionValue(id, value)
 			);
 		}

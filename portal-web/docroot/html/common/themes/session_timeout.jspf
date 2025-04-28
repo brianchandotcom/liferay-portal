@@ -11,7 +11,7 @@ String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REME
 
 <c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">
 	<aui:script type="module">
-		import {Session} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web", "legacy") %>';
+		import {Session} from '<%= FrontendESMUtil.buildURL(themeDisplay, "frontend-js-web", "legacy") %>';
 
 		if (Liferay.Session && Liferay.Session.destructor) {
 			Liferay.Session.destructor();

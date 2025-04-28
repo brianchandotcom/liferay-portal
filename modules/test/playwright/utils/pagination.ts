@@ -17,13 +17,13 @@ export async function nextPage(page) {
 	await getPaginator(page).getByTitle('next page').click();
 }
 
-export async function gotoPage(page, pageNumber: number | string) {
+export async function gotoPage(page, pageNumber: number) {
 	await getPaginator(page)
 		.getByRole('link', {name: `Page ${pageNumber}`})
 		.click();
 }
 
-export async function setItemsPerPage(page, limit: number | string) {
+export async function setItemsPerPage(page, limit: 20 | 40 | 60) {
 	const timeout = 300;
 	const option = getPaginator(page).getByRole('option', {
 		name: `${limit} Entries per Page`,

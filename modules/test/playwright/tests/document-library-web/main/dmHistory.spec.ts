@@ -34,7 +34,7 @@ test(
 						)
 					);
 
-				for (let i = 0; i < 11; i++) {
+				for (let i = 0; i < 20; i++) {
 					await apiHelpers.headlessDelivery.patchDocument({
 						document: {
 							description: '' + i,
@@ -49,14 +49,14 @@ test(
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.goToViewHistoryFileEntry(fileEntryTitle);
 
-		await setItemsPerPage(page, 8);
+		await setItemsPerPage(page, 20);
 
 		await expect(
-			page.getByText('Showing 1 to 8 of 12 entries.', {exact: true})
+			page.getByText('Showing 1 to 20 of 21 entries.', {exact: true})
 		).toBeVisible();
 
 		await expect(page.locator('td.lfr-version-column').nth(0)).toHaveText(
-			'1.11'
+			'1.20'
 		);
 	}
 );

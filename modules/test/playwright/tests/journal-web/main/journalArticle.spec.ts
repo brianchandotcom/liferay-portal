@@ -509,7 +509,7 @@ baseTest(
 		const contentStructureId =
 			await getBasicWebContentStructureId(apiHelpers);
 
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 42; i++) {
 			await apiHelpers.jsonWebServicesJournal.addWebContent({
 				ddmStructureId: contentStructureId,
 				groupId: site.id,
@@ -518,7 +518,7 @@ baseTest(
 
 		await journalPage.goto(site.friendlyUrlPath);
 
-		await setItemsPerPage(page, 4);
+		await setItemsPerPage(page, 20);
 
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
 		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
@@ -526,7 +526,7 @@ baseTest(
 		await nextPage(page);
 
 		await expect(
-			page.getByText('Showing 5 to 8 of 10 entries.')
+			page.getByText('Showing 21 to 40 of 42 entries.')
 		).toBeVisible();
 
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
@@ -535,7 +535,7 @@ baseTest(
 		await nextPage(page);
 
 		await expect(
-			page.getByText('Showing 9 to 10 of 10 entries.')
+			page.getByText('Showing 41 to 42 of 42 entries.')
 		).toBeVisible();
 
 		await page.getByTestId('row').nth(0).getByRole('checkbox').check();

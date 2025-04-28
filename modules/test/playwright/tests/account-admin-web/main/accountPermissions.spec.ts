@@ -730,7 +730,7 @@ test(
 			}
 		}
 
-		await setItemsPerPage(page, '40');
+		await setItemsPerPage(page, 40);
 
 		for (const account of accounts) {
 			await expect(

@@ -55,6 +55,9 @@ public class JakartaUpgradeProcessUtil {
 		sb.append(columnName);
 		sb.append(" from ");
 		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" is not null");
 
 		return sb.toString();
 	}
@@ -135,6 +138,10 @@ public class JakartaUpgradeProcessUtil {
 
 		String jakartaValue;
 		String javaxValue = (String)values[values.length - 1];
+
+		if (javaxValue == null) {
+			return null;
+		}
 
 		if (customSeparators.length > 0) {
 			jakartaValue = replace(javaxValue, customSeparators);

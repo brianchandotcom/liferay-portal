@@ -10,8 +10,8 @@ import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,7 +73,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		invocationBuilder = authorize(webTarget.request(), tokenString);
@@ -108,7 +108,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		String token = getToken(
 			"oauthTestApplicationRW", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 				"everything.write"),
 			this::parseTokenString);
 
@@ -142,18 +142,18 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createCompany("testcompany");
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationRO",
+				companyId, _user, "oauthTestApplicationRO",
 				Collections.singletonList("everything.read"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationRW",
+				companyId, _user, "oauthTestApplicationRW",
 				Arrays.asList("everything.read", "everything.write"));
 		}
 
@@ -163,5 +163,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new JsonWebServiceTestPreparatorBundleActivator();
 	}
+
+	private static User _user;
 
 }

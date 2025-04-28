@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -34,6 +35,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.model.ObjectLayoutBox;
+import com.liferay.object.model.ObjectLayoutColumn;
+import com.liferay.object.model.ObjectLayoutRow;
+import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
@@ -42,7 +48,12 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.service.test.system.TestSystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -96,6 +107,7 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -115,6 +127,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1441,6 +1454,36 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectRelationshipWithObjectLayout()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition1,
+				_objectDefinition2,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectLayout objectLayout = _objectLayoutLocalService.addObjectLayout(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(
+				_addObjectLayoutTab(0),
+				_addObjectLayoutTab(
+					objectRelationship.getObjectRelationshipId())));
+
+		List<ObjectLayoutTab> objectLayoutTabs =
+			objectLayout.getObjectLayoutTabs();
+
+		_assertObjectLayoutTab(1, objectLayoutTabs.get(1));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_assertObjectLayoutTab(0, objectLayoutTabs.get(1));
+	}
+
+	@Test
 	public void testRegisterObjectRelationshipsRelatedInfoItemCollectionProviders()
 		throws Exception {
 
@@ -2167,6 +2210,72 @@ public class ObjectRelationshipLocalServiceTest {
 			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ObjectLayoutBox _addObjectLayoutBox() throws Exception {
+		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(0);
+
+		objectLayoutBox.setCollapsable(false);
+		objectLayoutBox.setNameMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectLayoutBox.setPriority(0);
+		objectLayoutBox.setType(ObjectLayoutBoxConstants.TYPE_REGULAR);
+		objectLayoutBox.setObjectLayoutRows(
+			Arrays.asList(
+				_addObjectLayoutRow(), _addObjectLayoutRow(),
+				_addObjectLayoutRow()));
+
+		return objectLayoutBox;
+	}
+
+	private ObjectLayoutColumn _addObjectLayoutColumn() throws Exception {
+		ObjectLayoutColumn objectLayoutColumn =
+			_objectLayoutColumnPersistence.create(0);
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"x" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).required(
+				true
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		objectLayoutColumn.setObjectFieldId(objectField.getObjectFieldId());
+
+		return objectLayoutColumn;
+	}
+
+	private ObjectLayoutRow _addObjectLayoutRow() throws Exception {
+		ObjectLayoutRow objectLayoutRow = _objectLayoutRowPersistence.create(0);
+
+		objectLayoutRow.setPriority(0);
+		objectLayoutRow.setObjectLayoutColumns(
+			Collections.singletonList(_addObjectLayoutColumn()));
+
+		return objectLayoutRow;
+	}
+
+	private ObjectLayoutTab _addObjectLayoutTab(long objectRelationshipId)
+		throws Exception {
+
+		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(0);
+
+		objectLayoutTab.setObjectRelationshipId(objectRelationshipId);
+		objectLayoutTab.setNameMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+
+		if (objectRelationshipId == 0) {
+			objectLayoutTab.setObjectLayoutBoxes(
+				Collections.singletonList(_addObjectLayoutBox()));
+		}
+
+		return objectLayoutTab;
+	}
+
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()
 		throws Exception {
 
@@ -2239,6 +2348,26 @@ public class ObjectRelationshipLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectEntry.getObjectEntryId()),
 				role.getRoleId(), ActionKeys.VIEW));
+	}
+
+	private void _assertObjectLayoutTab(
+			int expectedSize, ObjectLayoutTab objectLayoutTab)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectRelationshipLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		List<ServiceReference<?>> serviceReferences = new ArrayList<>(
+			bundleContext.getServiceReferences(
+				ScreenNavigationCategory.class,
+				"(screen.navigation.category.order:Integer=" +
+					objectLayoutTab.getObjectLayoutTabId() + ")"));
+
+		Assert.assertEquals(
+			serviceReferences.toString(), expectedSize,
+			serviceReferences.size());
 	}
 
 	private void _assertRootObjectDefinitionIdIsZero(
@@ -2777,6 +2906,21 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectLayoutBoxPersistence _objectLayoutBoxPersistence;
+
+	@Inject
+	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
+
+	@Inject
+	private ObjectLayoutLocalService _objectLayoutLocalService;
+
+	@Inject
+	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
+
+	@Inject
+	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

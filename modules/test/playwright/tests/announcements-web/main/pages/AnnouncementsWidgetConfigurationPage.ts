@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 type DistributionScope = 'Organizations' | 'Roles' | 'Sites' | 'User Groups';
 

@@ -41,6 +41,19 @@ export default function PublishModal({
 	const [dateError, setDateError] = useState('');
 	const [showErrorAlert, setShowErrorAlert] = useState(false);
 
+	const handleButtonClick = () => {
+		if (!displayDate && actionButton === 'schedule') {
+			setDateError(Liferay.Language.get('please-enter-a-valid-date'));
+			setShowErrorAlert(true);
+		}
+		else if (dateError) {
+			setShowErrorAlert(true);
+		}
+		else {
+			onPublishButtonClick(actionButton);
+		}
+	};
+
 	return (
 		<ClayModal className="m-0" observer={observer} size="md">
 			<ClayModal.Header>{heading}</ClayModal.Header>
@@ -91,25 +104,7 @@ export default function PublishModal({
 						<ClayButton
 							displayType="primary"
 							form={formId}
-							onClick={() => {
-								if (
-									!displayDate &&
-									actionButton === 'schedule'
-								) {
-									setDateError(
-										Liferay.Language.get(
-											'please-enter-a-valid-date'
-										)
-									);
-									setShowErrorAlert(true);
-								}
-								else if (dateError) {
-									setShowErrorAlert(true);
-								}
-								else {
-									onPublishButtonClick(actionButton);
-								}
-							}}
+							onClick={handleButtonClick}
 							type={
 								dateError ||
 								(!displayDate && actionButton === 'schedule')

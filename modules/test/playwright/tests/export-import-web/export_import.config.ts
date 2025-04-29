@@ -5,6 +5,6 @@
 
 export const exportImportConfig = {
 	environment: {
-		tomcatDir: process.env.LIFERAY_HOME ? process.env.LIFERAY_HOME : null,
+		tomcatDir: process.env.TOMCAT_DIR ? process.env.TOMCAT_DIR : null,
 	},
 };

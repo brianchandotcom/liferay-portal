@@ -494,8 +494,6 @@ function start_app_server {
 
 	local tomcat_dir=$(get_tomcat_dir ${liferay_home})
 
-	export TOMCAT_DIR=${tomcat_dir}
-
 	cd ${tomcat_dir}/bin
 
 	/bin/bash catalina.sh run &

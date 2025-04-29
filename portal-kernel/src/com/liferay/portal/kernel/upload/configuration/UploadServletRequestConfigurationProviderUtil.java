@@ -43,11 +43,11 @@ public class UploadServletRequestConfigurationProviderUtil {
 		return uploadServletRequestConfigurationProvider.getTempDir();
 	}
 
+	private static final long _UPLOAD_MAX_SIZE_PADDING = 10000;
+
 	private static final Snapshot<UploadServletRequestConfigurationProvider>
 		_uploadServletRequestConfigurationProviderSnapshot = new Snapshot<>(
 			UploadServletRequestConfigurationProviderUtil.class,
 			UploadServletRequestConfigurationProvider.class);
-
-	private static final long _UPLOAD_MAX_SIZE_PADDING = 10000;
 
 }

@@ -4734,17 +4734,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONArray accountBriefsJSONArray = jsonObject.getJSONArray(
-				"accountBriefs");
-
-			if (JSONUtil.isEmpty(accountBriefsJSONArray)) {
-				continue;
-			}
-
 			List<Group> oldGroups = new ArrayList<>();
 
 			long imageId = jsonObject.getLong("imageId");
-			int j = 0;
 			long userId = 0;
 
 			UserAccount userAccount = UserAccount.toDTO(
@@ -4754,25 +4746,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getCompanyId(), userAccount.getEmailAddress());
 
 			if (user == null) {
-				JSONObject accountBriefsJSONObject =
-					accountBriefsJSONArray.getJSONObject(j);
-
 				userAccount =
 					userAccountResource.putUserAccountByExternalReferenceCode(
 						jsonObject.getString("externalReferenceCode"),
 						userAccount);
-
-				userAccountResource.
-					postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
-						accountBriefsJSONObject.getString(
-							"externalReferenceCode"),
-						userAccount.getExternalReferenceCode());
-
-				j++;
-
-				_associateUserAccounts(
-					accountBriefsJSONObject,
-					jsonObject.getString("emailAddress"), serviceContext);
 
 				userId = userAccount.getId();
 			}
@@ -4808,19 +4785,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 					userId);
 			}
 
-			for (; j < accountBriefsJSONArray.length(); j++) {
-				JSONObject accountBriefsJSONObject =
-					accountBriefsJSONArray.getJSONObject(j);
+			if (jsonObject.has("accountBriefs")) {
+				JSONArray accountBriefsJSONArray = jsonObject.getJSONArray(
+					"accountBriefs");
 
-				userAccountResource.
-					postAccountUserAccountByExternalReferenceCodeByEmailAddress(
-						accountBriefsJSONObject.getString(
-							"externalReferenceCode"),
-						userAccount.getEmailAddress());
+				for (int j = 0; j < accountBriefsJSONArray.length(); j++) {
+					JSONObject accountBriefsJSONObject =
+						accountBriefsJSONArray.getJSONObject(j);
 
-				_associateUserAccounts(
-					accountBriefsJSONObject,
-					jsonObject.getString("emailAddress"), serviceContext);
+					userAccountResource.
+						postAccountUserAccountByExternalReferenceCodeByEmailAddress(
+							accountBriefsJSONObject.getString(
+								"externalReferenceCode"),
+							userAccount.getEmailAddress());
+
+					_associateUserAccounts(
+						accountBriefsJSONObject,
+						jsonObject.getString("emailAddress"), serviceContext);
+				}
 			}
 
 			userAccount = userAccountResource.getUserAccountByEmailAddress(

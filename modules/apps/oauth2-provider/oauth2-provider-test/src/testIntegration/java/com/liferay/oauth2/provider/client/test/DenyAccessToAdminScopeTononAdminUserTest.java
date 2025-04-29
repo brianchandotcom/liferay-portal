@@ -67,8 +67,9 @@ public class DenyAccessToAdminScopeTononAdminUserTest
 		Assert.assertEquals(400, response.getStatus());
 	}
 
-	public static class AdminScopeTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
+	public static class
+		DenyAccessToAdminScopeTononAdminUserTestPreparatorBundleActivator
+			extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -107,7 +108,7 @@ public class DenyAccessToAdminScopeTononAdminUserTest
 
 	@Override
 	protected BundleActivator getBundleActivator() {
-		return new AdminScopeTestPreparatorBundleActivator();
+		return new DenyAccessToAdminScopeTononAdminUserTestPreparatorBundleActivator();
 	}
 
 	@Inject

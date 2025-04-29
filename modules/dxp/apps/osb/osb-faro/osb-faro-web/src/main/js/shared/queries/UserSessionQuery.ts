@@ -2,6 +2,8 @@ import {gql} from 'apollo-boost';
 import {SessionEntityTypes} from 'shared/util/constants';
 
 export interface UserSessionEvent {
+	applicationId: string;
+	assetTitle: string;
 	canonicalUrl: string;
 	createDate: string;
 	name: string;
@@ -78,6 +80,8 @@ export default gql`
 					devicePixelRatio
 					deviceType
 					events {
+						applicationId
+						assetTitle
 						canonicalUrl
 						createDate
 						name

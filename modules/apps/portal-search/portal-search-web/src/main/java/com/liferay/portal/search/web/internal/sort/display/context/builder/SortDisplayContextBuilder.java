@@ -57,7 +57,7 @@ public class SortDisplayContextBuilder {
 		SortDisplayContext sortDisplayContext = new SortDisplayContext();
 
 		List<SortTermDisplayContext> sortTermDisplayContexts =
-			_buildTermDisplayContexts();
+			_buildSortTermDisplayContexts();
 
 		sortDisplayContext.setActionDropdownItems(
 			_getActionDropdownItems(sortTermDisplayContexts));
@@ -164,7 +164,7 @@ public class SortDisplayContextBuilder {
 		return false;
 	}
 
-	private SortTermDisplayContext _buildTermDisplayContext(
+	private SortTermDisplayContext _buildSortTermDisplayContext(
 		String label, String field, int index) {
 
 		SortTermDisplayContext sortTermDisplayContext =
@@ -186,7 +186,7 @@ public class SortDisplayContextBuilder {
 		return sortTermDisplayContext;
 	}
 
-	private List<SortTermDisplayContext> _buildTermDisplayContexts() {
+	private List<SortTermDisplayContext> _buildSortTermDisplayContexts() {
 		List<SortTermDisplayContext> sortTermDisplayContexts =
 			new ArrayList<>();
 
@@ -197,7 +197,7 @@ public class SortDisplayContextBuilder {
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
 
 			sortTermDisplayContexts.add(
-				_buildTermDisplayContext(
+				_buildSortTermDisplayContext(
 					jsonObject.getString("label"),
 					jsonObject.getString("field"), i));
 		}

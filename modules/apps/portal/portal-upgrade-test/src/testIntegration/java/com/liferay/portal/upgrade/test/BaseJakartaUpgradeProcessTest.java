@@ -10,7 +10,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.BaseJakartaUpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
@@ -136,40 +138,40 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 			AtomicInteger i = new AtomicInteger();
 
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					_assertLogEntry(
-						StringBundler.concat(
-							"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_1,
-							" for company ", companyId,
-							" has been upgraded for next IDs:"),
-						new HashSet<>(
-							Arrays.asList("(0, uuid1)", "(1, uuid2)")),
-						logEntries.get(
-							i.getAndIncrement()
-						).toString());
+			long[] companyIds = ReflectionTestUtil.invoke(
+				PortalInstancePool.class, "_getCompanyIdsBySQL", null);
 
-					_assertLogEntry(
-						StringBundler.concat(
-							"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_2,
-							" for company ", companyId,
-							" has been upgraded for next IDs: "),
-						new HashSet<>(
-							Arrays.asList("(0, uuid1)", "(1, uuid2)")),
-						logEntries.get(
-							i.getAndIncrement()
-						).toString());
+			for (long companyId : companyIds) {
+				_assertLogEntry(
+					StringBundler.concat(
+						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_1,
+						" for company ", companyId,
+						" has been upgraded for next IDs:"),
+					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
+					logEntries.get(
+						i.getAndIncrement()
+					).toString());
 
-					_assertLogEntry(
-						StringBundler.concat(
-							"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_3,
-							" for company ", companyId,
-							" has been upgraded for next IDs: "),
-						new HashSet<>(Arrays.asList("(0, uuid1)")),
-						logEntries.get(
-							i.getAndIncrement()
-						).toString());
-				});
+				_assertLogEntry(
+					StringBundler.concat(
+						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_2,
+						" for company ", companyId,
+						" has been upgraded for next IDs: "),
+					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
+					logEntries.get(
+						i.getAndIncrement()
+					).toString());
+
+				_assertLogEntry(
+					StringBundler.concat(
+						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_3,
+						" for company ", companyId,
+						" has been upgraded for next IDs: "),
+					new HashSet<>(Arrays.asList("(0, uuid1)")),
+					logEntries.get(
+						i.getAndIncrement()
+					).toString());
+			}
 		}
 	}
 

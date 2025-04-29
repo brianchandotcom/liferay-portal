@@ -65,6 +65,7 @@ import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -80,6 +81,7 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Copy;
@@ -91,6 +93,7 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.TaskState;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
+import org.gradle.process.JavaExecSpec;
 import org.gradle.process.ProcessForkOptions;
 
 /**
@@ -308,6 +311,8 @@ public class ClientExtensionProjectConfigurator
 		_addDockerTasks(
 			project, assembleClientExtensionTaskProvider,
 			createClientExtensionConfigTaskProvider, workspaceExtension);
+
+		_configureSpringBootPlugin(project);
 
 		_configureLiferayRoutes(project, workspaceExtension);
 
@@ -936,6 +941,65 @@ public class ClientExtensionProjectConfigurator
 			});
 	}
 
+	private void _configureJDKJavaOptions(Project project) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED ");
+		sb.append("--add-opens=java.base/java.net=ALL-UNNAMED ");
+		sb.append(
+			"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED ");
+		sb.append(
+			"--add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED ");
+		sb.append("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED ");
+		sb.append("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED ");
+
+		Map<String, String> environmentVariables = new HashMap<>();
+
+		environmentVariables.put("JDK_JAVA_OPTIONS", sb.toString());
+
+		Gradle gradle = project.getGradle();
+
+		TaskExecutionGraph taskGraph = gradle.getTaskGraph();
+
+		taskGraph.addTaskExecutionListener(
+			new TaskExecutionListener() {
+
+				@Override
+				public void afterExecute(Task task, TaskState taskState) {
+				}
+
+				@Override
+				public void beforeExecute(Task task) {
+					if (Objects.equals(project, task.getProject()) &&
+						(task instanceof JavaExecSpec)) {
+
+						JavaExecSpec javaExecSpec = (JavaExecSpec)task;
+
+						javaExecSpec.environment(environmentVariables);
+
+						Logger logger = task.getLogger();
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								StringUtil.concat(
+									"Injecting JDK_JAVA_OPTIONS environment " +
+										"variable into the process invoked " +
+											"by the task ",
+									task.getPath()));
+
+							for (Map.Entry<String, String> entry :
+									environmentVariables.entrySet()) {
+
+								logger.info(
+									"{}: {}", entry.getKey(), entry.getValue());
+							}
+						}
+					}
+				}
+
+			});
+	}
+
 	private void _configureLanguageProject(Project project) {
 		TaskProvider<BuildLangTask> buildLangTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -1085,6 +1149,21 @@ public class ClientExtensionProjectConfigurator
 					configurableFileCollection.builtBy(assembleTask);
 
 					copySpec.from(buildClientExtensionZipTaskProvider);
+				}
+
+			});
+	}
+
+	private void _configureSpringBootPlugin(Project project) {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"org.springframework.boot",
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					_configureJDKJavaOptions(project);
 				}
 
 			});

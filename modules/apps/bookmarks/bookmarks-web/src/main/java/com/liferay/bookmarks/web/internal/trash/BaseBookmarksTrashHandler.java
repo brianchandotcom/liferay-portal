@@ -44,17 +44,10 @@ public abstract class BaseBookmarksTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		List<BookmarksFolder> folders =
+		return TransformUtil.transform(
 			BookmarksFolderLocalServiceUtil.getFolders(
-				getGroupId(classPK), parentContainerModelId, start, end);
-
-		List<ContainerModel> containerModels = new ArrayList<>(folders.size());
-
-		for (BookmarksFolder curFolder : folders) {
-			containerModels.add(curFolder);
-		}
-
-		return containerModels;
+				getGroupId(classPK), parentContainerModelId, start, end),
+			folder -> folder);
 	}
 
 	@Override

@@ -408,6 +408,53 @@ components:
                         A valid external identifier to reference this page template folder.
                     type: string
             type: object
+        DisplayPageTemplateSEOSettings:
+            description:
+                Settings related with SEO of a display page template.
+            properties:
+                description:
+                    description:
+                        The description of the display page template to be used as summary for search engines.
+                    type: string
+                htmlTitle:
+                    description:
+                        The main title of the display page template to be used by search engines.
+                    type: string
+                robots_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        A localized tag telling search engines if and how they should crawl the display page template.
+                    type: object
+                siteMapSettings:
+                    description:
+                        Represents settings related with the site map.
+                    properties:
+                        changeFrequency:
+                            description:
+                                Indicates how often a page is updated.
+                            enum:
+                                -   always
+                                -   hourly
+                                -   daily
+                                -   weekly
+                                -   monthly
+                                -   yearly
+                                -   never
+                            type: string
+                        include:
+                            description:
+                                Whether search engines should crawl and index the display page template.
+                            type: boolean
+                        pagePriority:
+                            description:
+                                How the page should be prioritized relative to other pages.
+                            format: double
+                            maximum: 1
+                            minimum: 0
+                            type: number
+                    type: object
+            type: object
         DisplayPageTemplateSettings:
             # @review
             description:
@@ -419,7 +466,7 @@ components:
                     description:
                         The display page template's Open Graph settings.
                 seoSettings:
-                    $ref: "#/components/schemas/SEOSettings"
+                    $ref: "#/components/schemas/DisplayPageTemplateSEOSettings"
                     # @review
                     description:
                         The display page template's SEO settings.

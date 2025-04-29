@@ -9,6 +9,10 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {membershipsPagesTest} from './fixtures/membershipsPagesTest';
 
@@ -303,5 +307,97 @@ test(
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 		await apiHelpers.headlessSite.deleteSite(site2.id);
+	}
+);
+
+test(
+	'Confirm tooltip of back button of Membership Requests is correct',
+	{
+		tag: '@LPS-177717',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await page.getByTitle('User Profile Menu').click();
+
+		await page
+			.getByRole('menuitem', {
+				name: 'My Dashboard',
+			})
+			.click();
+
+		await page.getByRole('link', {name: 'Available Sites'}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Request Membership'}),
+			trigger: page
+				.locator(
+					'[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-guest"]'
+				)
+				.getByLabel('Show Actions'),
+		});
+
+		await page.locator('textarea[id$=comments]').fill('Test');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await membershipsPage.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'View Membership Requests',
+			}),
+			trigger: page.getByLabel('Options', {exact: true}),
+		});
+
+		await expect(
+			page
+				.locator('.control-menu-nav-item')
+				.getByTitle('Go to Memberships')
+		).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Reply'}),
+			trigger: page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_membershipRequestsSearchContainer_1"]'
+				)
+				.getByLabel('More actions'),
+		});
+
+		await expect(
+			page
+				.locator('.control-menu-nav-item')
+				.getByTitle('Go to Membership Requests')
+		).toBeVisible();
+
+		await page.locator('textarea[id$=replyComments]').fill('Test');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page
+				.locator('.control-menu-nav-item')
+				.getByTitle('Go to Memberships')
+		).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 	}
 );

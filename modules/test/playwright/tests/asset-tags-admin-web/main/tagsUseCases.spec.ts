@@ -5,19 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {searchPageTest} from '../../fixtures/searchPageTest';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
-import getRandomString from '../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {searchPageTest} from '../../../fixtures/searchPageTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {tagsPagesTest} from './fixtures/tagsAdminPagesTest';
 
 const test = mergeTests(

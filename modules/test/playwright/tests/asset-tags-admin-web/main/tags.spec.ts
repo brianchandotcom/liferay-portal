@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {tagsPagesTest} from './fixtures/tagsAdminPagesTest';
 
 const test = mergeTests(

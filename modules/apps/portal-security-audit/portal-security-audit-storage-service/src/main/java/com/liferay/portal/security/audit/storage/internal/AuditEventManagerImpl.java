@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.audit.storage.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -17,7 +18,6 @@ import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -138,21 +138,10 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 	private List<AuditEvent> _translate(
 		List<com.liferay.portal.security.audit.storage.model.AuditEvent>
-			auditEventModels) {
+			auditEvents) {
 
-		if (auditEventModels.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<AuditEvent> auditEvents = new ArrayList<>(auditEventModels.size());
-
-		for (com.liferay.portal.security.audit.storage.model.AuditEvent
-				auditEventModel : auditEventModels) {
-
-			auditEvents.add(_createAuditEvent(auditEventModel));
-		}
-
-		return auditEvents;
+		return TransformUtil.transform(
+			auditEvents, auditEvent -> _createAuditEvent(auditEvent));
 	}
 
 	@Reference

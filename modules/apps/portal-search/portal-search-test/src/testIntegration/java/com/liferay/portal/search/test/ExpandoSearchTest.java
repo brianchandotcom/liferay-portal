@@ -16,6 +16,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -424,13 +425,8 @@ public class ExpandoSearchTest {
 	protected List<String> getExpandoColumnValues(Hits hits) {
 		List<Document> documents = hits.toList();
 
-		List<String> values = new ArrayList<>(documents.size());
-
-		for (Document document : documents) {
-			values.add(getExpandoColumnValue(document));
-		}
-
-		return values;
+		return TransformUtil.transform(
+			documents, document -> getExpandoColumnValue(document));
 	}
 
 	protected ServiceContext getServiceContext(

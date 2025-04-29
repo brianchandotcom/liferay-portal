@@ -136,12 +136,13 @@ public class JakartaUpgradeProcessUtil {
 			String[] primaryKeyColumnNames, Object[] values)
 		throws SQLException {
 
-		String jakartaValue;
 		String javaxValue = (String)values[values.length - 1];
 
 		if (javaxValue == null) {
 			return null;
 		}
+
+		String jakartaValue;
 
 		if (customSeparators.length > 0) {
 			jakartaValue = replace(javaxValue, customSeparators);

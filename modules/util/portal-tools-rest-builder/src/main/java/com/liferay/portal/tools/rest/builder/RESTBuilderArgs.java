@@ -34,6 +34,10 @@ public class RESTBuilderArgs {
 		return _forcePredictableOperationId;
 	}
 
+	public Boolean isUseJavax() {
+		return _useJavax;
+	}
+
 	public void setCopyrightFile(File copyrightFile) {
 		_copyrightFile = copyrightFile;
 	}
@@ -52,6 +56,10 @@ public class RESTBuilderArgs {
 
 	public void setRESTConfigDir(File restConfigDir) {
 		_restConfigDir = restConfigDir;
+	}
+
+	public void setUseJavax(Boolean useJavax) {
+		_useJavax = useJavax;
 	}
 
 	protected boolean isHelp() {
@@ -91,5 +99,12 @@ public class RESTBuilderArgs {
 		names = {"-r", "--rest-config-dir"}
 	)
 	private File _restConfigDir = new File(REST_CONFIG_DIR_NAME);
+
+	@Parameter(
+		converter = BooleanConverter.class,
+		description = "Use javax.* imports instead of the default jakarta.* ones",
+		names = {"-j", "--use-javax"}
+	)
+	private Boolean _useJavax;
 
 }

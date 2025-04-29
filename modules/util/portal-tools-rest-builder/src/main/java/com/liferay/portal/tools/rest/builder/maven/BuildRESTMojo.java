@@ -68,6 +68,13 @@ public class BuildRESTMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter
+	 */
+	public void setUseJavax(Boolean useJavax) {
+		_restBuilderArgs.setUseJavax(useJavax);
+	}
+
+	/**
 	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */

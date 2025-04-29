@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import getRandomString from '../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

@@ -26,7 +26,9 @@ import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryModel;
 import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.model.ObjectEntryVersionModel;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -117,6 +119,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -230,7 +233,20 @@ public class ObjectEntryDTOConverter
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			dtoConverterContext, serviceBuilderObjectEntry);
 
-		ObjectEntry objectEntry = new ObjectEntry() {
+		ObjectEntryVersion objectEntryVersion =
+			(ObjectEntryVersion)dtoConverterContext.getAttribute(
+				"objectEntryVersion");
+
+		ObjectEntry contentObjectEntry = null;
+
+		if (objectEntryVersion != null) {
+			contentObjectEntry = ObjectEntry.unsafeToDTO(
+				objectEntryVersion.getContent());
+		}
+
+		ObjectEntry finalContentObjectEntry = contentObjectEntry;
+
+		return new ObjectEntry() {
 			{
 				setActions(dtoConverterContext::getActions);
 				setAuditEvents(
@@ -238,12 +254,29 @@ public class ObjectEntryDTOConverter
 						dtoConverterContext, objectDefinition,
 						serviceBuilderObjectEntry));
 				setCreator(
-					() -> CreatorUtil.toCreator(
-						_portal, dtoConverterContext.getUriInfo(),
-						_userLocalService.fetchUser(
-							serviceBuilderObjectEntry.getUserId())));
-				setDateCreated(serviceBuilderObjectEntry::getCreateDate);
-				setDateModified(serviceBuilderObjectEntry::getModifiedDate);
+					() -> _getAttribute(
+						objectEntryVersion,
+						objectEntryVersion -> CreatorUtil.toCreator(
+							_portal, dtoConverterContext.getUriInfo(),
+							_userLocalService.fetchUser(
+								objectEntryVersion.getUserId())),
+						serviceBuilderObjectEntry,
+						serviceBuilderObjectEntry -> CreatorUtil.toCreator(
+							_portal, dtoConverterContext.getUriInfo(),
+							_userLocalService.fetchUser(
+								serviceBuilderObjectEntry.getUserId()))));
+				setDateCreated(
+					() -> _getAttribute(
+						objectEntryVersion,
+						ObjectEntryVersionModel::getCreateDate,
+						serviceBuilderObjectEntry,
+						ObjectEntryModel::getCreateDate));
+				setDateModified(
+					() -> _getAttribute(
+						objectEntryVersion,
+						ObjectEntryVersionModel::getModifiedDate,
+						serviceBuilderObjectEntry,
+						ObjectEntryModel::getModifiedDate));
 				setDefaultLanguageId(
 					() -> {
 						if (FeatureFlagManagerUtil.isEnabled(
@@ -256,7 +289,15 @@ public class ObjectEntryDTOConverter
 						return null;
 					});
 				setExternalReferenceCode(
-					serviceBuilderObjectEntry::getExternalReferenceCode);
+					() -> {
+						if (objectEntryVersion != null) {
+							return finalContentObjectEntry.
+								getExternalReferenceCode();
+						}
+
+						return serviceBuilderObjectEntry.
+							getExternalReferenceCode();
+					});
 				setFriendlyUrlPath(
 					() -> serviceBuilderObjectEntry.getURLTitle(
 						dtoConverterContext.getLocale()));
@@ -265,7 +306,10 @@ public class ObjectEntryDTOConverter
 				setId(serviceBuilderObjectEntry::getObjectEntryId);
 				setKeywords(
 					() -> {
-						if (!objectDefinition.isEnableCategorization()) {
+						if (objectEntryVersion != null) {
+							return finalContentObjectEntry.getKeywords();
+						}
+						else if (!objectDefinition.isEnableCategorization()) {
 							return null;
 						}
 
@@ -295,23 +339,61 @@ public class ObjectEntryDTOConverter
 					() -> _toPermissions(
 						objectDefinition, serviceBuilderObjectEntry));
 				setProperties(
-					() -> _toProperties(
-						dtoConverterContext, objectDefinition,
-						serviceBuilderObjectEntry));
+					() -> {
+						if (objectEntryVersion == null) {
+							return _toProperties(
+								dtoConverterContext, objectDefinition,
+								serviceBuilderObjectEntry);
+						}
+
+						Map<String, Object> properties =
+							finalContentObjectEntry.getProperties();
+
+						com.liferay.object.model.ObjectEntry
+							serviceBuilderObjectEntryClone =
+								(com.liferay.object.model.ObjectEntry)
+									serviceBuilderObjectEntry.clone();
+
+						serviceBuilderObjectEntryClone.setValues(
+							(Map<String, Serializable>)properties.get(
+								"properties"));
+
+						return _toProperties(
+							dtoConverterContext,
+							_objectDefinitionLocalService.getObjectDefinition(
+								serviceBuilderObjectEntryClone.
+									getObjectDefinitionId()),
+							serviceBuilderObjectEntryClone);
+					});
 				setScopeKey(
 					() -> _getScopeKey(
 						objectDefinition, serviceBuilderObjectEntry));
 				setStatus(
-					() -> _toStatus(
-						dtoConverterContext.getLocale(),
-						serviceBuilderObjectEntry.getStatus()));
+					() -> _getAttribute(
+						objectEntryVersion,
+						objectEntryVersion -> _toStatus(
+							dtoConverterContext.getLocale(),
+							objectEntryVersion.getStatus()),
+						serviceBuilderObjectEntry,
+						serviceBuilderObjectEntry -> _toStatus(
+							dtoConverterContext.getLocale(),
+							serviceBuilderObjectEntry.getStatus())));
 				setSystemProperties(
-					() -> _toSystemProperties(
-						objectDefinition,
-						serviceBuilderObjectEntry.getVersion()));
+					() -> _getAttribute(
+						objectEntryVersion,
+						objectEntryVersion -> _toSystemProperties(
+							objectDefinition, objectEntryVersion.getVersion()),
+						serviceBuilderObjectEntry,
+						serviceBuilderObjectEntry -> _toSystemProperties(
+							objectDefinition,
+							serviceBuilderObjectEntry.getVersion())));
 				setTaxonomyCategoryBriefs(
 					() -> {
-						if (!objectDefinition.isEnableCategorization()) {
+						if (objectEntryVersion != null) {
+							return finalContentObjectEntry.
+								getTaxonomyCategoryBriefs();
+						}
+						else if (!objectDefinition.isEnableCategorization()) {
 							return null;
 						}
 
@@ -327,59 +409,6 @@ public class ObjectEntryDTOConverter
 					});
 			}
 		};
-
-		ObjectEntryVersion objectEntryVersion =
-			(ObjectEntryVersion)dtoConverterContext.getAttribute(
-				"objectEntryVersion");
-
-		if (objectEntryVersion == null) {
-			return objectEntry;
-		}
-
-		objectEntry.setCreator(
-			() -> CreatorUtil.toCreator(
-				_portal, dtoConverterContext.getUriInfo(),
-				_userLocalService.fetchUser(objectEntryVersion.getUserId())));
-		objectEntry.setDateCreated(objectEntryVersion::getCreateDate);
-		objectEntry.setDateModified(objectEntryVersion::getModifiedDate);
-
-		ObjectEntry contentObjectEntry = ObjectEntry.unsafeToDTO(
-			objectEntryVersion.getContent());
-
-		objectEntry.setExternalReferenceCode(
-			contentObjectEntry::getExternalReferenceCode);
-		objectEntry.setKeywords(contentObjectEntry::getKeywords);
-		objectEntry.setProperties(
-			() -> {
-				Map<String, Object> properties =
-					contentObjectEntry.getProperties();
-
-				com.liferay.object.model.ObjectEntry
-					serviceBuilderObjectEntryClone =
-						(com.liferay.object.model.ObjectEntry)
-							serviceBuilderObjectEntry.clone();
-
-				serviceBuilderObjectEntryClone.setValues(
-					(Map<String, Serializable>)properties.get("properties"));
-
-				return _toProperties(
-					dtoConverterContext,
-					_objectDefinitionLocalService.getObjectDefinition(
-						serviceBuilderObjectEntryClone.getObjectDefinitionId()),
-					serviceBuilderObjectEntryClone);
-			});
-
-		objectEntry.setStatus(
-			() -> _toStatus(
-				dtoConverterContext.getLocale(),
-				objectEntryVersion.getStatus()));
-		objectEntry.setSystemProperties(
-			() -> _toSystemProperties(
-				objectDefinition, objectEntryVersion.getVersion()));
-		objectEntry.setTaxonomyCategoryBriefs(
-			contentObjectEntry::getTaxonomyCategoryBriefs);
-
-		return objectEntry;
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
@@ -546,6 +575,21 @@ public class ObjectEntryDTOConverter
 				unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
+	}
+
+	private <T> T _getAttribute(
+		ObjectEntryVersion objectEntryVersion,
+		Function<ObjectEntryVersion, T> objectEntryVersionGetterFunction,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+		Function<com.liferay.object.model.ObjectEntry, T>
+			serviceBuilderObjectEntryGetterFunction) {
+
+		if (objectEntryVersion != null) {
+			return objectEntryVersionGetterFunction.apply(objectEntryVersion);
+		}
+
+		return serviceBuilderObjectEntryGetterFunction.apply(
+			serviceBuilderObjectEntry);
 	}
 
 	private String _getDateString(

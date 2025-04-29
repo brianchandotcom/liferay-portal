@@ -9,8 +9,12 @@ import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateOpenGraphSettings;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -19,6 +23,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -39,12 +44,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Objects;
 
@@ -403,6 +410,87 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate.getName(), 0L,
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(displayPageTemplate, groupId));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		DisplayPageTemplateSettings displayPageTemplateSettings =
+			displayPageTemplate.getDisplayPageTemplateSettings();
+
+		if (displayPageTemplateSettings != null) {
+			DisplayPageTemplateOpenGraphSettings
+				displayPageTemplateOpenGraphSettings =
+					displayPageTemplateSettings.getOpenGraphSettings();
+
+			UnicodeProperties unicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			if (displayPageTemplateOpenGraphSettings != null) {
+				unicodeProperties.setProperty(
+					"mapped-openGraphDescription",
+					displayPageTemplateOpenGraphSettings.
+						getDescriptionTemplate());
+				unicodeProperties.setProperty(
+					"mapped-openGraphImageAlt",
+					displayPageTemplateOpenGraphSettings.getImageAltTemplate());
+				unicodeProperties.setProperty(
+					"mapped-openGraphImage",
+					displayPageTemplateOpenGraphSettings.getImageTemplate());
+				unicodeProperties.setProperty(
+					"mapped-openGraphTitle",
+					displayPageTemplateOpenGraphSettings.getTitleTemplate());
+			}
+
+			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
+				displayPageTemplateSettings.getSeoSettings();
+
+			if (displayPageTemplateSEOSettings != null) {
+				unicodeProperties.setProperty(
+					"mapped-description",
+					displayPageTemplateSEOSettings.getDescriptionTemplate());
+				unicodeProperties.setProperty(
+					"mapped-title",
+					displayPageTemplateSEOSettings.getHtmlTitleTemplate());
+				layout.setRobotsMap(
+					LocalizedMapUtil.getLocalizedMap(
+						contextAcceptLanguage.getPreferredLocale(), null,
+						displayPageTemplateSEOSettings.getRobots_i18n()));
+			}
+
+			SiteMapSettings siteMapSettings =
+				displayPageTemplateSEOSettings.getSiteMapSettings();
+
+			if (siteMapSettings != null) {
+				SiteMapSettings.ChangeFrequency changeFrequency =
+					siteMapSettings.getChangeFrequency();
+
+				if (changeFrequency != null) {
+					unicodeProperties.setProperty(
+						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+						changeFrequency.toString());
+				}
+
+				Boolean include = siteMapSettings.getInclude();
+
+				if (include != null) {
+					String siteMapInclude = "0";
+
+					if (include) {
+						siteMapInclude = "1";
+					}
+
+					unicodeProperties.setProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE,
+						siteMapInclude);
+				}
+
+				unicodeProperties.setProperty(
+					LayoutTypePortletConstants.SITEMAP_PRIORITY,
+					String.valueOf(siteMapSettings.getPagePriority()));
+			}
+
+			_layoutLocalService.updateLayout(layout);
+		}
 
 		long previewFileEntryId = _getPreviewFileEntryId(
 			groupId, displayPageTemplate.getThumbnail());

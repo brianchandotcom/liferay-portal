@@ -43,6 +43,7 @@ export class ObjectFieldsPage {
 
 	async addObjectField({
 		attachmentSource,
+		formulaFieldOutput,
 		listTypeDefinitionName,
 		objectFieldBusinessType,
 		objectFieldLabel,
@@ -66,6 +67,13 @@ export class ObjectFieldsPage {
 				.click();
 		}
 
+		if (objectFieldBusinessType === 'Formula') {
+			await this.objectFieldOptionsDropdown.click();
+			await this.page
+				.getByRole('option', {name: formulaFieldOutput})
+				.click();
+		}
+
 		if (
 			objectFieldBusinessType === 'Multiselect Picklist' ||
 			objectFieldBusinessType === 'Picklist'
@@ -79,7 +87,7 @@ export class ObjectFieldsPage {
 		await this.saveButton.click();
 	}
 
-	async deleteObjectField(nth: number, deleteConfirmation: boolean) {
+	async deleteObjectField(confirmDeletion: boolean, nth: number) {
 		await this.page.locator('.cell-item-actions').nth(nth).waitFor();
 
 		await this.page
@@ -90,8 +98,8 @@ export class ObjectFieldsPage {
 
 		await this.deleteObjectFieldOption.click();
 
-		if (deleteConfirmation) {
-			await this.page.getByRole('button', {name: 'Delete'}).click()
+		if (confirmDeletion) {
+			await this.page.getByRole('button', {name: 'Delete'}).click();
 		}
 	}
 

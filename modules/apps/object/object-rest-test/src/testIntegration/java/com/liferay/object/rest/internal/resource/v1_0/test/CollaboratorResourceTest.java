@@ -99,14 +99,14 @@ public class CollaboratorResourceTest {
 			jsonArray.toString(),
 			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				objectEntry.getObjectEntryId(), _COLLABORATORS),
+				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				objectEntry.getObjectEntryId(), _COLLABORATORS),
+				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.GET);
 
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
@@ -125,15 +125,15 @@ public class CollaboratorResourceTest {
 			jsonArray.toString(),
 			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				objectEntry.getObjectEntryId(), _COLLABORATORS),
+				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
-				_objectDefinition.getRESTContextPath(), _SCOPES,
-				_group.getGroupId(), _BY_EXTERNAL_REFERENCE_CODE,
-				objectEntry.getExternalReferenceCode(), _COLLABORATORS),
+				_objectDefinition.getRESTContextPath(), "/scopes/",
+				_group.getGroupId(), "/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/collaborators"),
 			Http.Method.GET);
 
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
@@ -151,7 +151,7 @@ public class CollaboratorResourceTest {
 			jsonArray.toString(),
 			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				objectEntry.getObjectEntryId(), _COLLABORATORS),
+				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.POST);
 
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
@@ -171,9 +171,9 @@ public class CollaboratorResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			jsonArray.toString(),
 			StringBundler.concat(
-				_objectDefinition.getRESTContextPath(), _SCOPES,
-				_group.getGroupId(), _BY_EXTERNAL_REFERENCE_CODE,
-				objectEntry.getExternalReferenceCode(), _COLLABORATORS),
+				_objectDefinition.getRESTContextPath(), "/scopes/",
+				_group.getGroupId(), "/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/collaborators"),
 			Http.Method.POST);
 
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
@@ -348,13 +348,6 @@ public class CollaboratorResourceTest {
 	private static final String[] _ASSERT_FIELD_NAMES = {
 		"actionIds", "externalReferenceCode", "name", "share", "type"
 	};
-
-	private static final String _BY_EXTERNAL_REFERENCE_CODE =
-		"/by-external-reference-code/";
-
-	private static final String _COLLABORATORS = "/collaborators";
-
-	private static final String _SCOPES = "/scopes/";
 
 	private static ObjectDefinition _objectDefinition;
 

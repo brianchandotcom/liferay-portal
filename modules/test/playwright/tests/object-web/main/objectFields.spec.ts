@@ -932,6 +932,30 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		).toBeDisabled();
 	});
 
+	test('can create custom object field in a system object definition', async ({
+		objectFieldsPage,
+		modelBuilderDiagramPage,
+		page
+	}) => {
+		await objectFieldsPage.goto('Account');
+
+		const objectFieldBusinessType = 'Text';
+		const objectFieldLabel = `text${getRandomInt()}`;
+
+		await objectFieldsPage.addObjectField({
+			objectDefinitionNodes:
+			modelBuilderDiagramPage.objectDefinitionNodes,
+			objectFieldBusinessType,
+			objectFieldLabel,
+		});
+
+		await expect(
+			page.getByText(objectFieldLabel)
+		).toBeVisible();
+
+		await objectFieldsPage.deleteObjectField(-1, true);
+	});
+
 	test('cannot delete an objectField that belongs to a unique composite key validation through Objects Admin UI', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -1000,7 +1024,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 		await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
-		await objectFieldsPage.deleteObjectField(-1);
+		await objectFieldsPage.deleteObjectField(-1, false);
 
 		await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
 		await expect(

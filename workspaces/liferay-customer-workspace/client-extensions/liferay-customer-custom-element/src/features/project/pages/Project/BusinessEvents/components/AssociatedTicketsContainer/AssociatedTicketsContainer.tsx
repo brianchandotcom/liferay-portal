@@ -18,6 +18,7 @@ interface IProps {
 	editing?: boolean;
 	handleRemove?: (value: ITicket) => void;
 	handleSelect?: (value: ITicket) => void;
+	selectedTickets?: ITicket[];
 	tickets: ITicket[];
 }
 
@@ -25,6 +26,7 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 	editing,
 	handleRemove = () => {},
 	handleSelect = () => {},
+	selectedTickets,
 	tickets,
 }) => {
 	const [expand, setExpand] = useState<boolean>(false);
@@ -51,7 +53,7 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 
 	return (
 		<>
-			{editing ? (
+			{editing && selectedTickets ? (
 				<div className="associated-tickets-container p-3 w-100">
 					<div className="associated-tickets-options pb-3">
 						<div className="align-items-center d-flex position-relative w-100">
@@ -85,8 +87,6 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 								tickets={tickets.filter(
 									(ticket) =>
 										!ticket.selected &&
-										ticket.status !== 'closed' &&
-										ticket.status !== 'solved' &&
 										(String(ticket.ticketId)
 											.toLowerCase()
 											.includes(
@@ -110,7 +110,7 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 					<TicketList
 						primaryAction={openTicket}
 						secondaryAction={handleRemove}
-						tickets={tickets.filter((ticket) => ticket.selected)}
+						tickets={selectedTickets}
 						type="selected"
 					/>
 				</div>

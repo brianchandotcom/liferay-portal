@@ -229,7 +229,14 @@ export default function EditVocabulary({
 						<ManagementToolbar.Item>
 							<ClayButton
 								displayType="primary"
-								onClick={_handleSave}
+								onClick={() => {
+									if (assetTypeChange || spaceChange) {
+										onOpenChange(true);
+									}
+									else {
+										_handleSave();
+									}
+								}}
 								size="sm"
 							>
 								{Liferay.Language.get('save')}
@@ -310,17 +317,14 @@ export default function EditVocabulary({
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
 
-				<>
-					{(assetTypeChange || spaceChange) && open && (
-						<ConfirmChangesModal
-							assetTypeChange={assetTypeChange}
-							observer={observer}
-							onOpenChange={onOpenChange}
-							onSave={_handleSave}
-							spaceChange={spaceChange}
-						/>
-					)}
-				</>
+				<ConfirmChangesModal
+					assetTypeChange={assetTypeChange}
+					observer={observer}
+					onOpenChange={onOpenChange}
+					onSave={_handleSave}
+					open={open}
+					spaceChange={spaceChange}
+				/>
 			</div>
 		</div>
 	);

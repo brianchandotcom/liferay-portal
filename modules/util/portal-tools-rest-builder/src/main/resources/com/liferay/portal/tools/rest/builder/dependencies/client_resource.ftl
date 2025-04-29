@@ -219,7 +219,7 @@ public interface ${schemaName}Resource {
 					_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 				}
 
-				<#if !javaMethodSignature.returnType?contains("jakarta.ws.rs.core.Response")>
+				<#if !javaMethodSignature.returnType?contains("jakarta.ws.rs.core.Response") && !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
 					try {
 						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
 							return Page.of(content, Permission::toDTO);

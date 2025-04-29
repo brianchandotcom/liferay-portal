@@ -1597,6 +1597,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		_jenkinsConsoleTextLoader = null;
+
 		_jenkinsMaster = null;
 		_jenkinsSlave = null;
 		_result = null;

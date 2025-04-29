@@ -82,8 +82,7 @@ public class DisabledUserClientTest extends BaseClientTestCase {
 			registerJaxRsApplication(new TestApplication(), "users", null);
 
 			createOAuth2Application(
-				companyId, user, "oauthTestApplication",
-				Arrays.asList("GET"));
+				companyId, user, "oauthTestApplication", Arrays.asList("GET"));
 			createOAuth2Application(
 				companyId, disabledUser, "oauthTestApplicationDisabled",
 				Arrays.asList("GET"));

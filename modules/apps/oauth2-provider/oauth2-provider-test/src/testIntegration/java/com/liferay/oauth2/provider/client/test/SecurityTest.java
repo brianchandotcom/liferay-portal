@@ -213,8 +213,7 @@ public class SecurityTest extends BaseClientTestCase {
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
 
-			Company company = CompanyLocalServiceUtil.getCompany(
-				companyId);
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 			createOAuth2Application(
 				companyId, company.getGuestUser(),

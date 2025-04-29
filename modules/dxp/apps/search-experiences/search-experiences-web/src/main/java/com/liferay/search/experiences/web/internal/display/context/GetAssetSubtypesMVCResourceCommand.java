@@ -114,7 +114,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 					identifierArray[2], group.getGroupId(),
 					_portal.getClassNameId(identifierArray[0]));
 
-			_addSubtypeClassInfo(
+			_addSubtypeInfoJSONObject(
 				ddmStructure.getExternalReferenceCode(),
 				ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
 				identifierArray[0], group.getExternalReferenceCode(),
@@ -137,7 +137,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 					_dlFileEntryTypeLocalService.
 						getBasicDocumentDLFileEntryType();
 
-				_addSubtypeClassInfo(
+				_addSubtypeInfoJSONObject(
 					basicDocumentDLFileEntryType.getExternalReferenceCode(),
 					basicDocumentDLFileEntryType.getName(locale),
 					assetSubtypeInfoJSONArray, identifierArray[0],
@@ -154,7 +154,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 					getDLFileEntryTypeByExternalReferenceCode(
 						identifierArray[2], group.getGroupId());
 
-			_addSubtypeClassInfo(
+			_addSubtypeInfoJSONObject(
 				dlFileEntryType.getExternalReferenceCode(),
 				dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
 				identifierArray[0], group.getExternalReferenceCode(),
@@ -167,7 +167,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	private void _addSubtypeClassInfo(
+	private void _addSubtypeInfoJSONObject(
 		String assetSubtypeExternalReferenceCode,
 		String assetSubtypeLocalizedName, JSONArray assetSubtypeInfoJSONArray,
 		String entryClassName, String groupExternalReferenceCode,
@@ -269,7 +269,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 				Group group = _groupLocalService.getGroup(
 					ddmStructure.getGroupId());
 
-				_addSubtypeClassInfo(
+				_addSubtypeInfoJSONObject(
 					ddmStructure.getExternalReferenceCode(),
 					ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
 					entryClassName, group.getExternalReferenceCode(),
@@ -315,7 +315,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			try {
 				if (dlFileEntryType.getGroupId() == 0) {
-					_addSubtypeClassInfo(
+					_addSubtypeInfoJSONObject(
 						dlFileEntryType.getExternalReferenceCode(),
 						dlFileEntryType.getName(locale),
 						assetSubtypeInfoJSONArray, entryClassName,
@@ -327,7 +327,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 				Group group = _groupLocalService.getGroup(
 					dlFileEntryType.getGroupId());
 
-				_addSubtypeClassInfo(
+				_addSubtypeInfoJSONObject(
 					dlFileEntryType.getExternalReferenceCode(),
 					dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
 					entryClassName, group.getExternalReferenceCode(),

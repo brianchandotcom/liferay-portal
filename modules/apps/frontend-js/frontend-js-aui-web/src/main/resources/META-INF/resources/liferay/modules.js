@@ -67,10 +67,6 @@
 						path: 'layout_column.js',
 						requires: ['aui-sortable-layout', 'dd'],
 					},
-					'liferay-logo-editor': {
-						path: 'logo_editor.js',
-						requires: ['aui-image-cropper', 'liferay-portlet-base'],
-					},
 					'liferay-menu': {
 						path: 'menu.js',
 						requires: ['aui-debounce', 'aui-node'],

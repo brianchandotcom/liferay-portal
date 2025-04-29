@@ -352,7 +352,7 @@ public class CommerceOrderItemServiceImpl
 	public CommerceOrderItem importCommerceOrderItem(
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
-			String cpMeasurementUnitKey, BigDecimal quantity,
+			String cpMeasurementUnitKey, String json, BigDecimal quantity,
 			BigDecimal shippedQuantity,
 			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			String unitOfMeasureKey, ServiceContext serviceContext)
@@ -363,7 +363,7 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.importCommerceOrderItem(
 			getUserId(), externalReferenceCode, commerceOrderItemId,
-			commerceOrderId, cpInstanceId, cpMeasurementUnitKey, quantity,
+			commerceOrderId, cpInstanceId, cpMeasurementUnitKey, json, quantity,
 			shippedQuantity, unitOfMeasureIncrementalOrderQuantity,
 			unitOfMeasureKey, serviceContext);
 	}

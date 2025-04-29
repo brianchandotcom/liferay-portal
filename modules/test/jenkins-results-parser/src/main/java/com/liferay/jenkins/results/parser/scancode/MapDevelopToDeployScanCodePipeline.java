@@ -122,13 +122,13 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 	}
 
 	protected MapDevelopToDeployScanCodePipeline(
-		String buildURL, String releaseBuildURL, String pipelineName) {
+		String buildURL, String pipelineName, String releaseBuildURL) {
 
-		super(buildURL, releaseBuildURL, pipelineName);
+		super(buildURL, pipelineName, releaseBuildURL);
 
 		_buildURL = buildURL;
-		_releaseBuildURL = releaseBuildURL;
 		_pipelineName = pipelineName;
+		_releaseBuildURL = releaseBuildURL;
 	}
 
 	private static final String _GCP_URL_REGEX =

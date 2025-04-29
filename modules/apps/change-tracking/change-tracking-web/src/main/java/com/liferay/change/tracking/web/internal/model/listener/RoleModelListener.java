@@ -7,6 +7,7 @@ package com.liferay.change.tracking.web.internal.model.listener;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.util.PublicationsRegularRolesUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,11 +36,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ModelListener.class)
 public class RoleModelListener extends BaseModelListener<Role> {
 
-	public static final String[] PUBLICATIONS_REGULAR_ROLES = {
-		RoleConstants.PUBLICATIONS_ADMIN, RoleConstants.PUBLICATIONS_EDITOR,
-		RoleConstants.PUBLICATIONS_PUBLISHER, RoleConstants.PUBLICATIONS_VIEWER
-	};
-
 	@Override
 	public void onAfterAddAssociation(
 			Object classPK, String associationClassName,
@@ -50,7 +46,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			Role role = _roleLocalService.getRole((Long)classPK);
 
 			if (!ArrayUtil.contains(
-					PUBLICATIONS_REGULAR_ROLES, role.getName())) {
+					PublicationsRegularRolesUtil.PUBLICATIONS_REGULAR_ROLES,
+					role.getName())) {
 
 				return;
 			}

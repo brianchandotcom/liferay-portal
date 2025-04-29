@@ -10,12 +10,12 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import createTempFile from '../../utils/createTempFile';
-import getRandomString from '../../utils/getRandomString';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import createTempFile from '../../../utils/createTempFile';
+import getRandomString from '../../../utils/getRandomString';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 

@@ -8,65 +8,89 @@ import ClayModal from '@clayui/modal';
 import React from 'react';
 
 const CONFIRMATION_MESSAGES = {
-	ASSET_TYPES: 'remove-asset-types-from-vocabulary-confirmation',
-	BOTH: 'remove-both-from-vocabulary-confirmation',
-	SPACES: 'remove-space-from-vocabulary-confirmation',
+	ASSET_TYPES: {
+		description: Liferay.Language.get(
+			'removing-asset-types-will-detach-vocabulary'
+		),
+		title: Liferay.Language.get('confirm-asset-type-change'),
+	},
+	BOTH: {
+		description: Liferay.Language.get(
+			'removing-both-will-make-the-vocabulary-unavailable'
+		),
+		title: Liferay.Language.get('confirm-changes'),
+	},
+	SPACES: {
+		description: Liferay.Language.get(
+			'removing-a-space-will-make-the-vocabulary-unavailable'
+		),
+		title: Liferay.Language.get('confirm-space-change'),
+	},
 };
+
 export default function ConfirmChangesModal({
 	assetTypeChange,
 	observer,
 	onOpenChange,
 	onSave,
+	open,
 	spaceChange,
 }: {
 	assetTypeChange: boolean;
 	observer: any;
 	onOpenChange: (value: boolean) => void;
 	onSave: Function;
+	open: any;
 	spaceChange: boolean;
 }) {
-	const getConfirmationMessage = () => {
+	const confirmationMessages = (() => {
 		if (assetTypeChange && spaceChange) {
 			return CONFIRMATION_MESSAGES.BOTH;
 		}
 		else if (assetTypeChange) {
 			return CONFIRMATION_MESSAGES.ASSET_TYPES;
 		}
-		else if (spaceChange) {
+		else {
 			return CONFIRMATION_MESSAGES.SPACES;
 		}
-	};
+	})();
 
 	return (
-		<ClayModal observer={observer} status="warning">
-			<ClayModal.Header>
-				{Liferay.Language.get('confirm-changes')}
-			</ClayModal.Header>
+		<>
+			{open && (
+				<ClayModal observer={observer} status="warning">
+					<ClayModal.Header>
+						{confirmationMessages.title}
+					</ClayModal.Header>
 
-			<ClayModal.Body>{getConfirmationMessage()}</ClayModal.Body>
+					<ClayModal.Body>
+						{confirmationMessages.description}
+					</ClayModal.Body>
 
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onOpenChange(false)}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => onOpenChange(false)}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-						<ClayButton
-							onClick={async () => {
-								onOpenChange(false);
+								<ClayButton
+									onClick={async () => {
+										onOpenChange(false);
 
-								onSave();
-							}}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</ClayModal>
+										onSave();
+									}}
+								>
+									{Liferay.Language.get('save')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
+			)}
+		</>
 	);
 }

@@ -757,6 +757,28 @@ test.describe('Manage object fields through Model Builder', () => {
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {
+	test('can create custom object field in a system object definition', async ({
+		modelBuilderDiagramPage,
+		objectFieldsPage,
+		page,
+	}) => {
+		await objectFieldsPage.goto('Account');
+
+		const objectFieldLabel = `formula${getRandomInt()}`;
+
+		await objectFieldsPage.addObjectField({
+			formulaFieldOutput: 'Integer',
+			objectDefinitionNodes:
+				modelBuilderDiagramPage.objectDefinitionNodes,
+			objectFieldBusinessType: 'Formula',
+			objectFieldLabel,
+		});
+
+		await expect(page.getByText(objectFieldLabel)).toBeVisible();
+
+		await objectFieldsPage.deleteObjectField(true, -1);
+	});
+
 	test('can create object fields of multiple types (except AutoIncrement, Date and Time, Encrypted and Aggregation)', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
@@ -932,30 +954,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		).toBeDisabled();
 	});
 
-	test('can create custom object field in a system object definition', async ({
-		objectFieldsPage,
-		modelBuilderDiagramPage,
-		page
-	}) => {
-		await objectFieldsPage.goto('Account');
-
-		const objectFieldBusinessType = 'Text';
-		const objectFieldLabel = `text${getRandomInt()}`;
-
-		await objectFieldsPage.addObjectField({
-			objectDefinitionNodes:
-			modelBuilderDiagramPage.objectDefinitionNodes,
-			objectFieldBusinessType,
-			objectFieldLabel,
-		});
-
-		await expect(
-			page.getByText(objectFieldLabel)
-		).toBeVisible();
-
-		await objectFieldsPage.deleteObjectField(-1, true);
-	});
-
 	test('cannot delete an objectField that belongs to a unique composite key validation through Objects Admin UI', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -1024,7 +1022,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 		await objectFieldsPage.goto(objectDefinition.label['en_US']);
 
-		await objectFieldsPage.deleteObjectField(-1, false);
+		await objectFieldsPage.deleteObjectField(false, -1);
 
 		await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
 		await expect(

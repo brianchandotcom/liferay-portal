@@ -16,6 +16,7 @@ import {ApiHelpers} from './ApiHelpers';
 
 export interface CreateObjectField {
 	attachmentSource?: string;
+	formulaFieldOutput?: 'Decimal' | 'Integer';
 	listTypeDefinitionName?: string;
 	mandatory?: boolean;
 	objectDefinitionLabel?: string;

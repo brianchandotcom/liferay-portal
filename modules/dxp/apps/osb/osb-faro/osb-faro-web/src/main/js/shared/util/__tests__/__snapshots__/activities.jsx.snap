@@ -39,8 +39,8 @@ Array [
         "attributes": Object {
           "canonicalUrl": "https://www.liferay0.com",
           "header": "Event Attributes",
+          "pageTitle": "Page Title",
           "referrer": "www.liferay.com",
-          "title": "Page Title",
           "url": "https://www.liferay0.com",
         },
         "description": "Page Title",
@@ -52,8 +52,8 @@ Array [
         "attributes": Object {
           "canonicalUrl": "https://www.liferay1.com",
           "header": "Event Attributes",
+          "pageTitle": "Page Title",
           "referrer": "www.liferay.com",
-          "title": "Page Title",
           "url": "https://www.liferay1.com",
         },
         "description": "Page Title",
@@ -65,8 +65,8 @@ Array [
         "attributes": Object {
           "canonicalUrl": "https://www.liferay2.com",
           "header": "Event Attributes",
+          "pageTitle": "Page Title",
           "referrer": "www.liferay.com",
-          "title": "Page Title",
           "url": "https://www.liferay2.com",
         },
         "description": "Page Title",

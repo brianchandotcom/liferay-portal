@@ -559,8 +559,8 @@ public class PageSpecificationResourceTest
 				curPageElementDefinition.getType());
 
 			_assertPageElements(
-				curPageElement.getPageElements(),
-				pageElement.getPageElements());
+				pageElement.getPageElements(),
+				curPageElement.getPageElements());
 			Assert.assertEquals(
 				pageElement.getParentExternalReferenceCode(),
 				curPageElement.getParentExternalReferenceCode());

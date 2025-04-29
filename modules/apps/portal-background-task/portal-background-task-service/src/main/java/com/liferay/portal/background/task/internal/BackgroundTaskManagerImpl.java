@@ -5,6 +5,7 @@
 
 package com.liferay.portal.background.task.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCompletionDateComparator;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
@@ -20,8 +21,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -543,20 +542,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		List<com.liferay.portal.background.task.model.BackgroundTask>
 			backgroundTaskModels) {
 
-		if (backgroundTaskModels.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<BackgroundTask> backgroundTasks = new ArrayList<>(
-			backgroundTaskModels.size());
-
-		for (com.liferay.portal.background.task.model.BackgroundTask
-				backgroundTaskModel : backgroundTaskModels) {
-
-			backgroundTasks.add(new BackgroundTaskImpl(backgroundTaskModel));
-		}
-
-		return backgroundTasks;
+		return TransformUtil.transform(
+			backgroundTaskModels,
+			backgroundTaskModel -> new BackgroundTaskImpl(backgroundTaskModel));
 	}
 
 	private OrderByComparator

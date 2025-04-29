@@ -419,12 +419,12 @@ public class DisplayPageTemplateResourceImpl
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
+			UnicodeProperties unicodeProperties =
+				layout.getTypeSettingsProperties();
+
 			DisplayPageTemplateOpenGraphSettings
 				displayPageTemplateOpenGraphSettings =
 					displayPageTemplateSettings.getOpenGraphSettings();
-
-			UnicodeProperties unicodeProperties =
-				layout.getTypeSettingsProperties();
 
 			if (displayPageTemplateOpenGraphSettings != null) {
 				unicodeProperties.setProperty(

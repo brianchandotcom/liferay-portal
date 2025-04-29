@@ -91,7 +91,7 @@ pipeline {
 			}
 		}
 
-		stage('Prisma Cloud Scan') {
+		stage("Prisma Cloud Scan") {
 			steps {
 				prismaScanImage([osbFaroImage.imageName()])
 			}

@@ -492,7 +492,6 @@
 						"items": {
 							"$ref": "#/components/schemas/TaxonomyCategoryBrief"
 						},
-						"readOnly": true,
 						"type": "array",
 						"x-batch-unsupported-formats": "CSV"
 					},
@@ -771,6 +770,44 @@
 				"x-filterable": [
 				]
 			},
+			"ParentTaxonomyCategory": {
+				"properties": {
+					"externalReferenceCode": {
+						"description": "The parent taxonomy category's external reference code.",
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "ParentTaxonomyCategory"
+				}
+			},
+			"ParentTaxonomyVocabulary": {
+				"properties": {
+					"externalReferenceCode": {
+						"description": "The parent category's `TaxonomyVocabulary` external reference code.",
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ParentTaxonomyVocabulary",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "ParentTaxonomyVocabulary"
+				}
+			},
 			"Permission": {
 				"properties": {
 					"actionIds": {
@@ -856,6 +893,19 @@
 						"description": "Optional field with the embedded taxonomy category, can be embedded with nestedFields",
 						"readOnly": true,
 						"type": "object"
+					},
+					"parentTaxonomyCategory": {
+						"$ref": "#/components/schemas/ParentTaxonomyCategory"
+					},
+					"parentTaxonomyVocabulary": {
+						"$ref": "#/components/schemas/ParentTaxonomyVocabulary"
+					},
+					"scope": {
+						"$ref": "#/components/schemas/Scope"
+					},
+					"taxonomyCategoryExternalReferenceCode": {
+						"description": "The category's external reference code.",
+						"type": "string"
 					},
 					"taxonomyCategoryId": {
 						"description": "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.",

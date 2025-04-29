@@ -220,6 +220,31 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteDisplayPageTemplateFolderPermissionsPage()
+		throws Exception {
+
+		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
+			testGetSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
+
+		Page<Permission> page =
+			displayPageTemplateFolderResource.
+				getSiteDisplayPageTemplateFolderPermissionsPage(
+					testGroup.getExternalReferenceCode(),
+					postDisplayPageTemplateFolder.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected DisplayPageTemplateFolder
+			testGetSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
@@ -238,29 +263,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		Page<Permission> page =
-			displayPageTemplateFolderResource.
-				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -767,31 +769,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		DisplayPageTemplateFolder postDisplayPageTemplateFolder =
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		Page<Permission> page =
-			displayPageTemplateFolderResource.
-				getSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postDisplayPageTemplateFolder.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected DisplayPageTemplateFolder
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
@@ -824,108 +801,59 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPutSiteDisplayPageTemplateFolderPermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			testPutSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			displayPageTemplateFolderResource.
+				putSiteDisplayPageTemplateFolderPermissionsPageHttpResponse(
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			displayPageTemplateFolderResource.
+				putSiteDisplayPageTemplateFolderPermissionsPageHttpResponse(
+					null, null,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected DisplayPageTemplateFolder
+			testPutSiteDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
 		throws Exception {
 
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DisplayPageTemplateFolder displayPageTemplateFolder =
-			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			displayPageTemplateFolderResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected DisplayPageTemplateFolder
-			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DisplayPageTemplateFolder displayPageTemplateFolder =
-			testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			displayPageTemplateFolderResource.
-				putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			displayPageTemplateFolderResource.
-				putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected DisplayPageTemplateFolder
-			testPutSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule

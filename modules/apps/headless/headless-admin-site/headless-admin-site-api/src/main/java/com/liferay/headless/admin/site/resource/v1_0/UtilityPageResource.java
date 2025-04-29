@@ -56,11 +56,6 @@ public interface UtilityPageResource {
 			String utilityPageExternalReferenceCode)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
 	public Page<UtilityPage> getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 			String siteExternalReferenceCode, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -70,7 +65,7 @@ public interface UtilityPageResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
+			getSiteUtilityPagePermissionsPage(
 				String siteExternalReferenceCode,
 				String utilityPageExternalReferenceCode, String roleNames)
 		throws Exception;
@@ -97,13 +92,7 @@ public interface UtilityPageResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
+			putSiteUtilityPagePermissionsPage(
 				String siteExternalReferenceCode,
 				String utilityPageExternalReferenceCode,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)

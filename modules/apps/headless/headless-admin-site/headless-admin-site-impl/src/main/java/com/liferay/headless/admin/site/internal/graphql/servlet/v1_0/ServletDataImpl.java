@@ -189,20 +189,15 @@ public class ServletDataImpl implements ServletData {
 							DisplayPageTemplateResourceImpl.class,
 							"postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification"));
 					put(
+						"mutation#updateSiteDisplayPageTemplatePermissionsPage",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"putSiteDisplayPageTemplatePermissionsPage"));
+					put(
 						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodeDisplayPageTemplate"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage",
-						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage",
-						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
@@ -219,20 +214,15 @@ public class ServletDataImpl implements ServletData {
 							DisplayPageTemplateFolderResourceImpl.class,
 							"postSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
 					put(
+						"mutation#updateSiteDisplayPageTemplateFolderPermissionsPage",
+						new ObjectValuePair<>(
+							DisplayPageTemplateFolderResourceImpl.class,
+							"putSiteDisplayPageTemplateFolderPermissionsPage"));
+					put(
 						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodeFragmentComposition",
 						new ObjectValuePair<>(
@@ -274,20 +264,15 @@ public class ServletDataImpl implements ServletData {
 							MasterPageResourceImpl.class,
 							"postSiteSiteByExternalReferenceCodeMasterPagePageSpecification"));
 					put(
+						"mutation#updateSiteMasterPagePermissionsPage",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class,
+							"putSiteMasterPagePermissionsPage"));
+					put(
 						"mutation#updateSiteSiteByExternalReferenceCodeMasterPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodeMasterPage"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeMasterPagePermissionsPage",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeMasterPagePermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodeMasterPagePermissionsPage",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"putSiteSiteExternalReferenceCodeMasterPagePermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodePageElement",
 						new ObjectValuePair<>(
@@ -439,20 +424,15 @@ public class ServletDataImpl implements ServletData {
 							PageTemplateResourceImpl.class,
 							"postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate"));
 					put(
+						"mutation#updateSitePageTemplatePermissionsPage",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"putSitePageTemplatePermissionsPage"));
+					put(
 						"mutation#updateSiteSiteByExternalReferenceCodePageTemplate",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodePageTemplate"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageTemplatePermissionsPage",
-						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodePageTemplatePermissionsPage",
-						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"putSiteSiteExternalReferenceCodePageTemplatePermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodePageTemplateSet",
 						new ObjectValuePair<>(
@@ -469,20 +449,15 @@ public class ServletDataImpl implements ServletData {
 							PageTemplateSetResourceImpl.class,
 							"postSiteSiteByExternalReferenceCodePageTemplateSet"));
 					put(
+						"mutation#updateSitePageTemplateSetPermissionsPage",
+						new ObjectValuePair<>(
+							PageTemplateSetResourceImpl.class,
+							"putSitePageTemplateSetPermissionsPage"));
+					put(
 						"mutation#updateSiteSiteByExternalReferenceCodePageTemplateSet",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodePageTemplateSet"));
-					put(
-						"mutation#updateSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage",
-						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage",
-						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodeSitePage",
 						new ObjectValuePair<>(
@@ -509,15 +484,10 @@ public class ServletDataImpl implements ServletData {
 							SitePageResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodeSitePage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeSitePagePermissionsPage",
+						"mutation#updateSiteSitePagePermissionsPage",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeSitePagePermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodeSitePagePermissionsPage",
-						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"putSiteSiteExternalReferenceCodeSitePagePermissionsPage"));
+							"putSiteSitePagePermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodeUtilityPage",
 						new ObjectValuePair<>(
@@ -544,15 +514,10 @@ public class ServletDataImpl implements ServletData {
 							UtilityPageResourceImpl.class,
 							"putSiteSiteByExternalReferenceCodeUtilityPage"));
 					put(
-						"mutation#updateSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage",
+						"mutation#updateSiteUtilityPagePermissionsPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage"));
-					put(
-						"mutation#updateSiteSiteExternalReferenceCodeUtilityPagePermissionsPage",
-						new ObjectValuePair<>(
-							UtilityPageResourceImpl.class,
-							"putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage"));
+							"putSiteUtilityPagePermissionsPage"));
 					put(
 						"mutation#deleteSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
 						new ObjectValuePair<>(
@@ -575,6 +540,11 @@ public class ServletDataImpl implements ServletData {
 							"putSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"));
 
 					put(
+						"query#displayPageTemplatePermissions",
+						new ObjectValuePair<>(
+							DisplayPageTemplateResourceImpl.class,
+							"getSiteDisplayPageTemplatePermissionsPage"));
+					put(
 						"query#siteByExternalReferenceCodeDisplayPageTemplate",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
@@ -585,40 +555,25 @@ public class ServletDataImpl implements ServletData {
 							DisplayPageTemplateResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplatesPage"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplatePermissions",
-						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodeDisplayPageTemplates",
 						new ObjectValuePair<>(
 							DisplayPageTemplateResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage"));
 					put(
-						"query#siteExternalReferenceCodeDisplayPageTemplatePermissions",
+						"query#displayPageTemplateFolderPermissions",
 						new ObjectValuePair<>(
-							DisplayPageTemplateResourceImpl.class,
-							"getSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage"));
+							DisplayPageTemplateFolderResourceImpl.class,
+							"getSiteDisplayPageTemplateFolderPermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodeDisplayPageTemplateFolder",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder"));
 					put(
-						"query#siteByExternalReferenceCodeDisplayPageTemplateFolderPermissions",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodeDisplayPageTemplateFolders",
 						new ObjectValuePair<>(
 							DisplayPageTemplateFolderResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage"));
-					put(
-						"query#siteExternalReferenceCodeDisplayPageTemplateFolderPermissions",
-						new ObjectValuePair<>(
-							DisplayPageTemplateFolderResourceImpl.class,
-							"getSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodeFragmentComposition",
 						new ObjectValuePair<>(
@@ -645,25 +600,20 @@ public class ServletDataImpl implements ServletData {
 							FriendlyUrlHistoryResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory"));
 					put(
+						"query#masterPagePermissions",
+						new ObjectValuePair<>(
+							MasterPageResourceImpl.class,
+							"getSiteMasterPagePermissionsPage"));
+					put(
 						"query#siteByExternalReferenceCodeMasterPage",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeMasterPage"));
 					put(
-						"query#siteByExternalReferenceCodeMasterPagePermissions",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodeMasterPages",
 						new ObjectValuePair<>(
 							MasterPageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeMasterPagesPage"));
-					put(
-						"query#siteExternalReferenceCodeMasterPagePermissions",
-						new ObjectValuePair<>(
-							MasterPageResourceImpl.class,
-							"getSiteSiteExternalReferenceCodeMasterPagePermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodePageElement",
 						new ObjectValuePair<>(
@@ -750,15 +700,15 @@ public class ServletDataImpl implements ServletData {
 							PageSpecificationResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeUtilityPagePageSpecificationsPage"));
 					put(
+						"query#pageTemplatePermissions",
+						new ObjectValuePair<>(
+							PageTemplateResourceImpl.class,
+							"getSitePageTemplatePermissionsPage"));
+					put(
 						"query#siteByExternalReferenceCodePageTemplate",
 						new ObjectValuePair<>(
 							PageTemplateResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodePageTemplate"));
-					put(
-						"query#siteByExternalReferenceCodePageTemplatePermissions",
-						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodePageTemplateSetPageTemplates",
 						new ObjectValuePair<>(
@@ -770,70 +720,50 @@ public class ServletDataImpl implements ServletData {
 							PageTemplateResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodePageTemplatesPage"));
 					put(
-						"query#siteExternalReferenceCodePageTemplatePermissions",
+						"query#pageTemplateSetPermissions",
 						new ObjectValuePair<>(
-							PageTemplateResourceImpl.class,
-							"getSiteSiteExternalReferenceCodePageTemplatePermissionsPage"));
+							PageTemplateSetResourceImpl.class,
+							"getSitePageTemplateSetPermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodePageTemplateSet",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodePageTemplateSet"));
 					put(
-						"query#siteByExternalReferenceCodePageTemplateSetPermissions",
-						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodePageTemplateSets",
 						new ObjectValuePair<>(
 							PageTemplateSetResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodePageTemplateSetsPage"));
-					put(
-						"query#siteExternalReferenceCodePageTemplateSetPermissions",
-						new ObjectValuePair<>(
-							PageTemplateSetResourceImpl.class,
-							"getSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodeSitePage",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeSitePage"));
 					put(
-						"query#siteByExternalReferenceCodeSitePagePermissions",
-						new ObjectValuePair<>(
-							SitePageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeSitePagePermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodeSitePages",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeSitePagesPage"));
 					put(
-						"query#siteExternalReferenceCodeSitePagePermissions",
+						"query#sitePagePermissions",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
-							"getSiteSiteExternalReferenceCodeSitePagePermissionsPage"));
+							"getSiteSitePagePermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodeUtilityPage",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeUtilityPage"));
 					put(
-						"query#siteByExternalReferenceCodeUtilityPagePermissions",
-						new ObjectValuePair<>(
-							UtilityPageResourceImpl.class,
-							"getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage"));
-					put(
 						"query#siteByExternalReferenceCodeUtilityPages",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
 							"getSiteSiteByExternalReferenceCodeUtilityPagesPage"));
 					put(
-						"query#siteExternalReferenceCodeUtilityPagePermissions",
+						"query#utilityPagePermissions",
 						new ObjectValuePair<>(
 							UtilityPageResourceImpl.class,
-							"getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage"));
+							"getSiteUtilityPagePermissionsPage"));
 					put(
 						"query#siteByExternalReferenceCodeSitePageWidgetInstances",
 						new ObjectValuePair<>(

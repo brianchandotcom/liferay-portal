@@ -221,29 +221,6 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		UtilityPage postUtilityPage =
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
-
-		Page<Permission> page =
-			utilityPageResource.
-				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected UtilityPage
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPage()
 		throws Exception {
 
@@ -706,24 +683,20 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
+	public void testGetSiteUtilityPagePermissionsPage() throws Exception {
 		UtilityPage postUtilityPage =
-			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
+			testGetSiteUtilityPagePermissionsPage_addUtilityPage();
 
 		Page<Permission> page =
-			utilityPageResource.
-				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postUtilityPage.getExternalReferenceCode(),
-					RoleConstants.GUEST);
+			utilityPageResource.getSiteUtilityPagePermissionsPage(
+				testGroup.getExternalReferenceCode(),
+				postUtilityPage.getExternalReferenceCode(),
+				RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
 	}
 
-	protected UtilityPage
-			testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
+	protected UtilityPage testGetSiteUtilityPagePermissionsPage_addUtilityPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -768,12 +741,10 @@ public abstract class BaseUtilityPageResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
+	public void testPutSiteUtilityPagePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UtilityPage utilityPage =
-			testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
+			testPutSiteUtilityPagePermissionsPage_addUtilityPage();
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
@@ -781,84 +752,32 @@ public abstract class BaseUtilityPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			200,
-			utilityPageResource.
-				putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
+			utilityPageResource.putSiteUtilityPagePermissionsPageHttpResponse(
+				null, null,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
 						}
-					}));
+					}
+				}));
 
 		assertHttpResponseStatusCode(
 			404,
-			utilityPageResource.
-				putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
+			utilityPageResource.putSiteUtilityPagePermissionsPageHttpResponse(
+				null, null,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
 						}
-					}));
+					}
+				}));
 	}
 
-	protected UtilityPage
-			testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UtilityPage utilityPage =
-			testPutSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			utilityPageResource.
-				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			utilityPageResource.
-				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected UtilityPage
-			testPutSiteSiteExternalReferenceCodeUtilityPagePermissionsPage_addUtilityPage()
+	protected UtilityPage testPutSiteUtilityPagePermissionsPage_addUtilityPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

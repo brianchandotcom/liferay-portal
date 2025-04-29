@@ -64,6 +64,32 @@ public class PortletFileRepositoryTest {
 	}
 
 	@Test
+	public void testFetchPortletFileEntryByExternalReferenceCode()
+		throws Exception {
+
+		FileEntry fileEntry = _addPortletFileEntry(
+			RandomTestUtil.randomString());
+
+		FileEntry fetchFileEntry =
+			PortletFileRepositoryUtil.
+				fetchPortletFileEntryByExternalReferenceCode(
+					fileEntry.getExternalReferenceCode(),
+					fileEntry.getGroupId());
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), fetchFileEntry.getFileEntryId());
+
+		PortletFileRepositoryUtil.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
+
+		Assert.assertNull(
+			PortletFileRepositoryUtil.
+				fetchPortletFileEntryByExternalReferenceCode(
+					fileEntry.getExternalReferenceCode(),
+					fileEntry.getGroupId()));
+	}
+
+	@Test
 	public void testFileEntryAddShouldCreateApprovedFileEntry()
 		throws Exception {
 

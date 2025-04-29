@@ -542,7 +542,6 @@ public class ProjectTemplates {
 		}
 		else if ((template.equals("freemarker-portlet") ||
 				  template.equals("mvc-portlet") ||
-				  template.equals("npm-angular-portlet") ||
 				  template.equals("npm-react-portlet") ||
 				  template.equals("npm-vuejs-portlet") ||
 				  template.equals("spring-mvc-portlet") ||

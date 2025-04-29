@@ -1,7 +1,0 @@
-dependencies {
-	compileOnly group: "com.liferay.portal", name: "release.${liferayProduct}.api"
-}
-
-node {
-	nodeVersion = "16.15.0"
-}

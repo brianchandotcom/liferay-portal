@@ -7,7 +7,7 @@
 
 import {Page} from '@playwright/test';
 
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class ContentDashboardPage {
 	readonly page: Page;

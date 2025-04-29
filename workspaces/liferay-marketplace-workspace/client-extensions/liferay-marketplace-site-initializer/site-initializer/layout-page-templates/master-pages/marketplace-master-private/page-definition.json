@@ -190,6 +190,21 @@
 															}
 														},
 														"type": "Widget"
+													},
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n\nbutton.dropdown-toggle.btn-secondary  {\n  font-size: 16px;\n  color: #1D1c22 !important;\n}\n\nbutton.dropdown-toggle.btn-secondary:hover {\n  background-color: #edf3fe !important;\n  color: #0053f0 !important;\n}\n  \nbutton.dropdown-toggle.btn-secondary:hover::after {\n  background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230053f0' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5l6 6 6-6'/%3E%3C/svg%3E\");\n}\n\nbutton.dropdown-toggle.btn-secondary::after {\n  background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5l6 6 6-6'/%3E%3C/svg%3E\");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  content: \"\";\n  display: inline-block;\n  width: 0.75rem;\n  height: 0.75rem;\n  margin-left: 0.5rem;\n  margin-bottom: 0.2rem;\n  vertical-align: middle;\n}\n}",
+															"fragment": {
+																"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
 													}
 												],
 												"type": "Section"
@@ -213,15 +228,56 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer",
+																"key": "site-search",
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
+																"searchBlueprintId": 0
 															},
 															"fragmentFields": [
+																{
+																	"id": "searchSeeAllResultsButton",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value": "/search"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "suggestionsPopularItem4",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "suggestionsPopularItem3",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "suggestionsPopularItem2",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "suggestionsPopularItem1",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																}
 															],
 															"fragmentStyle": {
-																"marginTop": "1"
+																"marginRight": "3"
 															},
 															"indexed": true
 														},

@@ -7,13 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,

@@ -5,15 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

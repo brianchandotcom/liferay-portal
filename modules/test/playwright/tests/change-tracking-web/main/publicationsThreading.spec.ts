@@ -7,16 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import {getTempDir} from '../../utils/temp';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {getTempDir} from '../../../utils/temp';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

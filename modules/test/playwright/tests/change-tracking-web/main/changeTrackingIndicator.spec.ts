@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {performLoginViaApi, performLogout} from '../../utils/performLogin';
-import {featureFlagPagesTest} from '../feature-flag-web/fixtures/featureFlagPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import {featureFlagPagesTest} from '../../feature-flag-web/main/fixtures/featureFlagPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

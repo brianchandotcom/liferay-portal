@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 
 export const test = mergeTests(
 	featureFlagsTest({

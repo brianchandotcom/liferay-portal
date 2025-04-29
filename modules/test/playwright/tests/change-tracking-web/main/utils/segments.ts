@@ -5,10 +5,10 @@
 
 import {Page} from '@playwright/test';
 
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import getRandomString from '../../../utils/getRandomString';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import getRandomString from '../../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export async function createSegmentsEntry(apiHelpers, name: string) {
 	const site =

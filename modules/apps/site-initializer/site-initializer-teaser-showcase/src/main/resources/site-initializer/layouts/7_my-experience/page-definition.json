@@ -256,46 +256,46 @@
 											},
 											{
 												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-button"
-												  },
-												  "fragmentConfig": {
-													"buttonType": "link",
-													"type": "link",
-													"buttonSize": "nm"
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "link",
-													  "value": {
-														"fragmentLink": {
-														  "value": {
-															"href": {
-															  "mapping": {
-																"fieldKey": "DDMStructure_linkPage",
-																"itemReference": {
-																  "contextSource": "CollectionItem"
+													"fragment": {
+														"key": "BASIC_COMPONENT-button"
+													},
+													"fragmentConfig": {
+														"buttonSize": "nm",
+														"buttonType": "link",
+														"type": "link"
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "DDMStructure_linkPage",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "DDMStructure_linkText",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
 																}
-															  }
-															},
-															"target": "Blank"
-														  }
-														},
-														"text": {
-														  "mapping": {
-															"fieldKey": "DDMStructure_linkText",
-															"itemReference": {
-															  "contextSource": "CollectionItem"
 															}
-														  }
 														}
-													  }
-													}
-												  ],
-												  "indexed": true
+													],
+													"indexed": true
 												},
 												"type": "Fragment"
-											  }
+											}
 										],
 										"type": "Section"
 									}

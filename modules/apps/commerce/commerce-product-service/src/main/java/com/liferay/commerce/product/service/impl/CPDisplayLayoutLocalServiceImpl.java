@@ -14,6 +14,7 @@ import com.liferay.commerce.product.service.base.CPDisplayLayoutLocalServiceBase
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -274,17 +274,19 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		List<Document> documents = hits.toList();
 
-		List<CPDisplayLayout> cpDisplayLayouts = new ArrayList<>(
-			documents.size());
+		return TransformUtil.transform(
+			documents,
+			document -> {
+				long cpDisplayLayoutId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
 
-		for (Document document : documents) {
-			long cpDisplayLayoutId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
+				CPDisplayLayout cpDisplayLayout = fetchCPDisplayLayout(
+					cpDisplayLayoutId);
 
-			CPDisplayLayout cpDisplayLayout = fetchCPDisplayLayout(
-				cpDisplayLayoutId);
+				if (cpDisplayLayout != null) {
+					return cpDisplayLayout;
+				}
 
-			if (cpDisplayLayout == null) {
 				Indexer<CPDisplayLayout> indexer =
 					IndexerRegistryUtil.getIndexer(CPDisplayLayout.class);
 
@@ -292,13 +294,9 @@ public class CPDisplayLayoutLocalServiceImpl
 					document.get(Field.COMPANY_ID));
 
 				indexer.delete(companyId, document.getUID());
-			}
-			else if (cpDisplayLayout != null) {
-				cpDisplayLayouts.add(cpDisplayLayout);
-			}
-		}
 
-		return cpDisplayLayouts;
+				return null;
+			});
 	}
 
 	private BaseModelSearchResult<CPDisplayLayout> _searchCPDisplayLayout(

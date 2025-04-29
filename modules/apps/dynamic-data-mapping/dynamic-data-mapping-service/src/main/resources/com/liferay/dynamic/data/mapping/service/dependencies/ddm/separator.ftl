@@ -9,7 +9,9 @@
 	label=escape(label)
 >
 	<div class="form-group">
-		<hr class="separator" style="${escapeAttribute(style)}" />
+		<@liferay_ui.csp>
+			<hr class="separator" style="${escapeAttribute(style)}" />
+		</@liferay_ui.csp>
 	</div>
 
 	${fieldStructure.children}

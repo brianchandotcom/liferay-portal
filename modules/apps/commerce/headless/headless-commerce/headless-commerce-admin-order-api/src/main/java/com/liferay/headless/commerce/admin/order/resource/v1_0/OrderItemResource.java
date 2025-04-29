@@ -76,10 +76,10 @@ public interface OrderItemResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Response patchOrderItem(Long id, OrderItem orderItem)
+	public OrderItem patchOrderItem(Long id, OrderItem orderItem)
 		throws Exception;
 
-	public Response patchOrderItemByExternalReferenceCode(
+	public OrderItem patchOrderItemByExternalReferenceCode(
 			String externalReferenceCode, OrderItem orderItem)
 		throws Exception;
 

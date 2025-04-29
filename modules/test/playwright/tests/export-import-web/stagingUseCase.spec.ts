@@ -7,17 +7,16 @@ import {mergeTests, expect} from '@playwright/test';
 import {checkFolderInZip} from '../../utils/zip';
 import {mergeTests, expect} from '@playwright/test';
 import {createReadStream, readdirSync, statSync} from 'fs';
-const fs = require('fs');
 import path from 'path';
 import { exportImportConfig } from './export_import.config';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';import getRandomString from '../../utils/getRandomString';
+import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import { stagingConfigurationPageTest} from '../export-import-web/fixtures/stagingConfigurationPageTest';
+import {stagingConfigurationPageTest} from '../export-import-web/fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from '../export-import-web/fixtures/stagingPageTest';
-import { liferayConfig } from '../../liferay.config';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -31,23 +30,7 @@ export const test = mergeTests(
 	
 );
 
-async function readPropertiesFile(filePath, property){
-	const data = fs.readFileSync(filePath, 'utf-8');
-	let propertyValue = '';
-	data.split('\n').forEach((line) => {
-		line = line.trim();
-		if (line && !line.startsWith('#')) {
-			const [key, value] = line.split('=');
-			if (key && value && key === property) {
-				propertyValue = value.trim();
-			}
-		}
-	});
-
-	return propertyValue;
-}
-
-test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',{tag: '@LPS-167777'}, async ({
+test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option', {tag: '@LPS-167777'}, async ({
 	apiHelpers,
 	stagingConfigurationPage,
 	stagingPage
@@ -64,22 +47,23 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		title: getRandomString(),
 	});
 
-	const webContentContent = getRandomString();
 
-	let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: webContentContent,
-		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
-		groupId: site.id,
-		titleMap: {en_US: getRandomString()},
-	});
 
 	await stagingPage.goto(site.name);
 	await stagingPage.enableLocalStaging();
 
 	const stagingSite =
-		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-			`${site.friendlyUrlPath}-staging`
-		);
+	await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+		`${site.friendlyUrlPath}-staging`
+	);
+
+	const webContentContent = getRandomString();
+	let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
+		content: webContentContent,
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+		groupId: stagingSite.id,
+		titleMap: {en_US: getRandomString()},
+	});
 
 	const document = await apiHelpers.headlessDelivery.postDocument(
 		stagingSite.id,
@@ -97,6 +81,9 @@ test('Non Modified Referred Content Cannot Publish To Live When Enable Include I
 		stagingSite.id,
 		webContent
 	);
+	
+	await stagingPage.goto(site.name + '-staging');
+	await stagingPage.publish();
 
 	await stagingConfigurationPage.goto(site.name);
 	await stagingConfigurationPage.disableTemporaryLARdeletion();

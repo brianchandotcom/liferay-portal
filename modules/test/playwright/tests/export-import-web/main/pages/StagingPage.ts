@@ -4,6 +4,7 @@
  */
 
 import {Page, expect} from '@playwright/test';
+import getRandomString from '../../../utils/getRandomString';
 
 export class StagingPage {
 	readonly page: Page;
@@ -37,10 +38,16 @@ export class StagingPage {
 		}
 	}
 
-	async publish(includeIfModified?: string[]) {
+	async publish(includeIfModified?: string[], title?: string, ) {
+		if(!title){
+			title = getRandomString();
+		}
+
 		await this.page
 			.getByRole('link', {name: 'Custom Publish Process'})
 			.click();
+
+		await this.page.getByPlaceholder('Enter the name of the process').fill(title);
 
 		for (const i in includeIfModified) {
 			await this.page
@@ -57,6 +64,7 @@ export class StagingPage {
 			.getByRole('button', {exact: true, name: 'Publish to Live'})
 			.click();
 
+		await expect( this.page.locator('[id="_com_liferay_staging_processes_web_portlet_StagingProcessesPortlet_publishLayoutProcesses_1"]').locator('span').filter({ hasText: 'Successful' }).first()).toBeVisible();
 	}
 
 	async goto(siteKey: string) {

@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.captcha;
+package com.liferay.captcha.test.util;
 
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.Inject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,14 +30,17 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Rafael Praxedes
  */
-public abstract class BaseCaptchaTestCase {
+public class CaptchaTestUtil {
 
-	protected boolean isCaptchaRendered(String expectedText) throws Exception {
+	public static boolean isCaptchaRendered(String expectedText)
+		throws Exception {
+
 		URL url = new URL(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					_getMockHttpServletRequest(), PortletKeys.LOGIN,
-					layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
+					LayoutLocalServiceUtil.fetchLayout(
+						TestPropsValues.getPlid()),
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/login/create_account"
@@ -71,10 +73,7 @@ public abstract class BaseCaptchaTestCase {
 		return false;
 	}
 
-	@Inject
-	protected LayoutLocalService layoutLocalService;
-
-	private MockHttpServletRequest _getMockHttpServletRequest()
+	private static MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -83,7 +82,7 @@ public abstract class BaseCaptchaTestCase {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLayout(
-			layoutLocalService.fetchLayout(TestPropsValues.getPlid()));
+			LayoutLocalServiceUtil.fetchLayout(TestPropsValues.getPlid()));
 		themeDisplay.setPlid(TestPropsValues.getPlid());
 		themeDisplay.setPortalURL("http://localhost:8080");
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());

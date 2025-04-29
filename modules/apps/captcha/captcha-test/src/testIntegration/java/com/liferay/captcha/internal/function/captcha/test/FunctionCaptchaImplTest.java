@@ -6,8 +6,8 @@
 package com.liferay.captcha.internal.function.captcha.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.captcha.BaseCaptchaTestCase;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.test.util.CaptchaTestUtil;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.manager.CETManager;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Pedro Victor Silvestre
  */
 @RunWith(Arquillian.class)
-public class FunctionCaptchaImplTest extends BaseCaptchaTestCase {
+public class FunctionCaptchaImplTest {
 
 	@ClassRule
 	@Rule
@@ -82,7 +82,7 @@ public class FunctionCaptchaImplTest extends BaseCaptchaTestCase {
 						).build())) {
 
 			Assert.assertTrue(
-				isCaptchaRendered(
+				CaptchaTestUtil.isCaptchaRendered(
 					StringPool.LESS_THAN +
 						customElementCET.getHTMLElementName()));
 		}

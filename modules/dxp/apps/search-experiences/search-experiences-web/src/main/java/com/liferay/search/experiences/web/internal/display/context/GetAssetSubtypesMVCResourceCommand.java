@@ -205,7 +205,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest) {
 
 		String[] searchableAssetTypes = ParamUtil.getStringValues(
-			resourceRequest, "assetSubtypeIdentifiers");
+			resourceRequest, "searchableAssetTypes");
 
 		if (searchableAssetTypes == null) {
 			return null;

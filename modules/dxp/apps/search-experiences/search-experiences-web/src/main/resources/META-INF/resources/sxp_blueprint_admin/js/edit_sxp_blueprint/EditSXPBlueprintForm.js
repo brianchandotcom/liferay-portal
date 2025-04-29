@@ -128,7 +128,7 @@ function EditSXPBlueprintForm({
 			getData: (response) => mapAssetSubtypes(response?.assetSubtypes),
 			resource: addParams(getAssetSubtypesURL, {
 				[`${namespace}cmd`]: 'getAssetSubtypeInfo',
-				[`${namespace}assetSubtypeIdentifiers`]: (
+				[`${namespace}searchableAssetTypes`]: (
 					initialConfiguration.generalConfiguration
 						?.searchableAssetTypes || []
 				).join(','),

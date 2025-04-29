@@ -553,6 +553,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		newMethodCall = _addOrReplaceMethodParameters(
 			parameterNames, newMethodCall, JavaSourceUtil.getParameterList(to));
 
+		newMethodCall =
+			newMethodCall +
+				StringUtil.removeSubstring(
+					to, JavaSourceUtil.getMethodCall(to, 0));
+
 		return StringUtil.replaceFirst(newContent, methodCall, newMethodCall);
 	}
 

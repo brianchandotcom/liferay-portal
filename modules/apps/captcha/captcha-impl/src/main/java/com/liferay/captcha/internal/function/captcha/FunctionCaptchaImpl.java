@@ -105,7 +105,7 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 			}
 		}
 
-		printWriter.write(\"></");
+		printWriter.write("\"></");
 		printWriter.write(customElementCET.getHTMLElementName());
 		printWriter.write(StringPool.GREATER_THAN);
 	}

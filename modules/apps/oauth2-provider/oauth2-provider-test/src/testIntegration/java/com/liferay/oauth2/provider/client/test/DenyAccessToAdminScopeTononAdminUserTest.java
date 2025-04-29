@@ -8,7 +8,6 @@ package com.liferay.oauth2.provider.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -33,7 +32,8 @@ import org.osgi.framework.BundleActivator;
  * @author Jorge García Jiménez
  */
 @RunWith(Arquillian.class)
-public class AdminScopeTest extends BaseClientTestCase {
+public class DenyAccessToAdminScopeTononAdminUserTest
+	extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule
@@ -41,7 +41,7 @@ public class AdminScopeTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDenyAccessToAdminScopeTononAdminUser() {
+	public void test() {
 		WebTarget webTarget = getWebTarget();
 
 		webTarget = webTarget.path(
@@ -74,10 +74,9 @@ public class AdminScopeTest extends BaseClientTestCase {
 		protected void prepareTest() throws Exception {
 			long companyId = PortalUtil.getDefaultCompanyId();
 
-			User user1 = UserTestUtil.getAdminUser(companyId);
-
 			OAuth2Application oauth2AdminApp = createOAuth2Application(
-				companyId, user1, "oauthTestApplicationAdmin",
+				companyId, UserTestUtil.getAdminUser(companyId),
+				"oauthTestApplicationAdmin",
 				Collections.singletonList(
 					"Liferay.Headless.Admin.Workflow.everything"));
 
@@ -89,10 +88,9 @@ public class AdminScopeTest extends BaseClientTestCase {
 				Collections.singletonList(
 					"Liferay.Headless.Admin.Workflow.everything"));
 
-			User user2 = UserTestUtil.addUser();
-
 			OAuth2Application oauth2RegularUserApp = createOAuth2Application(
-				companyId, user2, "oauthTestApplicationNonAdmin",
+				companyId, UserTestUtil.addUser(),
+				"oauthTestApplicationNonAdmin",
 				Collections.singletonList(
 					"Liferay.Headless.Admin.Workflow.everything"));
 

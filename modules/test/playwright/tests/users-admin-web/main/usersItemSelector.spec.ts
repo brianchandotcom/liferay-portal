@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../fixtures/loginTest';
-import {UsersAdminItemSelectorPageTest} from '../../fixtures/usersAdminItemSelectorPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {UsersAdminItemSelectorPageTest} from '../../../fixtures/usersAdminItemSelectorPagesTest';
 
 export const test = mergeTests(loginTest(), UsersAdminItemSelectorPageTest);
 

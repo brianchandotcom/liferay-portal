@@ -4933,10 +4933,14 @@ paths:
                             $ref: "#/components/schemas/OrderItem"
                 required: true
             responses:
-                202:
-                    description:
-                        Async
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
                     description:
                         Updated
                 400:
@@ -5176,10 +5180,14 @@ paths:
                             $ref: "#/components/schemas/OrderItem"
                 required: true
             responses:
-                202:
-                    description:
-                        Async
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/OrderItem"
                     description:
                         Updated
                 400:

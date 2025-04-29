@@ -121,21 +121,23 @@ public class CollaboratorUtil {
 			UserLocalService userLocalService)
 		throws Exception {
 
-		long toUserId = 0;
 		long toUserGroupId = 0;
+		long toUserId = 0;
 
-		if (Objects.equals(Collaborator.Type.USER, collaborator.getType())) {
-			User user = userLocalService.getUserByExternalReferenceCode(
-				collaborator.getExternalReferenceCode(), companyId);
+		if (Objects.equals(
+				Collaborator.Type.USER_GROUP, collaborator.getType())) {
 
-			toUserId = user.getUserId();
-		}
-		else {
 			UserGroup userGroup =
 				userGroupLocalService.getUserGroupByExternalReferenceCode(
 					collaborator.getExternalReferenceCode(), companyId);
 
 			toUserGroupId = userGroup.getUserGroupId();
+		}
+		else {
+			User user = userLocalService.getUserByExternalReferenceCode(
+				collaborator.getExternalReferenceCode(), companyId);
+
+			toUserId = user.getUserId();
 		}
 
 		boolean shareable = false;

@@ -94,11 +94,13 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteNavigationMenusPageHttpResponse(
-			Long siteId, Pagination pagination)
+			Long siteId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public NavigationMenu postSiteNavigationMenu(
@@ -118,13 +120,14 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public void postSiteNavigationMenusPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
-			String fieldNames)
+			Long siteId, String search, String filterString, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteNavigationMenusPageExportBatchHttpResponse(
-				Long siteId, String callbackURL, String contentType,
+				Long siteId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
@@ -1033,11 +1036,13 @@ public interface NavigationMenuResource {
 		}
 
 		public Page<NavigationMenu> getSiteNavigationMenusPage(
-				Long siteId, Pagination pagination)
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteNavigationMenusPageHttpResponse(siteId, pagination);
+				getSiteNavigationMenusPageHttpResponse(
+					siteId, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1099,7 +1104,8 @@ public interface NavigationMenuResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteNavigationMenusPageHttpResponse(
-				Long siteId, Pagination pagination)
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1123,11 +1129,23 @@ public interface NavigationMenuResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -1357,13 +1375,15 @@ public interface NavigationMenuResource {
 		}
 
 		public void postSiteNavigationMenusPageExportBatch(
-				Long siteId, String callbackURL, String contentType,
+				Long siteId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteNavigationMenusPageExportBatchHttpResponse(
-					siteId, callbackURL, contentType, fieldNames);
+					siteId, search, filterString, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1415,7 +1435,8 @@ public interface NavigationMenuResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteNavigationMenusPageExportBatchHttpResponse(
-					Long siteId, String callbackURL, String contentType,
+					Long siteId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
 
@@ -1441,6 +1462,18 @@ public interface NavigationMenuResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(

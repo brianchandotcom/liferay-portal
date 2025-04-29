@@ -74,7 +74,10 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public NavigationMenu postSiteNavigationMenu(
@@ -86,8 +89,10 @@ public interface NavigationMenuResource {
 		throws Exception;
 
 	public Response postSiteNavigationMenusPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
-			String fieldNames)
+			Long siteId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public NavigationMenu putNavigationMenu(

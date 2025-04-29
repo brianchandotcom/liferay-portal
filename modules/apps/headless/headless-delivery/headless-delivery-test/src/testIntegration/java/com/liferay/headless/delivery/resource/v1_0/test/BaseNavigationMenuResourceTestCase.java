@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.NavigationMenuSerDes;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -951,7 +953,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				siteId, Pagination.of(1, 10));
+				siteId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -961,7 +963,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 					irrelevantSiteId, randomIrrelevantNavigationMenu());
 
 			page = navigationMenuResource.getSiteNavigationMenusPage(
-				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
+				irrelevantSiteId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -983,7 +986,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				siteId, randomNavigationMenu());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
-			siteId, Pagination.of(1, 10));
+			siteId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -1016,13 +1019,109 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteNavigationMenusPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteNavigationMenusPage_getSiteId();
+
+		NavigationMenu navigationMenu1 = randomNavigationMenu();
+
+		navigationMenu1 = testGetSiteNavigationMenusPage_addNavigationMenu(
+			siteId, navigationMenu1);
+
+		for (EntityField entityField : entityFields) {
+			Page<NavigationMenu> page =
+				navigationMenuResource.getSiteNavigationMenusPage(
+					siteId, null,
+					getFilterString(entityField, "between", navigationMenu1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(navigationMenu1),
+				(List<NavigationMenu>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithFilterStringContains()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteNavigationMenusPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteNavigationMenusPage_getSiteId();
+
+		NavigationMenu navigationMenu1 =
+			testGetSiteNavigationMenusPage_addNavigationMenu(
+				siteId, randomNavigationMenu());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu navigationMenu2 =
+			testGetSiteNavigationMenusPage_addNavigationMenu(
+				siteId, randomNavigationMenu());
+
+		for (EntityField entityField : entityFields) {
+			Page<NavigationMenu> page =
+				navigationMenuResource.getSiteNavigationMenusPage(
+					siteId, null,
+					getFilterString(entityField, operator, navigationMenu1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(navigationMenu1),
+				(List<NavigationMenu>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteNavigationMenusPageWithPagination()
 		throws Exception {
 
 		Long siteId = testGetSiteNavigationMenusPage_getSiteId();
 
 		Page<NavigationMenu> navigationMenusPage =
-			navigationMenuResource.getSiteNavigationMenusPage(siteId, null);
+			navigationMenuResource.getSiteNavigationMenusPage(
+				siteId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			navigationMenusPage.getTotalCount());
@@ -1046,10 +1145,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<NavigationMenu> page1 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId,
+					siteId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1058,20 +1158,22 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			Page<NavigationMenu> page2 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId,
+					siteId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				navigationMenu2, (List<NavigationMenu>)page2.getItems());
 
 			Page<NavigationMenu> page3 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId,
+					siteId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				navigationMenu3, (List<NavigationMenu>)page3.getItems());
@@ -1079,7 +1181,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		else {
 			Page<NavigationMenu> page1 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(1, totalCount + 2));
+					siteId, null, null, Pagination.of(1, totalCount + 2), null);
 
 			List<NavigationMenu> navigationMenus1 =
 				(List<NavigationMenu>)page1.getItems();
@@ -1090,7 +1192,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			Page<NavigationMenu> page2 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(2, totalCount + 2));
+					siteId, null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1102,7 +1204,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			Page<NavigationMenu> page3 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(1, (int)totalCount + 3));
+					siteId, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
 
 			assertContains(
 				navigationMenu1, (List<NavigationMenu>)page3.getItems());
@@ -1110,6 +1213,158 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				navigationMenu2, (List<NavigationMenu>)page3.getItems());
 			assertContains(
 				navigationMenu3, (List<NavigationMenu>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithSortDateTime()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, navigationMenu1, navigationMenu2) -> {
+				BeanTestUtil.setProperty(
+					navigationMenu1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, navigationMenu1, navigationMenu2) -> {
+				BeanTestUtil.setProperty(
+					navigationMenu1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					navigationMenu2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithSortInteger()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, navigationMenu1, navigationMenu2) -> {
+				BeanTestUtil.setProperty(
+					navigationMenu1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					navigationMenu2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusPageWithSortString()
+		throws Exception {
+
+		testGetSiteNavigationMenusPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, navigationMenu1, navigationMenu2) -> {
+				Class<?> clazz = navigationMenu1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						navigationMenu1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						navigationMenu2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						navigationMenu1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						navigationMenu2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						navigationMenu1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						navigationMenu2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetSiteNavigationMenusPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, NavigationMenu, NavigationMenu, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteNavigationMenusPage_getSiteId();
+
+		NavigationMenu navigationMenu1 = randomNavigationMenu();
+		NavigationMenu navigationMenu2 = randomNavigationMenu();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, navigationMenu1, navigationMenu2);
+		}
+
+		navigationMenu1 = testGetSiteNavigationMenusPage_addNavigationMenu(
+			siteId, navigationMenu1);
+
+		navigationMenu2 = testGetSiteNavigationMenusPage_addNavigationMenu(
+			siteId, navigationMenu2);
+
+		Page<NavigationMenu> page =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				siteId, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<NavigationMenu> ascPage =
+				navigationMenuResource.getSiteNavigationMenusPage(
+					siteId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				navigationMenu1, (List<NavigationMenu>)ascPage.getItems());
+			assertContains(
+				navigationMenu2, (List<NavigationMenu>)ascPage.getItems());
+
+			Page<NavigationMenu> descPage =
+				navigationMenuResource.getSiteNavigationMenusPage(
+					siteId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				navigationMenu2, (List<NavigationMenu>)descPage.getItems());
+			assertContains(
+				navigationMenu1, (List<NavigationMenu>)descPage.getItems());
 		}
 	}
 
@@ -1433,6 +1688,9 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {

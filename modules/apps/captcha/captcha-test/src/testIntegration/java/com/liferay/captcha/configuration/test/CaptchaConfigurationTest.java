@@ -6,8 +6,8 @@
 package com.liferay.captcha.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.captcha.BaseCaptchaTestCase;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.test.util.CaptchaTestUtil;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  * @author Istvan Sajtos
  */
 @RunWith(Arquillian.class)
-public class CaptchaConfigurationTest extends BaseCaptchaTestCase {
+public class CaptchaConfigurationTest {
 
 	@ClassRule
 	@Rule
@@ -64,7 +64,8 @@ public class CaptchaConfigurationTest extends BaseCaptchaTestCase {
 					).build())) {
 
 			Assert.assertEquals(
-				expectedCaptchaRendered, isCaptchaRendered("CAPTCHA"));
+				expectedCaptchaRendered,
+				CaptchaTestUtil.isCaptchaRendered("CAPTCHA"));
 		}
 	}
 

@@ -399,7 +399,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				newContent = StringUtil.replaceFirst(
 					newContent, methodCall,
-					StringUtil.replace(methodCall, from, to));
+					StringUtil.replace(methodCall, from, to), matcher.start());
 			}
 		}
 
@@ -441,6 +441,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			Matcher matcher = pattern.matcher(javaContent);
 
+			int javaContentIndex = newContent.indexOf(javaContent);
+
 			while (matcher.find()) {
 				String methodCall = matcher.group();
 
@@ -459,7 +461,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				String to = jsonObject.getString("to");
 
 				if (from.startsWith("regex:")) {
-					newContent = newContent.replaceAll(pattern.toString(), to);
+					if (classNames.length > 0) {
+						newContent = StringUtil.replaceFirst(
+							newContent, methodCall,
+							methodCall.replaceFirst(pattern.toString(), to),
+							javaContentIndex + matcher.start());
+					}
+					else {
+						newContent = newContent.replaceAll(
+							pattern.toString(), to);
+					}
 				}
 				else if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 					newContent = _formatMethodCall(
@@ -473,7 +484,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				else {
 					newContent = StringUtil.replaceFirst(
 						newContent, methodCall,
-						StringUtil.replace(methodCall, from, to));
+						StringUtil.replace(methodCall, from, to),
+						matcher.start());
 				}
 			}
 		}

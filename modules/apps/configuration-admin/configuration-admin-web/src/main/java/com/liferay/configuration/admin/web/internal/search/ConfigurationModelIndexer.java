@@ -11,6 +11,7 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProviderUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -439,31 +440,29 @@ public class ConfigurationModelIndexer
 		List<String> attributeDescriptions,
 		ResourceBundleLoader resourceBundleLoader, Locale locale) {
 
-		List<String> values = new ArrayList<>(attributeDescriptions.size());
+		return TransformUtil.transform(
+			attributeDescriptions,
+			attributeDescription -> {
+				if (Validator.isNull(attributeDescription)) {
+					return null;
+				}
 
-		for (String attributeDescription : attributeDescriptions) {
-			if (Validator.isNull(attributeDescription)) {
-				continue;
-			}
+				ResourceBundle resourceBundle = _getResourceBundle(
+					locale, resourceBundleLoader);
 
-			ResourceBundle resourceBundle = _getResourceBundle(
-				locale, resourceBundleLoader);
+				if (resourceBundle == null) {
+					return null;
+				}
 
-			if (resourceBundle == null) {
-				continue;
-			}
+				String value = ResourceBundleUtil.getString(
+					resourceBundle, attributeDescription);
 
-			String value = ResourceBundleUtil.getString(
-				resourceBundle, attributeDescription);
+				if (Validator.isNull(value)) {
+					return null;
+				}
 
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			values.add(value);
-		}
-
-		return values;
+				return value;
+			});
 	}
 
 	private ResourceBundle _getResourceBundle(

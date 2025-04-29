@@ -963,15 +963,10 @@ public class DefaultWorkflowEngineImpl
 	private List<WorkflowInstance> _toWorkflowInstances(
 		List<KaleoInstance> kaleoInstances) {
 
-		List<WorkflowInstance> workflowInstances = new ArrayList<>(
-			kaleoInstances.size());
-
-		for (KaleoInstance kaleoInstance : kaleoInstances) {
-			workflowInstances.add(
-				_kaleoWorkflowModelConverter.toWorkflowInstance(kaleoInstance));
-		}
-
-		return workflowInstances;
+		return TransformUtil.transform(
+			kaleoInstances,
+			kaleoInstance -> _kaleoWorkflowModelConverter.toWorkflowInstance(
+				kaleoInstance));
 	}
 
 	private KaleoInstance _updateContext(

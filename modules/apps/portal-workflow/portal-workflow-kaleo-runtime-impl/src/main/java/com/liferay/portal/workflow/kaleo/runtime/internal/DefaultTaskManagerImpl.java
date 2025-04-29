@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -29,7 +30,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -41,7 +41,6 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -200,38 +199,36 @@ public class DefaultTaskManagerImpl
 				kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 					workflowTaskId);
 
-			List<KaleoTaskForm> kaleoTaskForms =
+			return TransformUtil.transform(
 				kaleoTaskFormLocalService.getKaleoTaskForms(
-					kaleoTaskInstanceToken.getKaleoTaskId());
+					kaleoTaskInstanceToken.getKaleoTaskId()),
+				kaleoTaskForm -> {
+					String kaleoFormDefinition =
+						kaleoTaskForm.getFormDefinition();
 
-			List<String> kaleoTaskFormDefinitions = new ArrayList<>(
-				kaleoTaskForms.size());
+					if (Validator.isNull(kaleoFormDefinition)) {
+						FormDefinitionRetriever formDefinitionRetriever =
+							_getFormDefinitionRetriever();
 
-			for (KaleoTaskForm kaleoTaskForm : kaleoTaskForms) {
-				String kaleoFormDefinition = kaleoTaskForm.getFormDefinition();
-
-				if (Validator.isNull(kaleoFormDefinition)) {
-					FormDefinitionRetriever formDefinitionRetriever =
-						_getFormDefinitionRetriever();
-
-					if (formDefinitionRetriever != null) {
-						kaleoFormDefinition =
-							formDefinitionRetriever.getFormDefinition(
-								kaleoTaskForm, kaleoTaskInstanceToken);
-					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn("No form definition retriever defined");
+						if (formDefinitionRetriever != null) {
+							kaleoFormDefinition =
+								formDefinitionRetriever.getFormDefinition(
+									kaleoTaskForm, kaleoTaskInstanceToken);
+						}
+						else {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"No form definition retriever defined");
+							}
 						}
 					}
-				}
 
-				if (Validator.isNotNull(kaleoFormDefinition)) {
-					kaleoTaskFormDefinitions.add(kaleoFormDefinition);
-				}
-			}
+					if (Validator.isNotNull(kaleoFormDefinition)) {
+						return kaleoFormDefinition;
+					}
 
-			return kaleoTaskFormDefinitions;
+					return null;
+				});
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;

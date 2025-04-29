@@ -122,6 +122,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		IOption[]
 	>([]);
 
+	const [selectedTicketOptions, setSelectedTicketOptions] = useState<
+		ITicket[]
+	>([]);
+
 	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
 
 	const handleOptionChange = useCallback(
@@ -148,6 +152,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 					: {...ticket};
 			}),
 		]);
+
+		setSelectedTicketOptions((selectedTicketOptions) => [
+			...selectedTicketOptions.filter((ticket) => {
+				return selectedTicket.ticketId !== ticket.ticketId;
+			}),
+		]);
 	}, []);
 
 	const handleSelect = useCallback((selectedTicket: ITicket) => {
@@ -157,6 +167,11 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 					? {...ticket, selected: true}
 					: {...ticket};
 			}),
+		]);
+
+		setSelectedTicketOptions((selectedTicketOptions) => [
+			...selectedTicketOptions,
+			selectedTicket,
 		]);
 	}, []);
 
@@ -212,9 +227,9 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
-			const selectedTickets = ticketOptions
-				.filter((ticket) => ticket.selected)
-				.map((ticket) => ticket.ticketId);
+			const selectedTickets = selectedTicketOptions.map(
+				(ticket) => ticket.ticketId
+			);
 
 			setFieldValue(
 				'businessEvent.associatedTickets',
@@ -224,7 +239,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		else {
 			setFieldValue('businessEvent.associatedTickets', '[]');
 		}
-	}, [hasImpactingEvents, setFieldValue, ticketOptions]);
+	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
 
 	useEffect(() => {
 		setFieldValue(
@@ -349,9 +364,15 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		setTicketOptions([
-			...(tickets?.map((ticket) => {
-				return {...ticket, selected: false};
-			}) || []),
+			...(tickets
+				?.filter((ticket) => {
+					return (
+						ticket.status !== 'closed' && ticket.status !== 'solved'
+					);
+				})
+				.map((ticket) => {
+					return {...ticket, selected: false};
+				}) || []),
 		]);
 	}, [tickets]);
 
@@ -551,46 +572,42 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									</ClayInput.GroupItem>
 								</ClayInput.Group>
 
-								{tickets && !!tickets.length ? (
-									<>
-										<div className="mx-3 pb-3">
-											<label>
-												{i18n.translate(
-													'are-there-any-support-tickets-impacting-this-event'
-												)}
-											</label>
+								<div className="mx-3 pb-3">
+									<label>
+										{i18n.translate(
+											'are-there-any-support-tickets-impacting-this-event'
+										)}
+									</label>
 
-											<div className="ml-1">
-												<ClayRadio
-													checked={
-														hasImpactingEvents ===
-														'no'
-													}
-													label={i18n.translate('no')}
-													onChange={() =>
-														handleRadioChange('no')
-													}
-													value="no"
-												/>
+									<div className="ml-1">
+										<ClayRadio
+											checked={
+												hasImpactingEvents === 'no'
+											}
+											label={i18n.translate('no')}
+											onChange={() =>
+												handleRadioChange('no')
+											}
+											value="no"
+										/>
 
-												<ClayRadio
-													checked={
-														hasImpactingEvents ===
-														'yes'
-													}
-													label={i18n.translate(
-														'yes'
-													)}
-													onChange={() =>
-														handleRadioChange('yes')
-													}
-													value="yes"
-												/>
-											</div>
-										</div>
+										<ClayRadio
+											checked={
+												hasImpactingEvents === 'yes'
+											}
+											label={i18n.translate('yes')}
+											onChange={() =>
+												handleRadioChange('yes')
+											}
+											value="yes"
+										/>
+									</div>
+								</div>
 
-										{hasImpactingEvents === 'yes' && (
-											<div className="mx-3 pb-3">
+								{hasImpactingEvents === 'yes' && (
+									<div className="mx-3 pb-3">
+										{ticketOptions.length ? (
+											<>
 												<label>
 													{i18n.translate(
 														'please-select-the-tickets-that-are-impacting-this-event'
@@ -601,15 +618,18 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 													editing
 													handleRemove={handleRemove}
 													handleSelect={handleSelect}
+													selectedTickets={
+														selectedTicketOptions
+													}
 													tickets={ticketOptions}
 												/>
+											</>
+										) : (
+											<div className="mx-3 pb-3">
+												{i18n.translate(
+													'there-are-currently-no-open-tickets-under-this-project'
+												)}
 											</div>
-										)}
-									</>
-								) : (
-									<div className="mx-3 pb-3">
-										{i18n.translate(
-											'there-are-currently-no-open-tickets-under-this-project'
 										)}
 									</div>
 								)}

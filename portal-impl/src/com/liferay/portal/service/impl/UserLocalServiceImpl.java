@@ -1970,6 +1970,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		else if (adminEmailUserAddedEnabled && sendEmail) {
 			notifyUser(user, serviceContext);
 		}
+
+		if (user.getPasswordModified()) {
+			user.setPasswordModified(false);
+
+			sendPasswordNotification(
+				user, user.getCompanyId(), user.getPassword(), null, null,
+				null, null, null, serviceContext);
+		}
 	}
 
 	/**
@@ -5194,7 +5202,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userId, modelListenerException);
 		}
 
-		if (!silentUpdate) {
+		if (!silentUpdate &&
+			user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+
 			user.setPasswordModified(false);
 
 			sendPasswordNotification(

@@ -445,6 +445,7 @@ test(
 	async ({
 		apiHelpers,
 		page,
+		pagesAdminPage,
 		productMenuPage,
 	}) => {
 		const siteTemplateName: string = 'Template-' + getRandomString();
@@ -461,5 +462,15 @@ test(
 			type: 'layoutSetPrototype',
 		});
 
+		await productMenuPage.goToPages();
+
+		const page1Name = getRandomString();
+		await pagesAdminPage.createNewPage({
+			name: page1Name,
+		});
+		const page2Name = getRandomString();
+		await pagesAdminPage.createNewPage({
+			name: page2Name,
+		});
 	}
 );

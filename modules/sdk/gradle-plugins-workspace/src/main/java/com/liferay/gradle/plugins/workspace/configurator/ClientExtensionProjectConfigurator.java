@@ -65,7 +65,6 @@ import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
-import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -86,6 +85,7 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
@@ -93,7 +93,6 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.TaskState;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
-import org.gradle.process.JavaExecSpec;
 import org.gradle.process.ProcessForkOptions;
 
 /**
@@ -942,61 +941,39 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _configureJDKJavaOptions(Project project) {
-		StringBuilder sb = new StringBuilder();
+		Map<String, String> environmentVariables = Collections.singletonMap(
+			"JDK_JAVA_OPTIONS",
+			StringUtil.join(
+				StringUtil.SPACE,
+				"--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+				"--add-opens=java.base/java.net=ALL-UNNAMED",
+				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED",
+				"--add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED",
+				"--add-opens=java.base/sun.util.calendar=ALL-UNNAMED",
+				"--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED "));
 
-		sb.append("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED ");
-		sb.append("--add-opens=java.base/java.net=ALL-UNNAMED ");
-		sb.append(
-			"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED ");
-		sb.append(
-			"--add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED ");
-		sb.append("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED ");
-		sb.append("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED ");
+		TaskContainer tasks = project.getTasks();
 
-		Map<String, String> environmentVariables = new HashMap<>();
+		tasks.withType(
+			JavaExec.class,
+			javaExecTask -> {
+				javaExecTask.environment(environmentVariables);
 
-		environmentVariables.put("JDK_JAVA_OPTIONS", sb.toString());
+				Logger logger = javaExecTask.getLogger();
 
-		Gradle gradle = project.getGradle();
+				if (logger.isInfoEnabled()) {
+					logger.info(
+						StringUtil.concat(
+							"Injecting JDK_JAVA_OPTIONS environment variable ",
+							"into the process invoked by the task {}"),
+						javaExecTask.getPath());
 
-		TaskExecutionGraph taskGraph = gradle.getTaskGraph();
+					for (Map.Entry<String, String> entry :
+							environmentVariables.entrySet()) {
 
-		taskGraph.addTaskExecutionListener(
-			new TaskExecutionListener() {
-
-				@Override
-				public void afterExecute(Task task, TaskState taskState) {
-				}
-
-				@Override
-				public void beforeExecute(Task task) {
-					if (Objects.equals(project, task.getProject()) &&
-						(task instanceof JavaExecSpec)) {
-
-						JavaExecSpec javaExecSpec = (JavaExecSpec)task;
-
-						javaExecSpec.environment(environmentVariables);
-
-						Logger logger = task.getLogger();
-
-						if (logger.isInfoEnabled()) {
-							logger.info(
-								StringUtil.concat(
-									"Injecting JDK_JAVA_OPTIONS environment " +
-										"variable into the process invoked " +
-											"by the task ",
-									task.getPath()));
-
-							for (Map.Entry<String, String> entry :
-									environmentVariables.entrySet()) {
-
-								logger.info(
-									"{}: {}", entry.getKey(), entry.getValue());
-							}
-						}
+						logger.info("{}: {}", entry.getKey(), entry.getValue());
 					}
 				}
-
 			});
 	}
 
@@ -1159,14 +1136,7 @@ public class ClientExtensionProjectConfigurator
 
 		pluginContainer.withId(
 			"org.springframework.boot",
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					_configureJDKJavaOptions(project);
-				}
-
-			});
+			plugin -> _configureJDKJavaOptions(project));
 	}
 
 	private void _configureTaskCheck(Project project) {

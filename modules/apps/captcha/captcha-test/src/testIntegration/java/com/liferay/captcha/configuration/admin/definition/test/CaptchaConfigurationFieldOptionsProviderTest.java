@@ -12,6 +12,8 @@ import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvi
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,9 +63,19 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			"com.liferay.captcha.internal.configuration." +
 				"FunctionCaptchaImplConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				"captchaName", "ClientExtensionCaptcha"
+				"captchaName", RandomTestUtil.randomString()
 			).put(
-				"customElementExternalReferenceCode", "test"
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"customElementExternalReferenceCode",
+				RandomTestUtil.randomString()
+			).put(
+				"oAuth2ApplicationExternalReferenceCode",
+				RandomTestUtil.randomString()
+			).put(
+				"resourcePath", RandomTestUtil.randomString()
+			).put(
+				"responseParameterName", RandomTestUtil.randomString()
 			).build());
 	}
 

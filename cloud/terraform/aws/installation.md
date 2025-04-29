@@ -1,10 +1,16 @@
 # Liferay Cloud Native AWS Installation Guide
 
+This installation guide is intended for use with the specialized Liferay AWS Helm chart located at:
+
+`oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws`.
+
 ## Prerequisites
 
 1. Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and configure with [IAM credentials](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
 
 1. Install [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
+
+1. Install [Git CLI](https://git-scm.com/downloads).
 
 1. Install [Helm CLI](https://helm.sh/docs/intro/install/).
 
@@ -26,15 +32,23 @@
 
 ## Installation
 
-Clone the repository [TBD].
+1. Clone the terraform files from the repository:
+
+   ```bash
+   git clone -n --depth=1 --filter=tree:0 https://github.com/liferay/liferay-portal.git liferay-aws-terraform
+   cd liferay-aws-terraform
+   git sparse-checkout set --no-cone /cloud/terraform/aws
+   git checkout
+   cd cloud/terraform/aws
+   ```
 
 Once the repository has been cloned, you have two choices:
 
-1. Bring your own AWS account. If you have an AWS account and wish to create a new EKS cluster complete with VPC and networking, follow [EKS Cluster Bootstrap](#eks-cluster-bootstrap).
+1. Create a new EKS cluster. If you want to create a new EKS cluster complete with VPC and networking, follow [Create a new EKS cluster](#create-a-new-eks-cluster).
 
-1. Bring your own EKS cluster. If you have an existing EKS cluster, follow [Liferay Infrastructure Bootstrap](#liferay-infrastructure-bootstrap).
+1. Use an existing EKS cluster. If you have an existing EKS cluster, follow [Create dependent services](#create-dependent-services).
 
-## EKS Cluster Bootstrap
+## Create a new EKS cluster
 
 1. Navigate to the `eks` directory.
 
@@ -52,17 +66,17 @@ Once the repository has been cloned, you have two choices:
 
    You are prompted to apply the changes.
 
-1. Append the result of `terraform output` to the `../dependencies/terraform.tfvars` file in the `dependencies` directory:
+1. Write the result of `terraform output` to the `../dependencies/terraform.tfvars` file in the `dependencies` directory:
 
    ```bash
-   terraform output >> ../dependencies/terraform.tfvars
+   terraform output > ../dependencies/terraform.tfvars
    ```
 
-## Liferay Infrastructure Bootstrap
+## Create Dependent Services
 
 1. Navigate to the `dependencies` directory.
 
-1. Update the `terraform.tfvars` file to configure your infrastructure. Variables are defined in `variables.tf` file. If you followed [EKS Cluster Bootstrap](#eks-cluster-bootstrap), this file is already populated.
+1. Update the `terraform.tfvars` file to configure your infrastructure. Variables are defined in `variables.tf` file. If you followed [Create a new EKS cluster](#create-a-new-eks-cluster), this file is already populated.
 
 1. Run the following commands:
 
@@ -85,7 +99,9 @@ To use Helm you must use the `aws` CLI to set up `kubectl`.
 1. Run the command below:
 
    ```bash
-   aws eks --name $(terraform output -raw cluster_name) --region $(terraform output -raw region) update-kubeconfig
+   aws eks update-kubeconfig \
+      --name $(terraform output -raw cluster_name) \
+      --region $(terraform output -raw region)
    ```
 
 1. Test that `kubectl cluster-info` works.
@@ -118,22 +134,11 @@ This secret is created automatically when you run the Terraform auto-configurati
 1. Run the following command:
 
    ```bash
-   helm upgrade liferay oci://[aws_chart] \
+   helm upgrade liferay oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws \
        --create-namespace \
        --install \
        --namespace $(terraform output -raw deployment_namespace) \
-       --set "awsServiceAccountArn=$(terraform output -raw liferay_sa_role)" \
-       --values ../helm/values.yaml
-   ```
-
-   If you have an externally created service account, use
-
-   ```bash
-   helm upgrade liferay oci://[aws_chart] \
-       --create-namespace \
-       --install \
-       --namespace $(terraform output -raw deployment_namespace) \
-       --set "serviceAccount.create=false" \
-       --set "serviceAccount.name=${SERVICE_ACCOUNT_NAME}" \
-       --values ../helm/values.yaml
+       --set "liferay-default.serviceAccount.annotations.eks\.amazonaws\.com/role-arn=$(terraform output -raw liferay_sa_role)" \
+       --values ../helm/values.yaml \
+       --version ${LIFERAY_AWS_HELM_CHART_VERSION}
    ```

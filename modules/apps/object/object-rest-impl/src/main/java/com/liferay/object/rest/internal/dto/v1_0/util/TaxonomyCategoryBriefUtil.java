@@ -34,6 +34,8 @@ public class TaxonomyCategoryBriefUtil {
 				setEmbeddedTaxonomyCategory(
 					() -> _toTaxonomyCategory(
 						assetCategory.getCategoryId(), dtoConverterContext));
+				setTaxonomyCategoryExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
 				setTaxonomyCategoryId(assetCategory::getCategoryId);
 				setTaxonomyCategoryName(
 					() -> assetCategory.getTitle(

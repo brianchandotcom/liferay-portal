@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,12 +89,11 @@ public class CollaboratorResourceTest {
 
 	@Test
 	public void testGetObjectEntryCollaboratorsPage() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry();
-
 		JSONArray jsonArray = JSONUtil.putAll(
 			_getUserCollaboratorJSONObject(),
 			_getUserGroupCollaboratorJSONObject(),
 			_getUserCollaboratorJSONObject());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		HTTPTestUtil.invokeToJSONObject(
 			jsonArray.toString(),
@@ -118,11 +116,10 @@ public class CollaboratorResourceTest {
 	public void testGetScopeScopeKeyByExternalReferenceCodeCollaboratorsPage()
 		throws Exception {
 
-		ObjectEntry objectEntry = _addObjectEntry();
-
 		JSONArray jsonArray = JSONUtil.putAll(
 			_getUserCollaboratorJSONObject(),
 			_getUserGroupCollaboratorJSONObject());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		HTTPTestUtil.invokeToJSONObject(
 			jsonArray.toString(),
@@ -144,12 +141,11 @@ public class CollaboratorResourceTest {
 
 	@Test
 	public void testPostObjectEntryCollaboratorsPage() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry();
-
 		JSONArray jsonArray = JSONUtil.putAll(
 			_getUserCollaboratorJSONObject(),
 			_getUserGroupCollaboratorJSONObject(),
 			_getUserCollaboratorJSONObject());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			jsonArray.toString(),
@@ -165,13 +161,12 @@ public class CollaboratorResourceTest {
 	public void testPostScopeScopeKeyByExternalReferenceCodeCollaboratorsPage()
 		throws Exception {
 
-		ObjectEntry objectEntry = _addObjectEntry();
-
 		JSONArray jsonArray = JSONUtil.putAll(
 			_getUserCollaboratorJSONObject(),
 			_getUserGroupCollaboratorJSONObject(),
 			_getUserCollaboratorJSONObject(),
 			_getUserGroupCollaboratorJSONObject());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			jsonArray.toString(),
@@ -230,9 +225,7 @@ public class CollaboratorResourceTest {
 			}
 		}
 
-		Assert.assertTrue(
-			actualJSONArray + " does not contain " + expectedJSONObject,
-			contains);
+		Assert.assertTrue(contains);
 	}
 
 	private void _assertEquals(

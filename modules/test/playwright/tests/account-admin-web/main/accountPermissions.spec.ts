@@ -5,26 +5,26 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {AccountOrganizationSelectorPage} from '../../pages/account-admin-web/AccountOrganizationSelectorPage';
-import {AccountsPage} from '../../pages/account-admin-web/AccountsPage';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {nextPage, setItemsPerPage} from '../../utils/pagination';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {AccountOrganizationSelectorPage} from '../../../pages/account-admin-web/AccountOrganizationSelectorPage';
+import {AccountsPage} from '../../../pages/account-admin-web/AccountsPage';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {addAccountRole, initAccountAdministrator} from './utils/roles';
 
 export const test = mergeTests(

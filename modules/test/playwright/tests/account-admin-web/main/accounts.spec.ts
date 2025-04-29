@@ -6,22 +6,25 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {customFieldsPagesTest} from '../../fixtures/customFieldsPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {createCategories} from '../../helpers/CreateCategories';
-import {TCustomField} from '../../helpers/CustomFieldTypesHelper';
-import getGlobalSiteId from '../../utils/getGlobalSiteId';
-import getRandomString from '../../utils/getRandomString';
-import {nextPage, setItemsPerPage} from '../../utils/pagination';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {tagsPagesTest} from '../asset-tags-admin-web/fixtures/tagsAdminPagesTest';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
+import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
+import getGlobalSiteId from '../../../utils/getGlobalSiteId';
+import getRandomString from '../../../utils/getRandomString';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {tagsPagesTest} from '../../asset-tags-admin-web/main/fixtures/tagsAdminPagesTest';
 
 export const test = mergeTests(
 	accountsPagesTest,

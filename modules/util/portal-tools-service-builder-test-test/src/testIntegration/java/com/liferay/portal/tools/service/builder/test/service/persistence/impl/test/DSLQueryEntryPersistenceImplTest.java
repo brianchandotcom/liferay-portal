@@ -345,7 +345,9 @@ public class DSLQueryEntryPersistenceImplTest {
 			_dslQueryEntryPersistence.dslQuery(
 				DSLQueryFactoryUtil.select(
 					DSLFunctionFactoryUtil.divide(
-						DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId,
+						DSLFunctionFactoryUtil.castFloat(
+							DSLQueryStatusEntryTable.INSTANCE.
+								dslQueryStatusEntryId),
 						new Scalar<>(2L)
 					).as(
 						"alias", Double.class

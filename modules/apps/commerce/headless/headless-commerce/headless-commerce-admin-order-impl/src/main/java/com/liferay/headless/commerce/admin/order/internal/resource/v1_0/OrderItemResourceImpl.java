@@ -232,19 +232,15 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 	}
 
 	@Override
-	public Response patchOrderItem(Long id, OrderItem orderItem)
+	public OrderItem patchOrderItem(Long id, OrderItem orderItem)
 		throws Exception {
 
-		_updateOrderItem(
+		return _updateOrderItem(
 			_commerceOrderItemService.getCommerceOrderItem(id), orderItem);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response patchOrderItemByExternalReferenceCode(
+	public OrderItem patchOrderItemByExternalReferenceCode(
 			String externalReferenceCode, OrderItem orderItem)
 		throws Exception {
 
@@ -259,11 +255,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 					externalReferenceCode);
 		}
 
-		_updateOrderItem(commerceOrderItem, orderItem);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _updateOrderItem(commerceOrderItem, orderItem);
 	}
 
 	@Override

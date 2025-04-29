@@ -627,11 +627,15 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem importCommerceOrderItem(
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
-			String cpMeasurementUnitKey, BigDecimal quantity,
+			String cpMeasurementUnitKey, String json, BigDecimal quantity,
 			BigDecimal shippedQuantity,
 			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
+
+		if (Validator.isBlank(json)) {
+			json = _getCPInstanceOptionValueRelsJSONString(cpInstanceId);
+		}
 
 		CommerceOrderLocalService commerceOrderLocalService =
 			_commerceOrderLocalServiceSnapshot.get();
@@ -659,14 +663,14 @@ public class CommerceOrderItemLocalServiceImpl
 		if (commerceOrderItem == null) {
 			commerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder, null,
-				cpInstance, 0, null, quantity, shippedQuantity,
+				cpInstance, 0, json, quantity, shippedQuantity,
 				unitOfMeasureIncrementalOrderQuantity, unitOfMeasureKey, false,
 				serviceContext);
 		}
 		else {
 			commerceOrderItem = _updateCommerceOrderItem(
 				commerceOrderItem, externalReferenceCode, user, commerceOrder,
-				cpInstance, quantity, shippedQuantity,
+				cpInstance, json, quantity, shippedQuantity,
 				unitOfMeasureIncrementalOrderQuantity, unitOfMeasureKey,
 				serviceContext);
 		}
@@ -2375,7 +2379,7 @@ public class CommerceOrderItemLocalServiceImpl
 	private CommerceOrderItem _updateCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem, String externalReferenceCode,
 			User user, CommerceOrder commerceOrder, CPInstance cpInstance,
-			BigDecimal quantity, BigDecimal shippedQuantity,
+			String json, BigDecimal quantity, BigDecimal shippedQuantity,
 			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
@@ -2385,7 +2389,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		_validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			commerceOrderItem.getJson(), quantity, unitOfMeasureKey,
+			json, quantity, unitOfMeasureKey,
 			commerceOrderItem.hasParentCommerceOrderItem(),
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
@@ -2400,6 +2404,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setCPInstanceId(cpInstance.getCPInstanceId());
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
 		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
+		commerceOrderItem.setJson(json);
 		commerceOrderItem.setManuallyAdjusted(false);
 		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
 		commerceOrderItem.setQuantity(quantity);
@@ -2422,8 +2427,8 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceProductPrice commerceProductPrice =
 				_getCommerceProductPrice(
 					commerceOrder, cpInstance.getCPDefinitionId(),
-					cpInstance.getCPInstanceId(), commerceOrderItem.getJson(),
-					quantity, unitOfMeasureKey, null);
+					cpInstance.getCPInstanceId(), json, quantity,
+					unitOfMeasureKey, null);
 
 			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
 

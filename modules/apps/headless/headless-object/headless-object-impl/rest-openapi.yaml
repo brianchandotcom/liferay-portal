@@ -19,7 +19,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: ../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator
                     description:
                         The object entry folder's creator.
                     readOnly: true

@@ -58,11 +58,11 @@ public class DLFileEntryModelPreFilterContributor
 		_addAttachmentFilter(booleanFilter, searchContext);
 		_addClassTypeIdsFilter(booleanFilter, searchContext);
 		_addDDMFieldFilter(booleanFilter, searchContext);
+		_addMimeTypesFilter(booleanFilter, searchContext);
 		_addSubtypeFilter(booleanFilter, searchContext);
+		addHiddenFilter(booleanFilter, searchContext);
 		addWorkflowStatusFilter(
 			booleanFilter, modelSearchSettings, searchContext);
-		addHiddenFilter(booleanFilter, searchContext);
-		_addMimeTypesFilter(booleanFilter, searchContext);
 	}
 
 	protected void addHiddenFilter(

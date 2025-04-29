@@ -22,6 +22,15 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	@Override
+	public String getSlaveLabel() {
+		if (_slaveLabel != null) {
+			return _slaveLabel;
+		}
+
+		return super.getSlaveLabel();
+	}
+
+	@Override
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
 
@@ -85,6 +94,10 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		_projectName = projectName;
 	}
 
+	public void setSlaveLabel(String slaveLabel) {
+		_slaveLabel = slaveLabel;
+	}
+
 	protected PlaywrightSegmentTestClassGroup(
 		BatchTestClassGroup parentBatchTestClassGroup) {
 
@@ -140,5 +153,6 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	private String _projectName;
+	private String _slaveLabel;
 
 }

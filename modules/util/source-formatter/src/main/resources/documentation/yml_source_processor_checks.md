@@ -4,6 +4,7 @@ Check | Category | Description
 ----- | -------- | -----------
 YMLDefinitionOrderCheck | [Styling](styling_checks.md#styling-checks) | Sorts definitions alphabetically in `.yml` files. |
 YMLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines. |
+YMLIndentationCheck | [Styling](styling_checks.md#styling-checks) | Finds incorrect indentation in YAML files. |
 YMLLongLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds lines that are longer than the specified maximum line length. |
 YMLStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules to enforce consistency in code style. |
 YMLWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary whitespace in `.yml` files. |

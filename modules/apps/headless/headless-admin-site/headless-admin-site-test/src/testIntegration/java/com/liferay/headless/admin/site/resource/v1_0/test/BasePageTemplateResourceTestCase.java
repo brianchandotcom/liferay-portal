@@ -205,6 +205,28 @@ public abstract class BasePageTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGetSitePageTemplatePermissionsPage() throws Exception {
+		PageTemplate postPageTemplate =
+			testGetSitePageTemplatePermissionsPage_addPageTemplate();
+
+		Page<Permission> page =
+			pageTemplateResource.getSitePageTemplatePermissionsPage(
+				testGroup.getExternalReferenceCode(),
+				postPageTemplate.getExternalReferenceCode(),
+				RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected PageTemplate
+			testGetSitePageTemplatePermissionsPage_addPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
@@ -223,29 +245,6 @@ public abstract class BasePageTemplateResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		PageTemplate postPageTemplate =
-			testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate();
-
-		Page<Permission> page =
-			pageTemplateResource.
-				getSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-					testGroup.getExternalReferenceCode(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected PageTemplate
-			testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -840,31 +839,6 @@ public abstract class BasePageTemplateResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		PageTemplate postPageTemplate =
-			testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate();
-
-		Page<Permission> page =
-			pageTemplateResource.
-				getSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
-					testGroup.getExternalReferenceCode(),
-					postPageTemplate.getExternalReferenceCode(),
-					RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected PageTemplate
-			testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testPatchSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
@@ -1010,108 +984,55 @@ public abstract class BasePageTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testPutSitePageTemplatePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageTemplate pageTemplate =
+			testPutSitePageTemplatePermissionsPage_addPageTemplate();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			pageTemplateResource.putSitePageTemplatePermissionsPageHttpResponse(
+				null, null,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageTemplateResource.putSitePageTemplatePermissionsPageHttpResponse(
+				null, null,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected PageTemplate
+			testPutSitePageTemplatePermissionsPage_addPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
 		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PageTemplate pageTemplate =
-			testPutSiteSiteByExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			pageTemplateResource.
-				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			pageTemplateResource.
-				putSiteSiteByExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected PageTemplate
-			testPutSiteSiteByExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteSiteExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PageTemplate pageTemplate =
-			testPutSiteSiteExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			pageTemplateResource.
-				putSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			pageTemplateResource.
-				putSiteSiteExternalReferenceCodePageTemplatePermissionsPageHttpResponse(
-					null, null,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected PageTemplate
-			testPutSiteSiteExternalReferenceCodePageTemplatePermissionsPage_addPageTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule

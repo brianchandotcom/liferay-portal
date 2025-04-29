@@ -61,16 +61,6 @@ public interface UtilityPageResource {
 				String utilityPageExternalReferenceCode)
 		throws Exception;
 
-	public Page<Permission>
-			getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
 	public Page<UtilityPage> getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 			String siteExternalReferenceCode, String search,
 			List<String> aggregations, String filterString,
@@ -84,14 +74,13 @@ public interface UtilityPageResource {
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public Page<Permission>
-			getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode, String roleNames)
+	public Page<Permission> getSiteUtilityPagePermissionsPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+			getSiteUtilityPagePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
 				String utilityPageExternalReferenceCode, String roleNames)
 		throws Exception;
@@ -143,25 +132,13 @@ public interface UtilityPageResource {
 				UtilityPage utilityPage)
 		throws Exception;
 
-	public Page<Permission>
-			putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode, Permission[] permissions)
+	public Page<Permission> putSiteUtilityPagePermissionsPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-				String siteExternalReferenceCode, Permission[] permissions)
-		throws Exception;
-
-	public Page<Permission>
-			putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-				String siteExternalReferenceCode,
-				String utilityPageExternalReferenceCode,
-				Permission[] permissions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+			putSiteUtilityPagePermissionsPageHttpResponse(
 				String siteExternalReferenceCode,
 				String utilityPageExternalReferenceCode,
 				Permission[] permissions)
@@ -505,120 +482,6 @@ public interface UtilityPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission>
-				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-					String siteExternalReferenceCode, String roleNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					siteExternalReferenceCode, roleNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					String siteExternalReferenceCode, String roleNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (roleNames != null) {
-				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/permissions");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<UtilityPage>
 				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 					String siteExternalReferenceCode, String search,
@@ -753,14 +616,13 @@ public interface UtilityPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission>
-				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-					String siteExternalReferenceCode,
-					String utilityPageExternalReferenceCode, String roleNames)
+		public Page<Permission> getSiteUtilityPagePermissionsPage(
+				String siteExternalReferenceCode,
+				String utilityPageExternalReferenceCode, String roleNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+				getSiteUtilityPagePermissionsPageHttpResponse(
 					siteExternalReferenceCode, utilityPageExternalReferenceCode,
 					roleNames);
 
@@ -824,7 +686,7 @@ public interface UtilityPageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+				getSiteUtilityPagePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
 					String utilityPageExternalReferenceCode, String roleNames)
 			throws Exception {
@@ -1343,133 +1205,14 @@ public interface UtilityPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission>
-				putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-					String siteExternalReferenceCode, Permission[] permissions)
+		public Page<Permission> putSiteUtilityPagePermissionsPage(
+				String siteExternalReferenceCode,
+				String utilityPageExternalReferenceCode,
+				Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					siteExternalReferenceCode, permissions);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
-					String siteExternalReferenceCode, Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Permission permissionValue : permissions) {
-				values.add(String.valueOf(permissionValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/utility-pages/permissions");
-
-			httpInvoker.path(
-				"siteExternalReferenceCode", siteExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Permission>
-				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-					String siteExternalReferenceCode,
-					String utilityPageExternalReferenceCode,
-					Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+				putSiteUtilityPagePermissionsPageHttpResponse(
 					siteExternalReferenceCode, utilityPageExternalReferenceCode,
 					permissions);
 
@@ -1533,7 +1276,7 @@ public interface UtilityPageResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteSiteExternalReferenceCodeUtilityPagePermissionsPageHttpResponse(
+				putSiteUtilityPagePermissionsPageHttpResponse(
 					String siteExternalReferenceCode,
 					String utilityPageExternalReferenceCode,
 					Permission[] permissions)

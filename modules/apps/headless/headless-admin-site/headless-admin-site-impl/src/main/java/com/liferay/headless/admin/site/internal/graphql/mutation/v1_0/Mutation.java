@@ -299,6 +299,33 @@ public class Mutation {
 						contentPageSpecification));
 	}
 
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteDisplayPageTemplatePermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("displayPageTemplateExternalReferenceCode") String
+					displayPageTemplateExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateResource -> {
+				Page paginationPage =
+					displayPageTemplateResource.
+						putSiteDisplayPageTemplatePermissionsPage(
+							siteExternalReferenceCode,
+							displayPageTemplateExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Updates the display page template with the given external reference code, or creates it if it does not exist."
 	)
@@ -321,56 +348,6 @@ public class Mutation {
 						siteExternalReferenceCode,
 						displayPageTemplateExternalReferenceCode,
 						displayPageTemplate));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateResource -> {
-				Page paginationPage =
-					displayPageTemplateResource.
-						putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateExternalReferenceCode") String
-					displayPageTemplateExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateResource -> {
-				Page paginationPage =
-					displayPageTemplateResource.
-						putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-							siteExternalReferenceCode,
-							displayPageTemplateExternalReferenceCode,
-							permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(
@@ -438,6 +415,33 @@ public class Mutation {
 						siteExternalReferenceCode, displayPageTemplateFolder));
 	}
 
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteDisplayPageTemplateFolderPermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
+					String displayPageTemplateFolderExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_displayPageTemplateFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			displayPageTemplateFolderResource -> {
+				Page paginationPage =
+					displayPageTemplateFolderResource.
+						putSiteDisplayPageTemplateFolderPermissionsPage(
+							siteExternalReferenceCode,
+							displayPageTemplateFolderExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Updates the display page template folder with the given external reference code, or creates it if it does not exist."
 	)
@@ -460,56 +464,6 @@ public class Mutation {
 						siteExternalReferenceCode,
 						displayPageTemplateFolderExternalReferenceCode,
 						displayPageTemplateFolder));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateFolderResource -> {
-				Page paginationPage =
-					displayPageTemplateFolderResource.
-						putSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("displayPageTemplateFolderExternalReferenceCode")
-					String displayPageTemplateFolderExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_displayPageTemplateFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			displayPageTemplateFolderResource -> {
-				Page paginationPage =
-					displayPageTemplateFolderResource.
-						putSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage(
-							siteExternalReferenceCode,
-							displayPageTemplateFolderExternalReferenceCode,
-							permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(
@@ -686,6 +640,31 @@ public class Mutation {
 						contentPageSpecification));
 	}
 
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteMasterPagePermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("masterPageExternalReferenceCode") String
+					masterPageExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_masterPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			masterPageResource -> {
+				Page paginationPage =
+					masterPageResource.putSiteMasterPagePermissionsPage(
+						siteExternalReferenceCode,
+						masterPageExternalReferenceCode, permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Updates the master page with the given external reference code, or creates it if it does not exist."
 	)
@@ -704,55 +683,6 @@ public class Mutation {
 				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
 					siteExternalReferenceCode, masterPageExternalReferenceCode,
 					masterPage));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_masterPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			masterPageResource -> {
-				Page paginationPage =
-					masterPageResource.
-						putSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("masterPageExternalReferenceCode") String
-					masterPageExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_masterPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			masterPageResource -> {
-				Page paginationPage =
-					masterPageResource.
-						putSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
-							siteExternalReferenceCode,
-							masterPageExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(
@@ -1430,6 +1360,31 @@ public class Mutation {
 						pageTemplateSetExternalReferenceCode, pageTemplate));
 	}
 
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSitePageTemplatePermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("pageTemplateExternalReferenceCode") String
+					pageTemplateExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateResource -> {
+				Page paginationPage =
+					pageTemplateResource.putSitePageTemplatePermissionsPage(
+						siteExternalReferenceCode,
+						pageTemplateExternalReferenceCode, permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Updates the page template with the given external reference code, or creates it if it does not exist."
 	)
@@ -1449,55 +1404,6 @@ public class Mutation {
 					putSiteSiteByExternalReferenceCodePageTemplate(
 						siteExternalReferenceCode,
 						pageTemplateExternalReferenceCode, pageTemplate));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateResource -> {
-				Page paginationPage =
-					pageTemplateResource.
-						putSiteSiteByExternalReferenceCodePageTemplatePermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("pageTemplateExternalReferenceCode") String
-					pageTemplateExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateResource -> {
-				Page paginationPage =
-					pageTemplateResource.
-						putSiteSiteExternalReferenceCodePageTemplatePermissionsPage(
-							siteExternalReferenceCode,
-							pageTemplateExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(
@@ -1559,6 +1465,32 @@ public class Mutation {
 						siteExternalReferenceCode, pageTemplateSet));
 	}
 
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSitePageTemplateSetPermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") String
+					siteExternalReferenceCode,
+				@GraphQLName("pageTemplateSetExternalReferenceCode") String
+					pageTemplateSetExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageTemplateSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageTemplateSetResource -> {
+				Page paginationPage =
+					pageTemplateSetResource.
+						putSitePageTemplateSetPermissionsPage(
+							siteExternalReferenceCode,
+							pageTemplateSetExternalReferenceCode, permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
 	@GraphQLField(
 		description = "Updates the page template set with the given external reference code, or creates it if it does not exist."
 	)
@@ -1578,55 +1510,6 @@ public class Mutation {
 					putSiteSiteByExternalReferenceCodePageTemplateSet(
 						siteExternalReferenceCode,
 						pageTemplateSetExternalReferenceCode, pageTemplateSet));
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateSetResource -> {
-				Page paginationPage =
-					pageTemplateSetResource.
-						putSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("pageTemplateSetExternalReferenceCode") String
-					pageTemplateSetExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageTemplateSetResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageTemplateSetResource -> {
-				Page paginationPage =
-					pageTemplateSetResource.
-						putSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage(
-							siteExternalReferenceCode,
-							pageTemplateSetExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
 	}
 
 	@GraphQLField(description = "Deletes a specific public page of a site.")
@@ -1726,30 +1609,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodeSitePagePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sitePageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sitePageResource -> {
-				Page paginationPage =
-					sitePageResource.
-						putSiteSiteByExternalReferenceCodeSitePagePermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodeSitePagePermissionsPage(
+			updateSiteSitePagePermissionsPage(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
 				@GraphQLName("sitePageExternalReferenceCode") String
@@ -1764,10 +1624,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			sitePageResource -> {
 				Page paginationPage =
-					sitePageResource.
-						putSiteSiteExternalReferenceCodeSitePagePermissionsPage(
-							siteExternalReferenceCode,
-							sitePageExternalReferenceCode, permissions);
+					sitePageResource.putSiteSitePagePermissionsPage(
+						siteExternalReferenceCode,
+						sitePageExternalReferenceCode, permissions);
 
 				return paginationPage.getItems();
 			});
@@ -1877,30 +1736,7 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-				@GraphQLName("siteExternalReferenceCode") String
-					siteExternalReferenceCode,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_utilityPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			utilityPageResource -> {
-				Page paginationPage =
-					utilityPageResource.
-						putSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage(
-							siteExternalReferenceCode, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
+			updateSiteUtilityPagePermissionsPage(
 				@GraphQLName("siteExternalReferenceCode") String
 					siteExternalReferenceCode,
 				@GraphQLName("utilityPageExternalReferenceCode") String
@@ -1915,10 +1751,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			utilityPageResource -> {
 				Page paginationPage =
-					utilityPageResource.
-						putSiteSiteExternalReferenceCodeUtilityPagePermissionsPage(
-							siteExternalReferenceCode,
-							utilityPageExternalReferenceCode, permissions);
+					utilityPageResource.putSiteUtilityPagePermissionsPage(
+						siteExternalReferenceCode,
+						utilityPageExternalReferenceCode, permissions);
 
 				return paginationPage.getItems();
 			});

@@ -51,14 +51,15 @@ public interface MasterPageResource {
 			String masterPageExternalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteMasterPagePermissionsPage(
+				String siteExternalReferenceCode,
+				String masterPageExternalReferenceCode, String roleNames)
+		throws Exception;
+
 	public MasterPage getSiteSiteByExternalReferenceCodeMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public Page<MasterPage> getSiteSiteByExternalReferenceCodeMasterPagesPage(
@@ -67,12 +68,6 @@ public interface MasterPageResource {
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
-				String siteExternalReferenceCode,
-				String masterPageExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public MasterPage patchSiteSiteByExternalReferenceCodeMasterPage(
@@ -91,22 +86,16 @@ public interface MasterPageResource {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception;
 
-	public MasterPage putSiteSiteByExternalReferenceCodeMasterPage(
-			String siteExternalReferenceCode,
-			String masterPageExternalReferenceCode, MasterPage masterPage)
-		throws Exception;
-
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodeMasterPagePermissionsPage(
-				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteExternalReferenceCodeMasterPagePermissionsPage(
+			putSiteMasterPagePermissionsPage(
 				String siteExternalReferenceCode,
 				String masterPageExternalReferenceCode,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public MasterPage putSiteSiteByExternalReferenceCodeMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode, MasterPage masterPage)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

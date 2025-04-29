@@ -51,6 +51,13 @@ public interface DisplayPageTemplateResource {
 			String displayPageTemplateExternalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getSiteDisplayPageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				String displayPageTemplateExternalReferenceCode,
+				String roleNames)
+		throws Exception;
+
 	public DisplayPageTemplate
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,
@@ -64,11 +71,6 @@ public interface DisplayPageTemplateResource {
 				Boolean flatten)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode, String roleNames)
-		throws Exception;
-
 	public Page<DisplayPageTemplate>
 			getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 				String siteExternalReferenceCode, String search,
@@ -76,13 +78,6 @@ public interface DisplayPageTemplateResource {
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode,
-				String roleNames)
 		throws Exception;
 
 	public DisplayPageTemplate
@@ -112,24 +107,18 @@ public interface DisplayPageTemplateResource {
 				ContentPageSpecification contentPageSpecification)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteDisplayPageTemplatePermissionsPage(
+				String siteExternalReferenceCode,
+				String displayPageTemplateExternalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public DisplayPageTemplate
 			putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 				String siteExternalReferenceCode,
 				String displayPageTemplateExternalReferenceCode,
 				DisplayPageTemplate displayPageTemplate)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage(
-				String siteExternalReferenceCode,
-				String displayPageTemplateExternalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

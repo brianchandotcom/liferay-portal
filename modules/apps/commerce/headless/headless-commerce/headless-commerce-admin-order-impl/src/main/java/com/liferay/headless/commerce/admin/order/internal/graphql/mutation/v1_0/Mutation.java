@@ -351,7 +351,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchOrderItem(
+	public OrderItem patchOrderItem(
 			@GraphQLName("id") Long id,
 			@GraphQLName("orderItem") OrderItem orderItem)
 		throws Exception {
@@ -364,7 +364,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchOrderItemByExternalReferenceCode(
+	public OrderItem patchOrderItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("orderItem") OrderItem orderItem)
 		throws Exception {

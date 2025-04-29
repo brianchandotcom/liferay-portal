@@ -1607,12 +1607,61 @@ public abstract class BaseOrderItemResourceTestCase {
 
 	@Test
 	public void testPatchOrderItem() throws Exception {
-		Assert.assertTrue(false);
+		OrderItem postOrderItem = testPatchOrderItem_addOrderItem();
+
+		OrderItem randomPatchOrderItem = randomPatchOrderItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderItem patchOrderItem = orderItemResource.patchOrderItem(
+			postOrderItem.getId(), randomPatchOrderItem);
+
+		OrderItem expectedPatchOrderItem = postOrderItem.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrderItem, expectedPatchOrderItem);
+
+		OrderItem getOrderItem = orderItemResource.getOrderItem(
+			patchOrderItem.getId());
+
+		assertEquals(expectedPatchOrderItem, getOrderItem);
+		assertValid(getOrderItem);
+	}
+
+	protected OrderItem testPatchOrderItem_addOrderItem() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPatchOrderItemByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
+		OrderItem postOrderItem =
+			testPatchOrderItemByExternalReferenceCode_addOrderItem();
+
+		OrderItem randomPatchOrderItem = randomPatchOrderItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderItem patchOrderItem =
+			orderItemResource.patchOrderItemByExternalReferenceCode(
+				postOrderItem.getExternalReferenceCode(), randomPatchOrderItem);
+
+		OrderItem expectedPatchOrderItem = postOrderItem.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOrderItem, expectedPatchOrderItem);
+
+		OrderItem getOrderItem =
+			orderItemResource.getOrderItemByExternalReferenceCode(
+				patchOrderItem.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOrderItem, getOrderItem);
+		assertValid(getOrderItem);
+	}
+
+	protected OrderItem testPatchOrderItemByExternalReferenceCode_addOrderItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

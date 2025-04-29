@@ -391,16 +391,202 @@ public abstract class BaseOrderItemResourceImpl
 	@javax.ws.rs.Path("/orderItems/{id}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response patchOrderItem(
+	public OrderItem patchOrderItem(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
 			OrderItem orderItem)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		OrderItem existingOrderItem = getOrderItem(id);
 
-		return responseBuilder.build();
+		if (orderItem.getBookedQuantityId() != null) {
+			existingOrderItem.setBookedQuantityId(
+				orderItem.getBookedQuantityId());
+		}
+
+		if (orderItem.getCustomFields() != null) {
+			existingOrderItem.setCustomFields(orderItem.getCustomFields());
+		}
+
+		if (orderItem.getDecimalQuantity() != null) {
+			existingOrderItem.setDecimalQuantity(
+				orderItem.getDecimalQuantity());
+		}
+
+		if (orderItem.getDeliveryGroup() != null) {
+			existingOrderItem.setDeliveryGroup(orderItem.getDeliveryGroup());
+		}
+
+		if (orderItem.getDeliveryGroupName() != null) {
+			existingOrderItem.setDeliveryGroupName(
+				orderItem.getDeliveryGroupName());
+		}
+
+		if (orderItem.getDiscountAmount() != null) {
+			existingOrderItem.setDiscountAmount(orderItem.getDiscountAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel1() != null) {
+			existingOrderItem.setDiscountPercentageLevel1(
+				orderItem.getDiscountPercentageLevel1());
+		}
+
+		if (orderItem.getDiscountPercentageLevel1WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel1WithTaxAmount(
+				orderItem.getDiscountPercentageLevel1WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel2() != null) {
+			existingOrderItem.setDiscountPercentageLevel2(
+				orderItem.getDiscountPercentageLevel2());
+		}
+
+		if (orderItem.getDiscountPercentageLevel2WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel2WithTaxAmount(
+				orderItem.getDiscountPercentageLevel2WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel3() != null) {
+			existingOrderItem.setDiscountPercentageLevel3(
+				orderItem.getDiscountPercentageLevel3());
+		}
+
+		if (orderItem.getDiscountPercentageLevel3WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel3WithTaxAmount(
+				orderItem.getDiscountPercentageLevel3WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel4() != null) {
+			existingOrderItem.setDiscountPercentageLevel4(
+				orderItem.getDiscountPercentageLevel4());
+		}
+
+		if (orderItem.getDiscountPercentageLevel4WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel4WithTaxAmount(
+				orderItem.getDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountWithTaxAmount() != null) {
+			existingOrderItem.setDiscountWithTaxAmount(
+				orderItem.getDiscountWithTaxAmount());
+		}
+
+		if (orderItem.getExternalReferenceCode() != null) {
+			existingOrderItem.setExternalReferenceCode(
+				orderItem.getExternalReferenceCode());
+		}
+
+		if (orderItem.getFinalPrice() != null) {
+			existingOrderItem.setFinalPrice(orderItem.getFinalPrice());
+		}
+
+		if (orderItem.getFinalPriceWithTaxAmount() != null) {
+			existingOrderItem.setFinalPriceWithTaxAmount(
+				orderItem.getFinalPriceWithTaxAmount());
+		}
+
+		if (orderItem.getName() != null) {
+			existingOrderItem.setName(orderItem.getName());
+		}
+
+		if (orderItem.getOptions() != null) {
+			existingOrderItem.setOptions(orderItem.getOptions());
+		}
+
+		if (orderItem.getOrderExternalReferenceCode() != null) {
+			existingOrderItem.setOrderExternalReferenceCode(
+				orderItem.getOrderExternalReferenceCode());
+		}
+
+		if (orderItem.getOrderId() != null) {
+			existingOrderItem.setOrderId(orderItem.getOrderId());
+		}
+
+		if (orderItem.getPrintedNote() != null) {
+			existingOrderItem.setPrintedNote(orderItem.getPrintedNote());
+		}
+
+		if (orderItem.getPromoPrice() != null) {
+			existingOrderItem.setPromoPrice(orderItem.getPromoPrice());
+		}
+
+		if (orderItem.getPromoPriceWithTaxAmount() != null) {
+			existingOrderItem.setPromoPriceWithTaxAmount(
+				orderItem.getPromoPriceWithTaxAmount());
+		}
+
+		if (orderItem.getQuantity() != null) {
+			existingOrderItem.setQuantity(orderItem.getQuantity());
+		}
+
+		if (orderItem.getReplacedSkuExternalReferenceCode() != null) {
+			existingOrderItem.setReplacedSkuExternalReferenceCode(
+				orderItem.getReplacedSkuExternalReferenceCode());
+		}
+
+		if (orderItem.getReplacedSkuId() != null) {
+			existingOrderItem.setReplacedSkuId(orderItem.getReplacedSkuId());
+		}
+
+		if (orderItem.getRequestedDeliveryDate() != null) {
+			existingOrderItem.setRequestedDeliveryDate(
+				orderItem.getRequestedDeliveryDate());
+		}
+
+		if (orderItem.getShippedQuantity() != null) {
+			existingOrderItem.setShippedQuantity(
+				orderItem.getShippedQuantity());
+		}
+
+		if (orderItem.getShippingAddressExternalReferenceCode() != null) {
+			existingOrderItem.setShippingAddressExternalReferenceCode(
+				orderItem.getShippingAddressExternalReferenceCode());
+		}
+
+		if (orderItem.getShippingAddressId() != null) {
+			existingOrderItem.setShippingAddressId(
+				orderItem.getShippingAddressId());
+		}
+
+		if (orderItem.getSku() != null) {
+			existingOrderItem.setSku(orderItem.getSku());
+		}
+
+		if (orderItem.getSkuExternalReferenceCode() != null) {
+			existingOrderItem.setSkuExternalReferenceCode(
+				orderItem.getSkuExternalReferenceCode());
+		}
+
+		if (orderItem.getSkuId() != null) {
+			existingOrderItem.setSkuId(orderItem.getSkuId());
+		}
+
+		if (orderItem.getSubscription() != null) {
+			existingOrderItem.setSubscription(orderItem.getSubscription());
+		}
+
+		if (orderItem.getUnitOfMeasure() != null) {
+			existingOrderItem.setUnitOfMeasure(orderItem.getUnitOfMeasure());
+		}
+
+		if (orderItem.getUnitOfMeasureKey() != null) {
+			existingOrderItem.setUnitOfMeasureKey(
+				orderItem.getUnitOfMeasureKey());
+		}
+
+		if (orderItem.getUnitPrice() != null) {
+			existingOrderItem.setUnitPrice(orderItem.getUnitPrice());
+		}
+
+		if (orderItem.getUnitPriceWithTaxAmount() != null) {
+			existingOrderItem.setUnitPriceWithTaxAmount(
+				orderItem.getUnitPriceWithTaxAmount());
+		}
+
+		preparePatch(orderItem, existingOrderItem);
+
+		return putOrderItem(id, existingOrderItem);
 	}
 
 	/**
@@ -426,7 +612,7 @@ public abstract class BaseOrderItemResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response patchOrderItemByExternalReferenceCode(
+	public OrderItem patchOrderItemByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -434,9 +620,197 @@ public abstract class BaseOrderItemResourceImpl
 			OrderItem orderItem)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		OrderItem existingOrderItem = getOrderItemByExternalReferenceCode(
+			externalReferenceCode);
 
-		return responseBuilder.build();
+		if (orderItem.getBookedQuantityId() != null) {
+			existingOrderItem.setBookedQuantityId(
+				orderItem.getBookedQuantityId());
+		}
+
+		if (orderItem.getCustomFields() != null) {
+			existingOrderItem.setCustomFields(orderItem.getCustomFields());
+		}
+
+		if (orderItem.getDecimalQuantity() != null) {
+			existingOrderItem.setDecimalQuantity(
+				orderItem.getDecimalQuantity());
+		}
+
+		if (orderItem.getDeliveryGroup() != null) {
+			existingOrderItem.setDeliveryGroup(orderItem.getDeliveryGroup());
+		}
+
+		if (orderItem.getDeliveryGroupName() != null) {
+			existingOrderItem.setDeliveryGroupName(
+				orderItem.getDeliveryGroupName());
+		}
+
+		if (orderItem.getDiscountAmount() != null) {
+			existingOrderItem.setDiscountAmount(orderItem.getDiscountAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel1() != null) {
+			existingOrderItem.setDiscountPercentageLevel1(
+				orderItem.getDiscountPercentageLevel1());
+		}
+
+		if (orderItem.getDiscountPercentageLevel1WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel1WithTaxAmount(
+				orderItem.getDiscountPercentageLevel1WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel2() != null) {
+			existingOrderItem.setDiscountPercentageLevel2(
+				orderItem.getDiscountPercentageLevel2());
+		}
+
+		if (orderItem.getDiscountPercentageLevel2WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel2WithTaxAmount(
+				orderItem.getDiscountPercentageLevel2WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel3() != null) {
+			existingOrderItem.setDiscountPercentageLevel3(
+				orderItem.getDiscountPercentageLevel3());
+		}
+
+		if (orderItem.getDiscountPercentageLevel3WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel3WithTaxAmount(
+				orderItem.getDiscountPercentageLevel3WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountPercentageLevel4() != null) {
+			existingOrderItem.setDiscountPercentageLevel4(
+				orderItem.getDiscountPercentageLevel4());
+		}
+
+		if (orderItem.getDiscountPercentageLevel4WithTaxAmount() != null) {
+			existingOrderItem.setDiscountPercentageLevel4WithTaxAmount(
+				orderItem.getDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountWithTaxAmount() != null) {
+			existingOrderItem.setDiscountWithTaxAmount(
+				orderItem.getDiscountWithTaxAmount());
+		}
+
+		if (orderItem.getExternalReferenceCode() != null) {
+			existingOrderItem.setExternalReferenceCode(
+				orderItem.getExternalReferenceCode());
+		}
+
+		if (orderItem.getFinalPrice() != null) {
+			existingOrderItem.setFinalPrice(orderItem.getFinalPrice());
+		}
+
+		if (orderItem.getFinalPriceWithTaxAmount() != null) {
+			existingOrderItem.setFinalPriceWithTaxAmount(
+				orderItem.getFinalPriceWithTaxAmount());
+		}
+
+		if (orderItem.getName() != null) {
+			existingOrderItem.setName(orderItem.getName());
+		}
+
+		if (orderItem.getOptions() != null) {
+			existingOrderItem.setOptions(orderItem.getOptions());
+		}
+
+		if (orderItem.getOrderExternalReferenceCode() != null) {
+			existingOrderItem.setOrderExternalReferenceCode(
+				orderItem.getOrderExternalReferenceCode());
+		}
+
+		if (orderItem.getOrderId() != null) {
+			existingOrderItem.setOrderId(orderItem.getOrderId());
+		}
+
+		if (orderItem.getPrintedNote() != null) {
+			existingOrderItem.setPrintedNote(orderItem.getPrintedNote());
+		}
+
+		if (orderItem.getPromoPrice() != null) {
+			existingOrderItem.setPromoPrice(orderItem.getPromoPrice());
+		}
+
+		if (orderItem.getPromoPriceWithTaxAmount() != null) {
+			existingOrderItem.setPromoPriceWithTaxAmount(
+				orderItem.getPromoPriceWithTaxAmount());
+		}
+
+		if (orderItem.getQuantity() != null) {
+			existingOrderItem.setQuantity(orderItem.getQuantity());
+		}
+
+		if (orderItem.getReplacedSkuExternalReferenceCode() != null) {
+			existingOrderItem.setReplacedSkuExternalReferenceCode(
+				orderItem.getReplacedSkuExternalReferenceCode());
+		}
+
+		if (orderItem.getReplacedSkuId() != null) {
+			existingOrderItem.setReplacedSkuId(orderItem.getReplacedSkuId());
+		}
+
+		if (orderItem.getRequestedDeliveryDate() != null) {
+			existingOrderItem.setRequestedDeliveryDate(
+				orderItem.getRequestedDeliveryDate());
+		}
+
+		if (orderItem.getShippedQuantity() != null) {
+			existingOrderItem.setShippedQuantity(
+				orderItem.getShippedQuantity());
+		}
+
+		if (orderItem.getShippingAddressExternalReferenceCode() != null) {
+			existingOrderItem.setShippingAddressExternalReferenceCode(
+				orderItem.getShippingAddressExternalReferenceCode());
+		}
+
+		if (orderItem.getShippingAddressId() != null) {
+			existingOrderItem.setShippingAddressId(
+				orderItem.getShippingAddressId());
+		}
+
+		if (orderItem.getSku() != null) {
+			existingOrderItem.setSku(orderItem.getSku());
+		}
+
+		if (orderItem.getSkuExternalReferenceCode() != null) {
+			existingOrderItem.setSkuExternalReferenceCode(
+				orderItem.getSkuExternalReferenceCode());
+		}
+
+		if (orderItem.getSkuId() != null) {
+			existingOrderItem.setSkuId(orderItem.getSkuId());
+		}
+
+		if (orderItem.getSubscription() != null) {
+			existingOrderItem.setSubscription(orderItem.getSubscription());
+		}
+
+		if (orderItem.getUnitOfMeasure() != null) {
+			existingOrderItem.setUnitOfMeasure(orderItem.getUnitOfMeasure());
+		}
+
+		if (orderItem.getUnitOfMeasureKey() != null) {
+			existingOrderItem.setUnitOfMeasureKey(
+				orderItem.getUnitOfMeasureKey());
+		}
+
+		if (orderItem.getUnitPrice() != null) {
+			existingOrderItem.setUnitPrice(orderItem.getUnitPrice());
+		}
+
+		if (orderItem.getUnitPriceWithTaxAmount() != null) {
+			existingOrderItem.setUnitPriceWithTaxAmount(
+				orderItem.getUnitPriceWithTaxAmount());
+		}
+
+		preparePatch(orderItem, existingOrderItem);
+
+		return putOrderItemByExternalReferenceCode(
+			externalReferenceCode, existingOrderItem);
 	}
 
 	/**
@@ -775,7 +1149,7 @@ public abstract class BaseOrderItemResourceImpl
 							getOrderItemByExternalReferenceCode(
 								orderItem.getExternalReferenceCode());
 
-						patchOrderItem(
+						persistedOrderItem = patchOrderItem(
 							getOrderItem.getId() != null ?
 								getOrderItem.getId() :
 									_parseLong(
@@ -954,14 +1328,10 @@ public abstract class BaseOrderItemResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			orderItemUnsafeFunction = orderItem -> {
-				patchOrderItem(
-					orderItem.getId() != null ? orderItem.getId() :
-						_parseLong((String)parameters.get("orderItemId")),
-					orderItem);
-
-				return null;
-			};
+			orderItemUnsafeFunction = orderItem -> patchOrderItem(
+				orderItem.getId() != null ? orderItem.getId() :
+					_parseLong((String)parameters.get("orderItemId")),
+				orderItem);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
@@ -1211,6 +1581,10 @@ public abstract class BaseOrderItemResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		OrderItem orderItem, OrderItem existingOrderItem) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

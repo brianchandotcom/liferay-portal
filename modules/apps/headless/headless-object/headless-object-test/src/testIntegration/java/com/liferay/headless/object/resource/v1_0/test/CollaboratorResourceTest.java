@@ -80,12 +80,12 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			_getUserGroupCollaborator()
 		};
 
-		Page<Collaborator> collaboratorPage =
+		Page<Collaborator> collaboratorsPage =
 			collaboratorResource.postObjectEntryFolderCollaboratorsPage(
 				objectEntryFolder.getObjectEntryFolderId(), collaborators);
 
 		_assertCollaborators(
-			(List<Collaborator>)collaboratorPage.getItems(), collaborators);
+			(List<Collaborator>)collaboratorsPage.getItems(), collaborators);
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			_getUserGroupCollaborator()
 		};
 
-		Page<Collaborator> collaboratorPage =
+		Page<Collaborator> collaboratorsPage =
 			collaboratorResource.
 				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
 					testGroup.getGroupKey(),
@@ -113,7 +113,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 					collaborators);
 
 		_assertCollaborators(
-			(List<Collaborator>)collaboratorPage.getItems(), collaborators);
+			(List<Collaborator>)collaboratorsPage.getItems(), collaborators);
 	}
 
 	@Override

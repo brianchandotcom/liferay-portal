@@ -540,11 +540,11 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	private List<BackgroundTask> _translate(
 		List<com.liferay.portal.background.task.model.BackgroundTask>
-			backgroundTaskModels) {
+			backgroundTasks) {
 
 		return TransformUtil.transform(
-			backgroundTaskModels,
-			backgroundTaskModel -> new BackgroundTaskImpl(backgroundTaskModel));
+			backgroundTasks,
+			backgroundTask -> new BackgroundTaskImpl(backgroundTask));
 	}
 
 	private OrderByComparator

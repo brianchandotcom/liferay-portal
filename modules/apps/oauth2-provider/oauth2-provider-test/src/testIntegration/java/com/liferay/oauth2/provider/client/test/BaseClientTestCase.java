@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 
 import java.net.URI;
 
@@ -665,25 +666,15 @@ public abstract class BaseClientTestCase {
 	protected void revokeOAuth2AuthorizationByAccessToken(String token)
 		throws PortalException {
 
-		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService =
-			_bundleContext.getService(
-				_bundleContext.getServiceReference(
-					OAuth2AuthorizationLocalService.class));
-
-		oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
-			oAuth2AuthorizationLocalService.
+		_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			_oAuth2AuthorizationLocalService.
 				getOAuth2AuthorizationByAccessTokenContent(token));
 	}
 
 	protected OAuth2Authorization updateOAuth2Authorization(
 		OAuth2Authorization oAuth2Authorization) {
 
-		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService =
-			_bundleContext.getService(
-				_bundleContext.getServiceReference(
-					OAuth2AuthorizationLocalService.class));
-
-		return oAuth2AuthorizationLocalService.updateOAuth2Authorization(
+		return _oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 			oAuth2Authorization);
 	}
 
@@ -694,5 +685,8 @@ public abstract class BaseClientTestCase {
 
 	private BundleActivator _bundleActivator;
 	private BundleContext _bundleContext;
+
+	@Inject
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

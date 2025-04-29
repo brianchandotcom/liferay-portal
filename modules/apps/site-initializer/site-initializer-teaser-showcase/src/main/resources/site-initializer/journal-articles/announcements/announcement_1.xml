@@ -8,27 +8,18 @@
 			]]>
 		</dynamic-content>
 	</dynamic-element>
-	<dynamic-element field-reference="Fieldset84243538" index-type="" instance-id="xU3FpPpX" name="Fieldset84243538" type="fieldset">
-		<dynamic-element field-reference="linkText" index-type="keyword" instance-id="7fvRpjd9" name="Text92513204" type="text">
-			<dynamic-content language-id="en_US">
-				<![CDATA[
-					Learn more
-				]]>
-			</dynamic-content>
-		</dynamic-element>
-		<dynamic-element field-reference="linkPage" index-type="keyword" instance-id="zujzWHf5" name="LinkToLayout01794324" type="link_to_layout">
-			<dynamic-content language-id="en_US">
-				<![CDATA[
-					{
-						"groupId": 32106,
-						"id": "66c5c45a-5798-ac56-fb3e-952a854a8427",
-						"layoutId": "9",
-						"name": "Pages > Products",
-						"privateLayout": false,
-						"value": "/products"
-					}
-				]]>
-			</dynamic-content>
-		</dynamic-element>
+	<dynamic-element field-reference="linkText" index-type="keyword" instance-id="7fvRpjd9" name="linkText" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				Learn more
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="linkPage" index-type="keyword" instance-id="zujzWHf5" name="linkPage" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				products
+			]]>
+		</dynamic-content>
 	</dynamic-element>
 </root>

@@ -256,55 +256,46 @@
 											},
 											{
 												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-button"
-													},
-													"fragmentConfig": {
-														"buttonSize": "nm",
-														"buttonType": "link",
-														"type": "link"
-													},
-													"fragmentFields": [
-														{
-															"id": "link",
-															"value": {
-																"fragmentLink": {
-																	"value": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/products"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "[$GROUP_KEY$]"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	}
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Learn more"
-																	}
+												  "fragment": {
+													"key": "BASIC_COMPONENT-button"
+												  },
+												  "fragmentConfig": {
+													"buttonType": "link",
+													"type": "link",
+													"buttonSize": "nm"
+												  },
+												  "fragmentFields": [
+													{
+													  "id": "link",
+													  "value": {
+														"fragmentLink": {
+														  "value": {
+															"href": {
+															  "mapping": {
+																"fieldKey": "DDMStructure_linkPage",
+																"itemReference": {
+																  "contextSource": "CollectionItem"
 																}
+															  }
+															},
+															"target": "Blank"
+														  }
+														},
+														"text": {
+														  "mapping": {
+															"fieldKey": "DDMStructure_linkText",
+															"itemReference": {
+															  "contextSource": "CollectionItem"
 															}
+														  }
 														}
-													],
-													"indexed": true
+													  }
+													}
+												  ],
+												  "indexed": true
 												},
 												"type": "Fragment"
-											}
+											  }
 										],
 										"type": "Section"
 									}

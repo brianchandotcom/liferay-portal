@@ -60,100 +60,96 @@
 							"visibilityExpression": ""
 						},
 						{
-							"collapsible": false,
-							"ddmStructureId": "",
-							"ddmStructureKey": "",
-							"ddmStructureLayoutId": "",
-							"fieldReference": "Fieldset84243538",
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[\"vertical\"]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "linkText",
+							"hideField": false,
+							"htmlAutocompleteAttribute": "",
+							"indexType": "keyword",
 							"label": {
-								"en_US": "Fields Group"
+								"en_US": "Link Text"
 							},
 							"labelAtStructureLevel": true,
-							"localizable": false,
-							"name": "Fieldset84243538",
-							"nestedFields": [
-								{
-									"confirmationErrorMessage": {
-										"en_US": ""
-									},
-									"confirmationLabel": {
-										"en_US": ""
-									},
-									"dataType": "string",
-									"direction": "[\"vertical\"]",
-									"displayStyle": "singleline",
-									"fieldNamespace": "",
-									"fieldReference": "linkText",
-									"hideField": false,
-									"htmlAutocompleteAttribute": "",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "Link Text"
-									},
-									"labelAtStructureLevel": true,
-									"localizable": true,
-									"name": "linkText",
-									"nativeField": false,
-									"objectFieldName": "",
-									"placeholder": {
-										"en_US": ""
-									},
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"requireConfirmation": false,
-									"required": true,
-									"requiredErrorMessage": {
-										"en_US": ""
-									},
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"tooltip": {
-										"en_US": ""
-									},
-									"type": "text",
-									"visibilityExpression": ""
-								},
-								{
-									"dataType": "link-to-page",
-									"fieldNamespace": "",
-									"fieldReference": "linkPage",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "Link to Page"
-									},
-									"localizable": true,
-									"name": "linkPage",
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"required": false,
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"type": "link_to_layout",
-									"visibilityExpression": ""
-								}
-							],
-							"normalizedStructure": false,
+							"localizable": true,
+							"name": "linkText",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
 							"predefinedValue": {
+								"en_US": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
-							"required": false,
-							"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text92513204\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"LinkToLayout01794324\"]}]}]",
+							"requireConfirmation": false,
+							"required": true,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
 							"showLabel": true,
 							"tip": {
+								"en_US": ""
 							},
-							"type": "fieldset",
-							"upgradedStructure": false
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[\"vertical\"]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "linkPage",
+							"hideField": false,
+							"htmlAutocompleteAttribute": "",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Link Page"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "linkPage",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": true,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
 						}
 					],
 					"successPage": {

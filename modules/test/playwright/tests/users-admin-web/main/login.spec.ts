@@ -5,7 +5,7 @@
 
 import {expect} from '@playwright/test';
 
-import {LoginOptions, loginTest} from '../../fixtures/loginTest';
+import {LoginOptions, loginTest} from '../../../fixtures/loginTest';
 
 const sessionIds = [];
 

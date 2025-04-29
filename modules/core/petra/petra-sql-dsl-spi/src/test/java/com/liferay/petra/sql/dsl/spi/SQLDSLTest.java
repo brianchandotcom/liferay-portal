@@ -499,6 +499,11 @@ public class SQLDSLTest {
 				DSLFunctionFactoryUtil.castLong(
 					MainExampleTable.INSTANCE.nameColumn)));
 		Assert.assertEquals(
+			"CAST_FLOAT(MainExample.name)",
+			String.valueOf(
+				DSLFunctionFactoryUtil.castFloat(
+					MainExampleTable.INSTANCE.nameColumn)));
+		Assert.assertEquals(
 			"CAST_TEXT(MainExample.mainExampleId)",
 			String.valueOf(
 				DSLFunctionFactoryUtil.castText(

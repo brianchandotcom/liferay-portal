@@ -73,6 +73,11 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	}
 
 	@Override
+	public Expression<Long> castFloat(Expression<?> expression) {
+		return new DSLFunction<>(DSLFunctionType.CAST_FLOAT, expression);
+	}
+
+	@Override
 	public Expression<Long> castLong(Expression<?> expression) {
 		return new DSLFunction<>(DSLFunctionType.CAST_LONG, expression);
 	}

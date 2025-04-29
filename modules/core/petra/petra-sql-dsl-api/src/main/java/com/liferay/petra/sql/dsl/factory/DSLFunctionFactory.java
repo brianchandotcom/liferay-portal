@@ -36,6 +36,8 @@ public interface DSLFunctionFactory {
 
 	public Expression<String> castClobText(Expression<Clob> expression);
 
+	public Expression<Long> castFloat(Expression<?> expression);
+
 	public Expression<Long> castLong(Expression<?> expression);
 
 	public Expression<String> castText(Expression<?> expression);

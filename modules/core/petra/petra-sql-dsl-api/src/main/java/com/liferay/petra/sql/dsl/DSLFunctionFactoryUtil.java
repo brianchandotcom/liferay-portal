@@ -66,6 +66,10 @@ public class DSLFunctionFactoryUtil {
 		return _DSL_FUNCTION_FACTORY.castClobText(expression);
 	}
 
+	public static Expression<Long> castFloat(Expression<?> expression) {
+		return _DSL_FUNCTION_FACTORY.castFloat(expression);
+	}
+
 	public static Expression<Long> castLong(Expression<?> expression) {
 		return _DSL_FUNCTION_FACTORY.castLong(expression);
 	}

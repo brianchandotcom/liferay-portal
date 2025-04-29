@@ -20,6 +20,9 @@ public class DSLFunctionType {
 	public static final DSLFunctionType CAST_CLOB_TEXT = new DSLFunctionType(
 		"CAST_CLOB_TEXT(", ")");
 
+	public static final DSLFunctionType CAST_FLOAT = new DSLFunctionType(
+		"CAST_FLOAT(", ")");
+
 	public static final DSLFunctionType CAST_LONG = new DSLFunctionType(
 		"CAST_LONG(", ")");
 

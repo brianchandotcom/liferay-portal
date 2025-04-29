@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditJSClientExtensionsPage extends EditClientExtensionsPage {

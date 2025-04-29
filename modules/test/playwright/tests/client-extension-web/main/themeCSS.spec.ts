@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../fixtures/loginTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
-import getRandomString from '../../utils/getRandomString';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editThemeCSSClientExtensionsPageTest} from './fixtures/editThemeCSSClientExtensionsPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';

@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
+import {liferayConfig} from '../../../../liferay.config';
 
 export class ViewClientExtensionPage {
 	readonly externalReferenceCode: string;

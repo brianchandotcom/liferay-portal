@@ -5,8 +5,8 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-import getRandomString from '../../../utils/getRandomString';
+import {liferayConfig} from '../../../../liferay.config';
+import getRandomString from '../../../../utils/getRandomString';
 
 interface newClientExtensionProps {
 	cssUrl?: string;

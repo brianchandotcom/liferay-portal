@@ -978,7 +978,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 						</#list>
 
-						Page<${schemaName}> ${schemaVarName}Page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						Page<${schemaName}> ${schemaVarNames}Page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if !javaMethodParameter?is_first>
@@ -994,7 +994,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						);
 
-						int totalCount = GetterUtil.getInteger(${schemaVarName}Page.getTotalCount());
+						int totalCount = GetterUtil.getInteger(${schemaVarNames}Page.getTotalCount());
 
 						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 

@@ -200,7 +200,7 @@ public abstract class Base${schemaName}ResourceImpl
 			public final ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
 				<#if stringUtil.equals(httpMethod, "get")>
 					<#if javaMethodSignature.returnType?contains("Page<")>
-						${javaMethodSignature.returnType} ${schemaVarName}Page =
+						${javaMethodSignature.returnType} ${schemaVarNames}Page =
 					<#else>
 						${javaMethodSignature.returnType} ${httpMethod}${schemaName} =
 					</#if>
@@ -217,10 +217,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#if javaMethodSignature.returnType?contains("Page<")>
 						<#if properties?keys?seq_contains("permissions")>
-							for (${schemaName} ${schemaVarName} : ${schemaVarName}Page.getItems()) {
+							for (${schemaName} ${schemaVarName} : ${schemaVarNames}Page.getItems()) {
 								${schemaVarName}.setPermissions(
 									() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-										Page<Permission> permissionPage = get${schemaName}PermissionsPage(
+										Page<Permission> permissionsPage = get${schemaName}PermissionsPage(
 											<#if properties?keys?seq_contains("id")>
 												${schemaVarName}.getId()
 											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -231,19 +231,19 @@ public abstract class Base${schemaName}ResourceImpl
 
 											, null);
 
-										Collection<Permission> permissions = permissionPage.getItems();
+										Collection<Permission> permissions = permissionsPage.getItems();
 
 										return permissions.toArray(new Permission[permissions.size()]);
 									}));
 							}
 						</#if>
 
-						return ${schemaVarName}Page;
+						return ${schemaVarNames}Page;
 					<#else>
 						<#if properties?keys?seq_contains("permissions")>
 							${httpMethod}${schemaName}.setPermissions(
 								() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-										Page<Permission> permissionPage = get${schemaName}PermissionsPage(
+										Page<Permission> permissionsPage = get${schemaName}PermissionsPage(
 											<#if properties?keys?seq_contains("id")>
 												${httpMethod}${schemaName}.getId()
 											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -254,7 +254,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 											, null);
 
-										Collection<Permission> permissions = permissionPage.getItems();
+										Collection<Permission> permissions = permissionsPage.getItems();
 
 										return permissions.toArray(new Permission[permissions.size()]);
 								}));
@@ -277,7 +277,7 @@ public abstract class Base${schemaName}ResourceImpl
 						);
 
 					if (permissions != null) {
-						Page<Permission> permissionPage = put${schemaName}PermissionsPage(
+						Page<Permission> permissionsPage = put${schemaName}PermissionsPage(
 							<#if properties?keys?seq_contains("id")>
 								${httpMethod}${schemaName}.getId()
 							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -290,7 +290,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						${httpMethod}${schemaName}.setPermissions(
 							() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-								Collection<Permission> collection = permissionPage.getItems();
+								Collection<Permission> collection = permissionsPage.getItems();
 
 								return collection.toArray(new Permission[collection.size()]);
 							}));

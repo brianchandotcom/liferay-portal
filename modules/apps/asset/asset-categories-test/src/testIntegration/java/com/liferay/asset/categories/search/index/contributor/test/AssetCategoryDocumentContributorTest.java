@@ -148,39 +148,29 @@ public class AssetCategoryDocumentContributorTest {
 	private List<String> _getGroupAssetCategoryExpectedExternalReferenceCodes(
 		List<AssetCategory> assetCategories) {
 
-		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>(
-			assetCategories.size());
-
-		for (AssetCategory assetCategory : assetCategories) {
-			assetCategoryExternalReferenceCodes.add(
-				StringBundler.concat(
-					_group.getExternalReferenceCode(), _DELIMITER,
-					assetCategory.getExternalReferenceCode()));
-		}
-
-		return assetCategoryExternalReferenceCodes;
+		return TransformUtil.transform(
+			assetCategories,
+			assetCategory -> StringBundler.concat(
+				_group.getExternalReferenceCode(), _DELIMITER,
+				assetCategory.getExternalReferenceCode()));
 	}
 
 	private List<String> _getGroupAssetVocabularyCategoryExternalReferenceCodes(
 			List<AssetCategory> assetCategories)
 		throws Exception {
 
-		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>(
-			assetCategories.size());
+		return TransformUtil.transform(
+			assetCategories,
+			assetCategory -> {
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyLocalService.getAssetVocabulary(
+						assetCategory.getVocabularyId());
 
-		for (AssetCategory assetCategory : assetCategories) {
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.getAssetVocabulary(
-					assetCategory.getVocabularyId());
-
-			assetCategoryExternalReferenceCodes.add(
-				StringBundler.concat(
+				return StringBundler.concat(
 					_group.getExternalReferenceCode(), _DELIMITER,
 					assetVocabulary.getExternalReferenceCode(), _DELIMITER,
-					assetCategory.getExternalReferenceCode()));
-		}
-
-		return assetCategoryExternalReferenceCodes;
+					assetCategory.getExternalReferenceCode());
+			});
 	}
 
 	private boolean _isSearchEngineSolr() {

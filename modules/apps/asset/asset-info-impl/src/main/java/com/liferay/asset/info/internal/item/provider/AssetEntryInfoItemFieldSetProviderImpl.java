@@ -25,6 +25,7 @@ import com.liferay.info.field.type.TagsInfoFieldType;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -292,13 +293,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	}
 
 	private List<String> _getTags(List<AssetTag> assetTags) {
-		List<String> tags = new ArrayList<>(assetTags.size());
-
-		for (AssetTag assetTag : assetTags) {
-			tags.add(assetTag.getName());
-		}
-
-		return tags;
+		return TransformUtil.transform(
+			assetTags, assetTag -> assetTag.getName());
 	}
 
 	@Reference

@@ -75,7 +75,7 @@ resource "aws_iam_role" "liferay" {
 					Action="sts:AssumeRoleWithWebIdentity"
 					Condition={
 						StringEquals={
-							"${var.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay"
+							"${var.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay-default"
 						}
 					}
 					Effect="Allow"

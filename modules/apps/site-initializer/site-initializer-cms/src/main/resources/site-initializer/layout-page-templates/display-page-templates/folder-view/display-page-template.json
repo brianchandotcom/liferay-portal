@@ -2,6 +2,5 @@
 	"contentType": {
 		"className": "com.liferay.object.model.ObjectEntryFolder"
 	},
-	"defaultTemplate": true,
 	"name": "View Folder"
 }

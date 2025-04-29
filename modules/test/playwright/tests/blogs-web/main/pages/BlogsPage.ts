@@ -5,8 +5,8 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class BlogsPage {
 	readonly blogName: (title: string) => Locator;

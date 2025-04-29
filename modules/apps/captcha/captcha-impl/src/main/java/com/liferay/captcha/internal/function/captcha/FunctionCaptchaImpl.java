@@ -195,9 +195,7 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 				throw new CaptchaConfigurationException();
 			}
 
-			String success = jsonObject.getString("success");
-
-			if (StringUtil.equalsIgnoreCase(success, "true")) {
+			if (jsonObject.getBoolean("success")) {
 				return true;
 			}
 

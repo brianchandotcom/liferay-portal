@@ -5,7 +5,7 @@ data "aws_region" "current" {
 module "s3_bucket" {
 	block_public_acls=true
 	block_public_policy=true
-	bucket="${var.deployment_name}-s3-bucket"
+	bucket="${var.deployment_name}-s3-bucket-${random_password.s3_bucket_suffix.result}"
 	force_destroy=true
 	ignore_public_acls=true
 	restrict_public_buckets=true

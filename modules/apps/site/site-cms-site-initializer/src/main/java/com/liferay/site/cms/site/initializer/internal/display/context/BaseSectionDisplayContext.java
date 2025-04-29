@@ -124,7 +124,8 @@ public abstract class BaseSectionDisplayContext {
 				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 					"/cms/edit_content_item?className={entryClassName}&",
-					"objectEntryId={embedded.id}"),
+					"objectEntryId={embedded.id}&redirect=",
+					themeDisplay.getURLCurrent()),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", "update", null),
 			new FDSActionDropdownItem(

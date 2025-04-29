@@ -5,19 +5,19 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {contentDashboardPagesTest} from '../content-dashboard-web/fixtures/contentDashboardPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {contentDashboardPagesTest} from '../../content-dashboard-web/main/fixtures/contentDashboardPagesTest';
 import {
 	createIndividuals,
 	generateIndividual,
-} from '../osb-faro-web/utils/individuals';
+} from '../../osb-faro-web/main/utils/individuals';
 import {Individuals, MetricType, RangeSelectors} from './types';
 import {formatDate} from './utils/date';
 import {createBlogsEventsForEveryDayByRangeSelector} from './utils/events';

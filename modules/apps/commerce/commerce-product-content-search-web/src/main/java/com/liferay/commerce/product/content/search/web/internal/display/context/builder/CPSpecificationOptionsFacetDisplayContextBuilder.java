@@ -14,6 +14,7 @@ import com.liferay.commerce.product.content.search.web.internal.util.CPSpecifica
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -436,18 +437,11 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	private List<Tuple> _getTuples(FacetCollector facetCollector) {
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<Tuple> tuples = new ArrayList<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			tuples.add(
-				new Tuple(
-					facetCollector.getFieldName(), termCollector.getFrequency(),
-					termCollector.getTerm()));
-		}
-
-		return tuples;
+		return TransformUtil.transform(
+			facetCollector.getTermCollectors(),
+			termCollector -> new Tuple(
+				facetCollector.getFieldName(), termCollector.getFrequency(),
+				termCollector.getTerm()));
 	}
 
 	private boolean _isCPDefinitionSpecificationOptionValueSelected(

@@ -12,6 +12,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -288,18 +289,11 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	private List<Tuple> _getTuples(
 		CPOption cpOption, FacetCollector facetCollector) {
 
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<Tuple> tuples = new ArrayList<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			tuples.add(
-				new Tuple(
-					cpOption, termCollector.getTerm(),
-					termCollector.getFrequency()));
-		}
-
-		return tuples;
+		return TransformUtil.transform(
+			facetCollector.getTermCollectors(),
+			termCollector -> new Tuple(
+				cpOption, termCollector.getTerm(),
+				termCollector.getFrequency()));
 	}
 
 	private ConfigurationProvider _configurationProvider;

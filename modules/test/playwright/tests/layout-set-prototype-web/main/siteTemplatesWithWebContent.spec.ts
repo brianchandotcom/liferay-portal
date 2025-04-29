@@ -26,6 +26,7 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
+import createSiteTemplate from './utils/createSiteTemplate';
 import createSiteTemplateWithContentPageAndAssetPublisher from './utils/createSiteTemplateWithContentPageAndAssetPublisher';
 import createSiteTemplateWithWebContentOnContentPage from './utils/createSiteTemplateWithWebContentOnContentPage';
 import createSiteTemplateWithWebContentOnHomePage from './utils/createSiteTemplateWithWebContentOnHomePage';
@@ -442,8 +443,23 @@ test(
 	'Page links on sites which were created in site templates should redirect correctly to other pages.',
 	{tag: ['@LPD-46415']},
 	async ({
-		
+		apiHelpers,
+		page,
+		productMenuPage,
 	}) => {
-		
+		const siteTemplateName: string = 'Template-' + getRandomString();
+
+		const layoutSetPrototype = await createSiteTemplate({
+			apiHelpers,
+			page,
+			productMenuPage,
+			templateName: siteTemplateName,
+		});
+
+		apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
 	}
 );

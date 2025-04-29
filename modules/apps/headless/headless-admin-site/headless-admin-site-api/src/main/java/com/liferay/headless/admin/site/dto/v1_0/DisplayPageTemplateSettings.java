@@ -57,7 +57,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 		description = "The display page template's Open Graph settings."
 	)
 	@Valid
-	public OpenGraphSettings getOpenGraphSettings() {
+	public DisplayPageTemplateOpenGraphSettings getOpenGraphSettings() {
 		if (_openGraphSettingsSupplier != null) {
 			openGraphSettings = _openGraphSettingsSupplier.get();
 
@@ -67,7 +67,9 @@ public class DisplayPageTemplateSettings implements Serializable {
 		return openGraphSettings;
 	}
 
-	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
+	public void setOpenGraphSettings(
+		DisplayPageTemplateOpenGraphSettings openGraphSettings) {
+
 		this.openGraphSettings = openGraphSettings;
 
 		_openGraphSettingsSupplier = null;
@@ -75,7 +77,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 
 	@JsonIgnore
 	public void setOpenGraphSettings(
-		UnsafeSupplier<OpenGraphSettings, Exception>
+		UnsafeSupplier<DisplayPageTemplateOpenGraphSettings, Exception>
 			openGraphSettingsUnsafeSupplier) {
 
 		_openGraphSettingsSupplier = () -> {
@@ -95,16 +97,17 @@ public class DisplayPageTemplateSettings implements Serializable {
 		description = "The display page template's Open Graph settings."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected OpenGraphSettings openGraphSettings;
+	protected DisplayPageTemplateOpenGraphSettings openGraphSettings;
 
 	@JsonIgnore
-	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
+	private Supplier<DisplayPageTemplateOpenGraphSettings>
+		_openGraphSettingsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's SEO settings."
 	)
 	@Valid
-	public SEOSettings getSeoSettings() {
+	public DisplayPageTemplateSEOSettings getSeoSettings() {
 		if (_seoSettingsSupplier != null) {
 			seoSettings = _seoSettingsSupplier.get();
 
@@ -114,7 +117,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 		return seoSettings;
 	}
 
-	public void setSeoSettings(SEOSettings seoSettings) {
+	public void setSeoSettings(DisplayPageTemplateSEOSettings seoSettings) {
 		this.seoSettings = seoSettings;
 
 		_seoSettingsSupplier = null;
@@ -122,7 +125,8 @@ public class DisplayPageTemplateSettings implements Serializable {
 
 	@JsonIgnore
 	public void setSeoSettings(
-		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
+		UnsafeSupplier<DisplayPageTemplateSEOSettings, Exception>
+			seoSettingsUnsafeSupplier) {
 
 		_seoSettingsSupplier = () -> {
 			try {
@@ -139,10 +143,10 @@ public class DisplayPageTemplateSettings implements Serializable {
 
 	@GraphQLField(description = "The display page template's SEO settings.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SEOSettings seoSettings;
+	protected DisplayPageTemplateSEOSettings seoSettings;
 
 	@JsonIgnore
-	private Supplier<SEOSettings> _seoSettingsSupplier;
+	private Supplier<DisplayPageTemplateSEOSettings> _seoSettingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -173,7 +177,8 @@ public class DisplayPageTemplateSettings implements Serializable {
 
 		sb.append("{");
 
-		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
+		DisplayPageTemplateOpenGraphSettings openGraphSettings =
+			getOpenGraphSettings();
 
 		if (openGraphSettings != null) {
 			if (sb.length() > 1) {
@@ -185,7 +190,7 @@ public class DisplayPageTemplateSettings implements Serializable {
 			sb.append(String.valueOf(openGraphSettings));
 		}
 
-		SEOSettings seoSettings = getSeoSettings();
+		DisplayPageTemplateSEOSettings seoSettings = getSeoSettings();
 
 		if (seoSettings != null) {
 			if (sb.length() > 1) {

@@ -9,13 +9,11 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {liferayConfig} from '../../../../../liferay.config';
-import getRandomString from '../../../../../utils/getRandomString';
-import getPageDefinition from '../../../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import getWidgetDefinition from '../../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
@@ -23,36 +21,17 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('Check toolbar button is added to Alloy Editor', async ({
-	apiHelpers,
+test.beforeEach(async ({ckeditorSamplePage, site}) => {
+	await ckeditorSamplePage.createAndGotoSitePage({site});
+
+	await ckeditorSamplePage.selectTab('CKEditor 4');
+	await ckeditorSamplePage.selectTab('Alloy');
+});
+
+test('Editor config contributor client extension is applied', async ({
 	page,
-	site,
 }) => {
-	let layout: Layout;
-
-	await test.step('Create page with CKEditor sample widget', async () => {
-		const widgetDefinition = getWidgetDefinition({
-			id: getRandomString(),
-			widgetName:
-				'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
-		});
-
-		layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-	});
-
-	await test.step('Check Client Extension is added to Alloy Editor sample ', async () => {
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
-
-		await page.getByRole('link', {name: 'CKEditor 4'}).click();
-
-		await page.getByRole('link', {name: 'Alloy'}).click();
-
+	await test.step('Assert "Insert Video" button is visible as provided by the CX', async () => {
 		await page.getByText('Lorem ipsum').selectText();
 
 		await expect(page.getByTitle('Insert Video')).toBeInViewport();

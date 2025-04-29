@@ -49,11 +49,21 @@ public interface AssetLibraryResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public void deleteAssetLibraryByExternalReferenceCodePin(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteAssetLibraryPin(Long assetLibraryId) throws Exception;
+
 	public Page<AssetLibrary> getAssetLibrariesPage(
 			String keywords, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<AssetLibrary> getAssetLibrariesPinnedByMePage(
+			Pagination pagination)
 		throws Exception;
 
 	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception;
@@ -75,6 +85,13 @@ public interface AssetLibraryResource {
 
 	public AssetLibrary putAssetLibraryByExternalReferenceCode(
 			String externalReferenceCode, AssetLibrary assetLibrary)
+		throws Exception;
+
+	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
+			String externalReferenceCode)
+		throws Exception;
+
+	public AssetLibrary putAssetLibraryPin(Long assetLibraryId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

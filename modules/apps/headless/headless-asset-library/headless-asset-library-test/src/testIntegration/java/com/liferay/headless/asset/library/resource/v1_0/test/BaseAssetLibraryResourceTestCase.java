@@ -259,6 +259,56 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryByExternalReferenceCodePin()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary =
+			testDeleteAssetLibraryByExternalReferenceCodePin_addAssetLibrary();
+
+		assertHttpResponseStatusCode(
+			204,
+			assetLibraryResource.
+				deleteAssetLibraryByExternalReferenceCodePinHttpResponse(
+					testDeleteAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
+						assetLibrary)));
+	}
+
+	protected String
+			testDeleteAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
+				AssetLibrary assetLibrary)
+		throws Exception {
+
+		return assetLibrary.getExternalReferenceCode();
+	}
+
+	protected AssetLibrary
+			testDeleteAssetLibraryByExternalReferenceCodePin_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAssetLibraryPin() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary = testDeleteAssetLibraryPin_addAssetLibrary();
+
+		assertHttpResponseStatusCode(
+			204,
+			assetLibraryResource.deleteAssetLibraryPinHttpResponse(
+				assetLibrary.getId()));
+	}
+
+	protected AssetLibrary testDeleteAssetLibraryPin_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibrariesPage() throws Exception {
 		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
 			null, null, null, Pagination.of(1, 10), null);
@@ -622,6 +672,141 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibrariesPinnedByMePage() throws Exception {
+		Page<AssetLibrary> page =
+			assetLibraryResource.getAssetLibrariesPinnedByMePage(
+				Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		AssetLibrary assetLibrary1 =
+			testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+				randomAssetLibrary());
+
+		AssetLibrary assetLibrary2 =
+			testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+				randomAssetLibrary());
+
+		page = assetLibraryResource.getAssetLibrariesPinnedByMePage(
+			Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(assetLibrary1, (List<AssetLibrary>)page.getItems());
+		assertContains(assetLibrary2, (List<AssetLibrary>)page.getItems());
+		assertValid(
+			page, testGetAssetLibrariesPinnedByMePage_getExpectedActions());
+
+		assetLibraryResource.deleteAssetLibrary(assetLibrary1.getId());
+
+		assetLibraryResource.deleteAssetLibrary(assetLibrary2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibrariesPinnedByMePage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibrariesPinnedByMePageWithPagination()
+		throws Exception {
+
+		Page<AssetLibrary> assetLibrariesPage =
+			assetLibraryResource.getAssetLibrariesPinnedByMePage(null);
+
+		int totalCount = GetterUtil.getInteger(
+			assetLibrariesPage.getTotalCount());
+
+		AssetLibrary assetLibrary1 =
+			testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+				randomAssetLibrary());
+
+		AssetLibrary assetLibrary2 =
+			testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+				randomAssetLibrary());
+
+		AssetLibrary assetLibrary3 =
+			testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+				randomAssetLibrary());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<AssetLibrary> page1 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(assetLibrary1, (List<AssetLibrary>)page1.getItems());
+
+			Page<AssetLibrary> page2 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(assetLibrary2, (List<AssetLibrary>)page2.getItems());
+
+			Page<AssetLibrary> page3 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(assetLibrary3, (List<AssetLibrary>)page3.getItems());
+		}
+		else {
+			Page<AssetLibrary> page1 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(1, totalCount + 2));
+
+			List<AssetLibrary> assetLibraries1 =
+				(List<AssetLibrary>)page1.getItems();
+
+			Assert.assertEquals(
+				assetLibraries1.toString(), totalCount + 2,
+				assetLibraries1.size());
+
+			Page<AssetLibrary> page2 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AssetLibrary> assetLibraries2 =
+				(List<AssetLibrary>)page2.getItems();
+
+			Assert.assertEquals(
+				assetLibraries2.toString(), 1, assetLibraries2.size());
+
+			Page<AssetLibrary> page3 =
+				assetLibraryResource.getAssetLibrariesPinnedByMePage(
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(assetLibrary1, (List<AssetLibrary>)page3.getItems());
+			assertContains(assetLibrary2, (List<AssetLibrary>)page3.getItems());
+			assertContains(assetLibrary3, (List<AssetLibrary>)page3.getItems());
+		}
+	}
+
+	protected AssetLibrary testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+			AssetLibrary assetLibrary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAssetLibrary() throws Exception {
 		AssetLibrary postAssetLibrary = testGetAssetLibrary_addAssetLibrary();
 
@@ -796,6 +981,89 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary
 			testPutAssetLibraryByExternalReferenceCode_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAssetLibraryByExternalReferenceCodePin()
+		throws Exception {
+
+		AssetLibrary postAssetLibrary =
+			testPutAssetLibraryByExternalReferenceCodePin_addAssetLibrary();
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		AssetLibrary putAssetLibrary =
+			assetLibraryResource.putAssetLibraryByExternalReferenceCodePin(
+				testPutAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
+					postAssetLibrary));
+
+		assertEquals(randomAssetLibrary, putAssetLibrary);
+		assertValid(putAssetLibrary);
+
+		AssetLibrary getAssetLibrary =
+			testPutAssetLibraryByExternalReferenceCodePin_getAssetLibrary(
+				putAssetLibrary.getExternalReferenceCode());
+
+		assertEquals(randomAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
+	}
+
+	protected AssetLibrary
+		testPutAssetLibraryByExternalReferenceCodePin_getAssetLibrary(
+			String externalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
+				AssetLibrary assetLibrary)
+		throws Exception {
+
+		return assetLibrary.getExternalReferenceCode();
+	}
+
+	protected AssetLibrary
+			testPutAssetLibraryByExternalReferenceCodePin_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAssetLibraryPin() throws Exception {
+		AssetLibrary postAssetLibrary =
+			testPutAssetLibraryPin_addAssetLibrary();
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		AssetLibrary putAssetLibrary = assetLibraryResource.putAssetLibraryPin(
+			postAssetLibrary.getId());
+
+		assertEquals(randomAssetLibrary, putAssetLibrary);
+		assertValid(putAssetLibrary);
+
+		AssetLibrary getAssetLibrary = testPutAssetLibraryPin_getAssetLibrary(
+			putAssetLibrary.getId());
+
+		assertEquals(randomAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
+	}
+
+	protected AssetLibrary testPutAssetLibraryPin_getAssetLibrary(
+		Long assetLibraryId) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AssetLibrary testPutAssetLibraryPin_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

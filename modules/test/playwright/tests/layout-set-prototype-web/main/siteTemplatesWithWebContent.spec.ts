@@ -445,9 +445,14 @@ test(
 	{tag: ['@LPD-46415']},
 	async ({
 		apiHelpers,
+		applicationsMenuPage,
 		page,
+		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
+		sitesPage,
+		uiElementsPage,
+		webContentDisplayPage,
 	}) => {
 		const siteTemplateName: string = 'Template-' + getRandomString();
 
@@ -493,5 +498,32 @@ test(
 			groupId: site.id,
 			titleMap: {en_US: webContentName},
 		});
+
+		await applicationsMenuPage.goToSites();
+
+		const siteName = getRandomString();
+
+		const siteId = await sitesPage.createSite({
+			isCustom: true,
+			siteName,
+			templateName: layoutSetPrototype.nameCurrentValue,
+		});
+
+		apiHelpers.data.push({
+			id: siteId,
+			type: 'site',
+		});
+
+		await applicationsMenuPage.goToSite(siteName);
+		await productMenuPage.goToPages();
+		await page.getByLabel(`${page1Name}`, {exact: true}).click();
+		await pageEditorPage.addWidget(
+			'Content Management',
+			'Web Content Display'
+		);
+		await webContentDisplayPage.addWebContentWithDisplay({
+			webContentName,
+		});
+		await uiElementsPage.publishButton.click();
 	}
 );

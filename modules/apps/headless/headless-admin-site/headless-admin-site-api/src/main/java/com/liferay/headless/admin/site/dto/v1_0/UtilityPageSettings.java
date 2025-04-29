@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The settings of an utility page.",
+	description = "The settings of a utility page.",
 	value = "UtilityPageSettings"
 )
 @JsonFilter("Liferay.Vulcan")

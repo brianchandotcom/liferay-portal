@@ -345,8 +345,8 @@ public class SiteMapSettings implements Serializable {
 	@GraphQLName("ChangeFrequency")
 	public static enum ChangeFrequency {
 
-		ALWAYS("always"), HOURLY("hourly"), DAILY("daily"), WEEKLY("weekly"),
-		MONTHLY("monthly"), YEARLY("yearly"), NEVER("never");
+		ALWAYS("Always"), HOURLY("Hourly"), DAILY("Daily"), WEEKLY("Weekly"),
+		MONTHLY("Monthly"), YEARLY("Yearly"), NEVER("Never");
 
 		@JsonCreator
 		public static ChangeFrequency create(String value) {

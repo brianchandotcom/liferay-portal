@@ -152,8 +152,8 @@ public class SiteMapSettings implements Cloneable, Serializable {
 
 	public static enum ChangeFrequency {
 
-		ALWAYS("always"), HOURLY("hourly"), DAILY("daily"), WEEKLY("weekly"),
-		MONTHLY("monthly"), YEARLY("yearly"), NEVER("never");
+		ALWAYS("Always"), HOURLY("Hourly"), DAILY("Daily"), WEEKLY("Weekly"),
+		MONTHLY("Monthly"), YEARLY("Yearly"), NEVER("Never");
 
 		public static ChangeFrequency create(String value) {
 			for (ChangeFrequency changeFrequency : values()) {

@@ -22,11 +22,18 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 	<liferay-ui:error key="rules" message="please-enter-valid-rules" />
 	<liferay-ui:error key="rulesEngineException" message="please-check-the-syntax-of-your-rules" />
 
+	<aui:style type="text/css">
+		.lfr-rules-configuration--textarea {
+			height: 250px !important;
+			width: 100% !important;
+		}
+	</aui:style>
+
 	<clay:container-fluid>
 		<aui:fieldset>
 			<aui:input name="domainName" value='<%= ParamUtil.getString(request, "domainName", domainName) %>' wrapperCssClass="lfr-input-text-container" />
 
-			<aui:input name="rules" style="height: 250px; width: 100%;" type="textarea" value='<%= ParamUtil.getString(request, "rules", rules) %>' wrap="off" wrapperCssClass="lfr-textarea-container" />
+			<aui:input cssClass="lfr-rules-configuration--textarea" name="rules" type="textarea" value='<%= ParamUtil.getString(request, "rules", rules) %>' wrap="off" wrapperCssClass="lfr-textarea-container" />
 
 			<%
 

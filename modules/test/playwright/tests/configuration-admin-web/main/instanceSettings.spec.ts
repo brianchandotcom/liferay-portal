@@ -6,13 +6,13 @@
 import {expect, mergeTests} from '@playwright/test';
 import {readFile} from 'fs/promises';
 
-import {accessibilityMenuPagesTest} from '../../fixtures/accessibilityMenuPagesTest';
-import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
-import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
-import getRandomString from '../../utils/getRandomString';
+import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {UsersAndOrganizationsPage} from '../../../pages/users-admin-web/UsersAndOrganizationsPage';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	accessibilityMenuPagesTest,

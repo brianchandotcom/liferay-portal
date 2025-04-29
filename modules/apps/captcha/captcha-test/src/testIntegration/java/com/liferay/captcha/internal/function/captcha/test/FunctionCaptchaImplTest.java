@@ -43,6 +43,8 @@ public class FunctionCaptchaImplTest {
 
 	@Test
 	public void test() throws Exception {
+		String externalReferenceCode = "LXC:" + RandomTestUtil.randomString();
+
 		CustomElementCET customElementCET =
 			(CustomElementCET)_cetManager.addCET(
 				ConfigurableUtil.createConfigurable(
@@ -56,15 +58,24 @@ public class FunctionCaptchaImplTest {
 					).put(
 						"typeSettings", new String[] {"htmlElementName=test"}
 					).build()),
-				TestPropsValues.getCompanyId(), "LXC:test");
+				TestPropsValues.getCompanyId(), externalReferenceCode);
 
 		String pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.captcha.internal.configuration." +
 				"FunctionCaptchaImplConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				"captchaName", "ClientExtensionCaptcha"
+				"captchaName", RandomTestUtil.randomString()
 			).put(
-				"customElementExternalReferenceCode", "LXC:test"
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"customElementExternalReferenceCode", externalReferenceCode
+			).put(
+				"oAuth2ApplicationExternalReferenceCode",
+				RandomTestUtil.randomString()
+			).put(
+				"resourcePath", RandomTestUtil.randomString()
+			).put(
+				"responseParameterName", RandomTestUtil.randomString()
 			).build());
 
 		String servicePid = StringUtil.extractLast(pid, StringPool.TILDE);

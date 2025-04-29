@@ -1564,6 +1564,10 @@ public class WabProcessor {
 
 			_processExcludedJSPs(analyzer);
 
+			_processBeans(analyzer);
+
+			_processOSGiConfigurator(jar, analyzer);
+
 			for (String stringPropertyName :
 					pluginPackageProperties.stringPropertyNames()) {
 
@@ -1571,10 +1575,6 @@ public class WabProcessor {
 					stringPropertyName,
 					pluginPackageProperties.getProperty(stringPropertyName));
 			}
-
-			_processBeans(analyzer);
-
-			_processOSGiConfigurator(jar, analyzer);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

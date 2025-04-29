@@ -320,6 +320,10 @@ public class OpenAPIUtil {
 
 		Components components = openAPIYAML.getComponents();
 
+		if (components == null) {
+			return new HashMap<>();
+		}
+
 		return getEnumSchemas(configYAML, components.getSchemas());
 	}
 

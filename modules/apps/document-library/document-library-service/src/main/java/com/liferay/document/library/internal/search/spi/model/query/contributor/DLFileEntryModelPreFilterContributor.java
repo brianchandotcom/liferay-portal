@@ -34,8 +34,8 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -174,10 +174,9 @@ public class DLFileEntryModelPreFilterContributor
 	private void _addSubtypeFilter(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		HashMap<String, List<AssetSubtypeIdentifier>>
-			assetSubtypeIdentifiersMap =
-				(HashMap<String, List<AssetSubtypeIdentifier>>)
-					searchContext.getAttribute("assetSubtypeIdentifiersMap");
+		Map<String, List<AssetSubtypeIdentifier>> assetSubtypeIdentifiersMap =
+			(Map<String, List<AssetSubtypeIdentifier>>)
+				searchContext.getAttribute("assetSubtypeIdentifiersMap");
 
 		if ((assetSubtypeIdentifiersMap == null) ||
 			!assetSubtypeIdentifiersMap.containsKey(

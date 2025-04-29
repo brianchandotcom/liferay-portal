@@ -27,4 +27,13 @@ public interface FunctionCaptchaImplConfiguration {
 	@Meta.AD
 	public String customElementExternalReferenceCode();
 
+	@Meta.AD
+	public String oAuth2ApplicationExternalReferenceCode();
+
+	@Meta.AD
+	public String resourcePath();
+
+	@Meta.AD
+	public String responseParameterName();
+
 }

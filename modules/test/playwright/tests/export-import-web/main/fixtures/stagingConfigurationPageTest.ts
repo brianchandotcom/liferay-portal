@@ -15,4 +15,4 @@ const stagingConfigurationPageTest = test.extend<{
 	},
 });
 
-export { stagingConfigurationPageTest};
+export {stagingConfigurationPageTest};

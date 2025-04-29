@@ -25,10 +25,15 @@ export async function zipFolder(folderPath: string, zipOptions?: ZipOptions) {
 	return tempFilePath;
 }
 
-export async function checkFolderInZip(filePath: string, folderName: string): Promise<boolean> {
+export async function checkFolderInZip(
+	filePath: string,
+	folderName: string
+): Promise<boolean> {
 	return new Promise((resolve, reject) => {
 		open(filePath, {lazyEntries: true}, (error, zip) => {
-			if (error) return reject(error);
+			if (error) {
+				return reject(error);
+			}
 
 			let found = false;
 
@@ -38,6 +43,7 @@ export async function checkFolderInZip(filePath: string, folderName: string): Pr
 				if (entry.fileName.startsWith(folderName + '/')) {
 					found = true;
 					zip.close(); // stop early
+
 					return resolve(true);
 				}
 				zip.readEntry(); // keep going

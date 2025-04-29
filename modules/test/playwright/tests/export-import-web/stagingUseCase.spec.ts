@@ -4,19 +4,19 @@
  */
 
 import {mergeTests, expect} from '@playwright/test';
-import {checkFolderInZip} from '../../utils/zip';
-import {mergeTests, expect} from '@playwright/test';
 import {createReadStream, readdirSync, statSync} from 'fs';
 import path from 'path';
-import { exportImportConfig } from './export_import.config';
+
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {checkFolderInZip} from '../../utils/zip';
 import {stagingConfigurationPageTest} from '../export-import-web/fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from '../export-import-web/fixtures/stagingPageTest';
+import {exportImportConfig} from './export_import.config';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -26,161 +26,152 @@ export const test = mergeTests(
 	}),
 	loginTest(),
 	stagingPageTest,
-	stagingConfigurationPageTest,
-	
+	stagingConfigurationPageTest
 );
 
-test('Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option', {tag: '@LPS-167777'}, async ({
-	apiHelpers,
-	stagingConfigurationPage,
-	stagingPage
-
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'site-' + getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
-
-
-
-	await stagingPage.goto(site.name);
-	await stagingPage.enableLocalStaging();
-
-	const stagingSite =
-	await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-		`${site.friendlyUrlPath}-staging`
-	);
-
-	const webContentContent = getRandomString();
-	let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: webContentContent,
-		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
-		groupId: stagingSite.id,
-		titleMap: {en_US: getRandomString()},
-	});
-
-	const document = await apiHelpers.headlessDelivery.postDocument(
-		stagingSite.id,
-		createReadStream(path.join(__dirname, '/dependencies/Document.jpg')),
-		{
-			fileName: 'Document.jpg',
-			title: 'Document.jpg',
-		}
-	);
-
-	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
-		{
-			content: `<img alt="" data-fileentryid="${document.id}" src="/documents/d${stagingSite.friendlyUrlPath}/Document-jpg">&nbsp;<br>${webContentContent}`,
-		},
-		stagingSite.id,
-		webContent
-	);
-	
-	await stagingPage.goto(site.name + '-staging');
-	await stagingPage.publish();
-
-	await stagingConfigurationPage.goto(site.name);
-	await stagingConfigurationPage.disableTemporaryLARdeletion();
-
-	webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
-		{title: getRandomString()},
-		stagingSite.id,
-		webContent
-	);
-
-	await stagingPage.goto(site.name + '-staging');
- 
-	await stagingPage.publish(['Web Content 1 Items Web']);
-
-	const bundlesDir = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'liferay-portal', 'bundles');
-	
-	const files = await fs.readdirSync(bundlesDir);
-	let tomcatFolder: string;
-	for (const file of files){
-		if(file.startsWith('tomcat-')){
-			tomcatFolder = path.resolve(bundlesDir, file);
-			break;
-		}
-		
-		console.log('Folder contents:');
-		files.forEach(file => {
-			console.log(file);
+test(
+	'Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',
+	{tag: '@LPS-167777'},
+	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'site-' + getRandomString(),
 		});
-		});		
-	
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await stagingPage.goto(site.name);
+		await stagingPage.enableLocalStaging();
+
+		const stagingSite =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`${site.friendlyUrlPath}-staging`
+			);
+
+		const webContentContent = getRandomString();
+		let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
+			content: webContentContent,
+			ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+			groupId: stagingSite.id,
+			titleMap: {en_US: getRandomString()},
+		});
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			stagingSite.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/Document.jpg')
+			),
+			{
+				fileName: 'Document.jpg',
+				title: 'Document.jpg',
+			}
+		);
+
+		webContent = await apiHelpers.jsonWebServicesJournal.editWebContent(
+			{
+				content: `<img alt="" data-fileentryid="${document.id}" src="/documents/d${stagingSite.friendlyUrlPath}/Document-jpg">&nbsp;<br>${webContentContent}`,
+			},
+			stagingSite.id,
+			webContent
+		);
+
+		await stagingPage.goto(site.name + '-staging');
+		await stagingPage.publish();
+
+		await stagingConfigurationPage.goto(site.name);
+		await stagingConfigurationPage.disableTemporaryLARdeletion();
+
+		await apiHelpers.jsonWebServicesJournal.editWebContent(
+			{title: getRandomString()},
+			stagingSite.id,
+			webContent
+		);
+
+		await stagingPage.goto(site.name + '-staging');
+		await stagingPage.publish(['Web Content 1 Items Web']);
+
+		let tomcatDir;
+		if (exportImportConfig.environment.tomcatDir) {
+			tomcatDir = exportImportConfig.environment.tomcatDir;
+		}
+		else {
+
+			// for local runs modify
+
+			tomcatDir = path.resolve(
+				__dirname,
+				'..',
+				'..',
+				'..',
+				'..',
+				'..',
+				'..',
+				'masterbundle'
+			);
+		}
 	await stagingPage.goto(site.name + '-staging');
  
 	await stagingPage.publish(['Web Content 1 Items Web']);
 
-	const bundlesDir = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'bundles');
-	
-	const files = await fs.readdirSync(bundlesDir);
-	let tomcatFolder: string;
-	for (const file of files){
-		if(file.startsWith('tomcat-')){
-			tomcatFolder = path.resolve(bundlesDir, file);
-			break;
+		const files = readdirSync(tomcatDir).filter((file) =>
+			file.startsWith('tomcat-')
+		);
+		if (!files.length) {
+			console.log('No tomcat folder found');
+
+			return;
 		}
+		const hasFolder = await _unzipAndCheckFolder(
+			path.resolve(tomcatDir, files[0], 'temp')
+		);
+
+		expect(hasFolder).toEqual(false);
 	}
+);
 
-	expect(fs.existsSync(path.resolve(tomcatFolder,'temp','adaptive-media'))).toEqual(true);
-
-	const { tomcatTempDir } = exportImportConfig.environment;
-
-	unzipAndCheckFolder(tomcatTempDir);
-
-});
-
-function getMostRecentLarFile(dir: string): string | null {
-	const files = readdirSync(dir)
-		.filter(file => file.endsWith('.lar'))
-		.map(file => ({
-			file,
-			time: statSync(path.join(dir, file)).mtime.getTime() // or use .ctime if preferred
-		}));
-
-	if (files.length === 0) return null;
-
-	files.sort((a, b) => b.time - a.time); // newest first
-
-	return path.join(dir, files[0].file);
-}
-
-const unzipAndCheckFolder = async (
+const _unzipAndCheckFolder = async (
 	tempDir: string,
 	folderName: string = 'adaptive-media'
-): Promise<void> => {
+): Promise<boolean> => {
 	const files = readdirSync(tempDir)
-		.filter(file => file.endsWith('.lar'))
-		.map(file => ({
+		.filter((file) => file.endsWith('.lar'))
+		.map((file) => ({
 			file,
-			time: statSync(path.join(tempDir, file)).mtime.getTime()
+			time: statSync(path.join(tempDir, file)).mtime.getTime(),
 		}));
 
-	if (files.length === 0) {
+	if (!files.length) {
 		console.log('No LAR files found');
-		return;
+
+		return null;
 	}
 
 	// Sort files by most recent modification time
+
 	files.sort((a, b) => b.time - a.time);
 
 	const mostRecentFilePath = path.join(tempDir, files[0].file);
 
 	try {
-		const hasFolder = await checkFolderInZip(mostRecentFilePath, folderName);
+		const hasFolder = await checkFolderInZip(
+			mostRecentFilePath,
+			folderName
+		);
 		console.log(
 			hasFolder
 				? `Folder "${folderName}" found in most recent LAR file: ${files[0].file}`
 				: `Folder "${folderName}" not found in most recent LAR file: ${files[0].file}`
 		);
-	} catch (error) {
+
+		return hasFolder;
+	}
+	catch (error) {
 		console.error(`Error reading file ${files[0].file}: ${error}`);
 	}
+
+	return null;
 };

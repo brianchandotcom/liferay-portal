@@ -40,7 +40,7 @@ public class RevokedTokenTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testRevokeToken() throws PortalException {
+	public void test() throws PortalException {
 		WebTarget webTarget = getJsonWebTarget("user", "get-current-user");
 
 		String tokenString = getToken(

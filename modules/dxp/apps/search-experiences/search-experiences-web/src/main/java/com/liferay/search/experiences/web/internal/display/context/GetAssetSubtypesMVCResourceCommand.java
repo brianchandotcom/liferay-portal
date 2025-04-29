@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 
 import java.io.IOException;
 
@@ -102,23 +103,27 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDDMStructureInfo(
-		JSONArray assetSubtypeInfoJSONArray, String[] identifierArray,
-		Locale locale, ResourceRequest resourceRequest) {
+		JSONArray assetSubtypeInfoJSONArray,
+		AssetSubtypeIdentifier assetSubtypeIdentifier, Locale locale,
+		ResourceRequest resourceRequest) {
 
 		try {
 			Group group = _groupLocalService.getGroupByExternalReferenceCode(
-				identifierArray[1], _portal.getCompanyId(resourceRequest));
+				assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+				_portal.getCompanyId(resourceRequest));
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getStructureByExternalReferenceCode(
-					identifierArray[2], group.getGroupId(),
-					_portal.getClassNameId(identifierArray[0]));
+					assetSubtypeIdentifier.getSubtypeExternalReferenceCode(),
+					group.getGroupId(),
+					_portal.getClassNameId(
+						assetSubtypeIdentifier.getClassName()));
 
 			_addSubtypeInfoJSONObject(
 				ddmStructure.getExternalReferenceCode(),
 				ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
-				identifierArray[0], group.getExternalReferenceCode(),
-				group.getName(locale));
+				assetSubtypeIdentifier.getClassName(),
+				group.getExternalReferenceCode(), group.getName(locale));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -128,11 +133,15 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDLFileEntryTypesInfo(
-		JSONArray assetSubtypeInfoJSONArray, String[] identifierArray,
-		Locale locale, ResourceRequest resourceRequest) {
+		JSONArray assetSubtypeInfoJSONArray,
+		AssetSubtypeIdentifier assetSubtypeIdentifier, Locale locale,
+		ResourceRequest resourceRequest) {
 
 		try {
-			if (identifierArray[1].equals(StringPool.BLANK)) {
+			String groupExternalReferenceCode =
+				assetSubtypeIdentifier.getGroupExternalReferenceCode();
+
+			if (groupExternalReferenceCode.equals(StringPool.BLANK)) {
 				DLFileEntryType basicDocumentDLFileEntryType =
 					_dlFileEntryTypeLocalService.
 						getBasicDocumentDLFileEntryType();
@@ -140,25 +149,29 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 				_addSubtypeInfoJSONObject(
 					basicDocumentDLFileEntryType.getExternalReferenceCode(),
 					basicDocumentDLFileEntryType.getName(locale),
-					assetSubtypeInfoJSONArray, identifierArray[0],
-					StringPool.BLANK, StringPool.BLANK);
+					assetSubtypeInfoJSONArray,
+					assetSubtypeIdentifier.getClassName(), StringPool.BLANK,
+					StringPool.BLANK);
 
 				return;
 			}
 
 			Group group = _groupLocalService.getGroupByExternalReferenceCode(
-				identifierArray[1], _portal.getCompanyId(resourceRequest));
+				groupExternalReferenceCode,
+				_portal.getCompanyId(resourceRequest));
 
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.
 					getDLFileEntryTypeByExternalReferenceCode(
-						identifierArray[2], group.getGroupId());
+						assetSubtypeIdentifier.
+							getSubtypeExternalReferenceCode(),
+						group.getGroupId());
 
 			_addSubtypeInfoJSONObject(
 				dlFileEntryType.getExternalReferenceCode(),
 				dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
-				identifierArray[0], group.getExternalReferenceCode(),
-				group.getName(locale));
+				assetSubtypeIdentifier.getClassName(),
+				group.getExternalReferenceCode(), group.getName(locale));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -191,10 +204,10 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 	private JSONObject _getAssetSubtypeInfoJSONObject(
 		ResourceRequest resourceRequest) {
 
-		String[] assetSubtypeIdentifiers = ParamUtil.getStringValues(
+		String[] searchableAssetTypes = ParamUtil.getStringValues(
 			resourceRequest, "assetSubtypeIdentifiers");
 
-		if (assetSubtypeIdentifiers == null) {
+		if (searchableAssetTypes == null) {
 			return null;
 		}
 
@@ -203,20 +216,22 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(resourceRequest, "languageId"));
 
-		for (String assetSubtypeIdentifier : assetSubtypeIdentifiers) {
-			String[] assetSubtypeIdentifierParts = StringUtil.split(
-				assetSubtypeIdentifier, "&&");
+		for (String searchableAssetType : searchableAssetTypes) {
+			AssetSubtypeIdentifier assetSubtypeIdentifier =
+				_assetSubtypeIdentifierBuilder.searchableAssetType(
+					searchableAssetType
+				).build();
 
-			String entryClassName = assetSubtypeIdentifierParts[0];
+			String className = assetSubtypeIdentifier.getClassName();
 
-			if (entryClassName.equals(DLFileEntry.class.getName())) {
+			if (className.equals(DLFileEntry.class.getName())) {
 				_addDLFileEntryTypesInfo(
-					assetSubtypeJSONArray, assetSubtypeIdentifierParts, locale,
+					assetSubtypeJSONArray, assetSubtypeIdentifier, locale,
 					resourceRequest);
 			}
-			else if (entryClassName.equals(JournalArticle.class.getName())) {
+			else if (className.equals(JournalArticle.class.getName())) {
 				_addDDMStructureInfo(
-					assetSubtypeJSONArray, assetSubtypeIdentifierParts, locale,
+					assetSubtypeJSONArray, assetSubtypeIdentifier, locale,
 					resourceRequest);
 			}
 		}
@@ -351,6 +366,9 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetAssetSubtypesMVCResourceCommand.class);
+
+	@Reference
+	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

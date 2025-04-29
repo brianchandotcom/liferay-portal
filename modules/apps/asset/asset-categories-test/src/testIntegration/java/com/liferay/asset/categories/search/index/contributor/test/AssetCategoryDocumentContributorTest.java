@@ -156,8 +156,7 @@ public class AssetCategoryDocumentContributorTest {
 	}
 
 	private List<String> _getGroupAssetVocabularyCategoryExternalReferenceCodes(
-			List<AssetCategory> assetCategories)
-		throws Exception {
+		List<AssetCategory> assetCategories) {
 
 		return TransformUtil.transform(
 			assetCategories,

@@ -735,12 +735,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
             tags: ["Collaborator"]
         post:
@@ -765,12 +765,12 @@ paths:
                     application/json:
                         schema:
                             items:
-                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                             type: array
                     application/xml:
                         schema:
                             items:
-                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                             type: array
             responses:
                 200:
@@ -778,12 +778,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
             tags: ["Collaborator"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}":
@@ -1051,12 +1051,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
             tags: ["Collaborator"]
         post:
@@ -1076,12 +1076,12 @@ paths:
                     application/json:
                         schema:
                             items:
-                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                             type: array
                     application/xml:
                         schema:
                             items:
-                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                             type: array
             responses:
                 200:
@@ -1089,12 +1089,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
             tags: ["Collaborator"]
     "/{objectEntryId}/object-actions/{objectActionName}":

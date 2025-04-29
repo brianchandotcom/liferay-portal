@@ -65,25 +65,6 @@ public class JenkinsConsoleTextLoader {
 		}
 	}
 
-	public JenkinsConsoleTextLoader(String buildURL) {
-		this(buildURL, false);
-	}
-
-	public JenkinsConsoleTextLoader(
-		String buildURL, boolean bypassConsoleLogSizeLimit) {
-
-		this.buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
-		this.bypassConsoleLogSizeLimit = bypassConsoleLogSizeLimit;
-
-		consoleLogFileKey = JenkinsResultsParserUtil.combine(
-			"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
-			".log");
-
-		JenkinsResultsParserUtil.saveToCacheFile(consoleLogFileKey, "");
-
-		serverLogSize = 0;
-	}
-
 	public void deleteCacheFile() {
 		File cacheFile = JenkinsResultsParserUtil.getCacheFile(
 			consoleLogFileKey);
@@ -200,6 +181,21 @@ public class JenkinsConsoleTextLoader {
 	protected boolean hasMoreData = true;
 	protected long serverLogSize;
 	protected boolean truncated;
+
+	private JenkinsConsoleTextLoader(
+		String buildURL, boolean bypassConsoleLogSizeLimit) {
+
+		this.buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
+		this.bypassConsoleLogSizeLimit = bypassConsoleLogSizeLimit;
+
+		consoleLogFileKey = JenkinsResultsParserUtil.combine(
+			"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
+			".log");
+
+		JenkinsResultsParserUtil.saveToCacheFile(consoleLogFileKey, "");
+
+		serverLogSize = 0;
+	}
 
 	private synchronized void _update() throws IOException {
 		boolean hasMoreData = true;

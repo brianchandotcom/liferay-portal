@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.service.access.policy.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -18,7 +19,6 @@ import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -110,17 +110,8 @@ public class ServiceAccessPolicyManagerImpl
 			return null;
 		}
 
-		List<ServiceAccessPolicy> serviceAccessPolicies = new ArrayList<>(
-			sapEntries.size());
-
-		for (SAPEntry sapEntry : sapEntries) {
-			ServiceAccessPolicy serviceAccessPolicy = _toServiceAccessPolicy(
-				sapEntry);
-
-			serviceAccessPolicies.add(serviceAccessPolicy);
-		}
-
-		return serviceAccessPolicies;
+		return TransformUtil.transform(
+			sapEntries, sapEntry -> _toServiceAccessPolicy(sapEntry));
 	}
 
 	private ServiceAccessPolicy _toServiceAccessPolicy(SAPEntry sapEntry) {

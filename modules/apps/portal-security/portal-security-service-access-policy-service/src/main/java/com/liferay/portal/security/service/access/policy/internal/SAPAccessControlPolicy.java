@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.service.access.policy.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -236,17 +237,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	private List<String> _getDefaultServiceAccessPolicyNames(long companyId) {
-		List<SAPEntry> defaultSAPEntries =
-			_sapEntryLocalService.getDefaultSAPEntries(companyId, true);
-
-		List<String> defaultServiceAccessPolicyNames = new ArrayList<>(
-			defaultSAPEntries.size());
-
-		for (SAPEntry sapEntry : defaultSAPEntries) {
-			defaultServiceAccessPolicyNames.add(sapEntry.getName());
-		}
-
-		return defaultServiceAccessPolicyNames;
+		return TransformUtil.transform(
+			_sapEntryLocalService.getDefaultSAPEntries(companyId, true),
+			sapEntry -> sapEntry.getName());
 	}
 
 	private List<String> _getSystemServiceAccessPolicyNames(long companyId) {

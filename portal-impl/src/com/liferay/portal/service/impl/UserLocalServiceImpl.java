@@ -1975,8 +1975,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordModified(false);
 
 			sendPasswordNotification(
-				user, user.getCompanyId(), user.getPassword(), null, null,
-				null, null, null, serviceContext);
+				user, user.getCompanyId(), user.getPassword(), null, null, null,
+				null, null, serviceContext);
 		}
 	}
 
@@ -5203,7 +5203,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (!silentUpdate &&
-			user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			(user.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
 
 			user.setPasswordModified(false);
 

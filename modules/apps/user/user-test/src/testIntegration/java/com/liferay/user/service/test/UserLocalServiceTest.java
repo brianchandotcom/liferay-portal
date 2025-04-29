@@ -10,7 +10,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -1398,13 +1397,9 @@ public class UserLocalServiceTest {
 			_userLocalService.updatePassword(
 				user.getUserId(), "test2", "test2", false);
 
-			String updatePasswordMessage = StringBundler.concat(
-				"Dear " + user.getFirstName() + StringPool.SPACE +
-					user.getLastName() + StringPool.COMMA);
-
 			Assert.assertFalse(
 				MailServiceTestUtil.lastMailMessageContains(
-					updatePasswordMessage));
+					"The request for a new password"));
 
 			for (WorkflowTask workflowTask :
 					_workflowTaskManager.getWorkflowTasks(

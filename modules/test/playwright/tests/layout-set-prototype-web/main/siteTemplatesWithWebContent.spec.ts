@@ -437,3 +437,13 @@ testWithPrivatePages(
 		);
 	}
 );
+
+test(
+	'Page links on sites which were created in site templates should redirect correctly to other pages.',
+	{tag: ['@LPD-46415']},
+	async ({
+		
+	}) => {
+		
+	}
+);

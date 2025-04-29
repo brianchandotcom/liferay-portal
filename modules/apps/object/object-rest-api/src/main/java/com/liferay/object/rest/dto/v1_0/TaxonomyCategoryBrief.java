@@ -98,6 +98,190 @@ public class TaxonomyCategoryBrief implements Serializable {
 	private Supplier<Object> _embeddedTaxonomyCategorySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's parent category."
+	)
+	@Valid
+	public ParentTaxonomyCategory getParentTaxonomyCategory() {
+		if (_parentTaxonomyCategorySupplier != null) {
+			parentTaxonomyCategory = _parentTaxonomyCategorySupplier.get();
+
+			_parentTaxonomyCategorySupplier = null;
+		}
+
+		return parentTaxonomyCategory;
+	}
+
+	public void setParentTaxonomyCategory(
+		ParentTaxonomyCategory parentTaxonomyCategory) {
+
+		this.parentTaxonomyCategory = parentTaxonomyCategory;
+
+		_parentTaxonomyCategorySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentTaxonomyCategory(
+		UnsafeSupplier<ParentTaxonomyCategory, Exception>
+			parentTaxonomyCategoryUnsafeSupplier) {
+
+		_parentTaxonomyCategorySupplier = () -> {
+			try {
+				return parentTaxonomyCategoryUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The category's parent category.")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected ParentTaxonomyCategory parentTaxonomyCategory;
+
+	@JsonIgnore
+	private Supplier<ParentTaxonomyCategory> _parentTaxonomyCategorySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The parent category's `TaxonomyVocabulary`."
+	)
+	@Valid
+	public ParentTaxonomyVocabulary getParentTaxonomyVocabulary() {
+		if (_parentTaxonomyVocabularySupplier != null) {
+			parentTaxonomyVocabulary = _parentTaxonomyVocabularySupplier.get();
+
+			_parentTaxonomyVocabularySupplier = null;
+		}
+
+		return parentTaxonomyVocabulary;
+	}
+
+	public void setParentTaxonomyVocabulary(
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary) {
+
+		this.parentTaxonomyVocabulary = parentTaxonomyVocabulary;
+
+		_parentTaxonomyVocabularySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentTaxonomyVocabulary(
+		UnsafeSupplier<ParentTaxonomyVocabulary, Exception>
+			parentTaxonomyVocabularyUnsafeSupplier) {
+
+		_parentTaxonomyVocabularySupplier = () -> {
+			try {
+				return parentTaxonomyVocabularyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The parent category's `TaxonomyVocabulary`.")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
+
+	@JsonIgnore
+	private Supplier<ParentTaxonomyVocabulary>
+		_parentTaxonomyVocabularySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Scope getScope() {
+		if (_scopeSupplier != null) {
+			scope = _scopeSupplier.get();
+
+			_scopeSupplier = null;
+		}
+
+		return scope;
+	}
+
+	public void setScope(Scope scope) {
+		this.scope = scope;
+
+		_scopeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+		_scopeSupplier = () -> {
+			try {
+				return scopeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Scope scope;
+
+	@JsonIgnore
+	private Supplier<Scope> _scopeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's external reference code."
+	)
+	public String getTaxonomyCategoryExternalReferenceCode() {
+		if (_taxonomyCategoryExternalReferenceCodeSupplier != null) {
+			taxonomyCategoryExternalReferenceCode =
+				_taxonomyCategoryExternalReferenceCodeSupplier.get();
+
+			_taxonomyCategoryExternalReferenceCodeSupplier = null;
+		}
+
+		return taxonomyCategoryExternalReferenceCode;
+	}
+
+	public void setTaxonomyCategoryExternalReferenceCode(
+		String taxonomyCategoryExternalReferenceCode) {
+
+		this.taxonomyCategoryExternalReferenceCode =
+			taxonomyCategoryExternalReferenceCode;
+
+		_taxonomyCategoryExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			taxonomyCategoryExternalReferenceCodeUnsafeSupplier) {
+
+		_taxonomyCategoryExternalReferenceCodeSupplier = () -> {
+			try {
+				return taxonomyCategoryExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The category's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String taxonomyCategoryExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _taxonomyCategoryExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
 	)
 	public Long getTaxonomyCategoryId() {
@@ -283,6 +467,61 @@ public class TaxonomyCategoryBrief implements Serializable {
 			else {
 				sb.append(embeddedTaxonomyCategory);
 			}
+		}
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			getParentTaxonomyCategory();
+
+		if (parentTaxonomyCategory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentTaxonomyCategory\": ");
+
+			sb.append(String.valueOf(parentTaxonomyCategory));
+		}
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			getParentTaxonomyVocabulary();
+
+		if (parentTaxonomyVocabulary != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentTaxonomyVocabulary\": ");
+
+			sb.append(String.valueOf(parentTaxonomyVocabulary));
+		}
+
+		Scope scope = getScope();
+
+		if (scope != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append(String.valueOf(scope));
+		}
+
+		String taxonomyCategoryExternalReferenceCode =
+			getTaxonomyCategoryExternalReferenceCode();
+
+		if (taxonomyCategoryExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taxonomyCategoryExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long taxonomyCategoryId = getTaxonomyCategoryId();

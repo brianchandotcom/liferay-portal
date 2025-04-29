@@ -94,7 +94,7 @@ public class ObjectEntryRowInfoItemRendererTest {
 	}
 
 	@Test
-	public void testObjectEntryRowInfoItemRenderer() throws Exception {
+	public void testRender() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -156,15 +156,13 @@ public class ObjectEntryRowInfoItemRendererTest {
 	private void _assertObjectEntryValues(
 		ObjectEntry objectEntry, ServletRequest servletRequest) {
 
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
 		Map<String, Serializable> values =
 			(Map<String, Serializable>)servletRequest.getAttribute(
 				ObjectWebKeys.OBJECT_ENTRY_VALUES);
 
 		Assert.assertEquals(
-			objectEntry.getValues(
-			).get(
-				_objectFieldName
-			),
+			objectEntryValues.get(_objectFieldName),
 			values.get(_objectFieldName));
 	}
 

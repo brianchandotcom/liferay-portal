@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accessibilityMenuPagesTest} from '../../fixtures/accessibilityMenuPagesTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import performLoginViaApi, {performLogout} from '../../utils/performLogin';
-import {featureFlagPagesTest} from '../feature-flag-web/fixtures/featureFlagPagesTest';
+import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
+import {featureFlagPagesTest} from '../../feature-flag-web/main/fixtures/featureFlagPagesTest';
 
 const test = mergeTests(
 	accessibilityMenuPagesTest,

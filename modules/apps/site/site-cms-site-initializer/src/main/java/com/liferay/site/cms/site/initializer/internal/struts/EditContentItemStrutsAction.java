@@ -13,8 +13,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
@@ -45,6 +47,7 @@ public class EditContentItemStrutsAction implements StrutsAction {
 		String className = ParamUtil.getString(httpServletRequest, "className");
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		Group group = _groupLocalService.getGroup(
 			themeDisplay.getCompanyId(), GroupConstants.CMS);
@@ -56,12 +59,17 @@ public class EditContentItemStrutsAction implements StrutsAction {
 				fetchDefaultLayoutPageTemplateEntry(
 					group.getGroupId(), classNameId, 0);
 
-		httpServletResponse.sendRedirect(
-			ActionUtil.getEditURL(
-				String.valueOf(classNameId), String.valueOf(objectEntryId),
-				_layoutLocalService.fetchLayout(
-					layoutPageTemplateEntry.getPlid()),
-				themeDisplay));
+		String editURL = ActionUtil.getEditURL(
+			String.valueOf(classNameId), String.valueOf(objectEntryId),
+			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()),
+			themeDisplay);
+
+		if (Validator.isNotNull(redirect)) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "redirect", redirect);
+		}
+
+		httpServletResponse.sendRedirect(editURL);
 
 		return null;
 	}

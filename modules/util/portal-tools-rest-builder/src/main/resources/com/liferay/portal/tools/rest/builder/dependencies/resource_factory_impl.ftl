@@ -25,12 +25,22 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+	import javax.servlet.http.HttpServletRequest;
+	import javax.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.UriInfo;
+	import javax.ws.rs.core.UriInfo;
+
+<#else>
+	import jakarta.annotation.Generated;
+
+	import jakarta.servlet.http.HttpServletRequest;
+	import jakarta.servlet.http.HttpServletResponse;
+
+	import jakarta.ws.rs.core.UriInfo;
+</#if>
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;

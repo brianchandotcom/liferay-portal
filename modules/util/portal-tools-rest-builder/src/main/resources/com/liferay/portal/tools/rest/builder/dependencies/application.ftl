@@ -1,8 +1,15 @@
 package ${configYAML.apiPackagePath}.internal.jaxrs.application;
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
 
-import jakarta.ws.rs.core.Application;
+	import javax.ws.rs.core.Application;
+
+<#else>
+	import jakarta.annotation.Generated;
+
+	import jakarta.ws.rs.core.Application;
+</#if>
 
 import org.osgi.service.component.annotations.Component;
 

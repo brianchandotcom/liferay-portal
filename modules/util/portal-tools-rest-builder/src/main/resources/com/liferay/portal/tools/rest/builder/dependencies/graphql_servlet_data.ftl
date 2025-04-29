@@ -16,7 +16,12 @@ import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Que
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
+
+<#else>
+	import jakarta.annotation.Generated;
+</#if>
 
 import java.util.HashMap;
 import java.util.Map;

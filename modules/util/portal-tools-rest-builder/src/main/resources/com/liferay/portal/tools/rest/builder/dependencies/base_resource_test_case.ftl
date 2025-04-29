@@ -136,15 +136,28 @@ import java.util.Set;
 	import java.util.function.Supplier;
 </#if>
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
 
-import jakarta.servlet.http.HttpServletRequest;
+	import javax.servlet.http.HttpServletRequest;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.PathSegment;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
+	import javax.ws.rs.core.MultivaluedHashMap;
+	import javax.ws.rs.core.MultivaluedMap;
+	import javax.ws.rs.core.PathSegment;
+	import javax.ws.rs.core.UriBuilder;
+	import javax.ws.rs.core.UriInfo;
+
+<#else>
+	import jakarta.annotation.Generated;
+
+	import jakarta.servlet.http.HttpServletRequest;
+
+	import jakarta.ws.rs.core.MultivaluedHashMap;
+	import jakarta.ws.rs.core.MultivaluedMap;
+	import jakarta.ws.rs.core.PathSegment;
+	import jakarta.ws.rs.core.UriBuilder;
+	import jakarta.ws.rs.core.UriInfo;
+</#if>
 
 import org.junit.After;
 import org.junit.Assert;

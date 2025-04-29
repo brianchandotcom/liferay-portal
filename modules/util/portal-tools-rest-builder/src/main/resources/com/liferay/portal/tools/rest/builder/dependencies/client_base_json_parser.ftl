@@ -1,6 +1,11 @@
 package ${configYAML.apiPackagePath}.client.json;
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
+
+<#else>
+	import jakarta.annotation.Generated;
+</#if>
 
 import java.math.BigDecimal;
 

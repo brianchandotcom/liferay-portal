@@ -29,7 +29,12 @@ import ${configYAML.apiPackagePath}.client.problem.Problem;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
-import jakarta.annotation.Generated;
+<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+	import javax.annotation.Generated;
+
+<#else>
+	import jakarta.annotation.Generated;
+</#if>
 
 import java.io.File;
 

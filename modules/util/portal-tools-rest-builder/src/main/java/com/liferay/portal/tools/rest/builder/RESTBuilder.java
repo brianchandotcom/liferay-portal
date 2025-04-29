@@ -157,6 +157,8 @@ public class RESTBuilder {
 			restBuilderArgs.getRESTConfigDir(),
 			restBuilderArgs.isForceClientVersionDescription(),
 			restBuilderArgs.isForcePredictableOperationId());
+
+		_useJavax = Boolean.TRUE.equals(restBuilderArgs.isUseJavax());
 	}
 
 	public void build() throws Exception {
@@ -168,6 +170,8 @@ public class RESTBuilder {
 			"freeMarkerTool", freeMarkerTool
 		).put(
 			"stringUtil", StringUtil_IW.getInstance()
+		).put(
+			"useJavax", _useJavax
 		).put(
 			"validator", Validator_IW.getInstance()
 		).build();
@@ -1886,5 +1890,6 @@ public class RESTBuilder {
 	private final ConfigYAML _configYAML;
 	private final File _copyrightFile;
 	private final List<File> _files = new ArrayList<>();
+	private Boolean _useJavax;
 
 }

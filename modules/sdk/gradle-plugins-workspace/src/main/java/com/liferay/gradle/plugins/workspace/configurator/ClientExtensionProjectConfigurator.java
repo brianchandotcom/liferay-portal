@@ -80,7 +80,7 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Copy;
@@ -1132,9 +1132,9 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _configureSpringBootPlugin(Project project) {
-		PluginContainer pluginContainer = project.getPlugins();
+		PluginManager pluginManager = project.getPluginManager();
 
-		pluginContainer.withId(
+		pluginManager.withPlugin(
 			"org.springframework.boot",
 			plugin -> _configureJDKJavaOptions(project));
 	}

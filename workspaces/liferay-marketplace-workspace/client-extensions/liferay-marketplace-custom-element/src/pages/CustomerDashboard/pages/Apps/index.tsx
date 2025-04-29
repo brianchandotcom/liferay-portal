@@ -34,6 +34,7 @@ const Apps = () => {
 			OrderTypes.COMPOSITE_APP,
 			OrderTypes.DXPAPP,
 			OrderTypes.LOW_CODE_CONFIGURATION,
+			OrderTypes.OTHER,
 		],
 		page,
 		pageSize: 10,

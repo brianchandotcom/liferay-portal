@@ -18,6 +18,7 @@ export default class MarketplaceDeliveryOrder {
 			OrderTypes.CLIENT_EXTENSION,
 			OrderTypes.COMPOSITE_APP,
 			OrderTypes.DXPAPP,
+			OrderTypes.OTHER,
 		].includes(this.order.orderTypeExternalReferenceCode as OrderTypes);
 	}
 

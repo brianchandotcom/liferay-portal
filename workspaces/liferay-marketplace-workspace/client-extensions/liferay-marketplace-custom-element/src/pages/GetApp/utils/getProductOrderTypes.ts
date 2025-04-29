@@ -11,6 +11,7 @@ const productTypeERC = {
 	[ProductType.COMPOSITE_APP]: 'COMPOSITE_APP',
 	[ProductType.DXP]: 'DXPAPP',
 	[ProductType.LOW_CODE_CONFIGURATION]: 'LOW_CODE_CONFIGURATION',
+	[ProductType.OTHER]: 'OTHER',
 } as const;
 
 export function getProductOrderTypes(productSpecificationValue: any) {

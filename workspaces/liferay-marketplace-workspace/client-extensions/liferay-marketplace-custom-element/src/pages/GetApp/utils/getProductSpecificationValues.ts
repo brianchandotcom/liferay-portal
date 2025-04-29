@@ -12,6 +12,7 @@ export function getProductSpecificationValues(
 		'composite-app',
 		'dxp',
 		'low-code-configuration',
+		'other',
 	];
 
 	const productSpecification = productSpecifications.find(({value}) => {

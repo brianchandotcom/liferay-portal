@@ -43,4 +43,10 @@ export const ProductTypeOptions: ProductTypeOption[] = [
 		label: i18n.translate('low-code-configuration'),
 		value: ProductType.LOW_CODE_CONFIGURATION,
 	},
+	{
+		description:
+			'Apps that do not fit into the standard categories. This may include external integrations, legacy solutions, prototypes, or custom deployments.',
+		label: i18n.translate('other'),
+		value: ProductType.OTHER,
+	},
 ];

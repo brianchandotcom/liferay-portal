@@ -28,6 +28,7 @@ export enum OrderTypes {
 	COMPOSITE_APP = 'COMPOSITE_APP',
 	DXPAPP = 'DXPAPP',
 	LOW_CODE_CONFIGURATION = 'LOW_CODE_CONFIGURATION',
+	OTHER = 'OTHER',
 	SOLUTIONS7 = 'SOLUTIONS7',
 	SOLUTIONS30 = 'SOLUTIONS30',
 }
@@ -52,6 +53,7 @@ export const orderTypeLabel = {
 	[OrderTypes.COMPOSITE_APP]: 'Composite App',
 	[OrderTypes.DXPAPP]: 'DXP',
 	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
+	[OrderTypes.OTHER]: 'Other',
 	[OrderTypes.SOLUTIONS7]: 'Solutions 7',
 	[OrderTypes.SOLUTIONS30]: 'Solutions 30',
 } as const;

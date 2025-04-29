@@ -105,6 +105,7 @@ export enum ProductType {
 	COMPOSITE_APP = 'composite-app',
 	DXP = 'dxp',
 	LOW_CODE_CONFIGURATION = 'low-code-configuration',
+	OTHER = 'other',
 }
 
 export enum ProductTypeVocabulary {
@@ -157,6 +158,7 @@ export const ProductTypeLabels = {
 	[ProductType.COMPOSITE_APP]: 'Composite App',
 	[ProductType.DXP]: 'DXP',
 	[ProductType.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
+	[ProductType.OTHER]: 'Other',
 } as const;
 
 export const ProductWorkflowStatusLabel = {

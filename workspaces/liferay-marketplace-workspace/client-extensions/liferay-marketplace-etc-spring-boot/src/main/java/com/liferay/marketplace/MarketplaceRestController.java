@@ -107,7 +107,9 @@ public class MarketplaceRestController extends BaseRestController {
 				order.getOrderTypeExternalReferenceCode(), "COMPOSITE_APP") ||
 			Objects.equals(
 				order.getOrderTypeExternalReferenceCode(),
-				"LOW_CODE_CONFIGURATION")) {
+				"LOW_CODE_CONFIGURATION") ||
+			Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "OTHER")) {
 
 			_marketplaceService.updateOrder(
 				null, order.getId(),

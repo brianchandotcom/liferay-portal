@@ -23,6 +23,7 @@ const offeringTypes = {
 		ProductOfferingTypes.LIFERAY_SELF_HOSTED,
 	],
 	'low-code-configuration': ALL_OFFERINGS,
+	'other': ALL_OFFERINGS,
 };
 
 export function getOfferingTypes(type: ProductType) {

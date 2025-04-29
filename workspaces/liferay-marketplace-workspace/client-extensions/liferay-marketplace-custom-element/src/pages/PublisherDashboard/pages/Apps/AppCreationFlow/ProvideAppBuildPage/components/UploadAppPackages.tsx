@@ -35,6 +35,9 @@ export const acceptFileTypes = {
 	[ProductType.LOW_CODE_CONFIGURATION]: {
 		'application/java-archive': ['.zip'],
 	},
+	[ProductType.OTHER]: {
+		'application/java-archive': ['.zip'],
+	},
 };
 
 export const UPLOAD_MAX_SIZE = 500_000_000;

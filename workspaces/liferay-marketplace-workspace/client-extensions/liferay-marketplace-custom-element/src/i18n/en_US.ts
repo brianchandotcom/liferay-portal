@@ -323,6 +323,7 @@ export default {
 	'order-id': 'Order ID',
 	'order-status': 'Order Status',
 	'orders': 'Orders',
+	'other': 'Other',
 	'payment-status': 'Payment Status',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',

@@ -50,6 +50,7 @@ const Metrics = () => {
 						OrderTypes.DXPAPP,
 						OrderTypes.COMPOSITE_APP,
 						OrderTypes.LOW_CODE_CONFIGURATION,
+						OrderTypes.OTHER,
 					]),
 					nestedFields: 'account,orderItems',
 					pageSize: '30',

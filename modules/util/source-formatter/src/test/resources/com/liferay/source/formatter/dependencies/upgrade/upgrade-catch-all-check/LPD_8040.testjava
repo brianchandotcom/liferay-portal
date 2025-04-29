@@ -17,7 +17,6 @@ public class LPD_8040 {
 		_http.addParameter(null, null, null);
 		_http.decodePath(null);
 		_http.decodeURL(null);
-		_http.encodeParameters(null);
 		_http.encodePath(null);
 		_http.fixPath(null);
 		_http.getCompleteURL(null, null, null);
@@ -44,6 +43,7 @@ public class LPD_8040 {
 		_http.sanitizeHeader(null);
 		_http.setParameter(null, null, null);
 		_http.shortenURL(null);
+		http.encodeParameters(null);
 
 		HttpUtil.hasProxyConfig();
 		HttpUtil.addParameter(null, null, null);
@@ -76,6 +76,10 @@ public class LPD_8040 {
 		HttpUtil.sanitizeHeader(null);
 		HttpUtil.setParameter(null, null, null);
 		HttpUtil.shortenURL(null);
+	}
+
+	public void method(Http http) {
+		http.encodeParameters(null);
 	}
 
 	@Reference

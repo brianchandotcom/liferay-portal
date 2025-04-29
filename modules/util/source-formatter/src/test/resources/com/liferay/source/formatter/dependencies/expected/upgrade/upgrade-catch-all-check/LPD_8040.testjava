@@ -19,7 +19,6 @@ public class LPD_8040 {
 		HttpComponentsUtil.addParameter(null, null, null);
 		HttpComponentsUtil.decodePath(null);
 		HttpComponentsUtil.decodeURL(null);
-		HttpComponentsUtil.encodeParameters(null);
 		HttpComponentsUtil.encodePath(null);
 		HttpComponentsUtil.fixPath(null);
 		HttpComponentsUtil.getCompleteURL(null, null, null);
@@ -46,6 +45,7 @@ public class LPD_8040 {
 		HttpComponentsUtil.sanitizeHeader(null);
 		HttpComponentsUtil.setParameter(null, null, null);
 		HttpComponentsUtil.shortenURL(null);
+		http.encodeParameters(null);
 
 		HttpUtil.hasProxyConfig();
 		HttpComponentsUtil.addParameter(null, null, null);
@@ -78,6 +78,10 @@ public class LPD_8040 {
 		HttpComponentsUtil.sanitizeHeader(null);
 		HttpComponentsUtil.setParameter(null, null, null);
 		HttpComponentsUtil.shortenURL(null);
+	}
+
+	public void method(Http http) {
+		HttpComponentsUtil.encodeParameters(null);
 	}
 
 	@Reference

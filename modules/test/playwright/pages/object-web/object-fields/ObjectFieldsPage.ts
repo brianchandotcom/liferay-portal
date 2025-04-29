@@ -79,7 +79,7 @@ export class ObjectFieldsPage {
 		await this.saveButton.click();
 	}
 
-	async deleteObjectField(nth: number) {
+	async deleteObjectField(nth: number, deleteConfirmation: boolean) {
 		await this.page.locator('.cell-item-actions').nth(nth).waitFor();
 
 		await this.page
@@ -89,6 +89,10 @@ export class ObjectFieldsPage {
 			.click();
 
 		await this.deleteObjectFieldOption.click();
+
+		if (deleteConfirmation) {
+			await this.page.getByRole('button', {name: 'Delete'}).click()
+		}
 	}
 
 	async goto(objectDefinitionLabel: string) {

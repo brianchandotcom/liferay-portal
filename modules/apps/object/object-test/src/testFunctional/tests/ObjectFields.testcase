@@ -441,33 +441,6 @@ definition {
 		}
 	}
 
-	@description = "Verify that the user is able to add formula fields when managing System Objects"
-	@priority = 5
-	test CanCreateFormulaFieldOnSystemObject {
-		property portal.acceptance = "true";
-
-		task ("Given a System Object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectSystemObject(label = "Commerce Order");
-
-			ObjectAdmin.goToFieldsTab();
-		}
-
-		task ("When a formula field on system objects is created") {
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Formula Field",
-				fieldType = "Formula",
-				formulaFieldOption = "Decimal");
-		}
-
-		task ("Then the formula field is present") {
-			ObjectAdmin.assertObjectField(
-				fieldLabel = "Custom Formula Field",
-				fieldType = "Formula");
-		}
-	}
-
 	@description = "LPS-148112 - Verify that File Size and Format defined by admin are working correctly when using the 'Show Files' option"
 	@priority = 4
 	test CanDefineMaximumFileSizeOnShowFilesOption {

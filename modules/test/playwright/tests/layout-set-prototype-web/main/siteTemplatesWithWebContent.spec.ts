@@ -525,5 +525,23 @@ test(
 			webContentName,
 		});
 		await uiElementsPage.publishButton.click();
+
+		await page.goto(`web/${siteName}/${page1Name}`);
+
+		await expect(
+			page.getByRole('link', {
+				name: `template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}`,
+			})
+		).toBeVisible();
+
+		expect(
+			await page
+				.getByRole('link', {
+					name: `template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}`,
+				})
+				.getAttribute('href')
+		).toEqual(
+			`${cleanBaseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}`
+		);
 	}
 );

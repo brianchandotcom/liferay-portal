@@ -574,18 +574,17 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 	protected BaseScanCodePipeline(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
 
-		_releaseBuildURL = null;
-
 		_pipelineNames.add(pipelineName);
+		_releaseBuildURL = null;
 	}
 
 	protected BaseScanCodePipeline(
-		String buildURL, String releaseBuildURL, String pipelineName) {
+		String buildURL, String pipelineName, String releaseBuildURL) {
 
 		_buildURL = buildURL;
-		_releaseBuildURL = releaseBuildURL;
 
 		_pipelineNames.add(pipelineName);
+		_releaseBuildURL = releaseBuildURL;
 	}
 
 	private boolean _hasErrors() {

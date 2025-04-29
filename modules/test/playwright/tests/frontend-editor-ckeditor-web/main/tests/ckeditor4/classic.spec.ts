@@ -28,6 +28,16 @@ test.beforeEach(async ({ckeditorSamplePage, site}) => {
 	await ckeditorSamplePage.selectTab('Classic');
 });
 
+test('Editor config contributor client extension is applied', async ({
+	page,
+}) => {
+	await test.step('Assert "AI Creator" button is visible as provided by the CX', async () => {
+		await expect(
+			page.getByRole('button', {name: 'Create AI Content'})
+		).toBeInViewport();
+	});
+});
+
 test(
 	'Dropdown and context menus are visible when maximized',
 	{tag: ['@LPD-33712', '@LPD-38600']},

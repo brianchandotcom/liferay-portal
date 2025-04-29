@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {openFieldset} from '../../../utils/openFieldset';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {openFieldset} from '../../../../utils/openFieldset';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {BlogsPage} from './BlogsPage';
 
-import type {postTaxonomyVocabularyTaxonomyCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
+import type {postTaxonomyVocabularyTaxonomyCategoryProps} from '../../../../helpers/HeadlessAdminTaxonomyApiHelper';
 
 type editBlogEntryAddfriendlyUrlType = {
 	categories: Pick<postTaxonomyVocabularyTaxonomyCategoryProps, 'name'>[];

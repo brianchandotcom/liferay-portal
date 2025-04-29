@@ -5,14 +5,14 @@
 
 import {Page} from '@playwright/test';
 
-import {AssetPublisherPage} from '../../../pages/asset-publisher-web/AssetPublisherPage';
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import getRandomString from '../../../utils/getRandomString';
-import {openFieldset} from '../../../utils/openFieldset';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {AssetPublisherPage} from '../../../../pages/asset-publisher-web/AssetPublisherPage';
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
+import getRandomString from '../../../../utils/getRandomString';
+import {openFieldset} from '../../../../utils/openFieldset';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
-import type {ApiHelpers} from '../../../helpers/ApiHelpers';
+import type {ApiHelpers} from '../../../../helpers/ApiHelpers';
 
 export async function createAssetPublisherAndConfigure({
 	apiHelpers,

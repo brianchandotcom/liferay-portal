@@ -5,8 +5,8 @@
 
 import {Page} from '@playwright/test';
 
-import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
-import getRandomString from '../../../utils/getRandomString';
+import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
+import getRandomString from '../../../../utils/getRandomString';
 
 export async function createDPTandMarkAsDefault({
 	page,

@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
+import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {BlogsEditBlogEntryPage} from '../pages/BlogsEditBlogEntryPage';
 import {BlogsPage} from '../pages/BlogsPage';
 

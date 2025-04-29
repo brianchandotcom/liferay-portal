@@ -911,7 +911,7 @@ public class ObjectEntry implements Serializable {
 	@GraphQLField(
 		description = "The categories associated with this object entry."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@JsonIgnore

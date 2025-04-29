@@ -66,6 +66,25 @@ components:
                     enum: [-1em, -0.95em, 1em, 0.95em]
                     type: string
             type: object
+        ErcAssetLibraryTestEntity:
+            properties:
+                assetLibraryExternalReferenceCode:
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+            type: object
         ErcSiteTestEntity:
             properties:
                 dateCreated:
@@ -83,25 +102,6 @@ components:
                         type: permission
                     type: array
                 siteExternalReferenceCode:
-                    type: string
-            type: object
-        ErcAssetLibraryTestEntity:
-            properties:
-                dateCreated:
-                    format: date-time
-                    type: string
-                dateModified:
-                    format: date-time
-                    type: string
-                description:
-                    type: string
-                externalReferenceCode:
-                    type: string
-                permissions:
-                    items:
-                        type: permission
-                    type: array
-                assetLibraryExternalReferenceCode:
                     type: string
             type: object
         Filter:
@@ -301,6 +301,116 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    /asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}:
+        get:
+            operationId: getAssetLibraryErcAssetLibraryTestEntity
+            parameters:
+                -   in: path
+                    name: AssetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: ercAssetLibraryTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                    description:
+                        "OK"
+            tags: ["ErcAssetLibraryTestEntity"]
+        put:
+            operationId: putAssetLibraryErcAssetLibraryTestEntity
+            parameters:
+                -   in: path
+                    name: AssetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: ercAssetLibraryTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                    description:
+                        "OK"
+            tags: ["ErcAssetLibraryTestEntity"]
+    /asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities:
+        get:
+            operationId: getAssetLibraryErcAssetLibraryTestEntitiesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["ErcAssetLibraryTestEntity"]
+        post:
+            operationId: postAssetLibraryErcAssetLibraryTestEntity
+            parameters:
+                -   in: path
+                    name: AssetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
+            tags: ["ErcAssetLibraryTestEntity"]
     /company-test-entities:
         get:
             operationId: getCompanyTestEntitiesPage
@@ -734,11 +844,11 @@ paths:
         get:
             operationId: getSiteErcSiteTestEntitiesPage
             parameters:
-                - in: path
-                  name: siteExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -758,11 +868,11 @@ paths:
         post:
             operationId: postSiteErcSiteTestEntity
             parameters:
-                - in: path
-                  name: siteExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -785,16 +895,16 @@ paths:
         get:
             operationId: getSiteErcSiteTestEntity
             parameters:
-                - in: path
-                  name: ercSiteTestEntityExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: siteExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: ercSiteTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -810,16 +920,16 @@ paths:
         put:
             operationId: putSiteErcSiteTestEntity
             parameters:
-                - in: path
-                  name: ercSiteTestEntityExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: siteExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: ercSiteTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -840,116 +950,6 @@ paths:
                     description:
                         "OK"
             tags: ["ErcSiteTestEntity"]
-    /asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities:
-        get:
-            operationId: getAssetLibraryErcAssetLibraryTestEntitiesPage
-            parameters:
-                - in: path
-                  name: assetLibraryExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                                type: array
-                        "application/xml":
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                                type: array
-                    description:
-                        "OK"
-            tags: [ "ErcAssetLibraryTestEntity" ]
-        post:
-            operationId: postAssetLibraryErcAssetLibraryTestEntity
-            parameters:
-                - in: path
-                  name: AssetLibraryExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-            responses:
-                "200":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-            tags: [ "ErcAssetLibraryTestEntity" ]
-    /asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}:
-        get:
-            operationId: getAssetLibraryErcAssetLibraryTestEntity
-            parameters:
-                - in: path
-                  name: ercAssetLibraryTestEntityExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: AssetLibraryExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                        "application/xml":
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                    description:
-                        "OK"
-            tags: [ "ErcAssetLibraryTestEntity" ]
-        put:
-            operationId: putAssetLibraryErcAssetLibraryTestEntity
-            parameters:
-                - in: path
-                  name: ercAssetLibraryTestEntityExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: AssetLibraryExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                        "application/xml":
-                            schema:
-                                $ref: "#/components/schemas/ErcAssetLibraryTestEntity"
-                    description:
-                        "OK"
-            tags: [ "ErcAssetLibraryTestEntity" ]
     /sites/{siteId}/site-test-entities:
         get:
             operationId: getSiteSiteTestEntitiesPage

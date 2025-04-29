@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -66,16 +66,9 @@ public class RoleUtil {
 	}
 
 	public static List<Long> getRoleIds(ServiceContext serviceContext) {
-		List<Role> roles = RoleLocalServiceUtil.getUserRoles(
-			serviceContext.getUserId());
-
-		List<Long> roleIds = new ArrayList<>(roles.size());
-
-		for (Role role : roles) {
-			roleIds.add(role.getRoleId());
-		}
-
-		return roleIds;
+		return TransformUtil.transform(
+			RoleLocalServiceUtil.getUserRoles(serviceContext.getUserId()),
+			role -> role.getRoleId());
 	}
 
 	public static int getRoleType(String roleType) {

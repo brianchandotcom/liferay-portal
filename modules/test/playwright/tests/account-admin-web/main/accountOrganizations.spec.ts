@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {nextPage, setItemsPerPage} from '../../utils/pagination';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	accountsPagesTest,

@@ -2280,6 +2280,8 @@ export const mockSessions = variables => ({
 						events: [
 							{
 								__typename: 'Event',
+								applicationId: 'Page',
+								assetTitle: 'Home - Liferay DXP',
 								canonicalUrl: 'http://localhost:8080',
 								createDate: 'Mon Dec 06 17:28:48 GMT 2021',
 								name: 'tabBlurred',

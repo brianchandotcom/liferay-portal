@@ -793,6 +793,8 @@ export function mockActivityHistory(data = {}) {
 
 export function mockEvent(seed = 0) {
 	return {
+		applicationId: 'Page',
+		assetTitle: 'Page Title',
 		canonicalUrl: `https://www.liferay${seed}.com`,
 		createDate: seed + 100000,
 		name: `Asset ${seed}`,

@@ -32,6 +32,8 @@ describe('activities', () => {
 		it('should decode canonicalUrl, referrer and url params', () => {
 			const result = formatEvents([
 				{
+					applicationId: 'Page',
+					assetTitle: 'this is a page title',
 					canonicalUrl:
 						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88',
 					name: 'eventName',
@@ -49,8 +51,8 @@ describe('activities', () => {
 					attributes: {
 						canonicalUrl: 'http://localhost:7400/新しいサイト',
 						header: 'Event Attributes',
+						pageTitle: 'this is a page title',
 						referrer: 'http://localhost:7400/新しいサイト',
-						title: 'this is a page title',
 						url: 'http://localhost:7400/新しいサイト'
 					},
 					description: 'this is a page title',

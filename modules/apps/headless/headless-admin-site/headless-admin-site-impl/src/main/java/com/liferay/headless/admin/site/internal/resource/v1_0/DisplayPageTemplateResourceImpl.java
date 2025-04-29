@@ -412,13 +412,13 @@ public class DisplayPageTemplateResourceImpl
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(displayPageTemplate, groupId));
 
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
 		DisplayPageTemplateSettings displayPageTemplateSettings =
 			displayPageTemplate.getDisplayPageTemplateSettings();
 
 		if (displayPageTemplateSettings != null) {
+			Layout layout = _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
 			DisplayPageTemplateOpenGraphSettings
 				displayPageTemplateOpenGraphSettings =
 					displayPageTemplateSettings.getOpenGraphSettings();

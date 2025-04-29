@@ -5,15 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {performLogout} from '../../utils/performLogin';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {performLogout} from '../../../utils/performLogin';
 
 const test = mergeTests(
 	apiHelpersTest,

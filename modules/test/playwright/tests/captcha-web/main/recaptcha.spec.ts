@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import {performLogout} from '../../utils/performLogin';
+import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import {performLogout} from '../../../utils/performLogin';
 import {reCaptchaConfig} from './config';
 
 export const test = mergeTests(loginTest(), captchaConfigPageTest);

@@ -8,8 +8,208 @@
 	display: none;
 }
 
-.text-cell-editor-hidden {
-	display: none;
+.form-builder-field {
+	background-color: $white;
+	border: 0.0625rem solid $secondary-l3;
+	border-radius: 0.25rem;
+	margin-top: 0.5rem;
+	padding: 1.3rem;
+
+	.form-builder-field-node {
+		display: inline;
+		margin-right: 5px;
+	}
+
+	.select-button {
+		margin-top: 1rem;
+	}
+}
+
+.form-builder-placeholder {
+	border: 0.0625rem dashed $secondary-l2;
+	margin: 0.3125rem;
+}
+
+.has-control-menu > .basecelleditor {
+	z-index: 9999 !important;
+}
+
+.lfr-ddm-container {
+	.form-group label {
+		margin-left: 0;
+	}
+
+	.field-wrapper {
+		position: relative;
+
+		&.form-builder-field label {
+			float: none;
+		}
+
+		.aui-field-wrapper {
+			margin-left: 20px;
+		}
+
+		.datepicker-display {
+			float: none;
+
+			.datepicker-button-wrapper,
+			.datepicker-select-wrapper {
+				display: inline;
+				float: none;
+			}
+		}
+
+		.file-entry-upload-progress {
+			height: 6px;
+			margin-top: -7px;
+		}
+
+		.icon-asterisk {
+			margin-left: 4px;
+		}
+
+		.lfr-ddm-repeatable-add-button,
+		.lfr-ddm-repeatable-delete-button {
+			display: block;
+			height: 16px;
+			position: absolute;
+			top: 4px;
+			width: 16px;
+
+			&.lfr-ddm-repeatable-add-button {
+				right: 4px;
+			}
+
+			&.lfr-ddm-repeatable-delete-button {
+				right: 24px;
+			}
+		}
+
+		.lfr-ddm-repeatable-drag-icon {
+			align-items: center;
+			cursor: move;
+			display: inline-flex;
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	.field-wrapper-content {
+		margin-bottom: 6px;
+
+		label {
+			margin-left: 0;
+		}
+
+		&,
+		.field-wrapper-content {
+			margin-left: 15px;
+		}
+	}
+
+	.lfr-ddm-repeatable-helper {
+		display: none;
+	}
+
+	.lfr-ddm-repeatable-placeholder {
+		border: 1px dotted;
+		margin-top: 15px;
+		padding: 20px 0;
+	}
+
+	.lfr-ddm-separator-hr {
+		top: 50%;
+	}
+}
+
+.lfr-ddm-legend {
+	color: $gray-900;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0.25rem;
+}
+
+.lfr-ddm-link-to-page-modal {
+	.collapse.navbar-collapse {
+		.active {
+			border-bottom: 4px solid $blue;
+		}
+		li.private,
+		li.public {
+			padding: 1.5em;
+		}
+	}
+	.lfr-ddm-breadcrumb {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.lfr-ddm-pages-container {
+		height: 283px;
+		margin-right: -23px;
+		overflow: auto;
+		padding-left: 5px;
+		padding-top: 50px;
+
+		&.top-ended {
+			padding-top: 0;
+		}
+
+		.lfr-ddm-link {
+			align-items: center;
+			display: flex;
+
+			a {
+				margin-left: 1em;
+			}
+		}
+
+		.loading-icon {
+			display: block;
+			font-size: 48px;
+			margin: 0 auto;
+		}
+
+		&.nav {
+			> li {
+				> a {
+					display: block;
+					margin-left: 20px;
+					padding: 0.625rem 1rem 0.625rem 0;
+				}
+
+				.loading-icon {
+					font-size: 18px;
+					position: absolute;
+					right: 36px;
+					top: 12px;
+				}
+			}
+
+			.lfr-ddm-page-radio {
+				position: relative;
+			}
+		}
+	}
+}
+
+.lfr-ddm-link-to-page-modal.modal-dialog:not(.dialog-iframe-modal):not(
+		.modal-full-screen
+	) {
+	position: fixed;
+}
+
+.ltr .form-builder-rtl-inputs,
+.rtl .form-builder-ltr-inputs {
+	.portlet-dynamic-data-mapping .form-builder-content,
+	.textareacelleditor,
+	.textcelleditor {
+		input[type='text'],
+		textarea {
+			direction: rtl;
+		}
+	}
 }
 
 .portlet-content-container {
@@ -207,18 +407,6 @@
 	}
 }
 
-.ltr .form-builder-rtl-inputs,
-.rtl .form-builder-ltr-inputs {
-	.portlet-dynamic-data-mapping .form-builder-content,
-	.textcelleditor,
-	.textareacelleditor {
-		input[type='text'],
-		textarea {
-			direction: rtl;
-		}
-	}
-}
-
 .tab-selected .tab-content {
 	color: #272833;
 
@@ -229,8 +417,8 @@
 	}
 }
 
-textarea.script {
-	min-height: 200px !important;
+.text-cell-editor-hidden {
+	display: none;
 }
 
 .vertical-scrolling.nav {
@@ -243,190 +431,6 @@ textarea.script {
 	}
 }
 
-.has-control-menu > .basecelleditor {
-	z-index: 9999 !important;
-}
-
-.lfr-ddm-container {
-	.form-group label {
-		margin-left: 0;
-	}
-
-	.lfr-ddm-repeatable-helper {
-		display: none;
-	}
-
-	.lfr-ddm-repeatable-placeholder {
-		border: 1px dotted;
-		margin-top: 15px;
-		padding: 20px 0;
-	}
-
-	.field-wrapper {
-		position: relative;
-
-		&.form-builder-field label {
-			float: none;
-		}
-
-		.aui-field-wrapper {
-			margin-left: 20px;
-		}
-
-		.datepicker-display {
-			float: none;
-
-			.datepicker-button-wrapper,
-			.datepicker-select-wrapper {
-				display: inline;
-				float: none;
-			}
-		}
-
-		.file-entry-upload-progress {
-			height: 6px;
-			margin-top: -7px;
-		}
-
-		.icon-asterisk {
-			margin-left: 4px;
-		}
-
-		.lfr-ddm-repeatable-add-button,
-		.lfr-ddm-repeatable-delete-button {
-			display: block;
-			height: 16px;
-			position: absolute;
-			top: 4px;
-			width: 16px;
-
-			&.lfr-ddm-repeatable-add-button {
-				right: 4px;
-			}
-
-			&.lfr-ddm-repeatable-delete-button {
-				right: 24px;
-			}
-		}
-
-		.lfr-ddm-repeatable-drag-icon {
-			align-items: center;
-			cursor: move;
-			display: inline-flex;
-			position: relative;
-			top: 1px;
-		}
-	}
-
-	.field-wrapper-content {
-		margin-bottom: 6px;
-
-		label {
-			margin-left: 0;
-		}
-
-		&,
-		.field-wrapper-content {
-			margin-left: 15px;
-		}
-	}
-}
-
-.lfr-ddm-legend {
-	color: $gray-900;
-	font-size: 0.875rem;
-	font-weight: 600;
-	margin-bottom: 0.25rem;
-}
-
-.lfr-ddm-link-to-page-modal.modal-dialog:not(.dialog-iframe-modal):not(
-		.modal-full-screen
-	) {
-	position: fixed;
-}
-
-.lfr-ddm-link-to-page-modal {
-	.collapse.navbar-collapse {
-		.active {
-			border-bottom: 4px solid $blue;
-		}
-		li.public,
-		li.private {
-			padding: 1.5em;
-		}
-	}
-	.lfr-ddm-breadcrumb {
-		padding-left: 0;
-		padding-right: 0;
-	}
-
-	.lfr-ddm-pages-container {
-		height: 283px;
-		margin-right: -23px;
-		overflow: auto;
-		padding-left: 5px;
-		padding-top: 50px;
-
-		&.top-ended {
-			padding-top: 0;
-		}
-
-		.lfr-ddm-link {
-			align-items: center;
-			display: flex;
-
-			a {
-				margin-left: 1em;
-			}
-		}
-
-		.loading-icon {
-			display: block;
-			font-size: 48px;
-			margin: 0 auto;
-		}
-
-		&.nav {
-			> li {
-				> a {
-					display: block;
-					margin-left: 20px;
-					padding: 0.625rem 1rem 0.625rem 0;
-				}
-
-				.loading-icon {
-					font-size: 18px;
-					position: absolute;
-					right: 36px;
-					top: 12px;
-				}
-			}
-
-			.lfr-ddm-page-radio {
-				position: relative;
-			}
-		}
-	}
-}
-
-.form-builder-field {
-	background-color: $white;
-	border: 0.0625rem solid $secondary-l3;
-	border-radius: 0.25rem;
-	margin-top: 0.5rem;
-	padding: 1.3rem;
-
-	.form-builder-field-node {
-		display: inline;
-		margin-right: 5px;
-	}
-
-	.select-button {
-		margin-top: 1rem;
-	}
-}
-
-.form-builder-placeholder {
-	border: 0.0625rem dashed $secondary-l2;
-	margin: 0.3125rem;
+textarea.script {
+	min-height: 200px !important;
 }

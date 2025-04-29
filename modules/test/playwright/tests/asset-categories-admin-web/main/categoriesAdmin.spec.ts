@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
 
 const test = mergeTests(

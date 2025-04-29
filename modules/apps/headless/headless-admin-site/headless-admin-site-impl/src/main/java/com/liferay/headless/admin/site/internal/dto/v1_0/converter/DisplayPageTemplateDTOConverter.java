@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -180,8 +181,10 @@ public class DisplayPageTemplateDTOConverter
 			{
 				setChangeFrequency(
 					() -> ChangeFrequency.create(
-						layout.getTypeSettingsProperty(
-							LayoutTypePortletConstants.SITEMAP_CHANGEFREQ)));
+						StringUtil.upperCaseFirstLetter(
+							layout.getTypeSettingsProperty(
+								LayoutTypePortletConstants.
+									SITEMAP_CHANGEFREQ))));
 				setInclude(
 					() -> Objects.equals(
 						layout.getTypeSettingsProperty(

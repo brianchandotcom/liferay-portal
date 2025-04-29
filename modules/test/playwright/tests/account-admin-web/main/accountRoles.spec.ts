@@ -5,20 +5,20 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {DataApiHelpers} from '../../helpers/ApiHelpers';
-import {TRole} from '../../helpers/HeadlessAdminUserApiHelper';
-import getRandomString from '../../utils/getRandomString';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {TRole} from '../../../helpers/HeadlessAdminUserApiHelper';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {addAccountRole, initAccountManager} from './utils/roles';
 
 export const test = mergeTests(

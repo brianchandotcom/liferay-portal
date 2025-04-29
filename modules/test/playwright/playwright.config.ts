@@ -131,6 +131,7 @@ import {config as stagingConfig} from './tests/staging-configuration-web/config'
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as templateWebConfig} from './tests/template-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
+import {config as usersAdminWebPermissionsConfig} from './tests/users-admin-web/permissions/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
 import {config as customerConfig} from './tests/workspaces/liferay-customer-workspace/config';
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
@@ -272,6 +273,7 @@ export default defineConfig({
 		stylebookWebConfig,
 		templateWebConfig,
 		usersAdminWebConfig,
+		usersAdminWebPermissionsConfig,
 		wikiWebConfig,
 		...setupProjects,
 	],

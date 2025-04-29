@@ -11,6 +11,8 @@
 	export {CompanyTestEntityAPI} from './apis/CompanyTestEntityAPI';
 	export {EntityModelResourceTestEntity1API} from './apis/EntityModelResourceTestEntity1API';
 	export {EntityModelResourceTestEntity2API} from './apis/EntityModelResourceTestEntity2API';
+	export {ErcAssetLibraryTestEntityAPI} from './apis/ErcAssetLibraryTestEntityAPI';
+	export {ErcSiteTestEntityAPI} from './apis/ErcSiteTestEntityAPI';
 	export {FilterAPI} from './apis/FilterAPI';
 	export {SchemaAPI} from './apis/SchemaAPI';
 	export {SiteTestEntityAPI} from './apis/SiteTestEntityAPI';
@@ -25,6 +27,8 @@
 	export {EntityModelResourceTestEntity1} from './models/EntityModelResourceTestEntity1';
 	export {EntityModelResourceTestEntity2} from './models/EntityModelResourceTestEntity2';
 	export {EnumTestEntity} from './models/EnumTestEntity';
+	export {ErcAssetLibraryTestEntity} from './models/ErcAssetLibraryTestEntity';
+	export {ErcSiteTestEntity} from './models/ErcSiteTestEntity';
 	export {Facet} from './models/Facet';
 	export {FacetValue} from './models/FacetValue';
 	export {Filter} from './models/Filter';
@@ -33,6 +37,8 @@
 	export {NestedTestEntity} from './models/NestedTestEntity';
 	export {PageCompanyTestEntity} from './models/PageCompanyTestEntity';
 	export {PageEntityModelResourceTestEntity1} from './models/PageEntityModelResourceTestEntity1';
+	export {PageErcAssetLibraryTestEntity} from './models/PageErcAssetLibraryTestEntity';
+	export {PageErcSiteTestEntity} from './models/PageErcSiteTestEntity';
 	export {PageFilter} from './models/PageFilter';
 	export {PagePermission} from './models/PagePermission';
 	export {PageSchema} from './models/PageSchema';

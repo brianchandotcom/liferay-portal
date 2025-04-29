@@ -234,33 +234,23 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		List<Object> categoriesAndThreads =
+		return TransformUtil.transform(
 			_mbCategoryLocalService.getCategoriesAndThreads(
 				category.getGroupId(), classPK,
-				WorkflowConstants.STATUS_IN_TRASH, start, end);
+				WorkflowConstants.STATUS_IN_TRASH, start, end),
+			categoryOrThread -> {
+				if (categoryOrThread instanceof MBThread) {
+					return (MBThread)categoryOrThread;
+				}
 
-		List<TrashedModel> trashedModels = new ArrayList<>(
-			categoriesAndThreads.size());
+				if (categoryOrThread instanceof MBCategory) {
+					return (MBCategory)categoryOrThread;
+				}
 
-		for (Object categoryOrThread : categoriesAndThreads) {
-			if (categoryOrThread instanceof MBThread) {
-				MBThread mbThread = (MBThread)categoryOrThread;
-
-				trashedModels.add(mbThread);
-			}
-			else if (categoryOrThread instanceof MBCategory) {
-				MBCategory mbCategory = (MBCategory)categoryOrThread;
-
-				trashedModels.add(mbCategory);
-			}
-			else {
 				throw new IllegalStateException(
 					"Expected MBThread or MBCategory, received " +
 						categoryOrThread.getClass());
-			}
-		}
-
-		return trashedModels;
+			});
 	}
 
 	@Override

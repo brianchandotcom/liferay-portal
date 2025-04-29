@@ -8,6 +8,7 @@ package com.liferay.message.boards.web.internal.util;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -32,25 +33,21 @@ public class MBAttachmentFileEntryUtil {
 					uniqueFileNameUnsafeFunction)
 		throws PortalException {
 
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences =
-			new ArrayList<>(tempFileEntries.size());
+		return TransformUtil.transform(
+			tempFileEntries,
+			tempFileEntry -> {
+				FileEntry mbFileEntry =
+					PortletFileRepositoryUtil.addPortletFileEntry(
+						null, groupId, userId, MBMessage.class.getName(),
+						messageId, MBConstants.SERVICE_NAME, folderId,
+						tempFileEntry.getContentStream(),
+						uniqueFileNameUnsafeFunction.apply(
+							tempFileEntry.getTitle()),
+						tempFileEntry.getMimeType(), true);
 
-		for (FileEntry tempFileEntry : tempFileEntries) {
-			FileEntry mbFileEntry =
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					null, groupId, userId, MBMessage.class.getName(), messageId,
-					MBConstants.SERVICE_NAME, folderId,
-					tempFileEntry.getContentStream(),
-					uniqueFileNameUnsafeFunction.apply(
-						tempFileEntry.getTitle()),
-					tempFileEntry.getMimeType(), true);
-
-			mbAttachmentFileEntryReferences.add(
-				new MBAttachmentFileEntryReference(
-					tempFileEntry.getFileEntryId(), mbFileEntry));
-		}
-
-		return mbAttachmentFileEntryReferences;
+				return new MBAttachmentFileEntryReference(
+					tempFileEntry.getFileEntryId(), mbFileEntry);
+			});
 	}
 
 	public static List<FileEntry> getTempMBAttachmentFileEntries(String content)

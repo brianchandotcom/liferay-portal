@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {countriesManagementPageTest} from '../../fixtures/CountriesManagementPageTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {waitForLoading} from '../osb-faro-web/utils/loading';
+import {countriesManagementPageTest} from '../../../fixtures/CountriesManagementPageTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForLoading} from '../../osb-faro-web/utils/loading';
 
 export const test = mergeTests(
 	apiHelpersTest,

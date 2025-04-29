@@ -102,6 +102,7 @@ public class OrderItemUtil {
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
+					GetterUtil.getString(orderItem.getOptions()),
 					BigDecimal.valueOf(
 						GetterUtil.get(orderItem.getQuantity(), 0)),
 					BigDecimalUtil.get(
@@ -338,6 +339,7 @@ public class OrderItemUtil {
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
+					GetterUtil.getString(orderItem.getOptions(), json),
 					quantity,
 					BigDecimalUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),

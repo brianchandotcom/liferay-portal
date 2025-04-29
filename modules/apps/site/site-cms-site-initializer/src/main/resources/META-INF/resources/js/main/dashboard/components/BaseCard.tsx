@@ -20,25 +20,25 @@ const BaseCard: React.FC<IBaseCard> = ({
 }) => {
 	return (
 		<div className="cms-dashboard__base-card p-3 rounded-lg sheet">
-			<div className="cms-dashboard__base-card__header d-flex mb-3">
-				<div className="flex-grow-1">
+			<div className="cms-dashboard__base-card__header d-flex">
+				<div className="align-items-center d-flex flex-grow-1">
 					<Text size={4} weight="semi-bold">
 						{title.toUpperCase()}
 					</Text>
-
-					{description && (
-						<div>
-							<Text color="secondary" size={3}>
-								{description}
-							</Text>
-						</div>
-					)}
 				</div>
 
 				{Preferences}
 			</div>
 
-			{children}
+			{description && (
+				<div className="mt-1">
+					<Text color="secondary" size={3}>
+						{description}
+					</Text>
+				</div>
+			)}
+
+			<div className="mt-3">{children}</div>
 		</div>
 	);
 };

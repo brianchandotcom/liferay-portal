@@ -22,6 +22,7 @@ import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -188,15 +188,13 @@ public class AssetEntryListLayoutListRetriever
 	}
 
 	private List<Object> _toAssetObjects(List<AssetEntry> assetEntries) {
-		List<Object> assetObjects = new ArrayList<>(assetEntries.size());
+		return TransformUtil.transform(
+			assetEntries,
+			assetEntry -> {
+				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-		for (AssetEntry assetEntry : assetEntries) {
-			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-			assetObjects.add(assetRenderer.getAssetObject());
-		}
-
-		return assetObjects;
+				return assetRenderer.getAssetObject();
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

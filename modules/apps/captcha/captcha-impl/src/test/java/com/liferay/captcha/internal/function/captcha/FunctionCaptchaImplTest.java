@@ -7,11 +7,10 @@ package com.liferay.captcha.internal.function.captcha;
 
 import com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration;
 import com.liferay.portal.catapult.PortalCatapult;
-import com.liferay.portal.json.JSONArrayImpl;
-import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -24,6 +23,7 @@ import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,36 +41,77 @@ public class FunctionCaptchaImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_setUpPortalCatapult();
+		_setUpUserLocalService();
+		_setUpFunctionCaptchaImplConfiguration();
+		_setUpHttpServletRequest();
+
+		_setUpFunctionCaptchaImpl();
+	}
+
 	@Test
 	public void testValidateChallenge() throws Exception {
-		FunctionCaptchaImplConfiguration functionCaptchaImplConfiguration =
-			Mockito.mock(FunctionCaptchaImplConfiguration.class);
+		_testValidateChallenge(false);
+		_testValidateChallenge(true);
+	}
+
+	private static void _setUpFunctionCaptchaImpl() {
+		_functionCaptchaImpl = new FunctionCaptchaImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_functionCaptchaImpl, "_functionCaptchaImplConfiguration",
+			_functionCaptchaImplConfiguration);
+		ReflectionTestUtil.setFieldValue(
+			_functionCaptchaImpl, "_portalCatapult", _portalCatapult);
+		ReflectionTestUtil.setFieldValue(
+			_functionCaptchaImpl, "_userLocalService", _userLocalService);
+	}
+
+	private static void _setUpFunctionCaptchaImplConfiguration() {
+		_functionCaptchaImplConfiguration = Mockito.mock(
+			FunctionCaptchaImplConfiguration.class);
 
 		Mockito.when(
-			functionCaptchaImplConfiguration.responseParameterName()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			functionCaptchaImplConfiguration.
+			_functionCaptchaImplConfiguration.
 				oAuth2ApplicationExternalReferenceCode()
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
-			functionCaptchaImplConfiguration.resourcePath()
+			_functionCaptchaImplConfiguration.resourcePath()
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
 
-		FunctionCaptchaImpl functionCaptchaImpl = new FunctionCaptchaImpl();
+		Mockito.when(
+			_functionCaptchaImplConfiguration.responseParameterName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+	}
 
-		ReflectionTestUtil.setFieldValue(
-			functionCaptchaImpl, "_functionCaptchaImplConfiguration",
-			functionCaptchaImplConfiguration);
+	private static void _setUpHttpServletRequest() {
+		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
+		Mockito.when(
+			_httpServletRequest.getRemoteAddr()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			ParamUtil.getString(
+				_httpServletRequest,
+				_functionCaptchaImplConfiguration.responseParameterName())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+	}
+
+	private static void _setUpPortalCatapult() throws Exception {
 		Future<byte[]> future = Mockito.mock(Future.class);
 
 		Mockito.when(
@@ -79,40 +120,19 @@ public class FunctionCaptchaImplTest {
 			RandomTestUtil.randomBytes()
 		);
 
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
+		_portalCatapult = Mockito.mock(PortalCatapult.class);
 
 		Mockito.when(
-			httpServletRequest.getRemoteAddr()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			ParamUtil.getString(
-				httpServletRequest,
-				functionCaptchaImplConfiguration.responseParameterName())
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		PortalCatapult portalCatapult = Mockito.mock(PortalCatapult.class);
-
-		Mockito.when(
-			portalCatapult.launch(
+			_portalCatapult.launch(
 				Mockito.anyLong(), Mockito.any(), Mockito.anyString(),
 				Mockito.any(), Mockito.anyString(), Mockito.anyLong())
 		).thenReturn(
 			future
 		);
+	}
 
-		ReflectionTestUtil.setFieldValue(
-			functionCaptchaImpl, "_portalCatapult", portalCatapult);
-
+	private static void _setUpUserLocalService() throws Exception {
 		User user = Mockito.mock(User.class);
-
-		UserLocalService userLocalService = Mockito.mock(
-			UserLocalService.class);
 
 		Mockito.when(
 			user.getUserId()
@@ -120,50 +140,14 @@ public class FunctionCaptchaImplTest {
 			RandomTestUtil.randomLong()
 		);
 
+		_userLocalService = Mockito.mock(UserLocalService.class);
+
 		Mockito.when(
-			userLocalService.getUserByScreenName(
+			_userLocalService.getUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			user
 		);
-
-		ReflectionTestUtil.setFieldValue(
-			functionCaptchaImpl, "_userLocalService", userLocalService);
-
-		JSONFactory jsonFactory = _mockJSONFactory(true);
-
-		ReflectionTestUtil.setFieldValue(
-			functionCaptchaImpl, "_jsonFactory", jsonFactory);
-
-		functionCaptchaImpl.validateChallenge(httpServletRequest);
-
-		ArgumentCaptor<JSONObject> argumentCaptor = ArgumentCaptor.forClass(
-			JSONObject.class);
-
-		Mockito.verify(
-			portalCatapult, Mockito.times(1)
-		).launch(
-			Mockito.anyLong(), Mockito.any(), Mockito.anyString(),
-			argumentCaptor.capture(), Mockito.anyString(), Mockito.anyLong()
-		);
-
-		JSONObject payloadJSONObject = argumentCaptor.getValue();
-
-		Assert.assertTrue(payloadJSONObject.has("remoteip"));
-		Assert.assertTrue(payloadJSONObject.has("response"));
-
-		jsonFactory = _mockJSONFactory(false);
-
-		ReflectionTestUtil.setFieldValue(
-			functionCaptchaImpl, "_jsonFactory", jsonFactory);
-
-		try {
-			functionCaptchaImpl.validateChallenge(httpServletRequest);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
 	}
 
 	private JSONFactory _mockJSONFactory(boolean success) throws Exception {
@@ -172,20 +156,14 @@ public class FunctionCaptchaImplTest {
 		Mockito.when(
 			jsonFactory.createJSONObject()
 		).thenReturn(
-			new JSONObjectImpl()
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
 		);
 
-		JSONObject jsonObject = new JSONObjectImpl();
-
-		jsonObject.put("success", success);
+		JSONObject jsonObject = JSONUtil.put("success", success);
 
 		if (!success) {
-			JSONArray jsonArray = new JSONArrayImpl(
-			).put(
-				"error-code-1"
-			).put(
-				"error-code-2"
-			);
+			JSONArray jsonArray = JSONUtil.put(RandomTestUtil.randomString());
 
 			jsonObject.put("error-codes", jsonArray);
 		}
@@ -198,5 +176,47 @@ public class FunctionCaptchaImplTest {
 
 		return jsonFactory;
 	}
+
+	private void _testValidateChallenge(boolean success) throws Exception {
+		JSONFactory jsonFactory = _mockJSONFactory(success);
+
+		ReflectionTestUtil.setFieldValue(
+			_functionCaptchaImpl, "_jsonFactory", jsonFactory);
+
+		if (success) {
+			_functionCaptchaImpl.validateChallenge(_httpServletRequest);
+
+			ArgumentCaptor<JSONObject> argumentCaptor = ArgumentCaptor.forClass(
+				JSONObject.class);
+
+			Mockito.verify(
+				_portalCatapult, Mockito.atLeastOnce()
+			).launch(
+				Mockito.anyLong(), Mockito.any(), Mockito.anyString(),
+				argumentCaptor.capture(), Mockito.anyString(), Mockito.anyLong()
+			);
+
+			JSONObject payloadJSONObject = argumentCaptor.getValue();
+
+			Assert.assertTrue(payloadJSONObject.has("remoteip"));
+			Assert.assertTrue(payloadJSONObject.has("response"));
+		}
+		else {
+			try {
+				_functionCaptchaImpl.validateChallenge(_httpServletRequest);
+
+				Assert.fail();
+			}
+			catch (Exception exception) {
+			}
+		}
+	}
+
+	private static FunctionCaptchaImpl _functionCaptchaImpl;
+	private static FunctionCaptchaImplConfiguration
+		_functionCaptchaImplConfiguration;
+	private static HttpServletRequest _httpServletRequest;
+	private static PortalCatapult _portalCatapult;
+	private static UserLocalService _userLocalService;
 
 }

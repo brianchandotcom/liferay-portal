@@ -8,10 +8,15 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.ClassSubtypeReference;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateOpenGraphSettings;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.SiteMapSettings;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
@@ -19,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -64,6 +70,17 @@ public class DisplayPageTemplateDTOConverter
 				setDateCreated(layoutPageTemplateEntry::getCreateDate);
 				setDateModified(layoutPageTemplateEntry::getModifiedDate);
 				setDatePublished(layout::getPublishDate);
+				setDisplayPageTemplateSettings(
+					() -> new DisplayPageTemplateSettings() {
+						{
+							setOpenGraphSettings(
+								() -> _getDisplayPageTemplateOpenGraphSettings(
+									layout));
+							setSeoSettings(
+								() -> _getDisplayPageTemplateSEOSettings(
+									layout));
+						}
+					});
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
 				setFriendlyUrlPath_i18n(
@@ -114,6 +131,72 @@ public class DisplayPageTemplateDTOConverter
 						};
 					});
 				setUuid(layoutPageTemplateEntry::getUuid);
+			}
+		};
+	}
+
+	private DisplayPageTemplateOpenGraphSettings
+		_getDisplayPageTemplateOpenGraphSettings(Layout layout) {
+
+		return new DisplayPageTemplateOpenGraphSettings() {
+			{
+				setDescriptionTemplate(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphDescription"));
+				setImageAltTemplate(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphImageAlt"));
+				setImageTemplate(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphImage"));
+				setTitleTemplate(
+					() -> layout.getTypeSettingsProperty(
+						"mapped-openGraphTitle"));
+			}
+		};
+	}
+
+	private DisplayPageTemplateSEOSettings _getDisplayPageTemplateSEOSettings(
+		Layout layout) {
+
+		return new DisplayPageTemplateSEOSettings() {
+			{
+				setDescriptionTemplate(
+					() -> layout.getTypeSettingsProperty("mapped-description"));
+				setHtmlTitleTemplate(
+					() -> layout.getTypeSettingsProperty("mapped-title"));
+				setRobots_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						true, layout.getRobotsMap()));
+				setSiteMapSettings(() -> _getSiteMapSettings(layout));
+			}
+		};
+	}
+
+	private SiteMapSettings _getSiteMapSettings(Layout layout) {
+		return new SiteMapSettings() {
+			{
+				setChangeFrequency(
+					() -> ChangeFrequency.create(
+						layout.getTypeSettingsProperty(
+							LayoutTypePortletConstants.SITEMAP_CHANGEFREQ)));
+
+				String include = GetterUtil.getString(
+					layout.getTypeSettingsProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE),
+					"0");
+
+				if (include.equals("1")) {
+					setInclude(() -> true);
+				}
+				else {
+					setInclude(() -> false);
+				}
+
+				setPagePriority(
+					() -> GetterUtil.getDouble(
+						layout.getTypeSettingsProperty(
+							LayoutTypePortletConstants.SITEMAP_PRIORITY)));
 			}
 		};
 	}

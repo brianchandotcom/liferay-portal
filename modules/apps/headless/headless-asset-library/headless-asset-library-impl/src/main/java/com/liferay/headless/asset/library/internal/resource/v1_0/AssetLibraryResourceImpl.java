@@ -8,7 +8,10 @@ package com.liferay.headless.asset.library.internal.resource.v1_0;
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryPin;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
+import com.liferay.depot.service.DepotEntryPinLocalService;
+import com.liferay.depot.service.DepotEntryPinService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
@@ -36,9 +39,11 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -81,6 +86,32 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
+	public void deleteAssetLibraryByExternalReferenceCodePin(
+			String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		deleteAssetLibraryPin(
+			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+	}
+
+	@Override
+	public void deleteAssetLibraryPin(Long assetLibraryId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			assetLibraryId);
+
+		_depotEntryPinService.deleteDepotEntryPin(
+			contextUser.getUserId(), depotEntry.getDepotEntryId());
+	}
+
+	@Override
 	public Page<AssetLibrary> getAssetLibrariesPage(
 			String keywords, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -108,6 +139,36 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			document -> _toAssetLibrary(
 				_depotEntryService.getDepotEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public Page<AssetLibrary> getAssetLibrariesPinnedByMePage(
+			Pagination pagination)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		List<DepotEntryPin> userDepotEntryPins =
+			_depotEntryPinLocalService.getUserDepotEntryPins(
+				contextUser.getUserId(), pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+		List<AssetLibrary> assetLibraries = new ArrayList<>(
+			pagination.getPageSize());
+
+		for (DepotEntryPin depotEntryPin : userDepotEntryPins) {
+			assetLibraries.add(
+				_toAssetLibrary(
+					_depotEntryService.getDepotEntry(
+						depotEntryPin.getDepotEntryId())));
+		}
+
+		return Page.of(
+			assetLibraries, pagination,
+			_depotEntryPinLocalService.getUserDepotEntryPinsCount(
+				contextUser.getUserId()));
 	}
 
 	@Override
@@ -236,6 +297,36 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),
 				_toUnicodeProperties(assetLibrary.getSettings())));
+	}
+
+	@Override
+	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
+			String externalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return putAssetLibraryPin(
+			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+	}
+
+	@Override
+	public AssetLibrary putAssetLibraryPin(Long assetLibraryId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			assetLibraryId);
+
+		_depotEntryPinService.addDepotEntryPin(
+			contextUser.getUserId(), depotEntry.getDepotEntryId());
+
+		return _toAssetLibrary(depotEntry);
 	}
 
 	private DepotEntry _addOrUpdateDepotEntry(
@@ -412,6 +503,12 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	@Reference
 	private DepotAppCustomizationLocalService
 		_depotAppCustomizationLocalService;
+
+	@Reference
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
+
+	@Reference
+	private DepotEntryPinService _depotEntryPinService;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

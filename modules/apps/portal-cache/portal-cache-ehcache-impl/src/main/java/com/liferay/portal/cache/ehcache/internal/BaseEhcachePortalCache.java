@@ -5,6 +5,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.BasePortalCache;
@@ -23,7 +24,6 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -66,17 +66,8 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 			return rawKeys;
 		}
 
-		if (rawKeys.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<K> keys = new ArrayList<>(rawKeys.size());
-
-		for (Object object : rawKeys) {
-			keys.add(SerializableObjectWrapper.unwrap(object));
-		}
-
-		return keys;
+		return TransformUtil.transform(
+			rawKeys, object -> SerializableObjectWrapper.unwrap(object));
 	}
 
 	@Override

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.model.adapter;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.util.ComparatorAdapter;
@@ -16,7 +17,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -27,13 +27,8 @@ import java.util.function.Function;
 public class ModelAdapterUtil {
 
 	public static <T> List<T> adapt(Class<T> clazz, List<?> delegateObjects) {
-		List<T> adaptedObjects = new ArrayList<>(delegateObjects.size());
-
-		for (Object delegateObject : delegateObjects) {
-			adaptedObjects.add(adapt(clazz, delegateObject));
-		}
-
-		return adaptedObjects;
+		return TransformUtil.transform(
+			delegateObjects, delegateObject -> adapt(clazz, delegateObject));
 	}
 
 	public static <T> T adapt(Class<T> clazz, Object delegateObject) {

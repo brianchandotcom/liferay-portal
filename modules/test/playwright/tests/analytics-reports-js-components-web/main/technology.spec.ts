@@ -5,21 +5,21 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {contentDashboardPagesTest} from '../content-dashboard-web/fixtures/contentDashboardPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {contentDashboardPagesTest} from '../../content-dashboard-web/main/fixtures/contentDashboardPagesTest';
 import {
+	Individual,
 	createIndividuals,
 	generateIndividual,
-} from '../osb-faro-web/utils/individuals';
+} from '../../osb-faro-web/main/utils/individuals';
 import {Individuals, MetricType, RangeSelectors} from './types';
-import {formatDate} from './utils/date';
 import {createBlogsEventsForEveryDayByRangeSelector} from './utils/events';
 import {changeGlobalFilters} from './utils/filters';
 
@@ -38,7 +38,7 @@ const assetTitle = getRandomString();
 let assetId;
 let channel;
 let individualIdentities;
-let individuals;
+let individuals: Individual[] | null = null;
 
 async function expectMatchingChartData({
 	expectedResult,
@@ -57,23 +57,16 @@ async function expectMatchingChartData({
 }) {
 	await changeGlobalFilters(page, {individual, metricType, rangeSelector});
 
-	const chartElement = page.getByTestId('visitors-behavior-chart-data');
+	const chartElement = page.getByTestId('stacked-bar-chart-data');
 
 	// eslint-disable-next-line @liferay/no-get-data-attribute
 	const chartData = await chartElement.getAttribute('data-qa-chart-data');
-
-	// eslint-disable-next-line @liferay/no-get-data-attribute
-	const tooltipFormattedDate = await chartElement.getAttribute(
-		'data-qa-tooltip-formatted-date'
-	);
 
 	chartLegends.forEach((chartLegend) => {
 		expect(page.getByText(chartLegend)).toBeVisible();
 	});
 
 	expect(chartData).toBe(expectedResult);
-
-	expect(JSON.parse(tooltipFormattedDate)).toEqual(formatDate(rangeSelector));
 }
 
 test.beforeEach(async ({apiHelpers, page, site}) => {
@@ -130,7 +123,7 @@ test.beforeEach(async ({apiHelpers, page, site}) => {
 	});
 });
 
-test('User is able to see data plotted on Visitors Behavior Chart by all, anonymous and known individuals', async ({
+test('User is able to see data plotted on Technology Chart by all, anonymous and known individuals', async ({
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -156,44 +149,52 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for ALL INDIVIDUALS', async () => {
+	await test.step('Expect matching data on technology chart for ALL INDIVIDUALS', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 60', 'Published Version: 1'],
-			expectedResult:
-				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
+			chartLegends: ['Unknown: 60'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 60}],
+				total: 60,
+			}),
 			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for KNOWN INDIVIDUALS', async () => {
+	await test.step('Expect matching data on technology chart for KNOWN INDIVIDUALS', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 30', 'Published Version: 1'],
-			expectedResult:
-				'[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]',
+			chartLegends: ['Unknown: 30'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 30}],
+				total: 30,
+			}),
 			individual: Individuals.KnownIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for ANONYMOUS INDIVIDUALS', async () => {
+	await test.step('Expect matching data on technology chart for ANONYMOUS INDIVIDUALS', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 30', 'Published Version: 1'],
-			expectedResult:
-				'[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]',
+			chartLegends: ['Unknown: 30'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 30}],
+				total: 30,
+			}),
 			individual: Individuals.AnonymousIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for ALL INDIVIDUALS and selected COMMENTS metric', async () => {
+	await test.step('Expect matching data on technology chart for ALL INDIVIDUALS and selected COMMENTS metric', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Comments: 120', 'Published Version: 1'],
-			expectedResult:
-				'[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]',
+			chartLegends: ['Unknown: 120'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 120}],
+				total: 120,
+			}),
 			individual: Individuals.AllIndividuals,
 			metricType: MetricType.Comments,
 			page,
@@ -202,7 +203,7 @@ test('User is able to see data plotted on Visitors Behavior Chart by all, anonym
 	});
 });
 
-test('User is able to see data plotted on Visitors Behavior Chart for the last 7 days', async ({
+test('User is able to see data plotted on technology Chart for the last 7 days', async ({
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -228,10 +229,13 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 7
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for the last 7 days', async () => {
+	await test.step('Expect matching data on technology chart for the last 7 days', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 14', 'Published Version: 1'],
-			expectedResult: '[2,2,2,2,2,2,2]',
+			chartLegends: ['Unknown: 14'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 14}],
+				total: 14,
+			}),
 			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last7Days,
@@ -239,7 +243,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 7
 	});
 });
 
-test('User is able to see data plotted on Visitors Behavior Chart for the last 28 days', async ({
+test('User is able to see data plotted on technology Chart for the last 28 days', async ({
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -265,11 +269,13 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 2
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for the last 28 days', async () => {
+	await test.step('Expect matching data on technology chart for the last 28 days', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 56', 'Published Version: 1'],
-			expectedResult:
-				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
+			chartLegends: ['Unknown: 56'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 56}],
+				total: 56,
+			}),
 			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last28Days,
@@ -277,7 +283,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 2
 	});
 });
 
-test('User is able to see data plotted on Visitors Behavior Chart for the last 30 days', async ({
+test('User is able to see data plotted on technology Chart for the last 30 days', async ({
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -303,11 +309,13 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 3
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for the last 30 days', async () => {
+	await test.step('Expect matching data on technology chart for the last 30 days', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 60', 'Published Version: 1'],
-			expectedResult:
-				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
+			chartLegends: ['Unknown: 60'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 60}],
+				total: 60,
+			}),
 			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last30Days,
@@ -315,7 +323,7 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 3
 	});
 });
 
-test('User is able to see data plotted on Visitors Behavior Chart for the last 90 days', async ({
+test('User is able to see data plotted on technology Chart for the last 90 days', async ({
 	apiHelpers,
 	contentDashboardPage,
 	page,
@@ -341,11 +349,13 @@ test('User is able to see data plotted on Visitors Behavior Chart for the last 9
 		});
 	});
 
-	await test.step('Expect matching data on visitors behavior chart for the last 90 days', async () => {
+	await test.step('Expect matching data on technology chart for the last 90 days', async () => {
 		await expectMatchingChartData({
-			chartLegends: ['Total Views: 180', 'Published Version: 1'],
-			expectedResult:
-				'[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]',
+			chartLegends: ['Unknown: 180'],
+			expectedResult: JSON.stringify({
+				data: [{label: 'Unknown', percentage: 100, value: 180}],
+				total: 180,
+			}),
 			individual: Individuals.AllIndividuals,
 			page,
 			rangeSelector: RangeSelectors.Last90Days,

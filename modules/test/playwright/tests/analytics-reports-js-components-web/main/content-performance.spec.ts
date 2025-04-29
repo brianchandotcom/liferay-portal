@@ -5,23 +5,23 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
 	goNextStep,
 	goToAnalyticsCloudInstanceSettings,
-} from '../analytics-settings-web/utils/analytics-settings';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {contentDashboardPagesTest} from '../content-dashboard-web/fixtures/contentDashboardPagesTest';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
-import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
-import {createDataSource} from '../osb-faro-web/utils/data-source';
-import {acceptsCookiesBanner} from '../osb-faro-web/utils/portal';
+} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {contentDashboardPagesTest} from '../../content-dashboard-web/main/fixtures/contentDashboardPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {JournalEditArticlePage} from '../../journal-web/main/pages/JournalEditArticlePage';
+import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
+import {acceptsCookiesBanner} from '../../osb-faro-web/main/utils/portal';
 
 async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
 	const {token} = await createDataSource(page);

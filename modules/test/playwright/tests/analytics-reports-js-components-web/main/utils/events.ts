@@ -1,6 +1,6 @@
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {IndividualIdentity, RangeSelectors} from '../types';
 
 /**

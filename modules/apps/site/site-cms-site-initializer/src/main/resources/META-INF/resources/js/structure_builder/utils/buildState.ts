@@ -143,6 +143,7 @@ function getFieldType(objectField: ObjectField): FieldType {
 		Clob: 'long-text',
 		Date: 'date',
 		DateTime: 'datetime',
+		Double: 'decimal',
 		Integer: 'integer',
 		Long: 'upload',
 		RichText: 'rich-text',

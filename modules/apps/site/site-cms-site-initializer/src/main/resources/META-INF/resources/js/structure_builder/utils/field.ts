@@ -70,7 +70,7 @@ export const FIELD_TYPE_TO_DB_TYPE: Record<FieldType, string> = {
 	'boolean': 'Boolean',
 	'date': 'Date',
 	'datetime': 'DateTime',
-	'decimal': 'BigDecimal',
+	'decimal': 'Double',
 	'integer': 'Integer',
 	'long-text': 'Clob',
 	'multiselect': 'String',

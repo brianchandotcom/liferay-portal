@@ -20,6 +20,7 @@ import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {liferayConfig} from '../../../liferay.config';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -471,6 +472,26 @@ test(
 		const page2Name = getRandomString();
 		await pagesAdminPage.createNewPage({
 			name: page2Name,
+		});
+
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const webContentName = getRandomString();
+
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				`Template-${layoutSetPrototype.layoutSetPrototypeId}`
+			);
+
+		const baseURL = liferayConfig.environment.baseUrl;
+		const cleanBaseURL = baseURL.replace('http://', '');
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			content: `<a href="${cleanBaseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}">${baseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}</a>`,
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: webContentName},
 		});
 	}
 );

@@ -53,7 +53,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			content = _sortPorts(content);
 		}
 
-		return content ;
+		return content;
 	}
 
 	private List<YMLDefinition> _combineComments(List<String> definitions) {

@@ -5,8 +5,6 @@
 
 package com.liferay.portal.workflow.metrics.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -15,8 +13,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowNode;
-import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.metrics.web.internal.constants.WorkflowMetricsPortletKeys;
 
@@ -58,57 +54,32 @@ public class GetWorkflowDefinitionInfoMVCResourceCommand
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"nodes",
-				() -> {
-					JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-					for (WorkflowNode workflowNode :
-							workflowDefinition.getWorkflowNodes()) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"label",
-								workflowNode.getLabel(
-									resourceRequest.getLocale())
-							).put(
-								"name", workflowNode.getName()
-							).put(
-								"type", workflowNode.getType()
-							));
-					}
-
-					return jsonArray;
-				}
+				() -> JSONUtil.toJSONArray(
+					workflowDefinition.getWorkflowNodes(),
+					workflowNode -> JSONUtil.put(
+						"label",
+						workflowNode.getLabel(resourceRequest.getLocale())
+					).put(
+						"name", workflowNode.getName()
+					).put(
+						"type", workflowNode.getType()
+					))
 			).put(
 				"transitions",
-				() -> {
-					JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-					for (WorkflowTransition workflowTransition :
-							workflowDefinition.getWorkflowTransitions()) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"label",
-								workflowTransition.getLabel(
-									resourceRequest.getLocale())
-							).put(
-								"name", workflowTransition.getName()
-							).put(
-								"sourceNodeName",
-								workflowTransition.getSourceNodeName()
-							).put(
-								"targetNodeName",
-								workflowTransition.getTargetNodeName()
-							));
-					}
-
-					return jsonArray;
-				}
+				() -> JSONUtil.toJSONArray(
+					workflowDefinition.getWorkflowTransitions(),
+					workflowTransition -> JSONUtil.put(
+						"label",
+						workflowTransition.getLabel(resourceRequest.getLocale())
+					).put(
+						"name", workflowTransition.getName()
+					).put(
+						"sourceNodeName", workflowTransition.getSourceNodeName()
+					).put(
+						"targetNodeName", workflowTransition.getTargetNodeName()
+					))
 			));
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;

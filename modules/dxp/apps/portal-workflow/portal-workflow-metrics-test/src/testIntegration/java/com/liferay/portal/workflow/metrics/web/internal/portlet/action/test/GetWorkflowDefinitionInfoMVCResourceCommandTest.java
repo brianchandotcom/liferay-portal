@@ -6,8 +6,6 @@
 package com.liferay.portal.workflow.metrics.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,8 +24,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowNode;
-import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -113,58 +109,34 @@ public class GetWorkflowDefinitionInfoMVCResourceCommandTest {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"nodes",
-				() -> {
-					JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-					for (WorkflowNode workflowNode :
-							_workflowDefinition.getWorkflowNodes()) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"label", workflowNode.getLabel(LocaleUtil.US)
-							).put(
-								"name", workflowNode.getName()
-							).put(
-								"type", workflowNode.getType()
-							));
-					}
-
-					return jsonArray;
-				}
+				() -> JSONUtil.toJSONArray(
+					_workflowDefinition.getWorkflowNodes(),
+					workflowNode -> JSONUtil.put(
+						"label", workflowNode.getLabel(LocaleUtil.US)
+					).put(
+						"name", workflowNode.getName()
+					).put(
+						"type", workflowNode.getType()
+					))
 			).put(
 				"transitions",
-				() -> {
-					JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-					for (WorkflowTransition workflowTransition :
-							_workflowDefinition.getWorkflowTransitions()) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"label",
-								workflowTransition.getLabel(LocaleUtil.US)
-							).put(
-								"name", workflowTransition.getName()
-							).put(
-								"sourceNodeName",
-								workflowTransition.getSourceNodeName()
-							).put(
-								"targetNodeName",
-								workflowTransition.getTargetNodeName()
-							));
-					}
-
-					return jsonArray;
-				}
+				() -> JSONUtil.toJSONArray(
+					_workflowDefinition.getWorkflowTransitions(),
+					workflowTransition -> JSONUtil.put(
+						"label", workflowTransition.getLabel(LocaleUtil.US)
+					).put(
+						"name", workflowTransition.getName()
+					).put(
+						"sourceNodeName", workflowTransition.getSourceNodeName()
+					).put(
+						"targetNodeName", workflowTransition.getTargetNodeName()
+					))
 			).toString(),
 			byteArrayOutputStream.toString(), JSONCompareMode.LENIENT);
 	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private JSONFactory _jsonFactory;
 
 	@Inject(
 		filter = "mvc.command.name=/workflow_metrics/get_workflow_definition_info"

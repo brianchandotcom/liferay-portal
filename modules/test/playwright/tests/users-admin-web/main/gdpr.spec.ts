@@ -7,28 +7,28 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {contactsCenterPagesTest} from '../../fixtures/contactsCenterPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {siteStagingPageTest} from '../../fixtures/siteStagingPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {contactsCenterPagesTest} from '../../../fixtures/contactsCenterPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {siteStagingPageTest} from '../../../fixtures/siteStagingPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {blogsPagesTest} from '../../blogs-web/fixtures/blogsPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	contactsCenterPagesTest,

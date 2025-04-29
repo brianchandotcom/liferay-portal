@@ -102,7 +102,6 @@ import {config as portalWebConfig} from './tests/portal-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/config';
 import {config as portletConfigurationCssWebConfig} from './tests/portlet-configuration-css-web/config';
-import {config as portletConfigurationWebConfig} from './tests/portlet-configuration-web/config';
 import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as questionsWebConfig} from './tests/questions-web/config';
@@ -131,7 +130,8 @@ import {config as smokeConfig} from './tests/smoke/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as templateWebConfig} from './tests/template-web/config';
-import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
+import {config as usersAdminWebConfig} from './tests/users-admin-web/main/config';
+import {config as usersAdminWebPermissionsConfig} from './tests/users-admin-web/permissions/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
 import {config as customerConfig} from './tests/workspaces/liferay-customer-workspace/config';
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
@@ -248,7 +248,6 @@ export default defineConfig({
 		portalWorkflowKaleoDesignerWebConfig,
 		portalWorkflowTaskWebConfig,
 		portletConfigurationCssWebConfig,
-		portletConfigurationWebConfig,
 		productNavigationProductMenuWeb,
 		productNavigationUserPersonalBarWebConfig,
 		questionsWebConfig,
@@ -274,6 +273,7 @@ export default defineConfig({
 		stylebookWebConfig,
 		templateWebConfig,
 		usersAdminWebConfig,
+		usersAdminWebPermissionsConfig,
 		wikiWebConfig,
 		...setupProjects,
 	],

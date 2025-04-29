@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {editCustomElementPageTest} from '../client-extension-web/fixtures/editCustomElementPageTest';
-import {componentsPageTest} from '../configuration-admin-web/fixtures/ComponentsPageTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {editCustomElementPageTest} from '../../client-extension-web/main/fixtures/editCustomElementPageTest';
+import {componentsPageTest} from '../../configuration-admin-web/main/fixtures/ComponentsPageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

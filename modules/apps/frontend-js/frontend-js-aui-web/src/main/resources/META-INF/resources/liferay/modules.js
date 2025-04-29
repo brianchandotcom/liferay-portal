@@ -60,13 +60,6 @@
 							'aui-set',
 						],
 					},
-					'liferay-layout': {
-						path: 'layout.js',
-					},
-					'liferay-layout-column': {
-						path: 'layout_column.js',
-						requires: ['aui-sortable-layout', 'dd'],
-					},
 					'liferay-menu': {
 						path: 'menu.js',
 						requires: ['aui-debounce', 'aui-node'],

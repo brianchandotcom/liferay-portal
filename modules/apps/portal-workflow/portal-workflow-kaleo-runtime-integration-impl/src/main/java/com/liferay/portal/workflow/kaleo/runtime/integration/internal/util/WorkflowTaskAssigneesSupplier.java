@@ -5,11 +5,10 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -27,24 +26,11 @@ public class WorkflowTaskAssigneesSupplier
 
 	@Override
 	public List<WorkflowTaskAssignee> get() {
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
-			_kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
-
-		List<WorkflowTaskAssignee> workflowTaskAssignees = new ArrayList<>(
-			kaleoTaskAssignmentInstances.size());
-
-		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
-				kaleoTaskAssignmentInstances) {
-
-			WorkflowTaskAssignee workflowTaskAssignee =
-				new WorkflowTaskAssignee(
-					kaleoTaskAssignmentInstance.getAssigneeClassName(),
-					kaleoTaskAssignmentInstance.getAssigneeClassPK());
-
-			workflowTaskAssignees.add(workflowTaskAssignee);
-		}
-
-		return workflowTaskAssignees;
+		return TransformUtil.transform(
+			_kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances(),
+			kaleoTaskAssignmentInstance -> new WorkflowTaskAssignee(
+				kaleoTaskAssignmentInstance.getAssigneeClassName(),
+				kaleoTaskAssignmentInstance.getAssigneeClassPK()));
 	}
 
 	private final KaleoTaskInstanceToken _kaleoTaskInstanceToken;

@@ -412,34 +412,34 @@ components:
             description:
                 Represents display page template settings related with Open Graph protocol.
             properties:
-                description:
+                descriptionTemplate:
                     description:
-                        The Open Graph's description.
+                        The Open Graph's description template.
                     type: string
-                image:
+                imageAltTemplate:
                     description:
-                        The Open Graph's image.
+                        The Open Graph's image alt template.
                     type: string
-                imageAlt:
+                imageTemplate:
                     description:
-                        The Open Graph's image alt.
+                        The Open Graph's image template.
                     type: string
-                title:
+                titleTemplate:
                     description:
-                        The Open Graph's title.
+                        The Open Graph's title template.
                     type: string
             type: object
         DisplayPageTemplateSEOSettings:
             description:
                 Settings related with SEO of a display page template.
             properties:
-                description:
+                descriptionTemplate:
                     description:
-                        The description of the display page template to be used as summary for search engines.
+                        The description template of the display page template to be used as summary for search engines.
                     type: string
-                htmlTitle:
+                htmlTitleTemplate:
                     description:
-                        The main title of the display page template to be used by search engines.
+                        The main title template of the display page template to be used by search engines.
                     type: string
                 robots_i18n:
                     additionalProperties:

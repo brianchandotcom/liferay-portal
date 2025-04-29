@@ -47,16 +47,10 @@ public abstract class BaseJournalTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
-			getGroupId(classPK), parentContainerModelId, start, end);
-
-		List<ContainerModel> containerModels = new ArrayList<>(folders.size());
-
-		for (JournalFolder curFolder : folders) {
-			containerModels.add(curFolder);
-		}
-
-		return containerModels;
+		return TransformUtil.transform(
+			JournalFolderLocalServiceUtil.getFolders(
+				getGroupId(classPK), parentContainerModelId, start, end),
+			folder -> folder);
 	}
 
 	@Override

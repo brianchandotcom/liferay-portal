@@ -97,8 +97,7 @@ public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 					"oauth2.scope.checker.type", "annotations"
 				).build());
 
-			createOAuth2Application(
-				companyId, user, "oauthTestApplication");
+			createOAuth2Application(companyId, user, "oauthTestApplication");
 		}
 
 	}

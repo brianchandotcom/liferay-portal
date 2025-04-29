@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

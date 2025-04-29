@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {KnowledgeBaseUrls} from '../knowledge-base-web/utils/knowledgeBaseUrls';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {knowledgeBasePages} from '../../../fixtures/knowledgeBasePagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {KnowledgeBaseUrls} from '../../knowledge-base-web/main/utils/knowledgeBaseUrls';
 
 const test = mergeTests(
 	apiHelpersTest,

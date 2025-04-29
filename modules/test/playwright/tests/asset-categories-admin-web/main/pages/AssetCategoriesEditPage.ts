@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {AssetCategoriesAdminPage} from './AssetCategoriesAdminPage';
 
 export class AssetCategoriesEditPage {

@@ -16,6 +16,7 @@ import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.base.CPOptionCategoryLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -312,17 +312,19 @@ public class CPOptionCategoryLocalServiceImpl
 
 		List<Document> documents = hits.toList();
 
-		List<CPOptionCategory> cpOptionCategories = new ArrayList<>(
-			documents.size());
+		return TransformUtil.transform(
+			documents,
+			document -> {
+				long cpOptionCategoryId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
 
-		for (Document document : documents) {
-			long cpOptionCategoryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
+				CPOptionCategory cpOptionCategory = fetchCPOptionCategory(
+					cpOptionCategoryId);
 
-			CPOptionCategory cpOptionCategory = fetchCPOptionCategory(
-				cpOptionCategoryId);
+				if (cpOptionCategory != null) {
+					return cpOptionCategory;
+				}
 
-			if (cpOptionCategory == null) {
 				Indexer<CPOptionCategory> indexer =
 					IndexerRegistryUtil.getIndexer(CPOptionCategory.class);
 
@@ -330,13 +332,9 @@ public class CPOptionCategoryLocalServiceImpl
 					document.get(Field.COMPANY_ID));
 
 				indexer.delete(companyId, document.getUID());
-			}
-			else if (cpOptionCategory != null) {
-				cpOptionCategories.add(cpOptionCategory);
-			}
-		}
 
-		return cpOptionCategories;
+				return null;
+			});
 	}
 
 	private BaseModelSearchResult<CPOptionCategory> _searchCPOptionCategories(

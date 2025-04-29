@@ -1310,22 +1310,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens)
 		throws PortalException {
 
-		List<WorkflowTask> workflowTasks = new ArrayList<>(
-			kaleoTaskInstanceTokens.size());
-
-		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
-				kaleoTaskInstanceTokens) {
-
-			WorkflowTask workflowTask =
+		return TransformUtil.transform(
+			kaleoTaskInstanceTokens,
+			kaleoTaskInstanceToken ->
 				_kaleoWorkflowModelConverter.toWorkflowTask(
 					kaleoTaskInstanceToken,
 					WorkflowContextUtil.convert(
-						kaleoTaskInstanceToken.getWorkflowContext()));
-
-			workflowTasks.add(workflowTask);
-		}
-
-		return workflowTasks;
+						kaleoTaskInstanceToken.getWorkflowContext())));
 	}
 
 	private static final int _ACTION_TYPE_ASSIGN = 1;

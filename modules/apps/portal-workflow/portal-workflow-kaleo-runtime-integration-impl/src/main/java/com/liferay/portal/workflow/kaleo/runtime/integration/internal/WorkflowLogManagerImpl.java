@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
@@ -14,7 +15,6 @@ import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoLogOrderBy
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.manager.WorkflowLogManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -98,14 +98,9 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 	}
 
 	private List<WorkflowLog> _toWorkflowLogs(List<KaleoLog> kaleoLogs) {
-		List<WorkflowLog> workflowLogs = new ArrayList<>(kaleoLogs.size());
-
-		for (KaleoLog kaleoLog : kaleoLogs) {
-			workflowLogs.add(
-				_kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog));
-		}
-
-		return workflowLogs;
+		return TransformUtil.transform(
+			kaleoLogs,
+			kaleoLog -> _kaleoWorkflowModelConverter.toWorkflowLog(kaleoLog));
 	}
 
 	@Reference

@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {ClientExtensionsPage} from './ClientExtensionsPage';
 
 const EDIT_CLIENT_EXTENSION_BASE_URL =

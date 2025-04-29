@@ -5,11 +5,11 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
+import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';

@@ -5,9 +5,9 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {languageOverridePageTest} from '../../fixtures/languageOverridePageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {TLanguageKey} from '../../pages/portal-language-override-web/LanguageOverridePage';
+import {languageOverridePageTest} from '../../../fixtures/languageOverridePageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {TLanguageKey} from '../../../pages/portal-language-override-web/LanguageOverridePage';
 
 const test = mergeTests(languageOverridePageTest, loginTest());
 

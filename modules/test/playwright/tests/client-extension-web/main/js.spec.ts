@@ -5,15 +5,15 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
-import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
-import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editJSClientExtensionsPageTest} from './fixtures/editJSClientExtensionsPageTest';
 import {ClientExtensionsPage} from './pages/ClientExtensionsPage';

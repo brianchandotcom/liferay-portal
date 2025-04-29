@@ -17,6 +17,7 @@ import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.marketplace.util.BundleManagerUtil;
 import com.liferay.marketplace.util.comparator.AppTitleComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -204,15 +205,15 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	public List<App> getInstalledApps(String category) {
 		List<App> apps = appPersistence.findByCategory(category);
 
-		List<App> installedApps = new ArrayList<>(apps.size());
+		return TransformUtil.transform(
+			apps,
+			app -> {
+				if (app.isInstalled()) {
+					return app;
+				}
 
-		for (App app : apps) {
-			if (app.isInstalled()) {
-				installedApps.add(app);
-			}
-		}
-
-		return installedApps;
+				return null;
+			});
 	}
 
 	@Override

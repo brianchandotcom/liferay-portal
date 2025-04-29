@@ -7,6 +7,7 @@ package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
 import com.liferay.marketplace.model.App;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -107,15 +108,7 @@ public class MarketplaceAppManagerUtil {
 	}
 
 	private static List<String> _getAppCategories(List<App> apps) {
-		List<String> categories = new ArrayList<>(apps.size());
-
-		for (App app : apps) {
-			if (Validator.isNotNull(app.getCategory())) {
-				categories.add(app.getCategory());
-			}
-		}
-
-		return categories;
+		return TransformUtil.transform(apps, app -> app.getCategory());
 	}
 
 	private static List<String> _getBundleCategories(List<Bundle> bundles) {

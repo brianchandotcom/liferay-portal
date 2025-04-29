@@ -8,6 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -65,13 +67,22 @@ public class EditFolderFragmentRenderer extends BaseSectionFragmentRenderer {
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
 					"backURL",
-					ParamUtil.getString(httpServletRequest, "backURL")
+					ParamUtil.getString(httpServletRequest, "redirect")
 				).put(
-					"description", "description"
-				).put(
-					"name", "name"
-				).put(
-					"space", "space 1"
+					"folderId",
+					() -> {
+						Object object = httpServletRequest.getAttribute(
+							InfoDisplayWebKeys.INFO_ITEM);
+
+						if (object instanceof ObjectEntryFolder) {
+							ObjectEntryFolder objectEntryFolder =
+								(ObjectEntryFolder)object;
+
+							return objectEntryFolder.getObjectEntryFolderId();
+						}
+
+						return null;
+					}
 				).build());
 
 			componentTag.setServletContext(_servletContext);

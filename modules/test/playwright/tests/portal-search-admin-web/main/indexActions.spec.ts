@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../fixtures/loginTest';
-import {searchAdminPageTest} from '../../fixtures/searchAdminPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {searchAdminPageTest} from '../../../fixtures/searchAdminPageTest';
 
 export const test = mergeTests(loginTest(), searchAdminPageTest);
 

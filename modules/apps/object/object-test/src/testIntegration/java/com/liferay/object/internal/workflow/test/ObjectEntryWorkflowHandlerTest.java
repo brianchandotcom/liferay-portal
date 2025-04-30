@@ -185,7 +185,7 @@ public class ObjectEntryWorkflowHandlerTest {
 	private ObjectEntryFolder _addObjectEntryFolder() throws Exception {
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			StringUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -206,6 +206,7 @@ public class ObjectEntryWorkflowHandlerTest {
 		return _objectEntryFolderLocalService.updateObjectEntryFolder(
 			TestPropsValues.getUserId(),
 			_objectEntryFolder.getObjectEntryFolderId(),
+			_objectEntryFolder.getDescription(),
 			_objectEntryFolder.getParentObjectEntryFolderId(),
 			_objectEntryFolder.getLabelMap(), _objectEntryFolder.getName(),
 			serviceContext);

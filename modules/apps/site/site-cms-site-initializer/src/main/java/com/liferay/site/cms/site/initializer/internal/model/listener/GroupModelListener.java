@@ -57,7 +57,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		_objectEntryFolderLocalService.addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-			group.getCreatorUserId(), group.getGroupId(),
+			group.getCreatorUserId(), group.getGroupId(), "Contents Folder",
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Contents"
@@ -65,7 +65,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			"Contents", ServiceContextThreadLocal.getServiceContext());
 		_objectEntryFolderLocalService.addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-			group.getCreatorUserId(), group.getGroupId(),
+			group.getCreatorUserId(), group.getGroupId(), "Files Folder",
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Files"

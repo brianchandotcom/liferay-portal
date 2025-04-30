@@ -35,14 +35,14 @@ public class SharingEntryObjectEntryFolderServiceWrapper
 
 	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
-			long userId, long objectEntryFolderId,
+			long userId, long objectEntryFolderId, String description,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
 			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder = super.updateObjectEntryFolder(
-			userId, objectEntryFolderId, parentObjectEntryFolderId, labelMap,
-			name, serviceContext);
+			userId, objectEntryFolderId, description, parentObjectEntryFolderId,
+			labelMap, name, serviceContext);
 
 		return _reindexSharingEntries(objectEntryFolder);
 	}

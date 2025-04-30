@@ -269,6 +269,7 @@ public class ObjectEntryFolderResourceImpl
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.updateObjectEntryFolder(
 				persistedObjectEntryFolder.getObjectEntryFolderId(),
+				objectEntryFolder.getDescription(),
 				_getParentObjectEntryFolderId(true, groupId, objectEntryFolder),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
@@ -288,7 +289,7 @@ public class ObjectEntryFolderResourceImpl
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.addObjectEntryFolder(
 				objectEntryFolder.getExternalReferenceCode(), groupId,
-				parentObjectEntryFolderId,
+				objectEntryFolder.getDescription(), parentObjectEntryFolderId,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					objectEntryFolder.getLabel(),
@@ -364,7 +365,7 @@ public class ObjectEntryFolderResourceImpl
 
 			objectEntryFolderPersistence =
 				_objectEntryFolderService.addObjectEntryFolder(
-					parentObjectEntryFolderExternalReferenceCode, groupId,
+					parentObjectEntryFolderExternalReferenceCode, groupId, null,
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					null, parentObjectEntryFolderExternalReferenceCode,
@@ -403,6 +404,7 @@ public class ObjectEntryFolderResourceImpl
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.updateObjectEntryFolder(
 				persistedObjectEntryFolder.getObjectEntryFolderId(),
+				persistedObjectEntryFolder.getDescription(),
 				parentObjectEntryFolderId,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),

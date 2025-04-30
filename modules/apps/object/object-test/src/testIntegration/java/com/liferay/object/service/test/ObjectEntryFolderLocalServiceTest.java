@@ -134,7 +134,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
 				StringUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null, StringUtil.randomString(),
@@ -251,6 +251,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(), name,
 					new ServiceContext());
@@ -268,6 +269,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(), null,
 					new ServiceContext());
@@ -295,6 +297,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					parentObjectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(),
 					objectEntryFolder.getName(), new ServiceContext());
@@ -313,6 +316,7 @@ public class ObjectEntryFolderLocalServiceTest {
 			_objectEntryFolderLocalService.updateObjectEntryFolder(
 				TestPropsValues.getUserId(),
 				objectEntryFolder1.getObjectEntryFolderId(),
+				objectEntryFolder1.getDescription(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null, objectEntryFolder1.getName(), new ServiceContext());
@@ -366,7 +370,7 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, TestPropsValues.getUserId(), groupId,
-			parentObjectEntryFolderId,
+			RandomTestUtil.randomString(), parentObjectEntryFolderId,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),

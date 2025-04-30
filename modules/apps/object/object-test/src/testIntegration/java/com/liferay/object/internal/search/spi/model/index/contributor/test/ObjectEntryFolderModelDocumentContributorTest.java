@@ -64,7 +64,8 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), parentObjectEntryFolderId,
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			parentObjectEntryFolderId,
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, RandomTestUtil.randomString()
 			).build(),

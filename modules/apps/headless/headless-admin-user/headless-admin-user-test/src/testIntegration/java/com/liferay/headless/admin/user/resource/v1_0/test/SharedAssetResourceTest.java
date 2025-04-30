@@ -110,7 +110,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
-				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(), null,
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				HashMapBuilder.put(

@@ -5,19 +5,25 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.internal.entity.v1_0.TestEntityEntityModel;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.TestEntityResource;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -68,6 +74,33 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
+	public Response postTestEntityMultiformBulk(MultipartBody multipartBody)
+		throws Exception {
+
+		TestEntity[] testEntities = multipartBody.getValueAsInstance(
+			"testEntities", TestEntity[].class);
+
+		if (testEntities == null) {
+			throw new BadRequestException("No test entities found in body");
+		}
+
+		for (TestEntity testEntity : testEntities) {
+			postTestEntity(testEntity);
+		}
+
+		return Response.ok(
+			_jsonFactory.createJSONObject(
+			).put(
+				"message", "Successfully processed entities"
+			).put(
+				"processedCount", testEntities.length
+			).toString()
+		).type(
+			ContentTypes.APPLICATION_JSON
+		).build();
+	}
+
+	@Override
 	public TestEntity putTestEntity(
 		Long testEntityId, Long optionalParameter, TestEntity testEntity) {
 
@@ -82,5 +115,8 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	private static final List<TestEntity> _testEntities = new ArrayList<>();
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

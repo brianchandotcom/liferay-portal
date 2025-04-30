@@ -7,18 +7,18 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(

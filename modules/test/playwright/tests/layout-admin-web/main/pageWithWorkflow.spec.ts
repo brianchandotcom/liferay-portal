@@ -5,20 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {WorkflowPage} from '../../pages/portal-workflow-web/WorkflowPage';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import createUserWithPermissions from '../../utils/createUserWithPermissions';
-import getRandomString from '../../utils/getRandomString';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {WorkflowPage} from '../../../pages/portal-workflow-web/WorkflowPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import createUserWithPermissions from '../../../utils/createUserWithPermissions';
+import getRandomString from '../../../utils/getRandomString';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

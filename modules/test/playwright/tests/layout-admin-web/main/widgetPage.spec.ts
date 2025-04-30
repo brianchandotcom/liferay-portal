@@ -5,20 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {openProductMenu} from '../../utils/productMenu';
-import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
-import addDraftStructuredContent from '../../utils/structured-content/addDraftStructuredContent';
-import addExpiredStructuredContent from '../../utils/structured-content/addExpiredStructuredContent';
-import addInTrashStructuredContent from '../../utils/structured-content/addInTrashStructuredContent';
-import addScheduledStructuredContent from '../../utils/structured-content/addScheduledStructuredContent';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {openProductMenu} from '../../../utils/productMenu';
+import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
+import addDraftStructuredContent from '../../../utils/structured-content/addDraftStructuredContent';
+import addExpiredStructuredContent from '../../../utils/structured-content/addExpiredStructuredContent';
+import addInTrashStructuredContent from '../../../utils/structured-content/addInTrashStructuredContent';
+import addScheduledStructuredContent from '../../../utils/structured-content/addScheduledStructuredContent';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 const test = mergeTests(
 	apiHelpersTest,

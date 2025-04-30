@@ -6,22 +6,22 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {liferayConfig} from '../../liferay.config';
-import {checkAccessibility} from '../../utils/checkAccessibility';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {performLoginViaApi, performLogout} from '../../utils/performLogin';
-import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageSelectorPagesTest} from '../../../fixtures/pageSelectorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(

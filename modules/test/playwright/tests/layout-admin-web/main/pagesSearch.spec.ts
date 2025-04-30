@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import {openProductMenu} from '../../utils/productMenu';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {openProductMenu} from '../../../utils/productMenu';
 
 const test = mergeTests(
 	apiHelpersTest,

@@ -5,22 +5,22 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {liferayConfig} from '../../liferay.config';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import createUserWithPermissions from '../../utils/createUserWithPermissions';
-import dragAndDropElement from '../../utils/dragAndDropElement';
-import getRandomString from '../../utils/getRandomString';
-import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
-import {performUserSwitch} from '../../utils/performLogin';
-import {openProductMenu} from '../../utils/productMenu';
-import {waitForAlert} from '../../utils/waitForAlert';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import createUserWithPermissions from '../../../utils/createUserWithPermissions';
+import dragAndDropElement from '../../../utils/dragAndDropElement';
+import getRandomString from '../../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../../utils/hoverAndExpectToBeVisible';
+import {performUserSwitch} from '../../../utils/performLogin';
+import {openProductMenu} from '../../../utils/productMenu';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(

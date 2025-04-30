@@ -39,8 +39,9 @@ public class ObjectEntryFolderServiceImpl
 	@Override
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long groupId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -49,7 +50,8 @@ public class ObjectEntryFolderServiceImpl
 
 		return objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, getUserId(), groupId,
-			parentObjectEntryFolderId, labelMap, name, serviceContext);
+			parentObjectEntryFolderId, description, labelMap, name,
+			serviceContext);
 	}
 
 	@Override
@@ -163,7 +165,7 @@ public class ObjectEntryFolderServiceImpl
 	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
-			Map<Locale, String> labelMap, String name,
+			String description, Map<Locale, String> labelMap, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -172,7 +174,7 @@ public class ObjectEntryFolderServiceImpl
 
 		return objectEntryFolderLocalService.updateObjectEntryFolder(
 			getUserId(), objectEntryFolderId, parentObjectEntryFolderId,
-			labelMap, name, serviceContext);
+			description, labelMap, name, serviceContext);
 	}
 
 	@Reference(

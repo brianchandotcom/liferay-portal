@@ -61,8 +61,9 @@ public class ObjectEntryFolderLocalServiceImpl
 	@Override
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long userId, long groupId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -86,6 +87,7 @@ public class ObjectEntryFolderLocalServiceImpl
 		objectEntryFolder.setUserName(user.getFullName());
 		objectEntryFolder.setParentObjectEntryFolderId(
 			parentObjectEntryFolderId);
+		objectEntryFolder.setDescription(description);
 		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
 		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
@@ -264,8 +266,9 @@ public class ObjectEntryFolderLocalServiceImpl
 	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder =
@@ -279,6 +282,7 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		objectEntryFolder.setParentObjectEntryFolderId(
 			parentObjectEntryFolderId);
+		objectEntryFolder.setDescription(description);
 		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
 		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());

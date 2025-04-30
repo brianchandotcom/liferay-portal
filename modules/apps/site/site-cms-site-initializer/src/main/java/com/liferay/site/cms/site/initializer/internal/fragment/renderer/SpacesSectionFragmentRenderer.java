@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -108,7 +109,7 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 						"url",
 						StringBundler.concat(
 							themeDisplay.getPathFriendlyURLPublic(),
-							themeDisplay.getPathCms(), "/e/space/",
+							GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
 							_portal.getClassNameId(DepotEntry.class),
 							StringPool.SLASH, assetLibrary.getId())
 					));
@@ -120,6 +121,11 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
+					"allSpacesURL",
+					StringBundler.concat(
+						themeDisplay.getPathFriendlyURLPublic(),
+						GroupConstants.CMS_FRIENDLY_URL, "/all-spaces")
+				).put(
 					"assetLibraries", assetLibrariesJSONArray
 				).put(
 					"assetLibrariesCount", assetLibrariesCount

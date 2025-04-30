@@ -749,14 +749,14 @@ public class FreeMarkerTool {
 			parentSchemaName = parentSchemaName.substring(6);
 		}
 
-		if (parentSchemaName.endsWith("Id")) {
-			parentSchemaName = parentSchemaName.substring(
-				0, parentSchemaName.length() - 2);
-		}
-
 		if (parentSchemaName.endsWith("ExternalReferenceCode")) {
 			parentSchemaName = parentSchemaName.substring(
 				0, parentSchemaName.length() - 21);
+		}
+
+		if (parentSchemaName.endsWith("Id")) {
+			parentSchemaName = parentSchemaName.substring(
+				0, parentSchemaName.length() - 2);
 		}
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {

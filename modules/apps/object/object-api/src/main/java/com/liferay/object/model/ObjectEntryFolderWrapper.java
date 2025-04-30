@@ -46,6 +46,7 @@ public class ObjectEntryFolderWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
 			"parentObjectEntryFolderId", getParentObjectEntryFolderId());
+		attributes.put("description", getDescription());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("treePath", getTreePath());
@@ -121,6 +122,12 @@ public class ObjectEntryFolderWrapper
 
 		if (parentObjectEntryFolderId != null) {
 			setParentObjectEntryFolderId(parentObjectEntryFolderId);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
 		}
 
 		String label = (String)attributes.get("label");
@@ -202,6 +209,16 @@ public class ObjectEntryFolderWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the description of this object entry folder.
+	 *
+	 * @return the description of this object entry folder
+	 */
+	@Override
+	public String getDescription() {
+		return model.getDescription();
 	}
 
 	/**
@@ -468,6 +485,16 @@ public class ObjectEntryFolderWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the description of this object entry folder.
+	 *
+	 * @param description the description of this object entry folder
+	 */
+	@Override
+	public void setDescription(String description) {
+		model.setDescription(description);
 	}
 
 	/**

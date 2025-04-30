@@ -138,6 +138,8 @@ public class ObjectEntryFolderPersistenceTest {
 		newObjectEntryFolder.setParentObjectEntryFolderId(
 			RandomTestUtil.nextLong());
 
+		newObjectEntryFolder.setDescription(RandomTestUtil.randomString());
+
 		newObjectEntryFolder.setLabel(RandomTestUtil.randomString());
 
 		newObjectEntryFolder.setName(RandomTestUtil.randomString());
@@ -182,6 +184,9 @@ public class ObjectEntryFolderPersistenceTest {
 		Assert.assertEquals(
 			existingObjectEntryFolder.getParentObjectEntryFolderId(),
 			newObjectEntryFolder.getParentObjectEntryFolderId());
+		Assert.assertEquals(
+			existingObjectEntryFolder.getDescription(),
+			newObjectEntryFolder.getDescription());
 		Assert.assertEquals(
 			existingObjectEntryFolder.getLabel(),
 			newObjectEntryFolder.getLabel());
@@ -289,8 +294,8 @@ public class ObjectEntryFolderPersistenceTest {
 			"externalReferenceCode", true, "objectEntryFolderId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
-			"parentObjectEntryFolderId", true, "label", true, "name", true,
-			"treePath", true);
+			"parentObjectEntryFolderId", true, "description", true, "label",
+			true, "name", true, "treePath", true);
 	}
 
 	@Test
@@ -641,6 +646,8 @@ public class ObjectEntryFolderPersistenceTest {
 
 		objectEntryFolder.setParentObjectEntryFolderId(
 			RandomTestUtil.nextLong());
+
+		objectEntryFolder.setDescription(RandomTestUtil.randomString());
 
 		objectEntryFolder.setLabel(RandomTestUtil.randomString());
 

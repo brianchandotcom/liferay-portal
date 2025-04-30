@@ -437,11 +437,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				continue;
 			}
 
+			int index = newContent.indexOf(javaContent);
+
 			Pattern pattern = _getPattern(jsonObject);
 
 			Matcher matcher = pattern.matcher(javaContent);
-
-			int javaContentIndex = newContent.indexOf(javaContent);
 
 			while (matcher.find()) {
 				String methodCall = matcher.group();
@@ -465,7 +465,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 						newContent = StringUtil.replaceFirst(
 							newContent, methodCall,
 							methodCall.replaceFirst(pattern.toString(), to),
-							javaContentIndex + matcher.start());
+							index + matcher.start());
 					}
 					else {
 						newContent = newContent.replaceAll(

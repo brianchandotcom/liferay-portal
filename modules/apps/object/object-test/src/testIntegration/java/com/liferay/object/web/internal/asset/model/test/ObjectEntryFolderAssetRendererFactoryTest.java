@@ -59,6 +59,7 @@ public class ObjectEntryFolderAssetRendererFactoryTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.US, RandomTestUtil.randomString()
 				).build(),

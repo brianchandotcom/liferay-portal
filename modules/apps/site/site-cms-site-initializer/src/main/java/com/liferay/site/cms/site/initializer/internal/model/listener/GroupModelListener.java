@@ -59,6 +59,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 			group.getCreatorUserId(), group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"Contents Folder",
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Contents"
 			).build(),
@@ -67,6 +68,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 			group.getCreatorUserId(), group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"Files Folder",
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Files"
 			).build(),

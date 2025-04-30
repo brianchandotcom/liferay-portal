@@ -202,6 +202,7 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			RandomTestUtil.randomString(),
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, RandomTestUtil.randomString()
 			).build(),

@@ -113,6 +113,7 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.put(
 					LocaleUtil.US, sharedAsset.getTitle()
 				).build(),

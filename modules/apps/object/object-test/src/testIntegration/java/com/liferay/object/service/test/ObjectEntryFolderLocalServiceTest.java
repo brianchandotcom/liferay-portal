@@ -137,7 +137,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				_group.getGroupId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, StringUtil.randomString(),
+				RandomTestUtil.randomString(), null, StringUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertEquals(
@@ -252,6 +252,7 @@ public class ObjectEntryFolderLocalServiceTest {
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					objectEntryFolder.getLabelMap(), name,
 					new ServiceContext());
 			});
@@ -269,6 +270,7 @@ public class ObjectEntryFolderLocalServiceTest {
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					objectEntryFolder.getLabelMap(), null,
 					new ServiceContext());
 			});
@@ -296,6 +298,7 @@ public class ObjectEntryFolderLocalServiceTest {
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
 					parentObjectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
 					objectEntryFolder.getLabelMap(),
 					objectEntryFolder.getName(), new ServiceContext());
 			});
@@ -315,7 +318,8 @@ public class ObjectEntryFolderLocalServiceTest {
 				objectEntryFolder1.getObjectEntryFolderId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, objectEntryFolder1.getName(), new ServiceContext());
+				objectEntryFolder1.getDescription(), null,
+				objectEntryFolder1.getName(), new ServiceContext());
 
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(
@@ -366,7 +370,7 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, TestPropsValues.getUserId(), groupId,
-			parentObjectEntryFolderId,
+			parentObjectEntryFolderId, RandomTestUtil.randomString(),
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),

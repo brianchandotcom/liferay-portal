@@ -187,6 +187,7 @@ public class ObjectEntryWorkflowHandlerTest {
 			StringUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			RandomTestUtil.randomString(),
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
@@ -207,6 +208,7 @@ public class ObjectEntryWorkflowHandlerTest {
 			TestPropsValues.getUserId(),
 			_objectEntryFolder.getObjectEntryFolderId(),
 			_objectEntryFolder.getParentObjectEntryFolderId(),
+			_objectEntryFolder.getDescription(),
 			_objectEntryFolder.getLabelMap(), _objectEntryFolder.getName(),
 			serviceContext);
 	}

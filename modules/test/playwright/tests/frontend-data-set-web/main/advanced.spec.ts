@@ -5,14 +5,14 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
 
 const test = mergeTests(

@@ -45,13 +45,17 @@ export default function PublishModal({
 		if (!displayDate && actionButton === 'schedule') {
 			setDateError(Liferay.Language.get('please-enter-a-valid-date'));
 			setShowErrorAlert(true);
+
+			return;
 		}
-		else if (dateError) {
+
+		if (dateError) {
 			setShowErrorAlert(true);
+
+			return;
 		}
-		else {
-			onPublishButtonClick(actionButton);
-		}
+
+		onPublishButtonClick(actionButton);
 	};
 
 	return (

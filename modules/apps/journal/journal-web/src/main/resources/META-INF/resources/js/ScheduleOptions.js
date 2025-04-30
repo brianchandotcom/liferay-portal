@@ -33,7 +33,8 @@ export default function ScheduleOptions({
 			const date = new Date(displayDate);
 
 			if (
-				date <= new Date(new Date().toLocaleString('en-US', {timeZone}))
+				date <=
+				new Date(new Date().toLocaleString('en-US', timeZone.id))
 			) {
 				setError(
 					Liferay.Language.get('the-date-entered-is-in-the-past')
@@ -67,7 +68,7 @@ export default function ScheduleOptions({
 					placeholder="YYYY-MM-DD HH:mm"
 					required
 					time
-					timezone={timeZone}
+					timezone={timeZone.name}
 					value={displayDate || ''}
 					years={{
 						end: 9999,
@@ -90,7 +91,7 @@ export default function ScheduleOptions({
 			</ClayForm.Group>
 
 			<p className="mt-1 text-3 text-secondary">
-				{sub(Liferay.Language.get('time-zone-x'), timeZone)}
+				{sub(Liferay.Language.get('time-zone-x'), timeZone.name)}
 			</p>
 
 			<ClayInput

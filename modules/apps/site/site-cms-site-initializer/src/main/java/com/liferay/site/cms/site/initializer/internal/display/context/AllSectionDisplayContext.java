@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +61,21 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			super.getFDSActionDropdownItems();
+
+		fdsActionDropdownItems.add(
+			1,
+			new FDSActionDropdownItem(
+				"{embedded.file.link.href}", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
+
+		return fdsActionDropdownItems;
 	}
 
 	@Override

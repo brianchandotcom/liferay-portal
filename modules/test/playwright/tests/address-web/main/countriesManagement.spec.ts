@@ -9,7 +9,7 @@ import {countriesManagementPageTest} from '../../../fixtures/CountriesManagement
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {waitForLoading} from '../../osb-faro-web/utils/loading';
+import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 
 export const test = mergeTests(
 	apiHelpersTest,

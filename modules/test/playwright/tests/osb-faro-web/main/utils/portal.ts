@@ -5,11 +5,11 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {liferayConfig} from '../../../liferay.config';
-import getRandomString from '../../../utils/getRandomString';
-import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../../liferay.config';
+import getRandomString from '../../../../utils/getRandomString';
+import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
 export async function acceptsCookiesBanner(page: Page) {
 	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});

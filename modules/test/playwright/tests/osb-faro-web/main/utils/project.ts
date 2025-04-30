@@ -5,7 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 
-import getRandomString from '../../../utils/getRandomString';
+import getRandomString from '../../../../utils/getRandomString';
 import {faroConfig} from '../faro.config';
 
 export async function acceptsCookiesBanner(page: Page) {

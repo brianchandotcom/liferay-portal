@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {JSONWebServicesOSBFaroApiHelper} from '../../helpers/json-web-services/JSONWebServicesOSBFaroApiHelper';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {JSONWebServicesOSBFaroApiHelper} from '../../../helpers/json-web-services/JSONWebServicesOSBFaroApiHelper';
+import getRandomString from '../../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 

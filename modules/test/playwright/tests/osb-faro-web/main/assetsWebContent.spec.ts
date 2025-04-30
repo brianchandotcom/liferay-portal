@@ -5,19 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';

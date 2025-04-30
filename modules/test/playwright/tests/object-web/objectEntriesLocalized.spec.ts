@@ -26,7 +26,7 @@ import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomDouble} from '../../utils/getRandomDouble';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
 import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(

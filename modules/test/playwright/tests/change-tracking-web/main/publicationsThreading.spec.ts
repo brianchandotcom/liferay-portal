@@ -16,7 +16,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {getTempDir} from '../../../utils/temp';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

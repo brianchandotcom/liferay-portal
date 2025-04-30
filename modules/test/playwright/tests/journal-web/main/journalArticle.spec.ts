@@ -5,24 +5,24 @@
 
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSettingsPage';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {openFieldset} from '../../utils/openFieldset';
-import {nextPage, setItemsPerPage} from '../../utils/pagination';
-import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
+import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 

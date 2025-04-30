@@ -19,7 +19,7 @@ import {
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,

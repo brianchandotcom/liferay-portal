@@ -12,7 +12,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

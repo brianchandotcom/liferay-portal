@@ -17,7 +17,7 @@ import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
 import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';

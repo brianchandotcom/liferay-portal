@@ -30,7 +30,7 @@ import {performUserSwitch} from '../../utils/performLogin';
 import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 import getCollectionDefinition from './utils/getCollectionDefinition';

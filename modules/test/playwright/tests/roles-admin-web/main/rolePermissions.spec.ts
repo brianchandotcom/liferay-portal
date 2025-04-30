@@ -5,26 +5,26 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {portletConfigurationPermissionsPageTest} from '../../fixtures/portletConfigurationPermissionsPagesTest';
-import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {HomePage} from '../../pages/portal-web/HomePage';
-import getRandomString from '../../utils/getRandomString';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {portletConfigurationPermissionsPageTest} from '../../../fixtures/portletConfigurationPermissionsPagesTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {HomePage} from '../../../pages/portal-web/HomePage';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {setupBookmark} from './utils/bookmarks';
+import {setupBookmark} from '../utils/bookmarks';
 
 export const test = mergeTests(
 	accountsPagesTest,

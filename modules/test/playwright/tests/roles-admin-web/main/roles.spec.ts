@@ -5,21 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {TRole} from '../../helpers/HeadlessAdminUserApiHelper';
-import {RolesPage} from '../../pages/roles-admin-web/RolesPage';
-import getRandomString from '../../utils/getRandomString';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {TRole} from '../../../helpers/HeadlessAdminUserApiHelper';
+import {RolesPage} from '../../../pages/roles-admin-web/RolesPage';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {setupBookmark} from './utils/bookmarks';
 
 export const test = mergeTests(

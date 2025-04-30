@@ -5,10 +5,10 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {DataApiHelpers} from '../../../helpers/ApiHelpers';
-import {BookmarksPage} from '../../../pages/roles-admin-web/bookmarks/BookmarksPage';
-import getRandomString from '../../../utils/getRandomString';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
+import {BookmarksPage} from '../../../../pages/roles-admin-web/bookmarks/BookmarksPage';
+import getRandomString from '../../../../utils/getRandomString';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 

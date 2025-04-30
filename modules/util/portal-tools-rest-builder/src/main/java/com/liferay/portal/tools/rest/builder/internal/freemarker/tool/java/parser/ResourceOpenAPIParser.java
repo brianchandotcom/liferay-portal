@@ -1069,10 +1069,10 @@ public class ResourceOpenAPIParser {
 
 					if (!(previousMethodNameSegment.endsWith(
 							externalReferenceCodeSubjectName) ||
-						  Objects.equals(previousMethodNameSegment, "Site") ||
+						  previousMethodNameSegment.endsWith(pathName) ||
 						  Objects.equals(
 							  previousMethodNameSegment, "AssetLibrary") ||
-						  previousMethodNameSegment.endsWith(pathName))) {
+						  Objects.equals(previousMethodNameSegment, "Site"))) {
 
 						operationIdSegments.add(pathName);
 					}

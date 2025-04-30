@@ -379,7 +379,7 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 			complianceAlertErrorMessage + complianceAlertWarningMessage;
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlertMessages)) {
-			sb.append("*Compliance alerts:* ");
+			sb.append("*Compliance Alerts:* ");
 			sb.append(complianceAlertMessages);
 			sb.append("\n");
 		}
@@ -418,7 +418,7 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 			));
 
 		if (_s3URL != null) {
-			sb.append("\n*S3 tar.gz:* ");
+			sb.append("\n*S3 Tar.gz:* ");
 			sb.append("<");
 			sb.append(_s3URL);
 			sb.append("|");

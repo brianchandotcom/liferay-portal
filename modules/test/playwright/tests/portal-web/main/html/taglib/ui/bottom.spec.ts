@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../../../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../../../../utils/structured-content/getBasicWebContentStructureId';
+import {dataApiHelpersTest} from '../../../../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../../../../utils/structured-content/getBasicWebContentStructureId';
 
 const test = mergeTests(dataApiHelpersTest, loginTest());
 

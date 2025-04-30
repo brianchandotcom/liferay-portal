@@ -242,6 +242,49 @@ public class ObjectEntryFolder implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's description."
+	)
+	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+
+		_descriptionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The object entry folder's description.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	@JsonIgnore
+	private Supplier<String> _descriptionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The object entry folder's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -887,6 +930,22 @@ public class ObjectEntryFolder implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		String description = getDescription();
+
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(description));
 
 			sb.append("\"");
 		}

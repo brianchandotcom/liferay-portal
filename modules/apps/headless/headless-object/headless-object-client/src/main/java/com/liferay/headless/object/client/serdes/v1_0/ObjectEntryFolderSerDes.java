@@ -104,6 +104,20 @@ public class ObjectEntryFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (objectEntryFolder.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectEntryFolder.getDescription()));
+
+			sb.append("\"");
+		}
+
 		if (objectEntryFolder.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -313,6 +327,15 @@ public class ObjectEntryFolderSerDes {
 					objectEntryFolder.getDateModified()));
 		}
 
+		if (objectEntryFolder.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(objectEntryFolder.getDescription()));
+		}
+
 		if (objectEntryFolder.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -451,6 +474,9 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
@@ -531,6 +557,12 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setDescription(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -19,12 +19,14 @@ export interface AssetLibrary {
 }
 
 interface SpacesNavigationProps {
+	allSpacesURL: string;
 	assetLibraries: AssetLibrary[];
 	assetLibrariesCount: number;
 	showAddButton: boolean;
 }
 
 const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
+	allSpacesURL,
 	assetLibraries,
 	assetLibrariesCount,
 	showAddButton,
@@ -73,10 +75,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 					))}
 
 					<li className="nav-item" role="none">
-						<ClayLink
-							className="nav-link"
-							href="/web/cms/all-spaces"
-						>
+						<ClayLink className="nav-link" href={allSpacesURL}>
 							<span className="mr-2 sticker">
 								<ClayIcon symbol="box-container" />
 							</span>

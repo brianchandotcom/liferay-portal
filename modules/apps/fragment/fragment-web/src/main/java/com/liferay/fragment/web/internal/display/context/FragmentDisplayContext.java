@@ -608,17 +608,6 @@ public class FragmentDisplayContext {
 		).build();
 	}
 
-	public String getNavigation() {
-		if (_navigation != null) {
-			return _navigation;
-		}
-
-		_navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "all");
-
-		return _navigation;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		if (!_isShowResourcesTab()) {
 			return Collections.emptyList();
@@ -1058,7 +1047,6 @@ public class FragmentDisplayContext {
 	private SearchContainer<Object> _fragmentEntriesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

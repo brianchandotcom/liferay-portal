@@ -93,8 +93,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
-import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
-import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.security.ldap.test.util.configuration.LDAPAuthConfigurationProviderTemporarySwapper;
 import com.liferay.portal.service.impl.UserLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -108,7 +107,6 @@ import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -175,14 +173,16 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testAddLDAPUserWithLDAPPasswordPolicy() throws Exception {
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					});
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+					})) {
 
 			User user = _addUser(true, "abc");
 
@@ -194,14 +194,16 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testAddLDAPUserWithoutLDAPPasswordPolicy() throws Exception {
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), false);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					});
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
+					})) {
 
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
@@ -248,14 +250,16 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testAddUserWithLDAPPasswordPolicy() throws Exception {
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					});
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+					})) {
 
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
@@ -342,11 +346,13 @@ public class UserLocalServiceTest {
 	public void testCheckLockoutLDAPUserWithLDAPPasswordPolicy()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true));
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+					passwordPolicy -> passwordPolicy.setLockout(true))) {
 
 			User user = UserTestUtil.addUser();
 
@@ -364,11 +370,13 @@ public class UserLocalServiceTest {
 	public void testCheckLockoutLDAPUserWithoutLDAPPasswordPolicy()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), false);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true));
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
+					passwordPolicy -> passwordPolicy.setLockout(true))) {
 
 			User user = UserTestUtil.addUser();
 
@@ -388,11 +396,13 @@ public class UserLocalServiceTest {
 	public void testCheckLockoutPortalUserWithLDAPPasswordPolicy()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true));
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+					passwordPolicy -> passwordPolicy.setLockout(true))) {
 
 			User user = UserTestUtil.addUser();
 
@@ -409,11 +419,13 @@ public class UserLocalServiceTest {
 	public void testCheckPasswordExpiredLDAPUserWithLDAPPasswordPolicy()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setChangeRequired(true));
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+					passwordPolicy -> passwordPolicy.setChangeRequired(true))) {
 
 			User user = _addUser(true, "Liferay123");
 
@@ -431,11 +443,13 @@ public class UserLocalServiceTest {
 	public void testCheckPasswordExpiredLDAPUserWithoutLDAPPasswordPolicy()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), false);
+			SafeCloseable safeCloseable =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setChangeRequired(true));
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
+					passwordPolicy -> passwordPolicy.setChangeRequired(true))) {
 
 			User user = _addUser(true, "Liferay123");
 
@@ -451,12 +465,14 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testCheckPasswordExpiredPortalUser() throws Exception {
-		try (SafeCloseable safeCloseable1 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						TestPropsValues.getCompanyId(), true)) {
 
 			User user = null;
 
-			try (SafeCloseable safeCloseable2 =
+			try (SafeCloseable safeCloseable =
 					_updateDefaultPasswordPolicyWithSafeCloseable(
 						passwordPolicy -> passwordPolicy.setChangeRequired(
 							false))) {
@@ -466,7 +482,7 @@ public class UserLocalServiceTest {
 				Assert.assertFalse(user.isPasswordReset());
 			}
 
-			try (SafeCloseable safeCloseable2 =
+			try (SafeCloseable safeCloseable =
 					_updateDefaultPasswordPolicyWithSafeCloseable(
 						passwordPolicy -> passwordPolicy.setChangeRequired(
 							true))) {
@@ -1713,25 +1729,6 @@ public class UserLocalServiceTest {
 		};
 	}
 
-	private SafeCloseable _updateLDAPAuthConfigurationWithSafeCloseable(
-			boolean passwordPolicyEnabled)
-		throws PortalException {
-
-		long companyId = TestPropsValues.getCompanyId();
-
-		Dictionary<String, Object> configurationProperties =
-			_ldapAuthConfigurationProvider.getConfigurationProperties(
-				companyId);
-
-		configurationProperties.put(
-			"passwordPolicyEnabled", passwordPolicyEnabled);
-
-		_ldapAuthConfigurationProvider.updateProperties(
-			companyId, configurationProperties);
-
-		return () -> _ldapAuthConfigurationProvider.delete(companyId);
-	}
-
 	private SafeCloseable _updateSecurityWithSafeCloseable(
 			long companyId, boolean strangersVerify)
 		throws PortalException {
@@ -1769,12 +1766,6 @@ public class UserLocalServiceTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject(
-		filter = "factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration"
-	)
-	private ConfigurationProvider<LDAPAuthConfiguration>
-		_ldapAuthConfigurationProvider;
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;

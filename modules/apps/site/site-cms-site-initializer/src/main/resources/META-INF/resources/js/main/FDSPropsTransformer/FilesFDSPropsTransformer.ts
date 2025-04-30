@@ -21,10 +21,12 @@ const ACTIONS = {
 export default function FilesFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
+	itemsActions = [],
 	...otherProps
 }: {
 	additionalProps: any;
 	creationMenu: any;
+	itemsActions?: any[];
 	otherProps: any;
 }) {
 	return {
@@ -61,5 +63,16 @@ export default function FilesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		itemsActions: itemsActions.map((action) => {
+			if (action?.data?.id === 'download') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(item?.embedded?.file?.link?.href),
+				};
+			}
+
+			return action;
+		}),
 	};
 }

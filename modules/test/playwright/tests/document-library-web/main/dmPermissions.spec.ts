@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
 	documentLibraryPagesTest,

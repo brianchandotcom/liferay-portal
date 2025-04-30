@@ -5,24 +5,25 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {SiteSettingsPage} from '../../../../pages/site-admin-web/SiteSettingsPage';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
-export class FileSizeLimitsInstanceSettingsPage {
+export class FileSizeLimitsSiteSettingsPage {
 	readonly page: Page;
 	readonly saveButton: Locator;
-	readonly instanceSettingsPage: InstanceSettingsPage;
+	readonly siteSettingsPage: SiteSettingsPage;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.instanceSettingsPage = new InstanceSettingsPage(page);
+		this.siteSettingsPage = new SiteSettingsPage(page);
 	}
 
-	async goto() {
-		await this.instanceSettingsPage.goToInstanceSetting(
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.siteSettingsPage.goToSiteSetting(
 			'Documents and Media',
-			'File Size Limits'
+			'File Size Limits',
+			siteUrl
 		);
 	}
 

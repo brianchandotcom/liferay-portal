@@ -7,10 +7,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
 
 const test = mergeTests(
 	apiHelpersTest,

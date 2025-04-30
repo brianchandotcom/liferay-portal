@@ -1122,41 +1122,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
             tags: ["TestEntity"]
-    /test-entities/multiform/bulk:
-        post:
-            operationId: postTestEntityMultiformBulk
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                testEntities:
-                                    type: array
-                                    items:
-                                        $ref: '#/components/schemas/TestEntity'
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                    processedCount:
-                                        type: integer
-                                        format: int32
-                        "application/xml":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                    processedCount:
-                                        type: integer
-                                        format: int32
-            tags: ["TestEntity"]
     /test-entities/count:
         get:
             description:
@@ -1172,6 +1137,41 @@ paths:
                                 type: integer
                     description:
                         "OK"
+            tags: ["TestEntity"]
+    /test-entities/multiform/bulk:
+        post:
+            operationId: postTestEntityMultiformBulk
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                testEntities:
+                                    items:
+                                        $ref: "#/components/schemas/TestEntity"
+                                    type: array
+                            type: object
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                properties:
+                                    message:
+                                        type: string
+                                    processedCount:
+                                        format: int32
+                                        type: integer
+                                type: object
+                        "application/xml":
+                            schema:
+                                properties:
+                                    message:
+                                        type: string
+                                    processedCount:
+                                        format: int32
+                                        type: integer
+                                type: object
             tags: ["TestEntity"]
     /test-entities/{testEntityId}:
         get:

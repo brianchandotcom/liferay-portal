@@ -714,11 +714,11 @@ public class DDMStructureWrapper
 
 	@Override
 	public String getUnambiguousName(
-			java.util.List<DDMStructure> structures, long groupId,
+			java.util.List<DDMStructure> ddmStructures, long groupId,
 			java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return model.getUnambiguousName(structures, groupId, locale);
+		return model.getUnambiguousName(ddmStructures, groupId, locale);
 	}
 
 	/**

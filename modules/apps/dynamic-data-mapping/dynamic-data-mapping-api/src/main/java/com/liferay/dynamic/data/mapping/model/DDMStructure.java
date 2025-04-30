@@ -122,7 +122,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public java.util.List<DDMTemplate> getTemplates();
 
 	public String getUnambiguousName(
-			java.util.List<DDMStructure> structures, long groupId,
+			java.util.List<DDMStructure> ddmStructures, long groupId,
 			java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

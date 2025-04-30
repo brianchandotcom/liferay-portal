@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(fragmentEntriesDisplayContext, request, liferayPortletRequest, liferayPortletResponse);
+ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(fragmentDisplayContext, request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
@@ -19,7 +19,7 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= fragmentEntriesDisplayContext.getContributedEntriesSearchContainer() %>"
+		searchContainer="<%= fragmentDisplayContext.getContributedEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -29,14 +29,14 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
-							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
+							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
 							propsTransformer="{ContributedFragmentEntryDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
-							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
+							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
 							propsTransformer="{ContributedFragmentEntryDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>

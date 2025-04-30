@@ -13,7 +13,7 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetchFragmentCollection(fragmentCollectionId);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(fragmentEntriesDisplayContext.getRedirect());
+portletDisplay.setURLBack(fragmentDisplayContext.getRedirect());
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-fragment-set"));
@@ -27,7 +27,7 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 	action="<%= editFragmentCollectionURL %>"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= fragmentEntriesDisplayContext.getRedirect() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getRedirect() %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentCollectionId %>" />
 
 	<liferay-frontend:edit-form-body>
@@ -45,7 +45,7 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
-			redirect="<%= fragmentEntriesDisplayContext.getRedirect() %>"
+			redirect="<%= fragmentDisplayContext.getRedirect() %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

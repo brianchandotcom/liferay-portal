@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentEntriesDisplayContext);
+FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentDisplayContext);
 %>
 
 <liferay-document-library:repository-browser

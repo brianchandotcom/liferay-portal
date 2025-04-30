@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {sitesPageTest} from '../../fixtures/sitesPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import getRandomString from '../../utils/getRandomString';
-import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {sitesPageTest} from '../../../fixtures/sitesPageTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import getRandomString from '../../../utils/getRandomString';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(

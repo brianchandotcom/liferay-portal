@@ -5,13 +5,13 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {WebContentDisplayPage} from '../../../pages/journal-content-web/WebContentDisplayPage';
-import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {WidgetPagePage} from '../../../pages/layout-admin-web/WidgetPagePage';
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {LayoutSetPrototype} from '../../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {WebContentDisplayPage} from '../../../../pages/journal-content-web/WebContentDisplayPage';
+import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage';
+import {WidgetPagePage} from '../../../../pages/layout-admin-web/WidgetPagePage';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {UIElementsPage} from '../../../../pages/uielements/UIElementsPage';
 import createSiteTemplate from './createSiteTemplate';
 
 export default async function createSiteTemplateWithWebContentOnWidgetPage({

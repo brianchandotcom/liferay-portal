@@ -32,6 +32,7 @@ public class ObjectEntryFolderModelDocumentContributor
 	public void contribute(
 		Document document, ObjectEntryFolder objectEntryFolder) {
 
+		document.addText(Field.DESCRIPTION, objectEntryFolder.getDescription());
 		document.addKeyword(
 			Field.FOLDER_ID, objectEntryFolder.getParentObjectEntryFolderId());
 		document.addText(Field.NAME, objectEntryFolder.getName());

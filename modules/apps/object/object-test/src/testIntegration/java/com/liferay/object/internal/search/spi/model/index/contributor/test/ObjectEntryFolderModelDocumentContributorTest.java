@@ -90,6 +90,9 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 			document, objectEntryFolder);
 
 		Assert.assertEquals(
+			objectEntryFolder.getDescription(),
+			document.get(Field.DESCRIPTION));
+		Assert.assertEquals(
 			String.valueOf(objectEntryFolder.getParentObjectEntryFolderId()),
 			document.get(Field.FOLDER_ID));
 		Assert.assertEquals(

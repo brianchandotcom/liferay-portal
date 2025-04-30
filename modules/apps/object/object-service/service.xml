@@ -327,6 +327,7 @@
 
 		<!-- Other fields -->
 
+		<column name="description" type="String" />
 		<column name="parentObjectEntryFolderId" parent-container-model="true" type="long" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />

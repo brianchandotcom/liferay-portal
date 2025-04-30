@@ -133,6 +133,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="description" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="parentObjectEntryFolderId" type="long" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />

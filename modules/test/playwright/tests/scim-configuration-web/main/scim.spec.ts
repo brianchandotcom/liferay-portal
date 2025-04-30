@@ -5,19 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {userGroupsPageTest} from '../../fixtures/userGroupsPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {liferayConfig} from '../../liferay.config';
-import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
-import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
-import {getRandomInt} from '../../utils/getRandomInt';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
+import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
+import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {SCIMConfigurationPage} from '../../../pages/scim-configuraiton-web/SCIMConfigurationPage';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import performLogin, {performLogout} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	featureFlagsTest({

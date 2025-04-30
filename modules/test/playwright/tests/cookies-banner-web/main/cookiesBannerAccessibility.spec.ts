@@ -5,18 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
-export const test = mergeTests(
-	isolatedLayoutTest(),
-	loginTest(),
-	systemSettingsPageTest
-);
+export const test = mergeTests(loginTest(), systemSettingsPageTest);
 
-test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
+test('LPD-30822 Cookie Banner Accessibility', async ({
+	page,
+	systemSettingsPage,
+}) => {
 	await test.step('Enable Third Party Cookies', async () => {
 		await systemSettingsPage.goToSystemSetting(
 			'Cookies',
@@ -53,7 +51,7 @@ test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
 		await waitForAlert(page);
 	});
 
-	await test.step('Open Configuration', async () => {
+	await test.step('Check aria-label, role, and paragraph', async () => {
 		await page.goto('/');
 
 		await page
@@ -62,18 +60,14 @@ test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
 			)
 			.waitFor({state: 'visible'});
 
-		const configuration = page.getByRole('button', {name: 'Configuration'});
+		const cookiesBannerContainer = page.locator(
+			'//div[@role="dialog"][@aria-label="banner cookies"]'
+		);
 
-		await configuration.waitFor({state: 'visible'});
+		await expect(cookiesBannerContainer).toBeVisible();
 
-		await configuration.click();
-	});
+		const paragraph = cookiesBannerContainer.locator('p.mb-0');
 
-	await test.step('Check cadmin is not applied', async () => {
-		const modalBody = page
-			.frameLocator('#cookiesBannerConfiguration_iframe_')
-			.locator('.dialog-iframe-popup');
-
-		await expect(modalBody).not.toHaveClass(/cadmin/);
+		await expect(paragraph).toBeVisible();
 	});
 });

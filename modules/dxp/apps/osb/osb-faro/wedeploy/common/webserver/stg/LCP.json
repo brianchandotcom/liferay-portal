@@ -28,6 +28,13 @@
 	},
 	"loadBalancer": {
 		"cdn": true,
+		"certs": [
+			{
+				"customDomains": [
+					"analytics-stg.liferay.com"
+				]
+			}
+		],
 		"targetPort": 80
 	},
 	"memory": 512,

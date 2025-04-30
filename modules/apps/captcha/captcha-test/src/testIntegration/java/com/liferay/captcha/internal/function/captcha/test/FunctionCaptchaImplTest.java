@@ -66,6 +66,8 @@ public class FunctionCaptchaImplTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captchaName", RandomTestUtil.randomString()
 			).put(
+				"captchaResponseParameterName", RandomTestUtil.randomString()
+			).put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
 				"customElementExternalReferenceCode", externalReferenceCode
@@ -74,8 +76,6 @@ public class FunctionCaptchaImplTest {
 				RandomTestUtil.randomString()
 			).put(
 				"resourcePath", RandomTestUtil.randomString()
-			).put(
-				"responseParameterName", RandomTestUtil.randomString()
 			).build());
 
 		String servicePid = StringUtil.extractLast(pid, StringPool.TILDE);

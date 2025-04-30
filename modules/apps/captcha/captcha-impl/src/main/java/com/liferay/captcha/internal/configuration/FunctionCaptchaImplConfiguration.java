@@ -25,6 +25,9 @@ public interface FunctionCaptchaImplConfiguration {
 	public String captchaName();
 
 	@Meta.AD
+	public String captchaResponseParameterName();
+
+	@Meta.AD
 	public String customElementExternalReferenceCode();
 
 	@Meta.AD
@@ -32,8 +35,5 @@ public interface FunctionCaptchaImplConfiguration {
 
 	@Meta.AD
 	public String resourcePath();
-
-	@Meta.AD
-	public String responseParameterName();
 
 }

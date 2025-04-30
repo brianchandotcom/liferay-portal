@@ -74,7 +74,7 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
-	public Response postTestEntityMultiformBulk(MultipartBody multipartBody)
+	public Response postTestEntityMultipartBulk(MultipartBody multipartBody)
 		throws Exception {
 
 		TestEntity[] testEntities = multipartBody.getValueAsInstance(
@@ -88,16 +88,7 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 			postTestEntity(testEntity);
 		}
 
-		return Response.ok(
-			_jsonFactory.createJSONObject(
-			).put(
-				"message", "Successfully processed entities"
-			).put(
-				"processedCount", testEntities.length
-			).toString()
-		).type(
-			ContentTypes.APPLICATION_JSON
-		).build();
+		return Response.ok().build();
 	}
 
 	@Override

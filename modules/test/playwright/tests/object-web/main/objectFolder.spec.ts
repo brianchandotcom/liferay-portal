@@ -6,11 +6,11 @@
 import {ObjectFolder} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	apiHelpersTest,

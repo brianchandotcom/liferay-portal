@@ -9,16 +9,16 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {listTypeDefinitionsPagesTest} from '../../../fixtures/listTypeDefinitionsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(

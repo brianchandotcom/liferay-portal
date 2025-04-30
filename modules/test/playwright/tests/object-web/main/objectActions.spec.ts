@@ -11,12 +11,12 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 import path from 'node:path';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 
 export const test = mergeTests(

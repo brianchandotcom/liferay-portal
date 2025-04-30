@@ -333,6 +333,7 @@
 		<!-- Other fields -->
 
 		<column name="parentObjectEntryFolderId" parent-container-model="true" type="long" />
+		<column name="description" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="treePath" type="String" />

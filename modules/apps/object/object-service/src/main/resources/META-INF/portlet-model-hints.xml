@@ -135,6 +135,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="parentObjectEntryFolderId" type="long" />
+		<field name="description" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="treePath" type="String">

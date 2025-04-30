@@ -5,13 +5,13 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';

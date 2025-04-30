@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';

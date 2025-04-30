@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 
 export enum Nanites {
 	UpdateMembershipsNanite = 'UpdateMembershipsNanite',

@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
-import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
+import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {createChannel} from './utils/channel';
 import {
 	addBreakdown,

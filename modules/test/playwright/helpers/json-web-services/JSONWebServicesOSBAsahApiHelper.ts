@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {asahConfig} from '../../tests/osb-faro-web/asah.config';
-import {Nanites} from '../../tests/osb-faro-web/utils/nanites';
+import {asahConfig} from '../../tests/osb-faro-web/main/asah.config';
+import {Nanites} from '../../tests/osb-faro-web/main/utils/nanites';
 import {ApiHelpers} from '../ApiHelpers';
 
 type BlogDaily = {

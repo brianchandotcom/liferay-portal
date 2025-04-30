@@ -38,7 +38,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {waitForLoading} from '../osb-faro-web/utils/loading';
+import {waitForLoading} from '../osb-faro-web/main/utils/loading';
 import {
 	TIdentityProvider,
 	configureIdentityProvider,

@@ -5,12 +5,12 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {navigateToACAdmin} from './utils/navigation';
 
 export const test = mergeTests(

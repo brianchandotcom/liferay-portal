@@ -5,7 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 
-import getRandomString from '../../../utils/getRandomString';
+import getRandomString from '../../../../utils/getRandomString';
 import {waitForLoading} from './loading';
 import {navigateTo} from './navigation';
 

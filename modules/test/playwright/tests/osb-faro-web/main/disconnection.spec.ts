@@ -5,17 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
 	goPreviousStep,
 	goToAnalyticsCloudInstanceSettings,
-} from '../analytics-settings-web/utils/analytics-settings';
+} from '../../analytics-settings-web/main/utils/analytics-settings';
 import {createChannel} from './utils/channel';
 import {
 	checkDataSourceStatus,

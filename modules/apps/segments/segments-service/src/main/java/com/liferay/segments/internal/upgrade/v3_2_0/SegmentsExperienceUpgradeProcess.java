@@ -85,6 +85,10 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 				Layout layout = _layoutLocalService.fetchLayout(
 					resultSet.getLong("plid"));
 
+				if (layout == null) {
+					continue;
+				}
+
 				Layout draftLayout = layout.fetchDraftLayout();
 
 				if ((draftLayout == null) ||

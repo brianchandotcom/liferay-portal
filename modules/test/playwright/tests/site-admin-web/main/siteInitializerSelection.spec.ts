@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {sitesPageTest} from '../../fixtures/sitesPageTest';
-import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {checkAccessibility} from '../../utils/checkAccessibility';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {sitesPageTest} from '../../../fixtures/sitesPageTest';
+import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
+import getRandomString from '../../../utils/getRandomString';
 import {selectSiteInitializerPagesTest} from './fixtures/selectSiteInitializerPagesTest';
 
 const test = mergeTests(

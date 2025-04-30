@@ -82,32 +82,32 @@ export class ErcAssetLibraryTestEntityAPI {
 
 		/**
 		 * 
+				 * @param assetLibraryExternalReferenceCode
 				 * @param ercAssetLibraryTestEntityExternalReferenceCode
-				 * @param AssetLibraryExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
 		public async getAssetLibraryErcAssetLibraryTestEntity(
+						assetLibraryExternalReferenceCode: string,
 						ercAssetLibraryTestEntityExternalReferenceCode: string,
-						AssetLibraryExternalReferenceCode: string,
 			headers?: {[name: string]: string},
 		): Promise<{
 				body: ErcAssetLibraryTestEntity;
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
-						.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
-										.replace("{AssetLibraryExternalReferenceCode}",encodeURIComponent(AssetLibraryExternalReferenceCode))
+			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
+										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;
 
 			const queryParameters: any = {};
 
-						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
+						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
 						}
 
-						if (AssetLibraryExternalReferenceCode === null || AssetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter AssetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
+						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -142,12 +142,12 @@ export class ErcAssetLibraryTestEntityAPI {
 
 		/**
 		 * 
-				 * @param AssetLibraryExternalReferenceCode
+				 * @param assetLibraryExternalReferenceCode
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
 		public async postAssetLibraryErcAssetLibraryTestEntityWithContentType(
-						AssetLibraryExternalReferenceCode: string,
+						assetLibraryExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
@@ -177,13 +177,13 @@ export class ErcAssetLibraryTestEntityAPI {
 						}
 
 			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
-						.replace("{AssetLibraryExternalReferenceCode}",encodeURIComponent(AssetLibraryExternalReferenceCode))
+						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
 				;
 
 			const queryParameters: any = {};
 
-						if (AssetLibraryExternalReferenceCode === null || AssetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter AssetLibraryExternalReferenceCode was null or undefined when calling postAssetLibraryErcAssetLibraryTestEntity.");
+						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling postAssetLibraryErcAssetLibraryTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -220,11 +220,11 @@ export class ErcAssetLibraryTestEntityAPI {
 
 					/**
 					 *  - Default method for JSON body
-							 * @param AssetLibraryExternalReferenceCode
+							 * @param assetLibraryExternalReferenceCode
 						 * @param ercAssetLibraryTestEntity
 					 */
 					public async postAssetLibraryErcAssetLibraryTestEntity(
-									AssetLibraryExternalReferenceCode: string,
+									assetLibraryExternalReferenceCode: string,
 							ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
@@ -232,7 +232,7 @@ export class ErcAssetLibraryTestEntityAPI {
 						response: Response;
 					}> {
 						return this.postAssetLibraryErcAssetLibraryTestEntityWithContentType(
-										AssetLibraryExternalReferenceCode,
+										assetLibraryExternalReferenceCode,
 							{
 								parameters: {
 										ercAssetLibraryTestEntity: ercAssetLibraryTestEntity
@@ -244,14 +244,14 @@ export class ErcAssetLibraryTestEntityAPI {
 					}
 		/**
 		 * 
+				 * @param assetLibraryExternalReferenceCode
 				 * @param ercAssetLibraryTestEntityExternalReferenceCode
-				 * @param AssetLibraryExternalReferenceCode
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
 		public async putAssetLibraryErcAssetLibraryTestEntityWithContentType(
+						assetLibraryExternalReferenceCode: string,
 						ercAssetLibraryTestEntityExternalReferenceCode: string,
-						AssetLibraryExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
@@ -280,19 +280,19 @@ export class ErcAssetLibraryTestEntityAPI {
 								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercAssetLibraryTestEntity, "ErcAssetLibraryTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
-						.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
-										.replace("{AssetLibraryExternalReferenceCode}",encodeURIComponent(AssetLibraryExternalReferenceCode))
+			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
+										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
 				;
 
 			const queryParameters: any = {};
 
-						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
+						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
 						}
 
-						if (AssetLibraryExternalReferenceCode === null || AssetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter AssetLibraryExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
+						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -329,13 +329,13 @@ export class ErcAssetLibraryTestEntityAPI {
 
 					/**
 					 *  - Default method for JSON body
+							 * @param assetLibraryExternalReferenceCode
 							 * @param ercAssetLibraryTestEntityExternalReferenceCode
-							 * @param AssetLibraryExternalReferenceCode
 						 * @param ercAssetLibraryTestEntity
 					 */
 					public async putAssetLibraryErcAssetLibraryTestEntity(
+									assetLibraryExternalReferenceCode: string,
 									ercAssetLibraryTestEntityExternalReferenceCode: string,
-									AssetLibraryExternalReferenceCode: string,
 							ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
@@ -343,8 +343,8 @@ export class ErcAssetLibraryTestEntityAPI {
 						response: Response;
 					}> {
 						return this.putAssetLibraryErcAssetLibraryTestEntityWithContentType(
+										assetLibraryExternalReferenceCode,
 										ercAssetLibraryTestEntityExternalReferenceCode,
-										AssetLibraryExternalReferenceCode,
 							{
 								parameters: {
 										ercAssetLibraryTestEntity: ercAssetLibraryTestEntity

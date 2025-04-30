@@ -55,8 +55,8 @@ public interface ErcAssetLibraryTestEntityResource {
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity getAssetLibraryErcAssetLibraryTestEntity(
-			String ercAssetLibraryTestEntityExternalReferenceCode,
-			String AssetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode,
+			String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception;
 
 	public Response postAssetLibraryErcAssetLibraryTestEntitiesPageExportBatch(
@@ -65,18 +65,18 @@ public interface ErcAssetLibraryTestEntityResource {
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity postAssetLibraryErcAssetLibraryTestEntity(
-			String AssetLibraryExternalReferenceCode,
+			String assetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 
 	public Response postAssetLibraryErcAssetLibraryTestEntityBatch(
-			String AssetLibraryExternalReferenceCode, String callbackURL,
+			String assetLibraryExternalReferenceCode, String callbackURL,
 			Object object)
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity putAssetLibraryErcAssetLibraryTestEntity(
+			String assetLibraryExternalReferenceCode,
 			String ercAssetLibraryTestEntityExternalReferenceCode,
-			String AssetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 

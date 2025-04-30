@@ -110,17 +110,17 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercAssetLibraryTestEntityExternalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "AssetLibraryExternalReferenceCode"
+				name = "ercAssetLibraryTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -133,21 +133,21 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public ErcAssetLibraryTestEntity getAssetLibraryErcAssetLibraryTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam(
 				"ercAssetLibraryTestEntityExternalReferenceCode"
 			)
-			String ercAssetLibraryTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("AssetLibraryExternalReferenceCode")
-			String AssetLibraryExternalReferenceCode)
+			String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception {
 
 		return new ErcAssetLibraryTestEntity();
@@ -237,7 +237,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "AssetLibraryExternalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -258,8 +258,8 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	public ErcAssetLibraryTestEntity postAssetLibraryErcAssetLibraryTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("AssetLibraryExternalReferenceCode")
-			String AssetLibraryExternalReferenceCode,
+			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
@@ -275,7 +275,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "AssetLibraryExternalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -300,8 +300,8 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	public Response postAssetLibraryErcAssetLibraryTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("AssetLibraryExternalReferenceCode")
-			String AssetLibraryExternalReferenceCode,
+			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -328,17 +328,17 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}' -d $'{"assetLibraryExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}' -d $'{"assetLibraryExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercAssetLibraryTestEntityExternalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "AssetLibraryExternalReferenceCode"
+				name = "ercAssetLibraryTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -351,7 +351,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -359,14 +359,14 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	public ErcAssetLibraryTestEntity putAssetLibraryErcAssetLibraryTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam(
 				"ercAssetLibraryTestEntityExternalReferenceCode"
 			)
 			String ercAssetLibraryTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("AssetLibraryExternalReferenceCode")
-			String AssetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
@@ -393,7 +393,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 					ercAssetLibraryTestEntity ->
 						postAssetLibraryErcAssetLibraryTestEntity(
 							(String)parameters.get(
-								"AssetLibraryExternalReferenceCode"),
+								"assetLibraryExternalReferenceCode"),
 							ercAssetLibraryTestEntity);
 			}
 			else {

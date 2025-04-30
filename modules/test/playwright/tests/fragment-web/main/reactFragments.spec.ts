@@ -6,14 +6,14 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {zipFolder} from '../../utils/zip';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {zipFolder} from '../../../utils/zip';
 
 const test = mergeTests(
 	apiHelpersTest,

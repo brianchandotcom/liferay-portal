@@ -51,12 +51,12 @@ public class StructuresSectionDisplayContext {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("/o/object-admin/v1.0/object-definitions?filter=");
-		sb.append("objectFolderExternalReferenceCode eq '");
+		sb.append("(objectFolderExternalReferenceCode eq '");
 		sb.append(
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 		sb.append("' or objectFolderExternalReferenceCode eq '");
 		sb.append(ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
-		sb.append("'");
+		sb.append("')");
 
 		return sb.toString();
 	}

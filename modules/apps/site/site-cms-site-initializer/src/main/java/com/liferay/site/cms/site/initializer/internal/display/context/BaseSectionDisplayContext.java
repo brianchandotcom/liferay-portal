@@ -85,7 +85,7 @@ public abstract class BaseSectionDisplayContext {
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=objectFolderExternalReferenceCode in ('");
+		sb.append("filter=(objectFolderExternalReferenceCode in ('");
 		sb.append(StringUtil.merge(objectFolderExternalReferenceCodes, "','"));
 		sb.append("')");
 
@@ -101,7 +101,7 @@ public abstract class BaseSectionDisplayContext {
 			sb.append(_objectEntryFolder.getObjectEntryFolderId());
 		}
 
-		sb.append("&nestedFields=embedded");
+		sb.append(")&nestedFields=embedded");
 
 		return sb.toString();
 	}

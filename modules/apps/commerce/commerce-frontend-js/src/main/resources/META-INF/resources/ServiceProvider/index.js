@@ -17,6 +17,7 @@ import DeliveryCatalogAPI from './commerce-delivery-catalog/index';
 import DeliveryOrderAPI from './commerce-delivery-order/index';
 import ReturnItemAPI from './commerce-return-items/ReturnItem';
 import ReturnAPI from './commerce-returns/Return';
+import BatchEngineAPI from './headless-batch-engine/index';
 
 const ServiceProvider = {
 	AdminAccountAPI,
@@ -28,6 +29,7 @@ const ServiceProvider = {
 	AdminOrderAPI,
 	AdminPricingAPI,
 	AdminUserAPI,
+	BatchEngineAPI,
 	DeliveryCartAPI,
 	DeliveryCatalogAPI,
 	DeliveryOrderAPI,

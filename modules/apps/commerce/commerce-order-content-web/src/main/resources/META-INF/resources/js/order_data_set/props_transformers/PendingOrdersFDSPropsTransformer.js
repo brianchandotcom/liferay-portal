@@ -13,6 +13,76 @@ import PendingOrderIdDataRenderer, {
 import {openOrderNameModal} from './util';
 
 const DeliveryCartAPI = CommerceServiceProvider.DeliveryCartAPI('v1');
+const BatchEngineAPI = CommerceServiceProvider.BatchEngineAPI('v1');
+
+const MAX_ATTEMPTS = 5;
+const TIMEOUT = 2000;
+
+const checkImportStatus = (loadData, props, selectedCarts, task) => {
+	let failedAttempts = 0;
+	let numberOfAttempts = 0;
+	const retryStrategy = setInterval(() => {
+		numberOfAttempts++;
+		BatchEngineAPI.getImportTaskId(task.id)
+			.then((importTask) => {
+				if (importTask.executeStatus === 'COMPLETED') {
+					clearInterval(retryStrategy);
+
+					loadData();
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+
+					const {orderId: activeCart} =
+						Liferay?.CommerceContext?.order;
+
+					const includesActiveCart = !!selectedCarts.find(
+						({id}) => id === activeCart
+					);
+
+					if (includesActiveCart) {
+						Liferay.fire(commerceEvents.CURRENT_ORDER_DELETED, {
+							accountId: parseInt(
+								props.additionalProps.accountId,
+								10
+							),
+							id: 0,
+							order: {id: 0},
+						});
+					}
+				}
+				else if (importTask.executeStatus === 'FAILED') {
+					failedAttempts = MAX_ATTEMPTS;
+					numberOfAttempts = MAX_ATTEMPTS;
+				}
+			})
+			.catch(() => {
+				failedAttempts++;
+			})
+			.finally(() => {
+				if (numberOfAttempts >= MAX_ATTEMPTS) {
+					clearInterval(retryStrategy);
+
+					const hasErrors = numberOfAttempts === failedAttempts;
+
+					openToast({
+						message: hasErrors
+							? Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								)
+							: Liferay.Language.get(
+									'it-looks-like-this-is-taking-longer-than-expected'
+								),
+						type: hasErrors ? 'danger' : 'warning',
+					});
+				}
+			});
+	}, TIMEOUT);
+};
 
 const PendingOrdersFDSPropsTransformer = (props) => ({
 	...props,
@@ -150,41 +220,18 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 				)}\n${Liferay.Language.get('this-operation-cannot-be-undone')}`,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						DeliveryCartAPI.deleteCartsById(selectedCarts)
-							.then(() => {
-								setTimeout(() => {
-									loadData();
-
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										type: 'success',
-									});
-
-									const {orderId: activeCart} =
-										Liferay?.CommerceContext?.order;
-
-									const includesActiveCart =
-										!!selectedCarts.find(
-											({id}) => id === activeCart
-										);
-
-									if (includesActiveCart) {
-										Liferay.fire(
-											commerceEvents.CURRENT_ORDER_DELETED,
-											{
-												accountId: parseInt(
-													props.additionalProps
-														.accountId,
-													10
-												),
-												id: 0,
-												order: {id: 0},
-											}
-										);
-									}
-								}, 500);
+						DeliveryCartAPI.deleteCartsById(
+							selectedCarts.map((item) => {
+								return {id: item.id};
+							})
+						)
+							.then((task) => {
+								checkImportStatus(
+									loadData,
+									props,
+									selectedCarts,
+									task
+								);
 							})
 							.catch((error) => {
 								openToast({

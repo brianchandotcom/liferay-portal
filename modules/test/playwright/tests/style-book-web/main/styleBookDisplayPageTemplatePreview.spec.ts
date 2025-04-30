@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,

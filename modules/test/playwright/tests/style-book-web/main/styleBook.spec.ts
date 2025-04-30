@@ -5,20 +5,20 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
-import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
-import {MasterPagesPage} from '../../pages/layout-page-template-admin-web/MasterPagesPage';
-import {StyleBooksPage} from '../../pages/style-book-web/StyleBooksPage';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
+import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
+import {MasterPagesPage} from '../../../pages/layout-page-template-admin-web/MasterPagesPage';
+import {StyleBooksPage} from '../../../pages/style-book-web/StyleBooksPage';
+import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
 	apiHelpersTest,

@@ -5,15 +5,15 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
-import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
-import {navigationMenusPagesTest} from '../site-navigation-admin-web/fixtures/navigationMenusPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
+import getRandomString from '../../../utils/getRandomString';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {navigationMenusPagesTest} from '../../site-navigation-admin-web/main/fixtures/navigationMenusPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

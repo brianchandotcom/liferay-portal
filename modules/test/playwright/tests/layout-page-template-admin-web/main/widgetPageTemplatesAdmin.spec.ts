@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {widgetPageTemplatesPagesTest} from '../../fixtures/widgetPageTemplatesPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {widgetPageTemplatesPagesTest} from '../../../fixtures/widgetPageTemplatesPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	isolatedSiteTest,

@@ -6,20 +6,20 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {zipFolder} from '../../utils/zip';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {zipFolder} from '../../../utils/zip';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,

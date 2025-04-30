@@ -5,17 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import {KnowledgeBaseEditArticlePage} from '../../pages/knowledge-base-web/KnowledgeBaseEditArticlePage';
-import getLoggedInPage from '../../utils/getLoggedInPage';
-import getRandomString from '../../utils/getRandomString';
-import {performLogout} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {knowledgeBasePages} from '../../../fixtures/knowledgeBasePagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import {KnowledgeBaseEditArticlePage} from '../../../pages/knowledge-base-web/KnowledgeBaseEditArticlePage';
+import getLoggedInPage from '../../../utils/getLoggedInPage';
+import getRandomString from '../../../utils/getRandomString';
+import {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {KnowledgeBaseUrls} from './utils/knowledgeBaseUrls';
 
 const test = mergeTests(

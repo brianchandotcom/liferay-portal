@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import getRandomString from '../../utils/getRandomString';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 
 const test = mergeTests(

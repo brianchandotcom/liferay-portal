@@ -5,10 +5,10 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {LayoutSetPrototype} from '../../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import getBasicWebContentStructureId from '../../../../utils/structured-content/getBasicWebContentStructureId';
 
 export default async function createSiteTemplate({
 	apiHelpers,

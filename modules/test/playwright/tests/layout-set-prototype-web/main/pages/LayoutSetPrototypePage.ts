@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
+import {liferayConfig} from '../../../../liferay.config';
+import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
 
 export class LayoutSetPrototypePage {
 	readonly addLink: Locator;

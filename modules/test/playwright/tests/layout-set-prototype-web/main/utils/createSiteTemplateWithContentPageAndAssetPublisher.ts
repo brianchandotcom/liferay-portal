@@ -5,13 +5,13 @@
 
 import {Page} from '@playwright/test';
 
-import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {LayoutSetPrototype} from '../../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage';
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {UIElementsPage} from '../../../../pages/uielements/UIElementsPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import createSiteTemplate from './createSiteTemplate';
 
 export default async function createSiteTemplateWithContentPageAndAssetPublisher({

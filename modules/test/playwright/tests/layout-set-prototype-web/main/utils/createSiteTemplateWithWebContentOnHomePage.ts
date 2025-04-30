@@ -5,20 +5,21 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {WebContentDisplayPage} from '../../../pages/journal-content-web/WebContentDisplayPage';
-import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {LayoutSetPrototype} from '../../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import {WebContentDisplayPage} from '../../../../pages/journal-content-web/WebContentDisplayPage';
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
+import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {UIElementsPage} from '../../../../pages/uielements/UIElementsPage';
+import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
 import createSiteTemplate from './createSiteTemplate';
 
-export default async function createSiteTemplateWithWebContentOnContentPage({
+export default async function createSiteTemplateWithWebContentOnHomePage({
 	apiHelpers,
+	layoutSetPrototypePage,
 	page,
 	pageEditorPage,
-	pagesAdminPage,
 	productMenuPage,
 	templateName,
 	text,
@@ -27,9 +28,10 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	webContentName,
 }: {
 	apiHelpers: ApiHelpers;
+	applicationsMenuPage: ApplicationsMenuPage;
+	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
 	pageEditorPage: PageEditorPage;
-	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
 	templateName: string;
 	text: string;
@@ -47,11 +49,7 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	});
 
 	await productMenuPage.goToPages();
-	await pagesAdminPage.newButton.click();
-	await pagesAdminPage.addPage({
-		name: templateName,
-	});
-
+	await layoutSetPrototypePage.homePageLink.click();
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay({
 		webContentName,

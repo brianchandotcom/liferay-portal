@@ -6,12 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
-import {FormBuilderPage} from '../../pages/dynamic-data-mapping-form-web/FormBuilderPage';
-import {FormsPage} from '../../pages/dynamic-data-mapping-form-web/FormsPage';
-import performLogin from '../../utils/performLogin';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {FormBuilderPage} from '../../../pages/dynamic-data-mapping-form-web/FormBuilderPage';
+import {FormsPage} from '../../../pages/dynamic-data-mapping-form-web/FormsPage';
+import performLogin from '../../../utils/performLogin';
 import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(

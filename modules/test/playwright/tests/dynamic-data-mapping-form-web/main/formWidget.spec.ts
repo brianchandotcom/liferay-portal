@@ -5,20 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import getLoremIpsumText from '../../utils/lorem-ipsum-util/getLoremIpsumText';
-import getGridDefinition from '../layout-content-page-editor-web/utils/getGridDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
-import evaluateKeepCheckingAfterFound from '../object-web/utils/keepCheckingAfterFound';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import getLoremIpsumText from '../../../utils/lorem-ipsum-util/getLoremIpsumText';
+import getGridDefinition from '../../layout-content-page-editor-web/main/utils/getGridDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import evaluateKeepCheckingAfterFound from '../../object-web/main/utils/keepCheckingAfterFound';
 import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(

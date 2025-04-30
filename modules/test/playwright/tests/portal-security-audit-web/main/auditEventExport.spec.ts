@@ -6,10 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 import {readFileSync, statSync} from 'fs';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import {getTempDir} from '../../utils/temp';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {getTempDir} from '../../../utils/temp';
 
 export const test = mergeTests(loginTest(), applicationsMenuPageTest);
 

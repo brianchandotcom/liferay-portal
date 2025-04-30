@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {notificationPagesTest} from '../../fixtures/notificationPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import clearInvalidUserNotifications from '../../utils/clearInvalidUserNotifications';
-import retryGetWorkflowTasksBySubmittingUser from '../../utils/retryGetWorkflowTasksBySubmittingUser';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import clearInvalidUserNotifications from '../../../utils/clearInvalidUserNotifications';
+import retryGetWorkflowTasksBySubmittingUser from '../../../utils/retryGetWorkflowTasksBySubmittingUser';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

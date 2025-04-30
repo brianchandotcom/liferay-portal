@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {notificationPagesTest} from '../../fixtures/notificationPagesTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,

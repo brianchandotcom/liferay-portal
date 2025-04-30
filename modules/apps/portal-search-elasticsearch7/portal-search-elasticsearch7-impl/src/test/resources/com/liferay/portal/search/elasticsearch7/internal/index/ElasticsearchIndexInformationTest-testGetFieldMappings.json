@@ -1666,9 +1666,6 @@
 				"nodeId": {
 					"type": "keyword"
 				},
-				"objectFolderExternalReferenceCode": {
-					"type": "keyword"
-				},
 				"organizationId": {
 					"type": "keyword"
 				},

@@ -8,8 +8,8 @@ import {expect, mergeTests, test} from '@playwright/test';
 import {
 	FeatureFlagsOptions,
 	featureFlagsTest,
-} from '../../../fixtures/featureFlagsTest';
-import {getHeader} from '../../../helpers/ApiHelpers';
+} from '../../../../fixtures/featureFlagsTest';
+import {getHeader} from '../../../../helpers/ApiHelpers';
 
 function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
 	return mergeTests(

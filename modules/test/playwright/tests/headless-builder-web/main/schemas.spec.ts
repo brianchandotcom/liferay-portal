@@ -9,9 +9,9 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {waitForLoading} from '../osb-faro-web/utils/loading';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const testFeatureFlagsEnabled = mergeTests(

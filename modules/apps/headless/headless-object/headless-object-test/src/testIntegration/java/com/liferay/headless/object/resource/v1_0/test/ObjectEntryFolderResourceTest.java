@@ -144,7 +144,7 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"label", "title"};
+		return new String[] {"description", "label", "title"};
 	}
 
 	@Override
@@ -153,6 +153,7 @@ public class ObjectEntryFolderResourceTest
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

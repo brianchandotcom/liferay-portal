@@ -952,9 +952,9 @@ public class ClientExtensionProjectConfigurator
 				"--add-opens=java.base/sun.util.calendar=ALL-UNNAMED",
 				"--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED "));
 
-		TaskContainer tasks = project.getTasks();
+		TaskContainer taskContainer = project.getTasks();
 
-		tasks.withType(
+		taskContainer.withType(
 			JavaExec.class,
 			javaExecTask -> {
 				javaExecTask.environment(environmentVariables);

@@ -3243,6 +3243,13 @@
 	},
 	{
 		"classNames": [
+			"JournalArticle"
+		],
+		"from": "setDDMStructureKey(String paramName)",
+		"issueKey": "LPD-30559"
+	},
+	{
+		"classNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil",
 			"UserService",

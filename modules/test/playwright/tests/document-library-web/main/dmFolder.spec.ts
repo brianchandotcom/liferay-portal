@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {openFieldset} from '../../utils/openFieldset';
-import {PORTLET_URLS} from '../../utils/portletUrls';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 const test = mergeTests(
 	apiHelpersTest,

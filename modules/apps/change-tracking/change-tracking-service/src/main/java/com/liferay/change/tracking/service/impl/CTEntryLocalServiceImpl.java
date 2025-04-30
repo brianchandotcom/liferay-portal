@@ -88,15 +88,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CTEntry deleteCTEntry(CTEntry ctEntry) throws PortalException {
-		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
-			ctEntry.getCtCollectionId());
-
-		if (ctCollection.isReadOnly()) {
-			throw new PortalException(
-				"Change tracking collection " + ctCollection + " is read only");
-		}
-
-		return ctEntryPersistence.remove(ctEntry);
+		return deleteCTEntry(ctEntry, false);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

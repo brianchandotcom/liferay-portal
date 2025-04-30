@@ -139,13 +139,13 @@ public class
 		}
 
 		String[] searchableAssetTypeWithSubtype = StringUtil.split(
-			searchableAssetTypes[0], StringPool.POUND);
+			searchableAssetTypes[0], "&&");
 
 		String className = searchableAssetTypeWithSubtype[0];
 
 		for (int i = 1; i < searchableAssetTypes.length; i++) {
 			searchableAssetTypeWithSubtype = StringUtil.split(
-				searchableAssetTypes[i], StringPool.POUND);
+				searchableAssetTypes[i], "&&");
 
 			if (!className.equals(searchableAssetTypeWithSubtype[0])) {
 				return AssetEntry.class.getName();

@@ -104,7 +104,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		}
 
 		String[] searchableAssetTypeWithSubtype = StringUtil.split(
-			searchableAssetTypes[0], StringPool.POUND);
+			searchableAssetTypes[0], "&&");
 
 		if (searchableAssetTypeWithSubtype.length != 3) {
 			return StringPool.BLANK;

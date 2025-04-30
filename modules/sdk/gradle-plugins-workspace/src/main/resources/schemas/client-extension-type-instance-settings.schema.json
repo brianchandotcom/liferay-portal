@@ -653,17 +653,29 @@
 				"captchaName": {
 					"type": "string"
 				},
+				"captchaResponseParameterName": {
+					"type": "string"
+				},
 				"customElementExternalReferenceCode": {
+					"type": "string"
+				},
+				"oAuth2ApplicationExternalReferenceCode": {
 					"type": "string"
 				},
 				"pid": {
 					"const": "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration"
+				},
+				"resourcePath": {
+					"type": "string"
 				}
 			},
 			"required": [
 				"pid",
 				"captchaName",
-				"customElementExternalReferenceCode"
+				"captchaResponseParameterName",
+				"customElementExternalReferenceCode",
+				"oAuth2ApplicationExternalReferenceCode",
+				"resourcePath"
 			]
 		},
 		{

@@ -142,7 +142,7 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 
 		String captchaResponse = ParamUtil.getString(
 			httpServletRequest,
-			_functionCaptchaImplConfiguration.responseParameterName());
+			_functionCaptchaImplConfiguration.captchaResponseParameterName());
 
 		while (Validator.isBlank(captchaResponse) &&
 			   (httpServletRequest instanceof
@@ -153,7 +153,8 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 
 			captchaResponse = ParamUtil.getString(
 				httpServletRequest,
-				_functionCaptchaImplConfiguration.responseParameterName());
+				_functionCaptchaImplConfiguration.
+					captchaResponseParameterName());
 		}
 
 		if (Validator.isBlank(captchaResponse)) {

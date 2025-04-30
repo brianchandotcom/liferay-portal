@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import postSingleApproverCopy from './utils/postSingleApproverCopy';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);

@@ -55,6 +55,10 @@
 						path: 'custom_fields.js',
 						requires: ['liferay-portlet-dynamic-data-mapping'],
 					},
+					'liferay-translation-manager': {
+						path: 'translation_manager.js',
+						requires: ['aui-base'],
+					},
 				},
 				root: MODULE_PATH + '/js/legacy/',
 			},

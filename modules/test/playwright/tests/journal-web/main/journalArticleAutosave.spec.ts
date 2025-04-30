@@ -5,18 +5,18 @@
 
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import getRandomString from '../../utils/getRandomString';
-import {openFieldset} from '../../utils/openFieldset';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 

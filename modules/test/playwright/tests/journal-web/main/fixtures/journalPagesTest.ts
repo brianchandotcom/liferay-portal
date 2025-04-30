@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {FriendlyUrlInstanceSettingsPage} from '../../../pages/friendly-url-web/FriendlyUrlInstanceSettingsPage';
-import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
+import {FriendlyUrlInstanceSettingsPage} from '../../../../pages/friendly-url-web/FriendlyUrlInstanceSettingsPage';
+import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {JournalEditArticlePage} from '../pages/JournalEditArticlePage';
 import {JournalEditArticleTranslationsPage} from '../pages/JournalEditArticleTranslationsPage';
 import {JournalEditFolderPage} from '../pages/JournalEditFolderPage';

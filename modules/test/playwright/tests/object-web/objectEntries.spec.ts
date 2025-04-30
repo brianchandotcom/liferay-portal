@@ -28,7 +28,7 @@ import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {mockedObjectFields} from './dependencies/objectMockedFields';

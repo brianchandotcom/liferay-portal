@@ -11,7 +11,7 @@ import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

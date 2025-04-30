@@ -12,8 +12,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
-import {JournalPage} from '../../journal-web/pages/JournalPage';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {JournalPage} from '../../journal-web/main/pages/JournalPage';
 
 export const test = mergeTests(
 	apiHelpersTest,

@@ -5,9 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class JournalStructuresPage {
 	readonly page: Page;

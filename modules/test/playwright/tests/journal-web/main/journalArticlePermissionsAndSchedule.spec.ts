@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
 const scheduleTest = mergeTests(

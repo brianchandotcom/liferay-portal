@@ -12,7 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
 import {navigationMenusPagesTest} from '../site-navigation-admin-web/fixtures/navigationMenusPagesTest';
 
 export const test = mergeTests(

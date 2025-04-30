@@ -575,6 +575,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.10.0", "10.11.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntryVersion", "objectDefinitionId LONG"));
+
+		registry.register(
+			"10.11.0", "10.12.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntryFolder", "description STRING null"));
 	}
 
 	@Reference

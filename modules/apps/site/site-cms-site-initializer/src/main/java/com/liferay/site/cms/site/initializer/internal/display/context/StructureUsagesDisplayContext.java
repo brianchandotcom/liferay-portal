@@ -43,9 +43,9 @@ public class StructureUsagesDisplayContext {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=objectDefinitionId eq ");
+		sb.append("filter=(objectDefinitionId eq ");
 		sb.append(ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"));
-		sb.append("&nestedFields=embedded");
+		sb.append(")&nestedFields=embedded");
 
 		return sb.toString();
 	}

@@ -5,24 +5,24 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
 import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
-} from '../analytics-settings-web/utils/analytics-settings';
-import {faroConfig} from '../osb-faro-web/main/faro.config';
-import {clickOnLink} from '../osb-faro-web/main/utils/actions';
+} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {faroConfig} from '../../osb-faro-web/main/faro.config';
+import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
 import {
 	createSitePage,
 	navigateToDXPandDeleteSite,
 	navigateToSitePage,
-} from '../osb-faro-web/main/utils/portal';
-import {openABTesSidebar} from '../segment-experiment-web/utils/ab-test';
+} from '../../osb-faro-web/main/utils/portal';
+import {openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
 	apiHelpersTest,

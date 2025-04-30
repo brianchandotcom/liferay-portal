@@ -460,7 +460,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.taxonomy.client', and version '4.0.40'."
+        'com.liferay.headless.admin.taxonomy.client', and version '4.0.41'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -993,6 +993,36 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Keyword"
+            tags: ["Keyword"]
+    "/keywords/merge-keywords/{targetKeywordId}":
+        put:
+            operationId: putKeywordMergeKeyword
+            parameters:
+                -   in: path
+                    name: targetKeywordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["Keyword"]
     "/keywords/ranked":
         get:

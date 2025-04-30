@@ -6,23 +6,23 @@
 import {expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
-import {userPersonalBarPagesTest} from '../../fixtures/userPersonalBarPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import {userPersonalBarPagesTest} from '../../../fixtures/userPersonalBarPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
 	performUserSwitch,
 	userData,
-} from '../../utils/performLogin';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+} from '../../../utils/performLogin';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,

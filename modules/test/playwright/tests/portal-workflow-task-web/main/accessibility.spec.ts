@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {checkAccessibility} from '../../utils/checkAccessibility';
-import clearInvalidUserNotifications from '../../utils/clearInvalidUserNotifications';
-import retryGetWorkflowTasksBySubmittingUser from '../../utils/retryGetWorkflowTasksBySubmittingUser';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
+import clearInvalidUserNotifications from '../../../utils/clearInvalidUserNotifications';
+import retryGetWorkflowTasksBySubmittingUser from '../../../utils/retryGetWorkflowTasksBySubmittingUser';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
 

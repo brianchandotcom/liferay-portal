@@ -83,6 +83,8 @@ test('can interact with a large list of fields on the form entries page', async 
 	formsPage,
 	page,
 }) => {
+	test.slow();
+
 	await formBuilderPage.goToNew();
 
 	for (const index of Array.from(Array(30).keys())) {

@@ -5,13 +5,13 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {getRandomInt} from '../../../utils/getRandomInt';
-import getRandomString from '../../../utils/getRandomString';
-import {openFieldset} from '../../../utils/openFieldset';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../../../utils/getRandomInt';
+import getRandomString from '../../../../utils/getRandomString';
+import {openFieldset} from '../../../../utils/openFieldset';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {JournalPage} from './JournalPage';
 
 export class JournalEditArticlePage {

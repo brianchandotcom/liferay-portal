@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {JournalStructuresPage} from './JournalStructuresPage';
 
 export enum FIELD_TYPES {

@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {JournalStructuresPage} from './JournalStructuresPage';
 
 export class JournalEditStructureDefaultValuesPage {

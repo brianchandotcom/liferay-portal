@@ -9,7 +9,7 @@ import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.f
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {journalPagesTest} from '../../journal-web/fixtures/journalPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 const baseTest = mergeTests(
 	documentLibraryPagesTest,

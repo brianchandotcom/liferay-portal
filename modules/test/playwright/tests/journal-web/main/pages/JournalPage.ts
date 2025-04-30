@@ -5,10 +5,10 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {expandSection} from '../../../utils/expandSection';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../../../utils/expandSection';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class JournalPage {
 	readonly page: Page;

@@ -25,11 +25,14 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.IconItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.marketplace.constants.MarketplaceActionKeys;
+import com.liferay.marketplace.constants.MarketplacePortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -768,6 +772,19 @@ public class FragmentDisplayContext {
 
 	public boolean showFragmentCollectionActions() {
 		return !isSelectedFragmentCollectionContributor();
+	}
+
+	public boolean showMarketplace() throws PortalException {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				MarketplacePortletKeys.FRAGMENTS,
+				MarketplaceActionKeys.VIEW_APPS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private long _getDefaultFragmentCollectionId() {

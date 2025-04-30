@@ -80,7 +80,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 									</c:if>
 								</li>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-34938") && PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.VIEW_APPS) %>'>
+								<c:if test="<%= fragmentEntriesDisplayContext.showMarketplace() %>">
 									<li>
 										<div class="marketplace-button">
 											<react:component

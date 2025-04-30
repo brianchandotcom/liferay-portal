@@ -8,3 +8,7 @@ create index IX_7CA33F81 on DepotEntryGroupRel (toGroupId, ddmStructuresAvailabl
 create unique index IX_1DD0EA9C on DepotEntryGroupRel (toGroupId, depotEntryId, ctCollectionId);
 create index IX_BA106967 on DepotEntryGroupRel (toGroupId, searchable);
 create unique index IX_A83D9516 on DepotEntryGroupRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);
+
+create index IX_B423314A on DepotEntryPin (depotEntryId);
+create unique index IX_D51E5D62 on DepotEntryPin (userId, depotEntryId, ctCollectionId);
+create unique index IX_F06E6CD5 on DepotEntryPin (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);

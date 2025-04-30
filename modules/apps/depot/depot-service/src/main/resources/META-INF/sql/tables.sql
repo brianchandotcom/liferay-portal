@@ -41,3 +41,15 @@ create table DepotEntryGroupRel (
 	lastPublishDate DATE null,
 	primary key (depotEntryGroupRelId, ctCollectionId)
 );
+
+create table DepotEntryPin (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	depotEntryPinId LONG not null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	depotEntryId LONG,
+	primary key (depotEntryPinId, ctCollectionId)
+);

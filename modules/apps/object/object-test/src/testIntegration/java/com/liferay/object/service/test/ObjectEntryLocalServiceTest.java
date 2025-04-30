@@ -3038,9 +3038,10 @@ public class ObjectEntryLocalServiceTest {
 				companyObjectDefinition.getObjectDefinitionId()
 			).build());
 
-		_objectDefinitionLocalService.updateTitleObjectFieldId(
-			companyObjectDefinition.getObjectDefinitionId(),
-			objectField.getObjectFieldId());
+		companyObjectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				companyObjectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId());
 
 		ObjectEntry companyObjectEntry2 = _addObjectEntry(
 			0, companyObjectDefinition.getObjectDefinitionId(),
@@ -3067,6 +3068,22 @@ public class ObjectEntryLocalServiceTest {
 			2, companyObjectDefinition, companyObjectEntry1);
 		_assertFriendlyURLEntriesSize(
 			1, companyObjectDefinition, companyObjectEntry2);
+
+		companyObjectDefinition.setTitleObjectFieldId(0);
+
+		companyObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				companyObjectDefinition);
+
+		ObjectEntry companyObjectEntry3 = _addObjectEntry(
+			0, companyObjectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.put(
+				"en_US", companyObjectEntry3.getExternalReferenceCode()
+			).build(),
+			companyObjectEntry3.getURLTitleMap());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			companyObjectDefinition);

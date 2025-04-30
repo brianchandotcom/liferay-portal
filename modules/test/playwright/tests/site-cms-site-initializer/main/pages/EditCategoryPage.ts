@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class EditCategoryPage {
 	readonly page: Page;

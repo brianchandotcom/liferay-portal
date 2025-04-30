@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class EditVocabularyPage {
 	readonly page: Page;

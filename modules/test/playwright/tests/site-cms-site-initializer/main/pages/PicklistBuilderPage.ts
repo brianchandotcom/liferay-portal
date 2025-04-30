@@ -5,9 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class PicklistBuilderPage {
 	readonly page: Page;

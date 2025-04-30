@@ -9,22 +9,25 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
-import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {readFileFromZip} from '../../utils/zip';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {depotAdminPageTest} from '../../../fixtures/depotAdminPageTest';
+import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
+import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';

@@ -6,7 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {DateOptions} from '../types/dateOptions';
 import {ExportImportPage} from './ExportImportPage';
 
@@ -101,7 +101,7 @@ export class CompanyExportImportPage {
 		await this.page
 			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
 			.first()
-			.locator('../..')
+			.locator('../../..')
 			.getByText('Successful')
 			.waitFor();
 
@@ -165,7 +165,7 @@ export class CompanyExportImportPage {
 		const fileName = path.basename(filePath);
 		await this.page
 			.getByText(fileName)
-			.locator('../../..')
+			.locator('../../../..')
 			.getByText('Successful')
 			.waitFor();
 	}

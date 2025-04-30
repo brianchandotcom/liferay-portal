@@ -6,16 +6,19 @@
 import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import {getRandomInt} from '../../utils/getRandomInt';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {getTempDir} from '../../utils/temp';
-import {readFileFromZip} from '../../utils/zip';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import {getTempDir} from '../../../utils/temp';
+import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
 

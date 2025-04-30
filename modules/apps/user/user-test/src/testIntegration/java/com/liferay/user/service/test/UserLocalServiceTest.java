@@ -1424,11 +1424,19 @@ public class UserLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED, user.getStatus());
 
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					user.getGroupId(), user.getUserId()));
+
+			_userLocalService.updatePassword(
+				user.getUserId(), "newpassword", "newpassword", false);
+
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"You recently created an account"));
+					"The request for a new password"));
 		}
 		finally {
+			ServiceContextThreadLocal.popServiceContext();
 			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 				workflowDefinitionLink);
 		}

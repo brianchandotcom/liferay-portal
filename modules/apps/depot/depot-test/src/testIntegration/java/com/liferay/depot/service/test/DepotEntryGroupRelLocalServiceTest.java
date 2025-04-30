@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -228,6 +229,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 			(Map<Locale, String>)null, true, true, false,
 			ServiceContextTestUtil.getServiceContext());
 
+		int systemEventsCount = _systemEventLocalService.getSystemEventsCount();
+
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
 
@@ -235,6 +238,10 @@ public class DepotEntryGroupRelLocalServiceTest {
 			2,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
+
+		Assert.assertEquals(
+			systemEventsCount + 1,
+			_systemEventLocalService.getSystemEventsCount());
 
 		Assert.assertNull(
 			_depotEntryGroupRelLocalService.fetchDepotEntryGroupRel(
@@ -279,6 +286,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
 
+		int systemEventsCount = _systemEventLocalService.getSystemEventsCount();
+
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
 
@@ -286,6 +295,10 @@ public class DepotEntryGroupRelLocalServiceTest {
 			0,
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 				depotEntry));
+
+		Assert.assertEquals(
+			systemEventsCount + 3,
+			_systemEventLocalService.getSystemEventsCount());
 
 		Assert.assertNull(
 			_depotEntryGroupRelLocalService.fetchDepotEntryGroupRel(
@@ -526,5 +539,8 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 	@Inject
 	private Sites _sites;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 }

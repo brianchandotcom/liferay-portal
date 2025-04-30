@@ -123,7 +123,8 @@ public abstract class BaseSectionDisplayContext {
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-					"/cms/edit_content_item?className={entryClassName}&",
+					themeDisplay.getPathCms(),
+					"/edit_content_item?className={entryClassName}&",
 					"objectEntryId={embedded.id}&redirect=",
 					themeDisplay.getURLCurrent()),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
@@ -177,8 +178,8 @@ public abstract class BaseSectionDisplayContext {
 						StringBundler.concat(
 							themeDisplay.getPortalURL(),
 							themeDisplay.getPathMain(),
-							"/cms/add_structured_content_item?",
-							"objectDefinitionId=",
+							themeDisplay.getPathCms(),
+							"/add_structured_content_item?objectDefinitionId=",
 							objectDefinition.getObjectDefinitionId(), "&plid=",
 							themeDisplay.getPlid()));
 					dropdownItem.putData(

@@ -120,6 +120,11 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
+					"allSpacesURL",
+					StringBundler.concat(
+						themeDisplay.getPathFriendlyURLPublic(),
+						themeDisplay.getPathCms(), "/all-spaces")
+				).put(
 					"assetLibraries", assetLibrariesJSONArray
 				).put(
 					"assetLibrariesCount", assetLibrariesCount

@@ -99,6 +99,14 @@ public class CTEntryLocalServiceWrapper
 		return _ctEntryLocalService.deleteCTEntry(ctEntry);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTEntry deleteCTEntry(
+			com.liferay.change.tracking.model.CTEntry ctEntry, boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctEntryLocalService.deleteCTEntry(ctEntry, force);
+	}
+
 	/**
 	 * Deletes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

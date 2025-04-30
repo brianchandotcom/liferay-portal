@@ -105,6 +105,10 @@ public interface CTEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public CTEntry deleteCTEntry(CTEntry ctEntry) throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
+	public CTEntry deleteCTEntry(CTEntry ctEntry, boolean force)
+		throws PortalException;
+
 	/**
 	 * Deletes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

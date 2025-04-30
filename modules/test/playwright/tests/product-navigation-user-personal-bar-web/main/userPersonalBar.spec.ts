@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {userPersonalBarPagesTest} from '../../fixtures/userPersonalBarPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {userPersonalBarPagesTest} from '../../../fixtures/userPersonalBarPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

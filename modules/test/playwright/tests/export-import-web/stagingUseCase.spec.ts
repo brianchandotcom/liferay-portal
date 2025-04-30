@@ -94,37 +94,12 @@ test(
 		await stagingPage.goto(site.name + '-staging');
 		await stagingPage.publish(['Web Content 1 Items Web']);
 
-		let tomcatDir;
-		if (exportImportConfig.environment.tomcatDir) {
-			tomcatDir = exportImportConfig.environment.tomcatDir;
-		}
-		else {
-
-			// for local runs modify
-
-			tomcatDir = path.resolve(
-				__dirname,
-				'..',
-				'..',
-				'..',
-				'..',
-				'..',
-				'..',
-				'masterbundle'
-			);
-		}
-	await stagingPage.goto(site.name + '-staging');
- 
-	await stagingPage.publish(['Web Content 1 Items Web']);
-
+		const tomcatDir = exportImportConfig.environment.tomcatDir;
+		
 		const files = readdirSync(tomcatDir).filter((file) =>
 			file.startsWith('tomcat-')
 		);
-		if (!files.length) {
-			console.log('No tomcat folder found');
 
-			return;
-		}
 		const hasFolder = await _unzipAndCheckFolder(
 			path.resolve(tomcatDir, files[0], 'temp')
 		);
@@ -161,13 +136,7 @@ const _unzipAndCheckFolder = async (
 			mostRecentFilePath,
 			folderName
 		);
-		console.log(
-			hasFolder
-				? `Folder "${folderName}" found in most recent LAR file: ${files[0].file}`
-				: `Folder "${folderName}" not found in most recent LAR file: ${files[0].file}`
-		);
-
-		return hasFolder;
+				return hasFolder;
 	}
 	catch (error) {
 		console.error(`Error reading file ${files[0].file}: ${error}`);

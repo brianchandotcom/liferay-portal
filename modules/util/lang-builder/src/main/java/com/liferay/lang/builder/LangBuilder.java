@@ -159,12 +159,14 @@ public class LangBuilder {
 		_createProperties(content, "zh_CN"); // Chinese (China)
 		_createProperties(content, "zh_TW"); // Chinese (Taiwan)
 		_createProperties(content, "hr"); // Croatian
+		_createProperties(content, "hr_BA"); // Croatian (Bosnia & Herzegovina)
 		_createProperties(content, "cs"); // Czech
 		_createProperties(content, "da"); // Danish
 		_createProperties(content, "nl"); // Dutch (Netherlands)
 		_createProperties(content, "nl_BE", "nl"); // Dutch (Belgium)
 		_createProperties(content, "en_AU"); // English (Australia)
 		_createProperties(content, "en_CA"); // English (Canada)
+		_createProperties(content, "en_IE"); // English (Ireland)
 		_createProperties(content, "en_GB"); // English (United Kingdom)
 		_createProperties(content, "et"); // Estonian
 		_createProperties(content, "fi"); // Finnish

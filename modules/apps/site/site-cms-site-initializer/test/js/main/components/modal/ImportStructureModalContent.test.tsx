@@ -7,10 +7,12 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import * as api from '../../../../../src/main/resources/META-INF/resources/js/api/api';
 import ImportStructureModalContent from '../../../../../src/main/resources/META-INF/resources/js/main/components/modal/ImportStructureModalContent';
+import * as api from '../../../../../src/main/resources/META-INF/resources/js/services/api';
 
-jest.mock('../../../../../src/main/resources/META-INF/resources/js/api/api');
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/js/services/api'
+);
 
 const mockPostFormData = api.postFormData as jest.MockedFunction<
 	typeof api.postFormData

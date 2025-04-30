@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {IdentityProviderPage} from '../../../pages/saml-web/IdentityProviderPage';
+import {IdentityProviderPage} from '../../../../pages/saml-web/IdentityProviderPage';
 
 export type TIdentityProvider = {
 	authnRequestSigningAllowsDynamicAcsUrl?: boolean;

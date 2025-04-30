@@ -10,9 +10,9 @@ import {
 	DEFAULT_SP_CONNECTION_VALUES,
 	TIdpConnection,
 	TSpConnection,
-} from '../../../helpers/SamlProviderConnectionHelper';
-import {IdentityProviderConnectionsPage} from '../../../pages/saml-web/IdentityProviderConnectionsPage';
-import {ServiceProviderConnectionsPage} from '../../../pages/saml-web/ServiceProviderConnectionsPage';
+} from '../../../../helpers/SamlProviderConnectionHelper';
+import {IdentityProviderConnectionsPage} from '../../../../pages/saml-web/IdentityProviderConnectionsPage';
+import {ServiceProviderConnectionsPage} from '../../../../pages/saml-web/ServiceProviderConnectionsPage';
 
 const _DEFAULT_METADATA_PATH = '/c/portal/saml/metadata';
 

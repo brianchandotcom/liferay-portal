@@ -5,40 +5,43 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {searchAdminPageTest} from '../../fixtures/searchAdminPageTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {TCustomField, TInputField} from '../../helpers/CustomFieldTypesHelper';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {searchAdminPageTest} from '../../../fixtures/searchAdminPageTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {
+	TCustomField,
+	TInputField,
+} from '../../../helpers/CustomFieldTypesHelper';
 import {
 	DEFAULT_IDP_CONNECTION_VALUES,
 	DEFAULT_SP_CONNECTION_VALUES,
 	TIdpConnection,
 	TSpConnection,
-} from '../../helpers/SamlProviderConnectionHelper';
-import {EActions} from '../../helpers/ServerAdministrationHelper';
-import {liferayConfig} from '../../liferay.config';
-import {InstanceSettingsPage} from '../../pages/configuration-admin-web/InstanceSettingsPage';
-import {GeneralPage} from '../../pages/instance-configuration-web/GeneralPage';
-import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
+} from '../../../helpers/SamlProviderConnectionHelper';
+import {EActions} from '../../../helpers/ServerAdministrationHelper';
+import {liferayConfig} from '../../../liferay.config';
+import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {GeneralPage} from '../../../pages/instance-configuration-web/GeneralPage';
+import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {
 	AttributeMapping,
 	IdentityProviderConnectionsPage,
-} from '../../pages/saml-web/IdentityProviderConnectionsPage';
-import {SamlAdminPage} from '../../pages/saml-web/SamlAdminPage';
-import {ServiceProviderConnectionsPage} from '../../pages/saml-web/ServiceProviderConnectionsPage';
-import {SiteSettingsPage} from '../../pages/site-admin-web/SiteSettingsPage';
-import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
-import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {waitForLoading} from '../osb-faro-web/main/utils/loading';
+} from '../../../pages/saml-web/IdentityProviderConnectionsPage';
+import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
+import {ServiceProviderConnectionsPage} from '../../../pages/saml-web/ServiceProviderConnectionsPage';
+import {SiteSettingsPage} from '../../../pages/site-admin-web/SiteSettingsPage';
+import {EditUserPage} from '../../../pages/users-admin-web/EditUserPage';
+import {UsersAndOrganizationsPage} from '../../../pages/users-admin-web/UsersAndOrganizationsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 import {
 	TIdentityProvider,
 	configureIdentityProvider,

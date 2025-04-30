@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {ServiceProviderPage} from '../../../pages/saml-web/ServiceProviderPage';
+import {ServiceProviderPage} from '../../../../pages/saml-web/ServiceProviderPage';
 
 export type TServiceProvider = {
 	allowShowingTheLoginPortlet?: boolean;

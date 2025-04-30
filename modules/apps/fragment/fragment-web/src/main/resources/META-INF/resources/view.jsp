@@ -85,30 +85,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 										<div class="marketplace-button">
 											<react:component
 												module="{MarketplaceButton} from layout-js-components-web"
-												props='<%=
-													HashMapBuilder.<String, Object>put(
-														"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")
-													).put(
-														"fragmentPortletNamespace", liferayPortletResponse.getNamespace()
-													).put(
-														"fragmentsImportURL",
-														importDisplayContext.getProps(
-														).get(
-															"importURL"
-														)
-													).put(
-														"heading", LanguageUtil.get(request, "marketplace-is-now-in-fragments")
-													).put(
-														"isMarketplaceButtonVisited", GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited", "false"))
-													).put(
-														"permissions",
-														HashMapBuilder.<String, Object>put(
-															"installFreeApps", PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)
-														).put(
-															"purchaseAndInstallPaidApps", PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS)
-														).build()
-													).build()
-												%>'
+												props="<%= fragmentEntriesDisplayContext.getMarketplaceProps() %>"
 											/>
 										</div>
 									</li>

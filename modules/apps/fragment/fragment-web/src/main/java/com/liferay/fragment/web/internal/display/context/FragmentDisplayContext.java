@@ -48,10 +48,12 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,6 +70,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -551,6 +554,58 @@ public class FragmentDisplayContext {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		return group.getDescriptiveName(_themeDisplay.getLocale());
+	}
+
+	public Map<String, Object> getMarketplaceProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"body",
+			LanguageUtil.get(
+				_httpServletRequest,
+				"we-are-excited-to-share-that-marketplace-is-now-part-of-" +
+					"fragments")
+		).put(
+			"fragmentPortletNamespace", _renderResponse.getNamespace()
+		).put(
+			"fragmentsImportURL",
+			() -> {
+				ResourceURL importURL = _renderResponse.createResourceURL();
+
+				importURL.setParameter(
+					"fragmentCollectionId",
+					ParamUtil.getString(
+						_httpServletRequest, "fragmentCollectionId"));
+				importURL.setResourceID("/fragment/import");
+
+				return importURL.toString();
+			}
+		).put(
+			"heading",
+			LanguageUtil.get(
+				_httpServletRequest, "marketplace-is-now-in-fragments")
+		).put(
+			"isMarketplaceButtonVisited",
+			GetterUtil.getBoolean(
+				SessionClicks.get(
+					_httpServletRequest,
+					_renderResponse.getNamespace() +
+						"isMarketplaceButtonVisited",
+					"false"))
+		).put(
+			"permissions",
+			HashMapBuilder.<String, Object>put(
+				"installFreeApps",
+				PortletPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(),
+					MarketplacePortletKeys.FRAGMENTS,
+					MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)
+			).put(
+				"purchaseAndInstallPaidApps",
+				PortletPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(),
+					MarketplacePortletKeys.FRAGMENTS,
+					MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS)
+			).build()
+		).build();
 	}
 
 	public String getNavigation() {

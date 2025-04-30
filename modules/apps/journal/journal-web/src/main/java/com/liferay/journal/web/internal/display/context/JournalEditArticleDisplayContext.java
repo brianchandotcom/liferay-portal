@@ -1151,7 +1151,7 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"showPublishModal", _isShowPublishModal()
 		).put(
-			"timeZone", getTimeZoneName()
+			"timeZone", getTimeZone()
 		).put(
 			"workflowEnabled", () -> _isWorkflowEnabled()
 		).build();
@@ -1322,6 +1322,16 @@ public class JournalEditArticleDisplayContext {
 						requestBackedPortletURLFactory, "selectDDMTemplate",
 						ddmTemplateItemSelectorCriterion));
 			}
+		).build();
+	}
+
+	public Map<String, Object> getTimeZone() {
+		TimeZone timeZone = _themeDisplay.getTimeZone();
+
+		return HashMapBuilder.<String, Object>put(
+			"id", timeZone.getID()
+		).put(
+			"name", timeZone.getDisplayName(false, TimeZone.SHORT)
 		).build();
 	}
 

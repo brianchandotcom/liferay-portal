@@ -466,6 +466,59 @@ export class TestEntityAPI {
 					}
 		/**
 		 * 
+				 	* @param testEntities
+		 * @param headers Optional custom request headers
+		 */
+		public async postTestEntityMultiformBulk(
+						testEntities?: Array<TestEntity>,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body: object;
+			response: Response;
+		}> {
+				let body;
+						const formData = new FormData();
+								formData.append("testEntities", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntities, "Array<TestEntity>")));
+						body = formData;
+
+			const path = this._basePath + "/test/v1.0/test-entities/multiform/bulk"
+;
+
+			const queryParameters: any = {};
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+					body: body,
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+					,headers || {}
+					),
+				method: "POST",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "object"), response};
+					}
+					else {
+						return {body: await response.text() as any, response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
 				 * @param testEntityId
 				 * @param optionalParameter
 		 		* @param requestBody Request body that can be one of multiple content types

@@ -103,8 +103,8 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDDMStructureInfo(
-		JSONArray assetSubtypeInfoJSONArray,
-		AssetSubtypeIdentifier assetSubtypeIdentifier, Locale locale,
+		AssetSubtypeIdentifier assetSubtypeIdentifier,
+		JSONArray assetSubtypeInfoJSONArray, Locale locale,
 		ResourceRequest resourceRequest) {
 
 		try {
@@ -121,7 +121,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 			_addSubtypeInfoJSONObject(
 				ddmStructure.getExternalReferenceCode(),
-				ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
+				assetSubtypeInfoJSONArray, ddmStructure.getName(locale),
 				assetSubtypeIdentifier.getClassName(),
 				group.getExternalReferenceCode(), group.getName(locale));
 		}
@@ -133,8 +133,8 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private void _addDLFileEntryTypesInfo(
-		JSONArray assetSubtypeInfoJSONArray,
-		AssetSubtypeIdentifier assetSubtypeIdentifier, Locale locale,
+		AssetSubtypeIdentifier assetSubtypeIdentifier,
+		JSONArray assetSubtypeInfoJSONArray, Locale locale,
 		ResourceRequest resourceRequest) {
 
 		try {
@@ -148,8 +148,8 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 				_addSubtypeInfoJSONObject(
 					basicDocumentDLFileEntryType.getExternalReferenceCode(),
-					basicDocumentDLFileEntryType.getName(locale),
 					assetSubtypeInfoJSONArray,
+					basicDocumentDLFileEntryType.getName(locale),
 					assetSubtypeIdentifier.getClassName(), StringPool.BLANK,
 					StringPool.BLANK);
 
@@ -169,7 +169,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 			_addSubtypeInfoJSONObject(
 				dlFileEntryType.getExternalReferenceCode(),
-				dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
+				assetSubtypeInfoJSONArray, dlFileEntryType.getName(locale),
 				assetSubtypeIdentifier.getClassName(),
 				group.getExternalReferenceCode(), group.getName(locale));
 		}
@@ -182,7 +182,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 	private void _addSubtypeInfoJSONObject(
 		String assetSubtypeExternalReferenceCode,
-		String assetSubtypeLocalizedName, JSONArray assetSubtypeInfoJSONArray,
+		JSONArray assetSubtypeInfoJSONArray, String assetSubtypeLocalizedName,
 		String entryClassName, String groupExternalReferenceCode,
 		String groupLocalizedName) {
 
@@ -226,12 +226,12 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 			if (className.equals(DLFileEntry.class.getName())) {
 				_addDLFileEntryTypesInfo(
-					assetSubtypeJSONArray, assetSubtypeIdentifier, locale,
+					assetSubtypeIdentifier, assetSubtypeJSONArray, locale,
 					resourceRequest);
 			}
 			else if (className.equals(JournalArticle.class.getName())) {
 				_addDDMStructureInfo(
-					assetSubtypeJSONArray, assetSubtypeIdentifier, locale,
+					assetSubtypeIdentifier, assetSubtypeJSONArray, locale,
 					resourceRequest);
 			}
 		}
@@ -286,7 +286,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 				_addSubtypeInfoJSONObject(
 					ddmStructure.getExternalReferenceCode(),
-					ddmStructure.getName(locale), assetSubtypeInfoJSONArray,
+					assetSubtypeInfoJSONArray, ddmStructure.getName(locale),
 					entryClassName, group.getExternalReferenceCode(),
 					group.getName(locale));
 			}
@@ -332,8 +332,8 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 				if (dlFileEntryType.getGroupId() == 0) {
 					_addSubtypeInfoJSONObject(
 						dlFileEntryType.getExternalReferenceCode(),
-						dlFileEntryType.getName(locale),
-						assetSubtypeInfoJSONArray, entryClassName,
+						assetSubtypeInfoJSONArray,
+						dlFileEntryType.getName(locale), entryClassName,
 						StringPool.BLANK, StringPool.BLANK);
 
 					continue;
@@ -344,7 +344,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 				_addSubtypeInfoJSONObject(
 					dlFileEntryType.getExternalReferenceCode(),
-					dlFileEntryType.getName(locale), assetSubtypeInfoJSONArray,
+					assetSubtypeInfoJSONArray, dlFileEntryType.getName(locale),
 					entryClassName, group.getExternalReferenceCode(),
 					group.getName(locale));
 			}

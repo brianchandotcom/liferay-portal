@@ -23,7 +23,6 @@ import aQute.bnd.version.Version;
 import aQute.lib.filter.Filter;
 
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -1574,18 +1573,6 @@ public class WabProcessor {
 				analyzer.setProperty(
 					stringPropertyName,
 					pluginPackageProperties.getProperty(stringPropertyName));
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Transforming WAB to OSGI bundle: ",
-						analyzer.get(Constants.BUNDLE_SYMBOLICNAME),
-						", with analyzer plugins: ",
-						TransformUtil.transform(
-							analyzer.getPlugins(),
-							plugin -> plugin.getClass(
-							).getName())));
 			}
 
 			try {

@@ -19,22 +19,18 @@ import aQute.bnd.version.Version;
 import aQute.lib.filter.Filter;
 
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -43,6 +39,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -65,13 +62,15 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Raymond Augé
@@ -223,48 +222,71 @@ public class WabProcessorTest {
 
 	@Test
 	public void testCustomizedPlugins() throws Exception {
+		File file = FileUtil.createTempFile("war");
+
+		try (JarOutputStream jarOutputStream = new JarOutputStream(
+				new FileOutputStream(file))) {
+
+			Manifest manifest = new Manifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			attributes.putValue("Manifest-Version", "1.0");
+
+			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
+
+			manifest.write(jarOutputStream);
+
+			jarOutputStream.closeEntry();
+
+			jarOutputStream.putNextEntry(new ZipEntry("WEB-INF/beans.xml"));
+			jarOutputStream.write(
+				"<?xml version=\"1.0\" ?><beans/>".getBytes());
+
+			jarOutputStream.closeEntry();
+
+			jarOutputStream.finish();
+		}
+
 		WabProcessor wabProcessor = new TestWabProcessor(
-			_createWab(
-				Collections.singletonMap(
-					"WEB-INF/beans.xml",
-					_getBytes("<?xml version=\"1.0\" ?><beans/>"))),
+			file,
 			Collections.singletonMap(
 				"Web-ContextPath", new String[] {"/test-plugins"}));
 
-		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				WabProcessor.class.getName(), Level.FINE)) {
+		Logger logger = LoggerFactory.getLogger("aQute.bnd.osgi.Processor");
 
+		int originalCurrentLogLevel = ReflectionTestUtil.getAndSetFieldValue(
+			logger, "currentLogLevel", 10);
+
+		PrintStream originalErr = System.err;
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		System.setErr(new PrintStream(unsyncByteArrayOutputStream));
+
+		try {
 			wabProcessor.getProcessedFile();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			String message = unsyncByteArrayOutputStream.toString();
 
-			LogEntry logEntry = logEntries.get(0);
-
-			String message = logEntry.getMessage();
-
-			String messagePrefix =
-				"Transforming WAB to OSGI bundle: test-plugins, with " +
-					"analyzer plugins: ";
-
-			Assert.assertTrue(message, message.startsWith(messagePrefix));
-
-			List<String> plugins = ListUtil.fromString(
-				message.substring(
-					messagePrefix.length() + 1, message.length() - 1),
-				StringPool.COMMA_AND_SPACE);
-
+			Assert.assertFalse(
+				message, message.contains(DSAnnotations.class.getSimpleName()));
+			Assert.assertFalse(
+				message,
+				message.contains(ServiceComponent.class.getSimpleName()));
 			Assert.assertTrue(
-				plugins.toString(),
-				!plugins.contains(DSAnnotations.class.getName()));
+				message,
+				message.contains(JspAnalyzerPlugin.class.getSimpleName()));
 			Assert.assertTrue(
-				plugins.toString(),
-				!plugins.contains(ServiceComponent.class.getName()));
-			Assert.assertTrue(
-				plugins.toString(),
-				plugins.contains(JspAnalyzerPlugin.class.getName()));
-			Assert.assertTrue(
-				plugins.toString(),
-				plugins.contains(WabProcessor.class.getName() + "$2"));
+				message,
+				message.contains(WabProcessor.class.getSimpleName() + "$2"));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				logger, "currentLogLevel", originalCurrentLogLevel);
+
+			System.setErr(originalErr);
 		}
 	}
 
@@ -578,37 +600,6 @@ public class WabProcessorTest {
 		return path.toFile();
 	}
 
-	private File _createWab(Map<String, byte[]> fileEntries) throws Exception {
-		File file = FileUtil.createTempFile("war");
-
-		try (JarOutputStream jarOutputStream = new JarOutputStream(
-				new FileOutputStream(file))) {
-
-			Manifest manifest = new Manifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			attributes.putValue("Manifest-Version", "1.0");
-
-			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
-
-			manifest.write(jarOutputStream);
-
-			jarOutputStream.closeEntry();
-
-			for (Map.Entry<String, byte[]> entry : fileEntries.entrySet()) {
-				jarOutputStream.putNextEntry(new ZipEntry(entry.getKey()));
-				jarOutputStream.write(entry.getValue());
-
-				jarOutputStream.closeEntry();
-			}
-
-			jarOutputStream.finish();
-		}
-
-		return file;
-	}
-
 	private Map.Entry<String, Attrs> _findRequirement(
 			Parameters requirements, String namespace,
 			Map<String, Object> arguments)
@@ -637,12 +628,6 @@ public class WabProcessorTest {
 		}
 
 		return null;
-	}
-
-	private byte[] _getBytes(String... strings) {
-		String string = StringBundler.concat(strings);
-
-		return string.getBytes();
 	}
 
 	private static class TestWabProcessor extends WabProcessor {

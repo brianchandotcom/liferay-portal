@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import {OpenIdInstanceSettingsPage} from '../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
-import getRandomString from '../../utils/getRandomString';
-import {performLoginViaApi, performLogout} from '../../utils/performLogin';
-import {utilityPagesPage} from '../login-web/fixtures/utilityPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import {OpenIdInstanceSettingsPage} from '../../../pages/portal-settings-authentication-openid-connect-web/OpenIdInstanceSettingsPage';
+import getRandomString from '../../../utils/getRandomString';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
+import {utilityPagesPage} from '../../login-web/main/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
 

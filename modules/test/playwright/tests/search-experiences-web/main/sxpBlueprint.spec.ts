@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {searchExperiencesPagesTest} from '../../fixtures/searchExperiencesPageTest';
-import {getRandomInt} from '../../utils/getRandomInt';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {searchExperiencesPagesTest} from '../../../fixtures/searchExperiencesPageTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

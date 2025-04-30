@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {multiFactorAuthenticationPagesTest} from '../../fixtures/multiFactorAuthenticationPagesTest';
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {multiFactorAuthenticationPagesTest} from '../../../fixtures/multiFactorAuthenticationPagesTest';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,

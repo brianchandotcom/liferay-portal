@@ -5,9 +5,9 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class MembershipsPage {
 	readonly page: Page;

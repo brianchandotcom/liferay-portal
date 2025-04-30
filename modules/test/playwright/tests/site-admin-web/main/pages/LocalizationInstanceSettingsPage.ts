@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {InstanceSettingsPage} from '../../../../pages/configuration-admin-web/InstanceSettingsPage';
 
 export class LocalizationInstanceSettingsPage {
 	readonly instanceSettingsPage: InstanceSettingsPage;

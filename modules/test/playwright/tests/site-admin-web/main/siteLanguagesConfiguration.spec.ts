@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {localizationPagesTest} from '../site-admin-web/fixtures/localizationPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {localizationPagesTest} from '../../site-admin-web/fixtures/localizationPagesTest';
 
 const test = mergeTests(
 	dataApiHelpersTest,

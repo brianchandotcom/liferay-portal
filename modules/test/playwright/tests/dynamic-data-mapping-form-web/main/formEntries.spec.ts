@@ -5,10 +5,10 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {FormFieldsPage} from '../../pages/dynamic-data-mapping-form-web/FormFieldsPage';
-import getRandomString from '../../utils/getRandomString';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {FormFieldsPage} from '../../../pages/dynamic-data-mapping-form-web/FormFieldsPage';
+import getRandomString from '../../../utils/getRandomString';
 import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);

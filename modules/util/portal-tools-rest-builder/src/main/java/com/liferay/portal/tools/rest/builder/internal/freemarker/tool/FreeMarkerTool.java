@@ -740,10 +740,10 @@ public class FreeMarkerTool {
 	}
 
 	public JavaMethodSignature getPostSchemaJavaMethodSignature(
-		List<JavaMethodSignature> javaMethodSignatures,
-		String parentSchemaParameterName, String schemaName) {
+		List<JavaMethodSignature> javaMethodSignatures, String parameterName,
+		String schemaName) {
 
-		String parentSchemaName = parentSchemaParameterName;
+		String parentSchemaName = parameterName;
 
 		if (parentSchemaName.startsWith("parent")) {
 			parentSchemaName = parentSchemaName.substring(6);
@@ -763,7 +763,7 @@ public class FreeMarkerTool {
 			Operation operation = javaMethodSignature.getOperation();
 
 			if (!Objects.equals(getHTTPMethod(operation), "post") ||
-				!hasParameter(javaMethodSignature, parentSchemaParameterName)) {
+				!hasParameter(javaMethodSignature, parameterName)) {
 
 				continue;
 			}

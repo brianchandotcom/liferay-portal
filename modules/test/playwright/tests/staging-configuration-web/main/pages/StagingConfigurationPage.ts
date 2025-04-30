@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class StagingConfigurationPage {
 	readonly page: Page;

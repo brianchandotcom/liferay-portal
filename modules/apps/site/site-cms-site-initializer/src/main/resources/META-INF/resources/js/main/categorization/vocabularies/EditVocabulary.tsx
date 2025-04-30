@@ -47,12 +47,8 @@ export default function EditVocabulary({
 		NAVIGATION_TABS.GENERAL
 	);
 	const [assetLibraries, setAssetLibraries] = useState<AssetLibraryType[]>(
-		[
-			{
-				id: -1,
-				name: 'All Spaces',
-			},
-	]);
+		[]
+	);
 	const assetTypeChange = false;
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const {observer, onOpenChange, open} = useModal();
@@ -303,6 +299,7 @@ export default function EditVocabulary({
 										setVocabularyPermissions
 									}
 									showPermissions={isNew}
+									spaceInputError={spaceInputError}
 									spritemap={spritemap}
 									vocabulary={vocabulary}
 								/>

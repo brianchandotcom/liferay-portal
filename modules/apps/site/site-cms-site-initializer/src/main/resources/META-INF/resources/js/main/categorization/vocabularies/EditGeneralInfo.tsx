@@ -13,7 +13,7 @@ import ClayForm, {
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationSpaces from '../components/CategorizationSpaces';
@@ -43,6 +43,7 @@ export default function EditGeneralInfo({
 	setSpaceInputError,
 	setVocabularyPermissions,
 	showPermissions,
+	spaceInputError,
 	spritemap,
 	vocabulary,
 }: {
@@ -57,20 +58,11 @@ export default function EditGeneralInfo({
 	setSpaceInputError: (value: string) => void;
 	setVocabularyPermissions: Function;
 	showPermissions: boolean;
+	spaceInputError: string;
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
-	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
-
-	useEffect(() => {
-		onChangeVocabulary(() => ({
-			...vocabulary,
-			assetLibraries: selectedSpaces.map((number) => ({
-				id: number,
-			})),
-		}));
-	}, [selectedSpaces]);
 
 	const getLanguageLabel = (languageId: string) => {
 		return languageId.replace('_', '-');
@@ -111,6 +103,15 @@ export default function EditGeneralInfo({
 				...vocabulary.name_i18n,
 				[getLanguageLabel(languageId)]: newName,
 			},
+		}));
+	};
+
+	const onChangeSelectedSpaces = (newSelectedSpaces: number[]) => {
+		onChangeVocabulary(() => ({
+			...vocabulary,
+			assetLibraries: newSelectedSpaces.map((number) => ({
+				id: number,
+			})),
 		}));
 	};
 
@@ -251,9 +252,13 @@ export default function EditGeneralInfo({
 				<CategorizationSpaces
 					assetLibraries={assetLibraries}
 					checkboxText="vocabulary"
-					setSelectedSpaces={setSelectedSpaces}
+					selectedSpaces={vocabulary.assetLibraries.map(
+						(item: AssetLibraryType) => item.id
+					)}
+					setSelectedSpaces={onChangeSelectedSpaces}
 					setSpaceChange={setSpaceChange}
 					setSpaceInputError={setSpaceInputError}
+					spaceInputError={spaceInputError}
 				/>
 			</ClayForm.Group>
 

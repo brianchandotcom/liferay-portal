@@ -2,8 +2,10 @@
 
 <#assign style = fieldStructure.style!"" />
 
-<p style="${escapeAttribute(style)}">
-	${escape(label)}
+<@liferay_ui.csp>
+	<p style="${escapeAttribute(style)}">
+		${escape(label)}
 
-	${fieldStructure.children}
-</p>
+		${fieldStructure.children}
+	</p>
+</@liferay_ui.csp>

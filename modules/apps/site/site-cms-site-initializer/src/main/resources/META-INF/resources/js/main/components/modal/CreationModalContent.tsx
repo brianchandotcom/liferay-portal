@@ -46,42 +46,47 @@ export default function CreationModalContent({
 	redirect,
 	title,
 }: Props) {
-	const {errors, handleChange, handleSubmit, setFieldValue, touched, values} =
-		useFormik({
-			initialValues: {
-				groupId:
-					assetLibraries.length === 1
-						? assetLibraries[0].groupId
-						: '',
-				name: '',
-			},
-			onSubmit: async (values, formikHelpers) => {
-				if (redirect) {
-					const {groupId, name} = values;
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		isSubmitting,
+		setFieldValue,
+		touched,
+		values,
+	} = useFormik({
+		initialValues: {
+			groupId:
+				assetLibraries.length === 1 ? assetLibraries[0].groupId : '',
+			name: '',
+		},
+		onSubmit: async (values, formikHelpers) => {
+			if (redirect) {
+				const {groupId, name} = values;
 
-					const url = new URL(redirect);
+				const url = new URL(redirect);
 
-					url.searchParams.set('name', name);
-					url.searchParams.set('groupId', groupId);
+				url.searchParams.set('name', name);
+				url.searchParams.set('groupId', groupId);
 
-					navigate(url.pathname + url.search);
+				navigate(url.pathname + url.search);
 
-					return;
-				}
+				return;
+			}
 
-				if (onSubmit) {
-					await onSubmit(values, formikHelpers);
-				}
-			},
-			validate: (values) =>
-				validate(
-					{
-						groupId: [required],
-						name: action === 'createFolder' ? [required] : [],
-					},
-					values
-				),
-		});
+			if (onSubmit) {
+				await onSubmit(values, formikHelpers);
+			}
+		},
+		validate: (values) =>
+			validate(
+				{
+					groupId: [required],
+					name: action === 'createFolder' ? [required] : [],
+				},
+				values
+			),
+	});
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -135,7 +140,11 @@ export default function CreationModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" type="submit">
+						<ClayButton
+							disabled={isSubmitting}
+							displayType="primary"
+							type="submit"
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

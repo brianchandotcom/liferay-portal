@@ -5,17 +5,17 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
-import {liferayConfig} from '../../../liferay.config';
-import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
-import {AddCustomFieldPage} from '../../../pages/expando-web/AddCustomFieldPage';
-import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
-import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../utils/getRandomInt';
-import performLogin, {userData} from '../../../utils/performLogin';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {TCustomField} from '../../../../helpers/CustomFieldTypesHelper';
+import {liferayConfig} from '../../../../liferay.config';
+import {SystemSettingsPage} from '../../../../pages/configuration-admin-web/SystemSettingsPage';
+import {AddCustomFieldPage} from '../../../../pages/expando-web/AddCustomFieldPage';
+import {VirtualInstancesPage} from '../../../../pages/portal-instances-web/VirtualInstancesPage';
+import {SamlAdminPage} from '../../../../pages/saml-web/SamlAdminPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
+import performLogin, {userData} from '../../../../utils/performLogin';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
 export const DEFAULT_IDP_NAME = 'www.able.com';

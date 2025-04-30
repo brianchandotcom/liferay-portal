@@ -159,12 +159,10 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 		}
 
 		if (Validator.isBlank(captchaResponse)) {
-			_log.error(
+			throw new CaptchaException(
 				"CAPTCHA challenge is null. User " +
 					httpServletRequest.getRemoteUser() +
 						" may be trying to circumvent the CAPTCHA.");
-
-			throw new CaptchaException();
 		}
 
 		try {
@@ -187,11 +185,9 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 					).get()));
 
 			if (jsonObject == null) {
-				_log.error(
+				throw new CaptchaConfigurationException(
 					_functionCaptchaImplConfiguration.captchaName() +
 						" did not return a result");
-
-				throw new CaptchaConfigurationException();
 			}
 
 			if (jsonObject.getBoolean("success")) {
@@ -201,11 +197,9 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 			JSONArray jsonArray = jsonObject.getJSONArray("error-codes");
 
 			if ((jsonArray == null) || (jsonArray.length() == 0)) {
-				_log.error(
+				throw new CaptchaConfigurationException(
 					_functionCaptchaImplConfiguration.captchaName() +
 						" encountered an error");
-
-				throw new CaptchaConfigurationException();
 			}
 
 			StringBundler sb = new StringBundler((jsonArray.length() * 2) - 1);
@@ -218,19 +212,23 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 				}
 			}
 
-			_log.error(
+			throw new CaptchaConfigurationException(
 				_functionCaptchaImplConfiguration.captchaName() +
-					" encountered an error: " + sb.toString());
-
-			throw new CaptchaConfigurationException();
+					" encountered an error: " + sb);
 		}
 		catch (Exception exception) {
+			if (exception instanceof CaptchaException) {
+				_log.error(exception);
+
+				throw (CaptchaException)exception;
+			}
+
 			_log.error(
 				_functionCaptchaImplConfiguration.captchaName() +
 					" did not return a valid result.",
 				exception);
 
-			throw new CaptchaConfigurationException();
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 

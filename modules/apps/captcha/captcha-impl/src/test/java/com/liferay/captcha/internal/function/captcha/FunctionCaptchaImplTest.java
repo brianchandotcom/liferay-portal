@@ -9,6 +9,8 @@ import com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfigurati
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -17,9 +19,15 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,6 +81,12 @@ public class FunctionCaptchaImplTest {
 	private static void _setUpFunctionCaptchaImplConfiguration() {
 		_functionCaptchaImplConfiguration = Mockito.mock(
 			FunctionCaptchaImplConfiguration.class);
+
+		Mockito.when(
+			_functionCaptchaImplConfiguration.captchaName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
 
 		Mockito.when(
 			_functionCaptchaImplConfiguration.captchaResponseParameterName()
@@ -203,14 +217,34 @@ public class FunctionCaptchaImplTest {
 
 			Assert.assertTrue(payloadJSONObject.has("remoteip"));
 			Assert.assertTrue(payloadJSONObject.has("response"));
+
+			return;
 		}
-		else {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FunctionCaptchaImpl.class.getName(), Level.SEVERE)) {
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
 			try {
 				_functionCaptchaImpl.validateChallenge(_httpServletRequest);
 
 				Assert.fail();
 			}
-			catch (Exception exception) {
+			catch (CaptchaException captchaException) {
+				Assert.assertTrue(
+					captchaException instanceof CaptchaConfigurationException);
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertTrue(
+					StringUtil.startsWith(
+						logEntry.getMessage(),
+						_functionCaptchaImplConfiguration.captchaName() +
+							" encountered an error: "));
 			}
 		}
 	}

@@ -65,6 +65,8 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captchaName", RandomTestUtil.randomString()
 			).put(
+				"captchaResponseParameterName", RandomTestUtil.randomString()
+			).put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
 				"customElementExternalReferenceCode",
@@ -74,8 +76,6 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 				RandomTestUtil.randomString()
 			).put(
 				"resourcePath", RandomTestUtil.randomString()
-			).put(
-				"responseParameterName", RandomTestUtil.randomString()
 			).build());
 	}
 

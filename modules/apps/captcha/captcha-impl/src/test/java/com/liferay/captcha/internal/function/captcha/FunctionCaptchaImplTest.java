@@ -74,6 +74,12 @@ public class FunctionCaptchaImplTest {
 			FunctionCaptchaImplConfiguration.class);
 
 		Mockito.when(
+			_functionCaptchaImplConfiguration.captchaResponseParameterName()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
 			_functionCaptchaImplConfiguration.
 				oAuth2ApplicationExternalReferenceCode()
 		).thenReturn(
@@ -82,12 +88,6 @@ public class FunctionCaptchaImplTest {
 
 		Mockito.when(
 			_functionCaptchaImplConfiguration.resourcePath()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			_functionCaptchaImplConfiguration.responseParameterName()
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
@@ -105,7 +105,8 @@ public class FunctionCaptchaImplTest {
 		Mockito.when(
 			ParamUtil.getString(
 				_httpServletRequest,
-				_functionCaptchaImplConfiguration.responseParameterName())
+				_functionCaptchaImplConfiguration.
+					captchaResponseParameterName())
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);

@@ -159,7 +159,9 @@ public class BatchEngineImportReportEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		batchEngineImportReportEntryId = objectInput.readLong();
@@ -174,7 +176,7 @@ public class BatchEngineImportReportEntryCacheModel
 
 		entityClassNameId = objectInput.readLong();
 		entityExternalReferenceCode = objectInput.readUTF();
-		error = objectInput.readUTF();
+		error = (String)objectInput.readObject();
 
 		resolved = objectInput.readBoolean();
 
@@ -205,10 +207,10 @@ public class BatchEngineImportReportEntryCacheModel
 		}
 
 		if (error == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(error);
+			objectOutput.writeObject(error);
 		}
 
 		objectOutput.writeBoolean(resolved);

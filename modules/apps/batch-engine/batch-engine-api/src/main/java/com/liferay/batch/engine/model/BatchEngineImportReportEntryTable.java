@@ -8,6 +8,7 @@ package com.liferay.batch.engine.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -53,8 +54,8 @@ public class BatchEngineImportReportEntryTable
 		entityExternalReferenceCode = createColumn(
 			"entityExternalReferenceCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<BatchEngineImportReportEntryTable, String> error =
-		createColumn("error", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<BatchEngineImportReportEntryTable, Clob> error =
+		createColumn("error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportReportEntryTable, Boolean> resolved =
 		createColumn(
 			"resolved", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

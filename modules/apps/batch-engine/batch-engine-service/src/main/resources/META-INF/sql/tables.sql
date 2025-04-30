@@ -32,7 +32,7 @@ create table BatchEngineImportReportEntry (
 	classPK LONG,
 	entityClassNameId LONG,
 	entityExternalReferenceCode VARCHAR(75) null,
-	error VARCHAR(75) null,
+	error TEXT null,
 	resolved BOOLEAN,
 	type_ INTEGER
 );

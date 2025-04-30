@@ -5,10 +5,10 @@
 
 import {Page, expect, request} from '@playwright/test';
 
-import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
-import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {SystemSettingsPage} from '../../../../pages/configuration-admin-web/SystemSettingsPage';
+import {VirtualInstancesPage} from '../../../../pages/portal-instances-web/VirtualInstancesPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export async function deleteVirtualInstance(name: string, page: Page) {
 	const virtualInstancesPage = new VirtualInstancesPage(page);

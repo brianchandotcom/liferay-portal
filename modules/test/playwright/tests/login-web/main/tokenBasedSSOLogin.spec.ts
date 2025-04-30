@@ -5,17 +5,17 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {liferayConfig} from '../../liferay.config';
-import {InstanceSettingsPage} from '../../pages/configuration-admin-web/InstanceSettingsPage';
-import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSettingsPage';
-import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
-import performLogin from '../../utils/performLogin';
+import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
+import performLogin from '../../../utils/performLogin';
 import {
 	enableTokenBasedSSO,
 	resetTokenBasedSSOConfiguration,

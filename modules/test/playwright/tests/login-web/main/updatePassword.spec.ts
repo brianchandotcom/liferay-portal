@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {performLoginViaApi, performLogout} from '../../utils/performLogin';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,

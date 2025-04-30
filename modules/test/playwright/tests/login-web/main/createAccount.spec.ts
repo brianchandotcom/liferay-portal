@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
-import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	captchaConfigPageTest,

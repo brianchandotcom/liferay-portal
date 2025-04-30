@@ -23,13 +23,9 @@ export default function CreateTagsModalContent({
 	closeModal: () => void;
 	dataSetId: string;
 }) {
-	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+	const [selectedSpaces, setSelectedSpaces] = useState<number[]>([-1]);
 	const [spaceInputError, setSpaceInputError] = useState('');
 	const [close, setClose] = useState(false);
-
-	const assetLibraries = selectedSpaces.map((number) => ({
-		id: number,
-	}));
 
 	const {
 		errors,
@@ -48,7 +44,9 @@ export default function CreateTagsModalContent({
 			const url = '/o/headless-admin-taxonomy/v1.0/keywords';
 
 			const body = {
-				assetLibraries,
+				assetLibraries: selectedSpaces.map((number) => ({
+					id: number,
+				})),
 				name: values.tagName,
 			};
 
@@ -114,8 +112,10 @@ export default function CreateTagsModalContent({
 
 				<CategorizationSpaces
 					checkboxText="tag"
+					selectedSpaces={selectedSpaces}
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceInputError={setSpaceInputError}
+					spaceInputError={spaceInputError}
 				/>
 			</ClayModal.Body>
 

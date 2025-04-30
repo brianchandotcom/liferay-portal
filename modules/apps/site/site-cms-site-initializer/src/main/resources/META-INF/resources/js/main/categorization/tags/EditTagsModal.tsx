@@ -30,7 +30,9 @@ export default function EditTagsModalContent({
 	tagId: number;
 	tagName: string;
 }) {
-	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+	const [selectedSpaces, setSelectedSpaces] = useState<number[]>(
+		assetLibraries.map((item: {id: number}) => item.id)
+	);
 	const [spaceChange, setSpaceChange] = useState(false);
 	const [spaceInputError, setSpaceInputError] = useState('');
 
@@ -129,9 +131,11 @@ export default function EditTagsModalContent({
 				<CategorizationSpaces
 					assetLibraries={assetLibraries}
 					checkboxText="tag"
+					selectedSpaces={selectedSpaces}
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceChange={setSpaceChange}
 					setSpaceInputError={setSpaceInputError}
+					spaceInputError={spaceInputError}
 				/>
 			</ClayModal.Body>
 

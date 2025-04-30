@@ -5,15 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {breadcrumbPagesTest} from '../../fixtures/breadcrumbPagesTest';
-import {breadcrumbWidgetPagesTest} from '../../fixtures/breadcrumbWidgetPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import {templatesPageTest} from '../template-web/fixtures/templatesPageTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {breadcrumbPagesTest} from '../../../fixtures/breadcrumbPagesTest';
+import {breadcrumbWidgetPagesTest} from '../../../fixtures/breadcrumbWidgetPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

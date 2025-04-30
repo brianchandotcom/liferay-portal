@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import getRandomString from '../../../utils/getRandomString';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import getRandomString from '../../../../utils/getRandomString';
 import getCollectionDefinition from './getCollectionDefinition';
 import getFragmentDefinition from './getFragmentDefinition';
 import getPageDefinition from './getPageDefinition';

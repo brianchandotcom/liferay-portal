@@ -5,8 +5,8 @@
 
 import {expect, test} from '@playwright/test';
 
-import {liferayConfig} from '../../liferay.config';
-import {userData} from '../../utils/performLogin';
+import {liferayConfig} from '../../../liferay.config';
+import {userData} from '../../../utils/performLogin';
 
 test('LPD-38816 Checking the user has to change the password if the password policy is enabled', async ({
 	page,

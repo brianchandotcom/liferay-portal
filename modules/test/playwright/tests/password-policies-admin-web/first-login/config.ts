@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'password-policies-admin-web-setup-admin',
-	testDir: 'tests/password-policies-admin-web-setup-admin',
+	name: 'password-policies-admin-web.first-login',
+	testDir: 'tests/password-policies-admin-web-first-login',
 };

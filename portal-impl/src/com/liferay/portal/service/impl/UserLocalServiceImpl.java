@@ -1970,14 +1970,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		else if (adminEmailUserAddedEnabled && sendEmail) {
 			notifyUser(user, serviceContext);
 		}
-
-		if (user.getPasswordModified()) {
-			user.setPasswordModified(false);
-
-			sendPasswordNotification(
-				user, user.getCompanyId(), user.getPassword(), null, null, null,
-				null, null, serviceContext);
-		}
 	}
 
 	/**

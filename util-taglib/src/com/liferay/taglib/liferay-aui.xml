@@ -1317,60 +1317,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component dynamicAttributes="false" name="TranslationManager">
-		<description>Creates a UI component for managing translation of associated content. Deprecated as of Athanasius (7.4.x), replaced by <code>liferay-frontend:translation-manager</code>.</description>
-		<attributes>
-			<attribute>
-				<description>Available locales of translation languages from which to choose.</description>
-				<name>availableLocales</name>
-				<inputType>java.util.Locale[]</inputType>
-				<outputType>java.util.Locale[]</outputType>
-			</attribute>
-			<attribute>
-				<description>Whether to make the translation manager default language changeable. The default value is <![CDATA[<code>true</code>]]>.</description>
-				<name>changeableDefaultLanguage</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
-			</attribute>
-			<attribute>
-				<description>The language ID to which the translation manager defaults when no other translations are available in the user's language.</description>
-				<name>defaultLanguageId</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>editingLanguageId</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<description>The group ID of the site.</description>
-				<name>groupId</name>
-				<inputType>long</inputType>
-				<outputType>long</outputType>
-			</attribute>
-			<attribute>
-				<description>An ID for the component instance.</description>
-				<name>id</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<description>Whether to activate the translation manager. The default value is <![CDATA[<code>true</code>]]>. If this is set to <![CDATA[<code>false</code>]]>, the translation manager will not work entirely.</description>
-				<name>initialize</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
-			</attribute>
-			<attribute>
-				<description>Whether to make the translation manager read-only for the user. The default value is <![CDATA[<code>false</code>]]>.</description>
-				<name>readOnly</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-			</attribute>
-		</attributes>
-	</component>
 	<component className="ValidatorTagImpl" dynamicAttributes="false" name="Validator" parentClass="com.liferay.taglib.BaseBodyTagSupport" writeJSP="false">
 		<description>Creates a component to validate input fields.</description>
 		<attributes>

@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {CategoriesPage} from '../pages/CategoriesPage';
-import {EditCategoryPage} from '../pages/EditCategoryPage';
+import {CategoriesPage} from '../../pages/CategoriesPage';
+import {EditCategoryPage} from '../../pages/EditCategoryPage';
 
 const categorizationPagesTest = test.extend<{
 	categoriesPage: CategoriesPage;

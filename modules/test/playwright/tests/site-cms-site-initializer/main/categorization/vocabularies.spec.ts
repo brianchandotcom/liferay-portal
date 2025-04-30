@@ -10,7 +10,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
-import {cmsPagesTest} from '../../fixtures/cmsPagesTest';
+import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
 	cmsPagesTest,

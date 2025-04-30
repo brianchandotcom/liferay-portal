@@ -303,8 +303,9 @@ public abstract class BaseErcAssetLibraryTestEntityResourceTestCase {
 				ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryErcAssetLibraryTestEntity(
+				assetLibraryExternalReferenceCode, ercAssetLibraryTestEntity);
 	}
 
 	protected String

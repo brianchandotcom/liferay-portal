@@ -11,12 +11,12 @@
  */
 
 	export class ErcAssetLibraryTestEntity {
+			"assetLibraryExternalReferenceCode"?: string;
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
 			"description"?: string;
 			"externalReferenceCode"?: string;
 			"permissions"?: Array<Permission>;
-			"assetLibraryExternalReferenceCode"?: string;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -25,6 +25,11 @@
 		name: string;
 		type: string;
 	}> = [
+		{
+			baseName: "assetLibraryExternalReferenceCode",
+			name: "assetLibraryExternalReferenceCode",
+			type: "string",
+		},
 		{
 			baseName: "dateCreated",
 			name: "dateCreated",
@@ -49,11 +54,6 @@
 			baseName: "permissions",
 			name: "permissions",
 			type: "Array<Permission>",
-		},
-		{
-			baseName: "assetLibraryExternalReferenceCode",
-			name: "assetLibraryExternalReferenceCode",
-			type: "string",
 		},
 		];
 

@@ -44,14 +44,14 @@ public interface ErcAssetLibraryTestEntityResource {
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity getAssetLibraryErcAssetLibraryTestEntity(
-			String ercAssetLibraryTestEntityExternalReferenceCode,
-			String AssetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode,
+			String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-				String ercAssetLibraryTestEntityExternalReferenceCode,
-				String AssetLibraryExternalReferenceCode)
+				String assetLibraryExternalReferenceCode,
+				String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception;
 
 	public void postAssetLibraryErcAssetLibraryTestEntitiesPageExportBatch(
@@ -66,37 +66,37 @@ public interface ErcAssetLibraryTestEntityResource {
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity postAssetLibraryErcAssetLibraryTestEntity(
-			String AssetLibraryExternalReferenceCode,
+			String assetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-				String AssetLibraryExternalReferenceCode,
+				String assetLibraryExternalReferenceCode,
 				ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 
 	public void postAssetLibraryErcAssetLibraryTestEntityBatch(
-			String AssetLibraryExternalReferenceCode, String callbackURL,
+			String assetLibraryExternalReferenceCode, String callbackURL,
 			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAssetLibraryErcAssetLibraryTestEntityBatchHttpResponse(
-				String AssetLibraryExternalReferenceCode, String callbackURL,
+				String assetLibraryExternalReferenceCode, String callbackURL,
 				Object object)
 		throws Exception;
 
 	public ErcAssetLibraryTestEntity putAssetLibraryErcAssetLibraryTestEntity(
+			String assetLibraryExternalReferenceCode,
 			String ercAssetLibraryTestEntityExternalReferenceCode,
-			String AssetLibraryExternalReferenceCode,
 			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putAssetLibraryErcAssetLibraryTestEntityHttpResponse(
+				String assetLibraryExternalReferenceCode,
 				String ercAssetLibraryTestEntityExternalReferenceCode,
-				String AssetLibraryExternalReferenceCode,
 				ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception;
 
@@ -322,14 +322,14 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public ErcAssetLibraryTestEntity
 				getAssetLibraryErcAssetLibraryTestEntity(
-					String ercAssetLibraryTestEntityExternalReferenceCode,
-					String AssetLibraryExternalReferenceCode)
+					String assetLibraryExternalReferenceCode,
+					String ercAssetLibraryTestEntityExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-					ercAssetLibraryTestEntityExternalReferenceCode,
-					AssetLibraryExternalReferenceCode);
+					assetLibraryExternalReferenceCode,
+					ercAssetLibraryTestEntityExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -392,8 +392,8 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public HttpInvoker.HttpResponse
 				getAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-					String ercAssetLibraryTestEntityExternalReferenceCode,
-					String AssetLibraryExternalReferenceCode)
+					String assetLibraryExternalReferenceCode,
+					String ercAssetLibraryTestEntityExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -420,14 +420,14 @@ public interface ErcAssetLibraryTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}");
 
+			httpInvoker.path(
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
 				"ercAssetLibraryTestEntityExternalReferenceCode",
 				ercAssetLibraryTestEntityExternalReferenceCode);
-			httpInvoker.path(
-				"AssetLibraryExternalReferenceCode",
-				AssetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -557,13 +557,13 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public ErcAssetLibraryTestEntity
 				postAssetLibraryErcAssetLibraryTestEntity(
-					String AssetLibraryExternalReferenceCode,
+					String assetLibraryExternalReferenceCode,
 					ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-					AssetLibraryExternalReferenceCode,
+					assetLibraryExternalReferenceCode,
 					ercAssetLibraryTestEntity);
 
 			String content = httpResponse.getContent();
@@ -627,7 +627,7 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public HttpInvoker.HttpResponse
 				postAssetLibraryErcAssetLibraryTestEntityHttpResponse(
-					String AssetLibraryExternalReferenceCode,
+					String assetLibraryExternalReferenceCode,
 					ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 			throws Exception {
 
@@ -661,8 +661,8 @@ public interface ErcAssetLibraryTestEntityResource {
 						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities");
 
 			httpInvoker.path(
-				"AssetLibraryExternalReferenceCode",
-				AssetLibraryExternalReferenceCode);
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -673,13 +673,13 @@ public interface ErcAssetLibraryTestEntityResource {
 		}
 
 		public void postAssetLibraryErcAssetLibraryTestEntityBatch(
-				String AssetLibraryExternalReferenceCode, String callbackURL,
+				String assetLibraryExternalReferenceCode, String callbackURL,
 				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAssetLibraryErcAssetLibraryTestEntityBatchHttpResponse(
-					AssetLibraryExternalReferenceCode, callbackURL, object);
+					assetLibraryExternalReferenceCode, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -731,7 +731,7 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public HttpInvoker.HttpResponse
 				postAssetLibraryErcAssetLibraryTestEntityBatchHttpResponse(
-					String AssetLibraryExternalReferenceCode,
+					String assetLibraryExternalReferenceCode,
 					String callbackURL, Object object)
 			throws Exception {
 
@@ -769,8 +769,8 @@ public interface ErcAssetLibraryTestEntityResource {
 						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/batch");
 
 			httpInvoker.path(
-				"AssetLibraryExternalReferenceCode",
-				AssetLibraryExternalReferenceCode);
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -782,15 +782,15 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public ErcAssetLibraryTestEntity
 				putAssetLibraryErcAssetLibraryTestEntity(
+					String assetLibraryExternalReferenceCode,
 					String ercAssetLibraryTestEntityExternalReferenceCode,
-					String AssetLibraryExternalReferenceCode,
 					ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putAssetLibraryErcAssetLibraryTestEntityHttpResponse(
+					assetLibraryExternalReferenceCode,
 					ercAssetLibraryTestEntityExternalReferenceCode,
-					AssetLibraryExternalReferenceCode,
 					ercAssetLibraryTestEntity);
 
 			String content = httpResponse.getContent();
@@ -854,8 +854,8 @@ public interface ErcAssetLibraryTestEntityResource {
 
 		public HttpInvoker.HttpResponse
 				putAssetLibraryErcAssetLibraryTestEntityHttpResponse(
+					String assetLibraryExternalReferenceCode,
 					String ercAssetLibraryTestEntityExternalReferenceCode,
-					String AssetLibraryExternalReferenceCode,
 					ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
 			throws Exception {
 
@@ -886,14 +886,14 @@ public interface ErcAssetLibraryTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{AssetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}");
 
+			httpInvoker.path(
+				"assetLibraryExternalReferenceCode",
+				assetLibraryExternalReferenceCode);
 			httpInvoker.path(
 				"ercAssetLibraryTestEntityExternalReferenceCode",
 				ercAssetLibraryTestEntityExternalReferenceCode);
-			httpInvoker.path(
-				"AssetLibraryExternalReferenceCode",
-				AssetLibraryExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

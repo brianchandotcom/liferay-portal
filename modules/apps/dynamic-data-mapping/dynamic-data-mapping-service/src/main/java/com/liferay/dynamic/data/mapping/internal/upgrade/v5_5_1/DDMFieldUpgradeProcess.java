@@ -10,11 +10,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +37,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		_upgrade(companyIds);
+		_upgrade();
 	}
 
 	private boolean _hasDDMFieldCompanyId0() throws Exception {
@@ -61,48 +58,43 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgrade(long[] companyIds) throws Exception {
+	private void _upgrade() throws Exception {
 		if (!_hasDDMFieldCompanyId0()) {
 			return;
 		}
 
-		processConcurrently(
-			ArrayUtil.toLongArray(companyIds),
-			companyId -> {
-				DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
-					StringBundler.concat(
-						"update DDMField set companyId = ", companyId,
-						" where exists (select 1 from DDMStructureVersion ",
-						"where DDMStructureVersion.structureVersionId = ",
-						"DDMField.structureVersionId and ",
-						"DDMStructureVersion.ctCollectionId = ",
-						"DDMField.ctCollectionId and ",
-						"DDMStructureVersion.companyId = ", companyId,
-						") and DDMField.companyId = 0"));
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"update DDMField set companyId = ",
+				"DDMStructureVersion.companyId from DDMStructureVersion where ",
+				"DDMField.structureVersionId = ",
+				"DDMStructureVersion.structureVersionId and ",
+				"DDMField.ctCollectionId = DDMStructureVersion.ctCollectionId ",
+				"and DDMField.companyId = 0"));
 
-				String sql = StringBundler.concat(
-					"update DDMField inner join DDMStructureVersion on ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId and ",
-					"DDMStructureVersion.ctCollectionId = ",
-					"DDMField.ctCollectionId and ",
-					"DDMStructureVersion.companyId = ", companyId,
-					" set DDMField.companyId = ", companyId,
-					" where DDMField.companyId = 0");
+		String sql = StringBundler.concat(
+			"update DDMField inner join DDMStructureVersion on ",
+			"DDMField.structureVersionId = ",
+			"DDMStructureVersion.structureVersionId and ",
+			"DDMField.ctCollectionId = DDMStructureVersion.ctCollectionId set ",
+			"DDMField.companyId = DDMStructureVersion.companyId where ",
+			"DDMField.companyId = 0");
 
-				dbTypeToSQLMap.add(DBType.MARIADB, sql);
-				dbTypeToSQLMap.add(DBType.MYSQL, sql);
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
 
-				runSQL(dbTypeToSQLMap);
+		dbTypeToSQLMap.add(
+			DBType.ORACLE,
+			StringBundler.concat(
+				"update DDMField set companyId = COALESCE((select ",
+				"DDMStructureVersion.companyId from DDMStructureVersion where ",
+				"DDMField.structureVersionId = ",
+				"DDMStructureVersion.structureVersionId and ",
+				"DDMField.ctCollectionId = ",
+				"DDMStructureVersion.ctCollectionId), 0) where ",
+				"DDMField.companyId = 0"));
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Update company IDs for dynamic data mapping ",
-							"fields from 0 to ", companyId));
-				}
-			},
-			"Unable to update company IDs for dynamic data mapping fields");
+		runSQL(dbTypeToSQLMap);
 	}
 
 	private void _upgradeByCompanyId(long companyId) throws Exception {
@@ -114,8 +106,5 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			preparedStatement.executeUpdate();
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFieldUpgradeProcess.class);
 
 }

@@ -2207,9 +2207,12 @@ public class ObjectEntryLocalServiceImpl
 					).build()));
 		}
 
-		Map<String, Object> localizedValues =
-			(Map<String, Object>)values.getOrDefault(
+		Map<String, Object> localizedValues = new HashMap<>();
+
+		if (objectField != null) {
+			localizedValues = (Map<String, Object>)values.getOrDefault(
 				objectField.getI18nObjectFieldName(), new HashMap<>());
+		}
 
 		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
 			urlTitleMap.computeIfAbsent(

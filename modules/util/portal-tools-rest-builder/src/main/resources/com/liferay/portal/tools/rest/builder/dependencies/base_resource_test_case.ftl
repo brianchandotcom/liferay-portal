@@ -621,11 +621,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
 					<#if postSchemaJavaMethodSignature?has_content>
 
-						return test${postSchemaJavaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}()<#t>
+						return test${postSchemaJavaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />
-							, getMultipartFiles()<#t>
+							, getMultipartFiles()
 						</#if>
 
 						);

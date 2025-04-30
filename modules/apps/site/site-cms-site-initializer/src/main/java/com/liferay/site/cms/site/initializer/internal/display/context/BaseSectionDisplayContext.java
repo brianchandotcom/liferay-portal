@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -125,7 +126,8 @@ public abstract class BaseSectionDisplayContext {
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-					"/cms/edit_content_item?className={entryClassName}&",
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/edit_content_item?className={entryClassName}&",
 					"objectEntryId={embedded.id}&redirect=",
 					themeDisplay.getURLCurrent()),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
@@ -179,8 +181,8 @@ public abstract class BaseSectionDisplayContext {
 						StringBundler.concat(
 							themeDisplay.getPortalURL(),
 							themeDisplay.getPathMain(),
-							"/cms/add_structured_content_item?",
-							"objectDefinitionId=",
+							GroupConstants.CMS_FRIENDLY_URL,
+							"/add_structured_content_item?objectDefinitionId=",
 							objectDefinition.getObjectDefinitionId(), "&plid=",
 							themeDisplay.getPlid()));
 					dropdownItem.putData(

@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../../../../fixtures/loginTest';
-import {PORTLET_URLS} from '../../../../../utils/portletUrls';
-import {waitForAlert} from '../../../../../utils/waitForAlert';
+import {loginTest} from '../../../../../../fixtures/loginTest';
+import {PORTLET_URLS} from '../../../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../../../utils/waitForAlert';
 
 const test = mergeTests(loginTest());
 

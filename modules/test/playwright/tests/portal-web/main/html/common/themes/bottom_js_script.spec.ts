@@ -5,17 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../../fixtures/loginTest';
-import {masterPagesPagesTest} from '../../../../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../../../../fixtures/pageEditorPagesTest';
-import {pageSelectorPagesTest} from '../../../../../fixtures/pageSelectorPagesTest';
-import {pagesAdminPagesTest} from '../../../../../fixtures/pagesAdminPagesTest';
-import {systemSettingsPageTest} from '../../../../../fixtures/systemSettingsPageTest';
-import getRandomString from '../../../../../utils/getRandomString';
-import {waitForAlert} from '../../../../../utils/waitForAlert';
+import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../../../../fixtures/masterPagesPagesTest';
+import {pageEditorPagesTest} from '../../../../../../fixtures/pageEditorPagesTest';
+import {pageSelectorPagesTest} from '../../../../../../fixtures/pageSelectorPagesTest';
+import {pagesAdminPagesTest} from '../../../../../../fixtures/pagesAdminPagesTest';
+import {systemSettingsPageTest} from '../../../../../../fixtures/systemSettingsPageTest';
+import getRandomString from '../../../../../../utils/getRandomString';
+import {waitForAlert} from '../../../../../../utils/waitForAlert';
 
 const test = mergeTests(
 	apiHelpersTest,

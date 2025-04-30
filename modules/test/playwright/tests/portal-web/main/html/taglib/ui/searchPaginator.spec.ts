@@ -5,9 +5,9 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../../fixtures/loginTest';
+import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../../../fixtures/loginTest';
 import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
 
 export const test = mergeTests(

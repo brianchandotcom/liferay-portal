@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import isSPAEnabled from './utils/isSPAEnabled';
 
 export const test = mergeTests(

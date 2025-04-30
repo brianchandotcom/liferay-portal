@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import getRandomString from '../../../utils/getRandomString';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import isSPAEnabled from './utils/isSPAEnabled';
 
 export const test = mergeTests(

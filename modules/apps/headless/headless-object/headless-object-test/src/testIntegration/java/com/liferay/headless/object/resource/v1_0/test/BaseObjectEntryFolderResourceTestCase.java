@@ -209,6 +209,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		ObjectEntryFolder objectEntryFolder = randomObjectEntryFolder();
 
+		objectEntryFolder.setDescription(regex);
 		objectEntryFolder.setExternalReferenceCode(regex);
 		objectEntryFolder.setLabel(regex);
 		objectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
@@ -222,6 +223,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		objectEntryFolder = ObjectEntryFolderSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectEntryFolder.getDescription());
 		Assert.assertEquals(
 			regex, objectEntryFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectEntryFolder.getLabel());
@@ -1697,6 +1699,14 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (objectEntryFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1962,6 +1972,17 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						objectEntryFolder1.getDateModified(),
 						objectEntryFolder2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectEntryFolder1.getDescription(),
+						objectEntryFolder2.getDescription())) {
 
 					return false;
 				}
@@ -2293,6 +2314,52 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			Object object = objectEntryFolder.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = objectEntryFolder.getExternalReferenceCode();
 
@@ -2614,6 +2681,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

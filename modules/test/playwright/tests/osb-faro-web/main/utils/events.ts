@@ -5,7 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
+import {selectAndExpectToHaveValue} from '../../../../utils/selectAndExpectToHaveValue';
 
 export async function addBreakdown({
 	breakdownName,

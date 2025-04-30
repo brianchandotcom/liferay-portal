@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {waitForLoading} from '../../tests/osb-faro-web/utils/loading';
+import {waitForLoading} from '../../tests/osb-faro-web/main/utils/loading';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 

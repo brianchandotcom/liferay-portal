@@ -5,7 +5,7 @@
 
 import {expect, test} from '@playwright/test';
 
-import {faroConfig} from '../tests/osb-faro-web/faro.config';
+import {faroConfig} from '../tests/osb-faro-web/main/faro.config';
 import createTempFile, {readTempFile} from '../utils/createTempFile';
 export interface Login {
 	password: string;

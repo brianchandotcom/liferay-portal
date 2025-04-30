@@ -5,7 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
+import {liferayConfig} from '../../../../liferay.config';
 import {clickOnLink} from './actions';
 
 export async function checkEmptyStateOnACSide(page: Page) {

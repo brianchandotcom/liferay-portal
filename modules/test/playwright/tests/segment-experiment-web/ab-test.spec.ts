@@ -15,13 +15,13 @@ import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
 } from '../analytics-settings-web/utils/analytics-settings';
-import {faroConfig} from '../osb-faro-web/faro.config';
-import {clickOnLink} from '../osb-faro-web/utils/actions';
+import {faroConfig} from '../osb-faro-web/main/faro.config';
+import {clickOnLink} from '../osb-faro-web/main/utils/actions';
 import {
 	createSitePage,
 	navigateToDXPandDeleteSite,
 	navigateToSitePage,
-} from '../osb-faro-web/utils/portal';
+} from '../osb-faro-web/main/utils/portal';
 import {openABTesSidebar} from '../segment-experiment-web/utils/ab-test';
 
 const test = mergeTests(

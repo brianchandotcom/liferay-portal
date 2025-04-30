@@ -7,24 +7,24 @@ import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getGlobalSiteId from '../../utils/getGlobalSiteId';
-import getRandomString from '../../utils/getRandomString';
-import {getTempDir} from '../../utils/temp';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {zipFolder} from '../../utils/zip';
-import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getGlobalSiteId from '../../../utils/getGlobalSiteId';
+import getRandomString from '../../../utils/getRandomString';
+import {getTempDir} from '../../../utils/temp';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {zipFolder} from '../../../utils/zip';
+import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
 
 const test = mergeTests(
 	apiHelpersTest,

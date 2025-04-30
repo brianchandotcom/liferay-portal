@@ -71,7 +71,7 @@ public interface TestEntityResource {
 	public Response postTestEntityBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Response postTestEntityMultiformBulk(MultipartBody multipartBody)
+	public Response postTestEntityMultipartBulk(MultipartBody multipartBody)
 		throws Exception;
 
 	public TestEntity putTestEntity(

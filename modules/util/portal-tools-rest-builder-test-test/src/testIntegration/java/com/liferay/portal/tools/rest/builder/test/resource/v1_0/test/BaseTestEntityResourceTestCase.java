@@ -583,7 +583,7 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	@Test
-	public void testPostTestEntityMultiformBulk() throws Exception {
+	public void testPostTestEntityMultipartBulk() throws Exception {
 		Assert.assertTrue(false);
 	}
 

@@ -85,11 +85,11 @@ public interface TestEntityResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void postTestEntityMultiformBulk(
+	public void postTestEntityMultipartBulk(
 			TestEntity testEntity, Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTestEntityMultiformBulkHttpResponse(
+	public HttpInvoker.HttpResponse postTestEntityMultipartBulkHttpResponse(
 			TestEntity testEntity, Map<String, File> multipartFiles)
 		throws Exception;
 
@@ -1042,12 +1042,12 @@ public interface TestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTestEntityMultiformBulk(
+		public void postTestEntityMultipartBulk(
 				TestEntity testEntity, Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTestEntityMultiformBulkHttpResponse(
+				postTestEntityMultipartBulkHttpResponse(
 					testEntity, multipartFiles);
 
 			String content = httpResponse.getContent();
@@ -1098,7 +1098,7 @@ public interface TestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTestEntityMultiformBulkHttpResponse(
+		public HttpInvoker.HttpResponse postTestEntityMultipartBulkHttpResponse(
 				TestEntity testEntity, Map<String, File> multipartFiles)
 			throws Exception {
 
@@ -1134,7 +1134,7 @@ public interface TestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/test-entities/multiform/bulk");
+						"/o/test/v1.0/test-entities/multipart/bulk");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -358,20 +358,19 @@ public abstract class BaseTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/test-entities/multiform/bulk'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/test-entities/multipart/bulk'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PostTestEntityMultiformBulkRequestBody.class)))
+		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PostTestEntityMultipartBulkRequestBody.class)))
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.Consumes("multipart/form-data")
-	@javax.ws.rs.Path("/test-entities/multiform/bulk")
+	@javax.ws.rs.Path("/test-entities/multipart/bulk")
 	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response postTestEntityMultiformBulk(MultipartBody multipartBody)
+	public Response postTestEntityMultipartBulk(MultipartBody multipartBody)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -957,7 +956,7 @@ public abstract class BaseTestEntityResourceImpl
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseTestEntityResourceImpl.class);
 
-	private class PostTestEntityMultiformBulkRequestBody {
+	private class PostTestEntityMultipartBulkRequestBody {
 
 		public TestEntity[] testEntities;
 

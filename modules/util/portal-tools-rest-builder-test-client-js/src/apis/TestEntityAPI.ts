@@ -469,11 +469,11 @@ export class TestEntityAPI {
 				 	* @param testEntities
 		 * @param headers Optional custom request headers
 		 */
-		public async postTestEntityMultiformBulk(
+		public async postTestEntityMultipartBulk(
 						testEntities?: Array<TestEntity>,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: object;
+				body?: any;
 			response: Response;
 		}> {
 				let body;
@@ -481,7 +481,7 @@ export class TestEntityAPI {
 								formData.append("testEntities", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.testEntities, "Array<TestEntity>")));
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/test-entities/multiform/bulk"
+			const path = this._basePath + "/test/v1.0/test-entities/multipart/bulk"
 ;
 
 			const queryParameters: any = {};
@@ -494,9 +494,6 @@ export class TestEntityAPI {
 					body: body,
 				headers:
 					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
-						}
 					,headers || {}
 					),
 				method: "POST",
@@ -506,10 +503,10 @@ export class TestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "object"), response};
+						return {body: await response.json(), response};
 					}
 					else {
-						return {body: await response.text() as any, response};
+						return {body: await response.text(), response};
 					}
 			}
 			else {

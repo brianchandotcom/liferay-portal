@@ -19,6 +19,7 @@ import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
@@ -68,6 +69,9 @@ public interface TestEntityResource {
 	public TestEntity postTestEntity(TestEntity testEntity) throws Exception;
 
 	public Response postTestEntityBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response postTestEntityMultiformBulk(MultipartBody multipartBody)
 		throws Exception;
 
 	public TestEntity putTestEntity(

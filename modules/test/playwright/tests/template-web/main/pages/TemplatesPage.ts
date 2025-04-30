@@ -6,10 +6,10 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class TemplatesPage {
 	readonly page: Page;

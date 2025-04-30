@@ -39,14 +39,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
-import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.security.ldap.test.util.configuration.LDAPAuthConfigurationProviderTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.List;
 
 import org.junit.Assert;
@@ -73,8 +71,10 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(true, false);
 
-		try (SafeCloseable safeCloseable =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						_user.getCompanyId(), true)) {
 
 			List<Ticket> tickets = _processAction();
 
@@ -88,8 +88,10 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(true, false);
 
-		try (SafeCloseable safeCloseable =
-				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						_user.getCompanyId(), false)) {
 
 			List<Ticket> tickets = _processAction();
 
@@ -103,8 +105,10 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		_createUser(false, false);
 
-		try (SafeCloseable safeCloseable =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+		try (LDAPAuthConfigurationProviderTemporarySwapper
+				ldapAuthConfigurationProviderTemporarySwapper =
+					new LDAPAuthConfigurationProviderTemporarySwapper(
+						_user.getCompanyId(), true)) {
 
 			List<Ticket> tickets = _processAction();
 
@@ -249,32 +253,8 @@ public class ForgotPasswordMVCActionCommandTest {
 		}
 	}
 
-	private SafeCloseable _updateLDAPAuthConfigurationWithSafeCloseable(
-		boolean passwordPolicyEnabled) {
-
-		long companyId = _user.getCompanyId();
-
-		Dictionary<String, Object> configurationProperties =
-			_ldapAuthConfigurationProvider.getConfigurationProperties(
-				companyId);
-
-		configurationProperties.put(
-			"passwordPolicyEnabled", passwordPolicyEnabled);
-
-		_ldapAuthConfigurationProvider.updateProperties(
-			companyId, configurationProperties);
-
-		return () -> _ldapAuthConfigurationProvider.delete(companyId);
-	}
-
 	@DeleteAfterTestRun
 	private static User _user;
-
-	@Inject(
-		filter = "factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration"
-	)
-	private ConfigurationProvider<LDAPAuthConfiguration>
-		_ldapAuthConfigurationProvider;
 
 	@Inject(
 		filter = "mvc.command.name=/login/forgot_password",

@@ -63,6 +63,34 @@ public class SXPBlueprintSerDes {
 			sb.append(_toJSON(sxpBlueprint.getActions()));
 		}
 
+		if (sxpBlueprint.getCollectionProviderSubTypeName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProviderSubTypeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpBlueprint.getCollectionProviderSubTypeName()));
+
+			sb.append("\"");
+		}
+
+		if (sxpBlueprint.getCollectionProviderTypeName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProviderTypeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpBlueprint.getCollectionProviderTypeName()));
+
+			sb.append("\"");
+		}
+
 		if (sxpBlueprint.getConfiguration() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -269,6 +297,25 @@ public class SXPBlueprintSerDes {
 			map.put("actions", String.valueOf(sxpBlueprint.getActions()));
 		}
 
+		if (sxpBlueprint.getCollectionProviderSubTypeName() == null) {
+			map.put("collectionProviderSubTypeName", null);
+		}
+		else {
+			map.put(
+				"collectionProviderSubTypeName",
+				String.valueOf(
+					sxpBlueprint.getCollectionProviderSubTypeName()));
+		}
+
+		if (sxpBlueprint.getCollectionProviderTypeName() == null) {
+			map.put("collectionProviderTypeName", null);
+		}
+		else {
+			map.put(
+				"collectionProviderTypeName",
+				String.valueOf(sxpBlueprint.getCollectionProviderTypeName()));
+		}
+
 		if (sxpBlueprint.getConfiguration() == null) {
 			map.put("configuration", null);
 		}
@@ -396,6 +443,16 @@ public class SXPBlueprintSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderSubTypeName")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderTypeName")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "configuration")) {
 				return false;
 			}
@@ -450,6 +507,22 @@ public class SXPBlueprintSerDes {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderSubTypeName")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setCollectionProviderSubTypeName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProviderTypeName")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setCollectionProviderTypeName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "configuration")) {

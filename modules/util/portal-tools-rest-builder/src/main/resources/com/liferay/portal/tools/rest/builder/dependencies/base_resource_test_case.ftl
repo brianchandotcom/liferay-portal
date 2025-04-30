@@ -606,28 +606,26 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				<#assign
-					parameterName = javaMethodSignature.javaMethodParameters[0].parameterName
+					firstParameterName = javaMethodSignature.javaMethodParameters[0].parameterName
 					postSchemaJavaMethodSignature = ""
 				/>
 
-				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, parameterName, schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, parameterName, schemaName) />
-				<#elseif (parameterName?? && parameterName?has_content) && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + parameterName?cap_first, schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + parameterName?cap_first, schemaName) />
+				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName)>
+					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName) />
+				<#elseif (firstParameterName?? && firstParameterName?has_content) && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName)>
+					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName) />
 				<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 				</#if>
 
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
 					<#if postSchemaJavaMethodSignature?has_content>
-
 						return test${postSchemaJavaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />
 							, getMultipartFiles()
 						</#if>
-
 						);
 					<#else>
 						throw new UnsupportedOperationException("This method needs to be implemented");
@@ -2154,26 +2152,26 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						get${schemaName} =
 
-					<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
+						<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
 
-					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
-						${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
-							<@getGetParameters
-								javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
-								testJavaMethodSignature = javaMethodSignature
-								varName = "put" + schemaName
-							/>);
-					<#else>
-						<#assign addResourceGetterMethod = true />
+						<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
+							${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
+								<@getGetParameters
+									javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+									testJavaMethodSignature = javaMethodSignature
+									varName = "put" + schemaName
+								/>);
+						<#else>
+							<#assign addResourceGetterMethod = true />
 
-						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
-							<@getGetParameters
-								allowQueryParameter = false
-								javaMethodSignature = javaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
-								varName = "put" + schemaName
-							/>);
-					</#if>
+							test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+								<@getGetParameters
+									allowQueryParameter = false
+									javaMethodSignature = javaMethodSignature
+									testJavaMethodSignature = javaMethodSignature
+									varName = "put" + schemaName
+								/>);
+						</#if>
 
 						assertEquals(new${schemaName}, get${schemaName});
 

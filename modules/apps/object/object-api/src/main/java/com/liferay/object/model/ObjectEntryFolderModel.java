@@ -251,6 +251,21 @@ public interface ObjectEntryFolderModel
 	public void setParentObjectEntryFolderId(long parentObjectEntryFolderId);
 
 	/**
+	 * Returns the description of this object entry folder.
+	 *
+	 * @return the description of this object entry folder
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this object entry folder.
+	 *
+	 * @param description the description of this object entry folder
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the label of this object entry folder.
 	 *
 	 * @return the label of this object entry folder

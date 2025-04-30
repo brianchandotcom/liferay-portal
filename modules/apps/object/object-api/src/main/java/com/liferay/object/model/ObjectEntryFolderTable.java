@@ -54,6 +54,9 @@ public class ObjectEntryFolderTable extends BaseTable<ObjectEntryFolderTable> {
 		parentObjectEntryFolderId = createColumn(
 			"parentObjectEntryFolderId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryFolderTable, String> description =
+		createColumn(
+			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryFolderTable, String> label = createColumn(
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryFolderTable, String> name = createColumn(

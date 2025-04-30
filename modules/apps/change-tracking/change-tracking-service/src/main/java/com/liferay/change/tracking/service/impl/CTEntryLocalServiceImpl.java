@@ -99,6 +99,22 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return ctEntryPersistence.remove(ctEntry);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public CTEntry deleteCTEntry(CTEntry ctEntry, boolean force)
+		throws PortalException {
+
+		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
+			ctEntry.getCtCollectionId());
+
+		if (!force && ctCollection.isReadOnly()) {
+			throw new PortalException(
+				"Change tracking collection " + ctCollection + " is read only");
+		}
+
+		return ctEntryPersistence.remove(ctEntry);
+	}
+
 	@Override
 	public CTEntry fetchCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {

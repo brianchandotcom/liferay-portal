@@ -42,7 +42,6 @@
 							'liferay-form',
 							'liferay-menu',
 							'liferay-portlet-base',
-							'liferay-undo-manager',
 							'sortable',
 						],
 					},
@@ -95,10 +94,6 @@
 					'liferay-search-container-select': {
 						path: 'search_container_select.js',
 						requires: ['aui-component', 'aui-url', 'plugin'],
-					},
-					'liferay-undo-manager': {
-						path: 'undo_manager.js',
-						requires: ['aui-data-set-deprecated', 'base'],
 					},
 					'liferay-upload': {
 						path: 'upload.js',

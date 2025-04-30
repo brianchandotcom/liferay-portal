@@ -5,16 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {waitForAlert} from '../../utils/waitForAlert';
+import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
-export const test = mergeTests(loginTest(), systemSettingsPageTest);
+export const test = mergeTests(
+	isolatedLayoutTest(),
+	loginTest(),
+	systemSettingsPageTest
+);
 
-test('LPD-30822 Cookie Banner Accessibility', async ({
-	page,
-	systemSettingsPage,
-}) => {
+test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
 	await test.step('Enable Third Party Cookies', async () => {
 		await systemSettingsPage.goToSystemSetting(
 			'Cookies',
@@ -51,7 +53,7 @@ test('LPD-30822 Cookie Banner Accessibility', async ({
 		await waitForAlert(page);
 	});
 
-	await test.step('Check aria-label, role, and paragraph', async () => {
+	await test.step('Open Configuration', async () => {
 		await page.goto('/');
 
 		await page
@@ -60,14 +62,18 @@ test('LPD-30822 Cookie Banner Accessibility', async ({
 			)
 			.waitFor({state: 'visible'});
 
-		const cookiesBannerContainer = page.locator(
-			'//div[@role="dialog"][@aria-label="banner cookies"]'
-		);
+		const configuration = page.getByRole('button', {name: 'Configuration'});
 
-		await expect(cookiesBannerContainer).toBeVisible();
+		await configuration.waitFor({state: 'visible'});
 
-		const paragraph = cookiesBannerContainer.locator('p.mb-0');
+		await configuration.click();
+	});
 
-		await expect(paragraph).toBeVisible();
+	await test.step('Check cadmin is not applied', async () => {
+		const modalBody = page
+			.frameLocator('#cookiesBannerConfiguration_iframe_')
+			.locator('.dialog-iframe-popup');
+
+		await expect(modalBody).not.toHaveClass(/cadmin/);
 	});
 });

@@ -73,7 +73,8 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getIcon() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			_fragmentComposition.isMarketplace()) {
 
 			return "marketplace";
@@ -100,7 +101,8 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			_fragmentComposition.isMarketplace()) {
 
 			return null;
@@ -113,7 +115,8 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			_fragmentComposition.isMarketplace()) {
 
 			return "fragment-marketplace-sticker";
@@ -124,7 +127,8 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			_fragmentComposition.isMarketplace()) {
 
 			return "marketplace";
@@ -135,7 +139,8 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			_fragmentComposition.isMarketplace()) {
 
 			return null;

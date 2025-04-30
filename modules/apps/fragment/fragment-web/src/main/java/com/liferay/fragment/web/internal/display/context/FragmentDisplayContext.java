@@ -775,7 +775,8 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean showMarketplace() throws PortalException {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-34938") &&
 			PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				MarketplacePortletKeys.FRAGMENTS,

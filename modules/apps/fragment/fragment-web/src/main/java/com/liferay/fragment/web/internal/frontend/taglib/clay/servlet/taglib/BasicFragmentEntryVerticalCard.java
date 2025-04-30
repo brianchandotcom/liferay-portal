@@ -74,7 +74,8 @@ public class BasicFragmentEntryVerticalCard
 				themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ||
 			fragmentEntry.isTypeReact() ||
-			(FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			(FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-34938") &&
 			 fragmentEntry.isMarketplace())) {
 
 			return null;
@@ -95,7 +96,8 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getIcon() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-34938") &&
 			fragmentEntry.isMarketplace()) {
 
 			return "marketplace";
@@ -138,7 +140,8 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-34938") &&
 			fragmentEntry.isMarketplace()) {
 
 			return "fragment-marketplace-sticker";
@@ -149,7 +152,8 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-34938") &&
 			fragmentEntry.isMarketplace()) {
 
 			return "marketplace";

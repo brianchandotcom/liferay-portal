@@ -605,20 +605,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertNotNull(page);
 				}
 
-				<#assign
-					firstParameterName = javaMethodSignature.javaMethodParameters[0].parameterName
-					postSchemaJavaMethodSignature = ""
-				/>
-
-				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName) />
-				<#elseif (firstParameterName?? && firstParameterName?has_content) && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName) />
-				<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
-				</#if>
-
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+					<#assign
+						firstParameterName = javaMethodSignature.javaMethodParameters[0].parameterName
+						postSchemaJavaMethodSignature = ""
+					/>
+
+					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, firstParameterName, schemaName) />
+					<#elseif (firstParameterName?? && firstParameterName?has_content) && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName) />
+					<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+					</#if>
+
 					<#if postSchemaJavaMethodSignature?has_content>
 						return test${postSchemaJavaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}()
 

@@ -11,22 +11,22 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {formsPagesTest} from '../../fixtures/formsPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {getRandomDouble} from '../../utils/getRandomDouble';
-import {getRandomInt} from '../../utils/getRandomInt';
-import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
+import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {getRandomDouble} from '../../../utils/getRandomDouble';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(

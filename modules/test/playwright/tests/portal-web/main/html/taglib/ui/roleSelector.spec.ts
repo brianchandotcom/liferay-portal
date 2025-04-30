@@ -5,17 +5,43 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
 import {PORTLET_URLS} from '../../../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../../../utils/waitForAlert';
 
-const test = mergeTests(loginTest());
+const test = mergeTests(dataApiHelpersTest, loginTest());
 
 test(
 	'Multiple selection with pagination in SearchContainer modal',
 	{tag: '@LPD-50672'},
-	async ({page}) => {
+	async ({apiHelpers, page}) => {
+		const maxNumberOfRoles = 15;
 		let iframeSelectRole;
+		const roleIds = [];
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		await test.step('Create extra roles', async () => {
+			for (let i = 0; i <= maxNumberOfRoles; i++) {
+				const role = await apiHelpers.headlessAdminUser.postRole({
+					name: 'role' + i,
+					rolePermissions: [
+						{
+							actionIds: ['VIEW'],
+							primaryKey: companyId,
+							resourceName:
+								'com.liferay.account.model.AccountEntry',
+							scope: 1,
+						},
+					],
+				});
+
+				roleIds.push(role.id);
+			}
+		});
 
 		await test.step('Navigate to Configuration > Site Settings > Menu Access', async () => {
 			await page.goto(`/group/guest${PORTLET_URLS.siteSettings}`);
@@ -79,7 +105,7 @@ test(
 				'Analytics Administrator'
 			);
 
-			await expect(Number(selectedRoleValue)).toBeGreaterThanOrEqual(0);
+			expect(Number(selectedRoleValue)).toBeGreaterThanOrEqual(0);
 		});
 	}
 );

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -166,13 +167,6 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 			throw new CaptchaException();
 		}
 
-		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
-		).put(
-			"remoteip", httpServletRequest.getRemoteAddr()
-		).put(
-			"response", captchaResponse
-		);
-
 		try {
 			User user = _userLocalService.getUserByScreenName(
 				_companyId, "default-service-account");
@@ -183,7 +177,11 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 						_companyId, Http.Method.POST,
 						_functionCaptchaImplConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						payloadJSONObject,
+						JSONUtil.put(
+							"remoteip", httpServletRequest.getRemoteAddr()
+						).put(
+							"response", captchaResponse
+						),
 						_functionCaptchaImplConfiguration.resourcePath(),
 						user.getUserId()
 					).get()));

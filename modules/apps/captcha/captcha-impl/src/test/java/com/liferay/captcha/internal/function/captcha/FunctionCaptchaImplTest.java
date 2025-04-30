@@ -7,10 +7,11 @@ package com.liferay.captcha.internal.function.captcha;
 
 import com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration;
 import com.liferay.portal.catapult.PortalCatapult;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -157,14 +158,17 @@ public class FunctionCaptchaImplTest {
 		Mockito.when(
 			jsonFactory.createJSONObject()
 		).thenReturn(
-			JSONUtil.put(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString())
+			new JSONObjectImpl()
 		);
 
-		JSONObject jsonObject = JSONUtil.put("success", success);
+		JSONObject jsonObject = new JSONObjectImpl();
+
+		jsonObject.put("success", success);
 
 		if (!success) {
-			JSONArray jsonArray = JSONUtil.put(RandomTestUtil.randomString());
+			JSONArray jsonArray = new JSONArrayImpl();
+
+			jsonArray.put(RandomTestUtil.randomString());
 
 			jsonObject.put("error-codes", jsonArray);
 		}
@@ -179,10 +183,8 @@ public class FunctionCaptchaImplTest {
 	}
 
 	private void _testValidateChallenge(boolean success) throws Exception {
-		JSONFactory jsonFactory = _mockJSONFactory(success);
-
 		ReflectionTestUtil.setFieldValue(
-			_functionCaptchaImpl, "_jsonFactory", jsonFactory);
+			_functionCaptchaImpl, "_jsonFactory", _mockJSONFactory(success));
 
 		if (success) {
 			_functionCaptchaImpl.validateChallenge(_httpServletRequest);

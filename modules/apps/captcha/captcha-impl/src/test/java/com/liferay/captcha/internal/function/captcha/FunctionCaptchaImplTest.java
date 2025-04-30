@@ -44,10 +44,10 @@ public class FunctionCaptchaImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_setUpPortalCatapult();
-		_setUpUserLocalService();
 		_setUpFunctionCaptchaImplConfiguration();
 		_setUpHttpServletRequest();
+		_setUpPortalCatapult();
+		_setUpUserLocalService();
 
 		_setUpFunctionCaptchaImpl();
 	}

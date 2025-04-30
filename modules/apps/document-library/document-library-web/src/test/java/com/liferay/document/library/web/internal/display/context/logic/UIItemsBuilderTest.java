@@ -6,20 +6,29 @@
 package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -31,6 +40,8 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import javax.portlet.PortletURL;
 
 import org.assertj.core.api.AbstractUriAssert;
 import org.assertj.core.api.Assertions;
@@ -58,6 +69,7 @@ public class UIItemsBuilderTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_setUpGroupPermissionUtil();
+		_setUpPortletURLUtil();
 		_setUpStagedModelDataHandlerRegistryUtil();
 		_setUpStagingGroupHelper();
 
@@ -74,6 +86,13 @@ public class UIItemsBuilderTest {
 		);
 
 		_fileEntry = Mockito.mock(FileEntry.class);
+
+		Mockito.when(
+			_fileEntry.getFolderId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
 		_fileVersion = Mockito.mock(FileVersion.class);
 
 		Mockito.when(
@@ -94,8 +113,57 @@ public class UIItemsBuilderTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_groupPermissionUtilMockedStatic.close();
+		_portletURLUtilMockedStatic.close();
 		_stagedModelDataHandlerRegistryUtilMockedStatic.close();
 		_stagingGroupHelperUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testCancelCheckoutDropdownItem() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setPortletName(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		UIItemsBuilder uiItemsBuilder = _getUIItemsBuilder(themeDisplay);
+
+		DropdownItem cancelCheckoutDropdownItem =
+			uiItemsBuilder.createCancelCheckoutDropdownItem();
+
+		_assertHref(cancelCheckoutDropdownItem);
+	}
+
+	@Test
+	public void testCheckinDropdownItem() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setPortletName(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		UIItemsBuilder uiItemsBuilder = _getUIItemsBuilder(themeDisplay);
+
+		DropdownItem cancelCheckoutDropdownItem =
+			uiItemsBuilder.createCheckinDropdownItem();
+
+		_assertHref(cancelCheckoutDropdownItem);
+	}
+
+	@Test
+	public void testCreateCancelCheckoutDropdownItem() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setPortletName(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		UIItemsBuilder uiItemsBuilder = _getUIItemsBuilder(themeDisplay);
+
+		DropdownItem cancelCheckoutDropdownItem =
+			uiItemsBuilder.createCancelCheckoutDropdownItem();
+
+		_assertHref(cancelCheckoutDropdownItem);
 	}
 
 	@Test
@@ -162,6 +230,18 @@ public class UIItemsBuilderTest {
 			GroupPermissionUtil.class);
 	}
 
+	private static void _setUpPortletURLUtil() throws Exception {
+		_portletURLUtilMockedStatic = Mockito.mockStatic(PortletURLUtil.class);
+
+		Mockito.when(
+			PortletURLUtil.getCurrent(
+				Mockito.any(LiferayPortletRequest.class),
+				Mockito.any(LiferayPortletResponse.class))
+		).thenReturn(
+			new MockLiferayPortletURL()
+		);
+	}
+
 	private static void _setUpStagedModelDataHandlerRegistryUtil() {
 		_stagedModelDataHandlerRegistryUtilMockedStatic = Mockito.mockStatic(
 			StagedModelDataHandlerRegistryUtil.class);
@@ -223,16 +303,56 @@ public class UIItemsBuilderTest {
 		);
 	}
 
+	private void _assertHref(DropdownItem dropdownItem) {
+		String href = (String)dropdownItem.get("href");
+
+		Assert.assertNotNull(href);
+
+		Assert.assertTrue(
+			href.contains("param_folderId=" + _fileEntry.getFolderId()));
+	}
+
 	private UIItemsBuilder _getUIItemsBuilder(ThemeDisplay themeDisplay) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
+			LiferayPortletRequest.class);
+
+		Mockito.when(
+			liferayPortletRequest.getPortletName()
+		).thenReturn(
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+		);
+
+		String attributeName = StringBundler.concat(
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, StringPool.DASH,
+			WebKeys.CURRENT_PORTLET_URL);
+
+		liferayPortletRequest.setAttribute(
+			attributeName, Mockito.mock(PortletURL.class));
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST, liferayPortletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletActionResponse());
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		VersioningStrategy versioningStrategy = Mockito.mock(
+			VersioningStrategy.class);
+
+		Mockito.when(
+			versioningStrategy.isOverridable()
+		).thenReturn(
+			false
+		);
+
 		return new UIItemsBuilder(
-			mockHttpServletRequest, _fileEntry, _fileVersion, null, null,
-			_dlurlHelper);
+			mockHttpServletRequest, _fileEntry, _fileVersion, null,
+			versioningStrategy, _dlurlHelper);
 	}
 
 	private static DLURLHelper _dlurlHelper;
@@ -240,6 +360,7 @@ public class UIItemsBuilderTest {
 	private static FileVersion _fileVersion;
 	private static MockedStatic<GroupPermissionUtil>
 		_groupPermissionUtilMockedStatic;
+	private static MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
 	private static MockedStatic<StagedModelDataHandlerRegistryUtil>
 		_stagedModelDataHandlerRegistryUtilMockedStatic;
 	private static MockedStatic<StagingGroupHelperUtil>

@@ -1138,9 +1138,9 @@ paths:
                     description:
                         "OK"
             tags: ["TestEntity"]
-    /test-entities/multiform/bulk:
+    /test-entities/multipart/bulk:
         post:
-            operationId: postTestEntityMultiformBulk
+            operationId: postTestEntityMultipartBulk
             requestBody:
                 content:
                     multipart/form-data:
@@ -1153,25 +1153,7 @@ paths:
                             type: object
             responses:
                 200:
-                    content:
-                        "application/json":
-                            schema:
-                                properties:
-                                    message:
-                                        type: string
-                                    processedCount:
-                                        format: int32
-                                        type: integer
-                                type: object
-                        "application/xml":
-                            schema:
-                                properties:
-                                    message:
-                                        type: string
-                                    processedCount:
-                                        format: int32
-                                        type: integer
-                                type: object
+                    description: "OK"
             tags: ["TestEntity"]
     /test-entities/{testEntityId}:
         get:

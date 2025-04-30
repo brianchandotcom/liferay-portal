@@ -1122,6 +1122,41 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
             tags: ["TestEntity"]
+    /test-entities/multiform/bulk:
+        post:
+            operationId: postTestEntityMultiformBulk
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                testEntities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/TestEntity'
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                    processedCount:
+                                        type: integer
+                                        format: int32
+                        "application/xml":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                    processedCount:
+                                        type: integer
+                                        format: int32
+            tags: ["TestEntity"]
     /test-entities/count:
         get:
             description:

@@ -5,8 +5,8 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../fixtures/loginTest';
-import {checkAccessibility} from '../../utils/checkAccessibility';
+import {loginTest} from '../../../fixtures/loginTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 
 const test = mergeTests(loginTest());
 

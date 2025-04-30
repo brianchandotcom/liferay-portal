@@ -5,10 +5,10 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class UtilityPagesPage {
 	readonly page: Page;

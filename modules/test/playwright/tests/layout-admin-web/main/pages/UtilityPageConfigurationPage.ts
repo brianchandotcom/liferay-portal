@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {waitForAlert} from '../../../utils/waitForAlert';
-import {UtilityPagesPage} from '../../layout-admin-web/pages/UtilityPagesPage';
+import {waitForAlert} from '../../../../utils/waitForAlert';
+import {UtilityPagesPage} from './UtilityPagesPage';
 
 export class UtilityPageConfigurationPage {
 	readonly page: Page;

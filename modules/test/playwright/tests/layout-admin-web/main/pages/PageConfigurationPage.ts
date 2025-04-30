@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 type PageConfigurationSection =
 	| 'General'

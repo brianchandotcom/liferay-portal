@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {listTypeDefinitionsPagesTest} from '../../../fixtures/listTypeDefinitionsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

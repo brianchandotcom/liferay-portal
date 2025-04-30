@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../../utils/getRandomString';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {liferayConfig} from '../../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../utils/getRandomString';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export class JSComponentsSamplePage {
 	readonly page: Page;

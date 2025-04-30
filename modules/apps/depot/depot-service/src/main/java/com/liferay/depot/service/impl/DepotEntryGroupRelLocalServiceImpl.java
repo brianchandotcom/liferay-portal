@@ -117,7 +117,7 @@ public class DepotEntryGroupRelLocalServiceImpl
 			long depotEntryGroupRelId)
 		throws PortalException {
 
-		return deleteDepotEntryGroupRel(
+		return depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			getDepotEntryGroupRel(depotEntryGroupRelId));
 	}
 
@@ -285,7 +285,8 @@ public class DepotEntryGroupRelLocalServiceImpl
 				continue;
 			}
 
-			deleteDepotEntryGroupRel(depotEntryGroupRel);
+			depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
+				depotEntryGroupRel);
 		}
 	}
 

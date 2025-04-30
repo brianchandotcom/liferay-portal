@@ -30,15 +30,15 @@ public class ObjectEntryFolderServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntryFolder addObjectEntryFolder(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, String description,
 			long parentObjectEntryFolderId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderService.addObjectEntryFolder(
-			externalReferenceCode, groupId, parentObjectEntryFolderId, labelMap,
-			name, serviceContext);
+			externalReferenceCode, groupId, description,
+			parentObjectEntryFolderId, labelMap, name, serviceContext);
 	}
 
 	@Override
@@ -124,14 +124,15 @@ public class ObjectEntryFolderServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntryFolder updateObjectEntryFolder(
-			long objectEntryFolderId, long parentObjectEntryFolderId,
+			long objectEntryFolderId, String description,
+			long parentObjectEntryFolderId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderService.updateObjectEntryFolder(
-			objectEntryFolderId, parentObjectEntryFolderId, labelMap, name,
-			serviceContext);
+			objectEntryFolderId, description, parentObjectEntryFolderId,
+			labelMap, name, serviceContext);
 	}
 
 	@Override

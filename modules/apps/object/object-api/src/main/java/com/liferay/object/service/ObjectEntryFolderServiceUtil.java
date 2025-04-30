@@ -32,15 +32,15 @@ public class ObjectEntryFolderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectEntryFolder addObjectEntryFolder(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, String description,
 			long parentObjectEntryFolderId,
 			Map<java.util.Locale, String> labelMap, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addObjectEntryFolder(
-			externalReferenceCode, groupId, parentObjectEntryFolderId, labelMap,
-			name, serviceContext);
+			externalReferenceCode, groupId, description,
+			parentObjectEntryFolderId, labelMap, name, serviceContext);
 	}
 
 	public static ObjectEntryFolder deleteObjectEntryFolder(
@@ -110,14 +110,15 @@ public class ObjectEntryFolderServiceUtil {
 	}
 
 	public static ObjectEntryFolder updateObjectEntryFolder(
-			long objectEntryFolderId, long parentObjectEntryFolderId,
+			long objectEntryFolderId, String description,
+			long parentObjectEntryFolderId,
 			Map<java.util.Locale, String> labelMap, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateObjectEntryFolder(
-			objectEntryFolderId, parentObjectEntryFolderId, labelMap, name,
-			serviceContext);
+			objectEntryFolderId, description, parentObjectEntryFolderId,
+			labelMap, name, serviceContext);
 	}
 
 	public static ObjectEntryFolderService getService() {

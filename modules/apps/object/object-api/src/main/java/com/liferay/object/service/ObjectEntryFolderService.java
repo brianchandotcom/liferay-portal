@@ -46,7 +46,7 @@ public interface ObjectEntryFolderService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object entry folder remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectEntryFolderServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectEntryFolder addObjectEntryFolder(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, String description,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
 			String name, ServiceContext serviceContext)
 		throws PortalException;
@@ -91,9 +91,9 @@ public interface ObjectEntryFolderService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ObjectEntryFolder updateObjectEntryFolder(
-			long objectEntryFolderId, long parentObjectEntryFolderId,
-			Map<Locale, String> labelMap, String name,
-			ServiceContext serviceContext)
+			long objectEntryFolderId, String description,
+			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
+			String name, ServiceContext serviceContext)
 		throws PortalException;
 
 }

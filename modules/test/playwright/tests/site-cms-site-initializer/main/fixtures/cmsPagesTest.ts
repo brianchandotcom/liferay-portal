@@ -5,12 +5,12 @@
 
 import {test} from '@playwright/test';
 
-import {EditVocabularyPage} from '../../pages/EditVocabularyPage';
-import {PicklistBuilderPage} from '../../pages/PicklistBuilderPage';
-import {StructureBuilderPage} from '../../pages/StructureBuilderPage';
-import {StructuresPage} from '../../pages/StructuresPage';
-import {TagsPage} from '../../pages/TagsPage';
-import {VocabulariesPage} from '../../pages/VocabulariesPage';
+import {EditVocabularyPage} from '../pages/EditVocabularyPage';
+import {PicklistBuilderPage} from '../pages/PicklistBuilderPage';
+import {StructureBuilderPage} from '../pages/StructureBuilderPage';
+import {StructuresPage} from '../pages/StructuresPage';
+import {TagsPage} from '../pages/TagsPage';
+import {VocabulariesPage} from '../pages/VocabulariesPage';
 
 const cmsPagesTest = test.extend<{
 	editVocabularyPage: EditVocabularyPage;

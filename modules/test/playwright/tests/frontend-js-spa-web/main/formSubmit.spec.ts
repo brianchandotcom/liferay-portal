@@ -13,7 +13,7 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import isSPAEnabled from '../utils/isSPAEnabled';
+import isSPAEnabled from './utils/isSPAEnabled';
 
 export const test = mergeTests(
 	loginTest(),

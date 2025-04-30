@@ -6,7 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 
 export class PublisherSolutionPage {
 	readonly accountSearchDropdown: Locator;

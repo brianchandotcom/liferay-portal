@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {LocalizationInstanceSettingsPage} from '../../pages/LocalizationInstanceSettingsPage';
+import {LocalizationInstanceSettingsPage} from '../pages/LocalizationInstanceSettingsPage';
 
 const localizationPagesTest = test.extend<{
 	localizationInstanceSettingsPage: LocalizationInstanceSettingsPage;

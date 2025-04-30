@@ -23,12 +23,12 @@ import {
 	performLoginViaApi,
 	performLogout,
 	userData,
-} from '../../utils/performLogin';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
-import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
-import {journalPagesTest} from '../journal-web/main/fixtures/journalPagesTest';
+} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	contactsCenterPagesTest,

@@ -11,7 +11,7 @@ import {isolatedSiteTest} from '../../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../../../../utils/getRandomString';
-import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
+import {samplePageTest} from '../../../../../frontend-taglib/main/fixtures/samplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

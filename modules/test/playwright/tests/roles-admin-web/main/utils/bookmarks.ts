@@ -9,8 +9,8 @@ import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import {BookmarksPage} from '../../../../pages/roles-admin-web/bookmarks/BookmarksPage';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export async function setupBookmark(
 	apiHelpers: DataApiHelpers,

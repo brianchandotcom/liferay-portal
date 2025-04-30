@@ -6,7 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {zipFolder} from '../../../../../utils/zip';
+import {zipFolder} from '../../../../../../utils/zip';
 import {PublishProductPayload, Steps} from '../../types';
 
 export class PublisherAppPage {

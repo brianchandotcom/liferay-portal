@@ -20,9 +20,9 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {toLocalDateTimeFormatted} from '../utils/toLocalDateTimeFormatted';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
 export const test = mergeTests(
 	apiHelpersTest,
 	calendarPagesTest,

@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {MembershipsPage} from '../../pages/MembershipsPage';
+import {MembershipsPage} from '../pages/MembershipsPage';
 
 const membershipsPagesTest = test.extend<{
 	membershipsPage: MembershipsPage;

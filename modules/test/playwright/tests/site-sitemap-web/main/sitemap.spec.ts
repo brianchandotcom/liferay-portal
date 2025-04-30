@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
 
 export const test = mergeTests(instanceSettingsPagesTest, loginTest());
 

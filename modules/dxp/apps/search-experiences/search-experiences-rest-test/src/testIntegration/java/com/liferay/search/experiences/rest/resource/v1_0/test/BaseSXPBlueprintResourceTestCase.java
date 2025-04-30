@@ -209,6 +209,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		SXPBlueprint sxpBlueprint = randomSXPBlueprint();
 
+		sxpBlueprint.setCollectionProviderSubTypeName(regex);
+		sxpBlueprint.setCollectionProviderTypeName(regex);
 		sxpBlueprint.setDescription(regex);
 		sxpBlueprint.setExternalReferenceCode(regex);
 		sxpBlueprint.setSchemaVersion(regex);
@@ -222,6 +224,10 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		sxpBlueprint = SXPBlueprintSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, sxpBlueprint.getCollectionProviderSubTypeName());
+		Assert.assertEquals(
+			regex, sxpBlueprint.getCollectionProviderTypeName());
 		Assert.assertEquals(regex, sxpBlueprint.getDescription());
 		Assert.assertEquals(regex, sxpBlueprint.getExternalReferenceCode());
 		Assert.assertEquals(regex, sxpBlueprint.getSchemaVersion());
@@ -1436,6 +1442,27 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"collectionProviderSubTypeName",
+					additionalAssertFieldName)) {
+
+				if (sxpBlueprint.getCollectionProviderSubTypeName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"collectionProviderTypeName", additionalAssertFieldName)) {
+
+				if (sxpBlueprint.getCollectionProviderTypeName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("configuration", additionalAssertFieldName)) {
 				if (sxpBlueprint.getConfiguration() == null) {
 					valid = false;
@@ -1657,6 +1684,33 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 				if (!equals(
 						(Map)sxpBlueprint1.getActions(),
 						(Map)sxpBlueprint2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"collectionProviderSubTypeName",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getCollectionProviderSubTypeName(),
+						sxpBlueprint2.getCollectionProviderSubTypeName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"collectionProviderTypeName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpBlueprint1.getCollectionProviderTypeName(),
+						sxpBlueprint2.getCollectionProviderTypeName())) {
 
 					return false;
 				}
@@ -1917,6 +1971,98 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("collectionProviderSubTypeName")) {
+			Object object = sxpBlueprint.getCollectionProviderSubTypeName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("collectionProviderTypeName")) {
+			Object object = sxpBlueprint.getCollectionProviderTypeName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("configuration")) {
@@ -2323,6 +2469,10 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	protected SXPBlueprint randomSXPBlueprint() throws Exception {
 		return new SXPBlueprint() {
 			{
+				collectionProviderSubTypeName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				collectionProviderTypeName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

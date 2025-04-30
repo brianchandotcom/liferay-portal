@@ -96,6 +96,96 @@ public class SXPBlueprint implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getCollectionProviderSubTypeName() {
+		if (_collectionProviderSubTypeNameSupplier != null) {
+			collectionProviderSubTypeName =
+				_collectionProviderSubTypeNameSupplier.get();
+
+			_collectionProviderSubTypeNameSupplier = null;
+		}
+
+		return collectionProviderSubTypeName;
+	}
+
+	public void setCollectionProviderSubTypeName(
+		String collectionProviderSubTypeName) {
+
+		this.collectionProviderSubTypeName = collectionProviderSubTypeName;
+
+		_collectionProviderSubTypeNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCollectionProviderSubTypeName(
+		UnsafeSupplier<String, Exception>
+			collectionProviderSubTypeNameUnsafeSupplier) {
+
+		_collectionProviderSubTypeNameSupplier = () -> {
+			try {
+				return collectionProviderSubTypeNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String collectionProviderSubTypeName;
+
+	@JsonIgnore
+	private Supplier<String> _collectionProviderSubTypeNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getCollectionProviderTypeName() {
+		if (_collectionProviderTypeNameSupplier != null) {
+			collectionProviderTypeName =
+				_collectionProviderTypeNameSupplier.get();
+
+			_collectionProviderTypeNameSupplier = null;
+		}
+
+		return collectionProviderTypeName;
+	}
+
+	public void setCollectionProviderTypeName(
+		String collectionProviderTypeName) {
+
+		this.collectionProviderTypeName = collectionProviderTypeName;
+
+		_collectionProviderTypeNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCollectionProviderTypeName(
+		UnsafeSupplier<String, Exception>
+			collectionProviderTypeNameUnsafeSupplier) {
+
+		_collectionProviderTypeNameSupplier = () -> {
+			try {
+				return collectionProviderTypeNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String collectionProviderTypeName;
+
+	@JsonIgnore
+	private Supplier<String> _collectionProviderTypeNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Configuration getConfiguration() {
 		if (_configurationSupplier != null) {
@@ -673,6 +763,39 @@ public class SXPBlueprint implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		String collectionProviderSubTypeName =
+			getCollectionProviderSubTypeName();
+
+		if (collectionProviderSubTypeName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProviderSubTypeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(collectionProviderSubTypeName));
+
+			sb.append("\"");
+		}
+
+		String collectionProviderTypeName = getCollectionProviderTypeName();
+
+		if (collectionProviderTypeName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProviderTypeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(collectionProviderTypeName));
+
+			sb.append("\"");
 		}
 
 		Configuration configuration = getConfiguration();

@@ -48,5 +48,13 @@
 				"name": "Test User Group 2"
 			}
 		]
+	},
+	{
+		"alternateName": "testAlternateName3",
+		"emailAddress": "test.user3@liferay.com",
+		"externalReferenceCode": "TESTUSER3",
+		"familyName": "User3",
+		"givenName": "Test",
+		"name": "Test User 3"
 	}
 ]

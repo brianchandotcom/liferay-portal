@@ -4175,6 +4175,21 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(userAccount.getImageId() == 0);
 
 		_assertUserSiteGroups(userAccount.getId());
+
+		userAccount = userAccountResource.getUserAccountByEmailAddress(
+			"test.user3@liferay.com");
+
+		Assert.assertNotNull(userAccount);
+
+		accountBriefs = userAccount.getAccountBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(accountBriefs), 0, accountBriefs.length);
+
+		Assert.assertEquals(
+			"testalternatename3", userAccount.getAlternateName());
+		Assert.assertEquals(
+			UserAccount.Status.INACTIVE, userAccount.getStatus());
 	}
 
 	private void _assertUserAccounts2() throws Exception {

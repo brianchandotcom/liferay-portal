@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
-import {waitForAlert} from '../../../utils/waitForAlert';
+import {SystemSettingsPage} from '../../../../pages/configuration-admin-web/SystemSettingsPage';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class FileSizeLimitsSystemSettingsPage {
 	readonly page: Page;

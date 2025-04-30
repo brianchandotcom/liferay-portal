@@ -161,6 +161,9 @@ public interface KeywordResource {
 	public Response putKeywordBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void putKeywordMergeKeyword(Long targetKeywordId, Long[] longs)
+		throws Exception;
+
 	public void putKeywordSubscribe(Long keywordId) throws Exception;
 
 	public void putKeywordUnsubscribe(Long keywordId) throws Exception;

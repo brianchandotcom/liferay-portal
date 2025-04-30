@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {checkAccessibility} from '../../utils/checkAccessibility';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {featureFlagPagesTest} from './fixtures/featureFlagPagesTest';
 
 const DEPENDENCY_FEATURE_FLAG = 'LPD-00000';

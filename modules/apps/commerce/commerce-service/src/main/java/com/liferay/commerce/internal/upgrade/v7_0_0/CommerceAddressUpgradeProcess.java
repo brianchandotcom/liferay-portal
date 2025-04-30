@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,8 +26,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author Drew Brokke
@@ -84,9 +87,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				resultSet.getDouble("longitude"), resultSet.getString("name"),
 				resultSet.getString("street1"), resultSet.getString("street2"),
 				resultSet.getString("street3"), resultSet.getString("zip"),
-				resultSet.getString("phoneNumber"),
-				resultSet.getBoolean("defaultBilling"),
-				resultSet.getBoolean("defaultShipping")
+				resultSet.getString("phoneNumber")
 			},
 			values -> {
 				Address address = _addressLocalService.createAddress(
@@ -129,10 +130,33 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address = _addressLocalService.addAddress(address);
 
 				_setPhoneNumber(address, (String)values[21]);
-				_setDefaultBilling(address, (Boolean)values[22]);
-				_setDefaultShipping(address, (Boolean)values[23]);
 			},
 			"Unable to migrate commerceAddress to Address");
+
+		try (Statement selectStatement = connection.createStatement()) {
+			ResultSet resultSet = selectStatement.executeQuery(
+				StringBundler.concat(
+					"select CommerceAddress.commerceAddressId, ",
+					"CommerceAddress.classPK, CommerceAddress.defaultBilling, ",
+					"CommerceAddress.defaultShipping from CommerceAddress ",
+					"inner join ClassName_ on CommerceAddress.classNameId = ",
+					"ClassName_.classNameId where ",
+					"(CommerceAddress.defaultBilling = 1 or ",
+					"CommerceAddress.defaultShipping = 1) and ",
+					"(ClassName_.value = ", AccountEntry.class.getName(), " ",
+					"or ClassName_.value = ",
+					"com.liferay.commerce.account.model.CommerceAccount) ",
+					"order by CommerceAddress.commerceAddressId"));
+
+			while (resultSet.next()) {
+				long addressId = resultSet.getLong(1);
+				long classPK = resultSet.getLong(2);
+
+				_setDefaultBilling(addressId, classPK, resultSet.getBoolean(3));
+				_setDefaultShipping(
+					addressId, classPK, resultSet.getBoolean(4));
+			}
+		}
 	}
 
 	@Override
@@ -182,18 +206,13 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _setDefaultBilling(Address address, boolean defaultBilling) {
-		String className = address.getClassName();
+	private void _setDefaultBilling(
+		long addressId, long classPK, boolean defaultBilling) {
 
-		if (defaultBilling &&
-			(Objects.equals(AccountEntry.class.getName(), className) ||
-			 Objects.equals(
-				 className,
-				 "com.liferay.commerce.account.model.CommerceAccount"))) {
-
+		if (defaultBilling) {
 			try {
 				_accountEntryLocalService.updateDefaultBillingAddressId(
-					address.getClassPK(), address.getAddressId());
+					classPK, addressId);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);
@@ -201,18 +220,13 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _setDefaultShipping(Address address, boolean defaultShipping) {
-		String className = address.getClassName();
+	private void _setDefaultShipping(
+		long addressId, long classPK, boolean defaultShipping) {
 
-		if (defaultShipping &&
-			(Objects.equals(AccountEntry.class.getName(), className) ||
-			 Objects.equals(
-				 className,
-				 "com.liferay.commerce.account.model.CommerceAccount"))) {
-
+		if (defaultShipping) {
 			try {
 				_accountEntryLocalService.updateDefaultShippingAddressId(
-					address.getClassPK(), address.getAddressId());
+					classPK, addressId);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);

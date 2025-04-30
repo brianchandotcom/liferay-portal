@@ -5,14 +5,14 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {searchPageTest} from '../../fixtures/searchPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {liferayConfig} from '../../liferay.config';
-import {SearchPage} from '../../pages/portal-search-web/SearchPage';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {searchPageTest} from '../../../fixtures/searchPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../../liferay.config';
+import {SearchPage} from '../../../pages/portal-search-web/SearchPage';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 
 export const test = mergeTests(

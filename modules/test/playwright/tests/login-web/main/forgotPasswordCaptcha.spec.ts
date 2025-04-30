@@ -5,7 +5,7 @@
 
 import {expect, test} from '@playwright/test';
 
-import {liferayConfig} from '../../liferay.config';
+import {liferayConfig} from '../../../liferay.config';
 
 test('LPD-32888 Check captcha verification text is cleared after a wrong captcha', async ({
 	page,

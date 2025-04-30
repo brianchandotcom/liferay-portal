@@ -5,14 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

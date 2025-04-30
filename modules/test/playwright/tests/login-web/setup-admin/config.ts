@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'login-web-setup-admin',
+	name: 'login-web.setup-admin',
 	testDir: 'tests/login-web-setup-admin',
 };

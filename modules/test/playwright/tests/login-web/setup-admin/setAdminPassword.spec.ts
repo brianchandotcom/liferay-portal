@@ -5,14 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {userGroupsPageTest} from '../../fixtures/userGroupsPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
-import {userData} from '../../utils/performLogin';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
+import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import {userData} from '../../../utils/performLogin';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

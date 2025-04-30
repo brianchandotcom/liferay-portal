@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
 export class UtilityPagesPage {
 	readonly newButton: Locator;

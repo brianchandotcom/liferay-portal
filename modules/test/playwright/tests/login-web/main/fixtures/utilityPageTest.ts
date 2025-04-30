@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {LoginInstanceSettingsPage} from '../../../pages/login-web/LoginInstanceSettingsPage';
+import {LoginInstanceSettingsPage} from '../../../../pages/login-web/LoginInstanceSettingsPage';
 import {UtilityPagesPage} from '../pages/UtilityPagesPage';
 
 const utilityPagesPage = test.extend<{

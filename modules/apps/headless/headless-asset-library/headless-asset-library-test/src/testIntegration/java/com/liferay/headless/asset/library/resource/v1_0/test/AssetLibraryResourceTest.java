@@ -9,13 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.client.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -118,11 +122,38 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Override
+	protected AssetLibrary
+			testDeleteAssetLibraryByExternalReferenceCodePin_addAssetLibrary()
+		throws Exception {
+
+		return testDeleteAssetLibraryPin_addAssetLibrary();
+	}
+
+	@Override
+	protected AssetLibrary testDeleteAssetLibraryPin_addAssetLibrary()
+		throws Exception {
+
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		return assetLibraryResource.putAssetLibraryPin(assetLibrary.getId());
+	}
+
+	@Override
 	protected AssetLibrary testGetAssetLibrariesPage_addAssetLibrary(
 			AssetLibrary assetLibrary)
 		throws Exception {
 
 		return assetLibraryResource.postAssetLibrary(assetLibrary);
+	}
+
+	@Override
+	protected AssetLibrary testGetAssetLibrariesPinnedByMePage_addAssetLibrary(
+			AssetLibrary assetLibrary)
+		throws Exception {
+
+		assetLibrary = assetLibraryResource.postAssetLibrary(assetLibrary);
+
+		return assetLibraryResource.putAssetLibraryPin(assetLibrary.getId());
 	}
 
 	@Override
@@ -171,6 +202,59 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return _addAssetLibrary();
 	}
 
+	@Override
+	protected AssetLibrary
+			testPutAssetLibraryByExternalReferenceCodePin_addAssetLibrary()
+		throws Exception {
+
+		return _addAssetLibrary();
+	}
+
+	@Override
+	protected AssetLibrary
+		testPutAssetLibraryByExternalReferenceCodePin_getAssetLibrary(
+			String externalReferenceCode) {
+
+		try {
+			Group group = _groupLocalService.getGroupByExternalReferenceCode(
+				externalReferenceCode, testCompany.getCompanyId());
+
+			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+				group.getGroupId());
+
+			return testPutAssetLibraryPin_getAssetLibrary(
+				depotEntry.getDepotEntryId());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	@Override
+	protected AssetLibrary testPutAssetLibraryPin_addAssetLibrary()
+		throws Exception {
+
+		return _addAssetLibrary();
+	}
+
+	@Override
+	protected AssetLibrary testPutAssetLibraryPin_getAssetLibrary(
+		Long assetLibraryId) {
+
+		try {
+			User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+			Assert.assertNotNull(
+				_depotEntryPinLocalService.getDepotEntryPin(
+					user.getUserId(), assetLibraryId));
+
+			return assetLibraryResource.getAssetLibrary(assetLibraryId);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	private AssetLibrary _addAssetLibrary() throws Exception {
 		return assetLibraryResource.postAssetLibrary(randomAssetLibrary());
 	}
@@ -180,6 +264,12 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

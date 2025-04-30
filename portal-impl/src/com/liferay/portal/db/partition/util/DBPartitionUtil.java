@@ -1601,10 +1601,6 @@ public class DBPartitionUtil {
 					}
 
 					if (count > 0) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(sql);
-						}
-
 						throw new UnsupportedOperationException(
 							"Unsupported SQL: " + sql);
 					}

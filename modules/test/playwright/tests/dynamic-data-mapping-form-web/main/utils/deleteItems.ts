@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FormsPage} from '../../../pages/dynamic-data-mapping-form-web/FormsPage';
+import {FormsPage} from '../../../../pages/dynamic-data-mapping-form-web/FormsPage';
 
 export async function deleteItems(formsPage: FormsPage) {
 	await formsPage.page.waitForTimeout(1000);

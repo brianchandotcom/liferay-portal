@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'multi-factor-authentication-timebased-otp',
+	name: 'multi-factor-authentication-timebased-otp-web',
 	testDir: 'tests/multi-factor-authentication-timebased-otp',
 };

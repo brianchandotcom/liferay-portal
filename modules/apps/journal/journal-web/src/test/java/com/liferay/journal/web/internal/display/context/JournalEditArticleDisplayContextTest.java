@@ -32,7 +32,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -265,6 +267,43 @@ public class JournalEditArticleDisplayContextTest {
 		).get(
 			_httpServletRequest, "home"
 		);
+	}
+
+	@Test
+	public void testGetTimeZone() {
+		TimeZone timeZone = Mockito.mock(TimeZone.class);
+
+		String timeZoneId = RandomTestUtil.randomString();
+		String timeZoneName = RandomTestUtil.randomString();
+
+		Mockito.when(
+			timeZone.getID()
+		).thenReturn(
+			timeZoneId
+		);
+
+		Mockito.when(
+			timeZone.getDisplayName(false, TimeZone.SHORT)
+		).thenReturn(
+			timeZoneName
+		);
+
+		Mockito.when(
+			_themeDisplay.getTimeZone()
+		).thenReturn(
+			timeZone
+		);
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, null, null, null,
+				null);
+
+		Map<String, Object> timeZoneMap =
+			_journalEditArticleDisplayContext.getTimeZone();
+
+		Assert.assertEquals(timeZoneId, timeZoneMap.get("id"));
+		Assert.assertEquals(timeZoneName, timeZoneMap.get("name"));
 	}
 
 	@Test

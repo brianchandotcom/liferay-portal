@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {redirectPagesTest} from '../../fixtures/redirectPagesTest';
-import {liferayConfig} from '../../liferay.config';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {redirectPagesTest} from '../../../fixtures/redirectPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 
 export const test = mergeTests(
 	apiHelpersTest,

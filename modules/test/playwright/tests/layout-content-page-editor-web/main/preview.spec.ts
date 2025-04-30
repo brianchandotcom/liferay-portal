@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 

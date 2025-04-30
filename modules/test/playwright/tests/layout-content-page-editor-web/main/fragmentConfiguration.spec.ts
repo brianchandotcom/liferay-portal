@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import getRandomString from '../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';

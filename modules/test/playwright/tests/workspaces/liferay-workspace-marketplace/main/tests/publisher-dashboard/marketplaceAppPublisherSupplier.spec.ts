@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
 import {
 	performLoginViaApi,
 	performLogout,
-} from '../../../../../utils/performLogin';
+} from '../../../../../../utils/performLogin';
 import {marketplaceHelper} from '../../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../../fixtures/marketplaceSite';

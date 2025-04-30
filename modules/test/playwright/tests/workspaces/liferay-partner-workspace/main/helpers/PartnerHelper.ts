@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {TMDFClaim, TMDFRequest} from '../types/mdf';
 import {TRole} from '../types/role';
 

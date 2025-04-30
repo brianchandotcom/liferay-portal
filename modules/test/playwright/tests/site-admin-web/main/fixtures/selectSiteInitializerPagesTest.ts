@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {SelectSiteInitializerPage} from '../../pages/SelectSiteInitializerPage';
+import {SelectSiteInitializerPage} from '../pages/SelectSiteInitializerPage';
 
 const selectSiteInitializerPagesTest = test.extend<{
 	selectSiteInitializerPage: SelectSiteInitializerPage;

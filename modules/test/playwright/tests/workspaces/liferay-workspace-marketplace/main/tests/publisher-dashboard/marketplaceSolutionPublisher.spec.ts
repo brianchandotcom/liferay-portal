@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../../../utils/getRandomInt';
+import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../../../utils/getRandomInt';
 import {marketplaceHelper} from '../../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../../fixtures/marketplaceSite';

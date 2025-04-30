@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../../../../utils/getRandomString';
-import {categorizationPagesTest} from '../../../fixtures/categorizationPagesTest';
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../utils/getRandomString';
+import {categorizationPagesTest} from '../fixtures/categorizationPagesTest';
 
 const test = mergeTests(
 	categorizationPagesTest,

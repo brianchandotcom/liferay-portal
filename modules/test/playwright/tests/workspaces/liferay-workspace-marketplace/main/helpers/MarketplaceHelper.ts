@@ -5,9 +5,9 @@
 
 import {Page} from '@playwright/test';
 
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import {TProduct} from '../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
-import {userData} from '../../../../utils/performLogin';
+import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
+import {TProduct} from '../../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
+import {userData} from '../../../../../utils/performLogin';
 import {
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,

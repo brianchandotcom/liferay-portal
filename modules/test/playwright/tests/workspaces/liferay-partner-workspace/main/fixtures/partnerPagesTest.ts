@@ -5,7 +5,7 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {HomePage} from '../pages/HomePage';
 import {MDFClaimListPage} from '../pages/mdf/MDFClaimListPage';
 import {MDFRequestFormPage} from '../pages/mdf/MDFRequestFormPage';

@@ -13,7 +13,7 @@ import {searchPageTest} from '../../../fixtures/searchPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import {SearchPage} from '../../../pages/portal-search-web/SearchPage';
-import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
+import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,

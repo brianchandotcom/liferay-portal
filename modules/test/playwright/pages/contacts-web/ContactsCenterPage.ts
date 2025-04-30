@@ -6,8 +6,8 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers, DataApiHelpers} from '../../helpers/ApiHelpers';
-import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../tests/layout-content-page-editor-web/utils/getWidgetDefinition';
+import getPageDefinition from '../../tests/layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../tests/layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import getRandomString from '../../utils/getRandomString';
 
 export class ContactsCenterPage {

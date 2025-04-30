@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {NavigationMenusPage} from '../../pages/NavigationMenusPage';
+import {NavigationMenusPage} from '../pages/NavigationMenusPage';
 
 const navigationMenusPagesTest = test.extend<{
 	navigationMenusPage: NavigationMenusPage;

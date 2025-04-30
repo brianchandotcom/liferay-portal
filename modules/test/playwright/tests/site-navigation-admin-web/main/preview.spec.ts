@@ -15,8 +15,8 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {navigationMenusPagesTest} from './fixtures/navigationMenusPagesTest';
 
 const test = mergeTests(

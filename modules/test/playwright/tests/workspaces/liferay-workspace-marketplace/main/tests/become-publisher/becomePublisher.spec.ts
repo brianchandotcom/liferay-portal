@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 import {marketplacePagesTest} from '../../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../../fixtures/marketplaceSite';
 

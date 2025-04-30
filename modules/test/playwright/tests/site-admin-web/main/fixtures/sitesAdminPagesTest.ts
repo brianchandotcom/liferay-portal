@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {SitesAdminPage} from '../../pages/SitesAdminPage';
+import {SitesAdminPage} from '../pages/SitesAdminPage';
 
 const sitesAdminPagesTest = test.extend<{
 	sitesAdminPage: SitesAdminPage;

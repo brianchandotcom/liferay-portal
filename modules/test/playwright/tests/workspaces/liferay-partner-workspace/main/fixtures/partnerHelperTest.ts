@@ -5,7 +5,7 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {loginTest} from '../../../../fixtures/loginTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
 import {PartnerHelper} from '../helpers/PartnerHelper';
 
 const test = mergeTests(loginTest({screenName: 'test'}));

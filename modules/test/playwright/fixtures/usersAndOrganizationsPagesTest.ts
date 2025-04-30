@@ -26,8 +26,8 @@ import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePag
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 import {DocumentLibraryPage} from '../pages/users-admin-web/document-library-web/DocumentLibraryPage';
 import {SiteMembershipsPage} from '../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
-import {TagsEditPage} from '../tests/asset-tags-admin-web/pages/TagsEditPage';
-import {NotificationsPage} from '../tests/notifications-web/pages/NotificationsPage';
+import {TagsEditPage} from '../tests/asset-tags-admin-web/main/pages/TagsEditPage';
+import {NotificationsPage} from '../tests/notifications-web/main/pages/NotificationsPage';
 
 const usersAndOrganizationsPagesTest = test.extend<{
 	assignUsersPage: AssignUsersPage;

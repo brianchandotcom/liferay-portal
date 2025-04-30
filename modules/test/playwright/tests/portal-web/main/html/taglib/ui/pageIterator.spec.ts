@@ -15,9 +15,9 @@ import {clickAndExpectToBeHidden} from '../../../../../../utils/clickAndExpectTo
 import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../../../../utils/structured-content/getBasicWebContentStructureId';
-import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
-import getPageDefinition from '../../../../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../../../../layout-content-page-editor-web/utils/getWidgetDefinition';
+import {samplePageTest} from '../../../../../frontend-taglib/main/fixtures/samplePageTest';
+import getPageDefinition from '../../../../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,

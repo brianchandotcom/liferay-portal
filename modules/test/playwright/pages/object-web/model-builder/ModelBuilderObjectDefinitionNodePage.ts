@@ -17,11 +17,11 @@ export class ModelBuilderObjectDefinitionNodePage {
 	readonly addObjectRelationshipButton: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly editObjectDefinitionExternalReferenceCodeButton: Locator;
+	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
+	readonly modalDeleteObjectDefinitionTextField: Locator;
+	readonly modalEditObjectDefinitionExternalReferenceCodeInput: Locator;
 	readonly newObjectFieldSaveButton: Locator;
 	readonly newObjectRelationshipSaveButton: Locator;
-	readonly modalEditObjectDefinitionExternalReferenceCodeInput: Locator;
-	readonly modalDeleteObjectDefinitionTextField: Locator;
-	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
 	readonly objectFieldBusinessTypeSelect: Locator;
 	readonly objectFieldLabelInput: Locator;
 	readonly objectFieldPicklistSelect: Locator;

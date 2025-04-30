@@ -5,26 +5,26 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
-import {ldapConfigurationPagesTest} from '../../fixtures/ldapConfigurationPagesTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
-import {userGroupsPageTest} from '../../fixtures/userGroupsPageTest';
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {ldapConfigurationPagesTest} from '../../../fixtures/ldapConfigurationPagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {
 	TLdapConfiguration,
 	TLdapServer,
-} from '../../helpers/LdapConfigurationHelper';
-import {SystemSettingsPage} from '../../pages/configuration-admin-web/SystemSettingsPage';
-import {LdapConfigurationPage} from '../../pages/portal-security-ldap/LdapConfigurationPage';
-import {LdapServerPage} from '../../pages/portal-security-ldap/LdapServerPage';
-import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {ServerAdministrationPage} from '../../pages/server-admin-web/ServerAdministrationPage';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import getRandomString from '../../utils/getRandomString';
-import performLogin, {userData} from '../../utils/performLogin';
-import {waitForAlert} from '../../utils/waitForAlert';
+} from '../../../helpers/LdapConfigurationHelper';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {LdapConfigurationPage} from '../../../pages/portal-security-ldap/LdapConfigurationPage';
+import {LdapServerPage} from '../../../pages/portal-security-ldap/LdapServerPage';
+import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {ServerAdministrationPage} from '../../../pages/server-admin-web/ServerAdministrationPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import performLogin, {userData} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,

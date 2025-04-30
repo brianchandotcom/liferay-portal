@@ -133,6 +133,10 @@ test(
 			name,
 		});
 
+		await editVocabularyPage.multiSelectToggle.click();
+
+		await editVocabularyPage.changeVisibility('Private');
+
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
 				`Success:${name} was published successfully.`
@@ -149,6 +153,20 @@ test(
 
 		await expect(page.getByText(`Edit ${name}`)).toBeVisible();
 
+		await expect(editVocabularyPage.multiSelectToggle).not.toBeChecked();
+
+		await expect(editVocabularyPage.visibilitySelector).toBeDisabled();
+
+		await expect(editVocabularyPage.visibilitySelector).toContainText(
+			'Private'
+		);
+
+		const spacesInputLocator = page
+			.locator('.categorization-spaces .input-group-item span')
+			.nth(1);
+
+		await expect(spacesInputLocator).toContainText('All Spaces');
+
 		const newName = `Vocabulary${getRandomInt()}`;
 
 		await editVocabularyPage.changeGeneralInfo({
@@ -164,6 +182,53 @@ test(
 		});
 
 		await expect(vocabulariesPage.getItem(newName)).toBeVisible();
+	}
+);
+
+test(
+	'Validate change spaces when saving',
+	{tag: '@LPD-52592'},
+	async ({editVocabularyPage, page, vocabulariesPage}) => {
+		editVocabularyPage.goto();
+
+		const name = `Vocabulary${getRandomInt()}`;
+
+		await editVocabularyPage.changeGeneralInfo({
+			description: getRandomString(),
+			name,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				`Success:${name} was published successfully.`
+			),
+			trigger: editVocabularyPage.saveButton,
+		});
+
+		const newVocabRow = vocabulariesPage.getItem(name);
+		await expect(newVocabRow).toBeVisible();
+
+		const newVocabualry = page.getByRole('link', {name});
+
+		await newVocabualry.click();
+
+		await expect(page.getByText(`Edit ${name}`)).toBeVisible();
+
+		const spaceName = 'Default';
+
+		await editVocabularyPage.selectSpaces(spaceName);
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Confirm Space Change'),
+			trigger: editVocabularyPage.saveButton,
+		});
+
+		const modalSaveButton = page.locator('.modal .btn-primary');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(`Success:${name} was updated successfully.`),
+			trigger: modalSaveButton,
+		});
 	}
 );
 

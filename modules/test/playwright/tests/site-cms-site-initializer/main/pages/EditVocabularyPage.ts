@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 
@@ -13,16 +13,16 @@ export class EditVocabularyPage {
 	private readonly assetTypeCheckbox: Locator;
 	private readonly assetTypeSelector: Locator;
 	private readonly descriptionInput: Locator;
-	private readonly multiSelectToggle: Locator;
 	private readonly nameInput: Locator;
 	private readonly spaceCheckbox: Locator;
-	private readonly spaceSelector: Locator;
-	private readonly visibilitySelector: Locator;
 
 	readonly assetTypesButton: Locator;
 	readonly generalButton: Locator;
+	readonly multiSelectToggle: Locator;
 	readonly newButton: Locator;
 	readonly saveButton: Locator;
+	readonly spaceSelector: Locator;
+	readonly visibilitySelector: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -35,9 +35,7 @@ export class EditVocabularyPage {
 		});
 		this.descriptionInput = this.page.getByLabel('Description');
 		this.generalButton = this.page.getByRole('button', {name: 'General'});
-		this.multiSelectToggle = this.page.getByRole('checkbox', {
-			name: 'Multi Value',
-		});
+		this.multiSelectToggle = this.page.getByLabel('Multi Value');
 		this.nameInput = this.page.getByLabel('Name');
 		this.newButton = this.page.getByRole('button', {
 			name: 'New Vocabulary',
@@ -76,5 +74,21 @@ export class EditVocabularyPage {
 			await this.nameInput.fill(name);
 			await this.nameInput.blur();
 		}
+	}
+
+	async changeVisibility(visibility: string) {
+		await this.visibilitySelector.selectOption({label: visibility});
+	}
+
+	async selectSpaces(spaceName: string) {
+		if (this.spaceCheckbox.isChecked()) {
+			await this.spaceCheckbox.click();
+
+			await expect(this.spaceCheckbox).not.toBeChecked();
+		}
+
+		await this.spaceSelector.click();
+
+		await this.page.getByText(spaceName).click();
 	}
 }

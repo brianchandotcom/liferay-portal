@@ -47,8 +47,9 @@ public interface ObjectEntryFolderService extends BaseService {
 	 */
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long groupId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public ObjectEntryFolder deleteObjectEntryFolder(long objectEntryFolderId)
@@ -92,7 +93,7 @@ public interface ObjectEntryFolderService extends BaseService {
 
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
-			Map<Locale, String> labelMap, String name,
+			String description, Map<Locale, String> labelMap, String name,
 			ServiceContext serviceContext)
 		throws PortalException;
 

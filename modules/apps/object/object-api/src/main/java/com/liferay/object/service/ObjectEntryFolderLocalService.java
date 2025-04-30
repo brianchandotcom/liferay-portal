@@ -75,8 +75,9 @@ public interface ObjectEntryFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long userId, long groupId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -340,8 +341,9 @@ public interface ObjectEntryFolderLocalService
 
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
-			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, String description,
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

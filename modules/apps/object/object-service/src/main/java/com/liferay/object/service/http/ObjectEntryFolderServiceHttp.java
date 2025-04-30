@@ -45,6 +45,7 @@ public class ObjectEntryFolderServiceHttp {
 			addObjectEntryFolder(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long parentObjectEntryFolderId,
+				String description,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -56,7 +57,8 @@ public class ObjectEntryFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId,
-				parentObjectEntryFolderId, labelMap, name, serviceContext);
+				parentObjectEntryFolderId, description, labelMap, name,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -386,7 +388,7 @@ public class ObjectEntryFolderServiceHttp {
 	public static com.liferay.object.model.ObjectEntryFolder
 			updateObjectEntryFolder(
 				HttpPrincipal httpPrincipal, long objectEntryFolderId,
-				long parentObjectEntryFolderId,
+				long parentObjectEntryFolderId, String description,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -398,7 +400,7 @@ public class ObjectEntryFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryFolderId, parentObjectEntryFolderId,
-				labelMap, name, serviceContext);
+				description, labelMap, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -433,8 +435,9 @@ public class ObjectEntryFolderServiceHttp {
 
 	private static final Class<?>[] _addObjectEntryFolderParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, java.util.Map.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, long.class, long.class, String.class,
+			java.util.Map.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteObjectEntryFolderParameterTypes1 =
 		new Class[] {long.class};
@@ -455,8 +458,8 @@ public class ObjectEntryFolderServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _updateObjectEntryFolderParameterTypes8 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, String.class, java.util.Map.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

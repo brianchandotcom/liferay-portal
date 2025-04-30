@@ -1706,6 +1706,49 @@ test.describe('Paragraph Fragment', () => {
 			).toBe('right');
 		}
 	);
+
+	test(
+		'Editor config contributor client extension is applied',
+		{tag: ['@LPD-54262']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a paragraph fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Open editor options
+
+			await pageEditorPage.selectEditable(fragmentId, 'element-text');
+
+			const editable = pageEditorPage.getEditable({
+				editableId: 'element-text',
+				fragmentId,
+			});
+
+			await editable.dblclick();
+
+			await editable.locator('.cke_editable_inline').dblclick();
+
+			// Assert "Insert Video" button is visible as provided by the CX
+
+			await page.getByText('A paragraph').selectText();
+
+			await expect(page.getByTitle('Insert Video')).toBeInViewport();
+		}
+	);
 });
 
 test.describe('Slider Fragment', () => {

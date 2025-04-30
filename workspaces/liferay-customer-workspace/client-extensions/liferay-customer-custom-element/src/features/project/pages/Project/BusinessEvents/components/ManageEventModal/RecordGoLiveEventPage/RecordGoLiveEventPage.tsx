@@ -20,7 +20,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import classNames from 'classnames';
 import {isValidDate} from '~/utils/validations.form';
 
-import useAccountSyncBusinessEvents from '../../../hooks/useAccountSyncBusinessEvents';
+import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
@@ -70,7 +70,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {updateAccountBusinessEvents} = useAccountSyncBusinessEvents(
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
 		accountExternalReferenceCode,
 		businessEvent,
 		false,

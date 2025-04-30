@@ -28,8 +28,8 @@ import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 import {isValidDate} from '~/utils/validations.form';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
-import useAccountSyncBusinessEvents from '../../../hooks/useAccountSyncBusinessEvents';
-import useAccountTickets from '../../../hooks/useAccountTickets';
+import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
+import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../../utils/containsOption';
@@ -98,7 +98,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	const {isSaasOnly} = useIsSaasOnly(subscriptionGroups);
 
-	const {loading: loadingTickets, tickets} = useAccountTickets(
+	const {loading: loadingTickets, tickets} = useAccountsTickets(
 		project?.accountKey || ''
 	);
 
@@ -118,7 +118,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateAccountBusinessEvents} = useAccountSyncBusinessEvents(
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
 		project?.accountKey || '',
 		businessEvent,
 		true,

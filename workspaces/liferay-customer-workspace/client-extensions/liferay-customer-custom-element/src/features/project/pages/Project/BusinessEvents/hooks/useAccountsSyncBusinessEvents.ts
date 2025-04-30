@@ -8,7 +8,7 @@ import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {IBusinessEvent} from '~/utils/types';
 
-export default function useAccountSyncBusinessEvents(
+export default function useAccountsSyncBusinessEvents(
 	accountExternalReferenceCode: string,
 	businessEvent: IBusinessEvent,
 	isEdition: boolean,

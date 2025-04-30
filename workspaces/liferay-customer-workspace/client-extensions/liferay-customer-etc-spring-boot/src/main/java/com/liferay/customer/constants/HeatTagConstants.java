@@ -38,48 +38,41 @@ public interface HeatTagConstants {
 		"security_scan_result_concerns";
 
 	public static String getHeatTag(
-		long daysUntilTargetGoLive, String businessEventType) {
+		String businessEventType, long daysUntilTargetGoLive) {
 
-		if ((daysUntilTargetGoLive <= 0) &&
-			businessEventType.equals(BusinessEventConstants.TYPE_GO_LIVE)) {
+		if (businessEventType.equals(BusinessEventConstants.TYPE_GO_LIVE)) {
+			if (daysUntilTargetGoLive <= 0) {
+				return GO_LIVE_MISSED;
+			}
+			else if ((daysUntilTargetGoLive > 0) &&
+					 (daysUntilTargetGoLive <= 7)) {
 
-			return GO_LIVE_MISSED;
+				return GO_LIVE_7_DAYS;
+			}
+			else if ((daysUntilTargetGoLive > 7) &&
+					 (daysUntilTargetGoLive <= 30)) {
+
+				return GO_LIVE_30_DAYS;
+			}
 		}
-		else if ((daysUntilTargetGoLive > 0) && (daysUntilTargetGoLive <= 7) &&
+		else if (businessEventType.equals(
+					BusinessEventConstants.TYPE_MIGRATION) ||
 				 businessEventType.equals(
-					 BusinessEventConstants.TYPE_GO_LIVE)) {
+					 BusinessEventConstants.TYPE_OTHER_EVENT)) {
 
-			return GO_LIVE_7_DAYS;
-		}
-		else if ((daysUntilTargetGoLive > 7) && (daysUntilTargetGoLive <= 30) &&
-				 businessEventType.equals(
-					 BusinessEventConstants.TYPE_GO_LIVE)) {
+			if (daysUntilTargetGoLive <= 0) {
+				return EVENT_MISSED;
+			}
+			else if ((daysUntilTargetGoLive > 0) &&
+					 (daysUntilTargetGoLive <= 7)) {
 
-			return GO_LIVE_30_DAYS;
-		}
-		else if ((daysUntilTargetGoLive <= 0) &&
-				 (businessEventType.equals(
-					 BusinessEventConstants.TYPE_MIGRATION) ||
-				  businessEventType.equals(
-					  BusinessEventConstants.TYPE_OTHER_EVENT))) {
+				return EVENT_7_DAYS;
+			}
+			else if ((daysUntilTargetGoLive > 7) &&
+					 (daysUntilTargetGoLive <= 30)) {
 
-			return EVENT_MISSED;
-		}
-		else if ((daysUntilTargetGoLive > 0) && (daysUntilTargetGoLive <= 7) &&
-				 (businessEventType.equals(
-					 BusinessEventConstants.TYPE_MIGRATION) ||
-				  businessEventType.equals(
-					  BusinessEventConstants.TYPE_OTHER_EVENT))) {
-
-			return EVENT_7_DAYS;
-		}
-		else if ((daysUntilTargetGoLive > 7) && (daysUntilTargetGoLive <= 30) &&
-				 (businessEventType.equals(
-					 BusinessEventConstants.TYPE_MIGRATION) ||
-				  businessEventType.equals(
-					  BusinessEventConstants.TYPE_OTHER_EVENT))) {
-
-			return EVENT_30_DAYS;
+				return EVENT_30_DAYS;
+			}
 		}
 		else if (businessEventType.equals(
 					BusinessEventConstants.TYPE_UPGRADE)) {

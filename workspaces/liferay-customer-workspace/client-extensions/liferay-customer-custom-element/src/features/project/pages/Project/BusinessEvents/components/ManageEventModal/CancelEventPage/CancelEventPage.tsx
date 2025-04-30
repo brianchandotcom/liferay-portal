@@ -13,7 +13,7 @@ import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
-import useAccountSyncBusinessEvents from '../../../hooks/useAccountSyncBusinessEvents';
+import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
@@ -39,7 +39,7 @@ const CancelEventPage: React.FC<IProps> = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
-	const {updateAccountBusinessEvents} = useAccountSyncBusinessEvents(
+	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
 		accountExternalReferenceCode,
 		businessEvent,
 		false,

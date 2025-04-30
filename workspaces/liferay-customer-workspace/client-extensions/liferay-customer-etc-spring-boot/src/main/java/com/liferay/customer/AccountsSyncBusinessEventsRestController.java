@@ -101,7 +101,7 @@ public class AccountsSyncBusinessEventsRestController
 	public void scheduledHeatTagUpdate() throws Exception {
 		int page = 1;
 
-		Set<String> syncedAccountERCs = new HashSet<>();
+		Set<String> syncedAccountExternalReferenceCodes = new HashSet<>();
 
 		while (page > 0) {
 			JSONObject jsonObject = _getBusinessEventsJSONObject(
@@ -117,10 +117,13 @@ public class AccountsSyncBusinessEventsRestController
 					businessEventJSONObject.getString(
 						"accountEntryToBusinessEventsERC");
 
-				if (!syncedAccountERCs.contains(externalReferenceCode)) {
+				if (!syncedAccountExternalReferenceCodes.contains(
+						externalReferenceCode)) {
+
 					_updateAccountHeatTags(externalReferenceCode);
 
-					syncedAccountERCs.add(externalReferenceCode);
+					syncedAccountExternalReferenceCodes.add(
+						externalReferenceCode);
 				}
 			}
 
@@ -183,15 +186,16 @@ public class AccountsSyncBusinessEventsRestController
 
 		StringBundler sb = new StringBundler(8);
 
-		sb.append("/o/c/businessevents?page=");
+		sb.append("/o/c/businessevents?filter=");
+
+		if (Validator.isNotNull(filterString)) {
+			sb.append(filterString);
+		}
+
+		sb.append("&page=");
 		sb.append(page);
 		sb.append("&pageSize=");
 		sb.append(pageSize);
-
-		if (Validator.isNotNull(filterString)) {
-			sb.append("&filter=");
-			sb.append(filterString);
-		}
 
 		if (Validator.isNotNull(sortString)) {
 			sb.append("&sort=");
@@ -240,21 +244,16 @@ public class AccountsSyncBusinessEventsRestController
 	}
 
 	private String _getHeatTag(JSONObject jsonObject) {
+		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
+
 		String targetGoLiveDateTime = jsonObject.getString(
 			"targetGoLiveDateTime");
 
-		String targetGoLiveLocalDateFormat = targetGoLiveDateTime.substring(
-			0, 10);
-
-		LocalDate localDate = LocalDate.parse(targetGoLiveLocalDateFormat);
-
-		long daysUntilTargetGoLive = ChronoUnit.DAYS.between(
-			LocalDate.now(), localDate);
-
-		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
-
 		return HeatTagConstants.getHeatTag(
-			daysUntilTargetGoLive, eventTypeJSONObject.getString("key"));
+			eventTypeJSONObject.getString("key"),
+			ChronoUnit.DAYS.between(
+				LocalDate.now(),
+				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
 	}
 
 	private String _getHighestHeatTag(JSONArray jsonArray) {

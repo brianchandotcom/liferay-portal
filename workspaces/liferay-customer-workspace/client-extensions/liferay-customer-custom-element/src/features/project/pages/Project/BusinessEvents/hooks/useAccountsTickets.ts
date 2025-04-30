@@ -7,7 +7,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {Liferay} from '~/services/liferay';
 import {ITicket} from '~/utils/types';
 
-const useAccountTickets = (externalReferenceCode?: string, skip?: boolean) => {
+const useAccountsTickets = (externalReferenceCode?: string, skip?: boolean) => {
 	const [loading, setLoading] = useState(true);
 	const [tickets, setTickets] = useState<ITicket[] | undefined>(undefined);
 
@@ -44,4 +44,4 @@ const useAccountTickets = (externalReferenceCode?: string, skip?: boolean) => {
 	return {loading, tickets};
 };
 
-export default useAccountTickets;
+export default useAccountsTickets;

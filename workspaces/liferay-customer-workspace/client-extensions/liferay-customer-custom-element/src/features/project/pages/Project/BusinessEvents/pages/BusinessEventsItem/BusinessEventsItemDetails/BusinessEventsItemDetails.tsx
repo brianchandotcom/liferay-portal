@@ -24,7 +24,7 @@ import getKebabCase from '~/utils/getKebabCase';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import ManageEventModal from '../../../components/ManageEventModal';
-import useAccountTickets from '../../../hooks/useAccountTickets';
+import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 
@@ -40,7 +40,7 @@ const BusinessEventsItemDetails = () => {
 	const [modalType, setModalType] = useState('');
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
-	const {loading: loadingTickets, tickets} = useAccountTickets(accountKey);
+	const {loading: loadingTickets, tickets} = useAccountsTickets(accountKey);
 
 	const location = useLocation();
 	const navigate = useNavigate();

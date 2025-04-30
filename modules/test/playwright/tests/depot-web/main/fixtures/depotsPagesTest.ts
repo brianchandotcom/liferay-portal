@@ -7,7 +7,7 @@
 
 import {test} from '@playwright/test';
 
-import {DocumentLibraryEditFilePage} from '../../../pages/document-library-web/DocumentLibraryEditFilePage';
+import {DocumentLibraryEditFilePage} from '../../../../pages/document-library-web/DocumentLibraryEditFilePage';
 
 const depotsPagesTest = test.extend<{
 	documentLibraryEditFilePage: DocumentLibraryEditFilePage;

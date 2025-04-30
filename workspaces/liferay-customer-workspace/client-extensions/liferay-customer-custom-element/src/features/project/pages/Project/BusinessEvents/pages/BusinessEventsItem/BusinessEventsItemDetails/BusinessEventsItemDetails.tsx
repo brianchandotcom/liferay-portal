@@ -336,7 +336,7 @@ const BusinessEventsItemDetails = () => {
 
 									<div className="w-50">
 										<AssociatedTicketsContainer
-											tickets={ticketOptions}
+											ticketOptions={ticketOptions}
 										/>
 									</div>
 								</div>

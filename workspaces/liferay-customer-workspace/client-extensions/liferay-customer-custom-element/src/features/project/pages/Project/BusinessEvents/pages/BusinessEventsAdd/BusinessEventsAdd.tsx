@@ -122,9 +122,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		IOption[]
 	>([]);
 
-	const [selectedTicketOptions, setSelectedTicketOptions] = useState<
-		ITicket[]
-	>([]);
+	const [selectedTickets, setSelectedTickets] = useState<ITicket[]>([]);
 
 	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
 
@@ -153,8 +151,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 			}),
 		]);
 
-		setSelectedTicketOptions((selectedTicketOptions) => [
-			...selectedTicketOptions.filter((ticket) => {
+		setSelectedTickets((selectedTickets) => [
+			...selectedTickets.filter((ticket) => {
 				return selectedTicket.ticketId !== ticket.ticketId;
 			}),
 		]);
@@ -169,8 +167,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 			}),
 		]);
 
-		setSelectedTicketOptions((selectedTicketOptions) => [
-			...selectedTicketOptions,
+		setSelectedTickets((selectedTickets) => [
+			...selectedTickets,
 			selectedTicket,
 		]);
 	}, []);
@@ -227,19 +225,19 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (hasImpactingEvents === 'yes') {
-			const selectedTickets = selectedTicketOptions.map(
+			const selectedTicketsMap = selectedTickets.map(
 				(ticket) => ticket.ticketId
 			);
 
 			setFieldValue(
 				'businessEvent.associatedTickets',
-				`[${selectedTickets.length ? selectedTickets.join(', ') : ''}]`
+				`[${selectedTicketsMap.length ? selectedTicketsMap.join(', ') : ''}]`
 			);
 		}
 		else {
 			setFieldValue('businessEvent.associatedTickets', '[]');
 		}
-	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
+	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
 
 	useEffect(() => {
 		setFieldValue(
@@ -619,9 +617,11 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 													handleRemove={handleRemove}
 													handleSelect={handleSelect}
 													selectedTickets={
-														selectedTicketOptions
+														selectedTickets
 													}
-													tickets={ticketOptions}
+													ticketOptions={
+														ticketOptions
+													}
 												/>
 											</>
 										) : (

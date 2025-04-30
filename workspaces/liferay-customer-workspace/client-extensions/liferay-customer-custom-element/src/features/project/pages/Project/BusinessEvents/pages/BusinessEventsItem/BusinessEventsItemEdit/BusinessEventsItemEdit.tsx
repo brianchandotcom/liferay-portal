@@ -803,7 +803,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 															selectedTickets={
 																selectedTicketOptions
 															}
-															tickets={
+															ticketOptions={
 																ticketOptions
 															}
 														/>

@@ -59,6 +59,7 @@ public class ObjectEntryFolderDTOConverter
 							objectEntryFolder.getUserId())));
 				setDateCreated(objectEntryFolder::getCreateDate);
 				setDateModified(objectEntryFolder::getModifiedDate);
+				setDescription(objectEntryFolder::getDescription);
 				setExternalReferenceCode(
 					objectEntryFolder::getExternalReferenceCode);
 				setId(objectEntryFolder::getObjectEntryFolderId);

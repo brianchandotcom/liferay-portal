@@ -2579,7 +2579,7 @@ public class DataFactory {
 			companyModels.add(
 				_newCompanyModel(
 					StringBundler.concat(
-						BenchmarksPropsValues.VIRTUAL_HOST_NAME_PREFIX, i,
+						BenchmarksPropsValues.VIRTUAL_HOSTNAME_PREFIX, i,
 						".com")));
 		}
 

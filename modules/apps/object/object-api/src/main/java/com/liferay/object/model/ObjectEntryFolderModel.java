@@ -237,6 +237,21 @@ public interface ObjectEntryFolderModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the description of this object entry folder.
+	 *
+	 * @return the description of this object entry folder
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this object entry folder.
+	 *
+	 * @param description the description of this object entry folder
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the parent object entry folder ID of this object entry folder.
 	 *
 	 * @return the parent object entry folder ID of this object entry folder

@@ -114,6 +114,7 @@ create table ObjectEntryFolder (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	description STRING null,
 	parentObjectEntryFolderId LONG,
 	label STRING null,
 	name VARCHAR(75) null,

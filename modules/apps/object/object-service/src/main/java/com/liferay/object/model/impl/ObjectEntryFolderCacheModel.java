@@ -69,7 +69,7 @@ public class ObjectEntryFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class ObjectEntryFolderCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append(", parentObjectEntryFolderId=");
 		sb.append(parentObjectEntryFolderId);
 		sb.append(", label=");
@@ -152,6 +154,13 @@ public class ObjectEntryFolderCacheModel
 			objectEntryFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (description == null) {
+			objectEntryFolderImpl.setDescription("");
+		}
+		else {
+			objectEntryFolderImpl.setDescription(description);
+		}
+
 		objectEntryFolderImpl.setParentObjectEntryFolderId(
 			parentObjectEntryFolderId);
 
@@ -197,6 +206,7 @@ public class ObjectEntryFolderCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		description = objectInput.readUTF();
 
 		parentObjectEntryFolderId = objectInput.readLong();
 		label = objectInput.readUTF();
@@ -240,6 +250,13 @@ public class ObjectEntryFolderCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (description == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
 		objectOutput.writeLong(parentObjectEntryFolderId);
 
 		if (label == null) {
@@ -274,6 +291,7 @@ public class ObjectEntryFolderCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String description;
 	public long parentObjectEntryFolderId;
 	public String label;
 	public String name;

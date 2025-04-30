@@ -50,6 +50,9 @@ public class ObjectEntryFolderTable extends BaseTable<ObjectEntryFolderTable> {
 	public final Column<ObjectEntryFolderTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryFolderTable, String> description =
+		createColumn(
+			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryFolderTable, Long>
 		parentObjectEntryFolderId = createColumn(
 			"parentObjectEntryFolderId", Long.class, Types.BIGINT,

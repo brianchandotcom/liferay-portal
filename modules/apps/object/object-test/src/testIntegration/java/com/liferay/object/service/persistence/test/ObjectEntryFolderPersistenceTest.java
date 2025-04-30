@@ -135,6 +135,8 @@ public class ObjectEntryFolderPersistenceTest {
 
 		newObjectEntryFolder.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectEntryFolder.setDescription(RandomTestUtil.randomString());
+
 		newObjectEntryFolder.setParentObjectEntryFolderId(
 			RandomTestUtil.nextLong());
 
@@ -179,6 +181,9 @@ public class ObjectEntryFolderPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectEntryFolder.getModifiedDate()),
 			Time.getShortTimestamp(newObjectEntryFolder.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectEntryFolder.getDescription(),
+			newObjectEntryFolder.getDescription());
 		Assert.assertEquals(
 			existingObjectEntryFolder.getParentObjectEntryFolderId(),
 			newObjectEntryFolder.getParentObjectEntryFolderId());
@@ -288,7 +293,7 @@ public class ObjectEntryFolderPersistenceTest {
 			"ObjectEntryFolder", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "objectEntryFolderId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true,
+			true, "createDate", true, "modifiedDate", true, "description", true,
 			"parentObjectEntryFolderId", true, "label", true, "name", true,
 			"treePath", true);
 	}
@@ -638,6 +643,8 @@ public class ObjectEntryFolderPersistenceTest {
 		objectEntryFolder.setCreateDate(RandomTestUtil.nextDate());
 
 		objectEntryFolder.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectEntryFolder.setDescription(RandomTestUtil.randomString());
 
 		objectEntryFolder.setParentObjectEntryFolderId(
 			RandomTestUtil.nextLong());

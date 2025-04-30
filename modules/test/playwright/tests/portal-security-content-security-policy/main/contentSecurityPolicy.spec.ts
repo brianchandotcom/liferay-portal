@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {contentSecurityPolicyPagesTest} from '../../fixtures/contentSecurityPolicyPagesTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
-import {liferayConfig} from '../../liferay.config';
-import {ContentSecurityPolicyPage} from '../../pages/portal-security-content-security-policy/ContentSecurityPolicyPage';
-import getRandomString from '../../utils/getRandomString';
-import {performLoginViaApi} from '../../utils/performLogin';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {contentSecurityPolicyPagesTest} from '../../../fixtures/contentSecurityPolicyPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
+import {ContentSecurityPolicyPage} from '../../../pages/portal-security-content-security-policy/ContentSecurityPolicyPage';
+import getRandomString from '../../../utils/getRandomString';
+import {performLoginViaApi} from '../../../utils/performLogin';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,

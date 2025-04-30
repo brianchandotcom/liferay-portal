@@ -15,7 +15,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LPD_8040 {
 
 	public void method() {
-		_http.hasProxyConfig();
 		HttpComponentsUtil.addParameter(null, null, null);
 		HttpComponentsUtil.decodePath(null);
 		HttpComponentsUtil.decodeURL(null);
@@ -33,6 +32,7 @@ public class LPD_8040 {
 		HttpComponentsUtil.getURI(null);
 		HttpComponentsUtil.hasDomain(null);
 		HttpComponentsUtil.hasProtocol(null);
+		_http.hasProxyConfig();
 		HttpComponentsUtil.isForwarded(null);
 		HttpComponentsUtil.isSecure(null);
 		HttpComponentsUtil.normalizePath(null);
@@ -47,7 +47,6 @@ public class LPD_8040 {
 		HttpComponentsUtil.shortenURL(null);
 		http.encodeParameters(null);
 
-		HttpUtil.hasProxyConfig();
 		HttpComponentsUtil.addParameter(null, null, null);
 		HttpComponentsUtil.decodePath(null);
 		HttpComponentsUtil.decodeURL(null);
@@ -66,6 +65,7 @@ public class LPD_8040 {
 		HttpComponentsUtil.getURI(null);
 		HttpComponentsUtil.hasDomain(null);
 		HttpComponentsUtil.hasProtocol(null);
+		HttpUtil.hasProxyConfig();
 		HttpComponentsUtil.isForwarded(null);
 		HttpComponentsUtil.isSecure(null);
 		HttpComponentsUtil.normalizePath(null);

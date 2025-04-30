@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
 
 export class QuestionsPage {
 	readonly page: Page;

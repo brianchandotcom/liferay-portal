@@ -5,8 +5,8 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {getTempDir} from '../../../utils/temp';
+import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {getTempDir} from '../../../../utils/temp';
 
 export class ExportImportPage {
 	readonly continueButton: Locator;

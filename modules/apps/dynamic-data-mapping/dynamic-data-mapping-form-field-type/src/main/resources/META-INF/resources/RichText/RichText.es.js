@@ -336,7 +336,6 @@ const RichText = ({
 			label={label}
 			name={name}
 			readOnly={readOnly}
-			style={readOnly ? {pointerEvents: 'none'} : null}
 			tip={tip}
 			visible={visible}
 		>
@@ -364,11 +363,26 @@ const RichText = ({
 										]
 									: ''
 							}
-							editorConfig={{
-								...editorConfig,
-								applicationTitle:
-									(label || tip) && `${label}, ${tip}`,
-							}}
+							editorConfig={
+								readOnly
+									? {
+											...editorConfig,
+											applicationTitle:
+												(label || tip) &&
+												`${label}, ${tip}`,
+											removePlugins:
+												'codemirror, autogrow',
+											resize_enabled: true,
+										}
+									: {
+											...editorConfig,
+											applicationTitle:
+												(label || tip) &&
+												`${label}, ${tip}`,
+											removePlugins: 'autogrow',
+											resize_enabled: true,
+										}
+							}
 							name={name}
 							onBlur={onBlur}
 							onChange={(content) => handleContentChange(content)}

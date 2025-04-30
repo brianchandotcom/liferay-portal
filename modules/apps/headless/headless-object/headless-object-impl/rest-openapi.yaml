@@ -89,6 +89,10 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                description:
+                    description:
+                        The object entry folder's description.
+                    type: string
                 externalReferenceCode:
                     # @review
                     description:

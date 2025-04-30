@@ -242,8 +242,10 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/object.objectentry/add-object-entry \
 				-u ${userEmailAddress}:${userPassword} \
+				-d defaultLanguageId='' \
 				-d groupId=${groupId} \
 				-d objectDefinitionId=${objectId} \
+				-d objectEntryFolderId=0 \
 				-d values={${entryValues}}
 		''';
 

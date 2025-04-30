@@ -67,6 +67,12 @@ public interface BatchEngineImportReportEntryLocalService
 	public BatchEngineImportReportEntry addBatchEngineImportReportEntry(
 		BatchEngineImportReportEntry batchEngineImportReportEntry);
 
+	public BatchEngineImportReportEntry addBatchEngineImportReportEntry(
+			long companyId, long classNameId, long classPK,
+			long entityClassNameId, String entityExternalReferenceCode,
+			String error, int type)
+		throws Exception;
+
 	/**
 	 * Creates a new batch engine import report entry with the primary key. Does not add the batch engine import report entry to the database.
 	 *
@@ -213,6 +219,11 @@ public interface BatchEngineImportReportEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchEngineImportReportEntry> getBatchEngineImportReportEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchEngineImportReportEntry> getBatchEngineImportReportEntries(
+			long companyId, long classNameId, long classPK)
+		throws Exception;
 
 	/**
 	 * Returns the number of batch engine import report entries.

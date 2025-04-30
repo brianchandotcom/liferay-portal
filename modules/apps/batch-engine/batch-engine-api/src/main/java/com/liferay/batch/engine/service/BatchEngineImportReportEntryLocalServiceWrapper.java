@@ -51,6 +51,20 @@ public class BatchEngineImportReportEntryLocalServiceWrapper
 			addBatchEngineImportReportEntry(batchEngineImportReportEntry);
 	}
 
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineImportReportEntry
+			addBatchEngineImportReportEntry(
+				long companyId, long classNameId, long classPK,
+				long entityClassNameId, String entityExternalReferenceCode,
+				String error, int type)
+		throws Exception {
+
+		return _batchEngineImportReportEntryLocalService.
+			addBatchEngineImportReportEntry(
+				companyId, classNameId, classPK, entityClassNameId,
+				entityExternalReferenceCode, error, type);
+	}
+
 	/**
 	 * Creates a new batch engine import report entry with the primary key. Does not add the batch engine import report entry to the database.
 	 *
@@ -271,6 +285,17 @@ public class BatchEngineImportReportEntryLocalServiceWrapper
 
 		return _batchEngineImportReportEntryLocalService.
 			getBatchEngineImportReportEntries(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.batch.engine.model.BatchEngineImportReportEntry>
+				getBatchEngineImportReportEntries(
+					long companyId, long classNameId, long classPK)
+			throws Exception {
+
+		return _batchEngineImportReportEntryLocalService.
+			getBatchEngineImportReportEntries(companyId, classNameId, classPK);
 	}
 
 	/**

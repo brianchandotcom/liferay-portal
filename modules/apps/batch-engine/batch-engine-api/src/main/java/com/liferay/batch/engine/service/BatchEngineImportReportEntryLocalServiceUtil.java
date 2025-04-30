@@ -54,6 +54,17 @@ public class BatchEngineImportReportEntryLocalServiceUtil {
 			batchEngineImportReportEntry);
 	}
 
+	public static BatchEngineImportReportEntry addBatchEngineImportReportEntry(
+			long companyId, long classNameId, long classPK,
+			long entityClassNameId, String entityExternalReferenceCode,
+			String error, int type)
+		throws Exception {
+
+		return getService().addBatchEngineImportReportEntry(
+			companyId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode, error, type);
+	}
+
 	/**
 	 * Creates a new batch engine import report entry with the primary key. Does not add the batch engine import report entry to the database.
 	 *
@@ -239,6 +250,15 @@ public class BatchEngineImportReportEntryLocalServiceUtil {
 		getBatchEngineImportReportEntries(int start, int end) {
 
 		return getService().getBatchEngineImportReportEntries(start, end);
+	}
+
+	public static List<BatchEngineImportReportEntry>
+			getBatchEngineImportReportEntries(
+				long companyId, long classNameId, long classPK)
+		throws Exception {
+
+		return getService().getBatchEngineImportReportEntries(
+			companyId, classNameId, classPK);
 	}
 
 	/**

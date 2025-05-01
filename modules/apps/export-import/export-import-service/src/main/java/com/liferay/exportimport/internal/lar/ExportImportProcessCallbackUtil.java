@@ -23,36 +23,36 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExportImportProcessCallbackUtil {
 
 	public static List<Callable<?>> popCallbackList(String processId) {
-		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+		List<List<Callable<?>>> callbacksLists = _callbacksListsMap.get(
 			processId);
 
-		if (callbackListList == null) {
+		if (callbacksLists == null) {
 			return Collections.<Callable<?>>emptyList();
 		}
 
-		return callbackListList.remove(callbackListList.size() - 1);
+		return callbacksLists.remove(callbacksLists.size() - 1);
 	}
 
 	public static void pushCallbackList(String processId) {
-		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+		List<List<Callable<?>>> callbacksLists = _callbacksListsMap.get(
 			processId);
 
-		if (callbackListList == null) {
-			callbackListList = new ArrayList<>();
+		if (callbacksLists == null) {
+			callbacksLists = new ArrayList<>();
 
-			_callbackListListMap.put(processId, callbackListList);
+			_callbacksListsMap.put(processId, callbacksLists);
 		}
 
-		callbackListList.add(Collections.<Callable<?>>emptyList());
+		callbacksLists.add(Collections.<Callable<?>>emptyList());
 	}
 
 	public static void registerCallback(
 		String processId, Callable<?> callable) {
 
-		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+		List<List<Callable<?>>> callbacksLists = _callbacksListsMap.get(
 			processId);
 
-		if (ListUtil.isEmpty(callbackListList)) {
+		if (ListUtil.isEmpty(callbacksLists)) {
 
 			// Not within a process boundary, ignore the callback
 
@@ -81,23 +81,23 @@ public class ExportImportProcessCallbackUtil {
 			return;
 		}
 
-		int index = callbackListList.size() - 1;
+		int index = callbacksLists.size() - 1;
 
-		List<Callable<?>> callableList = callbackListList.get(index);
+		List<Callable<?>> callables = callbacksLists.get(index);
 
-		if (callableList == Collections.<Callable<?>>emptyList()) {
-			callableList = new ArrayList<>();
+		if (callables == Collections.<Callable<?>>emptyList()) {
+			callables = new ArrayList<>();
 
-			callbackListList.set(index, callableList);
+			callbacksLists.set(index, callables);
 		}
 
-		callableList.add(callable);
+		callables.add(callable);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportProcessCallbackUtil.class);
 
 	private static final Map<String, List<List<Callable<?>>>>
-		_callbackListListMap = new ConcurrentHashMap<>();
+		_callbacksListsMap = new ConcurrentHashMap<>();
 
 }

@@ -24,10 +24,6 @@ bootRun {
 	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "myclientsecret"
 	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URL", "https://myhomepage.com"
 	environment "EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI", "https://myhomepage.com/o/oauth2/token"
-
-	jvmArgs([
-		"--add-opens", "java.base/java.net=ALL-UNNAMED"
-	])
 }
 
 dependencies {

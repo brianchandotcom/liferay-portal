@@ -350,17 +350,23 @@ const viewReducer = (state: TState, action: TAction) => {
 			const {creationLanguageId, selectedObjectFields} = action.payload;
 
 			const {objectView} = state;
-			const {objectViewSortColumns} = objectView;
+			const {objectViewColumns, objectViewSortColumns} = objectView;
 
-			const newObjectViewColumns = selectedObjectFields.map(
-				(item: ObjectField, index: number) => {
+			const newObjectViewColumns = selectedObjectFields
+				.filter(
+					(item) =>
+						!objectViewColumns.some(
+							(col) => col.objectFieldName === item.name
+						)
+				)
+				.map((item: ObjectField, index: number) => {
 					const defaultSortColumn = objectViewSortColumns.find(
 						(sortColumn) => item.name === sortColumn.objectFieldName
 					);
 
 					return {
 						...item,
-						defaultSort: defaultSortColumn ? true : false,
+						defaultSort: !!defaultSortColumn,
 						fieldLabel: stringUtils.getLocalizableLabel({
 							fallbackLabel: item.name,
 							fallbackLanguageId: creationLanguageId,
@@ -369,14 +375,16 @@ const viewReducer = (state: TState, action: TAction) => {
 						label: item.label,
 						objectFieldBusinessType: item.businessType,
 						objectFieldName: item.name,
-						priority: index,
+						priority: objectViewColumns.length + index,
 					};
-				}
-			);
+				});
 
 			const newObjectView = {
 				...objectView,
-				objectViewColumns: newObjectViewColumns,
+				objectViewColumns: [
+					...objectViewColumns,
+					...newObjectViewColumns,
+				],
 			};
 
 			return {

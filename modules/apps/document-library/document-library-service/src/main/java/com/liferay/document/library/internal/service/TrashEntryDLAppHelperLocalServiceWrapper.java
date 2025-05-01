@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -873,24 +874,18 @@ public class TrashEntryDLAppHelperLocalServiceWrapper
 	protected List<ObjectValuePair<Long, Integer>> getDLFileVersionStatuses(
 		List<DLFileVersion> dlFileVersions) {
 
-		List<ObjectValuePair<Long, Integer>>
-			dlFileVersionStatusObjectValuePairs = new ArrayList<>(
-				dlFileVersions.size());
+		return TransformUtil.transform(
+			dlFileVersions,
+			dlFileVersion -> {
+				int status = dlFileVersion.getStatus();
 
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			int status = dlFileVersion.getStatus();
+				if (status == WorkflowConstants.STATUS_PENDING) {
+					status = WorkflowConstants.STATUS_DRAFT;
+				}
 
-			if (status == WorkflowConstants.STATUS_PENDING) {
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
-				new ObjectValuePair<>(dlFileVersion.getFileVersionId(), status);
-
-			dlFileVersionStatusObjectValuePairs.add(dlFileVersionStatusOVP);
-		}
-
-		return dlFileVersionStatusObjectValuePairs;
+				return new ObjectValuePair<>(
+					dlFileVersion.getFileVersionId(), status);
+			});
 	}
 
 	protected void trashOrRestoreFolder(DLFolder dlFolder, boolean moveToTrash)

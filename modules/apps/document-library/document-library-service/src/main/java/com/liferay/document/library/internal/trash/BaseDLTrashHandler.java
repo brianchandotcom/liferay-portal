@@ -61,16 +61,10 @@ public abstract class BaseDLTrashHandler extends BaseTrashHandler {
 
 		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		List<Folder> folders = documentRepository.getFolders(
-			parentContainerModelId, false, start, end, null);
-
-		List<ContainerModel> containerModels = new ArrayList<>(folders.size());
-
-		for (Folder folder : folders) {
-			containerModels.add((ContainerModel)folder.getModel());
-		}
-
-		return containerModels;
+		return TransformUtil.transform(
+			documentRepository.getFolders(
+				parentContainerModelId, false, start, end, null),
+			folder -> (ContainerModel)folder.getModel());
 	}
 
 	@Override

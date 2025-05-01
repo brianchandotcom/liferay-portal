@@ -186,7 +186,10 @@ public class SXPBlueprintDTOConverter
 			JSONObject generalConfigurationJSONObject =
 				configurationJSONObject.getJSONObject("generalConfiguration");
 
-			if (generalConfigurationJSONObject == null) {
+			if ((generalConfigurationJSONObject == null) ||
+				!generalConfigurationJSONObject.getBoolean(
+					"collectionProvider", false)) {
+
 				return new String[0];
 			}
 
@@ -209,7 +212,7 @@ public class SXPBlueprintDTOConverter
 		String[] collectionProviderTypes = _getCollectionProviderType(json);
 
 		if (collectionProviderTypes.length != 3) {
-			return StringPool.DASH;
+			return StringPool.BLANK;
 		}
 
 		String className = collectionProviderTypes[0];
@@ -258,14 +261,14 @@ public class SXPBlueprintDTOConverter
 			_log.error(exception);
 		}
 
-		return StringPool.DASH;
+		return StringPool.BLANK;
 	}
 
 	private String _getTypeName(long companyId, Locale locale, String json) {
 		String[] collectionProviderTypes = _getCollectionProviderType(json);
 
 		if (collectionProviderTypes.length == 0) {
-			return StringPool.DASH;
+			return StringPool.BLANK;
 		}
 
 		String className = collectionProviderTypes[0];
@@ -294,7 +297,7 @@ public class SXPBlueprintDTOConverter
 			_log.error(exception);
 		}
 
-		return StringPool.DASH;
+		return StringPool.BLANK;
 	}
 
 	private void _setLocalizedDescriptionAndTitle(

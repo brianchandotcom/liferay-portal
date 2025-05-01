@@ -86,7 +86,7 @@ public class VersionListTypeService extends BaseService {
 	}
 
 	private void _addVersion(
-		Map<String, List<String>> versionsMap, String key, String version) {
+		String key, String version, Map<String, List<String>> versionsMap) {
 
 		List<String> versions = versionsMap.get(key);
 
@@ -138,8 +138,8 @@ public class VersionListTypeService extends BaseService {
 						productGroupVersion;
 			}
 
-			_addVersion(versionsMap, product + "Major", productGroupVersion);
-			_addVersion(versionsMap, product + "Minor", productVersion);
+			_addVersion(product + "Major", productGroupVersion, versionsMap);
+			_addVersion(product + "Minor", productVersion, versionsMap);
 		}
 
 		return versionsMap;

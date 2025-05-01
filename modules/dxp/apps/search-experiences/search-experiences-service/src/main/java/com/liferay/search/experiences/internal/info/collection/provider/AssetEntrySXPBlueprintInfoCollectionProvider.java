@@ -11,12 +11,8 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -46,13 +42,8 @@ public class AssetEntrySXPBlueprintInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
-			Pagination pagination = collectionQuery.getPagination();
-
-			SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-				collectionQuery, pagination);
-
-			SearchResponse searchResponse = searcher.search(
-				searchRequestBuilder.build());
+			SearchResponse searchResponse = getCollectionQuerySearchResponse(
+				collectionQuery);
 
 			return InfoPage.of(
 				assetHelper.getAssetEntries(searchResponse.getSearchHits()),
@@ -64,19 +55,6 @@ public class AssetEntrySXPBlueprintInfoCollectionProvider
 
 		return InfoPage.of(
 			Collections.emptyList(), collectionQuery.getPagination(), 0);
-	}
-
-	@Override
-	public String getFormVariationKey() {
-		return sxpBlueprint.getExternalReferenceCode();
-	}
-
-	@Override
-	public String getKey() {
-		return StringBundler.concat(
-			AssetEntrySXPBlueprintInfoCollectionProvider.class.getName(),
-			StringPool.UNDERLINE, sxpBlueprint.getCompanyId(),
-			StringPool.UNDERLINE, sxpBlueprint.getExternalReferenceCode());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

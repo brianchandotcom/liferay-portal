@@ -13,8 +13,6 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -39,7 +36,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Joshua Cords
@@ -68,13 +64,8 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
-			Pagination pagination = collectionQuery.getPagination();
-
-			SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-				collectionQuery, pagination);
-
-			SearchResponse searchResponse = searcher.search(
-				searchRequestBuilder.build());
+			SearchResponse searchResponse = getCollectionQuerySearchResponse(
+				collectionQuery);
 
 			return InfoPage.of(
 				_getDLFileEntries(searchResponse.getSearchHits()),
@@ -145,20 +136,6 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		}
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getKey() {
-		return StringBundler.concat(
-			FileEntrySXPBlueprintInfoCollectionProvider.class.getName(),
-			StringPool.UNDERLINE, sxpBlueprint.getCompanyId(),
-			StringPool.UNDERLINE, sxpBlueprint.getExternalReferenceCode(),
-			StringPool.UNDERLINE, FileEntry.class.getName());
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return sxpBlueprint.getTitle(locale);
 	}
 
 	private List<FileEntry> _getDLFileEntries(SearchHits searchHits)

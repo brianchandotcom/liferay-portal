@@ -132,7 +132,6 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 	protected void activate(Map<String, Object> properties) {
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
-
 		_functionCaptchaImplConfiguration = ConfigurableUtil.createConfigurable(
 			FunctionCaptchaImplConfiguration.class, properties);
 	}

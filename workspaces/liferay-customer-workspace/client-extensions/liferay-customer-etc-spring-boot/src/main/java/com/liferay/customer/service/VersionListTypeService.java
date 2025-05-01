@@ -97,6 +97,11 @@ public class VersionListTypeService extends BaseService {
 		}
 	}
 
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-customer-etc-spring-boot-oahs");
+	}
+
 	private Map<String, List<String>> _getVersionsMap(
 		JSONArray releasesJSONArray) {
 
@@ -143,11 +148,6 @@ public class VersionListTypeService extends BaseService {
 		}
 
 		return versionsMap;
-	}
-
-	private String _getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-customer-etc-spring-boot-oahs");
 	}
 
 	private void _updateListTypeDefinition(

@@ -224,14 +224,12 @@ public class PageExperienceResourceTest
 					}
 				}
 			});
-
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			_draftLayout.getExternalReferenceCode());
 		pageExperience.setSegmentExternalReferenceCode(
 			SegmentsTestUtil.addSegmentsEntry(
 				testGroup.getGroupId()
 			).getSegmentsEntryKey());
-
-		pageExperience.setPageSpecificationExternalReferenceCode(
-			_draftLayout.getExternalReferenceCode());
 
 		return pageExperience;
 	}

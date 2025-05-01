@@ -149,22 +149,22 @@ public class JournalTransformerTest {
 
 		TemplateNode firstChildTemplateNode = childrenTemplateNodes.get(0);
 
-		List<TemplateNode> firstChildTemplateNodeSiblings =
+		List<TemplateNode> firstChildSiblingsTemplateNodes =
 			firstChildTemplateNode.getSiblings();
 
-		int firstChildTemplateNodeSiblingsSize =
-			firstChildTemplateNodeSiblings.size();
+		int firstChildSiblingsTemplateNodesSize =
+			firstChildSiblingsTemplateNodes.size();
 
 		List<TemplateNode> includeBackwardsCompatibilityTemplateNodes =
 			journalTransformer.includeBackwardsCompatibilityTemplateNodes(
 				nestedRepeatableFieldsTemplateNodes, 0);
 
-		int firstChildTemplateNodeSiblingsAfterTransformSize =
-			firstChildTemplateNodeSiblings.size();
+		int afterTransformFirstChildSiblingsTemplateNodesSize =
+			firstChildSiblingsTemplateNodes.size();
 
 		Assert.assertEquals(
-			firstChildTemplateNodeSiblingsSize,
-			firstChildTemplateNodeSiblingsAfterTransformSize);
+			firstChildSiblingsTemplateNodesSize,
+			afterTransformFirstChildSiblingsTemplateNodesSize);
 
 		Assert.assertEquals(
 			nestedRepeatableFieldsTemplateNodes,

@@ -1,0 +1,40 @@
+diff --git a/com/sun/tlddoc/Constants.java b/com/sun/tlddoc/Constants.java
+index cb5fc3e033d68..f08c1937dc033 100644
+--- a/com/sun/tlddoc/Constants.java
++++ b/com/sun/tlddoc/Constants.java
+@@ -52,6 +52,9 @@ public final class Constants {
+     
+     /** Namespace for Java EE */
+     public static final String NS_JAVAEE = "http://java.sun.com/xml/ns/javaee";
++
++	/** Namespace for Jakarta EE */
++    public static final String NS_JAKARTAEE = "https://jakarta.ee/xml/ns/jakartaee";
+     
+     /** Namespace for J2EE */
+     public static final String NS_J2EE = "http://java.sun.com/xml/ns/j2ee";
+@@ -59,3 +62,4 @@ public final class Constants {
+     /** If true, outputs the input to the transform before generation */
+     public static final boolean DEBUG_INPUT_DOCUMENT = false;
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/com/sun/tlddoc/TLDDocGenerator.java b/com/sun/tlddoc/TLDDocGenerator.java
+index 9b1654af79dbe..b9f0746a509a4 100644
+--- a/com/sun/tlddoc/TLDDocGenerator.java
++++ b/com/sun/tlddoc/TLDDocGenerator.java
+@@ -551,7 +551,8 @@ public class TLDDocGenerator {
+                 Element taglibNode = (Element)summaryTLD.importNode( 
+                     doc.getDocumentElement(), true );
+                 if( !taglibNode.getNamespaceURI().equals( Constants.NS_JAVAEE )
+-                    && !taglibNode.getNamespaceURI().equals( Constants.NS_J2EE )) {
++                    && !taglibNode.getNamespaceURI().equals( Constants.NS_JAKARTAEE )
++					&& !taglibNode.getNamespaceURI().equals( Constants.NS_J2EE )) {
+                     throw new GeneratorException( "Error: " + 
+                         tagLibrary.getPathDescription() + 
+                         " does not have xmlns=\"" + Constants.NS_JAVAEE + "\"" );
+@@ -1267,4 +1268,4 @@ public class TLDDocGenerator {
+             "http://taglibrarydoc.dev.java.net/" );
+     }
+ }
+-
++/* @generated */

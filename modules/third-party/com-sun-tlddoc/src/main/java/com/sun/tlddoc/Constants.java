@@ -52,6 +52,9 @@ public final class Constants {
     
     /** Namespace for Java EE */
     public static final String NS_JAVAEE = "http://java.sun.com/xml/ns/javaee";
+
+	/** Namespace for Jakarta EE */
+    public static final String NS_JAKARTAEE = "https://jakarta.ee/xml/ns/jakartaee";
     
     /** Namespace for J2EE */
     public static final String NS_J2EE = "http://java.sun.com/xml/ns/j2ee";
@@ -59,3 +62,4 @@ public final class Constants {
     /** If true, outputs the input to the transform before generation */
     public static final boolean DEBUG_INPUT_DOCUMENT = false;
 }
+/* @generated */

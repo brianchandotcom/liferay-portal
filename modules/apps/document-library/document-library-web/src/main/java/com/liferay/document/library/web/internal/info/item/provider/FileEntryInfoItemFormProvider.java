@@ -27,6 +27,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -300,24 +300,17 @@ public class FileEntryInfoItemFormProvider
 		long ddmStructureId, long fileEntryTypeId) {
 
 		try {
-			List<DDMStructure> ddmStructures =
+			return TransformUtil.transform(
 				DLFileEntryTypeUtil.getDDMStructures(
-					dlFileEntryTypeService.getFileEntryType(fileEntryTypeId));
+					dlFileEntryTypeService.getFileEntryType(fileEntryTypeId)),
+				ddmStructure -> {
+					if (ddmStructure.getStructureId() == ddmStructureId) {
+						return null;
+					}
 
-			List<InfoFieldSet> infoFieldSets = new ArrayList<>(
-				ddmStructures.size());
-
-			for (DDMStructure ddmStructure : ddmStructures) {
-				if (ddmStructure.getStructureId() == ddmStructureId) {
-					continue;
-				}
-
-				infoFieldSets.add(
-					ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
-						ddmStructure.getStructureId()));
-			}
-
-			return infoFieldSets;
+					return ddmStructureInfoItemFieldSetProvider.
+						getInfoItemFieldSet(ddmStructure.getStructureId());
+				});
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

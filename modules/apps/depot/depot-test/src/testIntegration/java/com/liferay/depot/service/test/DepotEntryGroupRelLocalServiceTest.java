@@ -103,7 +103,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 	}
 
 	@Test
-	public void testAddDepotEntryGroupRelWithSiteTemplateWithoutPropagation()
+	public void testAddDepotEntryGroupRelWithLayoutSetPrototypeWithoutPropagation()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry();
@@ -138,7 +138,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 	}
 
 	@Test
-	public void testAddDepotEntryGroupRelWithSiteTemplateWithPropagation()
+	public void testAddDepotEntryGroupRelWithLayoutSetPrototypeWithPropagation()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry();
@@ -194,7 +194,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteDepotEntryGroupRelWithSiteTemplateWithoutPropagation()
+	public void testDeleteDepotEntryGroupRelWithLayoutSetPrototypeWithoutPropagation()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry();
@@ -259,7 +259,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteDepotEntryGroupRelWithSiteTemplateWithPropagation()
+	public void testDeleteDepotEntryGroupRelWithLayoutSetPrototypeWithPropagation()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry();

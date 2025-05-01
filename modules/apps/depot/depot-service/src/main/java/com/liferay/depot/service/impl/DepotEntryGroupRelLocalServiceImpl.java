@@ -278,8 +278,8 @@ public class DepotEntryGroupRelLocalServiceImpl
 			if (depotEntryGroupRel.isDdmStructuresAvailable()) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Site " + depotEntryGroupRel.getToGroupId() +
-							" could not be disconnected.");
+						"Unable to disconnect " +
+							depotEntryGroupRel.getToGroupId());
 				}
 
 				continue;

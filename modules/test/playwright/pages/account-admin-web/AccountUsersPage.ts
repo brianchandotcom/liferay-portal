@@ -13,7 +13,10 @@ export class AccountUsersPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assignRolesMenuItem: Locator;
 	readonly assignUserMenuItem: Locator;
+	readonly clearButton: Locator;
 	readonly deactivateButton: Locator;
+	readonly filterButton: Locator;
+	readonly filterMenuItem: (option: string) => Locator;
 	readonly impersonateUserMenuItem: Locator;
 	readonly inviteUserMenuItem: Locator;
 	readonly page: Page;
@@ -37,11 +40,22 @@ export class AccountUsersPage {
 		this.assignUserMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Users',
 		});
+		this.clearButton = page.getByRole('button', {name: 'Clear'});
 		this.deactivateButton = page
 			.getByRole('button', {
 				name: 'Deactivate',
 			})
 			.or(page.getByRole('link', {name: 'Deactivate'}));
+		this.filterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
+		this.filterMenuItem = (option: string) => {
+			return page.getByRole('menuitem', {
+				exact: true,
+				name: option,
+			});
+		};
 		this.impersonateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Impersonate User',
 		});
@@ -69,6 +83,16 @@ export class AccountUsersPage {
 					)
 				)
 		);
+	}
+
+	async changeFilter(option) {
+		const expanded = await this.filterButton.getAttribute('aria-expanded');
+
+		if (expanded === 'false') {
+			await this.filterButton.click();
+		}
+
+		await this.filterMenuItem(option).click();
 	}
 
 	async roleName(name: string): Promise<Locator> {

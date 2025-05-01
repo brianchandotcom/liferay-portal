@@ -2736,3 +2736,46 @@ test(
 		}).toPass();
 	}
 );
+
+test(
+	'Clearing filter goes back to default Any Account filter',
+	{tag: ['@LPD-54580']},
+	async ({accountUsersPage, apiHelpers}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[user1.emailAddress]
+		);
+
+		await accountUsersPage.goto();
+
+		await accountUsersPage.changeFilter('No Assigned Account');
+
+		await expect(accountUsersPage.clearButton).toBeVisible();
+
+		await accountUsersPage.filterButton.click();
+
+		await expect(
+			accountUsersPage.filterMenuItem('No Assigned Account')
+		).toHaveClass(/active/);
+
+		await accountUsersPage.filterButton.click();
+
+		await accountUsersPage.clearButton.click();
+
+		await expect(accountUsersPage.clearButton).not.toBeVisible();
+
+		await accountUsersPage.filterButton.click();
+
+		await expect(
+			accountUsersPage.filterMenuItem('Any Account')
+		).toHaveClass(/active/);
+	}
+);

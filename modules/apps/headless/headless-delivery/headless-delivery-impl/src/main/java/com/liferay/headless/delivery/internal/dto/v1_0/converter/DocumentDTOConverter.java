@@ -262,7 +262,7 @@ public class DocumentDTOConverter
 			DLFileEntryType dlFileEntryType, DLFileVersion dlFileVersion)
 		throws Exception {
 
-		List<DDMFormValues> ddmFormValues = new ArrayList<>();
+		List<DDMFormValues> ddmFormValuesList = new ArrayList<>();
 
 		for (DDMStructure ddmStructure :
 				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
@@ -276,12 +276,12 @@ public class DocumentDTOConverter
 				continue;
 			}
 
-			ddmFormValues.add(
+			ddmFormValuesList.add(
 				_ddmStorageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId()));
 		}
 
-		return ddmFormValues;
+		return ddmFormValuesList;
 	}
 
 	private long _getDDMStructureId(FileEntry fileEntry) throws Exception {
@@ -351,7 +351,7 @@ public class DocumentDTOConverter
 
 		DLFileEntryType dlFileEntryType = dlFileVersion.getDLFileEntryType();
 
-		List<DDMFormValues> ddmFormValues = _getDDMFormValues(
+		List<DDMFormValues> ddmFormValuesList = _getDDMFormValues(
 			dlFileEntryType, dlFileVersion);
 
 		return new DocumentType() {
@@ -360,8 +360,8 @@ public class DocumentDTOConverter
 					() -> {
 						Set<Locale> locales = new HashSet<>();
 
-						for (DDMFormValues ddmFormValue : ddmFormValues) {
-							locales.addAll(ddmFormValue.getAvailableLocales());
+						for (DDMFormValues ddmFormValues : ddmFormValuesList) {
+							locales.addAll(ddmFormValues.getAvailableLocales());
 						}
 
 						return LocaleUtil.toW3cLanguageIds(
@@ -372,9 +372,9 @@ public class DocumentDTOConverter
 						List<DDMFormFieldValue> ddmFormFieldValues =
 							new ArrayList<>();
 
-						for (DDMFormValues ddmFormValue : ddmFormValues) {
+						for (DDMFormValues ddmFormValues : ddmFormValuesList) {
 							ddmFormFieldValues.addAll(
-								ddmFormValue.getDDMFormFieldValues());
+								ddmFormValues.getDDMFormFieldValues());
 						}
 
 						return TransformUtil.transformToArray(

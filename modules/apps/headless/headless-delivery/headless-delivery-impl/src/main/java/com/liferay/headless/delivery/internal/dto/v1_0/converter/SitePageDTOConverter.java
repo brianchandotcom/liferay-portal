@@ -228,7 +228,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 								continue;
 							}
 
-							Set<String> actionIdsSet = new HashSet<>();
+							Set<String> newActionIds = new HashSet<>();
 
 							long actionIds = resourcePermission.getActionIds();
 
@@ -241,7 +241,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 								if ((actionIds & bitwiseValue) ==
 										bitwiseValue) {
 
-									actionIdsSet.add(
+									newActionIds.add(
 										resourceAction.getActionId());
 								}
 							}
@@ -265,7 +265,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 								new PagePermission() {
 									{
 										setActionKeys(
-											() -> actionIdsSet.toArray(
+											() -> newActionIds.toArray(
 												new String[0]));
 										setRoleKey(() -> finalRoleKey);
 									}

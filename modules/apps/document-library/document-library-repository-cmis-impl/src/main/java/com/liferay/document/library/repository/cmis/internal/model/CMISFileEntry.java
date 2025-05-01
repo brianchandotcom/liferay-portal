@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -252,16 +252,9 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 		try {
 			List<Document> documents = getAllVersions();
 
-			List<FileVersion> fileVersions = new ArrayList<>(documents.size());
-
-			for (Document document : documents) {
-				FileVersion fileVersion = _cmisRepository.toFileVersion(
-					this, document);
-
-				fileVersions.add(fileVersion);
-			}
-
-			return fileVersions;
+			return TransformUtil.transform(
+				documents,
+				document -> _cmisRepository.toFileVersion(this, document));
 		}
 		catch (PortalException portalException) {
 			throw new RepositoryException(portalException);

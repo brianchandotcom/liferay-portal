@@ -224,7 +224,7 @@ public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 
 			_log.error(
 				_functionCaptchaImplConfiguration.captchaName() +
-					" did not return a valid result.",
+					" did not return a valid result",
 				exception);
 
 			throw new CaptchaConfigurationException(exception);

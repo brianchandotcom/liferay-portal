@@ -1,6 +1,6 @@
 # Liferay Cloud Native AWS Installation Guide
 
-The companion for these instructions is this specialized Liferay AWS Helm chart:
+Use this specialized Liferay AWS Helm chart with these instructions:
 
 `oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws`
 

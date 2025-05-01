@@ -1,4 +1,4 @@
-FROM liferay/dxp:7.4.13.nightly
+FROM liferay/jdk21:latest
 
 USER root
 
@@ -22,31 +22,34 @@ EXPOSE 8000 8080 11311
 
 HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit 1
 
-RUN rm -rf ${LIFERAY_HOME}
+COPY ./bundles /opt/liferay/
 
-COPY ./bundles ${LIFERAY_HOME}
+RUN mkdir -p /opt/liferay/tomcat/lib/org/apache/catalina/util && \
+    echo "server.info=" > /opt/liferay/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 
-RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
-    echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
-
-COPY ./common/resources/context.xml $LIFERAY_HOME/tomcat/conf
-COPY ./common/resources/lib/mysql.jar $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib
-COPY ./common/resources/portal-ext.properties $LIFERAY_HOME
-COPY ./common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF
-COPY ./common/resources/system-ext.properties $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/classes
+COPY ./common/resources/context.xml /opt/liferay/tomcat/conf
+COPY ./common/resources/lib/mysql.jar /opt/liferay/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib
+COPY ./common/resources/portal-ext.properties /opt/liferay
+COPY ./common/resources/portal-setup-wizard.properties /opt/liferay
+COPY ./common/resources/rewrite.config /opt/liferay/tomcat/webapps/ROOT/WEB-INF
+COPY ./common/resources/system-ext.properties /opt/liferay/tomcat/webapps/ROOT/WEB-INF/classes
 
 # Configs
 
-COPY ./common/resources/configs $LIFERAY_HOME/osgi/configs/
+COPY ./common/resources/configs /opt/liferay/osgi/configs/
 
 # Log4j
 
-COPY ./common/resources/log4j $LIFERAY_HOME/osgi/log4j/
+COPY ./common/resources/log4j /opt/liferay/osgi/log4j/
 
 # WAR
 
-COPY *osb-faro*.war $LIFERAY_HOME/osgi/modules/
+COPY *osb-faro*.war /opt/liferay/osgi/modules/
 
 # Modules
 
-COPY *osb.faro*.jar $LIFERAY_HOME/osgi/modules/
+COPY *osb.faro*.jar /opt/liferay/osgi/modules/
+
+ENTRYPOINT ["/opt/liferay/tomcat/bin/catalina.sh", "run"]
+
+WORKDIR /opt/liferay

@@ -262,26 +262,21 @@ public class DocumentDTOConverter
 			DLFileEntryType dlFileEntryType, DLFileVersion dlFileVersion)
 		throws Exception {
 
-		List<DDMFormValues> ddmFormValuesList = new ArrayList<>();
+		return TransformUtil.transform(
+			DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType),
+			ddmStructure -> {
+				DLFileEntryMetadata dlFileEntryMetadata =
+					_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
 
-		for (DDMStructure ddmStructure :
-				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
+				if (dlFileEntryMetadata == null) {
+					return null;
+				}
 
-			DLFileEntryMetadata dlFileEntryMetadata =
-				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					dlFileVersion.getFileVersionId());
-
-			if (dlFileEntryMetadata == null) {
-				continue;
-			}
-
-			ddmFormValuesList.add(
-				_ddmStorageEngineManager.getDDMFormValues(
-					dlFileEntryMetadata.getDDMStorageId()));
-		}
-
-		return ddmFormValuesList;
+				return _ddmStorageEngineManager.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId());
+			});
 	}
 
 	private long _getDDMStructureId(FileEntry fileEntry) throws Exception {

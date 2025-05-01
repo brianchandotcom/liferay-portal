@@ -2990,6 +2990,10 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 										<driver-name>${database.driver}</driver-name>
 										<properties>
 											<property>
+												<name>desiredtxisolevel</name>
+												<value>TRANSACTION_READ_COMMITTED</value>
+											</property>
+											<property>
 												<name>user</name>
 												<value>${database.username}</value>
 											</property>
@@ -2998,7 +3002,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									</jdbc-driver-params>
 									<jdbc-connection-pool-params>
 										<initial-capacity>5</initial-capacity>
-										<isolation-level>TRANSACTION_READ_COMMITTED</isolation-level>
 										<max-capacity>100</max-capacity>
 										<min-capacity>5</min-capacity>
 										<test-table-name>SQL SELECT 1</test-table-name>

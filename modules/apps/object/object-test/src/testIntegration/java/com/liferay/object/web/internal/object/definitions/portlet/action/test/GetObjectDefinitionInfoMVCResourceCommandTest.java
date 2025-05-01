@@ -71,16 +71,14 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 			TestPropsValues.getGroupId(), objectDefinition.getClassName(), 0, 0,
 			kaleoDefinition.getName(), 1);
 
-		JSONObject jsonObject = _getJSONObject(
-			objectDefinition.getObjectDefinitionId());
-
 		Assert.assertEquals(
 			JSONUtil.put(
 				"tableName", objectDefinition.getDBTableName()
 			).put(
 				"workflowDefinitionTitle", kaleoDefinition.getTitle()
 			).toString(),
-			jsonObject.toString());
+			String.valueOf(
+				_getJSONObject(objectDefinition.getObjectDefinitionId())));
 	}
 
 	private JSONObject _getJSONObject(long objectDefinitionId)

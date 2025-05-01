@@ -4179,8 +4179,6 @@ public class BundleSiteInitializerTest {
 		userAccount = userAccountResource.getUserAccountByEmailAddress(
 			"test.user3@liferay.com");
 
-		Assert.assertNotNull(userAccount);
-
 		accountBriefs = userAccount.getAccountBriefs();
 
 		Assert.assertEquals(

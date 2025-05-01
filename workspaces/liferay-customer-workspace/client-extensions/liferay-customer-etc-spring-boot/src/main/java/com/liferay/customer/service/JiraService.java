@@ -341,10 +341,10 @@ public class JiraService extends BaseService {
 				get(
 					_getCredentials(),
 					StringBundler.concat(
-						_URL_REST_API_2, "/search?jql=", jql, "&fields=",
-						StringUtil.merge(returnFields), "&maxResults=",
-						maxResults, "&startAt=", startAt,
-						"&expand=renderedFields")));
+						_URL_REST_API_2,
+						"/search?expand=renderedFields&fields=",
+						StringUtil.merge(returnFields), "&jql=", jql,
+						"&maxResults=", maxResults, "&startAt=", startAt)));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

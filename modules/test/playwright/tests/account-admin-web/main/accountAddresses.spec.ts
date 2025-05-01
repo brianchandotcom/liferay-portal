@@ -743,11 +743,14 @@ test(
 		}
 
 		await editAccountPage.detailsTab.click();
-		await editAccountPage.setBillingDefaultAddressButton.click();
-		await accountDefaultAddressSelectorPage.setDefaultAddress(
-			addresses[0].name,
-			'Billing'
-		);
+
+		await expect(async () => {
+			await editAccountPage.setBillingDefaultAddressButton.click();
+			await accountDefaultAddressSelectorPage.setDefaultAddress(
+				addresses[0].name,
+				'Billing'
+			);
+		}).toPass();
 
 		await expect(
 			editAccountPage.defaultBillingAddress(addresses[0].name)

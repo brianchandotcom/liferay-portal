@@ -106,12 +106,24 @@ export class AccountInstanceSettingsAccountAddressSubtypePage {
 		await this.goto();
 
 		await expect(async () => {
+			await expect(this.billingAddressSubtypePicklistInput).toBeEnabled();
+
 			await this.billingAddressSubtypePicklistInput.fill(
 				listTypeDefinitionBilling
 			);
+
+			await expect(
+				this.billingAndShippingAddressSubtypePicklistInput
+			).toBeEnabled();
+
 			await this.billingAndShippingAddressSubtypePicklistInput.fill(
 				listTypeDefinitionBillingAndShipping
 			);
+
+			await expect(
+				this.shippingAddressSubtypePicklistInput
+			).toBeEnabled();
+
 			await this.shippingAddressSubtypePicklistInput.fill(
 				listTypeDefinitionShipping
 			);

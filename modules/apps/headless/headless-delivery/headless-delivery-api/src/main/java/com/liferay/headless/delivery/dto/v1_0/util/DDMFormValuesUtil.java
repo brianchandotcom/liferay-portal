@@ -75,7 +75,7 @@ public class DDMFormValuesUtil {
 		LayoutLocalService layoutLocalService, Locale locale,
 		List<DDMFormField> rootDDMFormFields) {
 
-		Map<String, List<ContentField>> contentFieldMap = _toContentFieldsMap(
+		Map<String, List<ContentField>> contentFieldsMap = _toContentFieldsMap(
 			contentFields);
 
 		return new DDMFormValues(ddmForm) {
@@ -86,7 +86,7 @@ public class DDMFormValuesUtil {
 					_flattenDDMFormFieldValues(
 						rootDDMFormFields,
 						ddmFormField -> _toDDMFormFieldValues(
-							contentFieldMap.get(
+							contentFieldsMap.get(
 								ddmFormField.getFieldReference()),
 							ddmFormField, dlAppService, groupId,
 							journalArticleService, layoutLocalService,
@@ -181,7 +181,7 @@ public class DDMFormValuesUtil {
 		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService, Locale locale, Value value) {
 
-		Map<String, List<ContentField>> contentFieldMap = _toContentFieldsMap(
+		Map<String, List<ContentField>> contentFieldsMap = _toContentFieldsMap(
 			contentFields);
 
 		return new DDMFormFieldValue() {
@@ -192,7 +192,7 @@ public class DDMFormValuesUtil {
 					_flattenDDMFormFieldValues(
 						ddmFormField.getNestedDDMFormFields(),
 						field -> _toDDMFormFieldValues(
-							contentFieldMap.get(field.getFieldReference()),
+							contentFieldsMap.get(field.getFieldReference()),
 							field, dlAppService, groupId, journalArticleService,
 							layoutLocalService, locale)));
 				setValue(value);

@@ -450,6 +450,29 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	@Test
+	public void testPutKeywordMerge() throws Exception {
+		Keyword keyword1 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword2 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword3 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		keywordResource.putKeywordMerge(
+			keyword1.getId(), new Long[] {keyword2.getId(), keyword3.getId()});
+
+		List<AssetTagGroupRel> assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				keyword1.getId());
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), 1, assetTagGroupRels.size());
+
+		AssetTagGroupRel assetTagGroupRel = assetTagGroupRels.get(0);
+
+		Assert.assertEquals(
+			assetTagGroupRels.toString(), -1, assetTagGroupRel.getGroupId());
+	}
+
+	@Override
+	@Test
 	public void testPutSiteKeywordByExternalReferenceCode() throws Exception {
 		super.testPutSiteKeywordByExternalReferenceCode();
 

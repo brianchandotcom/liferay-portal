@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import java.util.Date;
 
@@ -63,11 +63,11 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				_setAddressListType(
 					companyId,
 					AccountListTypeConstants.
-						ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING);
+						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING);
 				_setAddressListType(
 					companyId,
 					AccountListTypeConstants.
-						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING);
+						ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING);
 			});
 
 		processConcurrently(
@@ -133,8 +133,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			},
 			"Unable to migrate commerceAddress to Address");
 
-		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet resultSet = selectStatement.executeQuery(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select CommerceAddress.commerceAddressId, ",
 					"CommerceAddress.classPK, CommerceAddress.defaultBilling, ",
@@ -143,18 +142,22 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 					"ClassName_.classNameId where ",
 					"(CommerceAddress.defaultBilling = 1 or ",
 					"CommerceAddress.defaultShipping = 1) and ",
-					"(ClassName_.value = ", AccountEntry.class.getName(), " ",
-					"or ClassName_.value = ",
-					"com.liferay.commerce.account.model.CommerceAccount) ",
-					"order by CommerceAddress.commerceAddressId"));
+					"(ClassName_.value = ? or ClassName_.value = ?)"))) {
 
-			while (resultSet.next()) {
-				long addressId = resultSet.getLong(1);
-				long classPK = resultSet.getLong(2);
+			preparedStatement.setString(1, AccountEntry.class.getName());
+			preparedStatement.setString(
+				2, "com.liferay.commerce.account.model.CommerceAccount");
 
-				_setDefaultBilling(addressId, classPK, resultSet.getBoolean(3));
-				_setDefaultShipping(
-					addressId, classPK, resultSet.getBoolean(4));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long addressId = resultSet.getLong(1);
+					long classPK = resultSet.getLong(2);
+
+					_setDefaultBilling(
+						addressId, classPK, resultSet.getBoolean(3));
+					_setDefaultShipping(
+						addressId, classPK, resultSet.getBoolean(4));
+				}
 			}
 		}
 	}

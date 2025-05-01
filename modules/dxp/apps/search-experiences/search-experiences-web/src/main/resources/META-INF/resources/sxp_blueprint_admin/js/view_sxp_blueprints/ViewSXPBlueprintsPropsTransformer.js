@@ -6,7 +6,6 @@
 import {download} from '../shared/fdsPropsTransformerActions';
 import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import CollectionProviderTableCell from './CollectionProviderTableCell';
-import {SubtypeTableCell, TypeTableCell} from './TypeTableCell';
 
 export default function propsTransformer({...otherProps}) {
 	const collectionProviderCellRenderer = {
@@ -15,25 +14,10 @@ export default function propsTransformer({...otherProps}) {
 		type: 'internal',
 	};
 
-	const subtypeCellRenderer = {
-		component: SubtypeTableCell,
-		name: 'subtypeCellRenderer',
-		type: 'internal',
-	};
-	const typeCellRenderer = {
-		component: TypeTableCell,
-		name: 'typeCellRenderer',
-		type: 'internal',
-	};
-
 	return {
 		...otherProps,
 		customRenderers: {
-			tableCell: [
-				collectionProviderCellRenderer,
-				typeCellRenderer,
-				subtypeCellRenderer,
-			],
+			tableCell: [collectionProviderCellRenderer],
 		},
 		onActionDropdownItemClick({action, itemData}) {
 			if (action.data.id === 'export') {

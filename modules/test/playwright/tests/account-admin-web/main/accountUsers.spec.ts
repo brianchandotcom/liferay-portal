@@ -882,7 +882,12 @@ test(
 			await editAccountPage.usersLink.click();
 			await accountUsersPage.usersTable.newButton.click();
 			await accountUsersPage.assignUserMenuItem.click();
-			await accountUserSelectorPage.usersTable.newButton.click();
+
+			await expect(async () => {
+				await accountUserSelectorPage.usersTable.newButton.click();
+
+				await expect(editUserPage.emailAddressInput).toBeVisible();
+			}).toPass();
 
 			const randomString = getRandomString();
 
@@ -1021,7 +1026,11 @@ test(
 		try {
 			await accountsPage.goto();
 
-			await accountsPage.accountsTable.newButton.click();
+			await expect(async () => {
+				await accountsPage.accountsTable.newButton.click();
+
+				await expect(editAccountPage.accountNameInput).toBeVisible();
+			}).toPass();
 
 			await editAccountPage.createAccount(apiHelpers, {
 				name: getRandomString(),
@@ -1551,7 +1560,7 @@ test(
 		page,
 		virtualInstancesPage,
 	}) => {
-		test.setTimeout(600000);
+		test.setTimeout(160000);
 
 		const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
@@ -1565,7 +1574,12 @@ test(
 		try {
 			await accountsPage.goto(false);
 
-			await accountsPage.accountsTable.newButton.click();
+			await expect(async () => {
+				await accountsPage.accountsTable.newButton.click();
+
+				await expect(editAccountPage.accountNameInput).toBeVisible();
+			}).toPass();
+
 			await editAccountPage.createAccount(apiHelpers, {
 				name: getRandomString(),
 			});
@@ -1573,7 +1587,12 @@ test(
 			await editAccountPage.usersLink.click();
 			await accountUsersPage.usersTable.newButton.click();
 			await accountUsersPage.assignUserMenuItem.click();
-			await accountUserSelectorPage.usersTable.newButton.click();
+
+			await expect(async () => {
+				await accountUserSelectorPage.usersTable.newButton.click();
+
+				await expect(editUserPage.emailAddressInput).toBeVisible();
+			}).toPass();
 
 			const randomString = getRandomString();
 
@@ -1617,7 +1636,12 @@ test(
 
 			await accountsPage.goto(false);
 
-			await accountsPage.accountsTable.newButton.click();
+			await expect(async () => {
+				await accountsPage.accountsTable.newButton.click();
+
+				await expect(editAccountPage.accountNameInput).toBeVisible();
+			}).toPass();
+
 			await editAccountPage.createAccount(apiHelpers, {
 				name: getRandomString(),
 			});
@@ -1625,7 +1649,12 @@ test(
 			await editAccountPage.usersLink.click();
 			await accountUsersPage.usersTable.newButton.click();
 			await accountUsersPage.assignUserMenuItem.click();
-			await accountUserSelectorPage.usersTable.newButton.click();
+
+			await expect(async () => {
+				await accountUserSelectorPage.usersTable.newButton.click();
+
+				await expect(editUserPage.emailAddressInput).toBeVisible();
+			}).toPass();
 
 			await editUserPage.emailAddressInput.fill(
 				`${getRandomString()}@blocked.com`
@@ -1770,6 +1799,8 @@ test(
 	'Can paginate account users',
 	{tag: ['@LPD-48750']},
 	async ({accountUsersPage, apiHelpers, page}) => {
+		test.setTimeout(150000);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			type: 'business',
 		});

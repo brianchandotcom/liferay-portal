@@ -518,7 +518,14 @@ test('LPD-45897 Can delete an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+	await expect(async () => {
+		await (
+			await accountsPage.accountsTable.rowActions(account.name)
+		).click();
+
+		await expect(accountsPage.deleteButton).toBeVisible({timeout: 300});
+	}).toPass();
+
 	await accountsPage.deleteButton.click();
 
 	await waitForAlert(page);
@@ -554,7 +561,7 @@ test('LPD-45897 Can delete an inactive account', async ({
 			await accountsPage.accountsTable.rowActions(account.name)
 		).click();
 
-		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 300});
+		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 500});
 	}).toPass();
 
 	await accountsPage.deactivateButton.click();

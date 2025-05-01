@@ -65,11 +65,21 @@ test(
 
 		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
 
-		await rolesPage.rolesTable.newButton.click();
+		await expect(async () => {
+			await rolesPage.rolesTable.newButton.click();
+
+			await expect(rolePage.keyInput).toBeVisible();
+		}).toPass();
+
 		await rolePage.addRole(apiHelpers, {name: key1, title});
 		await rolePage.backButton.click();
 
-		await rolesPage.rolesTable.newButton.click();
+		await expect(async () => {
+			await rolesPage.rolesTable.newButton.click();
+
+			await expect(rolePage.keyInput).toBeVisible();
+		}).toPass();
+
 		await rolePage.addRole(apiHelpers, {name: key2, title});
 		await rolePage.backButton.click();
 

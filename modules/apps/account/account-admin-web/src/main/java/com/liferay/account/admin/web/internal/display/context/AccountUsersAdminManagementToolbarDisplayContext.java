@@ -207,7 +207,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 		).setNavigation(
 			(String)null
 		).setParameter(
-			"accountEntriesNavigation", "all"
+			"accountEntriesNavigation", "any-account"
 		).setParameter(
 			"accountEntryIds", StringPool.BLANK
 		).buildString();

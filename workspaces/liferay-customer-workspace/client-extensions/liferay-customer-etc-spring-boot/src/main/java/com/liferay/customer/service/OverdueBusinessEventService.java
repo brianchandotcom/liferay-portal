@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 public class OverdueBusinessEventService extends BaseService {
 
 	@Scheduled(cron = "0 0 0 * * *")
-	public void scheduledTargetGoLiveDateCheck() {
+	public void scheudled() {
 		Date now = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat(

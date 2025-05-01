@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 public class VersionListTypeService extends BaseService {
 
 	@Scheduled(cron = "${liferay.customer.version.list.type.cron}")
-	public void scheduledListTypeUpdate() throws Exception {
+	public void scheduled() throws Exception {
 		if (_log.isInfoEnabled()) {
 			_log.info("Updating version list types");
 		}
@@ -47,25 +47,27 @@ public class VersionListTypeService extends BaseService {
 			releasesJSONArray);
 
 		List<String> dxpMajorVersionsMap = versionsMap.get("dxpMajor");
+
+		_updateListTypeDefinition(
+			_liferayCustomerVersionListTypeDXPMajorERC, "DXP Major Version",
+			dxpMajorVersionsMap);
+
 		List<String> dxpMinorVersionsMap = versionsMap.get("dxpMinor");
-		List<String> portalMajorVersionsMap = versionsMap.get("portalMajor");
-		List<String> portalMinorVersionsMap = versionsMap.get("portalMinor");
+
+		_updateListTypeDefinition(
+			_liferayCustomerVersionListTypeDXPMinorERC, "DXP Minor Version",
+			dxpMinorVersionsMap);
 
 		List<String> dxpMinorVersionsMapAndPortalMajorVersionsMap =
 			new ArrayList<>();
 
 		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
 			dxpMinorVersionsMap);
+
+		List<String> portalMajorVersionsMap = versionsMap.get("portalMajor");
+
 		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
 			portalMajorVersionsMap);
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypeDXPMajorERC, "DXP Major Version",
-			dxpMajorVersionsMap);
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypeDXPMinorERC, "DXP Minor Version",
-			dxpMinorVersionsMap);
 
 		_updateListTypeDefinition(
 			_liferayCustomerVersionListTypeDXPMinorPortalMajorERC,
@@ -75,6 +77,8 @@ public class VersionListTypeService extends BaseService {
 		_updateListTypeDefinition(
 			_liferayCustomerVersionListTypePortalMajorERC,
 			"Portal Major Version", portalMajorVersionsMap);
+
+		List<String> portalMinorVersionsMap = versionsMap.get("portalMinor");
 
 		_updateListTypeDefinition(
 			_liferayCustomerVersionListTypePortalMinorERC,

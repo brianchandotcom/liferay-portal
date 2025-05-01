@@ -262,7 +262,7 @@ public class DocumentDTOConverter
 			DLFileEntryType dlFileEntryType, DLFileVersion dlFileVersion)
 		throws Exception {
 
-		List<DDMFormValues> ddmFormValues = new ArrayList<>();
+		List<DDMFormValues> ddmFormValuesList = new ArrayList<>();
 
 		for (DDMStructure ddmStructure :
 				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
@@ -276,12 +276,12 @@ public class DocumentDTOConverter
 				continue;
 			}
 
-			ddmFormValues.add(
+			ddmFormValuesList.add(
 				_ddmStorageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId()));
 		}
 
-		return ddmFormValues;
+		return ddmFormValuesList;
 	}
 
 	private long _getDDMStructureId(FileEntry fileEntry) throws Exception {

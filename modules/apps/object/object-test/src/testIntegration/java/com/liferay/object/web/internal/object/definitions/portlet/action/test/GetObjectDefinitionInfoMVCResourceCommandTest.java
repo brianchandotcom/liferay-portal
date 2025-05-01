@@ -56,7 +56,7 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetObjectDefinitionInfo() throws Exception {
+	public void testDoServeResource() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 

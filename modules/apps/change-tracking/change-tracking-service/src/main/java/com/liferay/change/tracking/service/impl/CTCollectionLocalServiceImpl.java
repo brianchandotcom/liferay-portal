@@ -596,7 +596,8 @@ public class CTCollectionLocalServiceImpl
 		for (Map.Entry<Long, List<CTEntry>> entry :
 				relateCTEntriesMap.entrySet()) {
 
-			_discardCTEntries(ctCollection, entry.getKey(), entry.getValue());
+			_discardCTEntries(
+				ctCollection, entry.getKey(), entry.getValue(), force);
 		}
 
 		_ctClosureFactory.clearCache(ctCollection.getCtCollectionId());
@@ -1208,7 +1209,7 @@ public class CTCollectionLocalServiceImpl
 
 	private void _discardCTEntries(
 			CTCollection ctCollection, long classNameId,
-			List<CTEntry> ctEntries)
+			List<CTEntry> ctEntries, boolean force)
 		throws PortalException {
 
 		if (ListUtil.isEmpty(ctEntries)) {
@@ -1245,7 +1246,7 @@ public class CTCollectionLocalServiceImpl
 		for (CTEntry ctEntry : ctEntries) {
 			modelClassPKs.add(ctEntry.getModelClassPK());
 
-			_ctEntryLocalService.deleteCTEntry(ctEntry);
+			_ctEntryLocalService.deleteCTEntry(ctEntry, force);
 		}
 
 		try (SafeCloseable safeCloseable =

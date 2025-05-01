@@ -1136,7 +1136,7 @@ public class ClientExtensionProjectConfigurator
 
 		pluginManager.withPlugin(
 			"org.springframework.boot",
-			plugin -> _configureJDKJavaOptions(project));
+			appliedPlugin -> _configureJDKJavaOptions(project));
 	}
 
 	private void _configureTaskCheck(Project project) {

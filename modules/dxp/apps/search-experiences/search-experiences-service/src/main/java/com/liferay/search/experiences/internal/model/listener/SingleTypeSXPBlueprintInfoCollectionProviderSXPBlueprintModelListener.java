@@ -7,6 +7,8 @@ package com.liferay.search.experiences.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.info.collection.provider.AssetEntrySXPBlueprintInfoCollectionProvider;
+import com.liferay.search.experiences.internal.info.collection.provider.BlogsEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.FileEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.JournalArticleSXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -41,7 +44,8 @@ public class
 		extends InfoCollectionProviderSXPBlueprintModelListener {
 
 	public SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-		AssetHelper assetHelper, BundleContext bundleContext,
+		AssetHelper assetHelper, BlogsEntryLocalService blogsEntryLocalService,
+		BundleContext bundleContext,
 		ClassNameLocalService classNameLocalService,
 		CompanyLocalService companyLocalService,
 		DDMStructureService ddmStructureService,
@@ -54,6 +58,7 @@ public class
 		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
 
 		_assetHelper = assetHelper;
+		_blogsEntryLocalService = blogsEntryLocalService;
 		_classNameLocalService = classNameLocalService;
 		_ddmStructureService = ddmStructureService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
@@ -82,10 +87,15 @@ public class
 	protected InfoCollectionProvider<?> createInfoCollectionProvider(
 		SXPBlueprint sxpBlueprint) {
 
-		if (_className.equals(JournalArticle.class.getName())) {
-			return new JournalArticleSXPBlueprintInfoCollectionProvider(
-				_assetHelper, _classNameLocalService, _ddmStructureService,
-				_groupService, _journalArticleService, _searcher,
+		if (_className.equals(AssetEntry.class.getName())) {
+			return new AssetEntrySXPBlueprintInfoCollectionProvider(
+				_assetHelper, _searcher, _searchRequestBuilderFactory,
+				sxpBlueprint);
+		}
+
+		if (_className.equals(BlogsEntry.class.getName())) {
+			return new BlogsEntrySXPBlueprintInfoCollectionProvider(
+				_assetHelper, _blogsEntryLocalService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
 		else if (_className.equals(DLFileEntry.class.getName())) {
@@ -93,6 +103,12 @@ public class
 				_assetHelper, _dlAppLocalService, _dlFileEntryTypeLocalService,
 				_groupService, _searcher, _searchRequestBuilderFactory,
 				sxpBlueprint);
+		}
+		else if (_className.equals(JournalArticle.class.getName())) {
+			return new JournalArticleSXPBlueprintInfoCollectionProvider(
+				_assetHelper, _classNameLocalService, _ddmStructureService,
+				_groupService, _journalArticleService, _searcher,
+				_searchRequestBuilderFactory, sxpBlueprint);
 		}
 
 		return new AssetEntrySXPBlueprintInfoCollectionProvider(
@@ -156,6 +172,7 @@ public class
 	}
 
 	private final AssetHelper _assetHelper;
+	private final BlogsEntryLocalService _blogsEntryLocalService;
 	private String _className = AssetEntry.class.getName();
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDMStructureService _ddmStructureService;

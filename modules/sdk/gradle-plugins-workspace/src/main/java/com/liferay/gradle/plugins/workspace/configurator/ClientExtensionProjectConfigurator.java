@@ -311,8 +311,6 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			createClientExtensionConfigTaskProvider, workspaceExtension);
 
-		_configureSpringBootPlugin(project);
-
 		_configureLiferayRoutes(project, workspaceExtension);
 
 		if (_isLanguageProject(project)) {
@@ -320,6 +318,8 @@ public class ClientExtensionProjectConfigurator
 
 			_configureLanguageProject(project);
 		}
+
+		_configureSpringBootPlugin(project);
 	}
 
 	@Override

@@ -365,6 +365,25 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
+	public void putKeywordMerge(Long toTagId, Long[] fromTagIds)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		for (long fromTagId : fromTagIds) {
+			_assetTagService.mergeTags(fromTagId, toTagId);
+		}
+
+		AssetTag assetTag = _assetTagService.getTag(toTagId);
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(
+			assetTag.getTagId(),
+			new long[] {GroupConstants.ANY_PARENT_GROUP_ID});
+	}
+
+	@Override
 	public void putKeywordSubscribe(Long tagId) throws Exception {
 		AssetTag assetTag = _assetTagLocalService.getAssetTag(tagId);
 

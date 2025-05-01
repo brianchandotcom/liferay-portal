@@ -966,12 +966,13 @@ public class StructuredContentResourceTest
 
 			Assert.assertNotNull(page);
 
-			List<StructuredContent> items =
+			List<StructuredContent> structuredContents =
 				(List<StructuredContent>)page.getItems();
 
-			Assert.assertEquals(items.toString(), 1, items.size());
+			Assert.assertEquals(
+				structuredContents.toString(), 1, structuredContents.size());
 
-			StructuredContent structuredContent = items.get(0);
+			StructuredContent structuredContent = structuredContents.get(0);
 
 			Assert.assertEquals(
 				String.valueOf(journalArticle.getResourcePrimKey()),
@@ -1524,10 +1525,10 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		List<StructuredContent> items =
+		List<StructuredContent> structuredContents =
 			(List<StructuredContent>)page.getItems();
 
-		assertEquals(structuredContent2, items.get(0));
+		assertEquals(structuredContent2, structuredContents.get(0));
 
 		page =
 			structuredContentResource.getContentStructureStructuredContentsPage(
@@ -1537,9 +1538,9 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		items = (List<StructuredContent>)page.getItems();
+		structuredContents = (List<StructuredContent>)page.getItems();
 
-		assertEquals(structuredContent1, items.get(0));
+		assertEquals(structuredContent1, structuredContents.get(0));
 
 		page =
 			structuredContentResource.getContentStructureStructuredContentsPage(
@@ -1549,10 +1550,11 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(2, page.getTotalCount());
 
-		items = (List<StructuredContent>)page.getItems();
+		structuredContents = (List<StructuredContent>)page.getItems();
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(structuredContent1, structuredContent2), items);
+			Arrays.asList(structuredContent1, structuredContent2),
+			structuredContents);
 	}
 
 	private void _testGetContentStructureStructuredContentsPageUnlocalizedWithFilter()
@@ -1582,10 +1584,10 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		List<StructuredContent> items =
+		List<StructuredContent> structuredContents =
 			(List<StructuredContent>)page.getItems();
 
-		assertEquals(structuredContent2, items.get(0));
+		assertEquals(structuredContent2, structuredContents.get(0));
 
 		page =
 			structuredContentResource.getContentStructureStructuredContentsPage(
@@ -1595,9 +1597,9 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		items = (List<StructuredContent>)page.getItems();
+		structuredContents = (List<StructuredContent>)page.getItems();
 
-		assertEquals(structuredContent1, items.get(0));
+		assertEquals(structuredContent1, structuredContents.get(0));
 	}
 
 	private void _testGetSiteStructuredContentsPageByDefaultPriority()

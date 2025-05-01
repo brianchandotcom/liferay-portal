@@ -1141,7 +1141,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(layout.getPlid()), role.getRoleId());
 
-			Set<String> actionIdsSet = new HashSet<>();
+			Set<String> newActionIds = new HashSet<>();
 
 			long actionIds = resourcePermission.getActionIds();
 
@@ -1149,18 +1149,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				long bitwiseValue = resourceAction.getBitwiseValue();
 
 				if ((actionIds & bitwiseValue) == bitwiseValue) {
-					actionIdsSet.add(resourceAction.getActionId());
+					newActionIds.add(resourceAction.getActionId());
 				}
 			}
 
 			String[] actionKeys = pagePermission.getActionKeys();
 
 			Assert.assertEquals(
-				actionIdsSet.toString(), actionKeys.length,
-				actionIdsSet.size());
+				newActionIds.toString(), actionKeys.length,
+				newActionIds.size());
 
 			for (String actionKey : actionKeys) {
-				Assert.assertTrue(actionIdsSet.contains(actionKey));
+				Assert.assertTrue(newActionIds.contains(actionKey));
 			}
 		}
 	}

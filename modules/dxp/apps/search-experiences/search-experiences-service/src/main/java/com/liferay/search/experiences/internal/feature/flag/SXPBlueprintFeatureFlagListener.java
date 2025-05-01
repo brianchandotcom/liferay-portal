@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.internal.feature.flag;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -54,10 +55,11 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 			InfoCollectionProviderSXPBlueprintModelListener
 				infoCollectionProviderSXPBlueprintModelListener =
 					new SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-						_assetHelper, _bundleContext, _classNameLocalService,
-						_companyLocalService, _ddmStructureService,
-						_dlFileEntryTypeLocalService, _dlAppLocalService,
-						_groupService, _journalArticleService, _searcher,
+						_assetHelper, _blogsEntryLocalService, _bundleContext,
+						_classNameLocalService, _companyLocalService,
+						_ddmStructureService, _dlFileEntryTypeLocalService,
+						_dlAppLocalService, _groupService,
+						_journalArticleService, _searcher,
 						_searchRequestBuilderFactory,
 						_sxpBlueprintLocalService);
 
@@ -96,6 +98,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	private BundleContext _bundleContext;
 

@@ -165,11 +165,11 @@ public class DDMFormValuesUtil {
 		for (ContentField contentField : contentFields) {
 			String contentFieldName = contentField.getName();
 
-			List<ContentField> contentFieldsList =
+			List<ContentField> newContentFields =
 				contentFieldsMap.computeIfAbsent(
 					contentFieldName, key -> new ArrayList<>());
 
-			contentFieldsList.add(contentField);
+			newContentFields.add(contentField);
 		}
 
 		return contentFieldsMap;

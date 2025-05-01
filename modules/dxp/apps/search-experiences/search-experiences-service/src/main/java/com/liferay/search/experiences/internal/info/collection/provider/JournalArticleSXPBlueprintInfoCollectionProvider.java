@@ -16,8 +16,6 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -143,15 +141,6 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		}
 
 		return "0";
-	}
-
-	@Override
-	public String getKey() {
-		return StringBundler.concat(
-			JournalArticleSXPBlueprintInfoCollectionProvider.class.getName(),
-			StringPool.UNDERLINE, sxpBlueprint.getCompanyId(),
-			StringPool.UNDERLINE, sxpBlueprint.getExternalReferenceCode(),
-			StringPool.UNDERLINE, JournalArticle.class.getName());
 	}
 
 	@Override

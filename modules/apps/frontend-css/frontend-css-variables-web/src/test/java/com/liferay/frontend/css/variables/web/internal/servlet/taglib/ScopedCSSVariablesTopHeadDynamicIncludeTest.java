@@ -52,26 +52,27 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 		ScopedCSSVariablesProvider scopedCSSVariablesProvider = Mockito.mock(
 			ScopedCSSVariablesProvider.class);
 
-		Collection<ScopedCSSVariables> scopedCSSVariables = Arrays.asList(
-			new ScopedCSSVariables() {
+		Collection<ScopedCSSVariables> scopedCSSVariablesCollection =
+			Arrays.asList(
+				new ScopedCSSVariables() {
 
-				@Override
-				public Map<String, String> getCSSVariables() {
-					return Collections.singletonMap("color", "red");
-				}
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return Collections.singletonMap("color", "red");
+					}
 
-				@Override
-				public String getScope() {
-					return ":root";
-				}
+					@Override
+					public String getScope() {
+						return ":root";
+					}
 
-			});
+				});
 
 		Mockito.when(
 			scopedCSSVariablesProvider.getScopedCSSVariablesCollection(
 				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
-			scopedCSSVariables
+			scopedCSSVariablesCollection
 		);
 
 		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(
@@ -104,76 +105,78 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 		ScopedCSSVariablesProvider scopedCSSVariablesProvider1 = Mockito.mock(
 			ScopedCSSVariablesProvider.class);
 
-		Collection<ScopedCSSVariables> scopedCSSVariables1 = Arrays.asList(
-			new ScopedCSSVariables() {
+		Collection<ScopedCSSVariables> scopedCSSVariablesCollection1 =
+			Arrays.asList(
+				new ScopedCSSVariables() {
 
-				@Override
-				public Map<String, String> getCSSVariables() {
-					return HashMapBuilder.put(
-						"color", "red"
-					).build();
-				}
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return HashMapBuilder.put(
+							"color", "red"
+						).build();
+					}
 
-				@Override
-				public String getScope() {
-					return ":root";
-				}
+					@Override
+					public String getScope() {
+						return ":root";
+					}
 
-			});
+				});
 
 		Mockito.when(
 			scopedCSSVariablesProvider1.getScopedCSSVariablesCollection(
 				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
-			scopedCSSVariables1
+			scopedCSSVariablesCollection1
 		);
 
 		ScopedCSSVariablesProvider scopedCSSVariablesProvider2 = Mockito.mock(
 			ScopedCSSVariablesProvider.class);
 
-		Collection<ScopedCSSVariables> scopedCSSVariables2 = Arrays.asList(
-			new ScopedCSSVariables() {
+		Collection<ScopedCSSVariables> scopedCSSVariablesCollection2 =
+			Arrays.asList(
+				new ScopedCSSVariables() {
 
-				@Override
-				public Map<String, String> getCSSVariables() {
-					return HashMapBuilder.put(
-						"color", "green"
-					).put(
-						"fixed-font", "\"Lucida Console\""
-					).put(
-						"font", "Comic Sans"
-					).build();
-				}
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return HashMapBuilder.put(
+							"color", "green"
+						).put(
+							"fixed-font", "\"Lucida Console\""
+						).put(
+							"font", "Comic Sans"
+						).build();
+					}
 
-				@Override
-				public String getScope() {
-					return "body";
-				}
+					@Override
+					public String getScope() {
+						return "body";
+					}
 
-			},
-			new ScopedCSSVariables() {
+				},
+				new ScopedCSSVariables() {
 
-				@Override
-				public Map<String, String> getCSSVariables() {
-					return HashMapBuilder.put(
-						"color", "yellow"
-					).put(
-						"font", "Arial"
-					).build();
-				}
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return HashMapBuilder.put(
+							"color", "yellow"
+						).put(
+							"font", "Arial"
+						).build();
+					}
 
-				@Override
-				public String getScope() {
-					return ":root";
-				}
+					@Override
+					public String getScope() {
+						return ":root";
+					}
 
-			});
+				});
 
 		Mockito.when(
 			scopedCSSVariablesProvider2.getScopedCSSVariablesCollection(
 				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
-			scopedCSSVariables2
+			scopedCSSVariablesCollection2
 		);
 
 		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(

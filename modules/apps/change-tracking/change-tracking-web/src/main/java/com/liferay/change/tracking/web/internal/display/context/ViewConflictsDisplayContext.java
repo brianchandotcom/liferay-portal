@@ -431,20 +431,26 @@ public class ViewConflictsDisplayContext {
 							"deletion-conflicts-with-modifications-in-" +
 								"another-publication"))) {
 
-					actionsJSONArray.put(
-						_createEditActionJSONObject(
-							_language.format(
-								_httpServletRequest,
-								"you-are-currently-working-on-x.-work-on-" +
-									"production",
-								new Object[] {_ctCollection.getName()}, false),
-							CTConstants.CT_COLLECTION_ID_PRODUCTION,
-							_ctDisplayRendererRegistry.getEditURL(
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						CTConstants.CT_COLLECTION_ID_PRODUCTION,
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+						_httpServletRequest, model, modelClassNameId);
+
+					if (Validator.isNotNull(editURL)) {
+						actionsJSONArray.put(
+							_createEditActionJSONObject(
+								_language.format(
+									_httpServletRequest,
+									"you-are-currently-working-on-x.-work-on-" +
+										"production",
+									new Object[] {_ctCollection.getName()},
+									false),
 								CTConstants.CT_COLLECTION_ID_PRODUCTION,
-								CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-								_httpServletRequest, model, modelClassNameId),
-							_language.get(
-								_httpServletRequest, "edit-in-production")));
+								editURL,
+								_language.get(
+									_httpServletRequest,
+									"edit-in-production")));
+					}
 				}
 
 				actionsJSONArray.put(

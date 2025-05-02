@@ -3717,8 +3717,9 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Object> queryExpressions = new HashMap<>();
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByObjectDefinitionId2(
-					objectDefinition2.getObjectDefinitionId())) {
+				_objectRelationshipPersistence.findByODI2_R_T(
+					objectDefinition2.getObjectDefinitionId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField relationshipObjectField =
 				_objectFieldLocalService.fetchObjectField(

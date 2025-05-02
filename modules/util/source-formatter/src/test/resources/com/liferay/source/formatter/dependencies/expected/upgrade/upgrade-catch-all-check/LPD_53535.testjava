@@ -13,23 +13,21 @@ import org.osgi.service.component.annotations.Reference;
 public class LPD_53535 {
 
 	public void method() {
-		_commerceOrderItemWrapper.getCommerceInventoryBookedQuantityId();
-
 		CommerceInventoryBookedQuantityLocalServiceUtil.
 			deleteCommerceInventoryBookedQuantity(
 				_commerceOrderItem.getCommerceInventoryBookedQuantityId());
+		_commerceOrderItemWrapper.getCommerceInventoryBookedQuantityId();
 	}
 
 	public void method(long bookedQuantityId) {
-		_commerceOrderItemWrapper.setCommerceInventoryBookedQuantityId(bookedQuantityId);
-		_commerceOrderItemLocalService.fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
-			bookedQuantityId);
-		_commerceOrderItemLocalServiceWrapper.fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(bookedQuantityId);
 		CommerceOrderItemLocalServiceUtil.fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(bookedQuantityId);
-		CommerceOrderItemUtil.findByCommerceInventoryBookedQuantityId(bookedQuantityId);
-		CommerceOrderItemUtil.fetchByCommerceInventoryBookedQuantityId(bookedQuantityId);
-		CommerceOrderItemUtil.removeByCommerceInventoryBookedQuantityId(bookedQuantityId);
 		CommerceOrderItemUtil.countByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.fetchByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.findByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		CommerceOrderItemUtil.removeByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		_commerceOrderItemLocalService.fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		_commerceOrderItemLocalServiceWrapper.fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(bookedQuantityId);
+		_commerceOrderItemWrapper.setCommerceInventoryBookedQuantityId(bookedQuantityId);
 	}
 
 	private CommerceOrderItem _commerceOrderItem;

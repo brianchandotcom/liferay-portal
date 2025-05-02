@@ -130,9 +130,9 @@ definition {
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8539 | Test Summary: Create multiple custom asset report"
 	@priority = 5
 	test CanCreateMultipleCustomAssetReport {
-		property analytics.cloud.acceptance = "true";
 		property portal.acceptance = "true";
 		property portal.release = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

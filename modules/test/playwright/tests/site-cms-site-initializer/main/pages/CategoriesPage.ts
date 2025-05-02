@@ -14,6 +14,7 @@ export class CategoriesPage {
 	readonly permissionsFrame: FrameLocator;
 
 	private readonly breadcrumbBar: Locator;
+	private readonly closePermissionsModalButton: Locator;
 	private readonly createNewCategoryButton: Locator;
 	private readonly deleteConfirmationModal: Locator;
 
@@ -26,6 +27,9 @@ export class CategoriesPage {
 
 		this.breadcrumbBar = this.page.locator('.breadcrumb-bar');
 		this.createNewCategoryButton = this.page.getByTitle('New Category');
+		this.closePermissionsModalButton = this.page.locator(
+			'//button[@aria-label="close"]'
+		);
 		this.deleteConfirmationModal = this.page.locator('.modal-content', {
 			hasText: 'Delete',
 		});
@@ -76,5 +80,26 @@ export class CategoriesPage {
 			: await this.deleteConfirmationModal
 					.getByRole('button', {name: 'Cancel'})
 					.click();
+	}
+
+	async assertPermissions(
+		permissions: {enabled: boolean; locator: string}[]
+	) {
+		await this.permissionsFrame.locator(permissions[0].locator).waitFor();
+
+		for (const permission of permissions) {
+			const permissionCheckbox = this.permissionsFrame.locator(
+				permission.locator
+			);
+
+			if (permission.enabled) {
+				await expect(permissionCheckbox).toBeChecked();
+			}
+			else {
+				await expect(permissionCheckbox).not.toBeChecked();
+			}
+		}
+
+		await this.closePermissionsModalButton.click();
 	}
 }

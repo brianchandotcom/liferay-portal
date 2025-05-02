@@ -88,6 +88,57 @@ test.describe('Category tests that focus on creation', () => {
 			});
 		}
 	);
+
+	test(
+		'Create a Category with non-default permissions',
+		{tag: '@LPD-54328'},
+		async ({categoriesPage, editCategoryPage, page}) => {
+			await categoriesPage.goto(vocabularyId, vocabularyName);
+
+			await categoriesPage.clickCreateNewCategoryButton();
+
+			const categoryName: string = getRandomString();
+
+			await editCategoryPage.fillName(categoryName);
+
+			await editCategoryPage.setViewableByPermissions('Guest');
+			await editCategoryPage.assertDefaultViewableByPermissions('Guest');
+
+			await editCategoryPage.setViewableByPermissions('Site Member');
+			await editCategoryPage.assertDefaultViewableByPermissions(
+				'Site Member'
+			);
+
+			await editCategoryPage.setViewableByPermissions('Owner');
+			await editCategoryPage.assertDefaultViewableByPermissions('Owner');
+
+			await editCategoryPage.setViewableByPermissions('Guest');
+
+			await editCategoryPage.tickPermissionCheckbox('Guest', 'Delete');
+
+			await editCategoryPage.clickSave();
+
+			await categoriesPage.assertBreadcrumbItemText(0, 'Categorization');
+
+			await expect(categoriesPage.getItem(categoryName)).toBeVisible();
+
+			await categoriesPage.execItemAction({
+				action: 'Permissions',
+				filter: categoryName,
+			});
+
+			await expect(
+				page.getByRole('heading', {name: 'Permissions'})
+			).toBeVisible();
+
+			await categoriesPage.assertPermissions([
+				{enabled: true, locator: '#guest_ACTION_DELETE'},
+				{enabled: false, locator: '#guest_ACTION_UPDATE'},
+				{enabled: true, locator: '#guest_ACTION_VIEW'},
+				{enabled: false, locator: '#site-member_ACTION_DELETE'},
+			]);
+		}
+	);
 });
 
 test.describe("Category tests that don't focus on creation", () => {

@@ -85,7 +85,6 @@ exports[`ReactFieldBase does not render the label if showLabel is false 1`] = `
 exports[`ReactFieldBase renders the FieldBase with contentRenderer 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
   >
     <div>
@@ -147,7 +146,6 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
 exports[`ReactFieldBase renders the FieldBase with id 1`] = `
 <div>
   <div
-    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
   >
     <input
@@ -304,7 +302,6 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
 exports[`ReactFieldBase renders the default markup 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
   >
     <input

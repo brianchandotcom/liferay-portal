@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -100,6 +102,13 @@ public class ValidationsObjectDefinitionsScreenNavigationEntryTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(

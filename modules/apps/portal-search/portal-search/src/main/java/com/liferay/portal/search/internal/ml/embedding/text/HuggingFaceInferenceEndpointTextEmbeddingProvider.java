@@ -7,9 +7,11 @@ package com.liferay.portal.search.internal.ml.embedding.text;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -48,17 +50,29 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 		Map<String, Object> attributes, String text) {
 
 		try {
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				HttpUtil.URLtoString(_getOptions(attributes, text)));
+			String responseJSON = HttpUtil.URLtoString(
+				_getOptions(attributes, text));
 
-			if (responseJSONObject.has("embeddings")) {
-				List<Double> list = JSONUtil.toDoubleList(
-					responseJSONObject.getJSONArray("embeddings"));
-
-				return list.toArray(new Double[0]);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response: " + responseJSON);
 			}
 
-			throw new IllegalArgumentException(responseJSONObject.toString());
+			if (!JSONUtil.isJSONArray(responseJSON)) {
+				throw new IllegalArgumentException(responseJSON);
+			}
+
+			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray(
+				responseJSON);
+
+			JSONArray jsonArray2 = jsonArray1.getJSONArray(0);
+
+			if (jsonArray2 == null) {
+				throw new IllegalArgumentException(responseJSON);
+			}
+
+			List<Double> list = JSONUtil.toDoubleList(jsonArray2);
+
+			return list.toArray(new Double[0]);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -86,5 +100,8 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 
 		return options;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HuggingFaceInferenceEndpointTextEmbeddingProvider.class);
 
 }

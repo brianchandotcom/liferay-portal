@@ -9,7 +9,7 @@ const sidebarId = `${fragmentEntryLinkNamespace}sidebar`;
 const sidebarOpenKey = `${fragmentEntryLinkNamespace}sidebarOpen`;
 
 const sidebar = fragmentElement.querySelector('.sidebar-container');
-const sidebarContainer = fragmentElement.querySelector('.sidebar-fragment');
+const sidebarContainer = fragmentElement.querySelector('.sidebar-layout');
 const sidebarTrigger = fragmentElement.querySelector('.sidebar-toggle');
 
 if (sidebarTrigger) {

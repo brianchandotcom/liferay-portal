@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
+import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -223,22 +223,21 @@ const AddModal = ({
 
 					{Liferay.FeatureFlags['LPS-129412'] && (
 						<div className="form-group">
-							<ClayCheckbox
+							<ClayToggle
 								aria-label={Liferay.Language.get(
-									'create-collection-provider'
+									'enable-collection-provider'
 								)}
 								checked={isCollectionProvider}
 								label={
 									<>
 										{Liferay.Language.get(
-											'create-collection-provider'
+											'enable-collection-provider'
 										)}
 
 										<ClayTooltipProvider>
 											<span
-												data-tooltip-align="bottom-left"
 												title={Liferay.Language.get(
-													'create-collection-provider-help'
+													'enable-collection-provider-help'
 												)}
 											>
 												<ClayIcon

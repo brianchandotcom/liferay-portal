@@ -97,15 +97,19 @@ public class ViewSXPBlueprintsDisplayContext {
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "edit"), "get",
 				"get", null),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/set-as-collection-provider?collectionProvider=true", null,
-				"enable-as-a-collection-provider",
-				LanguageUtil.get(_sxpRequestHelper.getRequest(),
+				getAPIURL() +
+					"/{id}/set-as-collection-provider?collectionProvider=true",
+				"book", "enable-as-a-collection-provider",
+				LanguageUtil.get(
+					_sxpRequestHelper.getRequest(),
 					"enable-as-a-collection-provider"),
 				"post", "enable", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/set-as-collection-provider?collectionProvider=false", null,
-				"disable-as-a-collection-provider",
-				LanguageUtil.get(_sxpRequestHelper.getRequest(),
+				getAPIURL() +
+					"/{id}/set-as-collection-provider?collectionProvider=false",
+				"book", "disable-as-a-collection-provider",
+				LanguageUtil.get(
+					_sxpRequestHelper.getRequest(),
 					"disable-as-a-collection-provider"),
 				"post", "disable", "async"),
 			new FDSActionDropdownItem(

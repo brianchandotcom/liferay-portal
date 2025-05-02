@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -40,6 +41,9 @@ import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.util.SXPD
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -291,6 +295,11 @@ public class SXPBlueprintDTOConverter
 				}
 			}
 
+			if (!_collectionProviderTypes.contains(className)) {
+				typeName = ResourceActionsUtil.getModelResource(
+					locale, AssetEntry.class.getName());
+			}
+
 			return typeName;
 		}
 		catch (Exception exception) {
@@ -374,6 +383,13 @@ public class SXPBlueprintDTOConverter
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	private final List<String> _collectionProviderTypes = new ArrayList<>(
+		Arrays.asList(
+			"com.liferay.blogs.model.BlogsEntry",
+			"com.liferay.document.library.kernel.model.DLFileEntry",
+			"com.liferay.journal.model.JournalArticle",
+			"com.liferay.knowledge.base.model.KBArticle"));
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

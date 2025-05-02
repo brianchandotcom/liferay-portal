@@ -9,8 +9,8 @@ const CollectionProviderTableCell = ({itemData}) => {
 	return (
 		<span>
 			{!itemData.configuration.generalConfiguration.collectionProvider
-				? Liferay.Language.get('no')
-				: Liferay.Language.get('yes')}
+				? Liferay.Language.get('disabled')
+				: Liferay.Language.get('enabled')}
 		</span>
 	);
 };

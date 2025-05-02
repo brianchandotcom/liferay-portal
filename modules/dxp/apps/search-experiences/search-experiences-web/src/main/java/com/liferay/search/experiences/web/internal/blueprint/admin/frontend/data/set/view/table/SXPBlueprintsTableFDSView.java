@@ -42,8 +42,6 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"description", "description"
-		).add(
-			"id", "id"
 		);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-129412")) {
@@ -59,6 +57,8 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 		}
 
 		return fdsTableSchemaBuilder.add(
+			"id", "id"
+		).add(
 			"userName", "author"
 		).add(
 			"createDate", "created",

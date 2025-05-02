@@ -4,12 +4,14 @@
  */
 
 import ClayForm, {
-	ClayCheckbox,
 	ClayRadio,
 	ClayRadioGroup,
 	ClaySelect,
+	ClayToggle,
 } from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React, {useContext} from 'react';
 
@@ -130,27 +132,6 @@ function ConfigurationTab({
 	return (
 		<ClayLayout.ContainerFluid className="layout-section-main" size="xl">
 			<div className="layout-section-main-shift">
-				{Liferay.FeatureFlags['LPS-129412'] && (
-					<div className="c-mb-4 sheet sheet-lg">
-						<h2 className="sheet-title">
-							{Liferay.Language.get('general-settings')}
-						</h2>
-
-						<ClayCheckbox
-							aria-label={Liferay.Language.get(
-								'enable-as-a-collection-provider'
-							)}
-							checked={
-								frameworkConfig.collectionProvider || false
-							}
-							label={Liferay.Language.get(
-								'enable-as-a-collection-provider'
-							)}
-							onChange={_handleOnCollectionProviderChange}
-						/>
-					</div>
-				)}
-
 				<div className="sheet sheet-lg">
 					<h2 className="sheet-title">
 						{Liferay.Language.get('configuration')}
@@ -165,6 +146,40 @@ function ConfigurationTab({
 
 						<LearnMessage resourceKey="search-blueprint-configuration" />
 					</div>
+
+					{Liferay.FeatureFlags['LPS-129412'] && (
+						<div className="c-mb-4">
+							<ClayToggle
+								aria-label={Liferay.Language.get(
+									'enable-collection-provider'
+								)}
+								label={
+									<>
+										{Liferay.Language.get(
+											'enable-collection-provider'
+										)}
+
+										<ClayTooltipProvider>
+											<span
+												title={Liferay.Language.get(
+													'enable-collection-provider-help'
+												)}
+											>
+												<ClayIcon
+													className="c-ml-2 text-secondary"
+													symbol="question-circle-full"
+												/>
+											</span>
+										</ClayTooltipProvider>
+									</>
+								}
+								onToggle={_handleOnCollectionProviderChange}
+								toggled={
+									frameworkConfig.collectionProvider || false
+								}
+							/>
+						</div>
+					)}
 
 					<ClayForm.Group>
 						<label>

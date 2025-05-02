@@ -7110,7 +7110,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/tlddoc.jar</file-name>
-				<version>1.3</version>
+				<version>1.3.LIFERAY-PATCHED-1</version>
 				<project-name>Tag Library Documentation Generator</project-name>
 				<project-url>https://taglibrarydoc.dev.java.net</project-url>
 				<licenses>

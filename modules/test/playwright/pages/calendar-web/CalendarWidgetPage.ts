@@ -20,6 +20,7 @@ export class CalendarWidgetPage {
 	readonly configurationMenuItem: Locator;
 	readonly endDate: Locator;
 	readonly endTime: Locator;
+	readonly hideSidebarIcon: Locator;
 	readonly invitations: Locator;
 	readonly inviteResource: Locator;
 	readonly manageCalendarsMenuItem: Locator;
@@ -40,8 +41,7 @@ export class CalendarWidgetPage {
 	readonly successAlert: Locator;
 	readonly timeZoneDropdown: Locator;
 	readonly title: Locator;
-	readonly toggleSideBarButton: Locator;
-	readonly untoggleSideBarButton: Locator;
+	readonly unhideSidebarIcon: Locator;
 	readonly useGlobalTimeZoneCheckBox: Locator;
 
 	constructor(page: Page) {
@@ -76,6 +76,9 @@ export class CalendarWidgetPage {
 			.frameLocator('iframe')
 			.locator('input[type="time"]')
 			.last();
+		this.hideSidebarIcon = page.locator(
+			'.calendar-portlet-column-toggler .lexicon-icon-caret-left'
+		);
 		this.invitations = page
 			.frameLocator('iframe')
 			.getByText('Invitations', {exact: true});
@@ -130,10 +133,7 @@ export class CalendarWidgetPage {
 		this.title = page
 			.frameLocator('iframe')
 			.getByLabel('Title', {exact: true});
-		this.toggleSideBarButton = page.locator(
-			'.calendar-portlet-column-toggler .lexicon-icon-caret-left'
-		);
-		this.untoggleSideBarButton = page.locator(
+		this.unhideSidebarIcon = page.locator(
 			'.calendar-portlet-column-toggler .lexicon-icon-caret-right'
 		);
 		this.useGlobalTimeZoneCheckBox = page
@@ -186,6 +186,12 @@ export class CalendarWidgetPage {
 			.frameLocator('iframe')
 			.getByRole('option', {name: userName})
 			.click();
+	}
+
+	async hideSidebar() {
+		if (await this.hideSidebarIcon.isVisible()) {
+			await this.hideSidebarIcon.click();
+		}
 	}
 
 	async openInvitations() {
@@ -288,5 +294,11 @@ export class CalendarWidgetPage {
 
 		await this.saveConfigurationButton.click();
 		await this.closeConfigurationButton.click();
+	}
+
+	async unhideSidebar() {
+		if (await this.unhideSidebarIcon.isVisible()) {
+			await this.unhideSidebarIcon.click();
+		}
 	}
 }

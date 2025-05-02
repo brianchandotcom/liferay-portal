@@ -52,10 +52,16 @@
 		}
 
 		.sidebar-container {
-			left: calc(-1 * var(--sidebar-fragment-width));
+			height: 100%;
+			left: calc(-1 * var(--sidebar-layout-width));
 			position: absolute;
-			width: var(--sidebar-fragment-width);
+			width: var(--sidebar-layout-width);
 			z-index: 989;
+		}
+
+		.sidebar {
+			height: 100%;
+			max-height: none;
 		}
 	}
 

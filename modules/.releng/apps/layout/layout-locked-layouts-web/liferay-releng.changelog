@@ -117,3 +117,8 @@ e1417c4a90c6ce796777385fdcb36cdc0a0b9dcb^..f6a6dad7146b42dad20ce55c8ad0ea5964fca
 # Bundle Version 1.0.25
 #
 f6a6dad7146b42dad20ce55c8ad0ea5964fcafe7^..369b64b8cbbd0dd7b0584f55ea45b317e9f1b883=LPD-51373
+
+#
+# Bundle Version 1.0.26
+#
+369b64b8cbbd0dd7b0584f55ea45b317e9f1b883^..a94cf40eb7e2493c21a9782a2cd24f2e3360d4df=LPD-50555 LPD-51570 LPD-51750 LPD-54411

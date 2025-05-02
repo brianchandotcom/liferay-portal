@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context.util;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -402,7 +403,8 @@ public class ObjectCodeEditorUtil {
 		for (ObjectRelationship objectRelationship :
 				ObjectRelationshipLocalServiceUtil.
 					getObjectRelationshipsByObjectDefinitionId2(
-						objectDefinitionId)) {
+						objectDefinitionId,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectDefinition objectDefinition =
 				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(

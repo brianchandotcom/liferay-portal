@@ -52,8 +52,10 @@ public class FunctionCaptchaImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_setUpFunctionCaptchaImplConfiguration();
-		_setUpHttpServletRequest();
+		_httpServletRequest = _mockHttpServletRequest();
+
+		_setUpFunctionCaptchaImplConfiguration(_httpServletRequest);
+
 		_setUpPortalCatapult();
 		_setUpUserLocalService();
 
@@ -64,6 +66,19 @@ public class FunctionCaptchaImplTest {
 	public void testValidateChallenge() throws Exception {
 		_testValidateChallenge(false);
 		_testValidateChallenge(true);
+	}
+
+	private static HttpServletRequest _mockHttpServletRequest() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getRemoteAddr()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		return httpServletRequest;
 	}
 
 	private static void _setUpFunctionCaptchaImpl() {
@@ -78,7 +93,9 @@ public class FunctionCaptchaImplTest {
 			_functionCaptchaImpl, "_userLocalService", _userLocalService);
 	}
 
-	private static void _setUpFunctionCaptchaImplConfiguration() {
+	private static void _setUpFunctionCaptchaImplConfiguration(
+		HttpServletRequest httpServletRequest) {
+
 		_functionCaptchaImplConfiguration = Mockito.mock(
 			FunctionCaptchaImplConfiguration.class);
 
@@ -106,20 +123,10 @@ public class FunctionCaptchaImplTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
-	}
-
-	private static void _setUpHttpServletRequest() {
-		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
-
-		Mockito.when(
-			_httpServletRequest.getRemoteAddr()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
 
 		Mockito.when(
 			ParamUtil.getString(
-				_httpServletRequest,
+				httpServletRequest,
 				_functionCaptchaImplConfiguration.
 					captchaResponseParameterName())
 		).thenReturn(

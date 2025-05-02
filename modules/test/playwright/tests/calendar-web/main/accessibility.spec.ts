@@ -84,9 +84,7 @@ test.describe('Event creation pop-up', () => {
 
 		const eventTitle = page.getByTitle('e.g. Meeting');
 
-		if (await calendarWidgetPage.toggleSideBarButton.isVisible()) {
-			await calendarWidgetPage.toggleSideBarButton.click();
-		}
+		await calendarWidgetPage.hideSidebar();
 
 		await expect(eventTitle).toHaveAttribute('aria-haspopup', 'dialog');
 		await expect(eventTitle).toHaveAttribute('aria-expanded', 'false');

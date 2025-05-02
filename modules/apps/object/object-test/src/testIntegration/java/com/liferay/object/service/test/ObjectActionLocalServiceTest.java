@@ -1198,6 +1198,13 @@ public class ObjectActionLocalServiceTest {
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
+						"name", "paymentStatus"
+					).put(
+						"value", CommerceOrderPaymentConstants.STATUS_PENDING
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
 						"name", "shippingAmount"
 					).put(
 						"value", "10"

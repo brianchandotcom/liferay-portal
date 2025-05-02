@@ -190,6 +190,7 @@ export class CalendarWidgetPage {
 
 	async hideSidebar() {
 		if (await this.hideSidebarIcon.isVisible()) {
+			await this.page.waitForLoadState('networkidle');
 			await this.hideSidebarIcon.click();
 		}
 	}
@@ -298,6 +299,7 @@ export class CalendarWidgetPage {
 
 	async unhideSidebar() {
 		if (await this.unhideSidebarIcon.isVisible()) {
+			await this.page.waitForLoadState('networkidle');
 			await this.unhideSidebarIcon.click();
 		}
 	}

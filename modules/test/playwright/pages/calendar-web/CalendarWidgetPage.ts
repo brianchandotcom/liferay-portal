@@ -274,7 +274,7 @@ export class CalendarWidgetPage {
 	}
 
 	async openCalendarGroupActionsDropdownMenu(groupName: string) {
-		await this.page.getByLabel(`Manage Calendar  ${groupName}`).click();
+		await this.page.getByLabel(`Manage Calendar ${groupName}`).click();
 	}
 
 	async setCalendarWidgetConfiguration(

@@ -445,6 +445,10 @@ public class KnowledgeBaseUtil {
 	}
 
 	public static String[] splitKeywords(String keywords) {
+		if (Validator.isNull(keywords)) {
+			return new String[0];
+		}
+
 		Set<String> keywordsSet = new LinkedHashSet<>();
 
 		StringBundler sb = new StringBundler();

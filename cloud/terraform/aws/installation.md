@@ -4,7 +4,7 @@ Use this specialized Liferay AWS Helm chart with these instructions:
 
 `oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws`
 
-## Prerequisites
+## Install the Prerequisites
 
 1. Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and configure with [IAM credentials](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
 
@@ -16,7 +16,7 @@ Use this specialized Liferay AWS Helm chart with these instructions:
 
 1. Install [kubectl CLI](https://kubernetes.io/docs/tasks/tools/).
 
-## AWS
+## Log Into AWS
 
 1. Export your profile for AWS SDK and its tools.
 
@@ -30,7 +30,7 @@ Use this specialized Liferay AWS Helm chart with these instructions:
    aws sso login
    ```
 
-## Installation
+## Clone the Terraform Files
 
 1. Clone the terraform files from the repository:
 
@@ -48,7 +48,7 @@ Once the repository has been cloned, you have two choices:
 
 1. Use an existing EKS cluster. If you have an existing EKS cluster, follow [Create dependent services](#create-dependent-services).
 
-## Create a new EKS cluster
+## Create a New EKS Cluster
 
 1. Navigate to the `eks` directory.
 
@@ -72,7 +72,7 @@ Once the repository has been cloned, you have two choices:
    terraform output > ../dependencies/terraform.tfvars
    ```
 
-## Create Dependent Services
+## Create the Dependent Services
 
 1. Navigate to the `dependencies` directory.
 
@@ -90,7 +90,7 @@ Once the repository has been cloned, you have two choices:
 
    You are prompted to apply the changes.
 
-## Helm Setup
+## Set Up Helm
 
 To use Helm you must use the `aws` CLI to set up `kubectl`.
 
@@ -106,7 +106,7 @@ To use Helm you must use the `aws` CLI to set up `kubectl`.
 
 1. Test that `kubectl cluster-info` works.
 
-## Helm Chart Deployment
+## Deploy the Helm Chart
 
 The chart expects a Kubernetes secret called `managed-service-details` in the deployment namespace containing the following data:
 

@@ -16,6 +16,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -29,6 +31,7 @@ import com.liferay.search.experiences.internal.info.collection.provider.AssetEnt
 import com.liferay.search.experiences.internal.info.collection.provider.BlogsEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.FileEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.JournalArticleSXPBlueprintInfoCollectionProvider;
+import com.liferay.search.experiences.internal.info.collection.provider.KBArticleSXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
@@ -51,7 +54,8 @@ public class
 		DDMStructureService ddmStructureService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLAppLocalService dlAppLocalService, GroupService groupService,
-		JournalArticleService journalArticleService, Searcher searcher,
+		JournalArticleService journalArticleService,
+		KBArticleLocalService kbArticleLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		SXPBlueprintLocalService sxpBlueprintLocalService) {
 
@@ -65,6 +69,7 @@ public class
 		_dlAppLocalService = dlAppLocalService;
 		_groupService = groupService;
 		_journalArticleService = journalArticleService;
+		_kbArticleLocalService = kbArticleLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
@@ -108,6 +113,11 @@ public class
 			return new JournalArticleSXPBlueprintInfoCollectionProvider(
 				_assetHelper, _classNameLocalService, _ddmStructureService,
 				_groupService, _journalArticleService, _searcher,
+				_searchRequestBuilderFactory, sxpBlueprint);
+		}
+		else if (_className.equals(KBArticle.class.getName())) {
+			return new KBArticleSXPBlueprintInfoCollectionProvider(
+				_assetHelper, _kbArticleLocalService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
 
@@ -180,6 +190,7 @@ public class
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final GroupService _groupService;
 	private final JournalArticleService _journalArticleService;
+	private final KBArticleLocalService _kbArticleLocalService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private SXPBlueprint _sxpBlueprint;

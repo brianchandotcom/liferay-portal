@@ -105,6 +105,18 @@ export class NavigationMenusPage {
 		await this.saveButton.click();
 	}
 
+	async addPageItem(pageNames: string[]) {
+		await this.openAddPageModal();
+
+		for (const pageName of pageNames) {
+			await this.pagesModal.getByText(pageName, {exact: true}).click();
+		}
+
+		await this.selectButton.click();
+
+		await waitForAlert(this.page, 'Success');
+	}
+
 	async addSubmenuItem(submenuName: string) {
 		await this.addMenuItemButton.click();
 
@@ -127,19 +139,26 @@ export class NavigationMenusPage {
 		await this.page.waitForSelector('iframe', {state: 'detached'});
 	}
 
-	async addURLItem(urlName: string, submenuItemName: string) {
-		await this.page
-			.locator('p.card-title')
-			.filter({hasText: submenuItemName})
-			.hover();
+	async addURLItem(urlName: string, submenuItemName?: string) {
+		if (submenuItemName) {
+			await this.page
+				.locator('p.card-title')
+				.filter({hasText: submenuItemName})
+				.hover();
 
-		await this.page
-			.getByLabel('View ' + submenuItemName + ' Options')
-			.click();
+			await this.page
+				.getByLabel('View ' + submenuItemName + ' Options')
+				.click();
 
-		await (await this.getMenuItem('Add Child')).hover();
+			await (await this.getMenuItem('Add Child')).hover();
 
-		await this.page.getByText('URL').nth(3).click();
+			await this.page.getByText('URL').nth(3).click();
+		}
+		else {
+			await this.addMenuItemButton.click();
+
+			await (await this.getMenuItem('URL')).click();
+		}
 
 		// Wait until the modal is fully loaded
 
@@ -248,5 +267,29 @@ export class NavigationMenusPage {
 		});
 
 		await this.vocabulariesModal.getByPlaceholder('Search').waitFor();
+	}
+
+	async translateName(itemName: string, useCustomName = false) {
+		await this.page.getByText(itemName).click();
+
+		if (useCustomName) {
+			await this.page.getByText('Use Custom Name').click();
+		}
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.locator("a[data-languageId='es_ES']"),
+			trigger: this.page.getByText('en-US', {exact: true}),
+		});
+
+		await this.page
+			.locator(
+				'input[id="_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet_name"]'
+			)
+			.fill(`${itemName} Spanish`);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(this.page);
 	}
 }

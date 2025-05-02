@@ -159,6 +159,7 @@ test('cannot save a workflow definition that has a java action when the script m
 test('can save a workflow definition that has a customer extension action after changing from an UpdateStatus to a customer extension action', async ({
 	apiHelpers,
 	diagramViewPage,
+	nodePropertiesSidebarPage,
 	page,
 	processBuilderPage,
 }) => {
@@ -177,6 +178,8 @@ test('can save a workflow definition that has a customer extension action after 
 	);
 
 	await diagramViewPage.clickNode('Review');
+
+	await nodePropertiesSidebarPage.editActionButton.click();
 
 	await page
 		.locator('#type')

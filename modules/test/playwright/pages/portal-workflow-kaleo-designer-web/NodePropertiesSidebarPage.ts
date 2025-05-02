@@ -19,6 +19,7 @@ export class NodePropertiesSidebarPage {
 	readonly deleteNotificationsButton: Locator;
 	readonly diagramViewPage: DiagramViewPage;
 	readonly editAssignmentButton: Locator;
+	readonly editActionButton: Locator;
 	readonly nodeLabelInput: Locator;
 	readonly notificationPage: NotificationSectionPage;
 	readonly page: Page;
@@ -50,6 +51,10 @@ export class NodePropertiesSidebarPage {
 		this.editAssignmentButton = page
 			.getByRole('tablist')
 			.filter({hasText: 'Assignments'})
+			.locator('a');
+		this.editActionButton = page
+			.getByRole('tablist')
+			.filter({hasText: 'Actions'})
 			.locator('a');
 		this.nodeLabelInput = page.locator('#workflowDefinitionBaseNodeLabel');
 		this.notificationPage = new NotificationSectionPage(page);

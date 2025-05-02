@@ -39,6 +39,31 @@ export class StagingPage {
 		}
 	}
 
+	async disableLocalStaging() {
+		await this.page.getByTestId('stagingType_local').check();
+
+		this.page.once('dialog', async (dialog) => {
+			expect(dialog.message()).toContain(
+				'Are you sure you want to activate local staging for'
+			);
+			await dialog.accept().catch();
+		});
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			this.page.getByText('Initial Publish Process').first()
+		).toBeVisible();
+
+		for (const processResult of await this.page
+			.getByTestId('processResult')
+			.all()) {
+			await expect(processResult.getByText('Successful')).toBeVisible({
+				timeout: 60 * 1000,
+			});
+		}
+	}
+
 	async addTemplate(templateName: string) {
 		await this.page.waitForLoadState('domcontentloaded');
 		await this.page.getByRole('link', {exact: true, name: 'New'}).click();

@@ -16,7 +16,7 @@ type MultiSelectProps<T> = {
 	label?: string;
 	localized?: boolean;
 	multiselectKey: string;
-	onChange: (values: T) => void;
+	onChange?: (values: T) => void;
 	onItemsChange: (values: T) => void;
 	placeholder?: string;
 	required?: boolean;

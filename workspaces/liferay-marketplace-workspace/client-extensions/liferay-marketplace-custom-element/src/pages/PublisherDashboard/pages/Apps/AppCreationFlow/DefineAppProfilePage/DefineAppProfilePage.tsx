@@ -4,7 +4,6 @@
  */
 
 import {filesize} from 'filesize';
-import {useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import {UploadedFile} from '../../../../../../components/FileList/FileList';
@@ -172,19 +171,6 @@ export function DefineAppProfilePage({
 		onClickContinue();
 	};
 
-	const [multiSelectText, setMultiSelectText] = useState({
-		areas: '',
-		categories: '',
-		tags: '',
-	});
-
-	const onChangeMultiSelect = (event: any) => {
-		setMultiSelectText((prevState) => ({
-			...prevState,
-			[event.target.name]: event.target.value,
-		}));
-	};
-
 	const getFilteredItems = (
 		selectedItems: {[key: string]: string}[],
 		defaultItems: Categories[]
@@ -305,22 +291,19 @@ export function DefineAppProfilePage({
 								defaultSourceItems?.areas
 							).length
 						}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
-								target: {
-									name: 'areas',
-									value,
-								},
-							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
+						onItemsChange={(values: {[key: string]: string}[]) => {
+							const filteredValue = values.filter((value) =>
+								defaultSourceItems?.areas.includes(
+									value as Categories
+								)
+							);
 							dispatch({
 								payload: {
-									value,
+									value: filteredValue,
 								},
 								type: ActionTypes.UPDATE_APP_AREAS,
-							})
-						}
+							});
+						}}
 						placeholder={i18n.translate('select-areas')}
 						required
 						selectedItems={appAreas}
@@ -328,7 +311,6 @@ export function DefineAppProfilePage({
 							appAreas,
 							defaultSourceItems?.areas
 						)}
-						value={multiSelectText?.areas}
 					/>
 
 					<MultiSelect
@@ -338,22 +320,19 @@ export function DefineAppProfilePage({
 							getFilteredItems(appTags, defaultSourceItems?.tags)
 								.length
 						}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
-								target: {
-									name: 'tags',
-									value,
-								},
-							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
+						onItemsChange={(values: {[key: string]: string}[]) => {
+							const filteredValue = values.filter((value) =>
+								defaultSourceItems?.tags.includes(
+									value as Categories
+								)
+							);
 							dispatch({
 								payload: {
-									value,
+									value: filteredValue,
 								},
 								type: ActionTypes.UPDATE_APP_TAGS,
-							})
-						}
+							});
+						}}
 						placeholder={i18n.translate('select-tags')}
 						required
 						selectedItems={appTags}
@@ -361,7 +340,6 @@ export function DefineAppProfilePage({
 							appTags,
 							defaultSourceItems?.tags
 						)}
-						value={multiSelectText?.tags}
 					/>
 				</Section>
 			</div>

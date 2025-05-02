@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.internal.ml.embedding.text.util.ConfigurationValidationUtil;
 import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
@@ -70,37 +69,30 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 				responseJSON = HttpUtil.URLtoString(options);
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response: " + responseJSON);
+			}
+
 			if (!JSONUtil.isJSONArray(responseJSON)) {
 				throw new IllegalArgumentException(responseJSON);
 			}
-			else if (!_isValidResponse(responseJSON)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Invalid response: " + responseJSON);
-				}
 
-				throw new IllegalArgumentException(
-					"The selected model is not valid for creating text " +
-						"embedding");
+			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray(
+				responseJSON);
+
+			JSONArray jsonArray2 = jsonArray1.getJSONArray(0);
+
+			if (jsonArray2 == null) {
+				throw new IllegalArgumentException(responseJSON);
 			}
 
-			List<Double> list = JSONUtil.toDoubleList(
-				_getJSONArray(JSONFactoryUtil.createJSONArray(responseJSON)));
+			List<Double> list = JSONUtil.toDoubleList(jsonArray2);
 
 			return list.toArray(new Double[0]);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
-	}
-
-	private JSONArray _getJSONArray(JSONArray jsonArray1) {
-		JSONArray jsonArray2 = jsonArray1.getJSONArray(0);
-
-		if (jsonArray2 != null) {
-			return _getJSONArray(jsonArray2);
-		}
-
-		return jsonArray1;
 	}
 
 	private Http.Options _getOptions(
@@ -125,14 +117,6 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 		options.setPost(true);
 
 		return options;
-	}
-
-	private boolean _isValidResponse(String s) {
-		if (StringUtil.startsWith(s, "[[") && StringUtil.endsWith(s, "]]")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

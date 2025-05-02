@@ -11,6 +11,7 @@ import {ModalRecurrencePage} from './ModalRecurrencePage';
 type RecurrenceOption = 'Entire Series' | 'Following Events' | 'Single Event';
 
 export class CalendarWidgetPage {
+	readonly addCalendarMenuItem: Locator;
 	readonly addEventButton: Locator;
 	readonly allDayCheckbox: Locator;
 	readonly calendarWidget: Locator;
@@ -45,6 +46,9 @@ export class CalendarWidgetPage {
 	readonly useGlobalTimeZoneCheckBox: Locator;
 
 	constructor(page: Page) {
+		this.addCalendarMenuItem = page.getByRole('menuitem', {
+			name: 'Add Calendar',
+		});
 		this.addEventButton = page.getByRole('button', {name: 'Add Event'});
 		this.allDayCheckbox = page
 			.frameLocator('iframe')

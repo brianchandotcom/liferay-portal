@@ -13,9 +13,12 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -90,18 +93,28 @@ public class ExpandoColumnUpgradeProcessTest {
 			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
 				TestPropsValues.getCompanyId());
 
+			Company company = CompanyLocalServiceUtil.getCompany(
+				TestPropsValues.getCompanyId());
+
+			User user = UserLocalServiceUtil.getUser(
+				TestPropsValues.getUserId());
+
 			GroupResource groupResource = groupResourceBuilder.authentication(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).locale(
 				LocaleUtil.fromLanguageId(languageId)
+			).endpoint(
+				company.getVirtualHostname(), 8080, "http"
 			).build();
 
 			UserResource.Builder userResourceBuilder = UserResource.builder();
 
 			UserResource userResource = userResourceBuilder.authentication(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).locale(
 				LocaleUtil.fromLanguageId(languageId)
+			).endpoint(
+				company.getVirtualHostname(), 8080, "http"
 			).build();
 
 			HttpInvoker.HttpResponse httpResponse =

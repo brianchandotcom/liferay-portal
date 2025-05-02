@@ -282,3 +282,8 @@ fb4038bdb071385ca17f573fc2086d9b01ddb400^..bfae3dbb2adf6d42ee7b019db6c4c601f2d22
 # Bundle Version 4.0.51
 #
 bfae3dbb2adf6d42ee7b019db6c4c601f2d226ee^..40eab1c06099bd928bfad32f7d036d6ca1aca080=LPD-50277 LPD-51190
+
+#
+# Bundle Version 4.0.52
+#
+40eab1c06099bd928bfad32f7d036d6ca1aca080^..87a287a2ae5512e53d01bc677671418181d7caab=LPD-43765 LPD-52029

@@ -64,12 +64,25 @@ public class ObjectRelationshipTestUtil {
 			String name)
 		throws PortalException {
 
+		return addObjectRelationship(
+			objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2, deletionType, name,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
+	public static ObjectRelationship addObjectRelationship(
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String deletionType,
+			String name, String type)
+		throws PortalException {
+
 		return objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
 			objectDefinition1.getObjectDefinitionId(),
 			objectDefinition2.getObjectDefinitionId(), 0, deletionType, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			name, false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+			name, false, type, null);
 	}
 
 }

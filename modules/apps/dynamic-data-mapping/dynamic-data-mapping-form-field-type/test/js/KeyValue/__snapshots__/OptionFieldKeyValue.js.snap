@@ -61,7 +61,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -127,7 +126,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -254,7 +252,6 @@ exports[`OptionFieldKeyValue has a label 1`] = `
             label
           </label>
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -322,7 +319,6 @@ exports[`OptionFieldKeyValue has a label 1`] = `
             label
           </label>
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -436,12 +432,10 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -496,11 +490,9 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -608,12 +600,10 @@ exports[`OptionFieldKeyValue has a value 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -667,11 +657,9 @@ exports[`OptionFieldKeyValue has a value 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -779,12 +767,10 @@ exports[`OptionFieldKeyValue has an id 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="Id_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -837,11 +823,9 @@ exports[`OptionFieldKeyValue has an id 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="Id_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -949,12 +933,10 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -1008,11 +990,9 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -1120,12 +1100,10 @@ exports[`OptionFieldKeyValue is not required 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -1179,11 +1157,9 @@ exports[`OptionFieldKeyValue is not required 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -1301,7 +1277,6 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
             text
           </label>
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -1369,7 +1344,6 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
             text
           </label>
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >
@@ -1483,12 +1457,10 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
           display-name
         </label>
         <div
-          aria-labelledby="OptionFieldKeyValue_fieldDetails"
           class="form-group hide"
           data-field-name="OptionFieldKeyValue"
         >
           <div
-            aria-labelledby="keyValueDisplayNameOptionFieldKeyValue_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueDisplayNameOptionFieldKeyValue"
           >
@@ -1541,11 +1513,9 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
           option-reference
         </label>
         <div
-          aria-labelledby="undefined_fieldDetails"
           class="form-group hide"
         >
           <div
-            aria-labelledby="keyValueReferenceundefined_fieldDetails"
             class="form-group hide"
             data-field-name="keyValueReferenceundefined"
           >

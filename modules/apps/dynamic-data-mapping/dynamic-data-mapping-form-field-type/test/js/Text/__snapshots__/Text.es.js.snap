@@ -98,7 +98,6 @@ exports[`Field Text has a label 1`] = `
 exports[`Field Text has a placeholder 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >
@@ -137,7 +136,6 @@ exports[`Field Text has a placeholder 1`] = `
 exports[`Field Text has a value 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >
@@ -175,7 +173,6 @@ exports[`Field Text has a value 1`] = `
 exports[`Field Text has an id 1`] = `
 <div>
   <div
-    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >
@@ -212,7 +209,6 @@ exports[`Field Text has an id 1`] = `
 exports[`Field Text is not readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >
@@ -249,7 +245,6 @@ exports[`Field Text is not readOnly 1`] = `
 exports[`Field Text is not required 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >
@@ -287,7 +282,6 @@ exports[`Field Text is not required 1`] = `
 exports[`Field Text is readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
   >

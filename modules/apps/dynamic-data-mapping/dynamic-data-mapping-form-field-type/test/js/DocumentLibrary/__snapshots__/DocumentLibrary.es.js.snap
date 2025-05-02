@@ -551,7 +551,6 @@ exports[`Field DocumentLibrary has an id 1`] = `
 exports[`Field DocumentLibrary is not readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="uploadField_fieldDetails"
     class="form-group hide"
     data-field-name="uploadField"
   >

@@ -12,7 +12,6 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -21,10 +20,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -49,7 +46,7 @@ public class ScopeFinderTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUnavailableAssignedScopeAliases() throws PortalException {
+	public void testUnavailableAssignedScopeAliases() throws Exception {
 		String token = getToken(
 			"oauthTestClientCredentials", null,
 			this::getClientCredentialsResponse, this::parseTokenString);
@@ -103,17 +100,14 @@ public class ScopeFinderTest extends BaseClientTestCase {
 			invocationBuilder.get(
 			).getStatus());
 
-		List<String> scopeAliasess = new ArrayList<>();
-
-		scopeAliasess.add("Liferay.Captcha.REST.everything.write");
-
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(
 				_oAuth2ApplicationId);
 
 		_oAuth2ApplicationLocalService.updateScopeAliases(
 			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
-			_oAuth2ApplicationId, scopeAliasess);
+			_oAuth2ApplicationId,
+			Collections.singletonList("Liferay.Captcha.REST.everything.write"));
 
 		invocationBuilder = authorize(
 			webTarget.request(),

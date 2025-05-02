@@ -248,8 +248,8 @@ public class ElasticsearchSearchEngineInformation
 
 		try {
 			_setClusterAndNodeInformation(
-				connectionInformationBuilder,
-				elasticsearchConnection.getRestHighLevelClient(), labels);
+				connectionInformationBuilder, labels,
+				elasticsearchConnection.getRestHighLevelClient());
 		}
 		catch (Exception exception) {
 			connectionInformationBuilder.error(exception.toString());
@@ -320,8 +320,8 @@ public class ElasticsearchSearchEngineInformation
 					getConnectionInformationBuilder();
 
 			_setClusterAndNodeInformation(
-				connectionInformationBuilder, restHighLevelClient,
-				new LinkedHashSet<>());
+				connectionInformationBuilder, new LinkedHashSet<>(),
+				restHighLevelClient);
 
 			ConnectionInformation connectionInformation =
 				connectionInformationBuilder.build();
@@ -400,7 +400,7 @@ public class ElasticsearchSearchEngineInformation
 
 	private void _setClusterAndNodeInformation(
 			ConnectionInformationBuilder connectionInformationBuilder,
-			RestHighLevelClient restHighLevelClient, Set<String> labels)
+			Set<String> labels, RestHighLevelClient restHighLevelClient)
 		throws Exception {
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();

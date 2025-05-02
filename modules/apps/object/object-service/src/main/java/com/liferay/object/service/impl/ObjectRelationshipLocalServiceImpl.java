@@ -829,6 +829,14 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
+		long objectDefinitionId2, String type) {
+
+		return objectRelationshipPersistence.findByODI2_R_T(
+			objectDefinitionId2, false, type);
+	}
+
+	@Override
 	public Map<Long, List<ObjectRelationship>> getObjectRelationshipsMap(
 		long companyId) {
 

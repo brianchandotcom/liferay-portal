@@ -554,6 +554,10 @@ public class RenderLayoutStructureTagTest {
 			Assert.assertTrue(
 				content, StringUtil.contains(content, value, StringPool.BLANK));
 		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			relationshipObjectDefinition);
 	}
 
 	@Test

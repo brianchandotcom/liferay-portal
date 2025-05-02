@@ -22,6 +22,7 @@ Import-Package:\
 	org.apache.commons.io,\
 	org.apache.commons.io.build,\
 	org.apache.commons.io.file.attribute,\
+	org.apache.commons.io.function,\
 	org.apache.commons.io.input,\
 	org.apache.commons.io.output,\
 	org.apache.commons.math3.*,\

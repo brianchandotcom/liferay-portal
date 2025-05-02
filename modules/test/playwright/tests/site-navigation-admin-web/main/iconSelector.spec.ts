@@ -44,13 +44,7 @@ test(
 
 		await navigationMenusPage.createNavigationMenu(getRandomString());
 
-		await navigationMenusPage.openAddPageModal();
-
-		await navigationMenusPage.pagesModal
-			.getByText(pageName, {exact: true})
-			.click();
-
-		await navigationMenusPage.selectButton.click();
+		await navigationMenusPage.addPageItem([pageName]);
 
 		// Select an icon for the page item
 

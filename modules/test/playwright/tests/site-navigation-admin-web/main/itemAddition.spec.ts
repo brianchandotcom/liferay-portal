@@ -53,21 +53,14 @@ test(
 
 		await navigationMenusPage.createNavigationMenu(getRandomString());
 
-		await navigationMenusPage.openAddPageModal();
-
-		for (let i = 1; i <= 3; i++) {
-			await page
-				.frameLocator('iframe[title="Select Pages"]')
-				.getByText(`Parent ${i}`)
-				.click();
-
-			await page
-				.frameLocator('iframe[title="Select Pages"]')
-				.getByText(`Child ${i}`)
-				.click();
-		}
-
-		await page.getByRole('button', {name: 'Select'}).click();
+		await navigationMenusPage.addPageItem([
+			'Parent 1',
+			'Parent 2',
+			'Parent 3',
+			'Child 1',
+			'Child 2',
+			'Child 3',
+		]);
 
 		const source = page.getByRole('button', {name: 'Move Parent 3'});
 		const target = page

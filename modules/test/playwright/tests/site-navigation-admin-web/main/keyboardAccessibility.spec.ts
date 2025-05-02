@@ -45,13 +45,7 @@ test('The navigation menu creator could add child item via keyboard', async ({
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	await navigationMenusPage.openAddPageModal();
-
-	await navigationMenusPage.pagesModal
-		.getByText(pageName, {exact: true})
-		.click();
-
-	await navigationMenusPage.selectButton.click();
+	await navigationMenusPage.addPageItem([pageName]);
 
 	await page.getByText(pageName, {exact: true}).hover();
 
@@ -252,21 +246,13 @@ test('The site designer could reorder navigation menu items with child via keybo
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	await navigationMenusPage.openAddPageModal();
-
-	await navigationMenusPage.pagesModal.getByText(firstParentPageName).click();
-
-	await navigationMenusPage.pagesModal
-		.getByText(secondParentPageName)
-		.click();
-
-	await navigationMenusPage.pagesModal.getByText(firstChildPageName).click();
-
-	await navigationMenusPage.selectButton.click();
+	await navigationMenusPage.addPageItem([
+		firstParentPageName,
+		secondParentPageName,
+		firstChildPageName,
+	]);
 
 	// Assert the Navigation Menu Items current order
-
-	await waitForAlert(page, 'Success:3 Pages were added to this menu.');
 
 	let cardTitles = await page.locator('.card-title').allTextContents();
 
@@ -342,17 +328,10 @@ test('The site designer could cancel reorder navigation menu items via keyboard'
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	await navigationMenusPage.openAddPageModal();
-
-	await navigationMenusPage.pagesModal
-		.getByText(firstParentParentPageName)
-		.click();
-
-	await navigationMenusPage.pagesModal
-		.getByText(secondParentParentPageName)
-		.click();
-
-	await navigationMenusPage.selectButton.click();
+	await navigationMenusPage.addPageItem([
+		firstParentParentPageName,
+		secondParentParentPageName,
+	]);
 
 	// Use the mouse and keyboard to move Navigation Menu Item
 
@@ -414,11 +393,7 @@ test('The navigation menu creator could add sibling item via keyboard', async ({
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	await navigationMenusPage.openAddPageModal();
-
-	await navigationMenusPage.pagesModal.getByText(firstContentPage).click();
-
-	await navigationMenusPage.selectButton.click();
+	await navigationMenusPage.addPageItem([firstContentPage]);
 
 	// Use the mouse and keyboard to navigate to the "add before" button from the first Navigation Menu Item
 

@@ -125,13 +125,7 @@ test('Ensure that the navigation menu admin could choose display template when p
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	await navigationMenusPage.openAddPageModal();
-
-	await navigationMenusPage.pagesModal
-		.getByText(pageName, {exact: true})
-		.click();
-
-	await navigationMenusPage.selectButton.click();
+	await navigationMenusPage.addPageItem([pageName]);
 
 	// Assert that, when the preview option is selected, the default option for the display template is Bar minimally styled
 

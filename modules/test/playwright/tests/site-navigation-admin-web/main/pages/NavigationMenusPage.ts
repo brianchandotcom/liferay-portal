@@ -35,7 +35,10 @@ export class NavigationMenusPage {
 		this.page = page;
 
 		this.getMenuItem = async (menuItemName: string) => {
-			return page.getByRole('menuitem', {name: menuItemName});
+			return page.getByRole('menuitem', {
+				exact: true,
+				name: menuItemName,
+			});
 		};
 		this.getModalListItem = async (itemName: string) => {
 			return page

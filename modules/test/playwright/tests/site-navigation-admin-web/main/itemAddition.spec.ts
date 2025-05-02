@@ -10,9 +10,11 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageSelectorPagesTest} from '../../../fixtures/pageSelectorPagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {navigationMenusPagesTest} from './fixtures/navigationMenusPagesTest';
 
 const test = mergeTests(
@@ -23,6 +25,8 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	navigationMenusPagesTest,
+	pagesAdminPagesTest,
+	pagesPagesTest,
 	pageSelectorPagesTest
 );
 
@@ -258,5 +262,67 @@ test(
 		).toHaveValue(`${pageName} Spanish`);
 
 		await page.goto('/en');
+	}
+);
+
+test(
+	'Navigation Menu item is prepopulated with existing translation',
+	{
+		tag: '@LPS-85566',
+	},
+	async ({
+		apiHelpers,
+		navigationMenusPage,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+		const pageName = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(pageName, 'General');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Spanish.',
+			}),
+			trigger: page.locator(
+				'[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet__com_liferay_layout_admin_web_portlet_GroupPagesPortlet_nameMapAsXMLMenu"]'
+			),
+		});
+
+		await page.getByLabel('Name').fill(`${pageName} Spanish`);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		const navigationMenuName = getRandomString();
+
+		await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+		await navigationMenusPage.addPageItem([pageName]);
+
+		await page.getByText(pageName).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.locator("a[data-languageId='es_ES']"),
+			trigger: page.getByText('en-US', {exact: true}),
+		});
+
+		await expect(
+			page.locator(
+				'input[id="_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet_name"]'
+			)
+		).toHaveValue(`${pageName} Spanish`);
 	}
 );

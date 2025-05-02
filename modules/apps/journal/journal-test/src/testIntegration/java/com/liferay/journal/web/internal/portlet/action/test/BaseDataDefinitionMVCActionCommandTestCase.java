@@ -103,9 +103,10 @@ public abstract class BaseDataDefinitionMVCActionCommandTestCase {
 					group.getGroupId(), "journal", "Imported Structure",
 					Pagination.of(1, 1), null);
 
-		List<DataDefinition> items = (List<DataDefinition>)page.getItems();
+		List<DataDefinition> dataDefinitions =
+			(List<DataDefinition>)page.getItems();
 
-		return items.get(0);
+		return dataDefinitions.get(0);
 	}
 
 	protected abstract MVCActionCommand getMVCActionCommand();

@@ -420,14 +420,15 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	private void _assertAssetPublisherPortletPreferencesCount(
 		long companyId, int count, long groupId, boolean privateLayout) {
 
-		List<PortletPreferences> portletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
 				companyId, groupId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				AssetPublisherPortletKeys.ASSET_PUBLISHER, privateLayout);
 
 		Assert.assertEquals(
-			portletPreferences.toString(), count, portletPreferences.size());
+			portletPreferencesList.toString(), count,
+			portletPreferencesList.size());
 	}
 
 	private void _assertJournalContentSearchesCount(
@@ -513,14 +514,14 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	private int _getJournalContentPortletPreferencesCount(
 		boolean privateLayout) {
 
-		List<PortletPreferences> portletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
 				_group.getCompanyId(), _group.getGroupId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				JournalContentPortletKeys.JOURNAL_CONTENT, privateLayout);
 
-		return portletPreferences.size();
+		return portletPreferencesList.size();
 	}
 
 	private int _getLayoutClassedModelUsagesCount(long classPK, long groupId) {

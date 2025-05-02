@@ -1,12 +1,9 @@
-.page-bar {
-	position: sticky;
+.top-bar {
 	top: var(--control-menu-container-height);
-	z-index: 1000;
-
 }
 
 @media (max-width: 575px) {
-	.page-bar {
+	.top-bar {
 		position: static;
 	}
 }

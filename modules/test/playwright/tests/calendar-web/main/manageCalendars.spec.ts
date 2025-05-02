@@ -11,7 +11,9 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
@@ -26,6 +28,8 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
+let siteName: string;
+
 test.beforeEach(
 	async ({apiHelpers, calendarWidgetPage, page, pageEditorPage, site}) => {
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -39,6 +43,8 @@ test.beforeEach(
 			siteId: site.id,
 			title: getRandomString(),
 		});
+
+		siteName = site.name;
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
@@ -70,4 +76,39 @@ test('color column in manage calendar page is updated when the user changes the 
 	await expect(
 		calendarWidgetPage.page.locator('.calendar-portlet-color-box')
 	).toHaveCSS('background-color', 'rgb(224, 194, 64)');
+});
+
+test('can choose color when adding a calendar', async ({
+	calendarWidgetPage,
+}) => {
+	await calendarWidgetPage.unhideSidebar();
+
+	await calendarWidgetPage.page.waitForLoadState('networkidle');
+
+	await calendarWidgetPage.openCalendarGroupActionsDropdownMenu(siteName);
+
+	await calendarWidgetPage.addCalendarMenuItem.click();
+
+	const calendarName = 'Calendar' + getRandomInt();
+
+	const calendarIframeLocator = calendarWidgetPage.page.frameLocator(
+		'iframe[title="Add Calendar"]'
+	);
+
+	await calendarIframeLocator.getByLabel('Name').fill(calendarName);
+
+	await calendarIframeLocator.getByRole('radio', {name: '#85AAA5'}).click();
+
+	await waitForAlert(
+		calendarIframeLocator,
+		`Success:Your request completed successfully.`
+	);
+
+	await calendarWidgetPage.page.keyboard.press('Escape');
+
+	await calendarWidgetPage.openCalendarActionsDropdownMenu(calendarName);
+
+	await expect(
+		calendarWidgetPage.page.locator('.simple-color-picker-item-selected')
+	).toHaveCSS('background-color', 'rgb(133, 170, 165)');
 });

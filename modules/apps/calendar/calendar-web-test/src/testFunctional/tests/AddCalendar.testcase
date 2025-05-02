@@ -162,24 +162,6 @@ definition {
 		Calendar.viewDefault();
 	}
 
-	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
-	@priority = 4
-	test CanChooseAColor {
-		CalendarNavigator.gotoAddMyCalendars();
-
-		Calendar._editName(calendarName = "Calendar Name");
-
-		Calendar.chooseCalendarColor(myCalendarColor = "#E0C240");
-
-		Button.clickSave();
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		AssertElementPresent(
-			key_myCalendarColor = "#E6804D",
-			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
-	}
-
 	@description = "LRQA-71797 - Verify that the user can Enable Comments on Calendar"
 	@priority = 3
 	test CanEnableComments {

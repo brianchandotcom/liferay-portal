@@ -12,3 +12,8 @@
 # Bundle Version 1.1.1
 #
 0b04912120bc6ebc14fd1c26aedbbc808e598406^..3b96da6dd649b7f5ae8eec841ccd1175cf299c1b=LPD-23693 LPD-25046
+
+#
+# Bundle Version 2.0.1
+#
+3b96da6dd649b7f5ae8eec841ccd1175cf299c1b^..7af98ea07664f74b938144cb6297ed56f71e447f=LPD-50998

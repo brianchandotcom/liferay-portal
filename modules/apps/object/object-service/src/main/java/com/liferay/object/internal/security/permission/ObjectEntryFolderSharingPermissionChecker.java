@@ -37,7 +37,7 @@ public class ObjectEntryFolderSharingPermissionChecker
 		throws PortalException {
 
 		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
-			if (!_actionKeysSet.contains(sharingEntryAction) ||
+			if (!_sharingEntryActions.contains(sharingEntryAction) ||
 				!_objectEntryFolderModelResourcePermission.contains(
 					permissionChecker, classPK,
 					sharingEntryAction.getActionId())) {
@@ -49,10 +49,11 @@ public class ObjectEntryFolderSharingPermissionChecker
 		return true;
 	}
 
-	private static final Set<SharingEntryAction> _actionKeysSet = new HashSet<>(
-		Arrays.asList(
-			SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
-			SharingEntryAction.VIEW));
+	private static final Set<SharingEntryAction> _sharingEntryActions =
+		new HashSet<>(
+			Arrays.asList(
+				SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
+				SharingEntryAction.VIEW));
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"

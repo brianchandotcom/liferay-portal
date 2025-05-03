@@ -56,11 +56,11 @@ public class ObjectValidationRuleEngineRegistryImpl
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines(
 		long companyId, String objectDefinitionName) {
 
-		Collection<ObjectValidationRuleEngine>
-			objectValidationRuleEnginesCollection = _serviceTrackerMap.values();
+		Collection<ObjectValidationRuleEngine> objectValidationRuleEngines =
+			_serviceTrackerMap.values();
 
 		return ListUtil.filter(
-			ListUtil.fromCollection(objectValidationRuleEnginesCollection),
+			ListUtil.fromCollection(objectValidationRuleEngines),
 			objectValidationRuleEngine -> {
 				boolean companyAllowed = true;
 

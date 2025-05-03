@@ -56,16 +56,16 @@ public class ObjectActionExecutorRegistryImpl
 	public List<ObjectActionExecutor> getObjectActionExecutors(
 		long companyId, String objectDefinitionName) {
 
-		Collection<ObjectActionExecutor> objectActionExecutorsCollection =
+		Collection<ObjectActionExecutor> objectActionExecutors =
 			_serviceTrackerMap.values();
 
-		if (objectActionExecutorsCollection == null) {
+		if (objectActionExecutors == null) {
 			return Collections.<ObjectActionExecutor>emptyList();
 		}
 
 		return ListUtil.sort(
 			ListUtil.filter(
-				ListUtil.fromCollection(objectActionExecutorsCollection),
+				ListUtil.fromCollection(objectActionExecutors),
 				objectActionExecutor -> {
 					boolean companyAllowed = true;
 

@@ -155,8 +155,10 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_apiURL = apiURL;
 	}
 
-	public void setBulkActionDropdownItems(List<DropdownItem> bulkActions) {
-		_bulkActionDropdownItems = bulkActions;
+	public void setBulkActionDropdownItems(
+		List<DropdownItem> bulkActionDropdownItems) {
+
+		_bulkActionDropdownItems = bulkActionDropdownItems;
 	}
 
 	public void setCreationMenu(CreationMenu creationMenu) {

@@ -234,17 +234,18 @@ public class MicroblogsDisplayContext {
 					microblogsAssetTagName));
 		}
 		else if (getParentMicroblogsEntryId() > 0) {
-			List<MicroblogsEntry> results = new ArrayList<>();
+			List<MicroblogsEntry> microblogsEntries = new ArrayList<>();
 
 			MicroblogsEntry microblogsEntry =
 				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
 					getParentMicroblogsEntryId());
 
 			if (microblogsEntry != null) {
-				results.add(microblogsEntry);
+				microblogsEntries.add(microblogsEntry);
 			}
 
-			_searchContainer.setResultsAndTotal(() -> results, results.size());
+			_searchContainer.setResultsAndTotal(
+				() -> microblogsEntries, microblogsEntries.size());
 
 			_portletURL.setParameter(
 				"parentMicroblogsEntryId",

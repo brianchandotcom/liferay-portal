@@ -40,7 +40,7 @@ public class StructureBuilderDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProps() throws Exception {
+	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			JSONUtil.put(

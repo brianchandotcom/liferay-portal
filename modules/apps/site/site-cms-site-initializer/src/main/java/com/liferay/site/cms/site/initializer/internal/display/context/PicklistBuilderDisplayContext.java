@@ -39,7 +39,7 @@ public class PicklistBuilderDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProps() throws Exception {
+	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")

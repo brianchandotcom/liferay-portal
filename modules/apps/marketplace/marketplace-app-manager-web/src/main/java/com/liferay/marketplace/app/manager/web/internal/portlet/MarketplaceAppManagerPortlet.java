@@ -531,13 +531,14 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 						return bundleSymbolicNames;
 					}
 
-					Set<String> blacklistBundleSymbolicNamesSet =
+					Set<String> uniqueBlacklistBundleSymbolicNames =
 						SetUtil.fromArray(blacklistBundleSymbolicNames);
 
 					Collections.addAll(
-						blacklistBundleSymbolicNamesSet, bundleSymbolicNames);
+						uniqueBlacklistBundleSymbolicNames,
+						bundleSymbolicNames);
 
-					return blacklistBundleSymbolicNamesSet.toArray(
+					return uniqueBlacklistBundleSymbolicNames.toArray(
 						new String[0]);
 				});
 		}

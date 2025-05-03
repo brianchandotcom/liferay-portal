@@ -1176,85 +1176,98 @@ test(
 	'Test quick action buttons function correctly',
 	{tag: '@LPS-153220'},
 	async ({fdsSamplePage, page}) => {
-		const firstItemActionsCell =
-			fdsSamplePage.table.itemActionsCells.first();
+		const firstRowItemActionButton = fdsSamplePage.table.itemActionsCells
+			.first()
+			.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
 
-		const thirdItemActionsCell =
-			fdsSamplePage.table.itemActionsCells.nth(2);
+		const thirdRowItemActionButton = fdsSamplePage.table.itemActionsCells
+			.nth(2)
+			.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
 
-		const firstItemActionButton = firstItemActionsCell.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
-
-		const thirdItemActionButton = thirdItemActionsCell.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
-
-		const quickActionPencilIcon = page
-			.getByRole('link', {name: 'Sample Edit'})
-			.nth(0);
-
-		const firstTableHeadCell = page.locator('.cell-select');
-
-		await test.step('Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu', async () => {
-			await firstItemActionButton.hover();
-
-			await quickActionPencilIcon.click();
-
-			const pageURL = page.url();
-
-			await expect(pageURL).toContain('#test-pencil');
-
-			await firstItemActionButton.click();
-
-			const pencilIconDropdown = page.getByRole('menuitem', {
+		const firstRowSampleEditQuickActionLink = fdsSamplePage.table.bodyRows
+			.first()
+			.getByRole('link', {
 				name: 'Sample Edit',
 			});
 
-			await pencilIconDropdown.click();
+		const thirdRowSampleEditQuickActionLink = fdsSamplePage.table.bodyRows
+			.nth(2)
+			.getByRole('link', {
+				name: 'Sample Edit',
+			});
 
-			await expect(page.url()).toEqual(pageURL);
+		const firstTableHeadCell = fdsSamplePage.table.headerCells.first();
+
+		await test.step('Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu', async () => {
+			await firstRowItemActionButton.hover();
+
+			await fdsSamplePage.table.bodyRows
+				.first()
+				.getByRole('link', {
+					name: 'Sample Edit',
+				})
+				.click();
+
+			const pageURLAfterQuickAction = page.url();
+
+			expect(pageURLAfterQuickAction).toContain('#test-pencil');
+
+			await firstRowItemActionButton.click();
+
+			await page
+				.getByRole('menuitem', {
+					name: 'Sample Edit',
+				})
+				.click();
+
+			expect(page.url()).toEqual(pageURLAfterQuickAction);
 		});
 
 		await test.step('Assert that hover over mouse off of the table body quick action menu is not visible', async () => {
-			await firstItemActionButton.hover();
+			await firstRowItemActionButton.hover();
 
-			await expect(quickActionPencilIcon).toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).toBeVisible();
 
 			await firstTableHeadCell.hover();
 
-			await expect(quickActionPencilIcon).not.toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).not.toBeVisible();
 		});
 
 		await test.step('When hovering over the first line item and the quick action menu is displayed on the 1st line', async () => {
-			const firstCell = page.locator('.cell-select-item').first();
+			const firstTableRow = fdsSamplePage.table.bodyRows.first();
 
-			await firstCell.hover();
+			await firstTableRow.hover();
 
-			await expect(quickActionPencilIcon).toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).toBeVisible();
 		});
 
 		await test.step('When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed', async () => {
-			await thirdItemActionButton.hover();
+			await thirdRowItemActionButton.hover();
 
-			await expect(quickActionPencilIcon).toBeVisible();
+			await expect(thirdRowSampleEditQuickActionLink).toBeVisible();
 
-			await thirdItemActionButton.hover();
+			await thirdRowItemActionButton.hover();
 
-			await thirdItemActionButton.click();
+			await thirdRowItemActionButton.click();
 
-			const firstCell = page.locator('.cell-select-item').first();
+			await expect(page.locator('.dropdown-menu.show')).toBeVisible();
 
-			await firstCell.hover();
+			await fdsSamplePage.table.bodyRows.first().hover();
 
-			const pen = page
-				.locator('tr')
-				.filter({hasText: '32686Sample1Test'})
-				.getByLabel('Sample Edit');
+			await expect(
+				page
+					.locator('.fds table tbody tr')
+					.first()
+					.getByLabel('Sample Edit')
+			).toBeVisible(); // `page` must be used here since using `fdsSamplePage` won't locate the element with the dropdown open
 
-			await expect(pen).toBeVisible();
+			await firstTableHeadCell.click(); // Close the dropdown
 		});
 
 		await test.step('Assert quick action can be displayed on only one active row', async () => {
@@ -1262,35 +1275,31 @@ test(
 
 			await firstTableHeadCell.click();
 
-			await firstItemActionButton.hover();
+			await firstRowItemActionButton.hover();
 
-			await expect(quickActionPencilIcon).toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).toBeVisible();
 
-			await thirdItemActionButton.hover();
+			await thirdRowItemActionButton.hover();
 
-			await thirdItemActionButton.click();
+			await thirdRowItemActionButton.click();
 
-			await expect(quickActionPencilIcon).not.toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).not.toBeVisible();
+
+			await firstTableHeadCell.click(); // Close the dropdown
 		});
 
 		await test.step('Assert that quick action icons list should be limited to three actions', async () => {
-			await firstTableHeadCell.hover();
+			await firstRowItemActionButton.click();
 
-			await firstTableHeadCell.click();
-
-			await firstItemActionButton.hover();
-
-			await firstItemActionButton.click();
-
-			const sampleViewButton = page
+			const sampleViewButton = fdsSamplePage.table.bodyRows
 				.getByRole('cell', {name: 'Actions'})
 				.getByLabel('Sample View');
 
-			const sampleEditButton = page
+			const sampleEditButton = fdsSamplePage.table.bodyRows
 				.getByRole('cell', {name: 'Actions'})
 				.getByLabel('Sample Edit');
 
-			const sampleDelete = page
+			const sampleDelete = fdsSamplePage.table.bodyRows
 				.getByRole('cell', {name: 'Actions'})
 				.getByLabel('Sample Delete');
 
@@ -1306,27 +1315,22 @@ test(
 
 			await firstTableHeadCell.click();
 
-			await firstItemActionButton.hover();
+			await firstRowItemActionButton.hover();
 
-			await quickActionPencilIcon.click();
+			await firstRowSampleEditQuickActionLink.click();
 
-			const pageURL = page.url();
-
-			await expect(pageURL).toContain('#test-pencil');
+			expect(page.url()).toContain('#test-pencil');
 		});
 
 		await test.step('Assert the quick action is not visible when the row checkbox is checked', async () => {
-			const checkbox = page
-				.getByRole('row', {name: '32686 Sample1 Test'})
-				.getByLabel('', {exact: true});
+			await fdsSamplePage.table.bodyRows
+				.first()
+				.getByRole('checkbox')
+				.click();
 
-			await checkbox.click();
+			await firstRowItemActionButton.hover();
 
-			await firstTableHeadCell.hover();
-
-			await firstTableHeadCell.click();
-
-			await expect(quickActionPencilIcon).not.toBeVisible();
+			await expect(firstRowSampleEditQuickActionLink).not.toBeVisible();
 		});
 	}
 );

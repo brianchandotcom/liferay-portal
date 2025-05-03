@@ -195,13 +195,12 @@ public class GroupModelListenerTest {
 					objectDefinition2.getObjectDefinitionId(),
 					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
 
-			String acceptedGroupIds = objectDefinitionSetting.getValue();
+			String acceptedGroupIdsString = objectDefinitionSetting.getValue();
 
-			List<Long> acceptedGroupIdsList = TransformUtil.transformToList(
-				acceptedGroupIds.split("\\s*,\\s*"), GetterUtil::getLong);
+			List<Long> acceptedGroupIds = TransformUtil.transformToList(
+				acceptedGroupIdsString.split("\\s*,\\s*"), GetterUtil::getLong);
 
-			Assert.assertFalse(
-				acceptedGroupIdsList.contains(group.getGroupId()));
+			Assert.assertFalse(acceptedGroupIds.contains(group.getGroupId()));
 		}
 
 		_objectRelationshipLocalService.deleteObjectRelationship(

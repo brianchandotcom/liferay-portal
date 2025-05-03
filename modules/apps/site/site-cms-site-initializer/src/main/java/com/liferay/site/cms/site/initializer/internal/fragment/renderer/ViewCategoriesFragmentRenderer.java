@@ -9,7 +9,6 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,7 +58,7 @@ public class ViewCategoriesFragmentRenderer
 				ViewCategoriesDisplayContext.class.getName(),
 				new ViewCategoriesDisplayContext(
 					_assetVocabularyLocalService, httpServletRequest,
-					_jsonFactory, _layoutLocalService, _language, _portal));
+					_layoutLocalService, _language, _portal));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -70,9 +69,6 @@ public class ViewCategoriesFragmentRenderer
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

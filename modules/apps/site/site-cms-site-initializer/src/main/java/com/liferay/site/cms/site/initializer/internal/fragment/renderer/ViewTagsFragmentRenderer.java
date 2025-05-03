@@ -54,7 +54,6 @@ public class ViewTagsFragmentRenderer extends BaseSectionFragmentRenderer {
 			httpServletRequest.setAttribute(
 				ViewTagsDisplayContext.class.getName(),
 				new ViewTagsDisplayContext(
-					httpServletRequest,
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)));
 

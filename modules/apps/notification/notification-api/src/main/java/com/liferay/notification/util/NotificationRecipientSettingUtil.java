@@ -111,11 +111,11 @@ public class NotificationRecipientSettingUtil {
 				continue;
 			}
 
-			List<Map<String, String>> roles =
+			List<Map<String, String>> rolesMapList =
 				(List<Map<String, String>>)map.computeIfAbsent(
 					name, key -> new ArrayList<>());
 
-			roles.add(
+			rolesMapList.add(
 				HashMapBuilder.put(
 					NotificationRecipientSettingConstants.NAME_ROLE_NAME,
 					String.valueOf(value)

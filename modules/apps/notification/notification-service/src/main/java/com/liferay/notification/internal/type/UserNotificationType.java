@@ -108,7 +108,7 @@ public class UserNotificationType extends BaseNotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException {
 
-		List<Map<String, String>> notificationRecipientSettings =
+		List<Map<String, String>> notificationRecipientSettingsMapList =
 			new ArrayList<>();
 
 		NotificationTemplate notificationTemplate =
@@ -146,7 +146,7 @@ public class UserNotificationType extends BaseNotificationType {
 					"portletId", notificationContext.getPortletId()
 				));
 
-			notificationRecipientSettings.add(
+			notificationRecipientSettingsMapList.add(
 				HashMapBuilder.put(
 					"userFullName", user.getFullName()
 				).build());
@@ -158,7 +158,8 @@ public class UserNotificationType extends BaseNotificationType {
 		userLocale = user.getLocale();
 
 		prepareNotificationContext(
-			user, null, notificationContext, notificationRecipientSettings,
+			user, null, notificationContext,
+			notificationRecipientSettingsMapList,
 			formatLocalizedContent(
 				notificationTemplate.getSubjectMap(), notificationContext));
 

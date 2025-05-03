@@ -6570,15 +6570,15 @@ public class DefaultObjectEntryManagerImplTest
 	private String _buildInExpressionFilterString(
 		String fieldName, boolean includes, Object... values) {
 
-		List<String> valuesList = new ArrayList<>();
+		List<String> quotedValues = new ArrayList<>();
 
 		for (Object value : values) {
-			valuesList.add(StringUtil.quote(String.valueOf(value)));
+			quotedValues.add(StringUtil.quote(String.valueOf(value)));
 		}
 
 		String filterString = StringBundler.concat(
 			"(", fieldName, " in (",
-			StringUtil.merge(valuesList, StringPool.COMMA_AND_SPACE), "))");
+			StringUtil.merge(quotedValues, StringPool.COMMA_AND_SPACE), "))");
 
 		if (includes) {
 			return filterString;
@@ -6590,17 +6590,17 @@ public class DefaultObjectEntryManagerImplTest
 	private String _buildLambdaExpressionFilterString(
 		String fieldName, boolean includes, int... values) {
 
-		List<String> valuesList = new ArrayList<>();
+		List<String> quotedValues = new ArrayList<>();
 
 		for (int value : values) {
-			valuesList.add(
+			quotedValues.add(
 				StringBundler.concat(
 					"(x ", includes ? "eq " : "ne ", value, ")"));
 		}
 
 		return StringBundler.concat(
 			"(", fieldName, "/any(x:",
-			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
+			StringUtil.merge(quotedValues, includes ? " or " : " and "), "))");
 	}
 
 	private String _buildStartsWithExpressionFilterString(

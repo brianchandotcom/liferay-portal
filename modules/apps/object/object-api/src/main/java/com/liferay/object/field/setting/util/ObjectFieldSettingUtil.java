@@ -118,16 +118,16 @@ public class ObjectFieldSettingUtil {
 	}
 
 	public static boolean isUnique(
-		List<ObjectFieldSetting> objectFieldSetting) {
+		List<ObjectFieldSetting> objectFieldSettings) {
 
-		if (ListUtil.isEmpty(objectFieldSetting)) {
+		if (ListUtil.isEmpty(objectFieldSettings)) {
 			return false;
 		}
 
 		return GetterUtil.getBoolean(
 			getValue(
 				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-				objectFieldSetting));
+				objectFieldSettings));
 	}
 
 	private static ObjectFieldSetting _getObjectFieldSetting(

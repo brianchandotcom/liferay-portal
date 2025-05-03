@@ -33,10 +33,8 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 		for (ResultRow resultRow : resultRows) {
 			Subscription subscription = (Subscription)resultRow.getObject();
 
-			List<ResultRow> newResultRows = rowMap.computeIfAbsent(
+			rowMap.computeIfAbsent(
 				subscription.getClassName(), className -> new ArrayList<>());
-
-			newResultRows.add(resultRow);
 		}
 
 		List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<>(

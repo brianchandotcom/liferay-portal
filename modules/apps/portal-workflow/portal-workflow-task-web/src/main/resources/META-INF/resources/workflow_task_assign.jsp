@@ -25,7 +25,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 	<span aria-hidden="true" class="loading-animation"></span>
 </div>
 
-<div id="content" style="display: none;">
+<div class="d-none" id="content">
 	<div class="task-action">
 		<aui:form action="<%= assignURL %>" method="post" name="assignFm">
 			<div class="modal-body task-action-content">
@@ -75,8 +75,8 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 <aui:script use="aui-base">
 	document.onreadystatechange = () => {
 		if (document.readyState === 'complete') {
-			document.getElementById('loading').style.display = 'none';
-			document.getElementById('content').style.display = 'block';
+			document.getElementById('loading').classList.add('d-none');
+			document.getElementById('content').classList.add('d-block');
 
 			var done = A.one('#<portlet:namespace />done');
 

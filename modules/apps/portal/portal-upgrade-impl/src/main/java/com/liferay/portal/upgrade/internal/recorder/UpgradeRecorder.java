@@ -126,13 +126,13 @@ public class UpgradeRecorder {
 	}
 
 	public void start() {
+		_dataCleanUpMessages.clear();
 		_errorMessages.clear();
 		_result = "running";
 		_schemaVersionsMap.clear();
 		_type = "pending";
 		_upgradeProcessMessages.clear();
 		_warningMessages.clear();
-		_dataCleanUpMessages.clear();
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->

@@ -65,14 +65,24 @@ public class ContentsSectionDisplayContextTest
 
 		Assert.assertTrue(apiURL.contains("emptySearch=true"));
 
-		StringBundler sb = new StringBundler(3);
+		Assert.assertTrue(
+			apiURL.contains(
+				StringBundler.concat(
+					"objectFolderExternalReferenceCode in ('",
+					StringUtil.merge(
+						_getObjectFolderExternalReferenceCodes(), "','"),
+					"')")));
 
-		sb.append("filter=objectFolderExternalReferenceCode in ('");
-		sb.append(
-			StringUtil.merge(_getObjectFolderExternalReferenceCodes(), "','"));
-		sb.append("')");
+		int start = apiURL.indexOf("filter=");
 
-		Assert.assertTrue(apiURL.contains(sb.toString()));
+		int end = apiURL.indexOf("&", start);
+
+		String filterExpression = apiURL.substring(start + 7, end);
+
+		Assert.assertTrue(
+			filterExpression.startsWith(StringPool.OPEN_PARENTHESIS));
+		Assert.assertTrue(
+			filterExpression.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
 	@Ignore

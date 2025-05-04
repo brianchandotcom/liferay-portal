@@ -411,11 +411,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		List<ClusterNode> departClusterNodes = new ArrayList<>();
 
-		Collection<ClusterNodeStatus> clusterNodeStatusCollection =
+		Collection<ClusterNodeStatus> clusterNodeStatuses =
 			_clusterNodeStatuses.values();
 
-		Iterator<ClusterNodeStatus> iterator =
-			clusterNodeStatusCollection.iterator();
+		Iterator<ClusterNodeStatus> iterator = clusterNodeStatuses.iterator();
 
 		while (iterator.hasNext()) {
 			ClusterNodeStatus clusterNodeStatus = iterator.next();

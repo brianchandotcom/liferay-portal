@@ -1058,16 +1058,16 @@ public class UpgradeReport {
 		private class MessagePrinter {
 
 			public MessagePrinter(
-				String message, int occurrences, boolean includeOccurrence) {
+				String message, int occurrences, boolean includeOccurrences) {
 
 				_message = message;
 				_occurrences = occurrences;
-				_includeOccurrence = includeOccurrence;
+				_includeOccurrences = includeOccurrences;
 			}
 
 			@Override
 			public String toString() {
-				if (_includeOccurrence) {
+				if (_includeOccurrences) {
 					if (_logContext) {
 						return _occurrences + StringPool.COLON + _message;
 					}
@@ -1080,7 +1080,7 @@ public class UpgradeReport {
 				return _message;
 			}
 
-			private final boolean _includeOccurrence;
+			private final boolean _includeOccurrences;
 			private final String _message;
 			private final int _occurrences;
 

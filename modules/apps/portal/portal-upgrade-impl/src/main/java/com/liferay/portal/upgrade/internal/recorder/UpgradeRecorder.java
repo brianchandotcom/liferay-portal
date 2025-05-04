@@ -266,12 +266,12 @@ public class UpgradeRecorder {
 			messages.remove(filteredClassName);
 		}
 
-		for (String cleanUpClassName : _DATA_CLEAN_UP_CLASS_NAMES) {
-			if (messages.containsKey(cleanUpClassName)) {
+		for (String dataCleanUpClassName : _DATA_CLEAN_UP_CLASS_NAMES) {
+			if (messages.containsKey(dataCleanUpClassName)) {
 				_dataCleanUpMessages.putIfAbsent(
-					cleanUpClassName, messages.get(cleanUpClassName));
+					dataCleanUpClassName, messages.get(dataCleanUpClassName));
 
-				messages.remove(cleanUpClassName);
+				messages.remove(dataCleanUpClassName);
 			}
 		}
 

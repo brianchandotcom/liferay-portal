@@ -150,7 +150,7 @@ public class UpgradeReport {
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(
-		Map<String, Map<String, Integer>> map1, boolean includeOccurrence) {
+		Map<String, Map<String, Integer>> map1, boolean includeOccurrences) {
 
 		List<MessagesPrinter> messagesPrinters = new ArrayList<>();
 
@@ -174,7 +174,8 @@ public class UpgradeReport {
 
 			for (Map.Entry<String, Integer> entry2 : map2.entrySet()) {
 				messagesPrinter.addMessagePrinter(
-					entry2.getKey(), entry2.getValue(), includeOccurrence);
+					entry2.getKey(),
+					includeOccurrences ? entry2.getValue() : null);
 			}
 		}
 
@@ -1023,11 +1024,8 @@ public class UpgradeReport {
 			_className = className;
 		}
 
-		public void addMessagePrinter(
-			String message, int occurrences, boolean includeOccurrence) {
-
-			_messagePrinters.add(
-				new MessagePrinter(message, occurrences, includeOccurrence));
+		public void addMessagePrinter(String message, Integer occurrences) {
+			_messagePrinters.add(new MessagePrinter(message, occurrences));
 		}
 
 		@Override
@@ -1057,17 +1055,14 @@ public class UpgradeReport {
 
 		private class MessagePrinter {
 
-			public MessagePrinter(
-				String message, int occurrences, boolean includeOccurrences) {
-
+			public MessagePrinter(String message, Integer occurrences) {
 				_message = message;
 				_occurrences = occurrences;
-				_includeOccurrences = includeOccurrences;
 			}
 
 			@Override
 			public String toString() {
-				if (_includeOccurrences) {
+				if (_occurrences != null) {
 					if (_logContext) {
 						return _occurrences + StringPool.COLON + _message;
 					}
@@ -1080,9 +1075,8 @@ public class UpgradeReport {
 				return _message;
 			}
 
-			private final boolean _includeOccurrences;
 			private final String _message;
-			private final int _occurrences;
+			private final Integer _occurrences;
 
 		}
 

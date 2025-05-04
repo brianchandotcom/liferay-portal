@@ -1067,11 +1067,11 @@ public class UpgradeReport {
 
 			@Override
 			public String toString() {
-				if (_logContext) {
-					return _occurrences + StringPool.COLON + _message;
-				}
-
 				if (_includeOccurrence) {
+					if (_logContext) {
+						return _occurrences + StringPool.COLON + _message;
+					}
+
 					return StringBundler.concat(
 						_occurrences, " occurrences of the following event: ",
 						_message);

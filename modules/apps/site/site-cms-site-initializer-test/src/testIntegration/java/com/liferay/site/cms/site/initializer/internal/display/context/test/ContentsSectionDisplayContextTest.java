@@ -13,7 +13,6 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -65,14 +64,22 @@ public class ContentsSectionDisplayContextTest
 
 		Assert.assertTrue(apiURL.contains("emptySearch=true"));
 
-		StringBundler sb = new StringBundler(3);
+		int start = apiURL.indexOf("filter=");
 
-		sb.append("filter=objectFolderExternalReferenceCode in ('");
-		sb.append(
-			StringUtil.merge(_getObjectFolderExternalReferenceCodes(), "','"));
-		sb.append("')");
+		int end = apiURL.indexOf("&", start);
 
-		Assert.assertTrue(apiURL.contains(sb.toString()));
+		String filterExpression = apiURL.substring(start + 7, end);
+
+		String objectFolderExternalReferenceCodesString = StringUtil.merge(
+			_getObjectFolderExternalReferenceCodes(), "','");
+
+		Assert.assertTrue(
+			filterExpression.startsWith(
+				"(objectFolderExternalReferenceCode in ('" +
+					objectFolderExternalReferenceCodesString + "')"));
+
+		Assert.assertTrue(
+			filterExpression.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
 	@Ignore

@@ -83,7 +83,7 @@ public class UpgradeReportTest {
 			HashMapBuilder.<String, Map<String, Integer>>put(
 				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName(),
 				HashMapBuilder.put(
-					"Deleted row from table due to duplicate values", 1
+					"Deleted row from TestTable due to duplicate values", 1
 				).build()
 			).build()
 		);
@@ -102,7 +102,7 @@ public class UpgradeReportTest {
 			StringBundler.concat(
 				"Class name: ",
 				DeleteDuplicateUniqueFinderRowsUpgradeProcess.class.getName(),
-				"\n\tDeleted row from table due to duplicate values\n"),
+				"\n\tDeleted row from TestTable due to duplicate values\n"),
 			dataCleanUp.get(
 				0
 			).toString());

@@ -22,7 +22,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplace() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"javax-batch-operations", "jakarta-batch-operations"
 			).put(
@@ -34,7 +34,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithCustomSeparators() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"javax$persistence$cache", "jakarta$persistence$cache"
 			).put(
@@ -47,7 +47,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithFixupSubpackage() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"javax-transaction-xa-XAResource",
 				"javax-transaction-xa-XAResource"
@@ -59,7 +59,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithFixupSubpackageAndCustomSeparator() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"javax$transaction$xa$XAResource",
 				"javax$transaction$xa$XAResource"
@@ -72,7 +72,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithMultipleSubpackages() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"import javax.portlet.Portlet;\nimport javax.batch.operations;",
 				"import jakarta.portlet.Portlet;\nimport " +
@@ -82,7 +82,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithMultipleSubpackagesAndCustomSeparator() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"import javax@portlet@Portlet;\nimport javax$batch$operations;",
 				"import jakarta@portlet@Portlet;\nimport " +
@@ -93,7 +93,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithNoMatch() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"com.liferay.portal.kernel.util.StringUtil",
 				"com.liferay.portal.kernel.util.StringUtil"
@@ -102,7 +102,7 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithNoMatchAndCustomSeparator() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"com@liferay@portal@kernel@util@StringUtil",
 				"com@liferay@portal@kernel@util@StringUtil"
@@ -115,14 +115,14 @@ public class JakartaUpgradeProcessUtilTest {
 
 	@Test
 	public void testReplaceWithXJavaxPortletNamespacedResponse() {
-		_testReplacements(
+		_testReplace(
 			HashMapBuilder.put(
 				"X-JAVAX-PORTLET-NAMESPACED-RESPONSE",
 				"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE"
 			).build());
 	}
 
-	private void _testReplacements(Map<String, String> replacements) {
+	private void _testReplace(Map<String, String> replacements) {
 		for (Map.Entry<String, String> entry : replacements.entrySet()) {
 			Assert.assertEquals(
 				entry.getValue(),
@@ -130,7 +130,7 @@ public class JakartaUpgradeProcessUtilTest {
 		}
 	}
 
-	private void _testReplacements(
+	private void _testReplace(
 		Map<String, String> replacements, Set<Character> customSeparators) {
 
 		for (Map.Entry<String, String> entry : replacements.entrySet()) {

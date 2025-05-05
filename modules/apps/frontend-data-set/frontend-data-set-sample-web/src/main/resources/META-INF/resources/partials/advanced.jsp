@@ -19,7 +19,6 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	%>'
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	customViewsEnabled="<%= true %>"
-	fdsSortItemList="<%= fdsSampleDisplayContext.getFDSSortItemList() %>"
 	formId="fm"
 	id="<%= FDSSampleFDSNames.ADVANCED %>"
 	itemsPerPage="<%= 10 %>"

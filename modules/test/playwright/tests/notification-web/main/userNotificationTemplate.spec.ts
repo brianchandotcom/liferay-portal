@@ -12,6 +12,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -23,6 +24,55 @@ export const test = mergeTests(
 	objectPagesTest,
 	usersAndOrganizationsPagesTest
 );
+
+const notificationTemplateInfo = {
+	description: 'This is a description',
+	subject: 'Subject',
+	term: '[%CURRENT_USER_FIRST_NAME%]',
+};
+
+test('can create a template', async ({page, userNotificationTemplatePage}) => {
+	await userNotificationTemplatePage.goto();
+
+	const notificationTemplateName =
+		'Notification Template Name' + getRandomInt();
+
+	await userNotificationTemplatePage.basicInfoName.fill(
+		notificationTemplateName
+	);
+
+	await userNotificationTemplatePage.descriptionInput.fill(
+		notificationTemplateInfo.description
+	);
+
+	await userNotificationTemplatePage.toInput.fill(
+		notificationTemplateInfo.term
+	);
+
+	await userNotificationTemplatePage.contentSubject.fill(
+		notificationTemplateInfo.subject
+	);
+
+	await userNotificationTemplatePage.saveButton.click();
+
+	await page.getByText(notificationTemplateName).click();
+
+	await expect(userNotificationTemplatePage.basicInfoName).toHaveValue(
+		notificationTemplateName
+	);
+
+	await expect(userNotificationTemplatePage.descriptionInput).toHaveValue(
+		notificationTemplateInfo.description
+	);
+
+	await expect(userNotificationTemplatePage.toInput).toHaveValue(
+		notificationTemplateInfo.term
+	);
+
+	await expect(userNotificationTemplatePage.contentSubject).toHaveValue(
+		notificationTemplateInfo.subject
+	);
+});
 
 test('user notification is sent to regular role', async ({
 	apiHelpers,

@@ -10,16 +10,22 @@ import {NotificationTemplatesPage} from './NotificationTemplatesPage';
 export class UserNotificationTemplatePage {
 	readonly basicInfoName: Locator;
 	readonly contentSubject: Locator;
+	readonly descriptionInput: Locator;
 	readonly notificationTemplatesPage: NotificationTemplatesPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly toInput: Locator;
 
 	constructor(page: Page) {
 		this.basicInfoName = page.getByLabel('Name' + 'Mandatory').first();
 		this.contentSubject = page.getByLabel('Subject' + 'Mandatory');
+		this.descriptionInput = page.getByRole('textbox', {
+			name: 'Description',
+		});
 		this.notificationTemplatesPage = new NotificationTemplatesPage(page);
 		this.page = page;
 		this.saveButton = page.getByText('Save', {exact: true});
+		this.toInput = page.getByPlaceholder('Use terms to configure');
 	}
 
 	async goto() {

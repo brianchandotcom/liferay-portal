@@ -15,6 +15,19 @@ type RequestHandlerResult<T> = {
 	success: boolean;
 };
 
+const headers = new Headers({
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+});
+
+export const HEADERS_ALL_LANGUAGES = new Headers({
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+	'X-Accept-All-Languages': 'true',
+});
+
 export async function handleRequest<T>(
 	fetcher: () => Promise<Response>,
 	{returnValue = false}: {returnValue?: boolean} = {}
@@ -73,18 +86,15 @@ export async function postFormData(formData: FormData, url: string) {
 	);
 }
 
-const headers = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-});
-
-export const HEADERS_ALL_LANGUAGES = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-	'X-Accept-All-Languages': 'true',
-});
+export async function patch(data: any, url: string) {
+	return handleRequest(() =>
+		fetch(url, {
+			body: JSON.stringify(data),
+			headers,
+			method: 'PATCH',
+		})
+	);
+}
 
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	const result = await fetch(input, {headers, method: 'GET', ...init});

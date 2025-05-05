@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {patch} from '../services/api';
 import ApiHelper from '../structure_builder/services/ApiHelper';
 
 export type TFolder = {
@@ -19,4 +20,11 @@ async function getFolder(folderId: string): Promise<TFolder> {
 	return await ApiHelper.get(`${OBJECT_ENTRY_FOLDER_URL}/${folderId}`);
 }
 
-export default {getFolder};
+async function updateFolder(folderData: TFolder) {
+	return await patch(
+		folderData,
+		`${OBJECT_ENTRY_FOLDER_URL}/${folderData.id}`
+	);
+}
+
+export default {getFolder, updateFolder};

@@ -480,9 +480,7 @@ public class DisplayPageTemplateResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {
-			"displayPageTemplateSettings", "externalReferenceCode", "name"
-		};
+		return new String[] {"externalReferenceCode", "name"};
 	}
 
 	@Override

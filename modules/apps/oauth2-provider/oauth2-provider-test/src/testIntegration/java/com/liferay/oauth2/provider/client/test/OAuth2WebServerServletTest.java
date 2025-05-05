@@ -11,7 +11,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestPreviewURLApplication;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -58,7 +57,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws PortalException {
+	public void test() throws Exception {
 		String tokenString = getToken("oauthTestApplication");
 
 		WebTarget webTarget = getWebTarget("/preview-url");
@@ -120,7 +119,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		return new OAuth2WebServerServletTestPreparator();
 	}
 
-	private WebTarget _getRootWebTarget(String path) throws PortalException {
+	private WebTarget _getRootWebTarget(String path) throws Exception {
 		ClientBuilder clientBuilder = new ClientBuilderImpl();
 
 		Client client = clientBuilder.build();

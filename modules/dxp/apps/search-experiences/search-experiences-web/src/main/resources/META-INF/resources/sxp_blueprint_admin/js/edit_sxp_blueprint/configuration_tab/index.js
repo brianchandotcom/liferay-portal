@@ -148,7 +148,7 @@ function ConfigurationTab({
 					</div>
 
 					{Liferay.FeatureFlags['LPS-129412'] && (
-						<div className="c-mb-4">
+						<div className="align-items-center c-mb-4">
 							<ClayToggle
 								aria-label={Liferay.Language.get(
 									'enable-collection-provider'
@@ -161,9 +161,15 @@ function ConfigurationTab({
 
 										<ClayTooltipProvider>
 											<span
-												title={Liferay.Language.get(
-													'enable-collection-provider-help'
-												)}
+												title={
+													!frameworkConfig.collectionProvider
+														? Liferay.Language.get(
+																'enable-collection-provider-help'
+															)
+														: Liferay.Language.get(
+																'disable-collection-provider-help'
+															)
+												}
 											>
 												<ClayIcon
 													className="c-ml-2 text-secondary"
@@ -178,6 +184,10 @@ function ConfigurationTab({
 									frameworkConfig.collectionProvider || false
 								}
 							/>
+
+							<span className="c-ml-2 sheet-text">
+								<LearnMessage resourceKey="collections-with-search-blueprints" />
+							</span>
 						</div>
 					)}
 

@@ -122,7 +122,7 @@ test.describe('Form Configuration', () => {
 			// Go to view mode in spanish language
 
 			await page.goto(
-				`/es/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				`/es-es/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
 			// Submit form
@@ -1923,7 +1923,7 @@ test.describe('Form Localization', () => {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('menuitem', {
-					name: 'Español',
+					name: 'Español (España)',
 				}),
 				trigger: page.getByTestId('triggerButton').first(),
 			});
@@ -4241,7 +4241,7 @@ test.describe('Form Localization', () => {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('menuitem', {
-					name: 'Español',
+					name: 'Español (España)',
 				}),
 				trigger: page.getByTestId('triggerButton').first(),
 			});

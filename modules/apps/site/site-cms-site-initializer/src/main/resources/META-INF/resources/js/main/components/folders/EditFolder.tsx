@@ -8,7 +8,8 @@ import ClayForm from '@clayui/form';
 import {Item} from '@clayui/multi-select/lib/types';
 import ClayToolbar from '@clayui/toolbar';
 import {useFormik} from 'formik';
-import {navigate} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import FolderService, {TFolder} from '../../../services/FolderService';
@@ -69,9 +70,20 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 
 			if (success) {
 				navigate(backURL);
+
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-was-updated-successfully'),
+						`<strong>${formValues.folderName}</strong>`
+					),
+					type: 'success',
+				});
 			}
 			else {
-				console.log(errorMessage);
+				openToast({
+					message: errorMessage,
+					type: 'danger',
+				});
 			}
 		},
 		validate: (values) =>

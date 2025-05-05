@@ -164,16 +164,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				postUtilityPage.getExternalReferenceCode()));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPage()
@@ -228,10 +218,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteExternalReferenceCodeUtilityPagePermissionsPage();
+	public void testGetSiteUtilityPagePermissionsPage() throws Exception {
+		super.testGetSiteUtilityPagePermissionsPage();
 	}
 
 	@Override
@@ -392,20 +380,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteByExternalReferenceCodeUtilityPagePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeUtilityPagePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteExternalReferenceCodeUtilityPagePermissionsPage();
+	public void testPutSiteUtilityPagePermissionsPage() throws Exception {
+		super.testPutSiteUtilityPagePermissionsPage();
 	}
 
 	@Override
@@ -483,6 +459,15 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		return testGroup.getExternalReferenceCode();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	protected UtilityPage testGetSiteUtilityPagePermissionsPage_addUtilityPage()
+		throws Exception {
+
+		return super.testGetSiteUtilityPagePermissionsPage_addUtilityPage();
+	}
+
 	@Override
 	protected UtilityPage
 			testPostSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage(
@@ -491,6 +476,15 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		return testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
 			testGroup.getExternalReferenceCode(), utilityPage);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected UtilityPage testPutSiteUtilityPagePermissionsPage_addUtilityPage()
+		throws Exception {
+
+		return super.testPutSiteUtilityPagePermissionsPage_addUtilityPage();
 	}
 
 	private void _assertNestedFields(UtilityPage utilityPage) throws Exception {

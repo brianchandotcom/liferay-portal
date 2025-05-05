@@ -147,6 +147,15 @@ public class DisplayPageTemplateResourceTest
 							getExternalReferenceCode()));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.testGetSiteDisplayPageTemplatePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate()
@@ -197,16 +206,6 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate);
 		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
 			displayPageTemplate);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage();
 	}
 
 	@Override
@@ -267,16 +266,6 @@ public class DisplayPageTemplateResourceTest
 
 		super.
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortString();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage();
 	}
 
 	@Override
@@ -427,6 +416,15 @@ public class DisplayPageTemplateResourceTest
 				serviceContext, WorkflowConstants.STATUS_DRAFT));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteDisplayPageTemplatePermissionsPage()
+		throws Exception {
+
+		super.testPutSiteDisplayPageTemplatePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate()
@@ -458,26 +456,6 @@ public class DisplayPageTemplateResourceTest
 						displayPageTemplate));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplatePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteExternalReferenceCodeDisplayPageTemplatePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"externalReferenceCode", "name"};
@@ -495,6 +473,17 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate.setMarkedAsDefault(Boolean.FALSE);
 
 		return displayPageTemplate;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected DisplayPageTemplate
+			testGetSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate()
+		throws Exception {
+
+		return super.
+			testGetSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
 	}
 
 	@Override
@@ -582,6 +571,17 @@ public class DisplayPageTemplateResourceTest
 
 		return testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage_addDisplayPageTemplate(
 			testGroup.getExternalReferenceCode(), displayPageTemplate);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected DisplayPageTemplate
+			testPutSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate()
+		throws Exception {
+
+		return super.
+			testPutSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
 	}
 
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {

@@ -12,8 +12,8 @@
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-form-renderer/src/test/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactoryTest\.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/notification/DDMFormEmailNotificationSender\.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-service/src/test/java/com/liferay/dynamic/data/mapping/internal/report/NumericDDMFormFieldTypeReportProcessorTest\.java" />
-		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/DDMStructureTestHelper\.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-test/src/testIntegration/java/com/liferay/dynamic/data/mapping/service/test/BaseDDMServiceTestCase\.java" />
+		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/DDMStructureTestHelper\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="CSPTagIllegalAttributesCheck" files="dynamic-data-mapping-service/src/main/resources/com/liferay/dynamic/data/mapping/service/dependencies/readonly/ddm-separator\.ftl" />

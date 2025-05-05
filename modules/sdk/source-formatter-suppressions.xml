@@ -7,12 +7,12 @@
 		<suppress checks="JSONNamingCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
 		<suppress checks="MethodNamingCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayThemeDefaultsPlugin\.java" />
 		<suppress checks="MethodNamingCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/WorkspaceExtension\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayExtPlugin\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayOSGiExtPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/JspCDefaultsPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/WatchOSGiPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayExtPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayOSGiExtPlugin\.java" />
 		<suppress checks="OperatorOperandCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/ProjectTemplateFilesTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="ant-beanshell/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />

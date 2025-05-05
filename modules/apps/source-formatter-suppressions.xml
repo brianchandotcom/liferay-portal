@@ -17,15 +17,15 @@
 		<suppress checks="ComponentExposureCheck" files="export-import/export-import-changeset-taglib/src/main/java/com/liferay/exportimport/changeset/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="flags/flags-taglib/src/main/java/com/liferay/flags/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="frontend-data-set/frontend-data-set-taglib/src/main/java/com/liferay/frontend/data/set/taglib/internal/servlet/ServletContextUtil\.java" />
+		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib/src/main/java/com/liferay/frontend/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/internal/ClayTagContextContributorsProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/internal/js/loader/modules/extender/npm/NPMResolverProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib-dynamic-section/src/main/java/com/liferay/frontend/taglib/dynamic/section/internal/util/DynamicSectionUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="frontend-taglib/frontend-taglib/src/main/java/com/liferay/frontend/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="image-uploader/image-uploader-web/src/main/java/com/liferay/image/uploader/web/internal/util/UploadImageUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="info/info-taglib/src/main/java/com/liferay/info/taglib/internal/servlet/ServletContextUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="item-selector/item-selector-taglib/src/main/java/com/liferay/item/selector/taglib/internal/servlet/item/selector/ItemSelectorUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="item-selector/item-selector-taglib/src/main/java/com/liferay/item/selector/taglib/internal/servlet/ServletContextUtil\.java" />
+		<suppress checks="ComponentExposureCheck" files="item-selector/item-selector-taglib/src/main/java/com/liferay/item/selector/taglib/internal/servlet/item/selector/ItemSelectorUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="item-selector/item-selector-taglib/src/main/java/com/liferay/item/selector/taglib/internal/util/GroupItemSelectorProviderRegistryUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="journal/journal-service/src/main/java/com/liferay/journal/internal/util/JournalServiceComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="journal/journal-taglib/src/main/java/com/liferay/journal/taglib/internal/servlet/ServletContextUtil\.java" />
@@ -62,7 +62,7 @@
 		<suppress checks="InnerExceptionClassCheck" files="layout/layout-page-template-api/src/main/java/com/liferay/layout/page/template/exception/LayoutPageTemplateEntryNameException\.java" />
 		<suppress checks="InnerExceptionClassCheck" files="object/object-api/src/main/java/com/liferay/object/exception/ObjectRelationshipDeletionTypeException\.java" />
 		<suppress checks="InnerExceptionClassCheck" files="object/object-api/src/main/java/com/liferay/object/exception/ObjectValidationRuleEngineException\.java" />
-		<suppress checks="InnerExceptionClassCheck" files="portal-workflow/portal-workflow-kaleo-definition-api/src/main/java/com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException\.java" />
 		<suppress checks="InnerExceptionClassCheck" files="portal/portal-json-web-service-client/src/main/java/com/liferay/portal/json/web/service/client/JSONWebServiceTransportException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="portal-workflow/portal-workflow-kaleo-definition-api/src/main/java/com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException\.java" />
 	</checkstyle>
 </suppressions>

@@ -5,8 +5,8 @@
 		<suppress checks="AppendCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ArrayUtilCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ArrayUtil\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
-		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/servlet/filters/invoker/InvokerFilter\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/servlet/NonSerializableObjectRequestWrapper\.java" />
+		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/servlet/filters/invoker/InvokerFilter\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/Http\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
@@ -135,14 +135,14 @@
 		<suppress checks="MethodCallsOrderCheck" files="portal-impl/test/unit/com/liferay/portal/json/JSONUtilTest\.java" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Alert\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Clustering\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/fragment/FragmentsDeploy\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/PageEditor\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Navigator\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/OAuth2\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Organization\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/rss/RSSPortlet\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/SAML\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Staging\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/fragment/FragmentsDeploy\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pageeditor/PageEditor\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/rss/RSSPortlet\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/administration/passwordpolicies/PasswordPolicies\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/login/SessionTimeout\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/OAuth2\.testcase" />

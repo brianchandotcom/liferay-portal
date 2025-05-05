@@ -26,9 +26,9 @@
 		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLDTDVersionCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
-		<suppress checks="XMLServiceFileCheck" files="portal-tools-service-builder-test-service/service\.xml" />
 		<suppress checks="XMLServiceFileCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLServiceFileCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
+		<suppress checks="XMLServiceFileCheck" files="portal-tools-service-builder-test-service/service\.xml" />
 		<suppress checks="XMLServiceReferenceCheck" files="portal-tools-service-builder/src/main/resources/com/liferay/portlet/trash/service\.xml" />
 	</source-check>
 </suppressions>

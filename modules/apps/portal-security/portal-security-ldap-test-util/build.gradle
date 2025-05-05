@@ -7,3 +7,7 @@ dependencies {
 	compileOnly project(":apps:portal-security:portal-security-ldap-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 }
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

@@ -745,6 +745,13 @@
 					"title": "Default Publication Template ID",
 					"type": "number"
 				},
+				"defaultOwnerActionIds": {
+					"items": {
+						"type": "string"
+					},
+					"title": "Defaults Owner Action IDs",
+					"type": "array"
+				},
 				"defaultSandboxCTCollectionTemplateId": {
 					"default": 0,
 					"title": "Default Sandbox Publication Template ID",

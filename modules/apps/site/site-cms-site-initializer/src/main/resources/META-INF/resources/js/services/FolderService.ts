@@ -8,9 +8,9 @@ import ApiHelper from '../structure_builder/services/ApiHelper';
 
 export type TFolder = {
 	description: string;
-	externalReferenceCode: string;
+	externalReferenceCode?: string;
 	id: number;
-	scopeKey: string;
+	scopeKey?: string;
 	title: string;
 };
 

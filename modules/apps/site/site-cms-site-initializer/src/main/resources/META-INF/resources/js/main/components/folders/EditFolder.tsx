@@ -57,7 +57,23 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 			folderName: folderData.title,
 			folderSpace: folderData.scopeKey,
 		},
-		onSubmit: () => {},
+		onSubmit: async (formValues) => {
+			const newFolderValues: TFolder = {
+				description: formValues.folderDescription,
+				id: parseInt(folderId, 10),
+				title: formValues.folderName,
+			};
+
+			const {errorMessage, success} =
+				await FolderService.updateFolder(newFolderValues);
+
+			if (success) {
+				navigate(backURL);
+			}
+			else {
+				console.log(errorMessage);
+			}
+		},
 		validate: (values) =>
 			validate(
 				{

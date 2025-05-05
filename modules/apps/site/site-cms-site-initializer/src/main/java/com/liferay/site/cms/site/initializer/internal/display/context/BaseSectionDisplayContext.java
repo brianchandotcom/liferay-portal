@@ -82,10 +82,17 @@ public abstract class BaseSectionDisplayContext {
 		String[] objectFolderExternalReferenceCodes =
 			getObjectFolderExternalReferenceCodes();
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
-		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=(objectFolderExternalReferenceCode in ('");
+		sb.append("/o/search/v1.0/search?emptySearch=true&filter=(");
+
+		if (_objectEntryFolder != null) {
+			sb.append("folderId eq");
+			sb.append(_objectEntryFolder.getObjectEntryFolderId());
+			sb.append("and");
+		}
+
+		sb.append("(objectFolderExternalReferenceCode in ('");
 		sb.append(StringUtil.merge(objectFolderExternalReferenceCodes, "','"));
 		sb.append("')");
 
@@ -96,12 +103,7 @@ public abstract class BaseSectionDisplayContext {
 			sb.append(cmsSectionFilterString);
 		}
 
-		if (_objectEntryFolder != null) {
-			sb.append(" and folderId eq");
-			sb.append(_objectEntryFolder.getObjectEntryFolderId());
-		}
-
-		sb.append(")&nestedFields=embedded");
+		sb.append("))&nestedFields=embedded");
 
 		return sb.toString();
 	}

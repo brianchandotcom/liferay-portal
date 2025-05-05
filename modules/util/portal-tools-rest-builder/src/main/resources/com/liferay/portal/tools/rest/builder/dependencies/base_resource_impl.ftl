@@ -1009,8 +1009,31 @@ public abstract class Base${schemaName}ResourceImpl
 							if (${schemaVarName}.${getterMethodName}() != null) {
 								try {
 						</#if>
-
-						${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.${getterMethodName}());
+								<#if deleteByIdJavaMethodSignature.javaMethodParameters?? && deleteByIdJavaMethodSignature.javaMethodParameters?size gt 0>
+								${deleteByIdJavaMethodSignature.methodName}(
+						<#if deleteByIdJavaMethodSignature.javaMethodParameters?size gt 0>
+						  ${schemaVarName}.${getterMethodName}()
+							<#if deleteByIdJavaMethodSignature.javaMethodParameters?size gt 1>
+								,
+							  <#list deleteByIdJavaMethodSignature.javaMethodParameters as param>
+								<#if param?index gt 0>
+								  <#if stringUtil.equals(param.parameterType, "Boolean")>
+									(Boolean)parameters.getOrDefault("${param.parameterName}", ${param.defaultValue?has_content?then(param.defaultValue, "false")})
+								  <#elseif stringUtil.equals(param.parameterType, "String")>
+									(String)parameters.getOrDefault("${param.parameterName}", ${param.defaultValue?has_content?then('"' + param.defaultValue + '"', "null")})
+								  <#elseif param.parameterType?contains("Long") || param.parameterType?contains("Integer")>
+									(${param.parameterType})parameters.getOrDefault("${param.parameterName}", ${param.defaultValue?has_content?then(param.defaultValue, "null")})
+								  <#else>
+									(${param.parameterType})parameters.getOrDefault("${param.parameterName}", null)
+								  </#if><#if param?index < deleteByIdJavaMethodSignature.javaMethodParameters?size - 1>,</#if>
+								</#if>
+							  </#list>
+							</#if>
+						</#if>
+					  );
+						<#else>
+						  ${deleteByIdJavaMethodSignature.methodName}();
+						</#if>
 
 						return ${schemaVarName};
 

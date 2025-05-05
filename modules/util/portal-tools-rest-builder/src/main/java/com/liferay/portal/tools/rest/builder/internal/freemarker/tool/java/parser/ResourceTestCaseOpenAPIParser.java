@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
@@ -44,8 +45,7 @@ public class ResourceTestCaseOpenAPIParser {
 				javaMethodSignature.getJavaMethodParameters(),
 				_getMethodName(javaMethodSignature),
 				_getReturnType(
-					configYAML.getApiPackagePath(),
-					javaMethodSignature.getReturnType(),
+					configYAML, javaMethodSignature.getReturnType(),
 					_getVersion(openAPIYAML)),
 				javaMethodSignature.getParentSchemaName()));
 	}
@@ -116,7 +116,11 @@ public class ResourceTestCaseOpenAPIParser {
 	}
 
 	private static String _getReturnType(
-		String apiPackage, String returnType, String version) {
+		ConfigYAML configYAML, String returnType, String version) {
+
+		String apiPackage = configYAML.getApiPackagePath();
+
+		String packageName = ConfigUtil.packageName(configYAML);
 
 		String versionPackage = StringUtil.replace(version, '.', '_');
 
@@ -140,7 +144,7 @@ public class ResourceTestCaseOpenAPIParser {
 		}
 		else if (returnType.contains(".") &&
 				 !returnType.equals("com.liferay.portal.vulcan") &&
-				 !returnType.equals("jakarta.ws.rs.core.Response") &&
+				 !returnType.equals(packageName + ".ws.rs.core.Response") &&
 				 !returnType.startsWith("java.lang") &&
 				 !returnType.startsWith("java.util") &&
 				 !returnType.startsWith(apiPackage)) {

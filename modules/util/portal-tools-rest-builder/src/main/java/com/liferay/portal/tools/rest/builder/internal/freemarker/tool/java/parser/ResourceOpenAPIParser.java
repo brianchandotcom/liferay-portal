@@ -75,7 +75,7 @@ public class ResourceOpenAPIParser {
 				pathItem,
 				operation -> {
 					String returnType = _getReturnType(
-						javaDataTypeMap, operation, path);
+						configYAML, javaDataTypeMap, operation, path);
 
 					if (!_isSchemaMethod(
 							javaDataTypeMap, returnType, schemaName,
@@ -129,7 +129,9 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static String getMethodAnnotations(
-		JavaMethodSignature javaMethodSignature) {
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature) {
+
+		String packageName = ConfigUtil.packageName(configYAML);
 
 		String path = javaMethodSignature.getPath();
 		Operation operation = javaMethodSignature.getOperation();
@@ -236,21 +238,25 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		methodAnnotations.add("@jakarta.ws.rs.Path(\"" + path + "\")");
+		methodAnnotations.add(
+			StringBundler.concat(
+				"@", packageName, ".ws.rs.Path(\"", path, "\")"));
 
 		String annotationString = StringUtil.toUpperCase(
 			OpenAPIParserUtil.getHTTPMethod(operation));
 
-		methodAnnotations.add("@jakarta.ws.rs." + annotationString);
+		methodAnnotations.add(
+			StringBundler.concat(
+				"@", packageName, ".ws.rs.", annotationString));
 
 		String methodAnnotation = _getMethodAnnotationConsumes(
-			javaMethodSignature.getRequestBodyMediaTypes());
+			configYAML, javaMethodSignature.getRequestBodyMediaTypes());
 
 		if (Validator.isNotNull(methodAnnotation)) {
 			methodAnnotations.add(methodAnnotation);
 		}
 
-		methodAnnotation = _getMethodAnnotationProduces(operation);
+		methodAnnotation = _getMethodAnnotationProduces(configYAML, operation);
 
 		if (Validator.isNotNull(methodAnnotation)) {
 			methodAnnotations.add(methodAnnotation);
@@ -482,6 +488,8 @@ public class ResourceOpenAPIParser {
 
 		BatchOperationType batchOperationType = null;
 
+		String packageName = ConfigUtil.packageName(configYAML);
+
 		String methodName = javaMethodSignature.getMethodName();
 		String parentSchemaName = GetterUtil.getString(
 			javaMethodSignature.getParentSchemaName());
@@ -564,7 +572,7 @@ public class ResourceOpenAPIParser {
 				Collections.singleton(ContentTypes.APPLICATION_JSON),
 				schemaName, javaMethodParameters,
 				_getBatchMethodName(batchOperationType, methodName),
-				"jakarta.ws.rs.core.Response", parentSchemaName));
+				packageName + ".ws.rs.core.Response", parentSchemaName));
 	}
 
 	private static String _addParameter(Parameter parameter) {
@@ -887,11 +895,13 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodAnnotationConsumes(
-		Set<String> requestBodyMediaTypes) {
+		ConfigYAML configYAML, Set<String> requestBodyMediaTypes) {
 
 		if (requestBodyMediaTypes.isEmpty()) {
 			return null;
 		}
+
+		String packageName = ConfigUtil.packageName(configYAML);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -905,13 +915,17 @@ public class ResourceOpenAPIParser {
 		}
 
 		if (requestBodyMediaTypes.size() > 1) {
-			return "@jakarta.ws.rs.Consumes({" + sb.toString() + "})";
+			return StringBundler.concat(
+				"@", packageName, ".ws.rs.Consumes({", sb, "})");
 		}
 
-		return "@jakarta.ws.rs.Consumes(" + sb.toString() + ")";
+		return StringBundler.concat(
+			"@", packageName, ".ws.rs.Consumes(", sb, ")");
 	}
 
-	private static String _getMethodAnnotationProduces(Operation operation) {
+	private static String _getMethodAnnotationProduces(
+		ConfigYAML configYAML, Operation operation) {
+
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
 		if ((responses == null) || responses.isEmpty()) {
@@ -948,11 +962,15 @@ public class ResourceOpenAPIParser {
 
 		sb.setLength(sb.length() - 2);
 
+		String packageName = ConfigUtil.packageName(configYAML);
+
 		if (mediaTypes.size() > 1) {
-			return "@jakarta.ws.rs.Produces({" + sb.toString() + "})";
+			return StringBundler.concat(
+				"@", packageName, ".ws.rs.Produces({", sb, "})");
 		}
 
-		return "@jakarta.ws.rs.Produces(" + sb.toString() + ")";
+		return StringBundler.concat(
+			"@", packageName, ".ws.rs.Produces(", sb, ")");
 	}
 
 	private static String _getMethodName(
@@ -1142,6 +1160,8 @@ public class ResourceOpenAPIParser {
 		ConfigYAML configYAML, JavaMethodParameter javaMethodParameter,
 		Operation operation, Map<String, Schema> schemas) {
 
+		String packageName = ConfigUtil.packageName(configYAML);
+
 		List<Parameter> parameters = operation.getParameters();
 
 		Set<String> parameterNames = new HashSet<>();
@@ -1157,13 +1177,13 @@ public class ResourceOpenAPIParser {
 				"com.liferay.portal.vulcan.aggregation.Aggregation") &&
 			parameterNames.contains("aggregationTerms")) {
 
-			return "@jakarta.ws.rs.core.Context";
+			return "@" + packageName + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(parameterType, Filter.class.getName()) &&
 			parameterNames.contains("filter")) {
 
-			return "@jakarta.ws.rs.core.Context";
+			return "@" + packageName + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(
@@ -1172,13 +1192,13 @@ public class ResourceOpenAPIParser {
 			parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
-			return "@jakarta.ws.rs.core.Context";
+			return "@" + packageName + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(parameterType, Sort[].class.getName()) &&
 			parameterNames.contains("sort")) {
 
-			return "@jakarta.ws.rs.core.Context";
+			return "@" + packageName + ".ws.rs.core.Context";
 		}
 
 		for (Parameter parameter : operation.getParameters()) {
@@ -1191,13 +1211,20 @@ public class ResourceOpenAPIParser {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(10);
 
 			String defaultValue = _getDefaultValue(
 				configYAML, parameter.getSchema(), schemas);
 
 			if (defaultValue != null) {
-				sb.append("@jakarta.ws.rs.DefaultValue(\"");
+				sb.append(
+					"@"
+				).append(
+					packageName
+				).append(
+					".ws.rs.DefaultValue(\""
+				);
+
 				sb.append(defaultValue);
 				sb.append("\")");
 			}
@@ -1207,11 +1234,25 @@ public class ResourceOpenAPIParser {
 			}
 
 			if (parameter.isRequired()) {
-				sb.append("@jakarta.validation.constraints.NotNull");
+				sb.append(
+					"@"
+				).append(
+					packageName
+				).append(
+					".validation.constraints.NotNull"
+				);
 			}
 
-			sb.append("@io.swagger.v3.oas.annotations.Parameter(hidden=true)");
-			sb.append("@jakarta.ws.rs.");
+			sb.append(
+				"@io.swagger.v3.oas.annotations.Parameter(hidden=true)"
+			).append(
+				"@"
+			).append(
+				packageName
+			).append(
+				".ws.rs."
+			);
+
 			sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
 			sb.append("Param(\"");
 			sb.append(parameter.getName());
@@ -1346,7 +1387,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getReturnType(
-		Map<String, String> javaDataTypeMap, Operation operation, String path) {
+		ConfigYAML configYAML, Map<String, String> javaDataTypeMap,
+		Operation operation, String path) {
 
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
@@ -1379,12 +1421,25 @@ public class ResourceOpenAPIParser {
 
 			Integer curHttpStatusCode = responseCode.getHttpCode();
 
-			if (responseCode.isDefaultResponse() ||
-				(_FAMILY_SUCCESSFUL !=
-					jakarta.ws.rs.core.Response.Status.Family.familyOf(
-						curHttpStatusCode))) {
+			if (ConfigUtil.isUseJavax() ||
+				ConfigUtil.isVersionCompatible(configYAML, 10)) {
 
-				continue;
+				if (responseCode.isDefaultResponse() ||
+					(_FAMILY_SUCCESSFUL_JAVAX !=
+						javax.ws.rs.core.Response.Status.Family.familyOf(
+							curHttpStatusCode))) {
+
+					continue;
+				}
+			}
+			else {
+				if (responseCode.isDefaultResponse() ||
+					(_FAMILY_SUCCESSFUL_JAKARTA !=
+						jakarta.ws.rs.core.Response.Status.Family.familyOf(
+							curHttpStatusCode))) {
+
+					continue;
+				}
 			}
 
 			if ((httpStatusCode == null) ||
@@ -1424,6 +1479,12 @@ public class ResourceOpenAPIParser {
 				String format = schema.getFormat();
 
 				if ((format != null) && format.equals("binary")) {
+					if (ConfigUtil.isUseJavax() ||
+						ConfigUtil.isVersionCompatible(configYAML, 10)) {
+
+						return javax.ws.rs.core.Response.class.getName();
+					}
+
 					return jakarta.ws.rs.core.Response.class.getName();
 				}
 
@@ -1448,6 +1509,12 @@ public class ResourceOpenAPIParser {
 
 		if (operation instanceof Get) {
 			return returnType;
+		}
+
+		if (ConfigUtil.isUseJavax() ||
+			ConfigUtil.isVersionCompatible(configYAML, 10)) {
+
+			return javax.ws.rs.core.Response.class.getName();
 		}
 
 		return jakarta.ws.rs.core.Response.class.getName();
@@ -1580,8 +1647,12 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static final jakarta.ws.rs.core.Response.Status.Family
-		_FAMILY_SUCCESSFUL =
+		_FAMILY_SUCCESSFUL_JAKARTA =
 			jakarta.ws.rs.core.Response.Status.Family.SUCCESSFUL;
+
+	private static final javax.ws.rs.core.Response.Status.Family
+		_FAMILY_SUCCESSFUL_JAVAX =
+			javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 	private enum BatchOperationType {
 

@@ -12,6 +12,18 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
  */
 public class ConfigUtil {
 
+	public static boolean isUseJavax() {
+		return _useJavax;
+	}
+
+	public static boolean isUseJavax(ConfigYAML configYAML) {
+		if (!isVersionCompatible(configYAML, 9) || _useJavax) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isVersionCompatible(
 		ConfigYAML configYAML, int version) {
 
@@ -21,5 +33,19 @@ public class ConfigUtil {
 
 		return false;
 	}
+
+	public static String packageName(ConfigYAML configYAML) {
+		if (!isVersionCompatible(configYAML, 9) || _useJavax) {
+			return "javax";
+		}
+
+		return "jakarta";
+	}
+
+	public static void setUseJavax(boolean useJavax) {
+		_useJavax = useJavax;
+	}
+
+	private static boolean _useJavax;
 
 }

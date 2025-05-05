@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The settings of a Display Page Template.",
+	description = "The settings of a display page template.",
 	value = "DisplayPageTemplateSettings"
 )
 @JsonFilter("Liferay.Vulcan")

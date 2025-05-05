@@ -636,9 +636,17 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+		if (objectDefinition.isRootDescendantNode()) {
+			_startWorkflowInstance(
+				PrincipalThreadLocal.getUserId(), objectEntry,
+				new ServiceContext(), false);
+		}
+		else {
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+		}
 
 		_deleteFileEntries(
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
@@ -5073,15 +5081,28 @@ public class ObjectEntryLocalServiceImpl
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
-			_skipModelListeners.set(skipModelListener);
-
-			ObjectActionThreadLocal.setSkipObjectActionExecution(true);
 			WorkflowThreadLocal.setEnabled(true);
 
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
-				userId, objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), objectEntry, serviceContext);
+			if (objectDefinition.isRootDescendantNode()) {
+				ObjectDefinition rootObjectDefinition =
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						objectDefinition.getRootObjectDefinitionId());
+
+				_startWorkflowInstance(
+					userId, rootObjectDefinition.getClassName(),
+					objectEntryPersistence.fetchByPrimaryKey(
+						objectEntry.getRootObjectEntryId()),
+					serviceContext);
+			}
+			else {
+				_skipModelListeners.set(skipModelListener);
+
+				ObjectActionThreadLocal.setSkipObjectActionExecution(true);
+
+				_startWorkflowInstance(
+					userId, objectDefinition.getClassName(), objectEntry,
+					serviceContext);
+			}
 		}
 		finally {
 			_skipModelListeners.set(false);
@@ -5090,6 +5111,17 @@ public class ObjectEntryLocalServiceImpl
 				skipObjectActionExecution);
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	private void _startWorkflowInstance(
+			long userId, String className, ObjectEntry objectEntry,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,
+			className, objectEntry.getObjectEntryId(), objectEntry,
+			serviceContext);
 	}
 
 	private String _toPeriodSeparator(String value) {

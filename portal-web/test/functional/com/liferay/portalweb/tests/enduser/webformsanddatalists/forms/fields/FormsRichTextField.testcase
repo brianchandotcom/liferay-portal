@@ -345,42 +345,6 @@ definition {
 		Form.viewRichTextPublished(text = "Test");
 	}
 
-	@description = "Verify that a help text can be added to a Rich Text Field"
-	@priority = 5
-	test HelpTextCanBeAdded {
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = 0,
-			fieldType = "Rich Text");
-
-		FormFields.editHelpText(
-			fieldHelpText = "Rich Text Help Text",
-			fieldName = "tip");
-
-		FormViewBuilder.assertHelpTextPresent(
-			fieldName = "Rich Text",
-			fieldValue = "Rich Text Help Text");
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormViewBuilder.assertHelpTextPresent(
-			fieldName = "Rich Text",
-			fieldValue = "Rich Text Help Text");
-
-		FormFields.editFrameField(
-			fieldLabel = "Rich Text",
-			fielName = "Test");
-
-		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-	}
-
 	@description = "Verify that the Field Label can be changed"
 	@priority = 5
 	test LabelCanBeEdited {

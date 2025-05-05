@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests, expect} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 import {createReadStream, readdirSync, statSync} from 'fs';
 import path from 'path';
 
@@ -14,9 +14,9 @@ import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {checkFolderInZip} from '../../../utils/zip';
+import {exportImportConfig} from './export_import.config';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
-import {exportImportConfig} from './export_import.config';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -28,6 +28,42 @@ export const test = mergeTests(
 	stagingPageTest,
 	stagingConfigurationPageTest
 );
+
+async function _unzipAndCheckFolder(
+	tempDir: string,
+	folderName: string = 'adaptive-media'
+): Promise<boolean | null> {
+	const files = readdirSync(tempDir)
+		.filter((file) => file.endsWith('.lar'))
+		.map((file) => ({
+			file,
+			time: statSync(path.join(tempDir, file)).mtime.getTime(),
+		}));
+
+	if (!files.length) {
+		return null;
+	}
+
+	// Sort files by most recent modification time
+
+	files.sort((a, b) => b.time - a.time);
+
+	const mostRecentFilePath = path.join(tempDir, files[0].file);
+
+	try {
+		const hasFolder = await checkFolderInZip(
+			mostRecentFilePath,
+			folderName
+		);
+
+		return hasFolder;
+	}
+	catch (error) {
+		console.error(`Error reading file ${files[0].file}: ${error}`);
+	}
+
+	return null;
+}
 
 test(
 	'Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',
@@ -95,7 +131,7 @@ test(
 		await stagingPage.publish(['Web Content 1 Items Web']);
 
 		const tomcatDir = exportImportConfig.environment.tomcatDir;
-		
+
 		const files = readdirSync(tomcatDir).filter((file) =>
 			file.startsWith('tomcat-')
 		);
@@ -107,40 +143,3 @@ test(
 		expect(hasFolder).toEqual(false);
 	}
 );
-
-const _unzipAndCheckFolder = async (
-	tempDir: string,
-	folderName: string = 'adaptive-media'
-): Promise<boolean> => {
-	const files = readdirSync(tempDir)
-		.filter((file) => file.endsWith('.lar'))
-		.map((file) => ({
-			file,
-			time: statSync(path.join(tempDir, file)).mtime.getTime(),
-		}));
-
-	if (!files.length) {
-		console.log('No LAR files found');
-
-		return null;
-	}
-
-	// Sort files by most recent modification time
-
-	files.sort((a, b) => b.time - a.time);
-
-	const mostRecentFilePath = path.join(tempDir, files[0].file);
-
-	try {
-		const hasFolder = await checkFolderInZip(
-			mostRecentFilePath,
-			folderName
-		);
-				return hasFolder;
-	}
-	catch (error) {
-		console.error(`Error reading file ${files[0].file}: ${error}`);
-	}
-
-	return null;
-};

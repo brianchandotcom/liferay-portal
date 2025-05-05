@@ -2632,13 +2632,13 @@ components:
                     description:
                         Indicates how often a page is updated.
                     enum:
-                        -   Always
-                        -   Hourly
-                        -   Daily
-                        -   Weekly
-                        -   Monthly
-                        -   Yearly
-                        -   Never
+                        -   always
+                        -   hourly
+                        -   daily
+                        -   weekly
+                        -   monthly
+                        -   yearly
+                        -   never
                     type: string
                 include:
                     description:

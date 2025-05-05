@@ -12,7 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateOpenGraphSett
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.SiteMapSettings;
+import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -171,13 +171,13 @@ public class DisplayPageTemplateDTOConverter
 				setRobots_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getRobotsMap()));
-				setSiteMapSettings(() -> _getSiteMapSettings(layout));
+				setSitemapSettings(() -> _getSitemapSettings(layout));
 			}
 		};
 	}
 
-	private SiteMapSettings _getSiteMapSettings(Layout layout) {
-		return new SiteMapSettings() {
+	private SitemapSettings _getSitemapSettings(Layout layout) {
+		return new SitemapSettings() {
 			{
 				setChangeFrequency(
 					() -> ChangeFrequency.create(

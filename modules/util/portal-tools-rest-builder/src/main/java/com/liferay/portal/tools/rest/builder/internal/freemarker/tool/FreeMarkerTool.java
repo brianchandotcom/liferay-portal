@@ -816,9 +816,10 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceMethodAnnotations(
-		JavaMethodSignature javaMethodSignature) {
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature) {
 
-		return ResourceOpenAPIParser.getMethodAnnotations(javaMethodSignature);
+		return ResourceOpenAPIParser.getMethodAnnotations(
+			configYAML, javaMethodSignature);
 	}
 
 	public String getResourceMethodName(
@@ -1242,6 +1243,10 @@ public class FreeMarkerTool {
 		}
 
 		return false;
+	}
+
+	public boolean isUseJavax(ConfigYAML configYAML) {
+		return ConfigUtil.isUseJavax(configYAML);
 	}
 
 	public boolean isVersionCompatible(ConfigYAML configYAML, int version) {

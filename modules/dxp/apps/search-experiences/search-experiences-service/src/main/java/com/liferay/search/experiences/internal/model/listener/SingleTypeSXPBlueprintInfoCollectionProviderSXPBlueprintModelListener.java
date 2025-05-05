@@ -18,6 +18,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -32,6 +35,7 @@ import com.liferay.search.experiences.internal.info.collection.provider.BlogsEnt
 import com.liferay.search.experiences.internal.info.collection.provider.FileEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.JournalArticleSXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.internal.info.collection.provider.KBArticleSXPBlueprintInfoCollectionProvider;
+import com.liferay.search.experiences.internal.info.collection.provider.ObjectEntrySXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
@@ -55,7 +59,9 @@ public class
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLAppLocalService dlAppLocalService, GroupService groupService,
 		JournalArticleService journalArticleService,
-		KBArticleLocalService kbArticleLocalService, Searcher searcher,
+		KBArticleLocalService kbArticleLocalService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		SXPBlueprintLocalService sxpBlueprintLocalService) {
 
@@ -70,6 +76,8 @@ public class
 		_groupService = groupService;
 		_journalArticleService = journalArticleService;
 		_kbArticleLocalService = kbArticleLocalService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
@@ -103,21 +111,31 @@ public class
 				_assetHelper, _blogsEntryLocalService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
-		else if (_className.equals(DLFileEntry.class.getName())) {
+
+		if (_className.equals(DLFileEntry.class.getName())) {
 			return new FileEntrySXPBlueprintInfoCollectionProvider(
 				_assetHelper, _dlAppLocalService, _dlFileEntryTypeLocalService,
 				_groupService, _searcher, _searchRequestBuilderFactory,
 				sxpBlueprint);
 		}
-		else if (_className.equals(JournalArticle.class.getName())) {
+
+		if (_className.equals(JournalArticle.class.getName())) {
 			return new JournalArticleSXPBlueprintInfoCollectionProvider(
 				_assetHelper, _classNameLocalService, _ddmStructureService,
 				_groupService, _journalArticleService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
-		else if (_className.equals(KBArticle.class.getName())) {
+
+		if (_className.equals(KBArticle.class.getName())) {
 			return new KBArticleSXPBlueprintInfoCollectionProvider(
 				_assetHelper, _kbArticleLocalService, _searcher,
+				_searchRequestBuilderFactory, sxpBlueprint);
+		}
+
+		if (_className.contains(ObjectDefinition.class.getName())) {
+			return new ObjectEntrySXPBlueprintInfoCollectionProvider(
+				_assetHelper, _className, _objectDefinitionLocalService,
+				_objectEntryLocalService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
 
@@ -191,6 +209,8 @@ public class
 	private final GroupService _groupService;
 	private final JournalArticleService _journalArticleService;
 	private final KBArticleLocalService _kbArticleLocalService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private SXPBlueprint _sxpBlueprint;

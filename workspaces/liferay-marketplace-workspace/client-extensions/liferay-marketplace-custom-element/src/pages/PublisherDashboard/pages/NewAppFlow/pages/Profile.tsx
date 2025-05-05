@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayMultiSelect from '@clayui/multi-select';
 import {filesize} from 'filesize';
-import {useState} from 'react';
-
 import {UploadedFile} from '../../../../../components/FileList/FileList';
 import Form from '../../../../../components/MarketplaceForm';
 import UploadLogo from '../../../../../components/UploadLogo/UploadLogo';
@@ -16,10 +13,12 @@ import {
 } from '../../../../../context/NewAppContext';
 import {ProductVocabulary} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
-import {getIconSpriteMap} from '../../../../../liferay/constants';
 import {getRandomID} from '../../../../../utils/string';
+import MultiSelect from '../../../../../components/MultiSelect/MultiSelect';
+import Select from '../../../../../components/Select/Select';
 
 const tooltipInfo = {
+	areas: 'tooltip',
 	categories: 'tootip',
 	description: 'tootip',
 	name: 'tootip',
@@ -29,13 +28,16 @@ const tooltipInfo = {
 const Profile = () => {
 	const [
 		{
-			profile: {categories, description, file, name, tags},
+			profile: {areas, categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
 		},
 		dispatch,
 	] = useNewAppContext();
 
 	const defaultSourceItems = {
+		areas:
+			vocabulariesAndCategories[ProductVocabulary.APP_AREA]?.categories ??
+			[],
 		categories:
 			vocabulariesAndCategories[ProductVocabulary.APP_CATEGORY]
 				?.categories ?? [],
@@ -44,23 +46,11 @@ const Profile = () => {
 			[],
 	};
 
-	const [multiSelectText, setMultiSelectText] = useState({
-		categories: '',
-		tags: '',
-	});
-
 	const onChange = (event: any) => {
 		dispatch({
 			payload: {[event.target.name]: event.target.value},
 			type: NewAppTypes.SET_PROFILE,
 		});
-	};
-
-	const onChangeMultiSelect = (event: any) => {
-		setMultiSelectText((prevState) => ({
-			...prevState,
-			[event.target.name]: event.target.value,
-		}));
 	};
 
 	const handleLogoUpload = (files: FileList) => {
@@ -122,7 +112,6 @@ const Profile = () => {
 		<div className="new-app-form-profile">
 			<h5>App Info</h5>
 			<hr />
-
 			<div className="align-items-center d-flex mt-5">
 				<UploadLogo
 					onDeleteFile={handleDelete}
@@ -130,7 +119,6 @@ const Profile = () => {
 					uploadedFile={file}
 				/>
 			</div>
-
 			<Form.FormControl>
 				<Form.Label
 					className="mt-5"
@@ -149,7 +137,6 @@ const Profile = () => {
 					value={name}
 				/>
 			</Form.FormControl>
-
 			<Form.FormControl>
 				<Form.Label
 					className="mt-5"
@@ -162,7 +149,7 @@ const Profile = () => {
 
 				<Form.Input
 					component="textarea"
-					maxLength={150}
+					maxLength={2000}
 					name="description"
 					onChange={onChange}
 					placeholder="Enter app description"
@@ -179,70 +166,111 @@ const Profile = () => {
 						info={tooltipInfo.categories}
 						required
 					>
-						{i18n.translate('categories')}
+						{i18n.translate('category')}
 					</Form.Label>
 
-					<ClayMultiSelect
-						{...{placeholder: 'Select categories'}}
-						inputName="description-selector"
-						items={categories}
-						key={`cat-${categories.length}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
+					<Select
+						className={categories?.value || 'placeholder-value'}
+						defaultOption
+						defaultOptionLabel={i18n.translate('select-category')}
+						name="category"
+						onChange={(event) => {
+							const category = defaultSourceItems.categories.find(
+								(defaultCategory: {
+									value: string;
+									label: string;
+								}) =>
+									defaultCategory.value === event.target.value
+							);
+							onChange({
 								target: {
 									name: 'categories',
-									value,
+									value: {
+										value: event.target.value,
+										label: category.label,
+									},
 								},
+							});
+						}}
+						options={defaultSourceItems.categories.map(
+							(category: {value: string; label: string}) => ({
+								key: category.value,
+								name: category.label,
 							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
-							onChange({
-								target: {name: 'categories', value},
-							})
-						}
-						sourceItems={getFilteredItems(
-							categories,
-							defaultSourceItems?.categories
 						)}
-						spritemap={getIconSpriteMap()}
-						value={multiSelectText?.categories}
+						required
+						value={categories?.value || ''}
 					/>
 				</Form.FormControl>
 
 				<Form.FormControl>
 					<Form.Label
-						className="mt-5"
-						htmlFor="tags"
-						info={tooltipInfo.tags}
+						htmlFor="areas"
+						info={tooltipInfo.areas}
 						required
 					>
+						{i18n.translate('area')}
+					</Form.Label>
+
+					<MultiSelect
+						inputName="area"
+						key={`areas-${areas.length}`}
+						multiselectKey={`area-${
+							getFilteredItems(areas, defaultSourceItems?.areas)
+								.length
+						}`}
+						onItemsChange={(items: {[key: string]: string}[]) => {
+							const filteredValue = items.filter((item) =>
+								defaultSourceItems.areas.some(
+									(defaultItem: Categories) =>
+										defaultItem.value === item.value
+								)
+							);
+
+							onChange({
+								target: {name: 'areas', value: filteredValue},
+							});
+						}}
+						placeholder={i18n.translate('select-areas')}
+						required
+						selectedItems={areas}
+						sourceItems={getFilteredItems(
+							areas,
+							defaultSourceItems?.areas
+						)}
+					/>
+				</Form.FormControl>
+
+				<Form.FormControl>
+					<Form.Label htmlFor="tags" info={tooltipInfo.tags} required>
 						{i18n.translate('tags')}
 					</Form.Label>
 
-					<ClayMultiSelect
-						{...{placeholder: 'Select tags'}}
+					<MultiSelect
 						inputName="tags-selector"
-						items={tags}
 						key={`tags-${tags.length}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
-								target: {
-									name: 'tags',
-									value,
-								},
-							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
+						multiselectKey={`tag-${
+							getFilteredItems(tags, defaultSourceItems?.tags)
+								.length
+						}`}
+						onItemsChange={(items: {[key: string]: string}[]) => {
+							const filteredValue = items.filter((item) =>
+								defaultSourceItems.tags.some(
+									(defaultItem: Categories) =>
+										defaultItem.value === item.value
+								)
+							);
 							onChange({
-								target: {name: 'tags', value},
-							})
-						}
+								target: {name: 'tags', value: filteredValue},
+							});
+						}}
+						placeholder={i18n.translate('select-tags')}
+						required
+						selectedItems={tags}
 						sourceItems={getFilteredItems(
 							tags,
 							defaultSourceItems?.tags
 						)}
-						spritemap={getIconSpriteMap()}
-						value={multiSelectText?.tags}
 					/>
 				</Form.FormControl>
 			</div>

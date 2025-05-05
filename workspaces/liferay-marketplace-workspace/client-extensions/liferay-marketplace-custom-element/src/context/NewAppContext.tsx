@@ -58,7 +58,7 @@ export type NewAppInitialState = {
 		appType: ProductType;
 		compatibleOffering: string[];
 		liferayPackages: {
-			file: any[];
+			files: any[];
 			version: string;
 		}[];
 		resourceRequirements: {
@@ -78,10 +78,14 @@ export type NewAppInitialState = {
 	};
 	productId: number;
 	profile: {
-		categories: {
+		areas: {
 			label: string;
 			value: string;
 		}[];
+		categories: {
+			label: string;
+			value: string;
+		};
 		description: string;
 		file: UploadedFile;
 		name: string;
@@ -165,7 +169,8 @@ const newAppInitialState: NewAppInitialState = {
 	},
 	productId: 0,
 	profile: {
-		categories: [],
+		areas: [],
+		categories: {label: '', value: ''},
 		description: '',
 		file: {} as UploadedFile,
 		name: '',
@@ -300,7 +305,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					),
 				} as NewAppInitialState['pricing'],
 				profile: {
-					categories: filterProductVocabularies(
+					areas: filterProductVocabularies(
 						_product,
 						ProductVocabulary.APP_CATEGORY
 					),
@@ -547,6 +552,7 @@ export default function NewAppContextProvider({
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
 	const {productId} = useParams();
 	const {data = {}, isLoading} = useGetVocabulariesAndCategories([
+		ProductVocabulary.APP_AREA,
 		ProductVocabulary.APP_CATEGORY,
 		ProductVocabulary.APP_TAGS,
 		ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
@@ -562,7 +568,7 @@ export default function NewAppContextProvider({
 			productId as string,
 			new URLSearchParams({
 				nestedFields:
-					'attachments,images,productSpecifications,productOptions',
+					'attachments,images,productSpecifications,productOptions,productVirtualSettings',
 			})
 		)
 			.then((response) =>

@@ -12,6 +12,7 @@ import {
 	ProductVocabulary,
 	ProductWorkflowStatusCode,
 } from '../../enums/Product';
+import {createProductVirtualEntry} from '../../utils/api';
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import BaseAppPublish from './BaseAppPublish';
@@ -29,7 +30,7 @@ export default class AppPublish extends BaseAppPublish {
 		const {
 			_product,
 			catalogId,
-			profile: {categories, description, file, name, tags},
+			profile: {areas, categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
 		} = this.context;
 
@@ -39,9 +40,10 @@ export default class AppPublish extends BaseAppPublish {
 		).filter(({label}: any) => label === 'App');
 
 		const productCategories = [
-			...categories,
+			...areas,
 			...productTypeCategories,
 			...tags,
+			categories,
 		].map((category) => ({
 			id: category.value,
 			name: category.label,
@@ -135,7 +137,13 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncBuild(product: Product, config: ProductConfig) {
 		const {
-			build: {appType, compatibleOffering, resourceRequirements},
+			build: {
+				appType,
+				compatibleOffering,
+				resourceRequirements,
+				liferayPackages,
+			},
+			_product,
 		} = this.context;
 
 		const specifications = [
@@ -186,6 +194,27 @@ export default class AppPublish extends BaseAppPublish {
 				workflowStatusInfo: productStatus,
 			}
 		);
+
+		for (const liferayPackage of liferayPackages) {
+			const {files, version} = liferayPackage;
+
+			for (const file of files) {
+				const formData = new FormData();
+				const blob = new Blob([file]);
+
+				formData.append('file', blob, file.fileName);
+				formData.append(
+					'productVirtualSettingsFileEntry',
+					JSON.stringify({version})
+				);
+
+				await createProductVirtualEntry({
+					body: formData,
+					callback: () => {},
+					virtualSettingId: _product?.productVirtualSettings.id ?? '',
+				});
+			}
+		}
 	}
 
 	private async createProductSKUs(product: Product) {

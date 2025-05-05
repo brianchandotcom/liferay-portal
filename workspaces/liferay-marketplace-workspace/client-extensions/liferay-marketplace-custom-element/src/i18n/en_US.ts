@@ -77,6 +77,7 @@ export default {
 	'cancel': 'Cancel',
 	'cash': 'Cash',
 	'categories': 'Categories',
+	'category': 'Category',
 	'choose-an-option': 'Choose an option',
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
 		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching on a specific category name in the main Marketplace home page. Having your solution listed under the appropriate category will help them find your solution.',
@@ -404,6 +405,7 @@ export default {
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-areas': 'Select areas',
 	'select-categories': 'Select categories',
+	'select-category': 'Select category',
 	'select-compatible-versions': 'Select Compatible Versions',
 	'select-licensing-terms': 'Select licensing terms',
 	'select-tags': 'Select tags',

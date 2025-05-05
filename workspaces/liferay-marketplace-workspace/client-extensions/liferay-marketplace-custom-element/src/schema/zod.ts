@@ -127,7 +127,8 @@ const zodSchema = {
 			liferayPackages: z.array(z.any()).min(1),
 		}),
 		profile: z.object({
-			categories: z.array(z.any()).nonempty(),
+			areas: z.array(z.any()).nonempty(),
+			categories: z.object({label: z.string(), value: z.string().min(1)}),
 			description: z.string().min(3),
 			name: z.string().min(3),
 			tags: z.array(z.any()).nonempty(),

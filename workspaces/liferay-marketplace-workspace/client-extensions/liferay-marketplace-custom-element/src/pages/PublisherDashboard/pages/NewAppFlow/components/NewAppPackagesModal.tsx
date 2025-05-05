@@ -149,7 +149,7 @@ export function NewAppPackageVersionModal({
 											...liferayPackages,
 											...checkboxVersions.map(
 												(checkedVersion) => ({
-													file: [],
+													files: [],
 													version: checkedVersion,
 												})
 											),

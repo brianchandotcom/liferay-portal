@@ -101,6 +101,7 @@ const PublishAppOutlet = () => {
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 					{activeRoute.description}
 
+					{/* 
 					<details>
 						<pre>
 							{JSON.stringify(
@@ -108,6 +109,7 @@ const PublishAppOutlet = () => {
 									const _context: Partial<typeof context> = {
 										...context,
 									};
+
 
 									delete _context.references;
 									delete _context._product;
@@ -118,7 +120,7 @@ const PublishAppOutlet = () => {
 								4
 							)}
 						</pre>
-					</details>
+					</details> */}
 
 					<div className="mt-6 new-app-form">
 						<Outlet />

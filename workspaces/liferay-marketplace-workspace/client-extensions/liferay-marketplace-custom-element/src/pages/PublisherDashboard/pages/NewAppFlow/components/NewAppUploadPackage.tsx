@@ -34,6 +34,7 @@ export const acceptFileTypes = {
 		...ALLOWED_MIME_TYPES.WAR,
 	},
 	[ProductType.LOW_CODE_CONFIGURATION]: ALLOWED_MIME_TYPES.ZIP,
+	[ProductType.OTHER]: ALLOWED_MIME_TYPES.ZIP,
 };
 
 export function NewAppUploadAppPackagesComponent({
@@ -57,7 +58,7 @@ export function NewAppUploadAppPackagesComponent({
 			if (liferayPackage.version === versionName) {
 				return {
 					...liferayPackage,
-					file: liferayPackage.file.filter(({id}) => id !== fileId),
+					files: liferayPackage.files.filter(({id}) => id !== fileId),
 				};
 			}
 
@@ -89,8 +90,8 @@ export function NewAppUploadAppPackagesComponent({
 			if (liferayPackage.version === versionName) {
 				return {
 					...liferayPackage,
-					file: liferayPackage.file.length
-						? [...liferayPackage.file, ...newUploadedPackages]
+					files: liferayPackage.files.length
+						? [...liferayPackage.files, ...newUploadedPackages]
 						: newUploadedPackages,
 				};
 			}
@@ -116,7 +117,7 @@ export function NewAppUploadAppPackagesComponent({
 					liferayPackages.find(
 						(liferayPackage) =>
 							liferayPackage.version === versionName
-					)?.file ?? []
+					)?.files ?? []
 				}
 				versionName={versionName}
 			/>

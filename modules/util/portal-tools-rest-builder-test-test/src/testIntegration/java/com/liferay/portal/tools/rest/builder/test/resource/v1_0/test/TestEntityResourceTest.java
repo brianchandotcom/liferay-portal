@@ -13,6 +13,7 @@ import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntit
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.TestEntity;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,6 +44,12 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		Assert.assertEquals(
 			Integer.valueOf(initialCount + 1),
 			testEntityResource.getTestEntityCount());
+	}
+
+	@Ignore
+	@Test
+	public void testPostTestEntityMultipartBulk() throws Exception {
+
 	}
 
 	@Override
@@ -143,6 +150,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
 		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
 	}
+
 
 	@Override
 	protected Long testPatchTestEntity_getOptionalParameter() {

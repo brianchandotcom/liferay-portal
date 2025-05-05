@@ -7,15 +7,15 @@ import {mergeTests, expect} from '@playwright/test';
 import {createReadStream, readdirSync, statSync} from 'fs';
 import path from 'path';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {checkFolderInZip} from '../../utils/zip';
-import {stagingConfigurationPageTest} from '../export-import-web/fixtures/stagingConfigurationPageTest';
-import {stagingPageTest} from '../export-import-web/fixtures/stagingPageTest';
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {checkFolderInZip} from '../../../utils/zip';
+import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
+import {stagingPageTest} from './fixtures/stagingPageTest';
 import {exportImportConfig} from './export_import.config';
 
 export const test = mergeTests(

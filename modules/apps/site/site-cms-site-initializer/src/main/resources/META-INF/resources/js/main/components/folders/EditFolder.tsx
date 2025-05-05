@@ -52,7 +52,14 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 		? [{label: folderData.scopeKey, value: folderData.scopeKey}]
 		: [];
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useFormik({
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		isSubmitting,
+		setValues,
+		values,
+	} = useFormik({
 		initialValues: {
 			folderDescription: folderData.description,
 			folderName: folderData.title,
@@ -145,11 +152,21 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 
 					<ClayToolbar.Item>
 						<ClayButton
+							disabled={isSubmitting}
 							displayType="primary"
 							form="formEditFolder"
 							size="sm"
 							type="submit"
 						>
+							{isSubmitting && (
+								<span className="inline-item inline-item-before">
+									<span
+										aria-hidden="true"
+										className="loading-animation"
+									></span>
+								</span>
+							)}
+
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayToolbar.Item>

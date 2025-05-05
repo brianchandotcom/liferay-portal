@@ -1530,7 +1530,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setLocale(locale);
 		themeDisplay.setLookAndFeel(theme, colorScheme);
 		themeDisplay.setPathApplet(contextPath.concat("/applets"));
-		themeDisplay.setPathCms(contextPath.concat("/cms"));
 		themeDisplay.setPathContext(contextPath);
 		themeDisplay.setPathFriendlyURLPrivateGroup(
 			friendlyURLPrivateGroupPath);

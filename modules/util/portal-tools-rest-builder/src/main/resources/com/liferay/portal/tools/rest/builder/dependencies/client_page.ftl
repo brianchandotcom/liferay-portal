@@ -3,7 +3,7 @@ package ${configYAML.apiPackagePath}.client.pagination;
 import ${configYAML.apiPackagePath}.client.aggregation.Facet;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 <#else>

@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.constant.${escapedVersion};
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 <#else>

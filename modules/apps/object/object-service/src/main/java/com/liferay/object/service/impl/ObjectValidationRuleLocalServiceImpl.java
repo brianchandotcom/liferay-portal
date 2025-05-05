@@ -36,11 +36,11 @@ import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
-import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.service.persistence.ObjectValidationRuleSettingPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -510,9 +510,10 @@ public class ObjectValidationRuleLocalServiceImpl
 		throws PortalException {
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByODI2_R_T(
-					objectDefinitionId, false,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						objectDefinitionId,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField relationshipObjectField =
 				_objectFieldPersistence.findByPrimaryKey(
@@ -1052,7 +1053,7 @@ public class ObjectValidationRuleLocalServiceImpl
 	private ObjectFieldPersistence _objectFieldPersistence;
 
 	@Reference
-	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;

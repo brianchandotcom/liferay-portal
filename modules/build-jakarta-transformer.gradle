@@ -38,11 +38,8 @@ task jarTransformed
 
 jar {
 	enabled = true
-	finalizedBy jarTransformed
 	setActions([])
-}
 
-jarTransformed {
 	doLast {
 		JakartaTransformerCLI jakartaTransformerCLI = new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath})
 
@@ -60,6 +57,4 @@ jarTransformed {
 
 		JarTransformer.transform(jar.archivePath)
 	}
-
-	mustRunAfter generatePomFileForMavenPublication
 }

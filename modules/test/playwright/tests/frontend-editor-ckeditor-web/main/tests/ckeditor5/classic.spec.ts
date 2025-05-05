@@ -161,3 +161,29 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Opening source editing disables all custom controls',
+	{tag: '@LPD-11235'},
+	async ({classicPage}) => {
+		const imageButton = classicPage.toolbar.getByRole('button', {
+			name: 'Image',
+		});
+		const sourceButton = classicPage.toolbar.getByRole('button', {
+			name: 'Source',
+		});
+		const videoButton = classicPage.toolbar.getByRole('button', {
+			name: 'Video',
+		});
+
+		await sourceButton.click();
+
+		await expect(imageButton).toBeDisabled();
+		await expect(videoButton).toBeDisabled();
+
+		await sourceButton.click();
+
+		await expect(imageButton).toBeEnabled();
+		await expect(videoButton).toBeEnabled();
+	}
+);

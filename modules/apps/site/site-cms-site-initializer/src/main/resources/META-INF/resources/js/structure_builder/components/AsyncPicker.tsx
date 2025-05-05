@@ -4,8 +4,8 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import {CacheStatus} from '../contexts/CacheContext';
@@ -39,19 +39,17 @@ const Trigger = React.forwardRef(
 		return (
 			<button
 				{...otherProps}
-				className="align-items-center d-flex form-control form-control-select-secondary justify-content-between"
+				className={classNames(
+					'align-items-center d-flex form-control form-control-select-secondary justify-content-between',
+					{'form-control-select': status !== 'saving'}
+				)}
 				ref={ref}
 			>
 				{value}
 
 				{status === 'saving' ? (
 					<ClayLoadingIndicator className="m-0" />
-				) : (
-					<ClayIcon
-						className="text-secondary"
-						symbol="caret-double"
-					/>
-				)}
+				) : null}
 			</button>
 		);
 	}

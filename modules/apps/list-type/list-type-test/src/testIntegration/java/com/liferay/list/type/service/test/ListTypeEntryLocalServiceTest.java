@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -85,7 +85,7 @@ public class ListTypeEntryLocalServiceTest {
 			_listTypeDefinition);
 	}
 
-	@FeatureFlags("LPD-24055")
+	@FeatureFlag("LPD-24055")
 	@Test
 	public void testAddListTypeEntry() throws Exception {
 		String externalReferenceCode =
@@ -108,7 +108,6 @@ public class ListTypeEntryLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				_listTypeDefinition.isSystem()));
-
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,
 			"Only allowed bundles can add system list type entries",
@@ -121,25 +120,33 @@ public class ListTypeEntryLocalServiceTest {
 				_listTypeDefinition.getListTypeDefinitionId(), null,
 				_listTypeDefinition.isSystem()));
 		AssertUtils.assertFailure(
-			ListTypeEntrySystemException.class, true,
-			"System list type entries cannot be added to custom list type " +
-				"definitions",
-			() -> _testAddListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId(), "baker", true));
-		AssertUtils.assertFailure(
 			ListTypeEntryKeyException.class,
 			"Key must only contain letters and digits",
 			() -> _testAddListTypeEntry(
 				_listTypeDefinition.getListTypeDefinitionId(), " able ",
 				_listTypeDefinition.isSystem()));
 		AssertUtils.assertFailure(
+			ListTypeEntrySystemException.class, true,
+			"System list type entries cannot be added to custom list type " +
+				"definitions",
+			() -> _testAddListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), "baker", true));
+		AssertUtils.assertFailure(
 			NoSuchListTypeDefinitionException.class,
 			"No ListTypeDefinition exists with the primary key 0",
 			() -> _testAddListTypeEntry(0, "able", false));
 
-		_assertListTypeEntry(_listTypeDefinition.getListTypeDefinitionId());
+		ListTypeEntry listTypeEntry = _addListTypeEntry(
+			_listTypeDefinition.getListTypeDefinitionId());
+
 		_assertListTypeEntry(
+			"externalReferenceCode", "baker", "Baker", listTypeEntry);
+
+		listTypeEntry = _addListTypeEntry(
 			_systemListTypeDefinition.getListTypeDefinitionId());
+
+		_assertListTypeEntry(
+			"externalReferenceCode", "baker", "Baker", listTypeEntry);
 	}
 
 	@Test
@@ -211,7 +218,7 @@ public class ListTypeEntryLocalServiceTest {
 				_listTypeDefinition.getListTypeDefinitionId()));
 	}
 
-	@FeatureFlags("LPD-24055")
+	@FeatureFlag("LPD-24055")
 	@Test
 	public void testUpdateListTypeEntry() throws Exception {
 		String externalReferenceCode = "externalReferenceCode";
@@ -251,37 +258,39 @@ public class ListTypeEntryLocalServiceTest {
 
 		Assert.assertEquals(nameMap, _systemListTypeEntry.getNameMap());
 
-		listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
-			"externalReferenceCode", TestPropsValues.getUserId(),
-			_systemListTypeDefinition.getListTypeDefinitionId(), "baker",
-			Collections.singletonMap(LocaleUtil.US, "Baker"), false);
+		listTypeEntry = _addListTypeEntry(
+			_systemListTypeDefinition.getListTypeDefinitionId());
 
 		externalReferenceCode = RandomTestUtil.randomString();
-		nameMap = Collections.singletonMap(
-			LocaleUtil.US, RandomTestUtil.randomString());
+		String name = RandomTestUtil.randomString();
 
-		listTypeEntry = _listTypeEntryLocalService.updateListTypeEntry(
-			externalReferenceCode, listTypeEntry.getListTypeEntryId(), nameMap);
-
-		Assert.assertEquals(
-			externalReferenceCode, listTypeEntry.getExternalReferenceCode());
-		Assert.assertEquals(nameMap, listTypeEntry.getNameMap());
+		_assertListTypeEntry(
+			externalReferenceCode, "baker", name,
+			_listTypeEntryLocalService.updateListTypeEntry(
+				externalReferenceCode, listTypeEntry.getListTypeEntryId(),
+				Collections.singletonMap(LocaleUtil.US, name)));
 	}
 
-	private void _assertListTypeEntry(long listTypeDefinitionId)
+	private ListTypeEntry _addListTypeEntry(long listTypeDefinitionId)
 		throws Exception {
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.addListTypeEntry(
-				"externalReferenceCode", TestPropsValues.getUserId(),
-				listTypeDefinitionId, "baker",
-				Collections.singletonMap(LocaleUtil.US, "Baker"), false);
+		return _listTypeEntryLocalService.addListTypeEntry(
+			"externalReferenceCode", TestPropsValues.getUserId(),
+			listTypeDefinitionId, "baker",
+			Collections.singletonMap(LocaleUtil.US, "Baker"), false);
+	}
+
+	private void _assertListTypeEntry(
+			String expectedExternalReferenceCode, String expectedKey,
+			String expectedName, ListTypeEntry listTypeEntry)
+		throws Exception {
 
 		Assert.assertEquals(
-			"externalReferenceCode", listTypeEntry.getExternalReferenceCode());
-		Assert.assertEquals("baker", listTypeEntry.getKey());
+			expectedExternalReferenceCode,
+			listTypeEntry.getExternalReferenceCode());
+		Assert.assertEquals(expectedKey, listTypeEntry.getKey());
 		Assert.assertEquals(
-			Collections.singletonMap(LocaleUtil.US, "Baker"),
+			Collections.singletonMap(LocaleUtil.US, expectedName),
 			listTypeEntry.getNameMap());
 
 		_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);

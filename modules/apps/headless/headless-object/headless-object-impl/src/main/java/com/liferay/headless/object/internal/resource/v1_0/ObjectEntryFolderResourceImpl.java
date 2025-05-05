@@ -383,6 +383,12 @@ public class ObjectEntryFolderResourceImpl
 				persistedObjectEntryFolder)
 		throws Exception {
 
+		String description = objectEntryFolder.getDescription();
+
+		if (description == null) {
+			description = persistedObjectEntryFolder.getDescription();
+		}
+
 		Map<String, String> labelMap = objectEntryFolder.getLabel_i18n();
 
 		if (labelMap == null) {
@@ -404,8 +410,7 @@ public class ObjectEntryFolderResourceImpl
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.updateObjectEntryFolder(
 				persistedObjectEntryFolder.getObjectEntryFolderId(),
-				persistedObjectEntryFolder.getDescription(),
-				parentObjectEntryFolderId,
+				description, parentObjectEntryFolderId,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					GetterUtil.getString(

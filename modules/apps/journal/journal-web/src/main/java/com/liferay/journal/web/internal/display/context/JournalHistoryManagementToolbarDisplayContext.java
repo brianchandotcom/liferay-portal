@@ -138,6 +138,15 @@ public class JournalHistoryManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setKeywords(
+			StringPool.BLANK
+		).buildString();
+	}
+
+	@Override
 	public String getComponentId() {
 		return "journalHistoryManagementToolbar";
 	}

@@ -29,6 +29,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -180,19 +182,11 @@ public class DisplayPageTemplateDTOConverter
 					() -> ChangeFrequency.create(
 						layout.getTypeSettingsProperty(
 							LayoutTypePortletConstants.SITEMAP_CHANGEFREQ)));
-
-				String include = GetterUtil.getString(
-					layout.getTypeSettingsProperty(
-						LayoutTypePortletConstants.SITEMAP_INCLUDE),
-					"0");
-
-				if (include.equals("1")) {
-					setInclude(() -> true);
-				}
-				else {
-					setInclude(() -> false);
-				}
-
+				setInclude(
+					() -> Objects.equals(
+						layout.getTypeSettingsProperty(
+							LayoutTypePortletConstants.SITEMAP_INCLUDE),
+						"1"));
 				setPagePriority(
 					() -> GetterUtil.getDouble(
 						layout.getTypeSettingsProperty(

@@ -1,10 +1,5 @@
 components:
     schemas:
-        SimpleTestEntity:
-            properties:
-                name:
-                    type: string
-            type: object
         ChildTestEntity1:
             allOf:
                 -   $ref: "#/components/schemas/TestEntity"
@@ -176,6 +171,11 @@ components:
         Schema:
             properties:
                 property1:
+                    type: string
+            type: object
+        SimpleTestEntity:
+            properties:
+                name:
                     type: string
             type: object
         SiteTestEntity:
@@ -724,6 +724,80 @@ paths:
                     description:
                         "OK"
             tags: ["Schema"]
+    /simple-test-entities/{simpleEntityId}:
+        get:
+            operationId: getSimpleTestEntity
+            parameters:
+                -   in: path
+                    name: simpleTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/SimpleTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/SimpleTestEntity"
+                    description:
+                        "OK"
+            tags: ["SimpleTestEntity"]
+        patch:
+            operationId: patchSimpleTestEntity
+            parameters:
+                -   in: path
+                    name: simpleTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SimpleTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SimpleTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/SimpleTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/SimpleTestEntity"
+                    description:
+                        "OK"
+            tags: ["SimpleTestEntity"]
+        put:
+            operationId: putSimpleTestEntity
+            parameters:
+                -   in: path
+                    name: simpleTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: "#/components/schemas/SimpleTestEntity"
+            responses:
+                200:
+                    content:
+                        "multipart/form-data":
+                            schema:
+                                $ref: "#/components/schemas/SimpleTestEntity"
+                    description:
+                        "OK"
+            tags: ["SimpleTestEntity"]
     /site-test-entities/{siteTestEntityId}:
         get:
             operationId: getSiteTestEntity
@@ -1253,80 +1327,6 @@ paths:
                     description:
                         "OK"
             tags: ["TestEntity"]
-    /simple-test-entities/{simpleEntityId}:
-        get:
-            operationId: getSimpleTestEntity
-            parameters:
-                -   in: path
-                    name: simpleTestEntityId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
-                        "application/xml":
-                            schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
-                    description:
-                        "OK"
-            tags: ["SimpleTestEntity"]
-        patch:
-            operationId: patchSimpleTestEntity
-            parameters:
-                -   in: path
-                    name: simpleTestEntityId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
-            responses:
-                200:
-                    content:
-                        "application/json":
-                            schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
-                        "application/xml":
-                            schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
-                    description:
-                        "OK"
-            tags: ["SimpleTestEntity"]
-        put:
-            operationId: putSimpleTestEntity
-            parameters:
-                -   in: path
-                    name: simpleTestEntityId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
-            responses:
-                200:
-                    content:
-                        "multipart/form-data":
-                            schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
-                    description:
-                        "OK"
-            tags: ["SimpleTestEntity"]
     /test-entities/{testEntityId}/test-entity-address:
         get:
             operationId: getTestEntityTestEntityAddress

@@ -311,7 +311,8 @@ pre[class*='language-'] {
 }
 
 .learn-article,
-.learn-recipe-container {
+.learn-recipe-container, 
+.learn-knowledge-article-container {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
 	padding: 0 var(--spacer-4) var(--spacer-4);
@@ -1278,7 +1279,8 @@ pre[class*='language-'] {
 	}
 }
 
-.learn-recipe-container {
+.learn-recipe-container, 
+.learn-knowledge-article-container {
 	padding: var(--spacer-4);
 
 	button.copy-to-clipboard-button {
@@ -1304,6 +1306,7 @@ pre[class*='language-'] {
 	.component-button:hover {
 		background: var(--color-action-primary-active-20, #e6edfb);
 		border-radius: var(--border-radius-sm);
+		cursor: pointer;
 	}
 
 	.disclaimer {
@@ -1311,10 +1314,7 @@ pre[class*='language-'] {
 		border-radius: var(--border-radius-lg);
 		margin-bottom: var(--spacer-4,1.5rem);
 		margin-right: var(--spacer-3,1rem);
-		padding-bottom: var(--spacer-4,1.5rem);
-		padding-left: var(--spacer-4,1.5rem);
-		padding-right: var(--spacer-4,1.5rem);
-		padding-top: var(--spacer-4,1.5rem);
+		padding: var(--spacer-4,1.5rem);
 
 		.recipe-dialect {
 			margin-bottom: 1rem;

@@ -14,6 +14,23 @@ import ${configYAML.apiPackagePath}.client.aggregation.Aggregation;
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 </#list>
 
+<#macro processedReturnType
+	returnType
+>
+	<#assign
+		responseTypeToReplace = (freeMarkerTool.isUseJavax(configYAML))?then("javax.ws.rs.core.Response", "jakarta.ws.rs.core.Response")
+		_processedReturnType = returnType
+		?replace(".constant.", ".client.constant.")
+		?replace(".dto.", ".client.dto.")
+		?replace("com.liferay.portal.vulcan.aggregation.", "")
+		?replace("com.liferay.portal.vulcan.pagination.", "")
+		?replace("com.liferay.portal.vulcan.permission.", "")
+		?replace(responseTypeToReplace, "void")
+	/>
+
+	${_processedReturnType}
+</#macro>
+
 import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
@@ -68,11 +85,7 @@ public interface ${schemaName}Resource {
 			parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 		/>
 
-		<#if freeMarkerTool.isUseJavax(configYAML)>
-			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
-		<#else>
-			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("jakarta.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
-		</#if>
+		public <@processedReturnType returnType=javaMethodSignature.returnType /> ${javaMethodSignature.methodName}(${parameters}) throws Exception;
 
 		public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception;
 	</#list>
@@ -190,11 +203,7 @@ public interface ${schemaName}Resource {
 				parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 			/>
 
-			<#if freeMarkerTool.isUseJavax(configYAML)>
-				public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
-			<#else>
-				public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("jakarta.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
-			</#if>
+			public <@processedReturnType returnType=javaMethodSignature.returnType /> ${javaMethodSignature.methodName}(${parameters}) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${javaMethodSignature.methodName}HttpResponse(${arguments});
 
 				String content = httpResponse.getContent();
@@ -227,78 +236,43 @@ public interface ${schemaName}Resource {
 					_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 				}
 
-				<#if freeMarkerTool.isUseJavax(configYAML)>
-					<#if !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
-						try {
-							<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
-								return Page.of(content, Permission::toDTO);
-							<#elseif javaMethodSignature.returnType?contains("Page<")>
-								return Page.of(content, ${javaMethodSignature.returnType?keep_after_last('.', '')?replace('>', '')}SerDes::toDTO);
-							<#elseif javaMethodSignature.returnType?ends_with("String")>
-								return content;
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Float") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
+				<#assign responseTypeToExclude =
+					(freeMarkerTool.isUseJavax(configYAML))?then(
+						"javax.ws.rs.core.Response",
+						"jakarta.ws.rs.core.Response"
+					) />
 
-								return ${javaMethodSignature.returnType}.valueOf(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
-								return Double.valueOf(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Object")>
-								return (Object)content;
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
-								return new java.math.BigDecimal(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
-								return java.text.DateFormat.getInstance().parse(content);
-							<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
-								return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(content);
-							<#else>
-								return;
-							</#if>
-						}
-						catch (Exception e) {
-							_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
-
-							throw new Problem.ProblemException(Problem.toDTO(content));
-						}
-					</#if>
-				<#else>
-					<#if !javaMethodSignature.returnType?contains("jakarta.ws.rs.core.Response")>
-						try {
-							<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
-								return Page.of(content, Permission::toDTO);
-							<#elseif javaMethodSignature.returnType?contains("Page<")>
-								return Page.of(content, ${javaMethodSignature.returnType?keep_after_last('.', '')?replace('>', '')}SerDes::toDTO);
-							<#elseif javaMethodSignature.returnType?ends_with("String")>
-								return content;
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Float") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer") ||
-									 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
-
-								return ${javaMethodSignature.returnType}.valueOf(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
-								return Double.valueOf(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Object")>
-								return (Object)content;
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
-								return new java.math.BigDecimal(content);
-							<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
-								return java.text.DateFormat.getInstance().parse(content);
-							<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
-								return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(content);
-							<#else>
-								return;
-							</#if>
-						}
-						catch (Exception e) {
-							_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
-
-							throw new Problem.ProblemException(Problem.toDTO(content));
-						}
-					</#if>
+				<#if !javaMethodSignature.returnType?contains(responseTypeToExclude)>
+					try {
+						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
+							return Page.of(content, Permission::toDTO);
+						<#elseif javaMethodSignature.returnType?contains("Page<")>
+							return Page.of(content, ${javaMethodSignature.returnType?keep_after_last('.', '')?replace('>', '')}SerDes::toDTO);
+						<#elseif javaMethodSignature.returnType?ends_with("String")>
+							return content;
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean") ||
+								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Float") ||
+								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
+								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer") ||
+								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
+							return ${javaMethodSignature.returnType}.valueOf(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
+							return Double.valueOf(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Object")>
+							return (Object)content;
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
+							return new java.math.BigDecimal(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
+							return java.text.DateFormat.getInstance().parse(content);
+						<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
+							return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(content);
+						<#else>
+							return;
+						</#if>
+					} catch (Exception e) {
+						_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
+						throw new Problem.ProblemException(Problem.toDTO(content));
+					}
 				</#if>
 			}
 

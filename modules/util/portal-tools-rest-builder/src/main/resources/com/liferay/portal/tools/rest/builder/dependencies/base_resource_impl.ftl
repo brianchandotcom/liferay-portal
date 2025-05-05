@@ -4,6 +4,11 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 </#list>
 
+<#macro responseBuilderMacro>
+	<#assign responseBuilderPackage = (freeMarkerTool.isUseJavax(configYAML))?then("javax", "jakarta") />
+	${responseBuilderPackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${responseBuilderPackage}.ws.rs.core.Response.accepted();
+</#macro>
+
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -340,11 +345,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<#if freeMarkerTool.isUseJavax(configYAML)>
-					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
-				<#else>
-					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
-				</#if>
+				<@responseBuilderMacro />
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
@@ -357,11 +358,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
 				vulcanBatchEngineExportTaskResource.setGroupLocalService(groupLocalService);
 
-				<#if freeMarkerTool.isUseJavax(configYAML)>
-					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
-				<#else>
-					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
-				</#if>
+				<@responseBuilderMacro />
 
 				return responseBuilder.entity(
 					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, contentType, fieldNames)
@@ -373,11 +370,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<#if freeMarkerTool.isUseJavax(configYAML)>
-					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
-				<#else>
-					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
-				</#if>
+				<@responseBuilderMacro />
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.postImportTask(${javaDataType}.class.getName(), callbackURL, null, object)
@@ -389,11 +382,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<#if freeMarkerTool.isUseJavax(configYAML)>
-					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
-				<#else>
-					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
-				</#if>
+				<@responseBuilderMacro />
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)

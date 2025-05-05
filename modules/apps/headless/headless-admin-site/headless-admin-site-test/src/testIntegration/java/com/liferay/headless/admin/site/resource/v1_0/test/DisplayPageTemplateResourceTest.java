@@ -17,7 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSEOSet
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.SiteMapSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
@@ -828,7 +828,7 @@ public class DisplayPageTemplateResourceTest
 				}
 			});
 
-		SiteMapSettings randomSiteMapSettings = new SiteMapSettings() {
+		SitemapSettings randomSitemapSettings = new SitemapSettings() {
 			{
 				setChangeFrequency(
 					RandomTestUtil.randomEnum(ChangeFrequency.class));
@@ -845,7 +845,7 @@ public class DisplayPageTemplateResourceTest
 					setRobots_i18n(
 						LocalizedMapUtil.getI18nMap(
 							RandomTestUtil.randomLocaleStringMap()));
-					setSiteMapSettings(randomSiteMapSettings);
+					setSitemapSettings(randomSitemapSettings);
 				}
 			});
 

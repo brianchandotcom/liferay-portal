@@ -9,8 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -46,7 +46,7 @@ public class RevokedTokenTest extends BaseClientTestCase {
 		String tokenString = getToken(
 			"oauthTestApplication", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Invocation.Builder invocationBuilder = authorize(
@@ -74,12 +74,12 @@ public class RevokedTokenTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long companyId = PortalUtil.getDefaultCompanyId();
+			long companyId = TestPropsValues.getCompanyId();
 
-			User user = UserTestUtil.getAdminUser(companyId);
+			_user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				companyId, user, "oauthTestApplication",
+				companyId, _user, "oauthTestApplication",
 				Collections.singletonList("everything.read"));
 		}
 
@@ -89,5 +89,7 @@ public class RevokedTokenTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new RevokedTokenTestPreparatorBundleActivator();
 	}
+
+	private static User _user;
 
 }

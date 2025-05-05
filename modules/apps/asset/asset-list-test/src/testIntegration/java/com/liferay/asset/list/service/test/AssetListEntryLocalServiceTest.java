@@ -96,6 +96,23 @@ public class AssetListEntryLocalServiceTest {
 					assetListEntry.getGroupId()));
 	}
 
+	@Test
+	public void testUpdateAssetListEntry() throws PortalException {
+		AssetListEntry assetListEntry = _addAssetListEntry(
+			RandomTestUtil.randomString());
+
+		String assetListEntryKey = assetListEntry.getAssetListEntryKey();
+		String title = assetListEntry.getTitle();
+
+		assetListEntry = _assetListEntryLocalService.updateAssetListEntry(
+			assetListEntry.getAssetListEntryId(),
+			RandomTestUtil.randomString());
+
+		Assert.assertNotEquals(
+			assetListEntryKey, assetListEntry.getAssetListEntryKey());
+		Assert.assertNotEquals(title, assetListEntry.getTitle());
+	}
+
 	private AssetListEntry _addAssetListEntry(String externalReferenceCode)
 		throws PortalException {
 

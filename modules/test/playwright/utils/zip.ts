@@ -42,11 +42,11 @@ export async function checkFolderInZip(
 			zip.on('entry', (entry) => {
 				if (entry.fileName.startsWith(folderName + '/')) {
 					found = true;
-					zip.close(); // stop early
+					zip.close();
 
 					return resolve(true);
 				}
-				zip.readEntry(); // keep going
+				zip.readEntry();
 			});
 
 			zip.on('end', () => {

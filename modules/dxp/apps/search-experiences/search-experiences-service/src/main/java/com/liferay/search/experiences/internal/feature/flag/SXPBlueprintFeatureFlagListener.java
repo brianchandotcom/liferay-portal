@@ -12,6 +12,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -61,6 +63,7 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 						_ddmStructureService, _dlFileEntryTypeLocalService,
 						_dlAppLocalService, _groupService,
 						_journalArticleService, _kbArticleLocalService,
+						_objectDefinitionLocalService, _objectEntryLocalService,
 						_searcher, _searchRequestBuilderFactory,
 						_sxpBlueprintLocalService);
 
@@ -128,6 +131,12 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Searcher _searcher;

@@ -30,6 +30,7 @@
 	import {PageTestEntity} from '../models/PageTestEntity';
 	import {Permission} from '../models/Permission';
 	import {Schema} from '../models/Schema';
+	import {SimpleTestEntity} from '../models/SimpleTestEntity';
 	import {SiteTestEntity} from '../models/SiteTestEntity';
 	import {Sort} from '../models/Sort';
 	import {StringTestEntity} from '../models/StringTestEntity';
@@ -97,6 +98,7 @@ const typeMap: {[index: string]: any} = {
 	PageTestEntity,
 	Permission,
 	Schema,
+	SimpleTestEntity,
 	SiteTestEntity,
 	Sort,
 	StringTestEntity,

@@ -99,6 +99,8 @@ public class OpenAPIResourceImpl {
 
 			add(SchemaResourceImpl.class);
 
+			add(SimpleTestEntityResourceImpl.class);
+
 			add(SiteTestEntityResourceImpl.class);
 
 			add(SortResourceImpl.class);

@@ -383,6 +383,12 @@ public class ObjectEntryFolderResourceImpl
 				persistedObjectEntryFolder)
 		throws Exception {
 
+		String description = objectEntryFolder.getDescription();
+
+		if (description == null) {
+			description = persistedObjectEntryFolder.getDescription();
+		}
+
 		Map<String, String> labelMap = objectEntryFolder.getLabel_i18n();
 
 		if (labelMap == null) {

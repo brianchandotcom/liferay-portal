@@ -638,6 +638,27 @@ components:
                         A valid external identifier to reference this page template folder.
                     type: string
             type: object
+        DisplayPageTemplateOpenGraphSettings:
+            description:
+                Represents display page template settings related with Open Graph protocol.
+            properties:
+                description:
+                    description:
+                        The Open Graph's description.
+                    type: string
+                image:
+                    description:
+                        The Open Graph's image.
+                    type: string
+                imageAlt:
+                    description:
+                        The Open Graph's image alt.
+                    type: string
+                title:
+                    description:
+                        The Open Graph's title.
+                    type: string
+            type: object
         DisplayPageTemplateSEOSettings:
             description:
                 Settings related with SEO of a display page template.
@@ -691,7 +712,7 @@ components:
                 The settings of a Display Page Template.
             properties:
                 openGraphSettings:
-                    $ref: "#/components/schemas/OpenGraphSettings"
+                    $ref: "#/components/schemas/DisplayPageTemplateOpenGraphSettings"
                     # @review
                     description:
                         The display page template's Open Graph settings.

@@ -14,7 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.SiteMapSettings;
+import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -458,12 +458,12 @@ public class DisplayPageTemplateResourceImpl
 						displayPageTemplateSEOSettings.getRobots_i18n()));
 			}
 
-			SiteMapSettings siteMapSettings =
-				displayPageTemplateSEOSettings.getSiteMapSettings();
+			SitemapSettings sitemapSettings =
+				displayPageTemplateSEOSettings.getSitemapSettings();
 
-			if (siteMapSettings != null) {
-				SiteMapSettings.ChangeFrequency changeFrequency =
-					siteMapSettings.getChangeFrequency();
+			if (sitemapSettings != null) {
+				SitemapSettings.ChangeFrequency changeFrequency =
+					sitemapSettings.getChangeFrequency();
 
 				if (changeFrequency != null) {
 					unicodeProperties.setProperty(
@@ -472,23 +472,23 @@ public class DisplayPageTemplateResourceImpl
 							changeFrequency.toString()));
 				}
 
-				Boolean include = siteMapSettings.getInclude();
+				Boolean include = sitemapSettings.getInclude();
 
 				if (include != null) {
-					String siteMapInclude = "0";
+					String sitemapInclude = "0";
 
 					if (include) {
-						siteMapInclude = "1";
+						sitemapInclude = "1";
 					}
 
 					unicodeProperties.setProperty(
 						LayoutTypePortletConstants.SITEMAP_INCLUDE,
-						siteMapInclude);
+						sitemapInclude);
 				}
 
 				unicodeProperties.setProperty(
 					LayoutTypePortletConstants.SITEMAP_PRIORITY,
-					String.valueOf(siteMapSettings.getPagePriority()));
+					String.valueOf(sitemapSettings.getPagePriority()));
 			}
 
 			_layoutLocalService.updateLayout(layout);

@@ -20,8 +20,6 @@ export class ViewObjectEntriesPage {
 	readonly frontendDatasetActions: Locator;
 	readonly frontendDatasetDeleteAction: Locator;
 	readonly page: Page;
-	readonly richTextIFrame: FrameLocator;
-	readonly richTextInput: Locator;
 	readonly saveObjectEntryButton: Locator;
 	readonly saveObjectEntryButtonArabic: Locator;
 	readonly searchBar: Locator;
@@ -57,12 +55,6 @@ export class ViewObjectEntriesPage {
 			name: 'Delete',
 		});
 		this.page = page;
-		this.richTextIFrame = page
-			.getByRole('application', {
-				name: 'Rich Text Editor',
-			})
-			.frameLocator('iframe');
-		this.richTextInput = this.richTextIFrame.getByRole('textbox');
 		this.searchBar = this.frameSelect.getByPlaceholder('Search for');
 		this.searchButton = this.frameSelect.getByRole('button', {
 			name: 'Search for',
@@ -115,11 +107,18 @@ export class ViewObjectEntriesPage {
 		if (objectFieldBusinessType === 'RichText') {
 			await this.page.waitForSelector('iframe');
 
-			await this.richTextInput.fill(objectFieldValue);
+			const richTextInput = this.page
+				.getByRole('application', {
+					name: objectFieldLabel,
+				})
+				.frameLocator('iframe')
+				.getByRole('textbox');
 
-			await this.richTextInput.click({button: 'left'});
+			await richTextInput.fill(objectFieldValue);
 
-			await this.richTextInput.press('Backspace');
+			await richTextInput.click({button: 'left'});
+
+			await richTextInput.press('Backspace');
 
 			return;
 		}

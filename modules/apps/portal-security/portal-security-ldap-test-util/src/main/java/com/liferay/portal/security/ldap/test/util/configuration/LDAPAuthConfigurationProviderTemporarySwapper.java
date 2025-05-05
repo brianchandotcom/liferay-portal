@@ -72,7 +72,7 @@ public class LDAPAuthConfigurationProviderTemporarySwapper
 				null);
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
-			throw new RuntimeException(invalidSyntaxException);
+			throw new ExceptionInInitializerError(invalidSyntaxException);
 		}
 
 		_serviceTracker.open();

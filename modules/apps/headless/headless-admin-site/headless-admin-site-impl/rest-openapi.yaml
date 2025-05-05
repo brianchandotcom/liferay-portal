@@ -2939,7 +2939,7 @@ components:
         UtilityPageSEOSettings:
             # @review
             description:
-                Settings related with SEO of an utility page.
+                Settings related with SEO of a utility page.
             properties:
                 description_i18n:
                     additionalProperties:
@@ -2959,7 +2959,7 @@ components:
         UtilityPageSettings:
             # @review
             description:
-                The settings of an utility page.
+                The settings of a utility page.
             properties:
                 seoSettings:
                     $ref: "#/components/schemas/UtilityPageSEOSettings"

@@ -1,3 +1,9 @@
+afterEvaluate {
+	publish {
+		enabled = true
+	}
+}
+
 apply from: "../../build-jakarta-transformer.gradle"
 
 dependencies {

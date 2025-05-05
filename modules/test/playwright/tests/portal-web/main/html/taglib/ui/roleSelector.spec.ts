@@ -25,7 +25,7 @@ test(
 		});
 
 		await test.step('Create extra roles', async () => {
-			for (let i = 0; i <= maxNumberOfRoles; i++) {
+			for (let i = 0; i < maxNumberOfRoles; i++) {
 				const role = await apiHelpers.headlessAdminUser.postRole({
 					name: 'role' + i,
 					rolePermissions: [

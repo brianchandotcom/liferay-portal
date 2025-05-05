@@ -21,7 +21,12 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-@FeatureFlag("CLASS-123")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "CLASS-123"),
+		@FeatureFlag(enable = false, value = "CLASS-456")
+	}
+)
 public class FeatureFlagTestRuleTest {
 
 	@ClassRule
@@ -42,6 +47,7 @@ public class FeatureFlagTestRuleTest {
 	@Test
 	public void testAnnotateClass() throws Exception {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("CLASS-123"));
+		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("CLASS-456"));
 	}
 
 	@FeatureFlag("METHOD-123")
@@ -50,9 +56,45 @@ public class FeatureFlagTestRuleTest {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
 	}
 
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = false, value = "CLASS-123"),
+			@FeatureFlag("METHOD-123"), @FeatureFlag("METHOD-234")
+		}
+	)
+	@Test
+	public void testAnnotateMethodAndClassWithFeatureFlags() throws Exception {
+		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("CLASS-123"));
+		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
+		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-234"));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "METHOD-123"), @FeatureFlag("METHOD-234")
+		}
+	)
+	@Test
+	public void testAnnotateMethodWithFeatureFlags() throws Exception {
+		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
+		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-234"));
+	}
+
 	@FeatureFlag(enable = false, value = "METHOD-456")
 	@Test
 	public void testDisableFeatureFlag() {
+		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "METHOD-123"),
+			@FeatureFlag(enable = false, value = "METHOD-456")
+		}
+	)
+	@Test
+	public void testDisableFeatureFlags() {
+		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
 		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
 	}
 

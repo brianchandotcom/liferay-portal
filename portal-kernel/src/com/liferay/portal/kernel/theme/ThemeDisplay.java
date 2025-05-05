@@ -583,10 +583,6 @@ public class ThemeDisplay
 		return _pathApplet;
 	}
 
-	public String getPathCms() {
-		return _pathCms;
-	}
-
 	/**
 	 * Returns the base URL for the color scheme's images, which can be
 	 * configured in the theme's <code>liferay-look-and-feel.xml</code>.
@@ -1568,10 +1564,6 @@ public class ThemeDisplay
 		_pathApplet = pathApplet;
 	}
 
-	public void setPathCms(String pathCms) {
-		_pathCms = pathCms;
-	}
-
 	public void setPathColorSchemeImages(String pathColorSchemeImages) {
 		_pathColorSchemeImages = pathColorSchemeImages;
 	}
@@ -2038,7 +2030,6 @@ public class ThemeDisplay
 	private String _mainJSURL;
 	private List<NavItem> _navItems;
 	private String _pathApplet = StringPool.BLANK;
-	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
 	private String _pathContext = StringPool.BLANK;
 	private String _pathControlPanelSpritemap = StringPool.BLANK;

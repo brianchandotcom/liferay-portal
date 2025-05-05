@@ -16,6 +16,7 @@ import {getObjectDefinitionInfo} from './ViewObjectDefinitions/objectDefinitionU
 interface WorkflowContainerProps {
 	baseResourceURL: string;
 	className: string;
+	isRootDescendantNode: boolean;
 	objectDefinitionId: number;
 	workflowLabel: string;
 }
@@ -34,6 +35,7 @@ const processBuilderConfigurationURL = createPortletURL(
 export default function WorkflowContainer({
 	baseResourceURL,
 	className,
+	isRootDescendantNode,
 	objectDefinitionId,
 	workflowLabel: initialWorkflowLabel,
 }: WorkflowContainerProps) {
@@ -54,11 +56,13 @@ export default function WorkflowContainer({
 				{Liferay.Language.get('workflow')}
 			</label>
 
-			<Text as="p" color="secondary" size={2} weight="light">
-				{Liferay.Language.get(
-					'to-set-a-workflow-go-to-applications-process-builder-configuration'
-				)}
-			</Text>
+			{!isRootDescendantNode && (
+				<Text as="p" color="secondary" size={2} weight="light">
+					{Liferay.Language.get(
+						'to-set-a-workflow-go-to-applications-process-builder-configuration'
+					)}
+				</Text>
+			)}
 
 			<div className="lfr-objects__workflow-details-section">
 				<ClayInput
@@ -70,39 +74,41 @@ export default function WorkflowContainer({
 					value={workflowLabel ? workflowLabel : initialWorkflowLabel}
 				/>
 
-				<div className="lfr-objects__workflow-buttons">
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('refresh')}
-						className="lfr-objects__workflow-reload-button"
-						data-tooltip-align="top"
-						displayType="secondary"
-						onClick={updateWorkflowLabel}
-						symbol="reload"
-						title={Liferay.Language.get('refresh')}
-					/>
+				{!isRootDescendantNode && (
+					<div className="lfr-objects__workflow-buttons">
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('refresh')}
+							className="lfr-objects__workflow-reload-button"
+							data-tooltip-align="top"
+							displayType="secondary"
+							onClick={updateWorkflowLabel}
+							symbol="reload"
+							title={Liferay.Language.get('refresh')}
+						/>
 
-					<ClayButton
-						aria-label={Liferay.Language.get(
-							'process-builder-configurations'
-						)}
-						className="lfr-objects__workflow-process-builder-button"
-						displayType="secondary"
-						onClick={() => {
-							window.open(
-								processBuilderConfigurationURL,
-								'_blank'
-							);
-						}}
-					>
-						<span className="icon">
-							{Liferay.Language.get(
+						<ClayButton
+							aria-label={Liferay.Language.get(
 								'process-builder-configurations'
 							)}
-						</span>
+							className="lfr-objects__workflow-process-builder-button"
+							displayType="secondary"
+							onClick={() => {
+								window.open(
+									processBuilderConfigurationURL,
+									'_blank'
+								);
+							}}
+						>
+							<span className="icon">
+								{Liferay.Language.get(
+									'process-builder-configurations'
+								)}
+							</span>
 
-						<ClayIcon symbol="shortcut" />
-					</ClayButton>
-				</div>
+							<ClayIcon symbol="shortcut" />
+						</ClayButton>
+					</div>
+				)}
 			</div>
 		</ClayForm.Group>
 	);

@@ -264,6 +264,7 @@ export function RightSidebarObjectDefinitionDetails({
 						<WorkflowContainer
 							baseResourceURL={baseResourceURL}
 							className="lfr-objects__model-builder-right-sidebar-section"
+							isRootDescendantNode={isRootDescendantNode}
 							objectDefinitionId={
 								selectedObjectDefinitionNode?.data?.id as number
 							}

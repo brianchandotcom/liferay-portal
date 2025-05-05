@@ -52,6 +52,13 @@ components:
                     readOnly: true
                 name:
                     type: string
+                previewURL:
+                    # @review
+                    description:
+                        optional field that specifies the preview URL of the file to be used, can be embedded with
+                        nestedFields (the format of the nested field must be `<attachment field name>.previewURL`)
+                    readOnly: true
+                    type: string
                 scope:
                     $ref: "#/components/schemas/Scope"
                 thumbnailURL:

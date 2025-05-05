@@ -80,10 +80,10 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		_userResource = builder.authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-		).locale(
-			LocaleUtil.getDefault()
 		).endpoint(
 			company.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
 		).build();
 	}
 

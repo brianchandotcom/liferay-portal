@@ -101,10 +101,10 @@ public class ExpandoColumnUpgradeProcessTest {
 
 			GroupResource groupResource = groupResourceBuilder.authentication(
 				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-			).locale(
-				LocaleUtil.fromLanguageId(languageId)
 			).endpoint(
 				company.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.fromLanguageId(languageId)
 			).build();
 
 			UserResource.Builder userResourceBuilder = UserResource.builder();

@@ -76,7 +76,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 				title={`${Liferay.Language.get('info')}:`}
 			>
 				{Liferay.Language.get(
-					'when-enabled,-permissions-are-inherited,-all-api-endpoints-are-grouped-under-the-parent,-and-the-relationship-field-is-always-mandatory'
+					'when-enabled,-permissions-and-workflow-are-inherited,-all-api-endpoints-are-grouped-under-the-parent,-and-the-relationship-field-is-always-mandatory'
 				)}
 			</ClayAlert>
 		</>

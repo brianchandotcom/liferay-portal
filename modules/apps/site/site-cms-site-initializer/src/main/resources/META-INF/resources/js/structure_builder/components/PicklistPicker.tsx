@@ -101,12 +101,14 @@ export default function PicklistPicker({field}: {field: Field}) {
 									href: `picklist-builder?listTypeDefinitionId=${selectedKey}`,
 									label: Liferay.Language.get('edit'),
 									symbolLeft: 'pencil',
+									target: '_blank',
 								},
 								{type: 'divider'},
 								{
 									href: 'picklist-builder',
 									label: Liferay.Language.get('new-picklist'),
 									symbolRight: 'shortcut',
+									target: '_blank',
 								},
 							]}
 							trigger={

@@ -641,6 +641,23 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getExternalReferenceCode(),
 				objectEntry.getExternalReferenceCode(), _portal));
 		fileEntry.setName(dlFileEntry::getFileName);
+		fileEntry.setPreviewURL(
+			() -> NestedFieldsSupplier.supply(
+				objectFieldName + ".previewURL",
+				fieldName -> {
+					LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
+						dlFileEntry);
+
+					String previewURL = _dlURLHelper.getPreviewURL(
+						liferayFileEntry, liferayFileEntry.getFileVersion(),
+						null, StringPool.BLANK, false, false);
+
+					if (Validator.isNull(previewURL)) {
+						return null;
+					}
+
+					return previewURL;
+				}));
 		fileEntry.setScope(
 			() -> {
 				if ((objectEntry.getGroupId() == dlFileEntry.getGroupId()) &&

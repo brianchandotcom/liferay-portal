@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 	import javax.servlet.http.HttpServletRequest;

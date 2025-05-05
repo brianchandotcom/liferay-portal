@@ -136,7 +136,7 @@ import java.util.Set;
 	import java.util.function.Supplier;
 </#if>
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 	import javax.servlet.http.HttpServletRequest;

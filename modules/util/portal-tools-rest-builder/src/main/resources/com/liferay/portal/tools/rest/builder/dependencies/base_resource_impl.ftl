@@ -70,7 +70,7 @@ import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 	import javax.servlet.ServletContext;
@@ -118,7 +118,11 @@ import java.util.Set;
  */
 @Generated("")
 <#if configYAML.application??>
-	@jakarta.ws.rs.Path("/${openAPIYAML.info.version}")
+	<#if freeMarkerTool.isUseJavax(configYAML)>
+		@javax.ws.rs.Path("/${openAPIYAML.info.version}")
+	<#else>
+		@jakarta.ws.rs.Path("/${openAPIYAML.info.version}")
+	</#if>
 </#if>
 public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
@@ -211,7 +215,7 @@ public abstract class Base${schemaName}ResourceImpl
 				 */
 			</#if>
 			@Override
-			${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
+			${freeMarkerTool.getResourceMethodAnnotations(configYAML, javaMethodSignature)}
 			public final ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
 				<#if stringUtil.equals(httpMethod, "get")>
 					<#if javaMethodSignature.returnType?contains("Page<")>
@@ -325,7 +329,7 @@ public abstract class Base${schemaName}ResourceImpl
 			 */
 		</#if>
 		@Override
-		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
+		${freeMarkerTool.getResourceMethodAnnotations(configYAML, javaMethodSignature)}
 		public <#if generatePermissions>final</#if> ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
@@ -336,7 +340,11 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				<#if freeMarkerTool.isUseJavax(configYAML)>
+					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
+				<#else>
+					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				</#if>
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
@@ -349,7 +357,11 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
 				vulcanBatchEngineExportTaskResource.setGroupLocalService(groupLocalService);
 
-				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				<#if freeMarkerTool.isUseJavax(configYAML)>
+					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
+				<#else>
+					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				</#if>
 
 				return responseBuilder.entity(
 					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, contentType, fieldNames)
@@ -361,7 +373,11 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				<#if freeMarkerTool.isUseJavax(configYAML)>
+					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
+				<#else>
+					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				</#if>
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.postImportTask(${javaDataType}.class.getName(), callbackURL, null, object)
@@ -373,7 +389,11 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				<#if freeMarkerTool.isUseJavax(configYAML)>
+					javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
+				<#else>
+					jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.accepted();
+				</#if>
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)
@@ -508,6 +528,8 @@ public abstract class Base${schemaName}ResourceImpl
 				return new java.util.Date();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "jakarta.ws.rs.core.Response")>
 				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.ok();
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
+				javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok();
 
 				return responseBuilder.build();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "void")>

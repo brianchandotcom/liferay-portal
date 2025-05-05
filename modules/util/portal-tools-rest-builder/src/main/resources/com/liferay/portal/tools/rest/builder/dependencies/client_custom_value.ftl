@@ -3,7 +3,7 @@ package ${configYAML.apiPackagePath}.client.custom.field;
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 <#else>

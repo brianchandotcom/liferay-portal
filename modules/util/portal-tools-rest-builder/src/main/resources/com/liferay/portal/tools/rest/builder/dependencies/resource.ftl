@@ -23,7 +23,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-<#if !freeMarkerTool.isVersionCompatible(configYAML, 10) || (useJavax?string == "true")>
+<#if freeMarkerTool.isUseJavax(configYAML)>
 	import javax.annotation.Generated;
 
 	import javax.servlet.http.HttpServletRequest;

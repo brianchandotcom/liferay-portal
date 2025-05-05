@@ -4,7 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import {createReadStream, readdirSync, statSync} from 'fs';
+import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -13,10 +13,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import {checkFolderInZip} from '../../../utils/zip';
 import {exportImportConfig} from './export_import.config';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {unzipAndCheckFolder} from './utils/stagingUtil';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -29,44 +29,8 @@ export const test = mergeTests(
 	stagingConfigurationPageTest
 );
 
-async function _unzipAndCheckFolder(
-	tempDir: string,
-	folderName: string = 'adaptive-media'
-): Promise<boolean | null> {
-	const files = readdirSync(tempDir)
-		.filter((file) => file.endsWith('.lar'))
-		.map((file) => ({
-			file,
-			time: statSync(path.join(tempDir, file)).mtime.getTime(),
-		}));
-
-	if (!files.length) {
-		return null;
-	}
-
-	// Sort files by most recent modification time
-
-	files.sort((a, b) => b.time - a.time);
-
-	const mostRecentFilePath = path.join(tempDir, files[0].file);
-
-	try {
-		const hasFolder = await checkFolderInZip(
-			mostRecentFilePath,
-			folderName
-		);
-
-		return hasFolder;
-	}
-	catch (error) {
-		console.error(`Error reading file ${files[0].file}: ${error}`);
-	}
-
-	return null;
-}
-
 test(
-	'Non Modified Referred Content Cannot Publish To Live When Enable Include If Modified Option',
+	'Non modified referred content cannot publish to Live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
@@ -136,7 +100,7 @@ test(
 			file.startsWith('tomcat-')
 		);
 
-		const hasFolder = await _unzipAndCheckFolder(
+		const hasFolder = await unzipAndCheckFolder(
 			path.resolve(tomcatDir, files[0], 'temp')
 		);
 

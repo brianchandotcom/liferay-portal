@@ -1236,6 +1236,25 @@ paths:
                         "OK"
             tags: ["TestEntity"]
     /test-entities/{testEntityId}:
+        delete:
+            operationId: deleteTestEntity
+            parameters:
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: permanent
+                    schema:
+                        default: false
+                        type: boolean
+            responses:
+                204:
+                    description:
+                        "No Content"
+            tags: ["TestEntity"]
         get:
             operationId: getTestEntity
             parameters:

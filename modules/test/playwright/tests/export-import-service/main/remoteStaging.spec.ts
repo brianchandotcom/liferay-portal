@@ -5,20 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {dataRemoteApiHelpersTest} from '../../fixtures/dataRemoteApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {remotePageTest} from '../../fixtures/remotePageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {dataRemoteApiHelpersTest} from '../../../fixtures/dataRemoteApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {remotePageTest} from '../../../fixtures/remotePageTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 
 const remotePort = '9080';

@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 
 export class RemoteStagingPage {
 	readonly page: Page;

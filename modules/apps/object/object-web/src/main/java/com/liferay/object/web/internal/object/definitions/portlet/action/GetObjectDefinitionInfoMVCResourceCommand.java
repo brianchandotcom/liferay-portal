@@ -54,6 +54,32 @@ public class GetObjectDefinitionInfoMVCResourceCommand
 			return;
 		}
 
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"tableName", objectDefinition.getDBTableName()
+			).put(
+				"workflowDefinitionTitle",
+				() -> {
+					if (!objectDefinition.isRootDescendantNode()) {
+						return _getWorkflowDefinitionTitle(
+							objectDefinition, resourceRequest);
+					}
+
+					ObjectDefinition rootObjectDefinition =
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							objectDefinition.getRootObjectDefinitionId());
+
+					return _getWorkflowDefinitionTitle(
+						rootObjectDefinition, resourceRequest);
+				}
+			));
+	}
+
+	private String _getWorkflowDefinitionTitle(
+			ObjectDefinition objectDefinition, ResourceRequest resourceRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -62,26 +88,16 @@ public class GetObjectDefinitionInfoMVCResourceCommand
 				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 				objectDefinition.getClassName(), 0, 0);
 
-		String workflowDefinitionTitle = _language.get(
-			themeDisplay.getLocale(), "no-workflow");
-
-		if (workflowDefinitionLink != null) {
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.fetchKaleoDefinition(
-					workflowDefinitionLink.getWorkflowDefinitionName(),
-					ServiceContextFactory.getInstance(resourceRequest));
-
-			workflowDefinitionTitle = kaleoDefinition.getTitle(
-				themeDisplay.getLocale());
+		if (workflowDefinitionLink == null) {
+			return _language.get(themeDisplay.getLocale(), "no-workflow");
 		}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"tableName", objectDefinition.getDBTableName()
-			).put(
-				"workflowDefinitionTitle", workflowDefinitionTitle
-			));
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.fetchKaleoDefinition(
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				ServiceContextFactory.getInstance(resourceRequest));
+
+		return kaleoDefinition.getTitle(themeDisplay.getLocale());
 	}
 
 	@Reference

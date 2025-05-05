@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -467,7 +468,8 @@ public class DisplayPageTemplateResourceImpl
 				if (changeFrequency != null) {
 					unicodeProperties.setProperty(
 						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
-						changeFrequency.toString());
+						StringUtil.lowerCaseFirstLetter(
+							changeFrequency.toString()));
 				}
 
 				Boolean include = siteMapSettings.getInclude();

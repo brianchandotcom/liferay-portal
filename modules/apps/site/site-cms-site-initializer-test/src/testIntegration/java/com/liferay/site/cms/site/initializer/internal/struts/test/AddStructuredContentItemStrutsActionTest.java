@@ -61,6 +61,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -82,6 +83,11 @@ public class AddStructuredContentItemStrutsActionTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		GroupLocalServiceUtil.checkSystemGroups(TestPropsValues.getCompanyId());
+	}
 
 	@Before
 	public void setUp() throws Exception {

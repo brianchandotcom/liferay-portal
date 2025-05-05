@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTPublishConflictException;
@@ -28,6 +29,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -39,6 +41,10 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -49,6 +55,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -103,6 +110,50 @@ public class CTCollectionServiceTest {
 		_roleLocalService.addUserRole(
 			_user.getUserId(),
 			_roleLocalService.getDefaultGroupRole(_group.getGroupId()));
+	}
+
+	@Test
+	public void testAddCTCollectionWithCustomOwnerPermissions()
+		throws Exception {
+
+		UserTestUtil.setUser(_user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
+			RandomTestUtil.randomString(), null);
+
+		Assert.assertTrue(
+			_ctCollectionModelResourcePermission.contains(
+				permissionChecker, _ctCollection, CTActionKeys.PUBLISH));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"defaultOwnerActionIds",
+							new String[] {
+								ActionKeys.UPDATE, ActionKeys.VIEW,
+								CTActionKeys.INVITE_USERS
+							}
+						).build())) {
+
+			UserTestUtil.setUser(_user);
+
+			permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+			_ctCollection = _ctCollectionLocalService.addCTCollection(
+				null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
+				RandomTestUtil.randomString(), null);
+
+			Assert.assertFalse(
+				_ctCollectionModelResourcePermission.contains(
+					permissionChecker, _ctCollection, CTActionKeys.PUBLISH));
+		}
 	}
 
 	@Test
@@ -453,6 +504,12 @@ public class CTCollectionServiceTest {
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.change.tracking.model.CTCollection"
+	)
+	private volatile ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 	@DeleteAfterTestRun
 	private Group _group;

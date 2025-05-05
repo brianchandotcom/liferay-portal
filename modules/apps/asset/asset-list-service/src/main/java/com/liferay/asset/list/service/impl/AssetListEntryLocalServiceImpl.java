@@ -478,6 +478,8 @@ public class AssetListEntryLocalServiceImpl
 		_validateTitle(assetListEntry.getGroupId(), title);
 
 		assetListEntry.setModifiedDate(new Date());
+		assetListEntry.setAssetListEntryKey(
+			_generateAssetListEntryKey(assetListEntry.getGroupId(), title));
 		assetListEntry.setTitle(title);
 
 		return assetListEntryPersistence.update(assetListEntry);

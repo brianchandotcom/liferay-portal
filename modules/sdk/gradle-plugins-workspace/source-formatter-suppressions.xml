@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="CSPTagIllegalAttributesCheck" files="src/gradleTest/metatypePlugin/modules/configuration-action/src/main/resources/META-INF/resources/view\.jsp" />
 		<suppress checks="PropertiesDefinitionKeysCheck" files="src/gradleTest/dockerLocalRegistry/gradle\.properties" />
 	</source-check>
 </suppressions>

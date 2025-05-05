@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="CSPTagIllegalAttributesCheck" files="sharing-notifications/src/main/resources/com/liferay/sharing/notifications/dependencies/sharing_entry_added_email_body\.ftl" />
+	</source-check>
+</suppressions>

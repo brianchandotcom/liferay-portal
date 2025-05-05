@@ -390,7 +390,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 					),
 			]);
 
-			setSelectedTicketOptions((tickets) => [
+			setSelectedTicketOptions([
 				...tickets.filter((ticket) => {
 					return associatedTickets.includes(ticket.ticketId);
 				}),

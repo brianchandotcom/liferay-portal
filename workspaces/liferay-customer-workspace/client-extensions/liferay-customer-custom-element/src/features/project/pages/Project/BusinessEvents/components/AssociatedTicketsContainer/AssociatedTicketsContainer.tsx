@@ -8,7 +8,7 @@ import './AssociatedTicketsContainer.css';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ChangeEvent, useCallback, useEffect, useRef, useState} from 'react';
+import {ChangeEvent, useCallback, useRef, useState} from 'react';
 import i18n from '~/utils/I18n';
 import {ITicket} from '~/utils/types';
 
@@ -48,8 +48,6 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 	const openTicket = useCallback((ticket: ITicket) => {
 		window.open(ticket.link, '_blank', 'noreferrer');
 	}, []);
-
-	useEffect(() => {}, []);
 
 	return (
 		<>

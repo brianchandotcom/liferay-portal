@@ -22,6 +22,17 @@ export const test = mergeTests(
 
 let objectDefinition: ObjectDefinition;
 
+const notificationTemplateInfo = {
+	bcc: 'test3@liferay.com',
+	cc: 'test2@liferay.com',
+	description: 'This is a description',
+	recipients: 'test@liferay.com, test4@liferay.com',
+	senderAddress: 'test1@liferay.com',
+	senderName: 'Test Test',
+	subject: 'This is a subject',
+	term: '[%CURRENT_USER_FIRST_NAME%]',
+};
+
 test.beforeEach(async ({apiHelpers}) => {
 	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
 		objectFolderExternalReferenceCode: 'default',
@@ -59,6 +70,59 @@ test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 			throw new Error(error);
 		}
 	}
+});
+
+test('can create a template', async ({
+	emailNotificationTemplatePage,
+	notificationTemplatesPage,
+}) => {
+	await emailNotificationTemplatePage.goto();
+
+	const notificationTemplateName =
+		'Notification Template Name' + getRandomInt();
+
+	await emailNotificationTemplatePage.fillNotificationTemplateInfo(
+		notificationTemplateName,
+		notificationTemplateInfo
+	);
+
+	await emailNotificationTemplatePage.saveButton.click();
+
+	await notificationTemplatesPage
+		.getFrontEndDatasetItemLocator(notificationTemplateName)
+		.click();
+
+	await expect(emailNotificationTemplatePage.basicInfoName).toHaveValue(
+		notificationTemplateName
+	);
+
+	await expect(emailNotificationTemplatePage.descriptionInput).toHaveValue(
+		notificationTemplateInfo.description
+	);
+
+	await expect(emailNotificationTemplatePage.senderEmailAddress).toHaveValue(
+		notificationTemplateInfo.senderAddress
+	);
+
+	await expect(emailNotificationTemplatePage.senderName).toHaveValue(
+		notificationTemplateInfo.senderName
+	);
+
+	await expect(
+		emailNotificationTemplatePage.primaryRecipientUserEmailAddress
+	).toHaveValue(notificationTemplateInfo.recipients);
+
+	await expect(
+		emailNotificationTemplatePage.secondaryRecipientsCCInput
+	).toHaveValue(notificationTemplateInfo.cc);
+
+	await expect(
+		emailNotificationTemplatePage.secondaryRecipientsBCCInput
+	).toHaveValue(notificationTemplateInfo.bcc);
+
+	await expect(emailNotificationTemplatePage.contentSubject).toHaveValue(
+		notificationTemplateInfo.subject
+	);
 });
 
 test('can add rich text source code and verify that the source code is being persisted', async ({

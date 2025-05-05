@@ -7,6 +7,17 @@ import {Locator, Page} from '@playwright/test';
 
 import {NotificationTemplatesPage} from './NotificationTemplatesPage';
 
+interface NotificationTemplateInfo {
+	bcc: string;
+	cc: string;
+	description: string;
+	recipients: string;
+	senderAddress: string;
+	senderName: string;
+	subject: string;
+	term: string;
+}
+
 export class EmailNotificationTemplatePage {
 	readonly page: Page;
 	readonly accountRolesGroupTitle: Locator;
@@ -15,6 +26,7 @@ export class EmailNotificationTemplatePage {
 	readonly contentSubject: Locator;
 	readonly copyButton: Locator;
 	readonly definitionOfTermsEntity: Locator;
+	readonly descriptionInput: Locator;
 	readonly editorType: Locator;
 	readonly freeMarkerEntity: Locator;
 	readonly notificationTemplatesPage: NotificationTemplatesPage;
@@ -31,6 +43,8 @@ export class EmailNotificationTemplatePage {
 	readonly secondaryRecipientRolesCC: Locator;
 	readonly secondaryRecipientTypeBCC: Locator;
 	readonly secondaryRecipientTypeCC: Locator;
+	readonly secondaryRecipientsBCCInput: Locator;
+	readonly secondaryRecipientsCCInput: Locator;
 	readonly senderEmailAddress: Locator;
 	readonly senderName: Locator;
 
@@ -44,6 +58,9 @@ export class EmailNotificationTemplatePage {
 		this.contentSubject = page.getByLabel('Subject' + 'Mandatory');
 		this.copyButton = page.getByRole('button', {name: 'Copy'});
 		this.definitionOfTermsEntity = page.getByLabel('Entity').last();
+		this.descriptionInput = page.getByRole('textbox', {
+			name: 'Description',
+		});
 		this.editorType = page.getByLabel('Editor Type' + 'Mandatory');
 		this.freeMarkerEntity = page.getByLabel('Entity').first();
 		this.notificationTemplatesPage = new NotificationTemplatesPage(page);
@@ -81,6 +98,12 @@ export class EmailNotificationTemplatePage {
 		this.secondaryRecipientTypeCC = page
 			.getByLabel('Type', {exact: true})
 			.first();
+		this.secondaryRecipientsBCCInput = page.locator(
+			'#secondaryRecipientsBCC'
+		);
+		this.secondaryRecipientsCCInput = page.locator(
+			'#secondaryRecipientsCC'
+		);
 		this.senderEmailAddress = page.getByLabel(
 			'Email Address' + 'Mandatory'
 		);
@@ -93,5 +116,32 @@ export class EmailNotificationTemplatePage {
 		await this.notificationTemplatesPage.newNotificationTemplateButton.click();
 
 		await this.notificationTemplatesPage.emailNotificationDropdownItem.click();
+	}
+
+	async fillNotificationTemplateInfo(
+		notificationTemplateName: string,
+		notificationTemplateInfo: NotificationTemplateInfo
+	) {
+		await this.basicInfoName.fill(notificationTemplateName);
+
+		await this.descriptionInput.fill(notificationTemplateInfo.description);
+
+		await this.senderEmailAddress.fill(
+			notificationTemplateInfo.senderAddress
+		);
+
+		await this.senderName.fill(notificationTemplateInfo.senderName);
+
+		await this.primaryRecipientUserEmailAddress.fill(
+			notificationTemplateInfo.recipients
+		);
+
+		await this.secondaryRecipientsCCInput.fill(notificationTemplateInfo.cc);
+
+		await this.secondaryRecipientsBCCInput.fill(
+			notificationTemplateInfo.bcc
+		);
+
+		await this.contentSubject.fill(notificationTemplateInfo.subject);
 	}
 }

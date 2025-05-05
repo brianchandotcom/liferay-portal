@@ -130,6 +130,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 						liveGroupMasterPage.getExternalReferenceCode()));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteMasterPagePermissionsPage() throws Exception {
+		super.testGetSiteMasterPagePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeMasterPage()
@@ -153,15 +160,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_testGetSiteSiteByExternalReferenceCodeMasterPage(masterPage);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteByExternalReferenceCodeMasterPagePermissionsPage();
 	}
 
 	@Override
@@ -212,15 +210,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		super.
 			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortString();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteExternalReferenceCodeMasterPagePermissionsPage();
 	}
 
 	@Override
@@ -410,6 +399,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				getDisplayPageLayoutPageTemplateEntry(serviceContext));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteMasterPagePermissionsPage() throws Exception {
+		super.testPutSiteMasterPagePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
@@ -463,24 +459,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 						null, masterPage.getExternalReferenceCode(), null)));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodeMasterPagePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteByExternalReferenceCodeMasterPagePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeMasterPagePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteExternalReferenceCodeMasterPagePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -509,6 +487,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			_randomTaxonomyCategoryItemExternalReferences());
 
 		return masterPage;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected MasterPage testGetSiteMasterPagePermissionsPage_addMasterPage()
+		throws Exception {
+
+		return super.testGetSiteMasterPagePermissionsPage_addMasterPage();
 	}
 
 	@Override
@@ -545,6 +532,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		return testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected MasterPage testPutSiteMasterPagePermissionsPage_addMasterPage()
+		throws Exception {
+
+		return super.testPutSiteMasterPagePermissionsPage_addMasterPage();
 	}
 
 	private FileEntry _addPortletFileEntry(long folderId) throws Exception {

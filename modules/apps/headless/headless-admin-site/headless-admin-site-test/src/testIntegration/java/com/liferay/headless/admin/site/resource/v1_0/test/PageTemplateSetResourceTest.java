@@ -81,6 +81,13 @@ public class PageTemplateSetResourceTest
 						liveGroupPageTemplateSet.getExternalReferenceCode()));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSitePageTemplateSetPermissionsPage() throws Exception {
+		super.testGetSitePageTemplateSetPermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageTemplateSet()
@@ -95,16 +102,6 @@ public class PageTemplateSetResourceTest
 		_enableLocalStaging();
 
 		_testGetSiteSiteByExternalReferenceCodePageTemplateSet(pageTemplateSet);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage();
 	}
 
 	@Override
@@ -191,16 +188,6 @@ public class PageTemplateSetResourceTest
 
 		super.
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage();
 	}
 
 	@Override
@@ -301,6 +288,13 @@ public class PageTemplateSetResourceTest
 				"Key ", key, " must have fewer than 75 characters"));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPutSitePageTemplateSetPermissionsPage() throws Exception {
+		super.testPutSitePageTemplateSetPermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageTemplateSet()
@@ -330,29 +324,20 @@ public class PageTemplateSetResourceTest
 						pageTemplateSet));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteExternalReferenceCodePageTemplateSetPermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "externalReferenceCode", "name"};
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected PageTemplateSet
+			testGetSitePageTemplateSetPermissionsPage_addPageTemplateSet()
+		throws Exception {
+
+		return super.
+			testGetSitePageTemplateSetPermissionsPage_addPageTemplateSet();
 	}
 
 	@Override
@@ -386,6 +371,17 @@ public class PageTemplateSetResourceTest
 			putSiteSiteByExternalReferenceCodePageTemplateSet(
 				testGroup.getExternalReferenceCode(),
 				pageTemplateSet.getExternalReferenceCode(), pageTemplateSet);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected PageTemplateSet
+			testPutSitePageTemplateSetPermissionsPage_addPageTemplateSet()
+		throws Exception {
+
+		return super.
+			testPutSitePageTemplateSetPermissionsPage_addPageTemplateSet();
 	}
 
 	private void _assertProblemException(

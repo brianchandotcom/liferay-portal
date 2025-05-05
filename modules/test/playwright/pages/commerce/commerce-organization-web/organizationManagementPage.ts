@@ -25,8 +25,12 @@ export class OrganizationManagementPage {
 	readonly addUserNode: Locator;
 	readonly chart: Locator;
 	readonly collapseAllButton: Locator;
+	readonly deleteItem: Locator;
+	readonly discoveredAccountNode: (accountName: string) => Locator;
+	readonly discoveredOrganizationNode: (organizationName: string) => Locator;
 	readonly infoText: (text: string) => Locator;
 	readonly menuButton: (container: Locator) => Locator;
+	readonly noRootOrganizationsMessage: Locator;
 	readonly organizationNode: (organizationName: string) => Locator;
 	readonly page: Page;
 	readonly removeItem: Locator;
@@ -61,9 +65,16 @@ export class OrganizationManagementPage {
 			exact: true,
 			name: 'Collapse All',
 		});
+		this.deleteItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.infoText = (text) => {
 			return page.getByText(text);
 		};
+		this.noRootOrganizationsMessage = page.getByText(
+			'No root organizations were found'
+		);
 		this.menuButton = (container) => {
 			return container.locator('.node-menu-wrapper');
 		};
@@ -87,6 +98,16 @@ export class OrganizationManagementPage {
 		this.addUserNode = this.chart
 			.locator('g.actions-wrapper.menu-open')
 			.locator('g.add-action-wrapper.user');
+		this.discoveredAccountNode = (accountName) => {
+			return this.chart
+				.locator('g.chart-item-account.discovered')
+				.filter({hasText: accountName});
+		};
+		this.discoveredOrganizationNode = (organizationName) => {
+			return this.chart
+				.locator('g.chart-item-organization.discovered')
+				.filter({hasText: organizationName});
+		};
 		this.organizationNode = (organizationName) => {
 			return this.chart
 				.locator('g.chart-item-organization')

@@ -25,16 +25,18 @@ public class DisplayPageTemplateSettings implements Cloneable, Serializable {
 		return DisplayPageTemplateSettingsSerDes.toDTO(json);
 	}
 
-	public OpenGraphSettings getOpenGraphSettings() {
+	public DisplayPageTemplateOpenGraphSettings getOpenGraphSettings() {
 		return openGraphSettings;
 	}
 
-	public void setOpenGraphSettings(OpenGraphSettings openGraphSettings) {
+	public void setOpenGraphSettings(
+		DisplayPageTemplateOpenGraphSettings openGraphSettings) {
+
 		this.openGraphSettings = openGraphSettings;
 	}
 
 	public void setOpenGraphSettings(
-		UnsafeSupplier<OpenGraphSettings, Exception>
+		UnsafeSupplier<DisplayPageTemplateOpenGraphSettings, Exception>
 			openGraphSettingsUnsafeSupplier) {
 
 		try {
@@ -45,18 +47,19 @@ public class DisplayPageTemplateSettings implements Cloneable, Serializable {
 		}
 	}
 
-	protected OpenGraphSettings openGraphSettings;
+	protected DisplayPageTemplateOpenGraphSettings openGraphSettings;
 
-	public SEOSettings getSeoSettings() {
+	public DisplayPageTemplateSEOSettings getSeoSettings() {
 		return seoSettings;
 	}
 
-	public void setSeoSettings(SEOSettings seoSettings) {
+	public void setSeoSettings(DisplayPageTemplateSEOSettings seoSettings) {
 		this.seoSettings = seoSettings;
 	}
 
 	public void setSeoSettings(
-		UnsafeSupplier<SEOSettings, Exception> seoSettingsUnsafeSupplier) {
+		UnsafeSupplier<DisplayPageTemplateSEOSettings, Exception>
+			seoSettingsUnsafeSupplier) {
 
 		try {
 			seoSettings = seoSettingsUnsafeSupplier.get();
@@ -66,7 +69,7 @@ public class DisplayPageTemplateSettings implements Cloneable, Serializable {
 		}
 	}
 
-	protected SEOSettings seoSettings;
+	protected DisplayPageTemplateSEOSettings seoSettings;
 
 	@Override
 	public DisplayPageTemplateSettings clone()

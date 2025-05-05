@@ -686,7 +686,7 @@ components:
         DisplayPageTemplateSettings:
             # @review
             description:
-                The settings of a Display Page Template.
+                The settings of a display page template.
             properties:
                 openGraphSettings:
                     $ref: "#/components/schemas/DisplayPageTemplateOpenGraphSettings"

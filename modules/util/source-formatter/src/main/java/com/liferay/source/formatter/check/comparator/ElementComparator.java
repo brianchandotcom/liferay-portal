@@ -5,14 +5,12 @@
 
 package com.liferay.source.formatter.check.comparator;
 
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
-
 import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
  */
-public class ElementComparator extends NaturalOrderStringComparator {
+public class ElementComparator extends PropertyValueComparator {
 
 	public ElementComparator() {
 		this(_NAME_ATTRIBUTE_DEFAULT);

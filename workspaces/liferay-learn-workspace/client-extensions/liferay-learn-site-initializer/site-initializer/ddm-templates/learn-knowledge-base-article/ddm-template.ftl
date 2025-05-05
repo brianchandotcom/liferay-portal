@@ -1,0 +1,568 @@
+<#assign
+	assetId = ObjectEntry_objectEntryId.getData()?number
+	createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a")
+/>
+
+<div class="learn-knowledge-article-container">
+	<div class="header-navigation d-flex justify-content-between px-3 mb-3">
+		<div class="d-flex justify-content-between">
+			<ul aria-label="breadcrumb navigation" class="learn-breadcrumb" role="navigation">
+				<li>
+					<a href="/">
+						<@clay["icon"] symbol="home-full" />
+					</a>
+				</li>
+				<li>
+					${ObjectField_title.getData()}
+				</li>
+			</ul>
+		</div>
+
+		<div class="component-button text-break learn-submit-feedback">
+			<a
+				class="btn btn-nm btn-link page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link"
+				data-tooltip-floating="true"
+				href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+				id="fragment-txnc-link">
+				<@liferay_ui["message"] key="submit-feedback" />
+			</a>
+		</div>
+	</div>
+
+	<div class="knowledge-article-page-container d-flex">
+		<div class="container knowledge-article-main" id="left-panel">
+			<div class="disclaimers-container">
+				<div class="disclaimer">
+					<div class="container-fluid">
+						<div class="disclaimer-header d-flex">
+							<div class="col knowledge-article-dialect">
+								<#if getterUtil.getBoolean(ObjectField_legacy.getData())>
+									<@liferay_ui["message"] key="legacy-knowledge-base" />
+									<#else>
+										<@liferay_ui["message"] key="knowledge-base" />
+								</#if>
+							</div>
+
+							<span>
+								<@liferay_ui["message"] key="published" />
+								${createDate?string("MMM. d, yyyy")}
+							</span>
+						</div>
+						<#if (ObjectField_title.getData())??>
+							<h3 class="disclaimer-title mb-3">
+								${ObjectField_title.getData()}
+							</h3>
+						</#if>
+						<div class="description-container d-flex">
+							<div class="author-container d-flex">
+								<img class="publisher-avatar rounded-circle" src="${ObjectEntry_userProfileImage.getData()}" />
+
+								<div class="col-1.5 mx-3">
+									<@liferay_ui["message"] key="written-by" />
+
+									<p class="author">
+										${ObjectEntry_author.getData()}
+									</p>
+								</div>
+							</div>
+
+							<div class="col paragraph">
+								<@liferay_ui["message"] key="learn-knowledge-base-header-text" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<#if getterUtil.getBoolean(ObjectField_legacy.getData())>
+					<div class="warning-disclaimer d-flex">
+						<div>
+							<span class="icon-warning"></span>
+						</div>
+
+						<div class="col">
+							<p>
+								<@liferay_ui["message"] key="legacy-article" />
+							</p>
+							<@liferay_ui["message"] key="learn-legacy-article-disclaimer-text" />
+						</div>
+					</div>
+				</#if>
+			</div>
+
+			<article class="article-content">
+				<#if (ObjectField_content.getData())??>
+					${ObjectField_content.getData()}
+				</#if>
+			</article>
+
+			<div class="attachment-container">
+				Attachment Space
+			</div>
+
+			<div class="align-items-center d-flex flex-row p-3 rating-box bold">
+				<div>
+					<@liferay_ui["message"] key="did-this-article-resolve-your-issue" />
+				</div>
+
+				<div class="<#if themeDisplay.isSignedIn()>enabled<#else>disabled</#if>">
+					<@liferay_ratings["ratings"]
+						className="com.liferay.journal.model.JournalArticle"
+						classPK=assetId
+						type="thumbs"
+					/>
+				</div>
+			</div>
+
+			<div class="knowledge-article-category-bottom">
+				<hr class="my-5">
+			</div>
+		</div>
+
+		<div class="col-md-3 knowledge-article-sidemenu" id="right-panel">
+			<div class="container-fluid">
+				<div class="row sidemenu-header">
+					<div class="col knowledge-article-dialect">
+						<#if getterUtil.getBoolean(ObjectField_legacy.getData())>
+							<@liferay_ui["message"] key="legacy-knowledge-base" />
+							<#else>
+								<@liferay_ui["message"] key="knowledge-base" />
+						</#if>
+					</div>
+				</div>
+			</div>
+
+			<div class="page-nav-menu article-nav-menu">
+			</div>
+
+			<div class="page-nav-menu">
+				<div class="category-container mb-3">
+					<div class="learn-category-section-side">
+					</div>
+
+					<div class="knowledge-article-type-category-section">
+						<#if (ObjectField_knowledgeArticleType.getData())?hasContent>
+							<section>
+								<h6>
+									<@liferay_ui["message"] key="type" />
+								</h6>
+
+								<div class="category-tags">
+									<span class="category-tag">
+										${ObjectField_knowledgeArticleType.getData()}
+									</span>
+								</div>
+							</section>
+						</#if>
+					</div>
+				</div>
+
+				<hr>
+				<div class="align-items-center d-flex flex-row rating-box">
+					<div>
+						<@liferay_ui["message"] key="did-this-article-resolve-your-issue" />
+					</div>
+					<@liferay_ratings["ratings"]
+						className="com.liferay.journal.model.JournalArticle"
+						classPK=assetId
+						type="thumbs"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+window.addEventListener("load", function() {
+	document.querySelectorAll(".btn-thumbs-down").forEach((element) => {
+		element.addEventListener("click", (event) => {
+			location.reload();
+		});
+	});
+	document.querySelectorAll(".btn-thumbs-up").forEach((element) => {
+		element.addEventListener("click", (event) => {
+			location.reload();
+		});
+	});
+});
+
+const assetId = ${assetId}
+let knowledgeArticleContent = null;
+
+async function fetchKnowledgeArticles(assetId) {
+	try {
+		const response = await fetch(`https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}`, {
+			headers: {
+				'x-csrf-token': Liferay.authToken,
+			},
+		});
+
+		if (!response.ok) {
+			console.error('Request Error:', response.statusText);
+			return;
+		}
+
+		const data = await response.json();
+
+		if (data && data.content) {
+			knowledgeArticleContent = data.content;
+			const contentContainer = document.querySelector('.article-content');
+
+			if (contentContainer) {
+				contentContainer.innerHTML = knowledgeArticleContent;
+				generateButtonsFromRenderedContent();
+			}
+		} else {
+			console.error('Data not found:', data);
+		}
+	} catch (error) {
+		console.error('Error fetching data:', error);
+	}
+}
+
+function generateButtonsFromRenderedContent() {
+	const menuContainer = document.querySelector('.page-nav-menu');
+	const contentContainer = document.querySelector('.article-content');
+
+	if (!menuContainer || !contentContainer) {
+		console.warn('Container not found');
+		return;
+	}
+
+	menuContainer.innerHTML = '';
+
+	const headings = contentContainer.querySelectorAll('h2');
+
+	headings.forEach((heading) => {
+		let id = heading.getAttribute('id');
+		const text = heading.textContent.trim();
+
+		if (!id) {
+			id = text.toLowerCase().replace(/\s+/g, '').replace(/[^\w\-] /g, '');
+			heading.setAttribute('id', id);
+		}
+
+		const buttonDiv = document.createElement('div');
+
+		buttonDiv.className = 'component-button text-break';
+		const button = document.createElement('a');
+
+		button.className = 'btn btn-nm btn-link px-0';
+		button.href = "#" + id;
+
+		const translationKey = text.toLowerCase();
+
+		const translatedText = Liferay.Language.get(translationKey);
+
+		button.textContent = translatedText !== translationKey ? translatedText : text;
+
+		buttonDiv.appendChild(button);
+		menuContainer.appendChild(buttonDiv);
+	});
+}
+
+fetchKnowledgeArticles(assetId);
+
+async function fetchCategories(input) {
+	const response = await fetch('https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory', {
+		headers: {
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (!response.ok) {
+		console.error('Request Error:', response.statusText);
+		return;
+	}
+
+	const data = await response.json();
+
+	if (data && data.taxonomyCategoryBriefs) {
+		return data.taxonomyCategoryBriefs;
+	} else {
+		console.error('Data not found:', data);
+		return;
+	}
+};
+
+fetchCategories().then((taxonomyCategoryBriefs) => {
+	if (taxonomyCategoryBriefs) {
+		const groupedCategories = taxonomyCategoryBriefs.reduce((acc, item) => {
+			const vocabularyName = item.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name;
+
+			if (!acc[vocabularyName]) {
+				acc[vocabularyName] = [];
+			}
+
+			acc[vocabularyName].push(item.taxonomyCategoryName);
+
+			return acc;
+		}, {});
+
+		const learnCategorySectionSide = document.querySelector('.learn-category-section-side');
+		const learnCategorySectionBottom = document.querySelector('.knowledge-article-category-bottom');
+
+		for (const vocabularyName in groupedCategories) {
+			if (groupedCategories.hasOwnProperty(vocabularyName)) {
+				const section = document.createElement('section');
+				const vocabularyTitle = document.createElement('h6');
+
+				const isSideCategory = vocabularyName === "Applicable Versions" || vocabularyName === "Deployment Approach";
+				const isBottomCategory = vocabularyName === "Capability" || vocabularyName === "Feature";
+
+				if (isSideCategory || isBottomCategory) {
+					vocabularyTitle.textContent = isBottomCategory ? vocabularyName + ":" : vocabularyName;
+					section.appendChild(vocabularyTitle);
+					const categoryTags = document.createElement('div');
+
+					categoryTags.className = 'category-tags';
+					const spanClass = isBottomCategory ? 'category-tag-bottom' : 'category-tag';
+
+					groupedCategories[vocabularyName].forEach(categoryName => {
+						const span = document.createElement('span');
+
+						span.className = spanClass;
+						span.textContent = categoryName;
+						categoryTags.appendChild(span);
+					});
+
+					section.appendChild(categoryTags);
+					const targetContainer = isBottomCategory ? learnCategorySectionBottom : learnCategorySectionSide;
+
+					targetContainer.appendChild(section);
+				}
+			}
+		}
+	}
+});
+</script>
+
+<style>
+article h2 {
+	scroll-margin-top: 11rem;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+h6 {
+	font-size: 1rem;
+}
+
+.btn-thumbs-up,
+.btn-thumbs-down {
+	padding: 0;
+	width: 40px;
+	height: 40px;
+}
+
+.category-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.category-tag {
+	background-color: var(--color-state-info-lighten-2, #e6ebf5);
+	border-style: none;
+	color: #1C3667;
+	font-weight: 400;
+	font-size: 11px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.disclaimer {
+	.paragraph {
+		font-style: italic;
+	}
+
+	.author {
+		font-weight: bold;
+	}
+
+	.knowledge-article-dialect {
+		align-items: center;
+		color: var(--color-brand-primary);
+		padding: 0;
+		margin-bottom: 1rem;
+
+		&::before {
+			background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230B5FFF'%3E%3Cpath d='M3 1H1C0.45 1 0 1.45 0 2V3H4V2C4 1.45 3.55 1 3 1Z'/%3E%3Cpath d='M0 14C0 14.55 0.45 15 1 15H3C3.55 15 4 14.55 4 14V13H0V14Z'/%3E%3Cpath d='M4 4H0V12H4V4Z'/%3E%3Cpath d='M8 1H6C5.45 1 5 1.45 5 2V3H9V2C9 1.45 8.55 1 8 1Z'/%3E%3Cpath d='M5 14C5 14.55 5.45 15 6 15H8C8.55 15 9 14.55 9 14V13H5V14Z'/%3E%3Cpath d='M9 4H5V12H9V4Z'/%3E%3Cpath d='M11.22 1.1L10.25 1.35C9.72 1.49 9.4 2.04 9.54 2.57L9.79 3.54L12.69 2.78L12.44 1.82C12.3 1.28 11.76 0.96 11.22 1.1Z'/%3E%3Cpath d='M12.95 3.75L10.04 4.51L12.06 12.25L14.96 11.49L12.95 3.75Z'/%3E%3Cpath d='M12.56 14.18C12.7 14.72 13.24 15.04 13.78 14.9L14.75 14.65C15.28 14.51 15.6 13.96 15.46 13.43L15.21 12.46L12.31 13.22L12.56 14.18Z'/%3E%3C/g%3E%3C/svg%3E");
+		}
+	}
+}
+
+.knowledge-article-category-bottom {
+	section {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.category-tag-bottom {
+		background: var(--color-neutral-0, #fff);
+		border: 1px solid var(--color-brand-primary, #0b5fff);
+		border-radius: var(--border-radius-xl);
+		color: var(--color-brand-primary, #0b5fff);
+		gap: 0.25rem;
+		padding: 0.25rem 0.5rem;
+	}
+}
+
+.knowledge-article-dialect {
+	display: flex;
+	font-family: var(--font-family-sans-serif);
+	font-size: 18px;
+	font-weight: 600;
+
+	&::before {
+		content: "";
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background-repeat: no-repeat;
+		background-size: contain;
+		margin-right: 0.5rem;
+	}
+}
+
+.knowledge-article-main {
+	display: flex;
+	flex-direction: column;
+
+	.rating-box {
+		background: linear-gradient(123.06deg, #1514A4 0%, #00C2FB 173.41%);
+		border-radius: 10px;
+		color: var(--color-neutral-0, #fff);
+		margin-top: 2rem;
+		width: max-content;
+
+		.enabled .lexicon-icon,
+		.enabled span {
+			fill: white;
+			color: white;
+		}
+
+		.disabled .lexicon-icon,
+		.disabled span {
+			fill: #6e9dde;
+			color: #6e9dde;
+		}
+	}
+}
+
+.learn-breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+
+	a,
+	li {
+		color: var(--color-state-neutral-darken-1, #6c6c75);
+		font-size: 0.8125rem;
+		text-decoration: none;
+	}
+
+	li+li::before {
+		content: '/';
+		padding: 0 4px;
+	}
+}
+
+.learn-submit-feedback {
+	.btn-link::after {
+		content: url("data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cmask%20id%3D%22mask0_1005_5813%22%20style%3D%22mask-type%3Aalpha%22%20maskUnits%3D%22userSpaceOnUse%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2216%22%20height%3D%2217%22%3E%3Cpath%20d%3D%22M14%202.00383H15C15.5498%202.00383%2015.9971%202.45384%2016%203.00383V10.0038C16%2010.5569%2015.5527%2011.0038%2015%2011.0038H13V5.96629C13%204.88194%2012.1221%204.00383%2011.0371%204.00383H4V3.00383C4%202.45067%204.44727%202.00383%205%202.00383H10.5938L12.2939%200.297593C13.0156%20-0.386795%2014.0098%200.219468%2014%201.00383V2.00383Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M3.52539%208.00383H8.52539C9.22461%208.00383%209.125%209.00383%208.52539%209.00383H3.52539C2.8252%209.00383%202.8252%208.00383%203.52539%208.00383Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M6.52539%2010.0038H3.52539C2.8252%2010.0038%202.8252%2011.0038%203.52539%2011.0038H6.52539C7.125%2011.0038%207.22461%2010.0038%206.52539%2010.0038Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M11%205.00383H1C0.447266%205.00383%200%205.45073%200%206.00383V13.0038C0%2013.5569%200.447266%2014.0038%201%2014.0038H2V15.0038C2.0127%2015.9476%203.13086%2016.3069%203.70605%2015.7101L5.40625%2014.0038H11C11.5527%2014.0038%2012%2013.5569%2012%2013.0038V6.00383C12%205.45073%2011.5498%205.00383%2011%205.00383ZM11%2013.0038H1V6.00383H11V13.0038Z%22%20fill%3D%22%236B6C7E%22/%3E%3C/mask%3E%3Cg%20mask%3D%22url(%23mask0_1005_5813)%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%230B5FFF%22/%3E%3C/g%3E%3C/svg%3E");
+		display: inline-block;
+		margin-left: 5px;
+	}
+
+	a {
+		color: var(--color-brand-primary, #0b5fff);
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.5rem;
+
+		&:hover {
+			color: var(--color-action-primary-active, #004ad7);
+		}
+	}
+}
+
+.publisher-avatar {
+	width: 48px;
+	height: 48px;
+}
+
+.ratings-thumbs {
+	max-width: 80px;
+	display: flex;
+	margin-left: 1rem;
+}
+
+.sidemenu-header .knowledge-article-dialect {
+	align-items: center;
+	color: white;
+
+	&::before {
+		background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cmask%20id%3D%22mask0_1005_5947%22%20style%3D%22mask-type%3Aalpha%22%20maskUnits%3D%22userSpaceOnUse%22%20x%3D%220%22%20y%3D%221%22%20width%3D%2216%22%20height%3D%2214%22%3E%3Cpath%20d%3D%22M3%201H1C0.446875%201%200%201.44687%200%202V3H4V2C4%201.44687%203.55312%201%203%201Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M0%2014C0%2014.5531%200.446875%2015%201%2015H3C3.55312%2015%204%2014.5531%204%2014V13H0V14Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M4%204H0V12H4V4Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M8.00001%201H6.00001C5.44688%201%205.00001%201.44687%205.00001%202V3H9.00001V2C9.00001%201.44687%208.55313%201%208.00001%201Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M5.00001%2014C5.00001%2014.5531%205.44688%2015%206.00001%2015H8.00001C8.55313%2015%209.00001%2014.5531%209.00001%2014V13H5.00001V14Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M9.00001%204H5.00001V12H9.00001V4Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M11.2212%201.10002L10.2525%201.35315C9.71809%201.49377%209.39621%202.03752%209.53684%202.5719L9.78996%203.54065L12.6931%202.7844L12.44%201.81565C12.2993%201.28127%2011.7556%200.959396%2011.2212%201.10002Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M12.9456%203.75117L10.0422%204.50657L12.0566%2012.249L14.96%2011.4936L12.9456%203.75117Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M12.5586%2014.1844C12.6993%2014.7188%2013.243%2015.0407%2013.7774%2014.9001L14.7461%2014.6469C15.2805%2014.5063%2015.6024%2013.9626%2015.4618%2013.4282L15.2086%2012.4594L12.3055%2013.2157L12.5586%2014.1844Z%22%20fill%3D%22%236B6C7E%22/%3E%3C/mask%3E%3Cg%20mask%3D%22url(%23mask0_1005_5947)%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22white%22/%3E%3C/g%3E%3C/svg%3E");
+	}
+}
+
+.warning-disclaimer {
+	background-color: #FFF4EC;
+	border-radius: var(--border-radius-lg);
+	margin-bottom: var(--spacer-4, 1.5rem);
+	margin-right: var(--spacer-3, 1rem);
+	padding: var(--spacer-4, 1.5rem);
+
+	p {
+		color: #B95000;
+		text-transform: uppercase;
+		margin-bottom: 0;
+	}
+
+	.icon-warning::before {
+		content: "";
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.875 7.143c0 .838 0 1.17 0 1.714 0 .474-.392.857-.875.857s-.875-.383-.875-.857V7.143c0-.838 0-.527 0-1.072 0-.474.392-.857.875-.857s.875.383.875.857c0 .545 0 .234 0 1.072zM8 12.5c-.483 0-.875-.384-.875-.857 0-.474.392-.857.875-.857s.875.383.875.857c0 .473-.392.857-.875.857zm6.844-.394L8.992 2.632A.875.875 0 0 0 8 2c-.413 0-.784.236-.992.632L1.156 12.106a.875.875 0 0 0 .992 1.261h11.704a.875.875 0 0 0 .992-1.261z' fill='%23B95000'/%3E%3C/svg%3E");
+		background-size: contain;
+		background-repeat: no-repeat;
+		vertical-align: middle;
+		margin-right: 4px;
+	}
+}
+
+@media (max-width: 600px) {
+
+	.knowledge-article-page-container,
+	.description-container {
+		flex-direction: column;
+	}
+
+	.knowledge-article-sidemenu {
+		margin: 2rem auto;
+		max-width: var(--container-max-sm, 540px);
+	}
+}
+
+@media (min-width: 600px) and (max-width: 700px) {
+	.description-container {
+		flex-direction: column;
+	}
+
+	.knowledge-article-sidemenu {
+		margin: 0 auto;
+		max-width: var(--container-max-sm, 540px);
+	}
+}
+</style>

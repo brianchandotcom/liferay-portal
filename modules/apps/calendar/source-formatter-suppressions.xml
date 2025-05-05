@@ -8,9 +8,6 @@
 	<source-check>
 		<suppress checks="CSPTagIllegalAttributesCheck" files="calendar-web/src/main/resources/META-INF/resources/view_calendars\.jsp" />
 		<suppress checks="PoshiPauseUsageCheck" files="calendar-web-test/src/testFunctional/macros/Calendar\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="calendar-web-test/src/testFunctional/macros/CalendarEvent\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="calendar-web-test/src/testFunctional/macros/CalendarScheduler\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="calendar-web-test/src/testFunctional/tests/CalendarStaging\.testcase" />
 		<suppress checks="XMLServiceEntityNameCheck" files="calendar-service/service\.xml" />
 	</source-check>
 </suppressions>

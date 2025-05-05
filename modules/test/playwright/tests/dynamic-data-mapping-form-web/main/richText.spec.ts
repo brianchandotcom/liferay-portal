@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {deleteItems} from './utils/deleteItems';
 
 const baseTest = mergeTests(formsPagesTest, loginTest());
@@ -64,32 +65,7 @@ ckeditor5Test(
 const content = '<script>alert("Hello! I am an alert box!");</script>';
 const sanitizedContent = '<script>;</script>';
 
-const assertRichTextContent = async (
-	formBuilderPage,
-	formBuilderSidePanelPage,
-	content,
-	expected
-) => {
-	await formBuilderPage.goToNew();
-
-	await expect(formBuilderPage.newFormHeading).toBeVisible();
-
-	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
-
-	await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
-
-	await formBuilderPage.helpText.fill('help text');
-
-	const newTabPagePromise = new Promise<Page>((resolve) =>
-		formBuilderPage.page.once('popup', resolve)
-	);
-
-	await formBuilderPage.previewButton.click();
-
-	const newTabPage = await newTabPagePromise;
-
-	await newTabPage.waitForLoadState('domcontentloaded');
-
+const assertRichTextContent = async (content, expected, newTabPage) => {
 	const sourceButton = newTabPage.getByTitle('Source');
 
 	await expect(sourceButton).toBeVisible();
@@ -117,26 +93,69 @@ const assertRichTextContent = async (
 	await newTabPage.close();
 };
 
+const createRichText = async (
+	formBuilderPage,
+	formBuilderSidePanelPage,
+	helpText = 'help text'
+) => {
+	await formBuilderPage.goToNew();
+
+	await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+	await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+	await formBuilderPage.helpText.fill(helpText);
+
+	const formEntryPagePromisse = new Promise<Page>((resolve) =>
+		formBuilderPage.page.once('popup', resolve)
+	);
+
+	await formBuilderPage.previewButton.click();
+
+	const formEntryPage = await formEntryPagePromisse;
+
+	await formEntryPage.waitForLoadState('domcontentloaded');
+
+	return formEntryPage;
+};
+
 xssBypassTest(
 	'Can add scripts to the rich text field @LPD-31212',
 	async ({formBuilderPage, formBuilderSidePanelPage}) => {
-		await assertRichTextContent(
+		const formEntryPage = await createRichText(
+			formBuilderPage,
+			formBuilderSidePanelPage
+		);
+
+		await assertRichTextContent(content, content, formEntryPage);
+	}
+);
+
+xssDisabledTest(
+	'Can add help text to the rich text field @LPD-52535',
+	async ({formBuilderPage, formBuilderSidePanelPage}) => {
+		const helpText = getRandomString();
+
+		const formEntryPage = await createRichText(
 			formBuilderPage,
 			formBuilderSidePanelPage,
-			content,
-			content
+			helpText
 		);
+
+		expect(formEntryPage.getByText(helpText, {exact: true})).toBeVisible();
 	}
 );
 
 xssDisabledTest(
 	'Can not add scripts to the rich text field @LPD-31212',
 	async ({formBuilderPage, formBuilderSidePanelPage}) => {
-		await assertRichTextContent(
+		const formEntryPage = await createRichText(
 			formBuilderPage,
-			formBuilderSidePanelPage,
-			content,
-			sanitizedContent
+			formBuilderSidePanelPage
 		);
+
+		await assertRichTextContent(content, sanitizedContent, formEntryPage);
 	}
 );

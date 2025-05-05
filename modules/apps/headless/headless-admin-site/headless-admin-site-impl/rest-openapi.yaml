@@ -677,8 +677,8 @@ components:
                     description:
                         A localized tag telling search engines if and how they should crawl the display page template.
                     type: object
-                siteMapSettings:
-                    $ref: "#/components/schemas/SiteMapSettings"
+                sitemapSettings:
+                    $ref: "#/components/schemas/SitemapSettings"
                     # @review
                     description:
                         Represents settings related with the site map.
@@ -2544,8 +2544,8 @@ components:
                     description:
                         A list of localized target keywords of the page to be used by search engines.
                     type: object
-                siteMapSettings:
-                    $ref: "#/components/schemas/SiteMapSettings"
+                sitemapSettings:
+                    $ref: "#/components/schemas/SitemapSettings"
                     # @review
                     description:
                         Represents settings related with the site map.
@@ -2623,7 +2623,7 @@ components:
                     description:
                         The client extension for the theme spritemap of a page specification.
             type: object
-        SiteMapSettings:
+        SitemapSettings:
             # @review
             description:
                 Represents settings related with the site map.

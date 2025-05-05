@@ -270,7 +270,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		HttpInvoker.HttpResponse httpResponse =
 			testEntityResource.deleteTestEntityBatchHttpResponse(
-				null,
+				null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"externalReferenceCode", () -> externalReferenceCode

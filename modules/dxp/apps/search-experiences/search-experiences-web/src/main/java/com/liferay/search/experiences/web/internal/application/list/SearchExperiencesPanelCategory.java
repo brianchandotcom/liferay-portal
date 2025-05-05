@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS,
-		"panel.category.order:Integer=500"
+		"panel.category.order:Integer=450"
 	},
 	service = PanelCategory.class
 )

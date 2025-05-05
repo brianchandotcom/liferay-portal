@@ -46,12 +46,6 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			testEntityResource.getTestEntityCount());
 	}
 
-	@Ignore
-	@Test
-	public void testPostTestEntityMultipartBulk() throws Exception {
-
-	}
-
 	@Override
 	@Test
 	public void testPatchTestEntity() throws Exception {
@@ -133,6 +127,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		testEntityResource.postReservedWord(true);
 	}
 
+	@Ignore
+	@Test
+	public void testPostTestEntityMultipartBulk() throws Exception {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"property1", "property2"};
@@ -150,7 +149,6 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
 		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
 	}
-
 
 	@Override
 	protected Long testPatchTestEntity_getOptionalParameter() {

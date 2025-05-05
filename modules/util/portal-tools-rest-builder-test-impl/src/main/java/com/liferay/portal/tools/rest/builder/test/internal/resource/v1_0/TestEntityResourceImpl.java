@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.internal.entity.v1_0.TestEntityEntityModel;
@@ -88,7 +87,8 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 			postTestEntity(testEntity);
 		}
 
-		return Response.ok().build();
+		return Response.ok(
+		).build();
 	}
 
 	@Override

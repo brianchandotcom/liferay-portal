@@ -716,34 +716,17 @@
 		},
 		{
 			"properties": {
-				"modificationDeletionConflictCheckEnabled": {
-					"default": false,
-					"description": "Check this option to automatically check all modification deletion conflicts by default. This will let you review any deletion conflicts and prevent Liferay from overwriting deletions made in a publication when updating production.",
-					"title": "Modification Deletion Conflict Check Enabled",
-					"type": "boolean"
-				},
-				"pid": {
-					"const": "com.liferay.change.tracking.configuration.CTConflictConfiguration",
-					"title": "Publications Conflicts"
-				},
-				"schemaVersionCheckEnabled": {
-					"default": false,
-					"description": "Enabling the schema version check will allow unpublished publications to go out-of-date after an upgrade.",
-					"title": "Schema Version Check Enabled",
-					"type": "boolean"
-				}
-			},
-			"required": [
-				"pid"
-			],
-			"title": "Publications Conflicts"
-		},
-		{
-			"properties": {
 				"defaultCTCollectionTemplateId": {
 					"default": 0,
 					"title": "Default Publication Template ID",
 					"type": "number"
+				},
+				"defaultOwnerActionIds": {
+					"items": {
+						"type": "string"
+					},
+					"title": "Defaults Owner Action IDs",
+					"type": "array"
 				},
 				"defaultSandboxCTCollectionTemplateId": {
 					"default": 0,
@@ -753,6 +736,12 @@
 				"enabled": {
 					"default": false,
 					"title": "Enabled",
+					"type": "boolean"
+				},
+				"modificationDeletionConflictCheckEnabled": {
+					"default": false,
+					"description": "Check this option to automatically check all modification deletion conflicts by default. This will let you review any deletion conflicts and prevent Liferay from overwriting deletions made in a publication when updating production.",
+					"title": "Modification Deletion Conflict Check Enabled",
 					"type": "boolean"
 				},
 				"pid": {
@@ -775,6 +764,12 @@
 				"sandboxEnabled": {
 					"default": false,
 					"title": "Sandbox Enabled",
+					"type": "boolean"
+				},
+				"schemaVersionCheckEnabled": {
+					"default": false,
+					"description": "Enabling the schema version check will allow unpublished publications to go out-of-date after an upgrade.",
+					"title": "Schema Version Check Enabled",
 					"type": "boolean"
 				},
 				"unapprovedChangesAllowed": {
@@ -4260,7 +4255,6 @@
 				"com.liferay.captcha.configuration.CaptchaConfiguration",
 				"com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration",
 				"com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration",
-				"com.liferay.change.tracking.configuration.CTConflictConfiguration",
 				"com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 				"com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
 				"com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",

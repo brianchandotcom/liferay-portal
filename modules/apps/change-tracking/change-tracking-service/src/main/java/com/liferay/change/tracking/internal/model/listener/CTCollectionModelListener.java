@@ -5,12 +5,14 @@
 
 package com.liferay.change.tracking.internal.model.listener;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,11 +20,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -34,8 +43,41 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Truong
  */
-@Component(service = ModelListener.class)
+@Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
+	service = ModelListener.class
+)
 public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
+
+	@Override
+	public void onAfterCreate(CTCollection ctCollection)
+		throws ModelListenerException {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				CTSettingsConfiguration ctSettingsConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						CTSettingsConfiguration.class,
+						ctCollection.getCompanyId());
+
+				if (ArrayUtil.isNotEmpty(
+						ctSettingsConfiguration.defaultOwnerActionIds())) {
+
+					Role role = _roleLocalService.getRole(
+						ctCollection.getCompanyId(), RoleConstants.OWNER);
+
+					_resourcePermissionLocalService.setResourcePermissions(
+						ctCollection.getCompanyId(),
+						CTCollection.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(ctCollection.getCtCollectionId()),
+						role.getRoleId(),
+						ctSettingsConfiguration.defaultOwnerActionIds());
+				}
+
+				return null;
+			});
+	}
 
 	@Override
 	public void onAfterRemove(CTCollection ctCollection) {
@@ -110,6 +152,9 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 		CTCollectionModelListener.class.getName());
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
@@ -122,6 +167,12 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 		target = "(indexer.class.name=com.liferay.change.tracking.model.CTEntry)"
 	)
 	private Indexer<CTEntry> _indexer;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

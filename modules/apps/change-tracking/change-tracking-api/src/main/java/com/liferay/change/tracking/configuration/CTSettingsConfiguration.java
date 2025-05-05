@@ -29,6 +29,9 @@ public interface CTSettingsConfiguration {
 	)
 	public long defaultCTCollectionTemplateId();
 
+	@Meta.AD(name = "default-owner-action-ids", required = false)
+	public String[] defaultOwnerActionIds();
+
 	@Meta.AD(
 		deflt = "0", name = "default-sandbox-ct-collection-template-id",
 		required = false

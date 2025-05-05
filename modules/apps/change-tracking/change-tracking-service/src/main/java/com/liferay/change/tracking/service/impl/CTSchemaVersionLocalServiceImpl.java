@@ -5,7 +5,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
-import com.liferay.change.tracking.configuration.CTConflictConfiguration;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.base.CTSchemaVersionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	configurationPid = "com.liferay.change.tracking.configuration.CTConflictConfiguration",
+	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 	property = "model.class.name=com.liferay.change.tracking.model.CTSchemaVersion",
 	service = AopService.class
 )
@@ -82,12 +82,12 @@ public class CTSchemaVersionLocalServiceImpl
 		CTSchemaVersion ctSchemaVersion, boolean strict) {
 
 		try {
-			CTConflictConfiguration ctConflictConfiguration =
+			CTSettingsConfiguration ctSettingsConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					CTConflictConfiguration.class,
+					CTSettingsConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			if (!ctConflictConfiguration.schemaVersionCheckEnabled()) {
+			if (!ctSettingsConfiguration.schemaVersionCheckEnabled()) {
 				return true;
 			}
 		}

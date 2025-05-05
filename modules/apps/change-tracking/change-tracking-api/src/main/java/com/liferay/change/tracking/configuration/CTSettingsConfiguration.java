@@ -29,6 +29,9 @@ public interface CTSettingsConfiguration {
 	)
 	public long defaultCTCollectionTemplateId();
 
+	@Meta.AD(name = "default-owner-action-ids", required = false)
+	public String[] defaultOwnerActionIds();
+
 	@Meta.AD(
 		deflt = "0", name = "default-sandbox-ct-collection-template-id",
 		required = false
@@ -37,6 +40,13 @@ public interface CTSettingsConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
+
+	@Meta.AD(
+		deflt = "false",
+		description = "modification-deletion-conflict-check-enabled-description",
+		name = "modification-deletion-conflict-check-enabled", required = false
+	)
+	public boolean modificationDeletionConflictCheckEnabled();
 
 	@Meta.AD(deflt = "false", name = "remote-enabled", required = false)
 	public boolean remoteEnabled();
@@ -54,5 +64,12 @@ public interface CTSettingsConfiguration {
 		deflt = "false", name = "allow-unapproved-changes", required = false
 	)
 	public boolean unapprovedChangesAllowed();
+
+	@Meta.AD(
+		deflt = "false",
+		description = "schema-version-check-enabled-description",
+		name = "schema-version-check-enabled", required = false
+	)
+	public boolean schemaVersionCheckEnabled();
 
 }

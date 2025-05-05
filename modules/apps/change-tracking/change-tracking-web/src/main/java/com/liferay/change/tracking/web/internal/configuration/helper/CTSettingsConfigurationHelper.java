@@ -109,9 +109,15 @@ public class CTSettingsConfigurationHelper {
 			"defaultCTCollectionTemplateId",
 			ctSettingsConfiguration.defaultCTCollectionTemplateId());
 		properties.putIfAbsent(
+			"defaultOwnerActionIds",
+			ctSettingsConfiguration.defaultOwnerActionIds());
+		properties.putIfAbsent(
 			"defaultSandboxCTCollectionTemplateId",
 			ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId());
 		properties.putIfAbsent("enabled", ctSettingsConfiguration.enabled());
+		properties.putIfAbsent(
+			"modificationDeletionConflictCheckEnabled",
+			ctSettingsConfiguration.modificationDeletionConflictCheckEnabled());
 		properties.putIfAbsent(
 			"remoteEnabled", ctSettingsConfiguration.remoteEnabled());
 		properties.putIfAbsent(
@@ -120,6 +126,9 @@ public class CTSettingsConfigurationHelper {
 			"remoteClientSecret", ctSettingsConfiguration.remoteClientSecret());
 		properties.putIfAbsent(
 			"sandboxEnabled", ctSettingsConfiguration.sandboxEnabled());
+		properties.putIfAbsent(
+			"schemaVersionCheckEnabled",
+			ctSettingsConfiguration.schemaVersionCheckEnabled());
 		properties.putIfAbsent(
 			"unapprovedChangesAllowed",
 			ctSettingsConfiguration.unapprovedChangesAllowed());

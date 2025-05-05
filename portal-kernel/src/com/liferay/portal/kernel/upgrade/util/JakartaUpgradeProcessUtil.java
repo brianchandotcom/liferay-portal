@@ -68,7 +68,7 @@ public class JakartaUpgradeProcessUtil {
 	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
 	private static final Set<Character> _separators = new HashSet<>(
-		Arrays.asList('.', '-', '/'));
+		Arrays.asList('-', '/'));
 	private static final Set<String> _subpackageNames = new HashSet<>(
 		Arrays.asList(
 			"activation", "annotation", "batch", "decorator", "ejb", "el",

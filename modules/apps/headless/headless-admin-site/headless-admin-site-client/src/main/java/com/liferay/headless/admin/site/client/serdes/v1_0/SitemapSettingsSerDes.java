@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.SiteMapSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SiteMapSettingsSerDes {
+public class SitemapSettingsSerDes {
 
-	public static SiteMapSettings toDTO(String json) {
-		SiteMapSettingsJSONParser siteMapSettingsJSONParser =
-			new SiteMapSettingsJSONParser();
+	public static SitemapSettings toDTO(String json) {
+		SitemapSettingsJSONParser sitemapSettingsJSONParser =
+			new SitemapSettingsJSONParser();
 
-		return siteMapSettingsJSONParser.parseToDTO(json);
+		return sitemapSettingsJSONParser.parseToDTO(json);
 	}
 
-	public static SiteMapSettings[] toDTOs(String json) {
-		SiteMapSettingsJSONParser siteMapSettingsJSONParser =
-			new SiteMapSettingsJSONParser();
+	public static SitemapSettings[] toDTOs(String json) {
+		SitemapSettingsJSONParser sitemapSettingsJSONParser =
+			new SitemapSettingsJSONParser();
 
-		return siteMapSettingsJSONParser.parseToDTOs(json);
+		return sitemapSettingsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SiteMapSettings siteMapSettings) {
-		if (siteMapSettings == null) {
+	public static String toJSON(SitemapSettings sitemapSettings) {
+		if (sitemapSettings == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class SiteMapSettingsSerDes {
 
 		sb.append("{");
 
-		if (siteMapSettings.getChangeFrequency() != null) {
+		if (sitemapSettings.getChangeFrequency() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,39 +55,39 @@ public class SiteMapSettingsSerDes {
 
 			sb.append("\"");
 
-			sb.append(siteMapSettings.getChangeFrequency());
+			sb.append(sitemapSettings.getChangeFrequency());
 
 			sb.append("\"");
 		}
 
-		if (siteMapSettings.getInclude() != null) {
+		if (sitemapSettings.getInclude() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"include\": ");
 
-			sb.append(siteMapSettings.getInclude());
+			sb.append(sitemapSettings.getInclude());
 		}
 
-		if (siteMapSettings.getIncludeChildSitePages() != null) {
+		if (sitemapSettings.getIncludeChildSitePages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"includeChildSitePages\": ");
 
-			sb.append(siteMapSettings.getIncludeChildSitePages());
+			sb.append(sitemapSettings.getIncludeChildSitePages());
 		}
 
-		if (siteMapSettings.getPagePriority() != null) {
+		if (sitemapSettings.getPagePriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"pagePriority\": ");
 
-			sb.append(siteMapSettings.getPagePriority());
+			sb.append(sitemapSettings.getPagePriority());
 		}
 
 		sb.append("}");
@@ -96,67 +96,67 @@ public class SiteMapSettingsSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SiteMapSettingsJSONParser siteMapSettingsJSONParser =
-			new SiteMapSettingsJSONParser();
+		SitemapSettingsJSONParser sitemapSettingsJSONParser =
+			new SitemapSettingsJSONParser();
 
-		return siteMapSettingsJSONParser.parseToMap(json);
+		return sitemapSettingsJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(SiteMapSettings siteMapSettings) {
-		if (siteMapSettings == null) {
+	public static Map<String, String> toMap(SitemapSettings sitemapSettings) {
+		if (sitemapSettings == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (siteMapSettings.getChangeFrequency() == null) {
+		if (sitemapSettings.getChangeFrequency() == null) {
 			map.put("changeFrequency", null);
 		}
 		else {
 			map.put(
 				"changeFrequency",
-				String.valueOf(siteMapSettings.getChangeFrequency()));
+				String.valueOf(sitemapSettings.getChangeFrequency()));
 		}
 
-		if (siteMapSettings.getInclude() == null) {
+		if (sitemapSettings.getInclude() == null) {
 			map.put("include", null);
 		}
 		else {
-			map.put("include", String.valueOf(siteMapSettings.getInclude()));
+			map.put("include", String.valueOf(sitemapSettings.getInclude()));
 		}
 
-		if (siteMapSettings.getIncludeChildSitePages() == null) {
+		if (sitemapSettings.getIncludeChildSitePages() == null) {
 			map.put("includeChildSitePages", null);
 		}
 		else {
 			map.put(
 				"includeChildSitePages",
-				String.valueOf(siteMapSettings.getIncludeChildSitePages()));
+				String.valueOf(sitemapSettings.getIncludeChildSitePages()));
 		}
 
-		if (siteMapSettings.getPagePriority() == null) {
+		if (sitemapSettings.getPagePriority() == null) {
 			map.put("pagePriority", null);
 		}
 		else {
 			map.put(
 				"pagePriority",
-				String.valueOf(siteMapSettings.getPagePriority()));
+				String.valueOf(sitemapSettings.getPagePriority()));
 		}
 
 		return map;
 	}
 
-	public static class SiteMapSettingsJSONParser
-		extends BaseJSONParser<SiteMapSettings> {
+	public static class SitemapSettingsJSONParser
+		extends BaseJSONParser<SitemapSettings> {
 
 		@Override
-		protected SiteMapSettings createDTO() {
-			return new SiteMapSettings();
+		protected SitemapSettings createDTO() {
+			return new SitemapSettings();
 		}
 
 		@Override
-		protected SiteMapSettings[] createDTOArray(int size) {
-			return new SiteMapSettings[size];
+		protected SitemapSettings[] createDTOArray(int size) {
+			return new SitemapSettings[size];
 		}
 
 		@Override
@@ -181,32 +181,32 @@ public class SiteMapSettingsSerDes {
 
 		@Override
 		protected void setField(
-			SiteMapSettings siteMapSettings, String jsonParserFieldName,
+			SitemapSettings sitemapSettings, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "changeFrequency")) {
 				if (jsonParserFieldValue != null) {
-					siteMapSettings.setChangeFrequency(
-						SiteMapSettings.ChangeFrequency.create(
+					sitemapSettings.setChangeFrequency(
+						SitemapSettings.ChangeFrequency.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "include")) {
 				if (jsonParserFieldValue != null) {
-					siteMapSettings.setInclude((Boolean)jsonParserFieldValue);
+					sitemapSettings.setInclude((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "includeChildSitePages")) {
 
 				if (jsonParserFieldValue != null) {
-					siteMapSettings.setIncludeChildSitePages(
+					sitemapSettings.setIncludeChildSitePages(
 						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pagePriority")) {
 				if (jsonParserFieldValue != null) {
-					siteMapSettings.setPagePriority(
+					sitemapSettings.setPagePriority(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}

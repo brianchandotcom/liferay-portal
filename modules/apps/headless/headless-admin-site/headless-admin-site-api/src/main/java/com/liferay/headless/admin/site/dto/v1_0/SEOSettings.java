@@ -289,30 +289,30 @@ public class SEOSettings implements Serializable {
 		description = "Represents settings related with the site map."
 	)
 	@Valid
-	public SiteMapSettings getSiteMapSettings() {
-		if (_siteMapSettingsSupplier != null) {
-			siteMapSettings = _siteMapSettingsSupplier.get();
+	public SitemapSettings getSitemapSettings() {
+		if (_sitemapSettingsSupplier != null) {
+			sitemapSettings = _sitemapSettingsSupplier.get();
 
-			_siteMapSettingsSupplier = null;
+			_sitemapSettingsSupplier = null;
 		}
 
-		return siteMapSettings;
+		return sitemapSettings;
 	}
 
-	public void setSiteMapSettings(SiteMapSettings siteMapSettings) {
-		this.siteMapSettings = siteMapSettings;
+	public void setSitemapSettings(SitemapSettings sitemapSettings) {
+		this.sitemapSettings = sitemapSettings;
 
-		_siteMapSettingsSupplier = null;
+		_sitemapSettingsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSiteMapSettings(
-		UnsafeSupplier<SiteMapSettings, Exception>
-			siteMapSettingsUnsafeSupplier) {
+	public void setSitemapSettings(
+		UnsafeSupplier<SitemapSettings, Exception>
+			sitemapSettingsUnsafeSupplier) {
 
-		_siteMapSettingsSupplier = () -> {
+		_sitemapSettingsSupplier = () -> {
 			try {
-				return siteMapSettingsUnsafeSupplier.get();
+				return sitemapSettingsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -327,10 +327,10 @@ public class SEOSettings implements Serializable {
 		description = "Represents settings related with the site map."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SiteMapSettings siteMapSettings;
+	protected SitemapSettings sitemapSettings;
 
 	@JsonIgnore
-	private Supplier<SiteMapSettings> _siteMapSettingsSupplier;
+	private Supplier<SitemapSettings> _sitemapSettingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -420,16 +420,16 @@ public class SEOSettings implements Serializable {
 			sb.append(_toJSON(seoKeywords_i18n));
 		}
 
-		SiteMapSettings siteMapSettings = getSiteMapSettings();
+		SitemapSettings sitemapSettings = getSitemapSettings();
 
-		if (siteMapSettings != null) {
+		if (sitemapSettings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"siteMapSettings\": ");
+			sb.append("\"sitemapSettings\": ");
 
-			sb.append(String.valueOf(siteMapSettings));
+			sb.append(String.valueOf(sitemapSettings));
 		}
 
 		sb.append("}");

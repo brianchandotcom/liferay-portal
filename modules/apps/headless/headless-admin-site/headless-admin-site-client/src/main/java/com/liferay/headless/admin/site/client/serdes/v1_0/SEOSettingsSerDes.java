@@ -96,14 +96,14 @@ public class SEOSettingsSerDes {
 			sb.append(_toJSON(seoSettings.getSeoKeywords_i18n()));
 		}
 
-		if (seoSettings.getSiteMapSettings() != null) {
+		if (seoSettings.getSitemapSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"siteMapSettings\": ");
+			sb.append("\"sitemapSettings\": ");
 
-			sb.append(String.valueOf(seoSettings.getSiteMapSettings()));
+			sb.append(String.valueOf(seoSettings.getSitemapSettings()));
 		}
 
 		sb.append("}");
@@ -169,13 +169,13 @@ public class SEOSettingsSerDes {
 				String.valueOf(seoSettings.getSeoKeywords_i18n()));
 		}
 
-		if (seoSettings.getSiteMapSettings() == null) {
-			map.put("siteMapSettings", null);
+		if (seoSettings.getSitemapSettings() == null) {
+			map.put("sitemapSettings", null);
 		}
 		else {
 			map.put(
-				"siteMapSettings",
-				String.valueOf(seoSettings.getSiteMapSettings()));
+				"sitemapSettings",
+				String.valueOf(seoSettings.getSitemapSettings()));
 		}
 
 		return map;
@@ -213,7 +213,7 @@ public class SEOSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "seoKeywords_i18n")) {
 				return true;
 			}
-			else if (Objects.equals(jsonParserFieldName, "siteMapSettings")) {
+			else if (Objects.equals(jsonParserFieldName, "sitemapSettings")) {
 				return false;
 			}
 
@@ -257,10 +257,10 @@ public class SEOSettingsSerDes {
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "siteMapSettings")) {
+			else if (Objects.equals(jsonParserFieldName, "sitemapSettings")) {
 				if (jsonParserFieldValue != null) {
-					seoSettings.setSiteMapSettings(
-						SiteMapSettingsSerDes.toDTO(
+					seoSettings.setSitemapSettings(
+						SitemapSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

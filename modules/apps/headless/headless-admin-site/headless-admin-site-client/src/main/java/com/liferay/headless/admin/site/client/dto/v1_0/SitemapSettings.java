@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.SiteMapSettingsSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.SitemapSettingsSerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SiteMapSettings implements Cloneable, Serializable {
+public class SitemapSettings implements Cloneable, Serializable {
 
-	public static SiteMapSettings toDTO(String json) {
-		return SiteMapSettingsSerDes.toDTO(json);
+	public static SitemapSettings toDTO(String json) {
+		return SitemapSettingsSerDes.toDTO(json);
 	}
 
 	public ChangeFrequency getChangeFrequency() {
@@ -120,8 +120,8 @@ public class SiteMapSettings implements Cloneable, Serializable {
 	protected Double pagePriority;
 
 	@Override
-	public SiteMapSettings clone() throws CloneNotSupportedException {
-		return (SiteMapSettings)super.clone();
+	public SitemapSettings clone() throws CloneNotSupportedException {
+		return (SitemapSettings)super.clone();
 	}
 
 	@Override
@@ -130,13 +130,13 @@ public class SiteMapSettings implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SiteMapSettings)) {
+		if (!(object instanceof SitemapSettings)) {
 			return false;
 		}
 
-		SiteMapSettings siteMapSettings = (SiteMapSettings)object;
+		SitemapSettings sitemapSettings = (SitemapSettings)object;
 
-		return Objects.equals(toString(), siteMapSettings.toString());
+		return Objects.equals(toString(), sitemapSettings.toString());
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class SiteMapSettings implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return SiteMapSettingsSerDes.toJSON(this);
+		return SitemapSettingsSerDes.toJSON(this);
 	}
 
 	public static enum ChangeFrequency {

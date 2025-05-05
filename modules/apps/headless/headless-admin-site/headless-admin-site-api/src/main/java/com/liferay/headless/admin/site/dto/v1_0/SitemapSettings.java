@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -42,18 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName(
 	description = "Represents settings related with the site map.",
-	value = "SiteMapSettings"
+	value = "SitemapSettings"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SiteMapSettings")
-public class SiteMapSettings implements Serializable {
+@XmlRootElement(name = "SitemapSettings")
+public class SitemapSettings implements Serializable {
 
-	public static SiteMapSettings toDTO(String json) {
-		return ObjectMapperUtil.readValue(SiteMapSettings.class, json);
+	public static SitemapSettings toDTO(String json) {
+		return ObjectMapperUtil.readValue(SitemapSettings.class, json);
 	}
 
-	public static SiteMapSettings unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(SiteMapSettings.class, json);
+	public static SitemapSettings unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(SitemapSettings.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -257,13 +257,13 @@ public class SiteMapSettings implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SiteMapSettings)) {
+		if (!(object instanceof SitemapSettings)) {
 			return false;
 		}
 
-		SiteMapSettings siteMapSettings = (SiteMapSettings)object;
+		SitemapSettings sitemapSettings = (SitemapSettings)object;
 
-		return Objects.equals(toString(), siteMapSettings.toString());
+		return Objects.equals(toString(), sitemapSettings.toString());
 	}
 
 	@Override
@@ -337,7 +337,7 @@ public class SiteMapSettings implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SiteMapSettings",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SitemapSettings",
 		name = "x-class-name"
 	)
 	public String xClassName;

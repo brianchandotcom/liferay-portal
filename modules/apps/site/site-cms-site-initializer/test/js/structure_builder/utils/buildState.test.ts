@@ -157,4 +157,44 @@ describe('buildState', () => {
 			uuid,
 		});
 	});
+
+	it('It works with Double fields ', () => {
+		const objectDefinition = {
+			enableFriendlyURLCustomization: true,
+			enableIndexSearch: true,
+			enableLocalization: true,
+			enableObjectEntryDraft: true,
+			externalReferenceCode: 'ca7f96e2-3436-4aa4-9626-265d006bea87',
+			label: {
+				en_US: 'Untitled Structure',
+			},
+			objectFields: [
+				{
+					DBType: 'Double',
+					businessType: 'Decimal',
+					externalReferenceCode: 'decimal-field',
+					indexed: true,
+					label: {
+						en_US: 'Decimal',
+					},
+					localized: true,
+					name: 'decimal',
+					required: false,
+					type: 'Double',
+				},
+			],
+			pluralLabel: {
+				en_US: 'Untitled Structure',
+			},
+			scope: 'depot' as const,
+		};
+
+		const state = buildState({
+			...objectDefinition,
+		});
+
+		const [, field] = [...state!.fields][0];
+
+		expect(field).toEqual(expect.objectContaining({type: 'decimal'}));
+	});
 });

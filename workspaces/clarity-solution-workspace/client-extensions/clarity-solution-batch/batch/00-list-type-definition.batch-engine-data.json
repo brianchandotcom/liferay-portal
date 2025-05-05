@@ -1,0 +1,430 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "ANNUAL_PURCHASE_VOLUMES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "FIRST_TIER",
+					"key": "firstTier",
+					"name": "$50,000 - $100,000 USD",
+					"name_i18n": {
+						"en-US": "$50,000 - $100,000 USD"
+					}
+				},
+				{
+					"externalReferenceCode": "FOURTH_TIER",
+					"key": "fourthTier",
+					"name": "$1M+ USD",
+					"name_i18n": {
+						"en-US": "$1M+ USD"
+					}
+				},
+				{
+					"externalReferenceCode": "SECOND_TIER",
+					"key": "secondTier",
+					"name": "$200,000 - $500,000 USD",
+					"name_i18n": {
+						"en-US": "$200,000 - $500,000 USD"
+					}
+				},
+				{
+					"externalReferenceCode": "THIRD_TIER",
+					"key": "thirdTier",
+					"name": "$500,000 - $1M USD",
+					"name_i18n": {
+						"en-US": "$500,000 - $1M USD"
+					}
+				}
+			],
+			"name": "Annual Purchase Volumes",
+			"name_i18n": {
+				"en-US": "Annual Purchase Volumes"
+			}
+		},
+		{
+			"externalReferenceCode": "APPLICATION_STATES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "APPLICATION_STATE_APPROVED",
+					"key": "approved",
+					"name": "Approved",
+					"name_i18n": {
+						"en-US": "Approved"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_DENIED",
+					"key": "denied",
+					"name": "Denied",
+					"name_i18n": {
+						"en-US": "Denied"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_ON_HOLD",
+					"key": "onHold",
+					"name": "On Hold",
+					"name_i18n": {
+						"en-US": "On Hold"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_OPEN",
+					"key": "open",
+					"name": "Open",
+					"name_i18n": {
+						"en-US": "Open"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_UNDER_REVIEW",
+					"key": "underReview",
+					"name": "Under Review",
+					"name_i18n": {
+						"en-US": "Under Review"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_WITHDRAWN",
+					"key": "withdrawn",
+					"name": "Withdrawn",
+					"name_i18n": {
+						"en-US": "Withdrawn"
+					}
+				}
+			],
+			"name": "Application States",
+			"name_i18n": {
+				"en-US": "Application States"
+			}
+		},
+		{
+			"externalReferenceCode": "ASSESSMENT_SCORES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "AVERAGE",
+					"key": "average",
+					"name": "Average",
+					"name_i18n": {
+						"en-US": "Average"
+					}
+				},
+				{
+					"externalReferenceCode": "EXCELLENT",
+					"key": "excellent",
+					"name": "Excellent",
+					"name_i18n": {
+						"en-US": "Excellent"
+					}
+				},
+				{
+					"externalReferenceCode": "FAIR",
+					"key": "fair",
+					"name": "Fair",
+					"name_i18n": {
+						"en-US": "Fair"
+					}
+				},
+				{
+					"externalReferenceCode": "GOOD",
+					"key": "good",
+					"name": "Good",
+					"name_i18n": {
+						"en-US": "Good"
+					}
+				},
+				{
+					"externalReferenceCode": "POOR",
+					"key": "poor",
+					"name": "Poor",
+					"name_i18n": {
+						"en-US": "Poor"
+					}
+				}
+			],
+			"name": "Assessment Scores",
+			"name_i18n": {
+				"en-US": "Assessment Scores"
+			}
+		},
+		{
+			"externalReferenceCode": "DECISIONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "APPROVED",
+					"key": "approved",
+					"name": "Approved",
+					"name_i18n": {
+						"en-US": "Approved"
+					}
+				},
+				{
+					"externalReferenceCode": "APPROVED_WITH_CONDITIONS",
+					"key": "approvedWithConditions",
+					"name": "Approved With Conditions",
+					"name_i18n": {
+						"en-US": "Approved With Conditions"
+					}
+				},
+				{
+					"externalReferenceCode": "HOLD_FOR_FUTURE_CONSIDERATION",
+					"key": "holdForFutureConsideration",
+					"name": "Hold for Future Consideration",
+					"name_i18n": {
+						"en-US": "Hold for Future Consideration"
+					}
+				},
+				{
+					"externalReferenceCode": "REJECTED",
+					"key": "rejected",
+					"name": "Rejected",
+					"name_i18n": {
+						"en-US": "Rejected"
+					}
+				},
+				{
+					"externalReferenceCode": "WITHDRAWN",
+					"key": "withdrawn",
+					"name": "Withdrawn",
+					"name_i18n": {
+						"en-US": "Withdrawn"
+					}
+				}
+			],
+			"name": "Decisions",
+			"name_i18n": {
+				"en-US": "Decisions"
+			}
+		},
+		{
+			"externalReferenceCode": "DISTRIBUTION_CHANNELS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "E_COMMERCE",
+					"key": "eCommerce",
+					"name": "E-Commerce",
+					"name_i18n": {
+						"en-US": "E-Commerce"
+					}
+				},
+				{
+					"externalReferenceCode": "OTHER_RETAILERS",
+					"key": "otherRetailers",
+					"name": "Distribute to Other Retailers",
+					"name_i18n": {
+						"en-US": "Distribute to Other Retailers"
+					}
+				},
+				{
+					"externalReferenceCode": "OWN_RETAIL",
+					"key": "ownRetail",
+					"name": "Sell Through Own Retail",
+					"name_i18n": {
+						"en-US": "Sell Through Own Retail"
+					}
+				}
+			],
+			"name": "Distribution Channels",
+			"name_i18n": {
+				"en-US": "Distribution Channels"
+			}
+		},
+		{
+			"externalReferenceCode": "DISTRIBUTION_REGIONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "AFRICA",
+					"key": "africa",
+					"name": "Africa",
+					"name_i18n": {
+						"en-US": "Africa"
+					}
+				},
+				{
+					"externalReferenceCode": "ASIA_PACIFIC_RIM",
+					"key": "asiaPacificRim",
+					"name": "Asia & Pacific Rim",
+					"name_i18n": {
+						"en-US": "Asia & Pacific Rim"
+					}
+				},
+				{
+					"externalReferenceCode": "CARIBBEAN",
+					"key": "caribbean",
+					"name": "Caribbean",
+					"name_i18n": {
+						"en-US": "Caribbean"
+					}
+				},
+				{
+					"externalReferenceCode": "CENTRAL_ASIA",
+					"key": "centralAsia",
+					"name": "Central Asia",
+					"name_i18n": {
+						"en-US": "Central Asia"
+					}
+				},
+				{
+					"externalReferenceCode": "EASTERN_EUROPE",
+					"key": "easternEurope",
+					"name": "Eastern Europe",
+					"name_i18n": {
+						"en-US": "Eastern Europe"
+					}
+				},
+				{
+					"externalReferenceCode": "INDIA",
+					"key": "india",
+					"name": "India",
+					"name_i18n": {
+						"en-US": "India"
+					}
+				},
+				{
+					"externalReferenceCode": "LATIN_AMERICA",
+					"key": "latinAmerica",
+					"name": "Latin America",
+					"name_i18n": {
+						"en-US": "Latin America"
+					}
+				},
+				{
+					"externalReferenceCode": "MIDDLE_EAST",
+					"key": "middleEast",
+					"name": "Middle East",
+					"name_i18n": {
+						"en-US": "Middle East"
+					}
+				},
+				{
+					"externalReferenceCode": "NORTH_AMERICA",
+					"key": "northAmerica",
+					"name": "North America",
+					"name_i18n": {
+						"en-US": "North America"
+					}
+				},
+				{
+					"externalReferenceCode": "WESTERN_EUROPE",
+					"key": "westernEurope",
+					"name": "Western Europe",
+					"name_i18n": {
+						"en-US": "Western Europe"
+					}
+				}
+			],
+			"name": "Distribution Regions",
+			"name_i18n": {
+				"en-US": "Distribution Regions"
+			}
+		},
+		{
+			"externalReferenceCode": "PRODUCT_TYPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "PRODUCT_TYPE_CONTACTS",
+					"key": "contacts",
+					"name": "Contacts",
+					"name_i18n": {
+						"en-US": "Contacts"
+					}
+				},
+				{
+					"externalReferenceCode": "PRODUCT_TYPE_EYEGLASSES",
+					"key": "eyeglasses",
+					"name": "Eyeglasses",
+					"name_i18n": {
+						"en-US": "Eyeglasses"
+					}
+				},
+				{
+					"externalReferenceCode": "PRODUCT_TYPE_LENSES",
+					"key": "lenses",
+					"name": "Lenses",
+					"name_i18n": {
+						"en-US": "Lenses"
+					}
+				},
+				{
+					"externalReferenceCode": "PRODUCT_TYPE_SUNGLASSES",
+					"key": "sunglasses",
+					"name": "Sunglasses",
+					"name_i18n": {
+						"en-US": "Sunglasses"
+					}
+				}
+			],
+			"name": "Product Types",
+			"name_i18n": {
+				"en-US": "Product Types"
+			}
+		},
+		{
+			"externalReferenceCode": "RECOMMENDATIONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "DECLINE_APPLICATION",
+					"key": "declineApplication",
+					"name": "Decline Application",
+					"name_i18n": {
+						"en-US": "Decline Application"
+					}
+				},
+				{
+					"externalReferenceCode": "PROPOSE_APPROVAL",
+					"key": "proposeApproval",
+					"name": "Propose Approval",
+					"name_i18n": {
+						"en-US": "Propose Approval"
+					}
+				},
+				{
+					"externalReferenceCode": "PROPOSE_CONDITIONAL_APPROVAL",
+					"key": "proposeConditionalApproval",
+					"name": "Propose Conditional Approval",
+					"name_i18n": {
+						"en-US": "Propose Conditional Approval"
+					}
+				},
+				{
+					"externalReferenceCode": "REQUEST_ADDITIONAL_DOCUMENTS",
+					"key": "requestAdditionalDocuments",
+					"name": "Request Additional Documents",
+					"name_i18n": {
+						"en-US": "Request Additional Documents"
+					}
+				},
+				{
+					"externalReferenceCode": "SCHEDULE_FOLLOWUP_INTERVIEW",
+					"key": "scheduleFollowupInterview",
+					"name": "Schedule Follow-up Interview",
+					"name_i18n": {
+						"en-US": "Schedule Follow-up Interview"
+					}
+				},
+				{
+					"externalReferenceCode": "SEEK_LEGAL_REVIEW",
+					"key": "seekLegalReview",
+					"name": "Seek Legal Review",
+					"name_i18n": {
+						"en-US": "Seek Legal Review"
+					}
+				}
+			],
+			"name": "Recommendations",
+			"name_i18n": {
+				"en-US": "Recommendations"
+			}
+		}
+	]
+}

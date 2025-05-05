@@ -30,7 +30,7 @@ export const test = mergeTests(
 );
 
 test(
-	'Non modified referred content cannot publish to Live when enable include if modified option',
+	'Non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({

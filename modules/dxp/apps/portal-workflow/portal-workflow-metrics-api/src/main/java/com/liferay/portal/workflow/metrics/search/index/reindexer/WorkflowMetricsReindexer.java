@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface WorkflowMetricsReindexer {
 
+	public String getKey();
+
 	public void reindex(long companyId) throws PortalException;
 
 }

@@ -44,8 +44,13 @@ public class WorkflowMetricsReindexerRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, WorkflowMetricsReindexer.class,
-			"workflow.metrics.index.entity.name");
+			bundleContext, WorkflowMetricsReindexer.class, null,
+			(serviceReference, emitter) -> {
+				WorkflowMetricsReindexer workflowMetricsReindexer =
+					bundleContext.getService(serviceReference);
+
+				emitter.emit(workflowMetricsReindexer.getKey());
+			});
 	}
 
 	@Deactivate

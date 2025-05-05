@@ -34,12 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "workflow.metrics.index.entity.name=sla-task-result",
-	service = WorkflowMetricsReindexer.class
-)
+@Component(service = WorkflowMetricsReindexer.class)
 public class SLATaskResultWorkflowMetricsReindexer
 	implements WorkflowMetricsReindexer {
+
+	@Override
+	public String getKey() {
+		return "sla-task-result";
+	}
 
 	@Override
 	public void reindex(long companyId) {

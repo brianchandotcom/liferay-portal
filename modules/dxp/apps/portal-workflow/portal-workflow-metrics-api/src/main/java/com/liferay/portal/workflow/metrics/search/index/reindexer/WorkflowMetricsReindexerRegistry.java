@@ -7,9 +7,12 @@ package com.liferay.portal.workflow.metrics.search.index.reindexer;
 
 import java.util.Set;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jiaxu Wei
  */
+@ProviderType
 public interface WorkflowMetricsReindexerRegistry {
 
 	public boolean containsKey(String indexEntityName);

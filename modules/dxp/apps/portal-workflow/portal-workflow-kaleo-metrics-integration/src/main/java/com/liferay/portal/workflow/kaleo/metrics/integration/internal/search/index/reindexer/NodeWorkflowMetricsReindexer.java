@@ -30,11 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	property = "workflow.metrics.index.entity.name=node",
-	service = WorkflowMetricsReindexer.class
-)
+@Component(service = WorkflowMetricsReindexer.class)
 public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
+
+	@Override
+	public String getKey() {
+		return "node";
+	}
 
 	@Override
 	public void reindex(long companyId) throws PortalException {

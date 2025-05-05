@@ -65,7 +65,7 @@ import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -264,7 +264,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testAddDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
@@ -342,7 +342,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testAddDBPartitionCompanyWhenCompanyLocalServiceFails()
 		throws Exception {
@@ -395,7 +395,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testAddDBPartitionCompanyWhenDBPartitionUtilFails()
 		throws Exception {
@@ -480,7 +480,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testCopyDBPartitionCompany() throws Exception {
 		int rulesCount = _getRulesCount(defaultPartitionName);
@@ -572,7 +572,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testCopyDBPartitionCompanyWhenCompanyLocalServiceFails()
 		throws Exception {
@@ -607,7 +607,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testCopyDBPartitionCompanyWhenDBPartitionUtilFails()
 		throws Exception {

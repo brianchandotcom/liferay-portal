@@ -6,7 +6,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentComposition;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
@@ -43,7 +43,7 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 			"change-thumbnail", "rename", "export", "move", "delete");
 	}
 
-	@FeatureFlags("LPD-34938")
+	@FeatureFlag("LPD-34938")
 	@Test
 	public void testGetActionDropdownItemsForMarketplaceFragmentComposition()
 		throws Exception {

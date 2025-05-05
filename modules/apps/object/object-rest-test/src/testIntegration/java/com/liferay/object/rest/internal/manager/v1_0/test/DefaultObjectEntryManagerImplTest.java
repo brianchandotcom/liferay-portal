@@ -156,6 +156,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -213,7 +214,12 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags({"LPD-32050", "LPD-34594", "LPS-164801", "LPS-172017"})
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-32050"), @FeatureFlag(value = "LPD-34594"),
+		@FeatureFlag(value = "LPS-164801"), @FeatureFlag(value = "LPS-172017")
+	}
+)
 @RunWith(Arquillian.class)
 public class DefaultObjectEntryManagerImplTest
 	extends BaseObjectEntryManagerImplTestCase {
@@ -2197,7 +2203,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
-	@FeatureFlags("LPD-21926")
+	@FeatureFlag("LPD-21926")
 	@Test
 	public void testAddOrUpdateObjectEntryWithFriendlyURL() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -4098,7 +4104,7 @@ public class DefaultObjectEntryManagerImplTest
 			1, String.valueOf(parentObjectEntry2.getId()), page);
 	}
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryByVersion() throws Exception {
 		_objectDefinition1.setEnableObjectEntryVersioning(true);
@@ -4471,7 +4477,7 @@ public class DefaultObjectEntryManagerImplTest
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetVersionedObjectEntries() throws Exception {
 		_objectDefinition1.setEnableObjectEntryVersioning(true);
@@ -4994,7 +5000,7 @@ public class DefaultObjectEntryManagerImplTest
 			"Edited", objectEntry.getPropertyValue("textObjectFieldName"));
 	}
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryByVersion() throws Exception {
 		_objectDefinition1.setEnableObjectEntryVersioning(true);

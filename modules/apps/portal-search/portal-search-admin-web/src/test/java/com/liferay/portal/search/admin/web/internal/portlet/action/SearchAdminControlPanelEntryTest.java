@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.admin.web.internal.portlet.SearchAdminControlPanelEntry;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 /**
  * @author Gustavo Lima
  */
-@FeatureFlags("LPS-183672")
+@FeatureFlag("LPS-183672")
 public class SearchAdminControlPanelEntryTest {
 
 	@ClassRule

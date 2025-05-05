@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.RenderRequest;
@@ -34,7 +34,7 @@ import org.mockito.Mockito;
 /**
  * @author Bárbara Cabrera
  */
-@FeatureFlags("LPD-34938")
+@FeatureFlag("LPD-34938")
 public class FragmentDisplayContextTest {
 
 	@ClassRule

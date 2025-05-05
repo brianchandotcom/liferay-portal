@@ -78,7 +78,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -136,7 +136,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		exportImportJournalArticle(true);
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC15-AC16")
 	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
@@ -187,7 +187,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC15-AC17")
 	public void testExportImportJournalArticleWithLayoutURLLayoutExistOnImportSide()

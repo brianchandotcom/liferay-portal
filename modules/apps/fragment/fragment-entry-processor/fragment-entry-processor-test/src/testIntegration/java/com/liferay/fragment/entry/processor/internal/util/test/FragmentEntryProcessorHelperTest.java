@@ -85,7 +85,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -664,7 +664,7 @@ public class FragmentEntryProcessorHelperTest {
 				LocaleUtil.US));
 	}
 
-	@FeatureFlags("LPD-19955")
+	@FeatureFlag("LPD-19955")
 	@Test
 	@TestInfo({"LPD-12834", "LPD-52354"})
 	public void testHasViewPermission() throws Exception {

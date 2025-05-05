@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Istvan Sajtos
  */
-@FeatureFlags("LPD-6378")
+@FeatureFlag("LPD-6378")
 @RunWith(Arquillian.class)
 public class LayoutUtilityPageEntryViewRendererRegistryUtilTest {
 

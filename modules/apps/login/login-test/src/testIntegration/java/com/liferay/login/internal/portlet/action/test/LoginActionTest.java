@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.initializer.SiteInitializer;
@@ -65,7 +65,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jorge García
  */
-@FeatureFlags("LPD-6378")
+@FeatureFlag("LPD-6378")
 @RunWith(Arquillian.class)
 public class LoginActionTest {
 

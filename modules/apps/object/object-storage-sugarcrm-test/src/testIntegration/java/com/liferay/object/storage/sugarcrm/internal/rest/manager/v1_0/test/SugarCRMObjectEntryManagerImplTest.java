@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -56,7 +56,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Maurice Sepe
  */
-@FeatureFlags("LPS-135430")
+@FeatureFlag("LPS-135430")
 @RunWith(Arquillian.class)
 public class SugarCRMObjectEntryManagerImplTest
 	extends BaseObjectEntryManagerImplTestCase {

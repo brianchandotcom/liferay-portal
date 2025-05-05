@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
@@ -69,7 +69,7 @@ public class ContentSetElementResourceTest
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 	}
 
-	@FeatureFlags("LPD-32867")
+	@FeatureFlag("LPD-32867")
 	@Override
 	@Test
 	public void testGetSiteContentSetProviderByKeyContentSetElementsPage()
@@ -86,7 +86,7 @@ public class ContentSetElementResourceTest
 		}
 	}
 
-	@FeatureFlags("LPD-32867")
+	@FeatureFlag("LPD-32867")
 	@Override
 	@Test
 	public void testGetSiteContentSetProviderByKeyContentSetElementsPageWithPagination()

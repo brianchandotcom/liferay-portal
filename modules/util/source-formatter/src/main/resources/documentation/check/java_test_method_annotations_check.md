@@ -60,7 +60,12 @@ public class ObjectEntryResourceTest {
 Correct:
 
 ```java
-@FeatureFlags({"LPS-153117", "LPS-154672"})
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPS-153117"),
+		@FeatureFlag(value = "LPS-154672")
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -97,7 +102,7 @@ public void testImportFragmentsWithFolderResources() throws Exception {
 Correct:
 
 ```java
-@FeatureFlags("LPS-158675")
+@FeatureFlag("LPS-158675")
 @Test
 public void testImportFragmentsWithFolderResources() throws Exception {
     File fileWithFolderResources = _generateZipFileWithFolderResources();

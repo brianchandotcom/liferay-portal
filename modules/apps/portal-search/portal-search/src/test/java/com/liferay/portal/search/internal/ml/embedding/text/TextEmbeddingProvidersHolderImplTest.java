@@ -8,7 +8,7 @@ package com.liferay.portal.search.internal.ml.embedding.text;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 /**
  * @author Petteri Karttunen
  */
-@FeatureFlags("LPS-122920")
+@FeatureFlag("LPS-122920")
 public class TextEmbeddingProvidersHolderImplTest {
 
 	@ClassRule

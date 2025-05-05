@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -630,7 +630,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		_assertNewFriendlyURL(layoutB, friendlyURLA);
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildLayoutHasParentLayout()
 		throws Exception {
@@ -693,7 +693,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedLayout);
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC9-AC10")
 	public void testLayoutExportImportWithModifiedContentAndExistingParentAndChildLayoutsOnImportSide()
@@ -777,7 +777,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			).size());
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC9-AC11")
 	public void testLayoutExportImportWithModifiedContentAndNonexistentParentAndChildLayoutsOnImportSide()
@@ -823,7 +823,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedChildLayout);
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC12-AC13")
 	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnImportSide()
@@ -907,7 +907,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			).size());
 	}
 
-	@FeatureFlags("LPS-199086")
+	@FeatureFlag("LPS-199086")
 	@Test
 	@TestInfo("LPD-6808: AC12-AC14")
 	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndNonexistentParentAndChildLayoutsOnImportSide()

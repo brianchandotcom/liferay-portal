@@ -96,7 +96,7 @@ import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.ldap.test.util.configuration.LDAPAuthConfigurationProviderTemporarySwapper;
 import com.liferay.portal.service.impl.UserLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1132,7 +1132,7 @@ public class UserLocalServiceTest {
 		Assert.assertTrue(ArrayUtil.contains(user.getRoleIds(), roleId));
 	}
 
-	@FeatureFlags(enable = false, value = "LPD-36010")
+	@FeatureFlag(enable = false, value = "LPD-36010")
 	@Test
 	public void testSortUsersByLastLoginDate() throws Exception {
 		Calendar calendar = Calendar.getInstance();

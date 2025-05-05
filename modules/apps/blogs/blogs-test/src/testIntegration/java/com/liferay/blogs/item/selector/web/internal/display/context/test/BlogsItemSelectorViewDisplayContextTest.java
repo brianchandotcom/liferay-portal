@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -76,7 +76,7 @@ public class BlogsItemSelectorViewDisplayContextTest {
 				_getThemeDisplay()));
 	}
 
-	@FeatureFlags("LPD-29516")
+	@FeatureFlag("LPD-29516")
 	@Test
 	public void testShowDragAndDropZoneWithWorkflowEnabledAndFeatureFlagEnabled()
 		throws Exception {

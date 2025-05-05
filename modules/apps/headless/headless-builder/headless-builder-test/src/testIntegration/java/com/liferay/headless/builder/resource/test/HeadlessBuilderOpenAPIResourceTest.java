@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -73,7 +74,11 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Carlos Correa
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlags({"LPD-10964", "LPS-178642"})
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-10964"), @FeatureFlag(value = "LPS-178642")
+	}
+)
 @RunWith(Arquillian.class)
 public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 

@@ -59,6 +59,36 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryVersion expireObjectEntryVersion(
+			long userId, long objectEntryId, int version)
+		throws PortalException {
+
+		ObjectEntryVersion objectEntryVersion =
+			objectEntryVersionPersistence.findByOEI_V(objectEntryId, version);
+
+		if (objectEntryVersion.isDraft() || objectEntryVersion.isExpired() ||
+			objectEntryVersion.isPending()) {
+
+			return objectEntryVersion;
+		}
+
+		Date date = new Date();
+
+		objectEntryVersion.setExpirationDate(date);
+
+		objectEntryVersion.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+		User user = _userLocalService.getUser(userId);
+
+		objectEntryVersion.setStatusByUserId(user.getUserId());
+		objectEntryVersion.setStatusByUserName(user.getFullName());
+
+		objectEntryVersion.setStatusDate(date);
+
+		return objectEntryVersionPersistence.update(objectEntryVersion);
+	}
+
+	@Override
 	public ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {

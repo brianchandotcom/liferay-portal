@@ -262,10 +262,6 @@ public class UpgradeRecorder {
 	private Map<String, Map<String, Integer>> _filter(
 		Map<String, Map<String, Integer>> messages) {
 
-		for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-			messages.remove(filteredClassName);
-		}
-
 		for (String dataCleanUpClassName : _DATA_CLEAN_UP_CLASS_NAMES) {
 			if (messages.containsKey(dataCleanUpClassName)) {
 				_dataCleanUpMessages.putIfAbsent(
@@ -273,6 +269,10 @@ public class UpgradeRecorder {
 
 				messages.remove(dataCleanUpClassName);
 			}
+		}
+
+		for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+			messages.remove(filteredClassName);
 		}
 
 		return messages;

@@ -11,10 +11,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,29 +109,53 @@ public class FeatureFlagTestRule
 	}
 
 	private Map<String, String> _updateFeatureFlags(Description description) {
+		Map<String, String> previousValues = new HashMap<>();
+
 		FeatureFlags featureFlags = description.getAnnotation(
 			FeatureFlags.class);
 
-		if (featureFlags == null) {
-			return Collections.emptyMap();
+		if (featureFlags != null) {
+			for (FeatureFlag featureFlag : featureFlags.featureFlags()) {
+				if (featureFlag == null) {
+					continue;
+				}
+
+				KeyValuePair previousKeyValuePair = _updateFeatureFlags(
+					featureFlag);
+
+				previousValues.put(
+					previousKeyValuePair.getKey(),
+					previousKeyValuePair.getValue());
+			}
 		}
 
-		Map<String, String> previousValues = new HashMap<>();
+		FeatureFlag featureFlag = description.getAnnotation(FeatureFlag.class);
 
-		for (String key : featureFlags.value()) {
-			String featureFlagKey = "feature.flag." + key;
+		if (featureFlag != null) {
+			KeyValuePair previousKeyValuePair = _updateFeatureFlags(
+				featureFlag);
 
-			previousValues.put(featureFlagKey, PropsUtil.get(featureFlagKey));
-
-			PropsUtil.addProperties(
-				UnicodePropertiesBuilder.setProperty(
-					featureFlagKey, String.valueOf(featureFlags.enable())
-				).build());
-
-			_invokeFeatureFlagListeners(key, featureFlags.enable());
+			previousValues.put(
+				previousKeyValuePair.getKey(), previousKeyValuePair.getValue());
 		}
 
 		return previousValues;
+	}
+
+	private KeyValuePair _updateFeatureFlags(FeatureFlag featureFlag) {
+		String featureFlagKey = "feature.flag." + featureFlag.value();
+
+		KeyValuePair previousKeyValuePair = new KeyValuePair(
+			featureFlagKey, PropsUtil.get(featureFlagKey));
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				featureFlagKey, String.valueOf(featureFlag.enable())
+			).build());
+
+		_invokeFeatureFlagListeners(featureFlag.value(), featureFlag.enable());
+
+		return previousKeyValuePair;
 	}
 
 	private final boolean _enableFeatureFlagListeners;

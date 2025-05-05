@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -86,7 +86,7 @@ public class AssetPublisherConfigurationFormNavigatorTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@FeatureFlags(enable = false, value = "LPD-13311")
+	@FeatureFlag(enable = false, value = "LPD-13311")
 	@Test
 	public void testViewOrderOfFieldsetsInAssetSelectionWhenSelectionStyleIsDynamic1()
 		throws PortalException {
@@ -98,7 +98,7 @@ public class AssetPublisherConfigurationFormNavigatorTest {
 			});
 	}
 
-	@FeatureFlags("LPD-13311")
+	@FeatureFlag("LPD-13311")
 	@Test
 	public void testViewOrderOfFieldsetsInAssetSelectionWhenSelectionStyleIsDynamic2()
 		throws PortalException {

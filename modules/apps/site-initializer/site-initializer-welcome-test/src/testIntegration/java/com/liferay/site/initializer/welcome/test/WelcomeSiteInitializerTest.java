@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -134,7 +134,7 @@ public class WelcomeSiteInitializerTest {
 		Assert.assertTrue(html.contains("Enjoy using the best DXP on Earth!"));
 	}
 
-	@FeatureFlags("LPD-6378")
+	@FeatureFlag("LPD-6378")
 	@Test
 	public void testCreateAccountLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
@@ -175,7 +175,7 @@ public class WelcomeSiteInitializerTest {
 			_removeUUIDs(pageDefinition2.toString()));
 	}
 
-	@FeatureFlags("LPD-6378")
+	@FeatureFlag("LPD-6378")
 	@Test
 	public void testForgotPasswordLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
@@ -216,7 +216,7 @@ public class WelcomeSiteInitializerTest {
 			_removeUUIDs(pageDefinition2.toString()));
 	}
 
-	@FeatureFlags("LPD-6378")
+	@FeatureFlag("LPD-6378")
 	@Test
 	public void testInitialize() throws PortalException {
 		SiteInitializer siteInitializer =
@@ -247,7 +247,7 @@ public class WelcomeSiteInitializerTest {
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
 	}
 
-	@FeatureFlags("LPD-6378")
+	@FeatureFlag("LPD-6378")
 	@Test
 	public void testLoginLayoutUtilityPageEntryPageDefinition()
 		throws Exception {

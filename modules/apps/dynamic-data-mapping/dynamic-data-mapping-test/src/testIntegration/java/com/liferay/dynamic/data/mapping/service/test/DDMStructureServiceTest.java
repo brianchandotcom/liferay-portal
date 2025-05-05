@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -57,7 +57,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rafael Praxedes
  */
-@FeatureFlags("LPD-34651")
+@FeatureFlag("LPD-34651")
 @RunWith(Arquillian.class)
 public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 

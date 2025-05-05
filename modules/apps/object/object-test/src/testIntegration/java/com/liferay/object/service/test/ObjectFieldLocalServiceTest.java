@@ -88,7 +88,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -116,7 +116,7 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags("LPD-34594")
+@FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectFieldLocalServiceTest {
 
@@ -138,7 +138,7 @@ public class ObjectFieldLocalServiceTest {
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(

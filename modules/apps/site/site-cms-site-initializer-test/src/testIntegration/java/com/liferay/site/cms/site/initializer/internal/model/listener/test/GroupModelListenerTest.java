@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -43,7 +43,7 @@ public class GroupModelListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddDepotEntry() throws Exception {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -74,7 +74,7 @@ public class GroupModelListenerTest {
 					ObjectEntryFolder::getName)));
 	}
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testDeleteDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(

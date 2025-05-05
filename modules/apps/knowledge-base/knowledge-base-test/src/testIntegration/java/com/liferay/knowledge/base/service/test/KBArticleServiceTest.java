@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -67,7 +67,7 @@ public class KBArticleServiceTest {
 		_testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
 	}
 
-	@FeatureFlags("LPD-11003")
+	@FeatureFlag("LPD-11003")
 	@Test
 	public void testForceLockKBArticle() throws Exception {
 		KBArticle kbArticle = _addKbArticle(new Date());

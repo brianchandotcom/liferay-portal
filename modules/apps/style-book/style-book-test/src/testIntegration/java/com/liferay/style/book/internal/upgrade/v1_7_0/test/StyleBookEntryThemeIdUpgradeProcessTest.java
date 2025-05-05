@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -57,7 +57,7 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 			_group, TestPropsValues.getUserId());
 	}
 
-	@FeatureFlags("LPD-30204")
+	@FeatureFlag("LPD-30204")
 	@Test
 	public void testUpgrade() throws Exception {
 		long groupId = RandomTestUtil.randomLong();

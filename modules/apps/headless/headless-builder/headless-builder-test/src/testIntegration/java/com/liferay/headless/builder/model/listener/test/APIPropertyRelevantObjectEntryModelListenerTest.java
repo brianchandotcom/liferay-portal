@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -41,7 +41,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Sergio Jiménez del Coso
  */
-@FeatureFlags("LPS-178642")
+@FeatureFlag("LPS-178642")
 public class APIPropertyRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
 
@@ -294,7 +294,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			apiPropertiesJSONArray.toString(), JSONCompareMode.LENIENT);
 	}
 
-	@FeatureFlags("LPD-10964")
+	@FeatureFlag("LPD-10964")
 	@Test
 	public void testAddRecordAPIProperty() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(

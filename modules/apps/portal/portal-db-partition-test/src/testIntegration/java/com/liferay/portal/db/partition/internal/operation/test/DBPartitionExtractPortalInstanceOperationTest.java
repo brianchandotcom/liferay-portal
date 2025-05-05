@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 		return "ExtractPortalInstanceOperation";
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testDeployConfigurationFileWithFF() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -62,7 +62,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 		assertConfigurationFileIsDeletedAfterDeploy(_PID);
 	}
 
-	@FeatureFlags("LPD-11342")
+	@FeatureFlag("LPD-11342")
 	@Test
 	public void testDeployConfigurationWithFF() throws Exception {
 		try (SafeCloseable safeCloseable =

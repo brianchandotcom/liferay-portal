@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -53,7 +53,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@FeatureFlags("LPS-178642")
+@FeatureFlag("LPS-178642")
 @RunWith(Arquillian.class)
 public class ListTypeDefinitionsUpgradeProcessTest {
 

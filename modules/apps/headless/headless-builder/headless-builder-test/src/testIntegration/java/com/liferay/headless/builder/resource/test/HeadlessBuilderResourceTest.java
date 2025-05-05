@@ -80,7 +80,7 @@ import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -111,7 +111,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Luis Miguel Barcos
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlags("LPS-178642")
+@FeatureFlag("LPS-178642")
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@ClassRule
@@ -1525,7 +1525,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
-	@FeatureFlags("LPD-10964")
+	@FeatureFlag("LPD-10964")
 	@Test
 	public void testGetWithRecordProperty() throws Exception {
 		_addAPIApplicationWithRecordProperty(
@@ -2646,7 +2646,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(textPropertyValue, values.get("textField"));
 	}
 
-	@FeatureFlags("LPD-10964")
+	@FeatureFlag("LPD-10964")
 	@Test
 	public void testPostWithRecordProperty() throws Exception {
 		_addAPIApplicationWithRecordProperty(

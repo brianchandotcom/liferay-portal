@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -77,7 +77,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Vendel Toreki
  */
-@FeatureFlags("LPD-35914")
+@FeatureFlag("LPD-35914")
 @RunWith(Arquillian.class)
 public class BatchEnginePortletDataHandlerTest {
 

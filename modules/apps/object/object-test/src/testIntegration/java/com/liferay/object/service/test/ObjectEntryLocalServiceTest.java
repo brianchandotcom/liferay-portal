@@ -190,7 +190,7 @@ import com.liferay.portal.security.script.management.test.rule.ScriptManagementC
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -256,7 +256,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags("LPD-34594")
+@FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectEntryLocalServiceTest {
 
@@ -668,7 +668,7 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		_assertCount(0);
@@ -1027,7 +1027,7 @@ public class ObjectEntryLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntryAfterDeletingLocalizedObjectField()
 		throws Exception {
@@ -1683,7 +1683,7 @@ public class ObjectEntryLocalServiceTest {
 		_objectFieldLocalService.deleteObjectField(objectField2);
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntryWithFormulaObjectFieldAndObjectRelationship()
 		throws Exception {
@@ -2027,7 +2027,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntryWithLocalizedAttachmentObjectField()
 		throws Exception {
@@ -2114,7 +2114,7 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntryWithLocalizedBooleanObjectField()
 		throws Exception {
@@ -2668,7 +2668,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(8);
 	}
 
-	@FeatureFlags("LPD-31212")
+	@FeatureFlag("LPD-31212")
 	@Test
 	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
@@ -3002,7 +3002,7 @@ public class ObjectEntryLocalServiceTest {
 				tempFileEntry2.getFileEntryId()));
 	}
 
-	@FeatureFlags("LPD-21926")
+	@FeatureFlag("LPD-21926")
 	@Test
 	public void testAddOrUpdateObjectEntryWithFriendlyURL() throws Exception {
 

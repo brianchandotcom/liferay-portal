@@ -101,7 +101,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -790,7 +790,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(labelMap.get(LocaleUtil.SPAIN), textNode.text());
 	}
 
-	@FeatureFlags("LPD-39437")
+	@FeatureFlag("LPD-39437")
 	@Test
 	public void testFragmentEntryProcessorEditableAssertAnalyticsAttributesWithMappedImageInViewMode()
 		throws Exception {
@@ -853,7 +853,7 @@ public class EditableFragmentEntryProcessorTest {
 			element.attr("data-analytics-asset-type"));
 	}
 
-	@FeatureFlags("LPD-39437")
+	@FeatureFlag("LPD-39437")
 	@Test
 	public void testFragmentEntryProcessorEditableAssertAnalyticsAttributesWithMappedTextInEditMode()
 		throws Exception {
@@ -902,7 +902,7 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertTrue(attribute.isEmpty());
 	}
 
-	@FeatureFlags("LPD-39437")
+	@FeatureFlag("LPD-39437")
 	@Test
 	public void testFragmentEntryProcessorEditableAssertAnalyticsAttributesWithMappedTextInViewMode()
 		throws Exception {

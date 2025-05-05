@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -46,7 +46,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPD-17564")
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
 public class ContentsSectionDisplayContextTest

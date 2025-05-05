@@ -13,14 +13,14 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 
 import org.junit.Test;
 
 /**
  * @author Sergio Jiménez del Coso
  */
-@FeatureFlags("LPS-178642")
+@FeatureFlag("LPS-178642")
 public class APIApplicationPublisherObjectEntryModelListenerTest
 	extends BaseTestCase {
 

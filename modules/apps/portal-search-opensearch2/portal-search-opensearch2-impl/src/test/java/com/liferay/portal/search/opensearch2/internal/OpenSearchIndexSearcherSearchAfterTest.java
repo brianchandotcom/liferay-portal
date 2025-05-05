@@ -31,7 +31,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ import org.mockito.Mockito;
 /**
  * @author Joshua Cords
  */
-@FeatureFlags("LPS-172416")
+@FeatureFlag("LPS-172416")
 public class OpenSearchIndexSearcherSearchAfterTest {
 
 	@ClassRule

@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -65,7 +65,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Stefano Motta
  */
-@FeatureFlags("LPD-10889")
+@FeatureFlag("LPD-10889")
 @RunWith(Arquillian.class)
 public class CPConfigurationListEligibilityCommerceHealthStatusTest {
 

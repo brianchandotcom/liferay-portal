@@ -86,7 +86,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -896,7 +896,7 @@ public class LayoutSetPrototypePropagationTest
 				userGroup.getGroupId(), true));
 	}
 
-	@FeatureFlags(enable = false, value = "LPD-38869")
+	@FeatureFlag(enable = false, value = "LPD-38869")
 	@Test
 	public void testThemeSettingsAfterLayoutPropagation() throws Exception {
 		LayoutSet prototypePrivateLayoutSet =
@@ -933,7 +933,7 @@ public class LayoutSetPrototypePropagationTest
 			propagatedLayoutSet.getThemeId());
 	}
 
-	@FeatureFlags("LPD-38869")
+	@FeatureFlag("LPD-38869")
 	@Test
 	public void testThemeSettingsAfterLayoutPropagationWithPrivateLinkEnabled()
 		throws Exception {
@@ -1003,7 +1003,7 @@ public class LayoutSetPrototypePropagationTest
 		}
 	}
 
-	@FeatureFlags("LPD-38869")
+	@FeatureFlag("LPD-38869")
 	@Test
 	public void testThemeSettingsAfterLayoutPropagationWithPublicLinkEnabled()
 		throws Exception {

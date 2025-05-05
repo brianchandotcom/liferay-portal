@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-@FeatureFlags("CLASS-123")
+@FeatureFlag("CLASS-123")
 public class FeatureFlagTestRuleTest {
 
 	@ClassRule
@@ -44,13 +44,13 @@ public class FeatureFlagTestRuleTest {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("CLASS-123"));
 	}
 
-	@FeatureFlags("METHOD-123")
+	@FeatureFlag("METHOD-123")
 	@Test
 	public void testAnnotateMethod() throws Exception {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
 	}
 
-	@FeatureFlags(enable = false, value = "METHOD-456")
+	@FeatureFlag(enable = false, value = "METHOD-456")
 	@Test
 	public void testDisableFeatureFlag() {
 		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));

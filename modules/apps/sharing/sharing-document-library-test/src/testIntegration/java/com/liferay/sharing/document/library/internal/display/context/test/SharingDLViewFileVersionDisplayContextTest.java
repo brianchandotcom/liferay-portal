@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -84,7 +84,7 @@ public class SharingDLViewFileVersionDisplayContextTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@FeatureFlags("LPS-197477")
+	@FeatureFlag("LPS-197477")
 	@Test
 	public void testGetActionDropdownItems() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(

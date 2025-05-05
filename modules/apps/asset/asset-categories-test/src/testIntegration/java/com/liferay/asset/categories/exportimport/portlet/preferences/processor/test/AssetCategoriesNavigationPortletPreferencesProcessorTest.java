@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags("LPD-27566")
+@FeatureFlag("LPD-27566")
 @RunWith(Arquillian.class)
 public class AssetCategoriesNavigationPortletPreferencesProcessorTest {
 

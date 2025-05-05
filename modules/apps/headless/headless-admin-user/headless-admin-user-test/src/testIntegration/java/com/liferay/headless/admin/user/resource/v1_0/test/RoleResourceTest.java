@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -258,7 +258,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		}
 	}
 
-	@FeatureFlags("LPD-47858")
+	@FeatureFlag("LPD-47858")
 	@Override
 	@Test
 	public void testPostRole() throws Exception {

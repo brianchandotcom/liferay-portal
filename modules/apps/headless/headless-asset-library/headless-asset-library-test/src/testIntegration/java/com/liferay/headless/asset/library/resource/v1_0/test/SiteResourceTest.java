@@ -10,7 +10,7 @@ import com.liferay.headless.asset.library.client.dto.v1_0.Site;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Roberto Díaz
  */
-@FeatureFlags("LPD-17564")
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class SiteResourceTest extends BaseSiteResourceTestCase {
 

@@ -167,6 +167,7 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -230,7 +231,9 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPD-45945", "LPS-164801"})
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-45945"), @FeatureFlag("LPS-164801")}
+)
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -6951,7 +6954,7 @@ public class ObjectEntryResourceTest {
 			listTypeDefinition);
 	}
 
-	@FeatureFlags("LPD-21926")
+	@FeatureFlag("LPD-21926")
 	@Test
 	public void testGetObjectEntryWithFriendlyURL() throws Exception {
 		_objectDefinition1.setEnableFriendlyURLCustomization(true);
@@ -7544,7 +7547,7 @@ public class ObjectEntryResourceTest {
 		_assertItem(0, jsonObject, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 	}
 
-	@FeatureFlags("LPD-21926")
+	@FeatureFlag("LPD-21926")
 	@Test
 	public void testPatchObjectEntryWithFriendlyURL() throws Exception {
 		_objectDefinition1.setEnableFriendlyURLCustomization(true);
@@ -7911,7 +7914,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
 	}
 
-	@FeatureFlags("LPD-39967")
+	@FeatureFlag("LPD-39967")
 	@Test
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentObjectField()
 		throws Exception {
@@ -7944,7 +7947,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, jsonObject.getLong("id"));
 	}
 
-	@FeatureFlags("LPD-39967")
+	@FeatureFlag("LPD-39967")
 	@Test
 	public void testPatchPutCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
@@ -7980,7 +7983,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, _siteScopedObjectDefinition1);
 	}
 
-	@FeatureFlags("LPD-39967")
+	@FeatureFlag("LPD-39967")
 	@Test
 	public void testPostCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
@@ -7990,7 +7993,7 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1);
 	}
 
-	@FeatureFlags("LPD-39967")
+	@FeatureFlag("LPD-39967")
 	@Test
 	public void testPostCustomObjectEntryWithAttachmentObjectFieldInDifferentCompany()
 		throws Exception {
@@ -9953,7 +9956,7 @@ public class ObjectEntryResourceTest {
 			false);
 	}
 
-	@FeatureFlags("LPD-32050")
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testPutCustomObjectEntryWithLocalizedAttachmentObjectField()
 		throws Exception {

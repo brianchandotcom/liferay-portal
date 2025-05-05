@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -65,7 +65,7 @@ public class JournalEditArticleDisplayContextTest {
 		_user = TestPropsValues.getUser();
 	}
 
-	@FeatureFlags("LPD-11228")
+	@FeatureFlag("LPD-11228")
 	@Test
 	public void testIsShowPublishModal() throws Exception {
 		ServiceContext serviceContext =

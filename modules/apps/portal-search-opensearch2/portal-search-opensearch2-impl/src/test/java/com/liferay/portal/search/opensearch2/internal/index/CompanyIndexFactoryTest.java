@@ -23,7 +23,7 @@ import com.liferay.portal.search.spi.index.configuration.contributor.CompanyInde
 import com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper;
 import com.liferay.portal.search.spi.index.configuration.contributor.helper.SettingsHelper;
 import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -476,7 +476,7 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		_assertIndexSettings(1, 2);
 	}
 
-	@FeatureFlags("LPD-7822")
+	@FeatureFlag("LPD-7822")
 	@Test
 	public void testInitializeIndexAfterIndexExists() throws Exception {
 		initializeIndex();

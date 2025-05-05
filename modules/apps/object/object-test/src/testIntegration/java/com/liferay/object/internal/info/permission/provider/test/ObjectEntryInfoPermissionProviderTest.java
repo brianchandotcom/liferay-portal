@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -54,7 +54,7 @@ public class ObjectEntryInfoPermissionProviderTest {
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition();
 	}
 
-	@FeatureFlags("LPD-17564")
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testHasViewPermissionWithFF() throws Exception {
 		_testHasViewPermissionForCustomObjectDefinition();

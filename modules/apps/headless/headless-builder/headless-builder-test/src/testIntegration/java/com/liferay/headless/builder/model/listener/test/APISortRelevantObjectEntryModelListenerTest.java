@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Before;
@@ -34,7 +34,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Sergio Jiménez del Coso
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@FeatureFlags("LPS-178642")
+@FeatureFlag("LPS-178642")
 public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 
 	@ClassRule

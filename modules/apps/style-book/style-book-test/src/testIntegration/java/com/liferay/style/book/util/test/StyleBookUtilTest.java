@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -61,13 +61,13 @@ public class StyleBookUtilTest {
 		_testGetStyleFromThemeStyleBookEntry("styles-from-theme");
 	}
 
-	@FeatureFlags("LPD-30204")
+	@FeatureFlag("LPD-30204")
 	@Test
 	public void testGetStyleFromThemeStyleBookEntry2() throws Exception {
 		_testGetStyleFromThemeStyleBookEntry("styles-from-x");
 	}
 
-	@FeatureFlags("LPD-30204")
+	@FeatureFlag("LPD-30204")
 	@Test
 	public void testGetThemeName() {
 		Locale locale = LocaleUtil.US;
@@ -104,7 +104,7 @@ public class StyleBookUtilTest {
 		}
 	}
 
-	@FeatureFlags("LPD-30204")
+	@FeatureFlag("LPD-30204")
 	@Test
 	public void testIsThemeInactive() throws PortalException {
 		Assert.assertTrue(

@@ -429,6 +429,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(String expectedExecuteStatus, String externalReferenceCode, ${properties[idParameterName]} id) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+					<#list deleteJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation)
+							 !stringUtil.equals(javaMethodParameter.parameterName, "id") &&
+							 !stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") &&
+							 !stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode") &&
+							 !stringUtil.equals(javaMethodParameter.parameterName, "callbackURL") &&
+							 !stringUtil.equals(javaMethodParameter.parameterName, "object")>
+							null,
+						</#if>
+					</#list>
 					null,
 					JSONUtil.putAll(
 						JSONUtil.put(

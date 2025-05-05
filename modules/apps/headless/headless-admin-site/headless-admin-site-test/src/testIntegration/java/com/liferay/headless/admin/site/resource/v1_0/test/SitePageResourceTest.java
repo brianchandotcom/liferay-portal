@@ -172,15 +172,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodeSitePagePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteByExternalReferenceCodeSitePagePermissionsPage();
-	}
-
 	@Override
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePagesPage()
@@ -201,10 +192,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteExternalReferenceCodeSitePagePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteExternalReferenceCodeSitePagePermissionsPage();
+	public void testGetSiteSitePagePermissionsPage() throws Exception {
+		super.testGetSiteSitePagePermissionsPage();
 	}
 
 	@Override
@@ -331,19 +320,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testPutSiteSiteByExternalReferenceCodeSitePagePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteByExternalReferenceCodeSitePagePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodeSitePagePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteExternalReferenceCodeSitePagePermissionsPage();
+	public void testPutSiteSitePagePermissionsPage() throws Exception {
+		super.testPutSiteSitePagePermissionsPage();
 	}
 
 	@Override
@@ -391,6 +369,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return testGroup.getExternalReferenceCode();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	protected SitePage testGetSiteSitePagePermissionsPage_addSitePage()
+		throws Exception {
+
+		return super.testGetSiteSitePagePermissionsPage_addSitePage();
+	}
+
 	@Override
 	protected SitePage testPostByExternalReferenceCodeSitePage_addSitePage(
 			SitePage sitePage)
@@ -398,6 +385,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		return sitePageResource.postByExternalReferenceCodeSitePage(
 			testGroup.getExternalReferenceCode(), sitePage);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected SitePage testPutSiteSitePagePermissionsPage_addSitePage()
+		throws Exception {
+
+		return super.testPutSiteSitePagePermissionsPage_addSitePage();
 	}
 
 	private Layout _addLayout(

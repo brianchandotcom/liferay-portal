@@ -120,6 +120,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 							RandomTestUtil.randomString())));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetSitePageTemplatePermissionsPage() throws Exception {
+		super.testGetSitePageTemplatePermissionsPage();
+	}
+
 	@Override
 	@Test
 	@TestInfo("LPD-44414")
@@ -159,16 +166,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						getSiteSiteByExternalReferenceCodePageTemplate(
 							group.getExternalReferenceCode(),
 							RandomTestUtil.randomString())));
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodePageTemplatePermissionsPage();
 	}
 
 	@Override
@@ -259,15 +256,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		super.
 			testGetSiteSiteByExternalReferenceCodePageTemplatesPageWithSortInteger();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		super.testGetSiteSiteExternalReferenceCodePageTemplatePermissionsPage();
 	}
 
 	@Override
@@ -426,6 +414,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testPostSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPutSitePageTemplatePermissionsPage() throws Exception {
+		super.testPutSitePageTemplatePermissionsPage();
+	}
+
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageTemplate()
@@ -505,25 +500,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				}));
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteByExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		super.
-			testPutSiteSiteByExternalReferenceCodePageTemplatePermissionsPage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutSiteSiteExternalReferenceCodePageTemplatePermissionsPage()
-		throws Exception {
-
-		super.testPutSiteSiteExternalReferenceCodePageTemplatePermissionsPage();
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
@@ -540,6 +516,16 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	@Override
 	protected PageTemplate randomPageTemplate() throws Exception {
 		return _getPageTemplate(testGroup);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected PageTemplate
+			testGetSitePageTemplatePermissionsPage_addPageTemplate()
+		throws Exception {
+
+		return super.testGetSitePageTemplatePermissionsPage_addPageTemplate();
 	}
 
 	@Override
@@ -643,6 +629,16 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			postSiteSiteByExternalReferenceCodePageTemplateSetPageTemplate(
 				testGroup.getExternalReferenceCode(),
 				pageTemplateSet.getExternalReferenceCode(), pageTemplate);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	protected PageTemplate
+			testPutSitePageTemplatePermissionsPage_addPageTemplate()
+		throws Exception {
+
+		return super.testPutSitePageTemplatePermissionsPage_addPageTemplate();
 	}
 
 	private void

@@ -7,9 +7,14 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,12 +26,15 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -36,7 +44,10 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Collections;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,6 +56,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Nathaly Gomes
  */
+@FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
 public class GetObjectDefinitionInfoMVCResourceCommandTest {
 
@@ -55,21 +67,66 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_objectDefinitionA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			"A");
+		_objectDefinitionAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
+	}
+
 	@Test
 	public void testDoServeResource() throws Exception {
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition(
+			_objectDefinitionA);
+
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
+
+		_assertJSONObject(
+			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Collections.singletonList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, _objectDefinitionA,
+					_objectDefinitionAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					StringUtil.randomId())));
+
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionAA);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				_objectDefinitionA.getName(), _objectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	private KaleoDefinition _addKaleoDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.addKaleoDefinition(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), null, null,
 				WorkflowDefinitionConstants.SCOPE_ALL, 1,
 				ServiceContextTestUtil.getServiceContext());
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		_workflowDefinitionLinkService.addWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			TestPropsValues.getGroupId(), objectDefinition.getClassName(), 0, 0,
 			kaleoDefinition.getName(), 1);
+
+		return kaleoDefinition;
+	}
+
+	private void _assertJSONObject(
+			KaleoDefinition kaleoDefinition, ObjectDefinition objectDefinition)
+		throws Exception {
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -131,8 +188,20 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 	)
 	private MVCResourceCommand _mvcResourceCommand;
 
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinitionA;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinitionAA;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

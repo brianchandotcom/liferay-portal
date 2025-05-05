@@ -31,142 +31,148 @@ const notificationTemplateInfo = {
 	term: '[%CURRENT_USER_FIRST_NAME%]',
 };
 
-test('can create a template', async ({page, userNotificationTemplatePage}) => {
-	await userNotificationTemplatePage.goto();
+test.describe('User notification template', () => {
+	test('can be created and saved correctly', async ({
+		page,
+		userNotificationTemplatePage,
+	}) => {
+		await userNotificationTemplatePage.goto();
 
-	const notificationTemplateName =
-		'Notification Template Name' + getRandomInt();
+		const notificationTemplateName =
+			'Notification Template Name' + getRandomInt();
 
-	await userNotificationTemplatePage.basicInfoName.fill(
-		notificationTemplateName
-	);
-
-	await userNotificationTemplatePage.descriptionInput.fill(
-		notificationTemplateInfo.description
-	);
-
-	await userNotificationTemplatePage.toInput.fill(
-		notificationTemplateInfo.term
-	);
-
-	await userNotificationTemplatePage.contentSubject.fill(
-		notificationTemplateInfo.subject
-	);
-
-	await userNotificationTemplatePage.saveButton.click();
-
-	await page.getByText(notificationTemplateName).click();
-
-	await expect(userNotificationTemplatePage.basicInfoName).toHaveValue(
-		notificationTemplateName
-	);
-
-	await expect(userNotificationTemplatePage.descriptionInput).toHaveValue(
-		notificationTemplateInfo.description
-	);
-
-	await expect(userNotificationTemplatePage.toInput).toHaveValue(
-		notificationTemplateInfo.term
-	);
-
-	await expect(userNotificationTemplatePage.contentSubject).toHaveValue(
-		notificationTemplateInfo.subject
-	);
-});
-
-test('user notification is sent to regular role', async ({
-	apiHelpers,
-	editObjectActionPage,
-	notificationsPage,
-	page,
-	userNotificationTemplatePage,
-	viewObjectActionsPage,
-}) => {
-	const roleName = getRandomString();
-
-	const role = await apiHelpers.headlessAdminUser.postRole({
-		externalReferenceCode: getRandomString(),
-		name: roleName,
-		name_i18n: {en_US: getRandomString()},
-		roleType: 'regular',
-	});
-
-	apiHelpers.data.push({
-		id: role.id,
-		type: 'role',
-	});
-
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'test@liferay.com'
+		await userNotificationTemplatePage.basicInfoName.fill(
+			notificationTemplateName
 		);
 
-	await apiHelpers.headlessAdminUser.assignUserToRole(
-		role.externalReferenceCode,
-		user.id
-	);
+		await userNotificationTemplatePage.descriptionInput.fill(
+			notificationTemplateInfo.description
+		);
 
-	await userNotificationTemplatePage.goto();
+		await userNotificationTemplatePage.toInput.fill(
+			notificationTemplateInfo.term
+		);
 
-	const notificationTemplateName = getRandomString();
+		await userNotificationTemplatePage.contentSubject.fill(
+			notificationTemplateInfo.subject
+		);
 
-	await userNotificationTemplatePage.basicInfoName.fill(
-		notificationTemplateName
-	);
+		await userNotificationTemplatePage.saveButton.click();
 
-	const contentSubject = getRandomString();
+		await page.getByText(notificationTemplateName).click();
 
-	await userNotificationTemplatePage.contentSubject.fill(contentSubject);
+		await expect(userNotificationTemplatePage.basicInfoName).toHaveValue(
+			notificationTemplateName
+		);
 
-	await userNotificationTemplatePage.selectNotificationRecipient('Role');
+		await expect(userNotificationTemplatePage.descriptionInput).toHaveValue(
+			notificationTemplateInfo.description
+		);
 
-	await userNotificationTemplatePage.selectRole(roleName);
+		await expect(userNotificationTemplatePage.toInput).toHaveValue(
+			notificationTemplateInfo.term
+		);
 
-	await userNotificationTemplatePage.saveButton.click();
-
-	await page.getByText(notificationTemplateName).click();
-
-	const notificationTemplateId = await page
-		.locator('span:has-text("ID:") + strong')
-		.textContent();
-
-	apiHelpers.data.push({
-		id: notificationTemplateId,
-		type: 'notificationTemplate',
+		await expect(userNotificationTemplatePage.contentSubject).toHaveValue(
+			notificationTemplateInfo.subject
+		);
 	});
 
-	const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			status: {code: 0},
+	test('can be sent to a regular role', async ({
+		apiHelpers,
+		editObjectActionPage,
+		notificationsPage,
+		page,
+		userNotificationTemplatePage,
+		viewObjectActionsPage,
+	}) => {
+		const roleName = getRandomString();
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			externalReferenceCode: getRandomString(),
+			name: roleName,
+			name_i18n: {en_US: getRandomString()},
+			roleType: 'regular',
 		});
 
-	apiHelpers.data.push({
-		id: objectDefinition.id,
-		type: 'objectDefinition',
+		apiHelpers.data.push({
+			id: role.id,
+			type: 'role',
+		});
+
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await userNotificationTemplatePage.goto();
+
+		const notificationTemplateName = getRandomString();
+
+		await userNotificationTemplatePage.basicInfoName.fill(
+			notificationTemplateName
+		);
+
+		const contentSubject = getRandomString();
+
+		await userNotificationTemplatePage.contentSubject.fill(contentSubject);
+
+		await userNotificationTemplatePage.selectNotificationRecipient('Role');
+
+		await userNotificationTemplatePage.selectRole(roleName);
+
+		await userNotificationTemplatePage.saveButton.click();
+
+		await page.getByText(notificationTemplateName).click();
+
+		const notificationTemplateId = await page
+			.locator('span:has-text("ID:") + strong')
+			.textContent();
+
+		apiHelpers.data.push({
+			id: notificationTemplateId,
+			type: 'notificationTemplate',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectActionPage.addNewAction(
+			'Notification',
+			'On After Add',
+			notificationTemplateName
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const objectFieldValue = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: objectFieldValue},
+			applicationName
+		);
+
+		await notificationsPage.goto();
+
+		await page.getByText(contentSubject).click();
+
+		await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
+			objectFieldValue
+		);
 	});
-
-	await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-	await editObjectActionPage.addNewAction(
-		'Notification',
-		'On After Add',
-		notificationTemplateName
-	);
-
-	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
-
-	const objectFieldValue = getRandomString();
-
-	await apiHelpers.objectEntry.postObjectEntry(
-		{textField: objectFieldValue},
-		applicationName
-	);
-
-	await notificationsPage.goto();
-
-	await page.getByText(contentSubject).click();
-
-	await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
-		objectFieldValue
-	);
 });

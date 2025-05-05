@@ -5,6 +5,8 @@
 
 export const exportImportConfig = {
 	environment: {
-		tomcatDir: process.env.LIFERAY_HOME ? process.env.LIFERAY_HOME : '/opt/dev/projects/github/liferay-portal/bundles',
+		tomcatDir: process.env.LIFERAY_HOME
+			? process.env.LIFERAY_HOME
+			: '/opt/dev/projects/github/liferay-portal/bundles',
 	},
 };

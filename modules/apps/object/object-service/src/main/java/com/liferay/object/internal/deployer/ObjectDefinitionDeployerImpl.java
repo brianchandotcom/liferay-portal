@@ -401,14 +401,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryUADExporter(
 					objectDefinition, _objectEntryLocalService),
 				null),
-			_bundleContext.registerService(
-				WorkflowHandler.class,
-				new ObjectEntryWorkflowHandler(
-					objectDefinition, _objectEntryLocalService,
-					_workflowDefinitionLinkLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
-				).build()),
 			ObjectRelatedModelsProviderRegistryUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
@@ -477,6 +469,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"com.liferay.object", "true"
 					).put(
+						"model.class.name", objectDefinition.getClassName()
+					).build()));
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					WorkflowHandler.class,
+					new ObjectEntryWorkflowHandler(
+						objectDefinition, _objectEntryLocalService,
+						_workflowDefinitionLinkLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));
 		}

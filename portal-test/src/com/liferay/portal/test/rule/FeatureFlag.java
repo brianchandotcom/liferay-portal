@@ -12,14 +12,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Alejandro Tardín
  * @author Carlos Correa
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface FeatureFlags {
+public @interface FeatureFlag {
 
-	public FeatureFlag[] featureFlags();
+	public boolean enable() default true;
+
+	public String value();
 
 }

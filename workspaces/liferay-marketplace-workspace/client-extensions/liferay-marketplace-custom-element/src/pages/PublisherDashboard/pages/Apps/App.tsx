@@ -11,9 +11,6 @@ import {useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
-import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
-
-import './App.scss';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
@@ -25,6 +22,9 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../../utils/util';
+import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+
+import './App.scss';
 
 type AppProps = {
 	isAdministratorDashboard?: boolean;

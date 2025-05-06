@@ -19,6 +19,7 @@ import CategorizationPermissionService from '../services/CategorizationPermissio
 import CategoryService from '../services/CategoryService';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import EditCategoryGeneralInfoTab from './components/EditCategoryGeneralInfoTab';
+import EditCategoryPropertiesTab from './components/EditCategoryPropertiesTab';
 
 interface Props {
 	backURL: string | URL;
@@ -47,7 +48,7 @@ const EditCategoryPage = ({
 	const [category, setCategory] = useState<TaxonomyCategory>({
 		name: '',
 		name_i18n: {
-			[defaultLanguageId]: '',
+			[defaultLanguageId.replace('_', '-')]: '',
 		},
 	});
 	const [categoryPermissions, setCategoryPermissions] =
@@ -113,6 +114,12 @@ const EditCategoryPage = ({
 		}
 	}
 
+	function getFormattedCategoryProperties(category: TaxonomyCategory) {
+		return category.taxonomyCategoryProperties?.filter((row) => {
+			return row.key.trim() !== '' && row.value.trim() !== '';
+		});
+	}
+
 	async function handleSave() {
 		validateForm();
 
@@ -124,7 +131,11 @@ const EditCategoryPage = ({
 			if (isCreateNew) {
 				const response = await CategoryService.createCategory(
 					categoryByVocabularyIdAPIURL,
-					category
+					{
+						...category,
+						taxonomyCategoryProperties:
+							getFormattedCategoryProperties(category),
+					}
 				);
 
 				await CategorizationPermissionService.putPermissions(
@@ -158,7 +169,14 @@ const EditCategoryPage = ({
 
 								await CategoryService.updateCategory(
 									categoryByCategoryIdAPIURL,
-									category
+									{
+										...category,
+										taxonomyCategoryProperties:
+											getFormattedCategoryProperties(
+												category
+											),
+									},
+									'PUT'
 								);
 
 								navigate(backURL);
@@ -234,7 +252,11 @@ const EditCategoryPage = ({
 		);
 		mainContentMap.set(
 			NAVIGATION_TABS.PROPERTIES,
-			<div>Properties Tab Placeholder Content</div>
+			<EditCategoryPropertiesTab
+				category={category}
+				setCategory={setCategory}
+				spritemap={spritemap}
+			/>
 		);
 
 		return mainContentMap;

@@ -46,6 +46,6 @@ interface TaxonomyCategory {
 interface TaxonomyCategoryProperty {
 	externalReferenceCode?: string;
 	key: string;
-	value?: string;
+	value: string;
 
 }

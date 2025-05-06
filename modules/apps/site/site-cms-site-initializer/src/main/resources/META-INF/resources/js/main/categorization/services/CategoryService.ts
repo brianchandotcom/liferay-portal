@@ -46,14 +46,23 @@ const getCategory = async (
 	}
 };
 
+/**
+ * Updates the TaxonomyCategory specified by the provided ID in the API URL.
+ * Defaults to a 'PUT' request unless specified to 'PATCH'.
+ *
+ * @param categoryByCategoryIdAPIURL API URL with the ID of the category being updated
+ * @param category the updated category data
+ * @param updateMethod whether to partially update or replace the category. Defaults to 'PUT'.
+ */
 const updateCategory = async (
 	categoryByCategoryIdAPIURL: string,
-	category: TaxonomyCategory
+	category: TaxonomyCategory | Partial<TaxonomyCategory>,
+	updateMethod: 'PUT' | 'PATCH' = 'PUT'
 ) => {
 	const response = await fetch(categoryByCategoryIdAPIURL, {
 		body: JSON.stringify(category),
 		headers: HEADERS_ALL_LANGUAGES,
-		method: 'PATCH',
+		method: updateMethod,
 	});
 
 	if (response.ok) {
@@ -61,7 +70,7 @@ const updateCategory = async (
 	}
 	else {
 		throw new Error(
-			`PATCH request failed to update a Category with 'categoryId = ${category.id}' using the following provided data: ${JSON.stringify(category)}`
+			`${updateMethod} request failed to update a Category at ${categoryByCategoryIdAPIURL} using the following provided data: ${JSON.stringify(category)}`
 		);
 	}
 };

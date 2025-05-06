@@ -7,11 +7,13 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -54,6 +56,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -211,7 +214,6 @@ public class AssetVocabularyLocalServiceImpl
 		else {
 			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
-
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);
 
@@ -397,6 +399,49 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException {
 
 		return assetVocabularyPersistence.findByG_N(groupId, name);
+	}
+
+	@Override
+	public AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long userId, long groupId)
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			fetchAssetVocabularyByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		if (assetVocabulary != null) {
+			return assetVocabulary;
+		}
+
+		if (!LazyReferencingThreadLocal.isEnabled()) {
+			throw new NoSuchVocabularyException(
+				StringBundler.concat(
+					"Unable to find asset vocabulary with external reference ",
+					"code ", externalReferenceCode, " and group ", groupId));
+		}
+
+		assetVocabulary = assetVocabularyLocalService.fetchGroupVocabulary(
+			groupId, externalReferenceCode);
+
+		if (assetVocabulary != null) {
+			throw new DuplicateVocabularyException(
+				"A category vocabulary with the name " + externalReferenceCode +
+					" already exists");
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
+					true)) {
+
+			return assetVocabularyLocalService.addVocabulary(
+				externalReferenceCode, userId, groupId, externalReferenceCode,
+				externalReferenceCode,
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), externalReferenceCode),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INCOMPLETE,
+				new ServiceContext());
+		}
 	}
 
 	@Override

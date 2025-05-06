@@ -9,9 +9,12 @@ import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
+import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -47,6 +50,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -422,6 +426,52 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public List<AssetCategory> getEntryCategories(long entryId) {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long userId, long groupId)
+		throws PortalException {
+
+		AssetCategory assetCategory = fetchAssetCategoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		if (assetCategory != null) {
+			return assetCategory;
+		}
+
+		if (!LazyReferencingThreadLocal.isEnabled()) {
+			throw new NoSuchCategoryException(
+				StringBundler.concat(
+					"Unable to find asset category with external reference ",
+					"code ", externalReferenceCode, " and group ", groupId));
+		}
+
+		assetCategory = assetCategoryLocalService.fetchCategory(
+			groupId, AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID,
+			externalReferenceCode,
+			AssetVocabularyConstants.INCOMPLETE_VOCABULARY_ID);
+
+		if (assetCategory != null) {
+			throw new DuplicateCategoryException(
+				StringBundler.concat(
+					"There is another category named ", externalReferenceCode,
+					" as a child of category ",
+					AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID));
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
+					true)) {
+
+			return assetCategoryLocalService.addCategory(
+				externalReferenceCode, userId, groupId,
+				AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID,
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), externalReferenceCode),
+				null, AssetVocabularyConstants.INCOMPLETE_VOCABULARY_ID,
+				new String[0], new ServiceContext());
+		}
 	}
 
 	@Override

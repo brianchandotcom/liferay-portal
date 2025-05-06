@@ -3,23 +3,43 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayChart from '@clayui/charts';
+import ClayLabel from '@clayui/label';
+import {Status} from '@clayui/modal/lib/types';
+import {formatDistance} from 'date-fns';
 import {useMemo} from 'react';
-import useSWR from 'swr';
 
-import ErrorBoundary from '../../../../components/ErrorBoundary';
+import ListView from '../../../../components/ListView';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import {OrderTypes} from '../../../../enums/Order';
+import {
+	OrderTypes,
+	OrderWorkflowDisplayType,
+	PaymentWorkflowDisplayType,
+} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import CommerceSelectAccount from '../../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import InfoCard from '../../components/InfoCard';
 import useAccountsMetrics from '../../hooks/useAccountsMetrics';
 import useAnalyticsViewsMetrics from '../../hooks/useAnalyticsViewsMetrics';
-import useOrderMetrics, {
-	useOrderChartLineMetrics,
-} from '../../hooks/useOrderMetrics';
-import {colors} from '../../mock';
-import OrdersTable from './OrdersTab';
+import useOrderMetrics from '../../hooks/useOrderMetrics';
+
+function redirectTo(path: string) {
+	return async function (order: Order) {
+		await CommerceSelectAccount.selectAccount(order.accountId);
+
+		Liferay.CommerceContext.account = {
+			accountId: order.accountId,
+		};
+
+		Liferay.Util.navigate(
+			Liferay.ThemeDisplay.getLayoutURL().replace(
+				'/administrator-dashboard',
+				path
+			)
+		);
+	};
+}
 
 const getTotalAmountCurrency = (amount = 0) =>
 	new Intl.NumberFormat('en-US', {
@@ -29,35 +49,8 @@ const getTotalAmountCurrency = (amount = 0) =>
 
 const Metrics = () => {
 	const {data: accounts} = useAccountsMetrics('week');
-	const {
-		data: analytics,
-		isLoading: analyticsLoading,
-		visitorsMetric,
-	} = useAnalyticsViewsMetrics();
-	const {data: orderChartLine} = useOrderChartLineMetrics();
+	const {visitorsMetric} = useAnalyticsViewsMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
-
-	const {metrics = []} = orderChartLine || {};
-
-	const {data: orders} = useSWR<APIResponse<Order>>(
-		'administrator-dashboard/orders',
-		() =>
-			HeadlessCommerceAdminOrder.getOrders(
-				new URLSearchParams({
-					filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
-						OrderTypes.CLIENT_EXTENSION,
-						OrderTypes.CLOUDAPP,
-						OrderTypes.DXPAPP,
-						OrderTypes.COMPOSITE_APP,
-						OrderTypes.LOW_CODE_CONFIGURATION,
-						OrderTypes.OTHER,
-					]),
-					nestedFields: 'account,orderItems',
-					pageSize: '30',
-					sort: 'createDate:desc',
-				})
-			)
-	);
 
 	const infoCard = useMemo(
 		() => [
@@ -118,103 +111,122 @@ const Metrics = () => {
 				))}
 			</div>
 
-			<div className="d-flex flex-column metrics-container">
-				<div className="p-4 row">
-					<div className="col-md-8 p-0">
-						<span className="font-weight-bold">Orders p/week</span>
+			<ListView<Order>
+				emptyStateProps={{title: i18n.translate('no-orders-yet')}}
+				initialContext={{pageSize: 30}}
+				resource={function getAdministratorOrders({page, pageSize}) {
+					return HeadlessCommerceAdminOrder.getOrders(
+						new URLSearchParams({
+							filter: SearchBuilder.in(
+								'orderTypeExternalReferenceCode',
+								[
+									OrderTypes.CLIENT_EXTENSION,
+									OrderTypes.CLOUDAPP,
+									OrderTypes.DXPAPP,
+									OrderTypes.COMPOSITE_APP,
+									OrderTypes.LOW_CODE_CONFIGURATION,
+								]
+							),
 
-						{!!metrics.length && (
-							<div className="mt-4">
-								<ClayChart
-									axis={{
-										type: 'area-spline',
-										x: {
-											categories:
-												metrics[0]?.weekDays ?? [],
-											type: 'category',
-										},
-									}}
-									data={{
-										colors: {
-											['Last 7 days']: colors.color1,
-											['Previous Week']: colors.color2,
-										},
-										columns: [
-											[
-												'Last 7 days',
-												...(metrics[0]?.dates ?? []),
-											],
-											[
-												'Previous Week',
-												...(metrics[1]?.dates ?? []),
-											],
-										],
-										groups: [
-											['Last 7 days', 'Previous Week'],
-										],
-										types: {
-											['Last 7 days']: 'area-spline',
-											['Previous Week']: 'area-spline',
-										},
-									}}
-								/>
-							</div>
-						)}
-					</div>
+							nestedFields: 'account,orderItems',
+							page: page.toString(),
+							pageSize: pageSize.toString(),
+							sort: 'createDate:desc',
+						})
+					);
+				}}
+				tableProps={{
+					actions: [
+						{
+							name: i18n.translate('customer-dashboard'),
+							onClick: redirectTo('/customer-dashboard'),
+						},
+						{
+							name: i18n.translate('publisher-dashboard'),
+							onClick: redirectTo('/publisher-dashboard'),
+						},
 
-					<div className="col-md-4 p-0">
-						<span className="font-weight-bold ml-5">
-							Most visited product pages
-						</span>
-
-						<div className="mt-4">
-							<ErrorBoundary className="ml-5">
-								{!analyticsLoading &&
-									analytics?.columns[0].length > 1 && (
-										<ClayChart
-											axis={{
-												x: {
-													type: 'category',
-												},
-											}}
-											bar={{
-												padding: 1,
-												radius: {
-													ratio: 0.2,
-												},
-												width: {
-													max: 25,
-												},
-											}}
-											data={{
-												colors: analytics.colors,
-												columns: analytics.columns,
-												type: 'bar',
-												x: 'x',
-											}}
-											grid={{
-												lines: {
-													front: false,
-												},
-												x: {
-													show: false,
-												},
-												y: {
-													show: false,
-												},
-											}}
-											legend={{show: false}}
-										/>
+						{
+							name: i18n.translate('order-panel'),
+							onClick: (order: Order) => {
+								window.open(
+									`/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_mvcRenderCommandName=%2Fcommerce_order%2Fedit_commerce_order&_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_commerceOrderId=${order.id}`,
+									'_blank'
+								);
+							},
+						},
+					],
+					columns: [
+						{
+							id: 'id',
+							name: i18n.translate('id'),
+						},
+						{
+							id: 'orderItems',
+							name: i18n.translate('app-name'),
+							render: (orderItems) => orderItems[0]?.name?.en_US,
+						},
+						{
+							id: 'account',
+							name: i18n.translate('user-account'),
+							render: (account) => account.name,
+						},
+						{
+							id: 'orderTypeExternalReferenceCode',
+							name: i18n.translate('app-type'),
+						},
+						{
+							id: 'totalFormatted',
+							name: i18n.translate('amount'),
+						},
+						{
+							id: 'orderStatusInfo',
+							name: i18n.translate('order-status'),
+							render: (orderStatusInfo) => (
+								<ClayLabel
+									className="text-nowrap"
+									displayType={
+										OrderWorkflowDisplayType[
+											orderStatusInfo.code as keyof typeof OrderWorkflowDisplayType
+										] as Status
+									}
+								>
+									{orderStatusInfo.label_i18n}
+								</ClayLabel>
+							),
+						},
+						{
+							id: 'paymentStatusInfo',
+							name: i18n.translate('payment-status'),
+							render: (paymentStatusInfo) => (
+								<ClayLabel
+									className="text-nowrap"
+									displayType={
+										PaymentWorkflowDisplayType[
+											paymentStatusInfo?.code as keyof typeof PaymentWorkflowDisplayType
+										] as Status
+									}
+								>
+									{paymentStatusInfo.label_i18n}
+								</ClayLabel>
+							),
+						},
+						{
+							id: 'createDate',
+							name: i18n.translate('created-at'),
+							render: (createDate) => (
+								<span className="ml-2 text-capitalize text-nowrap">
+									{formatDistance(
+										new Date(createDate ?? ''),
+										Date.now(),
+										{addSuffix: true}
 									)}
-							</ErrorBoundary>
-						</div>
-					</div>
-				</div>
-
-				<div className="border d-flex flex-column justify-content-center p-6 rounded-lg">
-					<OrdersTable items={orders?.items || []} />
-				</div>
-			</div>
+								</span>
+							),
+						},
+					],
+				}}
+			/>
 		</div>
 	);
 };

@@ -12,7 +12,9 @@ import {useState} from 'react';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import Table from '../../../../components/Table/Table';
 import i18n from '../../../../i18n';
-import PublisherRequestModal, {STATUS} from './PublisherRequestModal';
+import PublisherRequestModal, {
+	PublisherStatusDisplayType,
+} from './PublisherRequestModal';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];
@@ -85,8 +87,8 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 							<ClayLabel
 								className="text-nowrap"
 								displayType={
-									STATUS[
-										requestStatus?.key as keyof typeof STATUS
+									PublisherStatusDisplayType[
+										requestStatus?.key as keyof typeof PublisherStatusDisplayType
 									] as Status
 								}
 							>

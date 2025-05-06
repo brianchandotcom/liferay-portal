@@ -16,7 +16,7 @@ export enum RangeSelectors {
 	Yesterday = '1',
 }
 
-interface IRangeSelectorsDropdown {
+export interface IRangeSelectorsDropdown {
 	activeRangeSelector: RangeSelectors;
 	className?: string;
 	onChange: (rangeSelector: RangeSelectors) => void;

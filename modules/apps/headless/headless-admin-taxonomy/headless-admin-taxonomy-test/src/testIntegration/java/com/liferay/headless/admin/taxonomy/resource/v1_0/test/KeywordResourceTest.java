@@ -15,6 +15,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
+import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
@@ -458,6 +459,15 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		keywordResource.putKeywordMerge(
 			keyword1.getId(), new Long[] {keyword2.getId(), keyword3.getId()});
 
+		Keyword keyword4 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+		Keyword keyword5 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		_invoke(
+			StringBundler.concat(
+				"http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords",
+				"/", keyword1.getId(), "/merge?fromKeywordIds=",
+				keyword4.getId(), "&fromKeywordIds=", keyword5.getId()));
+
 		List<AssetTagGroupRel> assetTagGroupRels =
 			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
 				keyword1.getId());
@@ -582,6 +592,19 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		keyword.setAssetLibraries(assetLibraries);
 
 		return keywordResource.postKeyword(keyword);
+	}
+
+	private void _invoke(String url) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+		httpInvoker.path(url);
+		httpInvoker.userNameAndPassword(
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		Assert.assertEquals(204, httpResponse.getStatusCode());
 	}
 
 	private AssetLibrary _randomAssetLibrary() throws Exception {

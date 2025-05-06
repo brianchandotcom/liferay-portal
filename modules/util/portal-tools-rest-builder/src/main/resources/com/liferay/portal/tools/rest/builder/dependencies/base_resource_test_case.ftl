@@ -624,8 +624,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />
+
 							, getMultipartFiles()
 						</#if>
+
 						);
 					<#else>
 						throw new UnsupportedOperationException("This method needs to be implemented");

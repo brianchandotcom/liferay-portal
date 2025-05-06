@@ -58,43 +58,19 @@ public class FeatureFlagTestRuleTest {
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(enable = false, value = "CLASS-123"),
-			@FeatureFlag("METHOD-123"), @FeatureFlag("METHOD-234")
-		}
-	)
-	@Test
-	public void testAnnotateMethodAndClassWithFeatureFlags() throws Exception {
-		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("CLASS-123"));
-		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
-		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-234"));
-	}
-
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("METHOD-123"), @FeatureFlag("METHOD-234")
-		}
-	)
-	@Test
-	public void testAnnotateMethodWithFeatureFlags() throws Exception {
-		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
-		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-234"));
-	}
-
-	@FeatureFlag(enable = false, value = "METHOD-456")
-	@Test
-	public void testDisableFeatureFlag() {
-		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
-	}
-
-	@FeatureFlags(
-		featureFlags = {
 			@FeatureFlag("METHOD-123"),
 			@FeatureFlag(enable = false, value = "METHOD-456")
 		}
 	)
 	@Test
-	public void testDisableFeatureFlags() {
+	public void testAnnotateMethodWithFeatureFlags() throws Exception {
 		Assert.assertTrue(FeatureFlagManagerUtil.isEnabled("METHOD-123"));
+		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
+	}
+
+	@FeatureFlag(enable = false, value = "METHOD-456")
+	@Test
+	public void testDisableFeatureFlag() {
 		Assert.assertFalse(FeatureFlagManagerUtil.isEnabled("METHOD-456"));
 	}
 

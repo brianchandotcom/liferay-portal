@@ -23,6 +23,8 @@ const Apps = () => {
 	const {properties} = useMarketplaceContext();
 	const navigate = useNavigate();
 
+	const isNewAppEnabled = properties.featureFlags.includes('LPD-24546');
+
 	return (
 		<Page
 			description={i18n.translate(
@@ -31,7 +33,11 @@ const Apps = () => {
 			rightButton={
 				<ClayButton
 					disabled={!catalogId}
-					onClick={() => navigate('/app/create')}
+					onClick={() =>
+						navigate(
+							isNewAppEnabled ? '/newapp/publish' : '/app/create'
+						)
+					}
 				>
 					{i18n.translate('new-app')}
 				</ClayButton>
@@ -71,7 +77,7 @@ const Apps = () => {
 					);
 				}}
 				tableProps={{
-					actions: properties.featureFlags.includes('LPD-24546')
+					actions: isNewAppEnabled
 						? [
 								{
 									icon: 'pencil',

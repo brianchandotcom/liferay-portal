@@ -652,8 +652,6 @@ public class FreeMarkerTool {
 		return null;
 	}
 
-
-
 	public Map<String, Schema> getMultipartBodySchemas(
 		JavaMethodSignature javaMethodSignature) {
 
@@ -932,6 +930,44 @@ public class FreeMarkerTool {
 			configYAML, true, openAPIYAML, schema, schemas);
 	}
 
+	public boolean hasCorrespondingMethodWithMediaType(
+		List<JavaMethodSignature> javaMethodSignatures,
+		JavaMethodSignature sourceJavaMethodSignature,
+		String targetMethodPrefix, String sourceMethodPrefix,
+		String... mediaTypes) {
+
+		if ((sourceJavaMethodSignature == null) ||
+			!sourceJavaMethodSignature.getMethodName(
+			).startsWith(
+				sourceMethodPrefix
+			)) {
+
+			return false;
+		}
+
+		String methodSuffix = sourceJavaMethodSignature.getMethodName(
+		).substring(
+			sourceMethodPrefix.length()
+		);
+
+		String targetMethodName = targetMethodPrefix + methodSuffix;
+
+		JavaMethodSignature targetJavaMethodSignature = getJavaMethodSignature(
+			javaMethodSignatures, targetMethodName);
+
+		if (targetJavaMethodSignature == null) {
+			return false;
+		}
+
+		for (String mediaType : mediaTypes) {
+			if (hasRequestBodyMediaType(targetJavaMethodSignature, mediaType)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
@@ -1057,37 +1093,6 @@ public class FreeMarkerTool {
 		}
 
 		return true;
-	}
-
-	public boolean hasCorrespondingMethodWithMediaType(
-		List<JavaMethodSignature> javaMethodSignatures,
-		JavaMethodSignature sourceJavaMethodSignature,
-		String targetMethodPrefix,
-		String sourceMethodPrefix,
-		String... mediaTypes) {
-
-		if (sourceJavaMethodSignature == null ||
-			!sourceJavaMethodSignature.getMethodName().startsWith(sourceMethodPrefix)) {
-			return false;
-		}
-
-		String methodSuffix = sourceJavaMethodSignature.getMethodName().substring(sourceMethodPrefix.length());
-		String targetMethodName = targetMethodPrefix + methodSuffix;
-
-		JavaMethodSignature targetJavaMethodSignature =
-			getJavaMethodSignature(javaMethodSignatures, targetMethodName);
-
-		if (targetJavaMethodSignature == null) {
-			return false;
-		}
-
-		for (String mediaType : mediaTypes) {
-			if (hasRequestBodyMediaType(targetJavaMethodSignature, mediaType)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public boolean isCollection(

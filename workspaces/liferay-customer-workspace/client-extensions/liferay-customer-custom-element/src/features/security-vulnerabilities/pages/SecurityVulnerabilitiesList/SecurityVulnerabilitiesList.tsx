@@ -14,7 +14,6 @@ import './SecurityVulnerabilitiesList.css';
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
 import {useMemo} from 'react';
-import {Link} from 'react-router-dom';
 import {SVWaves} from '~/assets/SVWaves';
 import {FILTER_OPTIONS} from '~/features/security-vulnerabilities/utils/constants/filterOptions';
 import {JiraEnum} from '~/features/security-vulnerabilities/utils/constants/jiraEnum';
@@ -112,12 +111,7 @@ const SecurityVulnerabilitiesList = () => {
 							</div>
 
 							<div className="font-weight-bold sv-name sv-wrap-text">
-								<Link
-									className="sv-name-link"
-									to={`/${issue?.[JiraEnum.KEY]}`}
-								>
-									{issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}
-								</Link>
+								{issue[JiraEnum.FIELDS]?.[JiraEnum.CVE_IDS]}
 							</div>
 						</div>
 

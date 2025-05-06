@@ -36,10 +36,13 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -53,6 +56,49 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eudaldo Alonso
  */
 public class ActionUtil {
+
+	public static String getDisplayPageEditURL(
+		FormManager formManager,
+		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+		HttpServletRequest httpServletRequest,
+		ObjectDefinition objectDefinition) {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = _getLayout(
+				PortalUtil.getClassNameId(objectDefinition.getClassName()),
+				formManager, fragmentEntryLinkListenerRegistry,
+				GroupLocalServiceUtil.getGroup(
+					themeDisplay.getCompanyId(), GroupConstants.CMS),
+				objectDefinition, 0,
+				ServiceContextFactory.getInstance(httpServletRequest));
+
+			String editURL = HttpComponentsUtil.addParameters(
+				PortalUtil.getLayoutFullURL(
+					layout.fetchDraftLayout(), themeDisplay),
+				"p_l_mode", Constants.EDIT);
+
+			String redirect = ParamUtil.getString(
+				httpServletRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				editURL = HttpComponentsUtil.addParameter(
+					editURL, "redirect", redirect);
+			}
+
+			return editURL;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static String getEditURL(
 		FormManager formManager,

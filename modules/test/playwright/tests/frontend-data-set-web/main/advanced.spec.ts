@@ -1173,7 +1173,7 @@ test(
 );
 
 test(
-	'Test quick action buttons function correctly',
+	'Check behavior of quick actions',
 	{tag: '@LPS-153220'},
 	async ({fdsSamplePage, page}) => {
 		const firstRowItemActionButton = fdsSamplePage.table.itemActionsCells
@@ -1192,27 +1192,26 @@ test(
 
 		const firstRowSampleEditQuickActionLink = fdsSamplePage.table.bodyRows
 			.first()
-			.getByRole('link', {
-				name: 'Sample Edit',
-			});
-
-		const thirdRowSampleEditQuickActionLink = fdsSamplePage.table.bodyRows
-			.nth(2)
-			.getByRole('link', {
-				name: 'Sample Edit',
-			});
+			.getByLabel('Sample Edit');
 
 		const firstTableHeadCell = fdsSamplePage.table.headerCells.first();
+
+		await test.step('Assert that "#test-pencil" is appended to browser URL after clicking', async () => {
+			await firstTableHeadCell.hover();
+
+			await firstTableHeadCell.click();
+
+			await firstRowItemActionButton.hover();
+
+			await firstRowSampleEditQuickActionLink.click();
+
+			expect(page.url()).toContain('#test-pencil');
+		});
 
 		await test.step('Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu', async () => {
 			await firstRowItemActionButton.hover();
 
-			await fdsSamplePage.table.bodyRows
-				.first()
-				.getByRole('link', {
-					name: 'Sample Edit',
-				})
-				.click();
+			await firstRowSampleEditQuickActionLink.click();
 
 			const pageURLAfterQuickAction = page.url();
 
@@ -1248,33 +1247,18 @@ test(
 		});
 
 		await test.step('When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed', async () => {
-			await thirdRowItemActionButton.hover();
-
-			await expect(thirdRowSampleEditQuickActionLink).toBeVisible();
-
-			await thirdRowItemActionButton.hover();
-
 			await thirdRowItemActionButton.click();
 
 			await expect(page.locator('.dropdown-menu.show')).toBeVisible();
 
 			await fdsSamplePage.table.bodyRows.first().hover();
 
-			await expect(
-				page
-					.locator('.fds table tbody tr')
-					.first()
-					.getByLabel('Sample Edit')
-			).toBeVisible(); // `page` must be used here since using `fdsSamplePage` won't locate the element with the dropdown open
+			await expect(firstRowSampleEditQuickActionLink).toBeVisible();
 
-			await firstTableHeadCell.click(); // Close the dropdown
+			await firstTableHeadCell.click(); // Close dropdown
 		});
 
 		await test.step('Assert quick action can be displayed on only one active row', async () => {
-			await firstTableHeadCell.hover();
-
-			await firstTableHeadCell.click();
-
 			await firstRowItemActionButton.hover();
 
 			await expect(firstRowSampleEditQuickActionLink).toBeVisible();
@@ -1285,41 +1269,27 @@ test(
 
 			await expect(firstRowSampleEditQuickActionLink).not.toBeVisible();
 
-			await firstTableHeadCell.click(); // Close the dropdown
+			await firstTableHeadCell.click(); // Close dropdown
 		});
 
 		await test.step('Assert that quick action icons list should be limited to three actions', async () => {
-			await firstRowItemActionButton.click();
-
-			const sampleViewButton = fdsSamplePage.table.bodyRows
-				.getByRole('cell', {name: 'Actions'})
-				.getByLabel('Sample View');
-
-			const sampleEditButton = fdsSamplePage.table.bodyRows
-				.getByRole('cell', {name: 'Actions'})
-				.getByLabel('Sample Edit');
-
-			const sampleDelete = fdsSamplePage.table.bodyRows
-				.getByRole('cell', {name: 'Actions'})
-				.getByLabel('Sample Delete');
-
-			await expect(sampleViewButton).toBeVisible();
-
-			await expect(sampleEditButton).toBeVisible();
-
-			await expect(sampleDelete).toBeVisible();
-		});
-
-		await test.step('Assert that test-pencil is appended to browser URL after clicking', async () => {
-			await firstTableHeadCell.hover();
-
-			await firstTableHeadCell.click();
-
 			await firstRowItemActionButton.hover();
 
-			await firstRowSampleEditQuickActionLink.click();
+			await expect(
+				fdsSamplePage.table.bodyRows.first().getByLabel('Sample View')
+			).toBeVisible();
 
-			expect(page.url()).toContain('#test-pencil');
+			await expect(
+				fdsSamplePage.table.bodyRows.first().getByLabel('Sample Edit')
+			).toBeVisible();
+
+			await expect(
+				fdsSamplePage.table.bodyRows.first().getByLabel('Sample Delete')
+			).toBeVisible();
+
+			await expect(
+				fdsSamplePage.table.bodyRows.first().getByLabel('Sample Copy')
+			).not.toBeVisible();
 		});
 
 		await test.step('Assert the quick action is not visible when the row checkbox is checked', async () => {

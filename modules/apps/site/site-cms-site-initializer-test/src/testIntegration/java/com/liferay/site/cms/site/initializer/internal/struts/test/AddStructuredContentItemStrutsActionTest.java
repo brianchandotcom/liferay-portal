@@ -31,20 +31,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,6 +60,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -86,7 +88,14 @@ public class AddStructuredContentItemStrutsActionTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		GroupLocalServiceUtil.checkSystemGroups(TestPropsValues.getCompanyId());
+		_company = CompanyTestUtil.addCompany();
+
+		_groupLocalService.checkSystemGroups(_company.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -101,7 +110,7 @@ public class AddStructuredContentItemStrutsActionTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+			_company.getCompanyId(), GroupConstants.CMS);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -152,7 +161,7 @@ public class AddStructuredContentItemStrutsActionTest {
 	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			ContentLayoutTestUtil.getMockHttpServletRequest(
-				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				_companyLocalService.getCompany(_company.getCompanyId()),
 				_group, _layout);
 
 		mockHttpServletRequest.setParameter(
@@ -270,13 +279,17 @@ public class AddStructuredContentItemStrutsActionTest {
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	@Inject(filter = "path=/cms/add_structured_content_item")
 	private StrutsAction _addStructuredContentItemStrutsAction;
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
-	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
 	@Inject
@@ -296,7 +309,6 @@ public class AddStructuredContentItemStrutsActionTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
 	@Inject

@@ -43,6 +43,16 @@ public class FrontendESMUtil {
 		return _scriptType.get();
 	}
 
+	public static boolean isInternalESMRequest(String requestURI) {
+		if (requestURI.contains("/__liferay__/") ||
+			requestURI.startsWith("/o/js/language/")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void setScriptType(String scriptType) {
 		_scriptType.set(scriptType);
 	}

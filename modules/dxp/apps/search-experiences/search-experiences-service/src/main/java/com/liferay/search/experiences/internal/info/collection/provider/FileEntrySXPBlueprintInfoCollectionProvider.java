@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -46,7 +48,9 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 			   SingleFormVariationInfoCollectionProvider<FileEntry> {
 
 	public FileEntrySXPBlueprintInfoCollectionProvider(
-		AssetHelper assetHelper, DLAppLocalService dlAppLocalService,
+		AssetHelper assetHelper,
+		AssetSubtypeIdentifierBuilder assetSubtypeIdentifierBuilder,
+		DLAppLocalService dlAppLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		GroupService groupService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
@@ -54,6 +58,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 
 		super(assetHelper, searcher, searchRequestBuilderFactory, sxpBlueprint);
 
+		_assetSubtypeIdentifierBuilder = assetSubtypeIdentifierBuilder;
 		_dlAppLocalService = dlAppLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_groupService = groupService;
@@ -94,14 +99,19 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 			return StringPool.BLANK;
 		}
 
-		String[] searchableAssetTypeWithSubtype = StringUtil.split(
-			searchableAssetTypes[0], "&&");
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_assetSubtypeIdentifierBuilder.searchableAssetType(
+				searchableAssetTypes[0]
+			).build();
 
-		if (searchableAssetTypeWithSubtype.length != 3) {
+		if (assetSubtypeIdentifier.getSubtypeExternalReferenceCode() == null) {
 			return StringPool.BLANK;
 		}
 
-		if (searchableAssetTypeWithSubtype[1].equals(StringPool.BLANK)) {
+		if (StringUtil.equals(
+				assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+				StringPool.BLANK)) {
+
 			return "0";
 		}
 
@@ -109,12 +119,13 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 
 		try {
 			group = _groupService.fetchGroupByExternalReferenceCode(
-				searchableAssetTypeWithSubtype[1], sxpBlueprint.getCompanyId());
+				assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+				sxpBlueprint.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get group with external reference code " +
-					searchableAssetTypeWithSubtype[1],
+					assetSubtypeIdentifier.getGroupExternalReferenceCode(),
 				portalException);
 
 			return StringPool.BLANK;
@@ -124,14 +135,16 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.
 					getDLFileEntryTypeByExternalReferenceCode(
-						searchableAssetTypeWithSubtype[2], group.getGroupId());
+						assetSubtypeIdentifier.
+							getSubtypeExternalReferenceCode(),
+						group.getGroupId());
 
 			return String.valueOf(dlFileEntryType.getFileEntryTypeId());
 		}
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get file entry type with external reference code " +
-					searchableAssetTypeWithSubtype[2],
+					assetSubtypeIdentifier.getSubtypeExternalReferenceCode(),
 				portalException);
 		}
 
@@ -158,6 +171,7 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntrySXPBlueprintInfoCollectionProvider.class);
 
+	private final AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final GroupService _groupService;

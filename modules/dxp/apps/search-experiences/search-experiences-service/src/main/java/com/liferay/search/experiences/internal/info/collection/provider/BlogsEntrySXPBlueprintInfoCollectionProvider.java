@@ -13,7 +13,6 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -66,9 +65,7 @@ public class BlogsEntrySXPBlueprintInfoCollectionProvider
 			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
-	private List<BlogsEntry> _getBlogEntries(SearchHits searchHits)
-		throws PortalException {
-
+	private List<BlogsEntry> _getBlogEntries(SearchHits searchHits) {
 		return TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {

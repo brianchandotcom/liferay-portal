@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.model.listener.InfoCollectionProviderSXPBlueprintModelListener;
-import com.liferay.search.experiences.internal.model.listener.SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener;
+import com.liferay.search.experiences.internal.model.listener.SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import java.util.AbstractMap;
@@ -57,8 +58,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 		if (enabled && Objects.equals(featureFlagKey, "LPS-129412")) {
 			InfoCollectionProviderSXPBlueprintModelListener
 				infoCollectionProviderSXPBlueprintModelListener =
-					new SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-						_assetHelper, _blogsEntryLocalService, _bundleContext,
+					new SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
+						_assetHelper, _assetSubtypeIdentifierBuilder,
+						_blogsEntryLocalService, _bundleContext,
 						_classNameLocalService, _companyLocalService,
 						_ddmStructureService, _dlFileEntryTypeLocalService,
 						_dlAppLocalService, _groupService,
@@ -102,6 +104,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;

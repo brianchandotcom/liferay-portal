@@ -12,7 +12,6 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -23,10 +22,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -36,7 +35,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author David Nebinger
@@ -48,7 +46,9 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 			   SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	public JournalArticleSXPBlueprintInfoCollectionProvider(
-		AssetHelper assetHelper, ClassNameLocalService classNameLocalService,
+		AssetHelper assetHelper,
+		AssetSubtypeIdentifierBuilder assetSubtypeIdentifierBuilder,
+		ClassNameLocalService classNameLocalService,
 		DDMStructureService ddmStructureService, GroupService groupService,
 		JournalArticleService journalArticleService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
@@ -56,6 +56,7 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 
 		super(assetHelper, searcher, searchRequestBuilderFactory, sxpBlueprint);
 
+		_assetSubtypeIdentifierBuilder = assetSubtypeIdentifierBuilder;
 		_classNameLocalService = classNameLocalService;
 		_ddmStructureService = ddmStructureService;
 		_groupService = groupService;
@@ -67,13 +68,8 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
-			Pagination pagination = collectionQuery.getPagination();
-
-			SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-				collectionQuery, pagination);
-
-			SearchResponse searchResponse = searcher.search(
-				searchRequestBuilder.build());
+			SearchResponse searchResponse = getCollectionQuerySearchResponse(
+				collectionQuery);
 
 			return InfoPage.of(
 				_getJournalArticles(searchResponse.getSearchHits()),
@@ -102,10 +98,12 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 			return "0";
 		}
 
-		String[] searchableAssetTypeWithSubtype = StringUtil.split(
-			searchableAssetTypes[0], "&&");
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_assetSubtypeIdentifierBuilder.searchableAssetType(
+				searchableAssetTypes[0]
+			).build();
 
-		if (searchableAssetTypeWithSubtype.length < 3) {
+		if (assetSubtypeIdentifier.getGroupExternalReferenceCode() == null) {
 			return "0";
 		}
 
@@ -113,12 +111,13 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 
 		try {
 			group = _groupService.fetchGroupByExternalReferenceCode(
-				searchableAssetTypeWithSubtype[1], sxpBlueprint.getCompanyId());
+				assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+				sxpBlueprint.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get group with external reference code " +
-					searchableAssetTypeWithSubtype[1],
+					assetSubtypeIdentifier.getGroupExternalReferenceCode(),
 				portalException);
 
 			return "0";
@@ -127,7 +126,8 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		try {
 			DDMStructure ddmStructure =
 				_ddmStructureService.fetchStructureByExternalReferenceCode(
-					searchableAssetTypeWithSubtype[2], group.getGroupId(),
+					assetSubtypeIdentifier.getSubtypeExternalReferenceCode(),
+					group.getGroupId(),
 					_classNameLocalService.getClassNameId(
 						JournalArticle.class));
 
@@ -136,21 +136,14 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get structure with external reference code " +
-					searchableAssetTypeWithSubtype[2],
+					assetSubtypeIdentifier.getSubtypeExternalReferenceCode(),
 				portalException);
 		}
 
 		return "0";
 	}
 
-	@Override
-	public String getLabel(Locale locale) {
-		return sxpBlueprint.getTitle(locale);
-	}
-
-	private List<JournalArticle> _getJournalArticles(SearchHits searchHits)
-		throws PortalException {
-
+	private List<JournalArticle> _getJournalArticles(SearchHits searchHits) {
 		return TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {
@@ -164,6 +157,7 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleSXPBlueprintInfoCollectionProvider.class);
 
+	private final AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private final GroupService _groupService;

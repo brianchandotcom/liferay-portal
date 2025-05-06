@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.info.collection.provider.AssetEntrySXPBlueprintInfoCollectionProvider;
@@ -46,12 +47,13 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Joshua Cords
  */
-public class
-	SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
-		extends InfoCollectionProviderSXPBlueprintModelListener {
+public class SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
+	extends InfoCollectionProviderSXPBlueprintModelListener {
 
-	public SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-		AssetHelper assetHelper, BlogsEntryLocalService blogsEntryLocalService,
+	public SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
+		AssetHelper assetHelper,
+		AssetSubtypeIdentifierBuilder assetSubtypeIdentifierBuilder,
+		BlogsEntryLocalService blogsEntryLocalService,
 		BundleContext bundleContext,
 		ClassNameLocalService classNameLocalService,
 		CompanyLocalService companyLocalService,
@@ -68,6 +70,7 @@ public class
 		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
 
 		_assetHelper = assetHelper;
+		_assetSubtypeIdentifierBuilder = assetSubtypeIdentifierBuilder;
 		_blogsEntryLocalService = blogsEntryLocalService;
 		_classNameLocalService = classNameLocalService;
 		_ddmStructureService = ddmStructureService;
@@ -114,16 +117,17 @@ public class
 
 		if (_className.equals(DLFileEntry.class.getName())) {
 			return new FileEntrySXPBlueprintInfoCollectionProvider(
-				_assetHelper, _dlAppLocalService, _dlFileEntryTypeLocalService,
-				_groupService, _searcher, _searchRequestBuilderFactory,
-				sxpBlueprint);
+				_assetHelper, _assetSubtypeIdentifierBuilder,
+				_dlAppLocalService, _dlFileEntryTypeLocalService, _groupService,
+				_searcher, _searchRequestBuilderFactory, sxpBlueprint);
 		}
 
 		if (_className.equals(JournalArticle.class.getName())) {
 			return new JournalArticleSXPBlueprintInfoCollectionProvider(
-				_assetHelper, _classNameLocalService, _ddmStructureService,
-				_groupService, _journalArticleService, _searcher,
-				_searchRequestBuilderFactory, sxpBlueprint);
+				_assetHelper, _assetSubtypeIdentifierBuilder,
+				_classNameLocalService, _ddmStructureService, _groupService,
+				_journalArticleService, _searcher, _searchRequestBuilderFactory,
+				sxpBlueprint);
 		}
 
 		if (_className.equals(KBArticle.class.getName())) {
@@ -200,6 +204,7 @@ public class
 	}
 
 	private final AssetHelper _assetHelper;
+	private final AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 	private final BlogsEntryLocalService _blogsEntryLocalService;
 	private String _className = AssetEntry.class.getName();
 	private final ClassNameLocalService _classNameLocalService;

@@ -13,7 +13,6 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -66,9 +65,7 @@ public class KBArticleSXPBlueprintInfoCollectionProvider
 			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
-	private List<KBArticle> _getKBArticles(SearchHits searchHits)
-		throws PortalException {
-
+	private List<KBArticle> _getKBArticles(SearchHits searchHits) {
 		return TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {

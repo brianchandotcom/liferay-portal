@@ -51,7 +51,7 @@ const TicketAttachmentsTable = ({
 	useEffect(() => {
 		const fetchTicketAttachments = async () => {
 			const ticketAttachmentsResponse = await getTicketAttachments(
-				`accountKey eq '${koroneikiAccount?.accountKey}' and status/any(s:s eq 0)`
+				`accountKey eq '${koroneikiAccount?.accountKey}' and (state eq 0 or state eq null) and status/any(s:s eq 0)`
 			);
 
 			const ticketAttachments = ticketAttachmentsResponse.items.map(

@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
@@ -89,15 +90,16 @@ export class NavigationMenusPage {
 
 		await this.page.waitForSelector('iframe', {state: 'attached'});
 
-		const blogItemButton = this.blogsModal.getByRole('button', {
-			name,
-		});
+		await this.blogsModal
+			.getByRole('button', {
+				name,
+			})
+			.click();
 
-		while (await blogItemButton.isVisible()) {
-			await blogItemButton.click();
-		}
-
-		await this.page.waitForSelector('iframe', {state: 'detached'});
+		await waitForAlert(
+			this.page,
+			'Success:1 Blogs Entry was added to this menu.'
+		);
 	}
 
 	async addOrChangeIcon(iconName: string) {
@@ -133,13 +135,14 @@ export class NavigationMenusPage {
 
 		await textBox.fill(submenuName);
 
-		const addButton = this.submenuModal.getByRole('button', {name: 'Add'});
+		await this.page.waitForTimeout(500);
 
-		await this.page.waitForTimeout(300);
+		await this.submenuModal.getByRole('button', {name: 'Add'}).click();
 
-		await addButton.click();
-
-		await this.page.waitForSelector('iframe', {state: 'detached'});
+		await waitForAlert(
+			this.page,
+			'Success:1 Submenu was added to this menu.'
+		);
 	}
 
 	async addURLItem(urlName: string, submenuItemName?: string) {
@@ -177,11 +180,11 @@ export class NavigationMenusPage {
 
 		const addButton = this.urlModal.getByRole('button', {name: 'Add'});
 
-		await this.page.waitForTimeout(300);
+		await this.page.waitForTimeout(500);
 
 		await addButton.click();
 
-		await this.page.waitForSelector('iframe', {state: 'detached'});
+		await waitForAlert(this.page, 'Success:1 URL was added to this menu.');
 	}
 
 	async addWebContentArticleItem(name: string) {
@@ -191,16 +194,12 @@ export class NavigationMenusPage {
 
 		await this.page.waitForSelector('iframe', {state: 'attached'});
 
-		const journalArticleItemButton =
-			this.journalArticleModal.getByText(name);
+		await this.journalArticleModal.getByText(name).click();
 
-		await journalArticleItemButton.click();
-
-		while (await journalArticleItemButton.isVisible()) {
-			await journalArticleItemButton.click();
-		}
-
-		await this.page.waitForSelector('iframe', {state: 'detached'});
+		await waitForAlert(
+			this.page,
+			'Success:1 Web Content Article was added to this menu.'
+		);
 	}
 
 	async addWidgetToPageTemplate(templateName: string) {
@@ -208,22 +207,23 @@ export class NavigationMenusPage {
 			this.page
 		);
 
+		const pageEditorPage = new PageEditorPage(this.page);
+
 		await displayPageTemplatesPage.editTemplate(templateName);
 
-		await this.page.getByLabel('Search Fragments and Widgets').click();
+		await pageEditorPage.addFragment(
+			'Content Display',
+			'Display Page Content'
+		);
 
-		await this.page
-			.getByLabel('Search Fragments and Widgets')
-			.fill('display page content');
+		await pageEditorPage.waitForChangesSaved();
 
-		await this.page.waitForTimeout(300);
+		await pageEditorPage.publishButton.click();
 
-		await (await this.getMenuItem('Display Page Content Add'))
-			.locator('div')
-			.first()
-			.dragTo(this.page.locator('#page-editor div').nth(1));
-
-		await this.page.getByLabel('Publish').click();
+		await waitForAlert(
+			this.page,
+			'Success:The display page template was published successfully.'
+		);
 
 		await displayPageTemplatesPage.markAsDefault(templateName);
 	}

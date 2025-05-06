@@ -79,12 +79,6 @@ public class DocumentLibraryCommerceOptionTypeImpl
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		DDMFormField ddmFormField = new DDMFormField(
 			cpDefinitionOptionRel.getKey(),
 			cpDefinitionOptionRel.getCommerceOptionTypeKey());
@@ -116,8 +110,16 @@ public class DocumentLibraryCommerceOptionTypeImpl
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 		ddmFormRenderingContext.setLocale(locale);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		ddmFormRenderingContext.setPortletNamespace(
 			portletDisplay.getNamespace());
+
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
 
 		printWriter.write(

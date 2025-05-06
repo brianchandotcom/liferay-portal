@@ -1935,6 +1935,42 @@
 		},
 		{
 			"properties": {
+				"cssStyleSheetsMaxAge": {
+					"default": 86400,
+					"description": "Sets the value that will be sent to the browser as max-age directive in Cache-Control header for CSS style sheets.",
+					"title": "CSS Style Sheets max-age Directive Value",
+					"type": "number"
+				},
+				"esModulesMaxAge": {
+					"default": 86400,
+					"description": "Sets the value that will be sent to the browser as max-age directive in Cache-Control header for ES modules.",
+					"title": "ES Modules max-age Directive Value",
+					"type": "number"
+				},
+				"pid": {
+					"const": "com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration",
+					"title": "Frontend Caching"
+				},
+				"sendNoCacheForCSSStyleSheets": {
+					"default": false,
+					"description": "Send no-cache (instead of must-revalidate) directive in Cache-Control header for CSS style sheets.",
+					"title": "Send no-cache Directive For CSS Style Sheets",
+					"type": "boolean"
+				},
+				"sendNoCacheForESModules": {
+					"default": false,
+					"description": "Send no-cache (instead of must-revalidate) directive in Cache-Control header for ES modules.",
+					"title": "Send no-cache Directive For ES Modules",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Frontend Caching"
+		},
+		{
+			"properties": {
 				"addDefaultStructures": {
 					"default": true,
 					"title": "Add Default Structures",
@@ -4321,6 +4357,7 @@
 				"com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration",
 				"com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration",
 				"com.liferay.frontend.js.web.internal.configuration.CustomDialogsSettingsConfiguration",
+				"com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration",
 				"com.liferay.journal.configuration.JournalServiceConfiguration",
 				"com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration",
 				"com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",

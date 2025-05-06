@@ -137,13 +137,13 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncBuild(product: Product, config: ProductConfig) {
 		const {
+			_product,
 			build: {
 				appType,
 				compatibleOffering,
-				resourceRequirements,
 				liferayPackages,
+				resourceRequirements,
 			},
-			_product,
 		} = this.context;
 
 		const specifications = [

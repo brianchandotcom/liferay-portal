@@ -4,8 +4,11 @@
  */
 
 import {filesize} from 'filesize';
+
 import {UploadedFile} from '../../../../../components/FileList/FileList';
 import Form from '../../../../../components/MarketplaceForm';
+import MultiSelect from '../../../../../components/MultiSelect/MultiSelect';
+import Select from '../../../../../components/Select/Select';
 import UploadLogo from '../../../../../components/UploadLogo/UploadLogo';
 import {
 	NewAppTypes,
@@ -14,8 +17,6 @@ import {
 import {ProductVocabulary} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
-import MultiSelect from '../../../../../components/MultiSelect/MultiSelect';
-import Select from '../../../../../components/Select/Select';
 
 const tooltipInfo = {
 	areas: 'tooltip',
@@ -170,15 +171,15 @@ const Profile = () => {
 					</Form.Label>
 
 					<Select
-						className={categories?.value || 'placeholder-value'}
+						className={categories?.value || 'select-empty-value'}
 						defaultOption
 						defaultOptionLabel={i18n.translate('select-category')}
 						name="category"
 						onChange={(event) => {
 							const category = defaultSourceItems.categories.find(
 								(defaultCategory: {
-									value: string;
 									label: string;
+									value: string;
 								}) =>
 									defaultCategory.value === event.target.value
 							);
@@ -186,14 +187,14 @@ const Profile = () => {
 								target: {
 									name: 'categories',
 									value: {
-										value: event.target.value,
 										label: category.label,
+										value: event.target.value,
 									},
 								},
 							});
 						}}
 						options={defaultSourceItems.categories.map(
-							(category: {value: string; label: string}) => ({
+							(category: {label: string; value: string}) => ({
 								key: category.value,
 								name: category.label,
 							})

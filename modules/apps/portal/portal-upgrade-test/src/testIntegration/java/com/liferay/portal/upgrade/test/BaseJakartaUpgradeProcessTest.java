@@ -147,7 +147,8 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
-					connection.prepareStatement("select * from " + _TABLE_NAME);
+					connection.prepareStatement(
+						"select * from " + _TABLE_NAME + " order by uuid_ asc");
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				Assert.assertTrue(resultSet.next());

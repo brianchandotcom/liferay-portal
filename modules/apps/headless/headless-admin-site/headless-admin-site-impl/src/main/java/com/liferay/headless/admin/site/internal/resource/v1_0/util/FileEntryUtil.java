@@ -28,8 +28,12 @@ public class FileEntryUtil {
 
 		FileEntry fileEntry =
 			PortletFileRepositoryUtil.
-				getPortletFileEntryByExternalReferenceCode(
+				fetchPortletFileEntryByExternalReferenceCode(
 					itemExternalReference.getExternalReferenceCode(), groupId);
+
+		if (fileEntry == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		return fileEntry.getFileEntryId();
 	}

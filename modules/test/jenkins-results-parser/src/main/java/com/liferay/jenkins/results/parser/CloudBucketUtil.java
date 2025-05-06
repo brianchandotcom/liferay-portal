@@ -127,6 +127,18 @@ public class CloudBucketUtil {
 		return null;
 	}
 
+	public static boolean isS3ObjectRefAvailable(String s3ObjectPath) {
+		_validateS3ObjectPath(s3ObjectPath);
+
+		File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
+
+		if (s3ObjectRefFile.exists()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String listGCPFiles(String path)
 		throws IOException, TimeoutException {
 

@@ -5,12 +5,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>7fa64302-932d-b1b5-9498-9928551dca31</name>
+	<name>Knowledge Article Workflow</name>
 	<description>A single approver can approve a workflow article.</description>
-	<version>14</version>
+	<version>1</version>
 	<state>
-		<name>02a4517d-00d1-4304-9247-f42ff795e258</name>
-		<description>The article has been created.</description>
+		<name>Submitted</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -24,18 +23,14 @@
 		<actions>
 			<action>
 				<name>Submitted</name>
-				<description></description>
 				<status>5</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Submitted</name>
-				<description>
-					<![CDATA[]]>
-				</description>
 				<template>
-					<![CDATA[Your ${entryType} submission has been sent for review in the Knowledge Article Workflow.]]>
+					<![CDATA[Your ${entryType} submission has been sent for review in the knowledge article workflow.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -59,14 +54,13 @@
 					</label>
 				</labels>
 				<name>submit-knowledge-article</name>
-				<target>69618eb0-298b-486e-bce4-a2668fa01322</target>
+				<target>In Review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>0432bb76-d9ed-4866-9e09-f6fa8914754f</name>
-		<description>The article is not appropriate to be published on learn Knowledge Base.</description>
+		<name>Rejected</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -81,17 +75,12 @@
 		<actions>
 			<action>
 				<name>Rejected</name>
-				<description>The article is not appropriate to be published on learn Knowledge Base.</description>
 				<status>4</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Rejected</name>
-				<description>
-					<![CDATA[The article is not appropriate to be published on learn Knowledge Base.
-]]>
-				</description>
 				<template>
 					<![CDATA[Your ${entryType} submission has been rejected.]]>
 				</template>
@@ -110,8 +99,7 @@
 		</labels>
 	</state>
 	<state>
-		<name>84745e76-5617-4a17-a7ec-205e41800ccf</name>
-		<description>The article was approved to be published on Learn Knowledge Base.</description>
+		<name>Approved</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -126,19 +114,14 @@
 		<actions>
 			<action>
 				<name>Knowledge Base</name>
-				<description>The article was approved to be published on Learn Knowledge Base.</description>
 				<status>0</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>Approved</name>
-				<description>
-					<![CDATA[The article was approved to be published on Learn Knowledge Base.
-]]>
-				</description>
 				<template>
-					<![CDATA[Your ${entryType} was approved to be added to Learn Knowledge Base.]]>
+					<![CDATA[Your ${entryType} was approved to be added to Liferay Learn knowledge base.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -155,8 +138,7 @@
 		</labels>
 	</state>
 	<state>
-		<name>a386b94c-6fd2-4e1a-8494-71f6030276f7</name>
-		<description>The article was approved to be added to Learn official Documentation.</description>
+		<name>In Documentation</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -171,19 +153,14 @@
 		<actions>
 			<action>
 				<name>Official Documentation</name>
-				<description>The article was approved to be added to Learn official Documentation.</description>
 				<status>7</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
 				<name>In Documentation</name>
-				<description>
-					<![CDATA[The article was approved to be added to Learn official Documentation.
-]]>
-				</description>
 				<template>
-					<![CDATA[Your ${entryType} was approved to be added to Learn official Documentation.]]>
+					<![CDATA[Your ${entryType} was approved to be added to Liferay Learn official documentation.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -200,8 +177,7 @@
 		</labels>
 	</state>
 	<task>
-		<name>69618eb0-298b-486e-bce4-a2668fa01322</name>
-		<description>The article is waiting for approver to review and decide state.</description>
+		<name>In Review</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -215,18 +191,14 @@
 		<actions>
 			<action>
 				<name>In Review</name>
-				<description>The article is waiting for approver to review and decide state.</description>
 				<status>1</status>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
 				<name>In Review</name>
-				<description>
-					<![CDATA[]]>
-				</description>
 				<template>
-					<![CDATA[${userName} sent a ${entryType} for review in the Knowledge Article Workflow.]]>
+					<![CDATA[${userName} sent a ${entryType} for review in the knowledge article workflow.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -264,7 +236,7 @@
 					</label>
 				</labels>
 				<name>needs-revision-knowledge-article</name>
-				<target>72061041-cb5f-4bc0-a73d-185c5b3d65c1</target>
+				<target>Needs Revision</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -274,7 +246,7 @@
 					</label>
 				</labels>
 				<name>reject-knowledge-article</name>
-				<target>0432bb76-d9ed-4866-9e09-f6fa8914754f</target>
+				<target>Rejected</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -284,7 +256,7 @@
 					</label>
 				</labels>
 				<name>knowledge-base-knowledge-article</name>
-				<target>84745e76-5617-4a17-a7ec-205e41800ccf</target>
+				<target>Approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
@@ -294,14 +266,13 @@
 					</label>
 				</labels>
 				<name>official-documentation-knowledge-article</name>
-				<target>a386b94c-6fd2-4e1a-8494-71f6030276f7</target>
+				<target>In Documentation</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>72061041-cb5f-4bc0-a73d-185c5b3d65c1</name>
-		<description>The article needs revision.</description>
+		<name>Needs Revision</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -315,17 +286,12 @@
 		<actions>
 			<action>
 				<name>Needs Revision</name>
-				<description>The article needs revision.</description>
 				<status>6</status>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
 				<name>Needs Revision</name>
-				<description>
-					<![CDATA[The article needs revision.
-]]>
-				</description>
 				<template>
 					<![CDATA[The ${entryType} you submitted needs revision.]]>
 				</template>
@@ -353,7 +319,7 @@
 					</label>
 				</labels>
 				<name>resubmit-knowledge-article</name>
-				<target>69618eb0-298b-486e-bce4-a2668fa01322</target>
+				<target>In Review</target>
 				<default>true</default>
 			</transition>
 		</transitions>

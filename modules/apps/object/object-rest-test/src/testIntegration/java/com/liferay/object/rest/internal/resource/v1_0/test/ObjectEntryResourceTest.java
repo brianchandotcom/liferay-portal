@@ -9540,12 +9540,6 @@ public class ObjectEntryResourceTest {
 						"externalReferenceCode", _ERC_VALUE_3
 					))
 			).put(
-				"lastPage", 1
-			).put(
-				"page", 1
-			).put(
-				"pageSize", 20
-			).put(
 				"totalCount", 2
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(

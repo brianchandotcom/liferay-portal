@@ -127,6 +127,9 @@ public class CustomFieldsUtil {
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toIntArray));
 			}
+			else if (ExpandoColumnConstants.LONG == attributeType) {
+				map.put(name, GetterUtil.getLong(data));
+			}
 			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
 				map.put(
 					name,
@@ -134,6 +137,17 @@ public class CustomFieldsUtil {
 						data,
 						(Function<Collection<Number>, Serializable>)
 							ArrayUtil::toLongArray));
+			}
+			else if (ExpandoColumnConstants.SHORT == attributeType) {
+				map.put(name, GetterUtil.getShort(data));
+			}
+			else if (ExpandoColumnConstants.SHORT_ARRAY == attributeType) {
+				map.put(
+					name,
+					_toArray(
+						data,
+						(Function<Collection<Number>, Serializable>)
+							ArrayUtil::toShortArray));
 			}
 			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toStringArray));

@@ -629,6 +629,12 @@ public class PortalUpgradeProcessRegistryImpl
 				"AssetVocabulary", "status INTEGER"),
 			UpgradeProcessFactory.runSQL(
 				"update AssetVocabulary set status = 0"));
+
+		upgradeVersionTreeMap.put(
+			new Version(32, 3, 0),
+			UpgradeProcessFactory.addColumns("Organization_", "status INTEGER"),
+			UpgradeProcessFactory.runSQL(
+				"update Organization_ set status = 0"));
 	}
 
 }

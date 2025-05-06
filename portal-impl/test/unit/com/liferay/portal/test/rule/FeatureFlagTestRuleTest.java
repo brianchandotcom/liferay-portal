@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 @FeatureFlags(
 	featureFlags = {
-		@FeatureFlag(value = "CLASS-123"),
+		@FeatureFlag("CLASS-123"),
 		@FeatureFlag(enable = false, value = "CLASS-456")
 	}
 )
@@ -71,7 +71,7 @@ public class FeatureFlagTestRuleTest {
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "METHOD-123"), @FeatureFlag("METHOD-234")
+			@FeatureFlag("METHOD-123"), @FeatureFlag("METHOD-234")
 		}
 	)
 	@Test
@@ -88,7 +88,7 @@ public class FeatureFlagTestRuleTest {
 
 	@FeatureFlags(
 		featureFlags = {
-			@FeatureFlag(value = "METHOD-123"),
+			@FeatureFlag("METHOD-123"),
 			@FeatureFlag(enable = false, value = "METHOD-456")
 		}
 	)

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -175,7 +176,15 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 6, logEntries.size());
+			int logEntriesSize = 3;
+
+			if (DBPartition.isPartitionEnabled()) {
+				logEntriesSize =
+					logEntriesSize * PortalInstancePool.getCompanyIds().length;
+			}
+
+			Assert.assertEquals(
+				logEntries.toString(), logEntriesSize, logEntries.size());
 
 			AtomicInteger i = new AtomicInteger();
 

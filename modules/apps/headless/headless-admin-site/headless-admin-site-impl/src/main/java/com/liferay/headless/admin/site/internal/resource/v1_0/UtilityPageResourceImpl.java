@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -270,7 +271,9 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				utilityPage.getExternalReferenceCode(), groupId,
-				_getLayoutPlid(groupId, utilityPage, serviceContext), 0L,
+				_getLayoutPlid(groupId, utilityPage, serviceContext),
+				FileEntryUtil.getPreviewFileEntryId(
+					groupId, utilityPage.getThumbnail()),
 				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
 				_getType(utilityPage.getType()), 0L, serviceContext));
 	}

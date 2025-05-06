@@ -178,6 +178,10 @@ describe('ShortcutManager', () => {
 		});
 	});
 
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('triggers hide sidebar action when pressing cmd + shift + .', () => {
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
@@ -411,7 +415,7 @@ describe('ShortcutManager', () => {
 		);
 	});
 
-	it.skip('cannot paste items because multiple parents are selected', () => {
+	it('cannot paste items because multiple parents are selected', () => {
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
 		});

@@ -5,15 +5,13 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -63,29 +61,9 @@ public class UtilityPageDTOConverter
 					layoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry);
 				setName(layoutUtilityPageEntry::getName);
 				setThumbnail(
-					() -> {
-						if (layoutUtilityPageEntry.getPreviewFileEntryId() <=
-								0) {
-
-							return null;
-						}
-
-						FileEntry fileEntry =
-							_portletFileRepository.getPortletFileEntry(
-								layoutUtilityPageEntry.getPreviewFileEntryId());
-
-						if (fileEntry == null) {
-							return null;
-						}
-
-						return new ItemExternalReference() {
-							{
-								setClassName(() -> FileEntry.class.getName());
-								setExternalReferenceCode(
-									fileEntry::getExternalReferenceCode);
-							}
-						};
-					});
+					() ->
+						ThumbnailUtil.getPortletFileEntryItemExternalReference(
+							layoutUtilityPageEntry.getPreviewFileEntryId()));
 				setType(() -> _getType(layoutUtilityPageEntry.getType()));
 				setUtilityPageSettings(
 					() -> new UtilityPageSettings() {
@@ -144,8 +122,5 @@ public class UtilityPageDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 }

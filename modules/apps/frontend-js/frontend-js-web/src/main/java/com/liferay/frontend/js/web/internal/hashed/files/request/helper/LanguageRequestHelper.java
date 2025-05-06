@@ -151,7 +151,7 @@ public class LanguageRequestHelper
 		}
 
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
-		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
+		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 

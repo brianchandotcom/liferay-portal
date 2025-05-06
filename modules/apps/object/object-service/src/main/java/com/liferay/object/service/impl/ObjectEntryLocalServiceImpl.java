@@ -1993,11 +1993,17 @@ public class ObjectEntryLocalServiceImpl
 			if (!objectEntryVersions.isEmpty()) {
 				_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
 			}
-
-			return objectEntry;
+		}
+		else {
+			objectEntry = _addObjectEntryVersion(objectDefinition, objectEntry);
 		}
 
-		return _addObjectEntryVersion(objectDefinition, objectEntry);
+		if (objectDefinition.isRootNode()) {
+			_updateRootDescendantNodeObjectEntryStatus(
+				userId, objectEntry, serviceContext);
+		}
+
+		return objectEntry;
 	}
 
 	@Override
@@ -5088,6 +5094,14 @@ public class ObjectEntryLocalServiceImpl
 			WorkflowThreadLocal.setEnabled(true);
 
 			if (objectDefinition.isRootDescendantNode()) {
+				ObjectEntry rootObjectEntry =
+					objectEntryPersistence.fetchByPrimaryKey(
+						objectEntry.getRootObjectEntryId());
+
+				if (rootObjectEntry == null) {
+					return;
+				}
+
 				ObjectDefinition rootObjectDefinition =
 					_objectDefinitionPersistence.fetchByPrimaryKey(
 						objectDefinition.getRootObjectDefinitionId());
@@ -5097,11 +5111,16 @@ public class ObjectEntryLocalServiceImpl
 
 				workflowServiceContext.setStrictAdd(false);
 
+				int originalStatus = rootObjectEntry.getStatus();
+
 				_startWorkflowInstance(
 					userId, rootObjectDefinition.getClassName(),
-					objectEntryPersistence.fetchByPrimaryKey(
-						objectEntry.getRootObjectEntryId()),
-					workflowServiceContext);
+					rootObjectEntry, workflowServiceContext);
+
+				if (originalStatus == rootObjectEntry.getStatus()) {
+					_updateRootDescendantNodeObjectEntryStatus(
+						userId, rootObjectEntry, workflowServiceContext);
+				}
 			}
 			else {
 				_skipModelListeners.set(skipModelListener);
@@ -5260,6 +5279,37 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCompanyId(), objectEntry.getGroupId(),
 			objectDefinition.getClassName(),
 			String.valueOf(objectEntry.getObjectEntryId()), modelPermissions);
+	}
+
+	private void _updateRootDescendantNodeObjectEntryStatus(
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		boolean skipModelListener = _skipModelListeners.get();
+		boolean skipObjectActionExecution =
+			ObjectActionThreadLocal.isSkipObjectActionExecution();
+
+		try {
+			_skipModelListeners.set(true);
+
+			ObjectActionThreadLocal.setSkipObjectActionExecution(true);
+
+			for (ObjectEntry rootDescendantNodeObjectEntry :
+					objectEntryPersistence.findByROEI_NotS(
+						objectEntry.getObjectEntryId(),
+						objectEntry.getStatus())) {
+
+				updateStatus(
+					userId, rootDescendantNodeObjectEntry,
+					objectEntry.getStatus(), serviceContext);
+			}
+		}
+		finally {
+			_skipModelListeners.set(skipModelListener);
+
+			ObjectActionThreadLocal.setSkipObjectActionExecution(
+				skipObjectActionExecution);
+		}
 	}
 
 	private void _updateRootObjectEntryIds(

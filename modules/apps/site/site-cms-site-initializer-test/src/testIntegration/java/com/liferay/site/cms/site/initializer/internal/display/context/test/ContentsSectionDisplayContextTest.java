@@ -64,7 +64,6 @@ public class ContentsSectionDisplayContextTest
 		String apiURL = _getAPIURL();
 
 		Assert.assertTrue(apiURL.contains("emptySearch=true"));
-
 		Assert.assertTrue(
 			apiURL.contains(
 				StringBundler.concat(
@@ -77,12 +76,10 @@ public class ContentsSectionDisplayContextTest
 
 		int end = apiURL.indexOf("&", start);
 
-		String filterExpression = apiURL.substring(start + 7, end);
+		String filterString = apiURL.substring(start + 7, end);
 
-		Assert.assertTrue(
-			filterExpression.startsWith(StringPool.OPEN_PARENTHESIS));
-		Assert.assertTrue(
-			filterExpression.endsWith(StringPool.CLOSE_PARENTHESIS));
+		Assert.assertTrue(filterString.startsWith(StringPool.OPEN_PARENTHESIS));
+		Assert.assertTrue(filterString.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
 	@Ignore

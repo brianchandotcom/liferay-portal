@@ -33,12 +33,10 @@ public class StructureUsagesDisplayContextTest {
 
 		int end = apiURL.indexOf("&", start);
 
-		String filterExpression = apiURL.substring(start + 7, end);
+		String filterString = apiURL.substring(start + 7, end);
 
-		Assert.assertTrue(
-			filterExpression.startsWith(StringPool.OPEN_PARENTHESIS));
-		Assert.assertTrue(
-			filterExpression.endsWith(StringPool.CLOSE_PARENTHESIS));
+		Assert.assertTrue(filterString.startsWith(StringPool.OPEN_PARENTHESIS));
+		Assert.assertTrue(filterString.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
 	private final StructureUsagesDisplayContext _structureUsagesDisplayContext =

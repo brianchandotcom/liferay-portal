@@ -31,12 +31,10 @@ public class StructuresSectionDisplayContextTest {
 
 		int start = apiURL.indexOf("filter=");
 
-		String filterExpression = apiURL.substring(start + 7);
+		String filterString = apiURL.substring(start + 7);
 
-		Assert.assertTrue(
-			filterExpression.startsWith(StringPool.OPEN_PARENTHESIS));
-		Assert.assertTrue(
-			filterExpression.endsWith(StringPool.CLOSE_PARENTHESIS));
+		Assert.assertTrue(filterString.startsWith(StringPool.OPEN_PARENTHESIS));
+		Assert.assertTrue(filterString.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
 	private final StructuresSectionDisplayContext

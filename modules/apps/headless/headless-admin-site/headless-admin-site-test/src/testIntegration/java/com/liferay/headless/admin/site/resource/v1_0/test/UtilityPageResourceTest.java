@@ -257,8 +257,37 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					setMarkedAsDefault(Boolean.TRUE);
 				}
 			});
+
+		utilityPage.setName(RandomTestUtil::randomString);
+		utilityPage.setUtilityPageSettings(
+			() -> new UtilityPageSettings() {
+				{
+					setSeoSettings(
+						() -> new UtilityPageSEOSettings() {
+							{
+								setDescription_i18n(
+									() -> LocalizedMapUtil.getI18nMap(
+										true,
+										RandomTestUtil.
+											randomLocaleStringMap()));
+								setHtmlTitle_i18n(
+									() -> LocalizedMapUtil.getI18nMap(
+										true,
+										RandomTestUtil.
+											randomLocaleStringMap()));
+							}
+						});
+				}
+			});
+
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
-			Boolean.TRUE, utilityPage, new UtilityPage());
+			Boolean.TRUE, utilityPage,
+			new UtilityPage() {
+				{
+					setName(utilityPage::getName);
+					setUtilityPageSettings(utilityPage::getUtilityPageSettings);
+				}
+			});
 
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,

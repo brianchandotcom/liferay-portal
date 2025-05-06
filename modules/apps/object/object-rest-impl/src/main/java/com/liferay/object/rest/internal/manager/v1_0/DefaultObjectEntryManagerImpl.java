@@ -310,6 +310,33 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public ObjectEntry expireObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			Integer version)
+		throws Exception {
+
+		return _expireObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_objectEntryService.getObjectEntry(objectEntryId), version);
+	}
+
+	@Override
+	public ObjectEntry expireObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Integer version)
+		throws Exception {
+
+		return _expireObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, null)),
+			version);
+	}
+
+	@Override
 	public ObjectEntry fetchObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId)
@@ -1259,6 +1286,31 @@ public class DefaultObjectEntryManagerImpl
 				}
 			),
 			dtoConverterContext.getUserId());
+	}
+
+	private ObjectEntry _expireObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			Integer version)
+		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+
+		_objectEntryService.expireObjectEntry(
+			dtoConverterContext.getUserId(),
+			serviceBuilderObjectEntry.getObjectEntryId(), version,
+			ServiceContextUtil.createServiceContext(
+				serviceBuilderObjectEntry.getObjectEntryId()));
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion",
+			_objectEntryVersionService.getObjectEntryVersion(
+				serviceBuilderObjectEntry.getObjectEntryId(), version));
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
 	}
 
 	private int _getEndPosition(Pagination pagination) {

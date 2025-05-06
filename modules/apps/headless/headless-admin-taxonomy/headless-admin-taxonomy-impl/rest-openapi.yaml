@@ -271,14 +271,16 @@ components:
                             type: string
                         id:
                             format: int64
+                            readOnly: true
                             type: integer
                         name:
+                            readOnly: true
                             type: string
                         name_i18n:
                             additionalProperties:
                                 type: string
+                            readOnly: true
                             type: object
-                    readOnly: true
                     type: object
                 permissions:
                     items:

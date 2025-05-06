@@ -1237,6 +1237,8 @@
 		<exception>ObjectEntryFolderParentObjectEntryFolderId</exception>
 		<exception>ObjectEntryFolderScope</exception>
 		<exception>ObjectEntryValues</exception>
+		<exception>ObjectEntryVersionCount</exception>
+		<exception>ObjectEntryVersionLatest</exception>
 		<exception>ObjectFieldBusinessType</exception>
 		<exception>ObjectFieldDBType</exception>
 		<exception>ObjectFieldLabel</exception>

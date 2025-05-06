@@ -15,20 +15,17 @@ import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.site.cms.site.initializer.internal.display.context.SpacesSectionDisplayContext;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
@@ -84,40 +81,17 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			JSONArray assetLibrariesJSONArray = _jsonFactory.createJSONArray();
-			long assetLibrariesCount = 0;
+			SpacesSectionDisplayContext spacesSectionDisplayContext =
+				new SpacesSectionDisplayContext(
+					httpServletRequest, _assetLibraryResourceFactory);
 
-			try {
-				AssetLibraryResource.Builder builder =
-					_assetLibraryResourceFactory.create();
-
-				AssetLibraryResource assetLibraryResource = builder.user(
-					themeDisplay.getUser()
-				).build();
-
-				Page<AssetLibrary> page =
-					assetLibraryResource.getAssetLibrariesPage(
-						null, null, null, Pagination.of(1, 5), null);
-
-				assetLibrariesJSONArray = JSONUtil.toJSONArray(
-					page.getItems(),
-					assetLibrary -> JSONUtil.put(
-						"id", assetLibrary.getId()
-					).put(
-						"name", assetLibrary.getName()
-					).put(
-						"url",
-						StringBundler.concat(
-							themeDisplay.getPathFriendlyURLPublic(),
-							GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-							_portal.getClassNameId(DepotEntry.class),
-							StringPool.SLASH, assetLibrary.getId())
-					));
-				assetLibrariesCount = page.getTotalCount();
+			if (PortalRunMode.isTestMode()) {
+				httpServletRequest.setAttribute(
+					SpacesSectionDisplayContext.class.getName(),
+					spacesSectionDisplayContext);
 			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
+
+			Page<AssetLibrary> page = spacesSectionDisplayContext.getPage();
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
@@ -126,9 +100,23 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 						themeDisplay.getPathFriendlyURLPublic(),
 						GroupConstants.CMS_FRIENDLY_URL, "/all-spaces")
 				).put(
-					"assetLibraries", assetLibrariesJSONArray
+					"assetLibraries",
+					JSONUtil.toJSONArray(
+						page.getItems(),
+						assetLibrary -> JSONUtil.put(
+							"id", assetLibrary.getId()
+						).put(
+							"name", assetLibrary.getName()
+						).put(
+							"url",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+								_portal.getClassNameId(DepotEntry.class),
+								StringPool.SLASH, assetLibrary.getId())
+						))
 				).put(
-					"assetLibrariesCount", assetLibrariesCount
+					"assetLibrariesCount", page.getTotalCount()
 				).put(
 					"showAddButton",
 					_portletResourcePermission.contains(
@@ -150,14 +138,8 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SpacesSectionFragmentRenderer.class);
-
 	@Reference
 	private AssetLibraryResource.Factory _assetLibraryResourceFactory;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

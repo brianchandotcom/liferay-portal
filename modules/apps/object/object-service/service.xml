@@ -247,6 +247,7 @@
 		<column name="objectEntryFolderId" type="long" />
 		<column name="rootObjectEntryId" type="long" />
 		<column name="defaultLanguageId" type="String" />
+		<column name="expirationDate" type="Date" />
 		<column name="treePath" type="String" />
 		<column name="version" type="int" />
 		<column name="lastPublishDate" type="Date" />
@@ -375,8 +376,12 @@
 		<column name="objectDefinitionId" type="long" />
 		<column name="objectEntryId" type="long" />
 		<column name="content" type="String" />
+		<column name="expirationDate" type="Date" />
 		<column name="version" type="int" />
 		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->
 

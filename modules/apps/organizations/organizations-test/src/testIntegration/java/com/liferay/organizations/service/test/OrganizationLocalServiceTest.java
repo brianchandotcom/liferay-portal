@@ -13,12 +13,15 @@ import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -428,6 +431,38 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organizationB, organizations.get(0));
+	}
+
+	@Test
+	public void testGetOrAddIncompleteOrganization() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_organizationLocalService.getOrAddIncompleteOrganization(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchOrganizationException noSuchOrganizationException) {
+			Assert.assertNotNull(noSuchOrganizationException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Organization organization =
+				_organizationLocalService.getOrAddIncompleteOrganization(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, organization.getStatus());
+		}
 	}
 
 	@Test
@@ -1020,6 +1055,36 @@ public class OrganizationLocalServiceTest {
 
 		_testSearchOrganizationsByType(expectedOrganizations, "asc");
 		_testSearchOrganizationsByType(expectedOrganizations, "desc");
+	}
+
+	@Test
+	public void testUpdateOrganizationWithLazyReferencingEnabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Organization organization =
+				_organizationLocalService.getOrAddIncompleteOrganization(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, organization.getStatus());
+
+			organization = _organizationLocalService.updateOrganization(
+				organization.getExternalReferenceCode(),
+				organization.getCompanyId(), organization.getOrganizationId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				organization.getName(), organization.getType(),
+				organization.getRegionId(), organization.getCountryId(),
+				organization.getStatusListTypeId(), organization.getComments(),
+				false, null, true, null);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, organization.getStatus());
+		}
 	}
 
 	@Rule

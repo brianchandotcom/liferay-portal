@@ -925,7 +925,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, patchUtilityPage.getMarkedAsDefault());
-
 		Assert.assertEquals(
 			expectedUtilityPage.getThumbnail(),
 			patchUtilityPage.getThumbnail());
@@ -1030,7 +1029,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
-
 		Assert.assertEquals(
 			utilityPage.getThumbnail(), putUtilityPage.getThumbnail());
 	}

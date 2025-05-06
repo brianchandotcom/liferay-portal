@@ -1470,6 +1470,11 @@ public class JenkinsResultsParserUtil {
 							_MILLIS_TIMEOUT_DEFAULT, null, true)));
 			}
 
+			if (!properties.containsKey("user.home")) {
+				properties.setProperty(
+					"user.home", getCanonicalPath(_userHomeDir));
+			}
+
 			_buildProperties.clear();
 
 			_buildProperties.putAll(properties);

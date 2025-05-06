@@ -12,8 +12,10 @@ import com.liferay.captcha.rest.client.resource.v1_0.CaptchaResource;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -34,9 +36,13 @@ public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		CaptchaResource.Builder builder = CaptchaResource.builder();
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
-		_captchaResource = builder.build();
+		_captchaResource = CaptchaResource.builder(
+		).endpoint(
+			company.getVirtualHostname(), 8080, "http"
+		).build();
 	}
 
 	@Override

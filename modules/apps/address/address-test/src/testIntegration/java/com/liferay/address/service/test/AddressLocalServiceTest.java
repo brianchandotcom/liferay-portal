@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -155,6 +158,43 @@ public class AddressLocalServiceTest {
 
 			Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
 		}
+	}
+
+	@Test
+	public void testReindexUser() throws Exception {
+		Address address = _addAddress(RandomTestUtil.randomString());
+
+		List<User> users = _userLocalService.search(
+			TestPropsValues.getCompanyId(), address.getCity(),
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+
+		address = _addressLocalService.updateAddress(
+			address.getExternalReferenceCode(), address.getAddressId(),
+			address.getCountryId(), address.getListTypeId(),
+			address.getRegionId(), RandomTestUtil.randomString(),
+			address.getDescription(), address.isMailing(), address.getName(),
+			address.isPrimary(), address.getStreet1(), address.getStreet2(),
+			address.getStreet3(), address.getSubtype(), address.getZip(),
+			address.getPhoneNumber());
+
+		users = _userLocalService.search(
+			TestPropsValues.getCompanyId(), address.getCity(),
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+
+		address = _addressLocalService.deleteAddress(address.getAddressId());
+
+		users = _userLocalService.search(
+			TestPropsValues.getCompanyId(), address.getCity(),
+			WorkflowConstants.STATUS_APPROVED, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+
+		Assert.assertEquals(users.toString(), 0, users.size());
 	}
 
 	@Test
@@ -433,5 +473,8 @@ public class AddressLocalServiceTest {
 
 	@Inject
 	private static RegionLocalService _regionLocalService;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 }

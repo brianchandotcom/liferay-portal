@@ -17,8 +17,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -88,16 +88,14 @@ public class ExpandoColumnUpgradeProcessTest {
 			).build());
 
 		try {
-			GroupResource.Builder groupResourceBuilder =
-				GroupResource.builder();
+			Company company = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
 			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
 				TestPropsValues.getCompanyId());
+			User user = _userLocalService.getUser(TestPropsValues.getUserId());
 
-			Company company = CompanyLocalServiceUtil.getCompany(
-				TestPropsValues.getCompanyId());
-
-			User user = UserLocalServiceUtil.getUser(
-				TestPropsValues.getUserId());
+			GroupResource.Builder groupResourceBuilder =
+				GroupResource.builder();
 
 			GroupResource groupResource = groupResourceBuilder.authentication(
 				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -265,10 +263,16 @@ public class ExpandoColumnUpgradeProcessTest {
 		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.scim.rest.internal.upgrade.registry.ScimRestUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

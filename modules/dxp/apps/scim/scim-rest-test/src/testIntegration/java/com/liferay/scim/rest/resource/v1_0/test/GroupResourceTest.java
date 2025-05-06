@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -73,10 +73,10 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		UserResource.Builder builder = UserResource.builder();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-		com.liferay.portal.kernel.model.User user =
-			UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
+		com.liferay.portal.kernel.model.User user = _userLocalService.getUser(
+			TestPropsValues.getUserId());
 
 		_userResource = builder.authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -723,7 +723,14 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		return _getGroup(userGroupId);
 	}
 
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static String _pid;
+
+	@Inject
+	private static UserLocalService _userLocalService;
+
 	private static UserResource _userResource;
 
 	@Inject

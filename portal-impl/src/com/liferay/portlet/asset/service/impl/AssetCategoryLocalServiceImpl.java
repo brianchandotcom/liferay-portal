@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
@@ -153,6 +155,13 @@ public class AssetCategoryLocalServiceImpl
 		category.setTitleMap(trimmedTitleMap);
 		category.setDescriptionMap(descriptionMap);
 		category.setVocabularyId(vocabularyId);
+
+		if (LazyReferencingThreadLocal.isIncompleteModel()) {
+			category.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		}
+		else {
+			category.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		category = assetCategoryPersistence.update(category);
 
@@ -671,6 +680,10 @@ public class AssetCategoryLocalServiceImpl
 		category.setName(name);
 		category.setTitleMap(trimmedTitleMap);
 		category.setDescriptionMap(descriptionMap);
+
+		if (category.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			category.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		return assetCategoryPersistence.update(category);
 	}

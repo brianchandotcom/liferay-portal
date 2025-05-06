@@ -131,21 +131,8 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 
 										<%
 										LearnMessage installElasticsearchLearnMessage = LearnMessageUtil.getLearnMessage("install-elasticsearch", themeDisplay.getLanguageId(), "portal-search-web");
-										LearnMessage sidecarNotSupportedLearnMessage = LearnMessageUtil.getLearnMessage("sidecar-not-supported", themeDisplay.getLanguageId(), "portal-search-web");
+										LearnMessage installOpenSearchLearnMessage = LearnMessageUtil.getLearnMessage("install-opensearch", themeDisplay.getLanguageId(), "portal-search-web");
 										%>
-
-										<c:if test="<%= sidecarNotSupportedLearnMessage.getURL() != StringPool.BLANK %>">
-											<div class="btn-group-item">
-												<clay:link
-													cssClass="btn btn-sm btn-warning"
-													displayType="warning"
-													href="<%= sidecarNotSupportedLearnMessage.getURL() %>"
-													label="<%= sidecarNotSupportedLearnMessage.getMessage() %>"
-													target="_blank"
-													type="button"
-												/>
-											</div>
-										</c:if>
 
 										<c:if test="<%= installElasticsearchLearnMessage.getURL() != StringPool.BLANK %>">
 											<div class="btn-group-item">
@@ -154,6 +141,19 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 													displayType="warning"
 													href="<%= installElasticsearchLearnMessage.getURL() %>"
 													label="<%= installElasticsearchLearnMessage.getMessage() %>"
+													target="_blank"
+													type="button"
+												/>
+											</div>
+										</c:if>
+
+										<c:if test="<%= installOpenSearchLearnMessage.getURL() != StringPool.BLANK %>">
+											<div class="btn-group-item">
+												<clay:link
+													cssClass="alert-btn btn btn-sm btn-warning"
+													displayType="warning"
+													href="<%= installOpenSearchLearnMessage.getURL() %>"
+													label="<%= installOpenSearchLearnMessage.getMessage() %>"
 													target="_blank"
 													type="button"
 												/>

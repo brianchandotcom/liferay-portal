@@ -22,6 +22,7 @@ public class TicketAttachment {
 
 	public TicketAttachment(JSONObject jsonObject) {
 		_accountKey = jsonObject.getString("accountKey");
+		_draftCommentBody = jsonObject.getString("draftCommentBody");
 		_fileName = jsonObject.getString("fileName");
 		_fileSize = jsonObject.getString("fileSize");
 		_gcsBucketName = jsonObject.getString("gcsBucketName");
@@ -34,11 +35,20 @@ public class TicketAttachment {
 		_storageProvider = jsonObject.getString("storageProvider");
 		_ticketAttachmentId = jsonObject.getLong("id");
 		_type = jsonObject.optString("type");
+
+		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
+
+		_userId = creatorJSONObject.getLong("id");
+
 		_zendeskTicketId = jsonObject.getLong("zendeskTicketId");
 	}
 
 	public String getAccountKey() {
 		return _accountKey;
+	}
+
+	public String getDraftCommentBody() {
+		return _draftCommentBody;
 	}
 
 	public String getFileName() {
@@ -86,6 +96,10 @@ public class TicketAttachment {
 		return _type;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
 	public long getZendeskTicketId() {
 		return _zendeskTicketId;
 	}
@@ -99,6 +113,7 @@ public class TicketAttachment {
 	}
 
 	private final String _accountKey;
+	private final String _draftCommentBody;
 	private final String _fileName;
 	private final String _fileSize;
 	private final String _gcsBucketName;
@@ -107,6 +122,7 @@ public class TicketAttachment {
 	private final String _storageProvider;
 	private final long _ticketAttachmentId;
 	private final String _type;
+	private final long _userId;
 	private final long _zendeskTicketId;
 
 }

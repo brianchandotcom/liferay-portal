@@ -915,6 +915,7 @@ create table Organization_ (
 	statusListTypeId LONG,
 	comments STRING null,
 	logoId LONG,
+	status INTEGER,
 	primary key (organizationId, ctCollectionId)
 );
 

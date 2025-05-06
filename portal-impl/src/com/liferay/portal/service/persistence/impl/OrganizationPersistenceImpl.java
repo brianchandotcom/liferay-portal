@@ -10582,6 +10582,7 @@ public class OrganizationPersistenceImpl
 		ctMergeColumnNames.add("statusListTypeId");
 		ctMergeColumnNames.add("comments");
 		ctMergeColumnNames.add("logoId");
+		ctMergeColumnNames.add("status");
 		ctMergeColumnNames.add("groups_");
 		ctMergeColumnNames.add("users");
 

@@ -68,7 +68,7 @@ public class OrganizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -110,6 +110,8 @@ public class OrganizationCacheModel
 		sb.append(comments);
 		sb.append(", logoId=");
 		sb.append(logoId);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -197,6 +199,7 @@ public class OrganizationCacheModel
 		}
 
 		organizationImpl.setLogoId(logoId);
+		organizationImpl.setStatus(status);
 
 		organizationImpl.resetOriginalValues();
 
@@ -235,6 +238,8 @@ public class OrganizationCacheModel
 		comments = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -312,6 +317,8 @@ public class OrganizationCacheModel
 		}
 
 		objectOutput.writeLong(logoId);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -334,5 +341,6 @@ public class OrganizationCacheModel
 	public long statusListTypeId;
 	public String comments;
 	public long logoId;
+	public int status;
 
 }

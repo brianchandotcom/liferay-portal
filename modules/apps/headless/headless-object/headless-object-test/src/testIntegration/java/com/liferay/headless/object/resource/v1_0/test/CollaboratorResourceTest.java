@@ -78,30 +78,10 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 	public void testGraphQLGetObjectEntryFolderCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
 		throws Exception {
 
+		// Namespace headlessObject_v1_0
+
 		Long irrelevantObjectEntryFolderId = RandomTestUtil.randomLong();
 		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectEntryFolderCollaboratorByTypeCollaborator" +
-							"TypeCollaborator",
-						HashMapBuilder.<String, Object>put(
-							"collaboratorId", irrelevantCollaboratorId
-						).put(
-							"collaboratorType", "\"User\""
-						).put(
-							"objectEntryFolderId", irrelevantObjectEntryFolderId
-						).build(),
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace headlessObject_v1_0
 
 		Assert.assertEquals(
 			"Not Found",
@@ -123,17 +103,6 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
-		throws Exception {
-
-		String irrelevantScopeKey = "\"" + RandomTestUtil.randomString() + "\"";
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
 
 		// No namespace
 
@@ -142,24 +111,31 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"scopeScopeKeyObjectEntryFolderByExternalReference" +
-							"CodeCollaboratorByTypeCollaboratorType" +
-								"Collaborator",
+						"objectEntryFolderCollaboratorByTypeCollaborator" +
+							"TypeCollaborator",
 						HashMapBuilder.<String, Object>put(
 							"collaboratorId", irrelevantCollaboratorId
 						).put(
 							"collaboratorType", "\"User\""
 						).put(
-							"externalReferenceCode",
-							irrelevantExternalReferenceCode
-						).put(
-							"scopeKey", irrelevantScopeKey
+							"objectEntryFolderId", irrelevantObjectEntryFolderId
 						).build(),
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
 
-		// Using the namespace headlessObject_v1_0
+	@Override
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaboratorNotFound()
+		throws Exception {
+
+		// Namespace headlessObject_v1_0
+
+		Long irrelevantCollaboratorId = RandomTestUtil.randomLong();
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantScopeKey = "\"" + RandomTestUtil.randomString() + "\"";
 
 		Assert.assertEquals(
 			"Not Found",
@@ -182,6 +158,30 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 								"scopeKey", irrelevantScopeKey
 							).build(),
 							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"scopeScopeKeyObjectEntryFolderByExternalReference" +
+							"CodeCollaboratorByTypeCollaboratorType" +
+								"Collaborator",
+						HashMapBuilder.<String, Object>put(
+							"collaboratorId", irrelevantCollaboratorId
+						).put(
+							"collaboratorType", "\"User\""
+						).put(
+							"externalReferenceCode",
+							irrelevantExternalReferenceCode
+						).put(
+							"scopeKey", irrelevantScopeKey
+						).build(),
+						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -238,7 +238,6 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		Collaborator postCollaborator =
 			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorTypeCollaborator_addCollaborator();
-
 		Collaborator randomCollaborator = randomCollaborator();
 
 		Collaborator putCollaborator =

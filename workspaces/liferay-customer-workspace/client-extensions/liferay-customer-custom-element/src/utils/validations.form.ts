@@ -28,7 +28,7 @@ const isLowercaseAndNumbers = (value: string) => {
 };
 
 const isValidDate = (value: string, years?: IYears) => {
-	const date = new Date(value);
+	const date = new Date(value.replace(/-/g, '/'));
 
 	if (date.toString() === 'Invalid Date') {
 		return i18n.translate('please-insert-a-valid-date');

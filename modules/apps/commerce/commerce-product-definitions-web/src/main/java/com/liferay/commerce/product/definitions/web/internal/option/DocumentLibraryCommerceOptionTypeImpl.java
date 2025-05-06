@@ -79,6 +79,10 @@ public class DocumentLibraryCommerceOptionTypeImpl
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addAvailableLocale(locale);
+
 		DDMFormField ddmFormField = new DDMFormField(
 			cpDefinitionOptionRel.getKey(),
 			cpDefinitionOptionRel.getCommerceOptionTypeKey());
@@ -96,10 +100,8 @@ public class DocumentLibraryCommerceOptionTypeImpl
 		ddmFormField.setName(cpDefinitionOptionRel.getKey());
 		ddmFormField.setRequired(cpDefinitionOptionRel.isRequired());
 
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.addAvailableLocale(locale);
 		ddmForm.addDDMFormField(ddmFormField);
+
 		ddmForm.setDefaultLocale(locale);
 
 		DDMFormRenderingContext ddmFormRenderingContext =

@@ -21,8 +21,8 @@ export async function classicCommerceSetUp(
 	return initializerSetUp(
 		apiHelpers,
 		'com.liferay.commerce.site.initializer',
-		'Commerce Classic',
-		'Liferay Commerce Channel',
+		siteName,
+		siteName,
 		siteName
 	);
 }

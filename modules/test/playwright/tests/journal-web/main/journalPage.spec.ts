@@ -287,3 +287,51 @@ test(
 		await expect(relatedAssetItems).toHaveCount(2);
 	}
 );
+
+test(
+	'Check Search Works in View History Page',
+	{
+		tag: '@LPD-54659',
+	},
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title = 'Web Content Title';
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+		await page.getByRole('link', {name: title}).click();
+		await journalEditArticlePage.fillTitle('Basic Web Content');
+
+		const productMenuToggleButton = page.locator(
+			'button[aria-label="Close Product Menu"]'
+		);
+
+		if (await productMenuToggleButton.isVisible()) {
+			await productMenuToggleButton.click();
+		}
+
+		await journalEditArticlePage.publishArticle(true);
+		page.waitForTimeout(1000);
+
+		await page.getByRole('button', {name: 'Actions'}).click();
+		await page.getByRole('menuitem', {name: 'View History'}).click();
+
+		const searchInput = page.locator('input[type="search"]');
+		await searchInput.waitFor({state: 'visible'});
+		await searchInput.fill('Basic');
+		await searchInput.press('Enter');
+		page.waitForTimeout(1000);
+
+		const resultRows = page.locator('tbody tr[data-selectable="true"]');
+		await resultRows.first().waitFor({state: 'visible'});
+		const count = await resultRows.count();
+		expect(count).toBe(1);
+	}
+);

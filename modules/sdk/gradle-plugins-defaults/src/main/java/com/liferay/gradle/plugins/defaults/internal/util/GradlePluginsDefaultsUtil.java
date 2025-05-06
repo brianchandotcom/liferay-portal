@@ -298,8 +298,11 @@ public class GradlePluginsDefaultsUtil {
 
 	public static boolean isTestProject(File dir) {
 		String dirName = dir.getName();
+		String dirPath = dir.getPath();
 
-		if (dirName.endsWith(_TEST_PROJECT_SUFFIX)) {
+		if (dirName.endsWith(_TEST_PROJECT_SUFFIX) &&
+			!dirPath.contains(_THIRD_PARTY_DIR_NAME)) {
+
 			return true;
 		}
 
@@ -307,9 +310,11 @@ public class GradlePluginsDefaultsUtil {
 	}
 
 	public static boolean isTestProject(Project project) {
-		String projectName = project.getName();
+		String projectPath = project.getPath();
 
-		if (projectName.endsWith(_TEST_PROJECT_SUFFIX)) {
+		if (projectPath.endsWith(_TEST_PROJECT_SUFFIX) &&
+			!projectPath.contains(_THIRD_PARTY_DIR_NAME)) {
+
 			return true;
 		}
 
@@ -331,5 +336,7 @@ public class GradlePluginsDefaultsUtil {
 	private static final String _BUILD_PROFILE_FILE_NAME_PREFIX = ".lfrbuild-";
 
 	private static final String _TEST_PROJECT_SUFFIX = "-test";
+
+	private static final String _THIRD_PARTY_DIR_NAME = "third-party";
 
 }

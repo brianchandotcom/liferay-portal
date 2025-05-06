@@ -63,6 +63,8 @@ export class MembershipsPage {
 			)
 			.click();
 
+		await this.page.waitForTimeout(500);
+
 		await this.page.getByRole('button', {name: 'Done'}).click();
 
 		await waitForAlert(this.page);
@@ -76,14 +78,16 @@ export class MembershipsPage {
 			trigger: this.page.getByLabel('Filter'),
 		});
 
-		await this.page
-			.frameLocator('iframe[title="Select Role"]')
-			.getByText('Site Administrator')
-			.click();
+		await expect(async () => {
+			await this.page
+				.frameLocator('iframe[title="Select Role"]')
+				.getByText('Site Administrator')
+				.click();
 
-		await expect(
-			this.page.getByRole('heading', {name: 'Search Results'})
-		).toBeVisible();
+			await expect(
+				this.page.getByRole('heading', {name: 'Search Results'})
+			).toBeVisible({timeout: 1000});
+		}).toPass();
 	}
 
 	async goto() {

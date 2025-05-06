@@ -274,7 +274,8 @@ public class ActionUtil {
 			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
 
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(),
 			typeSettingsUnicodeProperties.toString());
 
 		return layoutPageTemplateEntry;

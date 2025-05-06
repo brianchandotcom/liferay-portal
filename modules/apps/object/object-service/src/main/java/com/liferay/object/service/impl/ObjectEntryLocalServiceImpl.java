@@ -779,6 +779,27 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntry expireObjectEntry(
+			long userId, long objectEntryId, int version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
+			objectEntryId);
+
+		if (objectEntry.getVersion() == version) {
+			return updateStatus(
+				userId, objectEntry, WorkflowConstants.STATUS_EXPIRED,
+				serviceContext);
+		}
+
+		_objectEntryVersionLocalService.expireObjectEntryVersion(
+			userId, objectEntryId, version);
+
+		return objectEntry;
+	}
+
+	@Override
 	public ObjectEntry fetchManyToOneObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {

@@ -443,7 +443,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		_testPutSiteSiteByExternalReferenceCodeUtilityPage(randomUtilityPage());
+		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			Boolean.FALSE, randomUtilityPage());
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
@@ -458,6 +459,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		_assertProblemException(
 			"BAD_REQUEST",
 			() -> _testPutSiteSiteByExternalReferenceCodeUtilityPage(
+				Boolean.TRUE,
 				_getUtilityPage(
 					Boolean.TRUE,
 					layoutUtilityPageEntry.getExternalReferenceCode())));
@@ -465,14 +467,17 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			Boolean.FALSE,
 			_getUtilityPage(
 				Boolean.FALSE,
 				layoutUtilityPageEntry.getExternalReferenceCode()));
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			Boolean.TRUE,
 			_getUtilityPage(
 				Boolean.TRUE,
 				layoutUtilityPageEntry.getExternalReferenceCode()));
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			Boolean.FALSE,
 			_getUtilityPage(
 				null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
@@ -992,7 +997,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeUtilityPage(
-			UtilityPage utilityPage)
+			Boolean markedAsDefault, UtilityPage utilityPage)
 		throws Exception {
 
 		UtilityPage putUtilityPage =
@@ -1002,6 +1007,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		assertEquals(utilityPage, putUtilityPage);
 		assertValid(putUtilityPage);
+
+		Assert.assertEquals(
+			markedAsDefault, putUtilityPage.getMarkedAsDefault());
 	}
 
 	private void

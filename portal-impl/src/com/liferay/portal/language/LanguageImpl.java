@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.log.Log;
@@ -1638,24 +1637,17 @@ public class LanguageImpl implements Language, Serializable {
 		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
 		String content) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11848")) {
-			Matcher matcher = _liferayLanguageImportPattern.matcher(content);
+		Matcher matcher = _liferayLanguageImportPattern.matcher(content);
 
-			if (matcher.find()) {
-				return content;
-			}
-		}
-		else {
-			content = content.replaceAll(
-				_LIFERAY_LANGUAGE_IMPORT_REGEXP,
-				"{/*removed: await import('@liferay/language...')*/}");
+		if (matcher.find()) {
+			return content;
 		}
 
 		StringBundler sb = null;
 
 		ResourceBundle resourceBundle = null;
 
-		Matcher matcher = _pattern.matcher(content);
+		matcher = _pattern.matcher(content);
 
 		int x = 0;
 

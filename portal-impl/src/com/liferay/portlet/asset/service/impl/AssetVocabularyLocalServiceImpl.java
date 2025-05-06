@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
 
@@ -202,6 +204,14 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
+
+		if (LazyReferencingThreadLocal.isIncompleteModel()) {
+			vocabulary.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		}
+		else {
+			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);
 
@@ -481,6 +491,10 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
 
+		if (vocabulary.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+
 		return assetVocabularyPersistence.update(vocabulary);
 	}
 
@@ -503,6 +517,10 @@ public class AssetVocabularyLocalServiceImpl
 
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
+
+		if (vocabulary.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			vocabulary.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		return assetVocabularyPersistence.update(vocabulary);
 	}

@@ -181,7 +181,7 @@ public class CollaboratorUtil {
 
 		if (collaboratorTypeEnum == null) {
 			throw new IllegalArgumentException(
-				"CollaboratorType parameter must be 'User' or 'UserGroup'");
+				"Collaborator type must be \"User\" or \"UserGroup\"");
 		}
 
 		return collaboratorTypeEnum;

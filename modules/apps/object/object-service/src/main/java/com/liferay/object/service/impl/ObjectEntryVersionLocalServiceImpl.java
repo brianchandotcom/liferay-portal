@@ -15,8 +15,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -122,8 +124,27 @@ public class ObjectEntryVersionLocalServiceImpl
 			throw new PortalException(exception);
 		}
 
+		Date date = new Date();
+		Date expirationDate = objectEntryVersion.getExpirationDate();
+		int status = objectEntry.getStatus();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(date)) {
+
+			objectEntryVersion.setExpirationDate(null);
+		}
+
+		if ((status == WorkflowConstants.STATUS_EXPIRED) &&
+			(expirationDate == null)) {
+
+			objectEntryVersion.setExpirationDate(date);
+		}
+
 		objectEntryVersion.setVersion(version);
-		objectEntryVersion.setStatus(objectEntry.getStatus());
+		objectEntryVersion.setStatus(status);
+		objectEntryVersion.setStatusByUserId(user.getUserId());
+		objectEntryVersion.setStatusByUserName(user.getFullName());
+		objectEntryVersion.setStatusDate(date);
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
 	}

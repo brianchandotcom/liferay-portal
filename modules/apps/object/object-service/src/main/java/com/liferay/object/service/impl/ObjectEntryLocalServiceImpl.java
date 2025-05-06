@@ -1788,7 +1788,9 @@ public class ObjectEntryLocalServiceImpl
 
 		_deleteTempFileEntries(dlFileEntriesMap);
 
-		if (objectEntry.isPending() || originalObjectEntry.isDraft()) {
+		if (objectEntry.isPending() || originalObjectEntry.isDraft() ||
+			originalObjectEntry.isExpired()) {
+
 			_updateLatestObjectEntryVersion(objectDefinition, objectEntry);
 
 			return objectEntry;
@@ -1913,6 +1915,21 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry originalObjectEntry = (ObjectEntry)objectEntry.clone();
 
+		Date date = new Date();
+		Date expirationDate = objectEntry.getExpirationDate();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(date)) {
+
+			objectEntry.setExpirationDate(null);
+		}
+
+		if ((status == WorkflowConstants.STATUS_EXPIRED) &&
+			(expirationDate == null)) {
+
+			objectEntry.setExpirationDate(date);
+		}
+
 		objectEntry.setStatus(status);
 
 		User user = _userLocalService.getUser(userId);
@@ -1973,7 +1990,9 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.getLanguageId(), user);
 		}
 
-		if (originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
+		if ((status == WorkflowConstants.STATUS_EXPIRED) ||
+			originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
+
 			List<ObjectEntryVersion> objectEntryVersions =
 				_objectEntryVersionLocalService.getObjectEntryVersions(
 					objectEntry.getObjectEntryId());

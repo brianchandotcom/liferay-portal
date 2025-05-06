@@ -11,6 +11,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -101,6 +103,23 @@ public class JSUnitModulesBatchTestClassGroup
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
 
+		List<String> excludedTestMethods = new ArrayList<>();
+
+		for (JobProperty jobProperty : getExcludesJobProperties()) {
+			String jobPropertyValue = jobProperty.getValue();
+
+			if (jobPropertyValue != null) {
+				String[] methodNames = jobPropertyValue.split(",");
+
+				for (String methodName : methodNames) {
+					methodName = methodName.replace("/", ":");
+
+					excludedTestMethods.add(
+						methodName.replaceAll("[^a-zA-Z-:]", ""));
+				}
+			}
+		}
+
 		moduleDirs.addAll(
 			portalGitWorkingDirectory.getModuleDirsList(
 				excludesPathMatchers, getIncludesPathMatchers()));
@@ -113,7 +132,30 @@ public class JSUnitModulesBatchTestClassGroup
 				continue;
 			}
 
-			testClasses.add(testClass);
+			List<TestClassMethod> testClassMethods =
+				testClass.getTestClassMethods();
+
+			Iterator<TestClassMethod> iterator = testClassMethods.iterator();
+
+			while (iterator.hasNext()) {
+				TestClassMethod testClassMethod = iterator.next();
+
+				for (String excludedMethodName : excludedTestMethods) {
+					if (testClassMethod.getName(
+						).contains(
+							excludedMethodName
+						)) {
+
+						iterator.remove();
+
+						break;
+					}
+				}
+			}
+
+			if (!testClassMethods.isEmpty()) {
+				testClasses.add(testClass);
+			}
 		}
 
 		Collections.sort(testClasses);

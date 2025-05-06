@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-			import {ErcAssetLibraryTestEntity} from './ErcAssetLibraryTestEntity';
+			import {ERCAssetLibraryTestEntity} from './ERCAssetLibraryTestEntity';
 			import {Facet} from './Facet';
 
 /**
@@ -11,10 +11,10 @@
  * @generated
  */
 
-	export class PageErcAssetLibraryTestEntity {
+	export class PageERCAssetLibraryTestEntity {
 			"actions"?: {[key: string]: {[key: string]: string;};};
 			"facets"?: Array<Facet>;
-			"items"?: Array<ErcAssetLibraryTestEntity>;
+			"items"?: Array<ERCAssetLibraryTestEntity>;
 			"lastPage"?: number;
 			"page"?: number;
 			"pageSize"?: number;
@@ -40,7 +40,7 @@
 		{
 			baseName: "items",
 			name: "items",
-			type: "Array<ErcAssetLibraryTestEntity>",
+			type: "Array<ERCAssetLibraryTestEntity>",
 		},
 		{
 			baseName: "lastPage",
@@ -65,6 +65,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return PageErcAssetLibraryTestEntity.attributeTypeMap;
+				return PageERCAssetLibraryTestEntity.attributeTypeMap;
 		}
 	}

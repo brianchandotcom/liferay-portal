@@ -10,7 +10,7 @@
  * @generated
  */
 
-	export class ErcSiteTestEntity {
+	export class ERCSiteTestEntity {
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
 			"description"?: string;
@@ -58,6 +58,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return ErcSiteTestEntity.attributeTypeMap;
+				return ERCSiteTestEntity.attributeTypeMap;
 		}
 	}

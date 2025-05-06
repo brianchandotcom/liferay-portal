@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ErcSiteTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ERCSiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -24,23 +24,23 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ErcSiteTestEntitySerDes {
+public class ERCSiteTestEntitySerDes {
 
-	public static ErcSiteTestEntity toDTO(String json) {
-		ErcSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
-			new ErcSiteTestEntityJSONParser();
+	public static ERCSiteTestEntity toDTO(String json) {
+		ERCSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
+			new ERCSiteTestEntityJSONParser();
 
 		return ercSiteTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static ErcSiteTestEntity[] toDTOs(String json) {
-		ErcSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
-			new ErcSiteTestEntityJSONParser();
+	public static ERCSiteTestEntity[] toDTOs(String json) {
+		ERCSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
+			new ERCSiteTestEntityJSONParser();
 
 		return ercSiteTestEntityJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ErcSiteTestEntity ercSiteTestEntity) {
+	public static String toJSON(ERCSiteTestEntity ercSiteTestEntity) {
 		if (ercSiteTestEntity == null) {
 			return "null";
 		}
@@ -155,14 +155,14 @@ public class ErcSiteTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ErcSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
-			new ErcSiteTestEntityJSONParser();
+		ERCSiteTestEntityJSONParser ercSiteTestEntityJSONParser =
+			new ERCSiteTestEntityJSONParser();
 
 		return ercSiteTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ErcSiteTestEntity ercSiteTestEntity) {
+		ERCSiteTestEntity ercSiteTestEntity) {
 
 		if (ercSiteTestEntity == null) {
 			return null;
@@ -233,17 +233,17 @@ public class ErcSiteTestEntitySerDes {
 		return map;
 	}
 
-	public static class ErcSiteTestEntityJSONParser
-		extends BaseJSONParser<ErcSiteTestEntity> {
+	public static class ERCSiteTestEntityJSONParser
+		extends BaseJSONParser<ERCSiteTestEntity> {
 
 		@Override
-		protected ErcSiteTestEntity createDTO() {
-			return new ErcSiteTestEntity();
+		protected ERCSiteTestEntity createDTO() {
+			return new ERCSiteTestEntity();
 		}
 
 		@Override
-		protected ErcSiteTestEntity[] createDTOArray(int size) {
-			return new ErcSiteTestEntity[size];
+		protected ERCSiteTestEntity[] createDTOArray(int size) {
+			return new ERCSiteTestEntity[size];
 		}
 
 		@Override
@@ -276,7 +276,7 @@ public class ErcSiteTestEntitySerDes {
 
 		@Override
 		protected void setField(
-			ErcSiteTestEntity ercSiteTestEntity, String jsonParserFieldName,
+			ERCSiteTestEntity ercSiteTestEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "dateCreated")) {

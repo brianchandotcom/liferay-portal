@@ -10,7 +10,7 @@
  * @generated
  */
 
-	export class ErcAssetLibraryTestEntity {
+	export class ERCAssetLibraryTestEntity {
 			"assetLibraryExternalReferenceCode"?: string;
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
@@ -58,6 +58,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return ErcAssetLibraryTestEntity.attributeTypeMap;
+				return ERCAssetLibraryTestEntity.attributeTypeMap;
 		}
 	}

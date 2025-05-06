@@ -87,13 +87,13 @@ public class OpenAPIResourceImpl {
 		{
 			add(CompanyTestEntityResourceImpl.class);
 
+			add(ERCAssetLibraryTestEntityResourceImpl.class);
+
+			add(ERCSiteTestEntityResourceImpl.class);
+
 			add(EntityModelResourceTestEntity1ResourceImpl.class);
 
 			add(EntityModelResourceTestEntity2ResourceImpl.class);
-
-			add(ErcAssetLibraryTestEntityResourceImpl.class);
-
-			add(ErcSiteTestEntityResourceImpl.class);
 
 			add(FilterResourceImpl.class);
 

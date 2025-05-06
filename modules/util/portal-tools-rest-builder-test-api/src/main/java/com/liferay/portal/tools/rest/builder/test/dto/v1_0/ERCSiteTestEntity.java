@@ -39,17 +39,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ErcSiteTestEntity")
+@GraphQLName("ERCSiteTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ErcSiteTestEntity")
-public class ErcSiteTestEntity implements Serializable {
+@XmlRootElement(name = "ERCSiteTestEntity")
+public class ERCSiteTestEntity implements Serializable {
 
-	public static ErcSiteTestEntity toDTO(String json) {
-		return ObjectMapperUtil.readValue(ErcSiteTestEntity.class, json);
+	public static ERCSiteTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(ERCSiteTestEntity.class, json);
 	}
 
-	public static ErcSiteTestEntity unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ErcSiteTestEntity.class, json);
+	public static ERCSiteTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ERCSiteTestEntity.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -312,11 +312,11 @@ public class ErcSiteTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ErcSiteTestEntity)) {
+		if (!(object instanceof ERCSiteTestEntity)) {
 			return false;
 		}
 
-		ErcSiteTestEntity ercSiteTestEntity = (ErcSiteTestEntity)object;
+		ERCSiteTestEntity ercSiteTestEntity = (ERCSiteTestEntity)object;
 
 		return Objects.equals(toString(), ercSiteTestEntity.toString());
 	}
@@ -446,7 +446,7 @@ public class ErcSiteTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.ErcSiteTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCSiteTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

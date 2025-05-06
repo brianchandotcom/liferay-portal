@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ErcSiteTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ERCSiteTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -20,10 +20,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ErcSiteTestEntity implements Cloneable, Serializable {
+public class ERCSiteTestEntity implements Cloneable, Serializable {
 
-	public static ErcSiteTestEntity toDTO(String json) {
-		return ErcSiteTestEntitySerDes.toDTO(json);
+	public static ERCSiteTestEntity toDTO(String json) {
+		return ERCSiteTestEntitySerDes.toDTO(json);
 	}
 
 	public Date getDateCreated() {
@@ -166,8 +166,8 @@ public class ErcSiteTestEntity implements Cloneable, Serializable {
 	protected String siteExternalReferenceCode;
 
 	@Override
-	public ErcSiteTestEntity clone() throws CloneNotSupportedException {
-		return (ErcSiteTestEntity)super.clone();
+	public ERCSiteTestEntity clone() throws CloneNotSupportedException {
+		return (ERCSiteTestEntity)super.clone();
 	}
 
 	@Override
@@ -176,11 +176,11 @@ public class ErcSiteTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ErcSiteTestEntity)) {
+		if (!(object instanceof ERCSiteTestEntity)) {
 			return false;
 		}
 
-		ErcSiteTestEntity ercSiteTestEntity = (ErcSiteTestEntity)object;
+		ERCSiteTestEntity ercSiteTestEntity = (ERCSiteTestEntity)object;
 
 		return Objects.equals(toString(), ercSiteTestEntity.toString());
 	}
@@ -193,7 +193,7 @@ public class ErcSiteTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ErcSiteTestEntitySerDes.toJSON(this);
+		return ERCSiteTestEntitySerDes.toJSON(this);
 	}
 
 }

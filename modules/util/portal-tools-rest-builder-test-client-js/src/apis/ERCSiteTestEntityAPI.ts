@@ -5,15 +5,15 @@
 
 import {ObjectSerializer} from '../utils/SerDes';
 
-		import {ErcSiteTestEntity} from '../models/ErcSiteTestEntity';
-		import {PageErcSiteTestEntity} from '../models/PageErcSiteTestEntity';
+		import {ERCSiteTestEntity} from '../models/ERCSiteTestEntity';
+		import {PageERCSiteTestEntity} from '../models/PageERCSiteTestEntity';
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 
-export class ErcSiteTestEntityAPI {
+export class ERCSiteTestEntityAPI {
 	protected _basePath: string;
 	protected _defaultHeaders: any = {};
 
@@ -32,11 +32,11 @@ export class ErcSiteTestEntityAPI {
 				 * @param siteExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
-		public async getSiteErcSiteTestEntitiesPage(
+		public async getSiteERCSiteTestEntitiesPage(
 						siteExternalReferenceCode: string,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: PageErcSiteTestEntity;
+				body: PageERCSiteTestEntity;
 			response: Response;
 		}> {
 
@@ -47,7 +47,7 @@ export class ErcSiteTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
-							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteErcSiteTestEntitiesPage.");
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteERCSiteTestEntitiesPage.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -69,7 +69,7 @@ export class ErcSiteTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "PageErcSiteTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "PageERCSiteTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -86,12 +86,12 @@ export class ErcSiteTestEntityAPI {
 				 * @param siteExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
-		public async getSiteErcSiteTestEntity(
+		public async getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
 						ercSiteTestEntityExternalReferenceCode: string,
 						siteExternalReferenceCode: string,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcSiteTestEntity;
+				body: ERCSiteTestEntity;
 			response: Response;
 		}> {
 
@@ -103,11 +103,11 @@ export class ErcSiteTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (ercSiteTestEntityExternalReferenceCode === null || ercSiteTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling getSiteErcSiteTestEntity.");
+							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
 						}
 
 						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
-							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteErcSiteTestEntity.");
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -129,7 +129,7 @@ export class ErcSiteTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcSiteTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCSiteTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -146,34 +146,34 @@ export class ErcSiteTestEntityAPI {
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
-		public async postSiteErcSiteTestEntityWithContentType(
+		public async postSiteERCSiteTestEntityWithContentType(
 						siteExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
-										ercSiteTestEntity?: ErcSiteTestEntity
+										eRCSiteTestEntity?: ERCSiteTestEntity
 								},
 								type: "application/json"
 							}
 								|
 							{
 								parameters: {
-										ercSiteTestEntity?: ErcSiteTestEntity
+										eRCSiteTestEntity?: ERCSiteTestEntity
 								},
 								type: "application/xml"
 							}
 								,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcSiteTestEntity;
+				body: ERCSiteTestEntity;
 			response: Response;
 		}> {
 				let body;
 						if (requestBody.type === "application/json") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercSiteTestEntity, "ErcSiteTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 						if (requestBody.type === "application/xml") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercSiteTestEntity, "ErcSiteTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 
 			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities"
@@ -183,7 +183,7 @@ export class ErcSiteTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
-							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling postSiteErcSiteTestEntity.");
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling postSiteERCSiteTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -207,7 +207,7 @@ export class ErcSiteTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcSiteTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCSiteTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -221,21 +221,21 @@ export class ErcSiteTestEntityAPI {
 					/**
 					 *  - Default method for JSON body
 							 * @param siteExternalReferenceCode
-						 * @param ercSiteTestEntity
+						 * @param eRCSiteTestEntity
 					 */
-					public async postSiteErcSiteTestEntity(
+					public async postSiteERCSiteTestEntity(
 									siteExternalReferenceCode: string,
-							ercSiteTestEntity?: ErcSiteTestEntity,
+							eRCSiteTestEntity?: ERCSiteTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
-							body: ErcSiteTestEntity;
+							body: ERCSiteTestEntity;
 						response: Response;
 					}> {
-						return this.postSiteErcSiteTestEntityWithContentType(
+						return this.postSiteERCSiteTestEntityWithContentType(
 										siteExternalReferenceCode,
 							{
 								parameters: {
-										ercSiteTestEntity: ercSiteTestEntity
+										eRCSiteTestEntity: eRCSiteTestEntity
 								},
 								type: "application/json"
 							},
@@ -249,35 +249,35 @@ export class ErcSiteTestEntityAPI {
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
-		public async putSiteErcSiteTestEntityWithContentType(
+		public async putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeWithContentType(
 						ercSiteTestEntityExternalReferenceCode: string,
 						siteExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
-										ercSiteTestEntity?: ErcSiteTestEntity
+										eRCSiteTestEntity?: ERCSiteTestEntity
 								},
 								type: "application/json"
 							}
 								|
 							{
 								parameters: {
-										ercSiteTestEntity?: ErcSiteTestEntity
+										eRCSiteTestEntity?: ERCSiteTestEntity
 								},
 								type: "application/xml"
 							}
 								,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcSiteTestEntity;
+				body: ERCSiteTestEntity;
 			response: Response;
 		}> {
 				let body;
 						if (requestBody.type === "application/json") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercSiteTestEntity, "ErcSiteTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 						if (requestBody.type === "application/xml") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercSiteTestEntity, "ErcSiteTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCSiteTestEntity, "ERCSiteTestEntity"));
 						}
 
 			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
@@ -288,11 +288,11 @@ export class ErcSiteTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (ercSiteTestEntityExternalReferenceCode === null || ercSiteTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling putSiteErcSiteTestEntity.");
+							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
 						}
 
 						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
-							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling putSiteErcSiteTestEntity.");
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -316,7 +316,7 @@ export class ErcSiteTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcSiteTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCSiteTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -331,23 +331,23 @@ export class ErcSiteTestEntityAPI {
 					 *  - Default method for JSON body
 							 * @param ercSiteTestEntityExternalReferenceCode
 							 * @param siteExternalReferenceCode
-						 * @param ercSiteTestEntity
+						 * @param eRCSiteTestEntity
 					 */
-					public async putSiteErcSiteTestEntity(
+					public async putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
 									ercSiteTestEntityExternalReferenceCode: string,
 									siteExternalReferenceCode: string,
-							ercSiteTestEntity?: ErcSiteTestEntity,
+							eRCSiteTestEntity?: ERCSiteTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
-							body: ErcSiteTestEntity;
+							body: ERCSiteTestEntity;
 						response: Response;
 					}> {
-						return this.putSiteErcSiteTestEntityWithContentType(
+						return this.putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeWithContentType(
 										ercSiteTestEntityExternalReferenceCode,
 										siteExternalReferenceCode,
 							{
 								parameters: {
-										ercSiteTestEntity: ercSiteTestEntity
+										eRCSiteTestEntity: eRCSiteTestEntity
 								},
 								type: "application/json"
 							},

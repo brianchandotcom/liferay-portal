@@ -5,15 +5,15 @@
 
 import {ObjectSerializer} from '../utils/SerDes';
 
-		import {ErcAssetLibraryTestEntity} from '../models/ErcAssetLibraryTestEntity';
-		import {PageErcAssetLibraryTestEntity} from '../models/PageErcAssetLibraryTestEntity';
+		import {ERCAssetLibraryTestEntity} from '../models/ERCAssetLibraryTestEntity';
+		import {PageERCAssetLibraryTestEntity} from '../models/PageERCAssetLibraryTestEntity';
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 
-export class ErcAssetLibraryTestEntityAPI {
+export class ERCAssetLibraryTestEntityAPI {
 	protected _basePath: string;
 	protected _defaultHeaders: any = {};
 
@@ -32,11 +32,11 @@ export class ErcAssetLibraryTestEntityAPI {
 				 * @param assetLibraryExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
-		public async getAssetLibraryErcAssetLibraryTestEntitiesPage(
+		public async getAssetLibraryERCAssetLibraryTestEntitiesPage(
 						assetLibraryExternalReferenceCode: string,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: PageErcAssetLibraryTestEntity;
+				body: PageERCAssetLibraryTestEntity;
 			response: Response;
 		}> {
 
@@ -47,7 +47,7 @@ export class ErcAssetLibraryTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntitiesPage.");
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryERCAssetLibraryTestEntitiesPage.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -69,7 +69,7 @@ export class ErcAssetLibraryTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "PageErcAssetLibraryTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "PageERCAssetLibraryTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -86,12 +86,12 @@ export class ErcAssetLibraryTestEntityAPI {
 				 * @param ercAssetLibraryTestEntityExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
-		public async getAssetLibraryErcAssetLibraryTestEntity(
+		public async getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
 						assetLibraryExternalReferenceCode: string,
 						ercAssetLibraryTestEntityExternalReferenceCode: string,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcAssetLibraryTestEntity;
+				body: ERCAssetLibraryTestEntity;
 			response: Response;
 		}> {
 
@@ -103,11 +103,11 @@ export class ErcAssetLibraryTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
 						}
 
 						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling getAssetLibraryErcAssetLibraryTestEntity.");
+							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -129,7 +129,7 @@ export class ErcAssetLibraryTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcAssetLibraryTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCAssetLibraryTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -146,34 +146,34 @@ export class ErcAssetLibraryTestEntityAPI {
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
-		public async postAssetLibraryErcAssetLibraryTestEntityWithContentType(
+		public async postAssetLibraryERCAssetLibraryTestEntityWithContentType(
 						assetLibraryExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
-										ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity
 								},
 								type: "application/json"
 							}
 								|
 							{
 								parameters: {
-										ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity
 								},
 								type: "application/xml"
 							}
 								,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcAssetLibraryTestEntity;
+				body: ERCAssetLibraryTestEntity;
 			response: Response;
 		}> {
 				let body;
 						if (requestBody.type === "application/json") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercAssetLibraryTestEntity, "ErcAssetLibraryTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 						if (requestBody.type === "application/xml") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercAssetLibraryTestEntity, "ErcAssetLibraryTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 
 			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities"
@@ -183,7 +183,7 @@ export class ErcAssetLibraryTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling postAssetLibraryErcAssetLibraryTestEntity.");
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling postAssetLibraryERCAssetLibraryTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -207,7 +207,7 @@ export class ErcAssetLibraryTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcAssetLibraryTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCAssetLibraryTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -221,21 +221,21 @@ export class ErcAssetLibraryTestEntityAPI {
 					/**
 					 *  - Default method for JSON body
 							 * @param assetLibraryExternalReferenceCode
-						 * @param ercAssetLibraryTestEntity
+						 * @param eRCAssetLibraryTestEntity
 					 */
-					public async postAssetLibraryErcAssetLibraryTestEntity(
+					public async postAssetLibraryERCAssetLibraryTestEntity(
 									assetLibraryExternalReferenceCode: string,
-							ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity,
+							eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
-							body: ErcAssetLibraryTestEntity;
+							body: ERCAssetLibraryTestEntity;
 						response: Response;
 					}> {
-						return this.postAssetLibraryErcAssetLibraryTestEntityWithContentType(
+						return this.postAssetLibraryERCAssetLibraryTestEntityWithContentType(
 										assetLibraryExternalReferenceCode,
 							{
 								parameters: {
-										ercAssetLibraryTestEntity: ercAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity: eRCAssetLibraryTestEntity
 								},
 								type: "application/json"
 							},
@@ -249,35 +249,35 @@ export class ErcAssetLibraryTestEntityAPI {
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
-		public async putAssetLibraryErcAssetLibraryTestEntityWithContentType(
+		public async putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCodeWithContentType(
 						assetLibraryExternalReferenceCode: string,
 						ercAssetLibraryTestEntityExternalReferenceCode: string,
 					requestBody:
 							{
 								parameters: {
-										ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity
 								},
 								type: "application/json"
 							}
 								|
 							{
 								parameters: {
-										ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity
 								},
 								type: "application/xml"
 							}
 								,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: ErcAssetLibraryTestEntity;
+				body: ERCAssetLibraryTestEntity;
 			response: Response;
 		}> {
 				let body;
 						if (requestBody.type === "application/json") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercAssetLibraryTestEntity, "ErcAssetLibraryTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 						if (requestBody.type === "application/xml") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.ercAssetLibraryTestEntity, "ErcAssetLibraryTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.eRCAssetLibraryTestEntity, "ERCAssetLibraryTestEntity"));
 						}
 
 			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
@@ -288,11 +288,11 @@ export class ErcAssetLibraryTestEntityAPI {
 			const queryParameters: any = {};
 
 						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
-							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
 						}
 
 						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
-							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling putAssetLibraryErcAssetLibraryTestEntity.");
+							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -316,7 +316,7 @@ export class ErcAssetLibraryTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "ErcAssetLibraryTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "ERCAssetLibraryTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -331,23 +331,23 @@ export class ErcAssetLibraryTestEntityAPI {
 					 *  - Default method for JSON body
 							 * @param assetLibraryExternalReferenceCode
 							 * @param ercAssetLibraryTestEntityExternalReferenceCode
-						 * @param ercAssetLibraryTestEntity
+						 * @param eRCAssetLibraryTestEntity
 					 */
-					public async putAssetLibraryErcAssetLibraryTestEntity(
+					public async putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
 									assetLibraryExternalReferenceCode: string,
 									ercAssetLibraryTestEntityExternalReferenceCode: string,
-							ercAssetLibraryTestEntity?: ErcAssetLibraryTestEntity,
+							eRCAssetLibraryTestEntity?: ERCAssetLibraryTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
-							body: ErcAssetLibraryTestEntity;
+							body: ERCAssetLibraryTestEntity;
 						response: Response;
 					}> {
-						return this.putAssetLibraryErcAssetLibraryTestEntityWithContentType(
+						return this.putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCodeWithContentType(
 										assetLibraryExternalReferenceCode,
 										ercAssetLibraryTestEntityExternalReferenceCode,
 							{
 								parameters: {
-										ercAssetLibraryTestEntity: ercAssetLibraryTestEntity
+										eRCAssetLibraryTestEntity: eRCAssetLibraryTestEntity
 								},
 								type: "application/json"
 							},

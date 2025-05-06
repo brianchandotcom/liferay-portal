@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ErcAssetLibraryTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ERCAssetLibraryTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -24,26 +24,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ErcAssetLibraryTestEntitySerDes {
+public class ERCAssetLibraryTestEntitySerDes {
 
-	public static ErcAssetLibraryTestEntity toDTO(String json) {
-		ErcAssetLibraryTestEntityJSONParser
+	public static ERCAssetLibraryTestEntity toDTO(String json) {
+		ERCAssetLibraryTestEntityJSONParser
 			ercAssetLibraryTestEntityJSONParser =
-				new ErcAssetLibraryTestEntityJSONParser();
+				new ERCAssetLibraryTestEntityJSONParser();
 
 		return ercAssetLibraryTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static ErcAssetLibraryTestEntity[] toDTOs(String json) {
-		ErcAssetLibraryTestEntityJSONParser
+	public static ERCAssetLibraryTestEntity[] toDTOs(String json) {
+		ERCAssetLibraryTestEntityJSONParser
 			ercAssetLibraryTestEntityJSONParser =
-				new ErcAssetLibraryTestEntityJSONParser();
+				new ERCAssetLibraryTestEntityJSONParser();
 
 		return ercAssetLibraryTestEntityJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		ErcAssetLibraryTestEntity ercAssetLibraryTestEntity) {
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity) {
 
 		if (ercAssetLibraryTestEntity == null) {
 			return "null";
@@ -166,15 +166,15 @@ public class ErcAssetLibraryTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ErcAssetLibraryTestEntityJSONParser
+		ERCAssetLibraryTestEntityJSONParser
 			ercAssetLibraryTestEntityJSONParser =
-				new ErcAssetLibraryTestEntityJSONParser();
+				new ERCAssetLibraryTestEntityJSONParser();
 
 		return ercAssetLibraryTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ErcAssetLibraryTestEntity ercAssetLibraryTestEntity) {
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity) {
 
 		if (ercAssetLibraryTestEntity == null) {
 			return null;
@@ -249,17 +249,17 @@ public class ErcAssetLibraryTestEntitySerDes {
 		return map;
 	}
 
-	public static class ErcAssetLibraryTestEntityJSONParser
-		extends BaseJSONParser<ErcAssetLibraryTestEntity> {
+	public static class ERCAssetLibraryTestEntityJSONParser
+		extends BaseJSONParser<ERCAssetLibraryTestEntity> {
 
 		@Override
-		protected ErcAssetLibraryTestEntity createDTO() {
-			return new ErcAssetLibraryTestEntity();
+		protected ERCAssetLibraryTestEntity createDTO() {
+			return new ERCAssetLibraryTestEntity();
 		}
 
 		@Override
-		protected ErcAssetLibraryTestEntity[] createDTOArray(int size) {
-			return new ErcAssetLibraryTestEntity[size];
+		protected ERCAssetLibraryTestEntity[] createDTOArray(int size) {
+			return new ERCAssetLibraryTestEntity[size];
 		}
 
 		@Override
@@ -292,7 +292,7 @@ public class ErcAssetLibraryTestEntitySerDes {
 
 		@Override
 		protected void setField(
-			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity,
+			ERCAssetLibraryTestEntity ercAssetLibraryTestEntity,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(

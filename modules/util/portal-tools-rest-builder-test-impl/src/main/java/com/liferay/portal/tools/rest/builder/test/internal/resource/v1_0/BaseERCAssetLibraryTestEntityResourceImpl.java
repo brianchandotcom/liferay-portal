@@ -26,10 +26,10 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ErcAssetLibraryTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCAssetLibraryTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ErcAssetLibraryTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ERCAssetLibraryTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -66,9 +66,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseErcAssetLibraryTestEntityResourceImpl
-	implements EntityModelResource, ErcAssetLibraryTestEntityResource,
-			   VulcanBatchEngineTaskItemDelegate<ErcAssetLibraryTestEntity> {
+public abstract class BaseERCAssetLibraryTestEntityResourceImpl
+	implements EntityModelResource, ERCAssetLibraryTestEntityResource,
+			   VulcanBatchEngineTaskItemDelegate<ERCAssetLibraryTestEntity> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -86,7 +86,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -96,8 +96,8 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ErcAssetLibraryTestEntity>
-			getAssetLibraryErcAssetLibraryTestEntitiesPage(
+	public Page<ERCAssetLibraryTestEntity>
+			getAssetLibraryERCAssetLibraryTestEntitiesPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
@@ -127,7 +127,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -137,20 +137,21 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ErcAssetLibraryTestEntity getAssetLibraryErcAssetLibraryTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-			String assetLibraryExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam(
-				"ercAssetLibraryTestEntityExternalReferenceCode"
-			)
-			String ercAssetLibraryTestEntityExternalReferenceCode)
+	public ERCAssetLibraryTestEntity
+			getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam(
+					"ercAssetLibraryTestEntityExternalReferenceCode"
+				)
+				String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception {
 
-		return new ErcAssetLibraryTestEntity();
+		return new ERCAssetLibraryTestEntity();
 	}
 
 	/**
@@ -181,7 +182,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -192,7 +193,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postAssetLibraryErcAssetLibraryTestEntitiesPageExportBatch(
+	public Response postAssetLibraryERCAssetLibraryTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
@@ -223,7 +224,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				ErcAssetLibraryTestEntity.class.getName(), callbackURL,
+				ERCAssetLibraryTestEntity.class.getName(), callbackURL,
 				contentType, fieldNames)
 		).build();
 	}
@@ -244,7 +245,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -255,15 +256,15 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ErcAssetLibraryTestEntity postAssetLibraryErcAssetLibraryTestEntity(
+	public ERCAssetLibraryTestEntity postAssetLibraryERCAssetLibraryTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
 			String assetLibraryExternalReferenceCode,
-			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
+			ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		return new ErcAssetLibraryTestEntity();
+		return new ERCAssetLibraryTestEntity();
 	}
 
 	/**
@@ -286,7 +287,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -297,7 +298,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postAssetLibraryErcAssetLibraryTestEntityBatch(
+	public Response postAssetLibraryERCAssetLibraryTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
@@ -320,7 +321,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				ErcAssetLibraryTestEntity.class.getName(), callbackURL, null,
+				ERCAssetLibraryTestEntity.class.getName(), callbackURL, null,
 				object)
 		).build();
 	}
@@ -345,7 +346,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "ErcAssetLibraryTestEntity"
+				name = "ERCAssetLibraryTestEntity"
 			)
 		}
 	)
@@ -356,32 +357,33 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public ErcAssetLibraryTestEntity putAssetLibraryErcAssetLibraryTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-			String assetLibraryExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam(
-				"ercAssetLibraryTestEntityExternalReferenceCode"
-			)
-			String ercAssetLibraryTestEntityExternalReferenceCode,
-			ErcAssetLibraryTestEntity ercAssetLibraryTestEntity)
+	public ERCAssetLibraryTestEntity
+			putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+				String assetLibraryExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam(
+					"ercAssetLibraryTestEntityExternalReferenceCode"
+				)
+				String ercAssetLibraryTestEntityExternalReferenceCode,
+				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
-		return new ErcAssetLibraryTestEntity();
+		return new ERCAssetLibraryTestEntity();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<ErcAssetLibraryTestEntity> ercAssetLibraryTestEntities,
+			Collection<ERCAssetLibraryTestEntity> ercAssetLibraryTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
 		UnsafeFunction
-			<ErcAssetLibraryTestEntity, ErcAssetLibraryTestEntity, Exception>
+			<ERCAssetLibraryTestEntity, ERCAssetLibraryTestEntity, Exception>
 				ercAssetLibraryTestEntityUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
@@ -391,7 +393,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 			if (parameters.containsKey("assetLibraryId")) {
 				ercAssetLibraryTestEntityUnsafeFunction =
 					ercAssetLibraryTestEntity ->
-						postAssetLibraryErcAssetLibraryTestEntity(
+						postAssetLibraryERCAssetLibraryTestEntity(
 							(String)parameters.get(
 								"assetLibraryExternalReferenceCode"),
 							ercAssetLibraryTestEntity);
@@ -419,7 +421,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 				ercAssetLibraryTestEntityUnsafeFunction::apply);
 		}
 		else {
-			for (ErcAssetLibraryTestEntity ercAssetLibraryTestEntity :
+			for (ERCAssetLibraryTestEntity ercAssetLibraryTestEntity :
 					ercAssetLibraryTestEntities) {
 
 				ercAssetLibraryTestEntityUnsafeFunction.apply(
@@ -430,7 +432,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 	@Override
 	public void delete(
-			Collection<ErcAssetLibraryTestEntity> ercAssetLibraryTestEntities,
+			Collection<ERCAssetLibraryTestEntity> ercAssetLibraryTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -462,7 +464,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	}
 
 	public String getResourceName() {
-		return "ErcAssetLibraryTestEntity";
+		return "ERCAssetLibraryTestEntity";
 	}
 
 	public String getVersion() {
@@ -470,7 +472,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<ErcAssetLibraryTestEntity> read(
+	public Page<ERCAssetLibraryTestEntity> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -478,7 +480,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 		throws Exception {
 
 		if (parameters.containsKey("assetLibraryId")) {
-			return getAssetLibraryErcAssetLibraryTestEntitiesPage(
+			return getAssetLibraryERCAssetLibraryTestEntitiesPage(
 				(String)parameters.get("assetLibraryExternalReferenceCode"));
 		}
 		else {
@@ -511,7 +513,7 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 	@Override
 	public void update(
-			Collection<ErcAssetLibraryTestEntity> ercAssetLibraryTestEntities,
+			Collection<ERCAssetLibraryTestEntity> ercAssetLibraryTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -525,9 +527,9 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<ErcAssetLibraryTestEntity>,
+			<Collection<ERCAssetLibraryTestEntity>,
 			 UnsafeFunction
-				 <ErcAssetLibraryTestEntity, ErcAssetLibraryTestEntity,
+				 <ERCAssetLibraryTestEntity, ERCAssetLibraryTestEntity,
 				  Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
@@ -536,8 +538,8 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<ErcAssetLibraryTestEntity>,
-			 UnsafeConsumer<ErcAssetLibraryTestEntity, Exception>, Exception>
+			<Collection<ERCAssetLibraryTestEntity>,
+			 UnsafeConsumer<ERCAssetLibraryTestEntity, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -804,13 +806,13 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<ErcAssetLibraryTestEntity>,
+		<Collection<ERCAssetLibraryTestEntity>,
 		 UnsafeFunction
-			 <ErcAssetLibraryTestEntity, ErcAssetLibraryTestEntity, Exception>,
+			 <ERCAssetLibraryTestEntity, ERCAssetLibraryTestEntity, Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<ErcAssetLibraryTestEntity>,
-		 UnsafeConsumer<ErcAssetLibraryTestEntity, Exception>, Exception>
+		<Collection<ERCAssetLibraryTestEntity>,
+		 UnsafeConsumer<ERCAssetLibraryTestEntity, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -832,6 +834,6 @@ public abstract class BaseErcAssetLibraryTestEntityResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseErcAssetLibraryTestEntityResourceImpl.class);
+		LogFactoryUtil.getLog(BaseERCAssetLibraryTestEntityResourceImpl.class);
 
 }

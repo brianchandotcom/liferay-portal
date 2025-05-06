@@ -25,7 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ErcAssetLibraryTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ERCAssetLibraryTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -55,24 +55,24 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/v1.0/ErcAssetLibraryTestEntity",
-	service = ErcAssetLibraryTestEntityResource.Factory.class
+	property = "resource.locator.key=/test/v1.0/ERCAssetLibraryTestEntity",
+	service = ERCAssetLibraryTestEntityResource.Factory.class
 )
 @Generated("")
-public class ErcAssetLibraryTestEntityResourceFactoryImpl
-	implements ErcAssetLibraryTestEntityResource.Factory {
+public class ERCAssetLibraryTestEntityResourceFactoryImpl
+	implements ERCAssetLibraryTestEntityResource.Factory {
 
 	@Override
-	public ErcAssetLibraryTestEntityResource.Builder create() {
-		return new ErcAssetLibraryTestEntityResource.Builder() {
+	public ERCAssetLibraryTestEntityResource.Builder create() {
+		return new ERCAssetLibraryTestEntityResource.Builder() {
 
 			@Override
-			public ErcAssetLibraryTestEntityResource build() {
+			public ERCAssetLibraryTestEntityResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, ErcAssetLibraryTestEntityResource>
+				Function<InvocationHandler, ERCAssetLibraryTestEntityResource>
 					ercAssetLibraryTestEntityResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
 							_ercAssetLibraryTestEntityResourceProxyProviderFunction;
@@ -86,7 +86,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder checkPermissions(
+			public ERCAssetLibraryTestEntityResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -95,7 +95,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder httpServletRequest(
+			public ERCAssetLibraryTestEntityResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -104,7 +104,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder
+			public ERCAssetLibraryTestEntityResource.Builder
 				httpServletResponse(HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -113,7 +113,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder preferredLocale(
+			public ERCAssetLibraryTestEntityResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -122,7 +122,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder uriInfo(
+			public ERCAssetLibraryTestEntityResource.Builder uriInfo(
 				UriInfo uriInfo) {
 
 				_uriInfo = uriInfo;
@@ -131,7 +131,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public ErcAssetLibraryTestEntityResource.Builder user(User user) {
+			public ERCAssetLibraryTestEntityResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -148,16 +148,16 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 	}
 
 	private static Function
-		<InvocationHandler, ErcAssetLibraryTestEntityResource>
+		<InvocationHandler, ERCAssetLibraryTestEntityResource>
 			_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			ErcAssetLibraryTestEntityResource.class.getClassLoader(),
-			ErcAssetLibraryTestEntityResource.class);
+			ERCAssetLibraryTestEntityResource.class.getClassLoader(),
+			ERCAssetLibraryTestEntityResource.class);
 
 		try {
-			Constructor<ErcAssetLibraryTestEntityResource> constructor =
-				(Constructor<ErcAssetLibraryTestEntityResource>)
+			Constructor<ERCAssetLibraryTestEntityResource> constructor =
+				(Constructor<ERCAssetLibraryTestEntityResource>)
 					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -199,7 +199,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		ErcAssetLibraryTestEntityResource ercAssetLibraryTestEntityResource =
+		ERCAssetLibraryTestEntityResource ercAssetLibraryTestEntityResource =
 			_componentServiceObjects.getService();
 
 		ercAssetLibraryTestEntityResource.setContextAcceptLanguage(
@@ -250,7 +250,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ErcAssetLibraryTestEntityResource>
+	private ComponentServiceObjects<ERCAssetLibraryTestEntityResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -285,7 +285,7 @@ public class ErcAssetLibraryTestEntityResourceFactoryImpl
 	private static class ResourceProxyProviderFunctionHolder {
 
 		private static final Function
-			<InvocationHandler, ErcAssetLibraryTestEntityResource>
+			<InvocationHandler, ERCAssetLibraryTestEntityResource>
 				_ercAssetLibraryTestEntityResourceProxyProviderFunction =
 					_getProxyProviderFunction();
 

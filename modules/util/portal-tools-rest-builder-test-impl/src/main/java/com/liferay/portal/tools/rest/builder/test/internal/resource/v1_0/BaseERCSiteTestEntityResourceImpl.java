@@ -26,10 +26,10 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ErcSiteTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCSiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ErcSiteTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ERCSiteTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -66,9 +66,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseErcSiteTestEntityResourceImpl
-	implements EntityModelResource, ErcSiteTestEntityResource,
-			   VulcanBatchEngineTaskItemDelegate<ErcSiteTestEntity> {
+public abstract class BaseERCSiteTestEntityResourceImpl
+	implements EntityModelResource, ERCSiteTestEntityResource,
+			   VulcanBatchEngineTaskItemDelegate<ERCSiteTestEntity> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -85,7 +85,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.GET
@@ -94,7 +94,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ErcSiteTestEntity> getSiteErcSiteTestEntitiesPage(
+	public Page<ERCSiteTestEntity> getSiteERCSiteTestEntitiesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteExternalReferenceCode")
@@ -123,7 +123,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.GET
@@ -132,18 +132,19 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ErcSiteTestEntity getSiteErcSiteTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
-			String ercSiteTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+	public ERCSiteTestEntity
+			getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+				String ercSiteTestEntityExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("siteExternalReferenceCode")
+				String siteExternalReferenceCode)
 		throws Exception {
 
-		return new ErcSiteTestEntity();
+		return new ERCSiteTestEntity();
 	}
 
 	/**
@@ -173,7 +174,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.Consumes("application/json")
@@ -183,7 +184,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postSiteErcSiteTestEntitiesPageExportBatch(
+	public Response postSiteERCSiteTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteExternalReferenceCode")
@@ -214,7 +215,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				ErcSiteTestEntity.class.getName(), callbackURL, contentType,
+				ERCSiteTestEntity.class.getName(), callbackURL, contentType,
 				fieldNames)
 		).build();
 	}
@@ -234,7 +235,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
@@ -244,15 +245,15 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ErcSiteTestEntity postSiteErcSiteTestEntity(
+	public ERCSiteTestEntity postSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
-			ErcSiteTestEntity ercSiteTestEntity)
+			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		return new ErcSiteTestEntity();
+		return new ERCSiteTestEntity();
 	}
 
 	/**
@@ -274,7 +275,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.Consumes("application/json")
@@ -284,7 +285,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postSiteErcSiteTestEntityBatch(
+	public Response postSiteERCSiteTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteExternalReferenceCode")
@@ -307,7 +308,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				ErcSiteTestEntity.class.getName(), callbackURL, null, object)
+				ERCSiteTestEntity.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
@@ -330,7 +331,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ErcSiteTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ERCSiteTestEntity")
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
@@ -340,29 +341,30 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public ErcSiteTestEntity putSiteErcSiteTestEntity(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
-			String ercSiteTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode,
-			ErcSiteTestEntity ercSiteTestEntity)
+	public ERCSiteTestEntity
+			putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+				String ercSiteTestEntityExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("siteExternalReferenceCode")
+				String siteExternalReferenceCode,
+				ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
-		return new ErcSiteTestEntity();
+		return new ERCSiteTestEntity();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<ErcSiteTestEntity> ercSiteTestEntities,
+			Collection<ERCSiteTestEntity> ercSiteTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<ErcSiteTestEntity, ErcSiteTestEntity, Exception>
+		UnsafeFunction<ERCSiteTestEntity, ERCSiteTestEntity, Exception>
 			ercSiteTestEntityUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
@@ -371,7 +373,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("siteId")) {
 				ercSiteTestEntityUnsafeFunction =
-					ercSiteTestEntity -> postSiteErcSiteTestEntity(
+					ercSiteTestEntity -> postSiteERCSiteTestEntity(
 						(String)parameters.get("siteExternalReferenceCode"),
 						ercSiteTestEntity);
 			}
@@ -396,7 +398,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 				ercSiteTestEntities, ercSiteTestEntityUnsafeFunction::apply);
 		}
 		else {
-			for (ErcSiteTestEntity ercSiteTestEntity : ercSiteTestEntities) {
+			for (ERCSiteTestEntity ercSiteTestEntity : ercSiteTestEntities) {
 				ercSiteTestEntityUnsafeFunction.apply(ercSiteTestEntity);
 			}
 		}
@@ -404,7 +406,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 	@Override
 	public void delete(
-			Collection<ErcSiteTestEntity> ercSiteTestEntities,
+			Collection<ERCSiteTestEntity> ercSiteTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -436,7 +438,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	}
 
 	public String getResourceName() {
-		return "ErcSiteTestEntity";
+		return "ERCSiteTestEntity";
 	}
 
 	public String getVersion() {
@@ -444,7 +446,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<ErcSiteTestEntity> read(
+	public Page<ERCSiteTestEntity> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -452,7 +454,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 		throws Exception {
 
 		if (parameters.containsKey("siteId")) {
-			return getSiteErcSiteTestEntitiesPage(
+			return getSiteERCSiteTestEntitiesPage(
 				(String)parameters.get("siteExternalReferenceCode"));
 		}
 		else {
@@ -485,7 +487,7 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 	@Override
 	public void update(
-			Collection<ErcSiteTestEntity> ercSiteTestEntities,
+			Collection<ERCSiteTestEntity> ercSiteTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -499,8 +501,8 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<ErcSiteTestEntity>,
-			 UnsafeFunction<ErcSiteTestEntity, ErcSiteTestEntity, Exception>,
+			<Collection<ERCSiteTestEntity>,
+			 UnsafeFunction<ERCSiteTestEntity, ERCSiteTestEntity, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -508,8 +510,8 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<ErcSiteTestEntity>,
-			 UnsafeConsumer<ErcSiteTestEntity, Exception>, Exception>
+			<Collection<ERCSiteTestEntity>,
+			 UnsafeConsumer<ERCSiteTestEntity, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -776,12 +778,12 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<ErcSiteTestEntity>,
-		 UnsafeFunction<ErcSiteTestEntity, ErcSiteTestEntity, Exception>,
+		<Collection<ERCSiteTestEntity>,
+		 UnsafeFunction<ERCSiteTestEntity, ERCSiteTestEntity, Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<ErcSiteTestEntity>,
-		 UnsafeConsumer<ErcSiteTestEntity, Exception>, Exception>
+		<Collection<ERCSiteTestEntity>,
+		 UnsafeConsumer<ERCSiteTestEntity, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -803,6 +805,6 @@ public abstract class BaseErcSiteTestEntityResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseErcSiteTestEntityResourceImpl.class);
+		LogFactoryUtil.getLog(BaseERCSiteTestEntityResourceImpl.class);
 
 }

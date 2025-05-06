@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ErcAssetLibraryTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ERCAssetLibraryTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -20,10 +20,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ErcAssetLibraryTestEntity implements Cloneable, Serializable {
+public class ERCAssetLibraryTestEntity implements Cloneable, Serializable {
 
-	public static ErcAssetLibraryTestEntity toDTO(String json) {
-		return ErcAssetLibraryTestEntitySerDes.toDTO(json);
+	public static ERCAssetLibraryTestEntity toDTO(String json) {
+		return ERCAssetLibraryTestEntitySerDes.toDTO(json);
 	}
 
 	public String getAssetLibraryExternalReferenceCode() {
@@ -169,8 +169,8 @@ public class ErcAssetLibraryTestEntity implements Cloneable, Serializable {
 			Permission[] permissions;
 
 	@Override
-	public ErcAssetLibraryTestEntity clone() throws CloneNotSupportedException {
-		return (ErcAssetLibraryTestEntity)super.clone();
+	public ERCAssetLibraryTestEntity clone() throws CloneNotSupportedException {
+		return (ERCAssetLibraryTestEntity)super.clone();
 	}
 
 	@Override
@@ -179,12 +179,12 @@ public class ErcAssetLibraryTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ErcAssetLibraryTestEntity)) {
+		if (!(object instanceof ERCAssetLibraryTestEntity)) {
 			return false;
 		}
 
-		ErcAssetLibraryTestEntity ercAssetLibraryTestEntity =
-			(ErcAssetLibraryTestEntity)object;
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			(ERCAssetLibraryTestEntity)object;
 
 		return Objects.equals(toString(), ercAssetLibraryTestEntity.toString());
 	}
@@ -197,7 +197,7 @@ public class ErcAssetLibraryTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ErcAssetLibraryTestEntitySerDes.toJSON(this);
+		return ERCAssetLibraryTestEntitySerDes.toJSON(this);
 	}
 
 }

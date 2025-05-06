@@ -39,19 +39,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ErcAssetLibraryTestEntity")
+@GraphQLName("ERCAssetLibraryTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ErcAssetLibraryTestEntity")
-public class ErcAssetLibraryTestEntity implements Serializable {
+@XmlRootElement(name = "ERCAssetLibraryTestEntity")
+public class ERCAssetLibraryTestEntity implements Serializable {
 
-	public static ErcAssetLibraryTestEntity toDTO(String json) {
+	public static ERCAssetLibraryTestEntity toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			ErcAssetLibraryTestEntity.class, json);
+			ERCAssetLibraryTestEntity.class, json);
 	}
 
-	public static ErcAssetLibraryTestEntity unsafeToDTO(String json) {
+	public static ERCAssetLibraryTestEntity unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ErcAssetLibraryTestEntity.class, json);
+			ERCAssetLibraryTestEntity.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -317,12 +317,12 @@ public class ErcAssetLibraryTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ErcAssetLibraryTestEntity)) {
+		if (!(object instanceof ERCAssetLibraryTestEntity)) {
 			return false;
 		}
 
-		ErcAssetLibraryTestEntity ercAssetLibraryTestEntity =
-			(ErcAssetLibraryTestEntity)object;
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			(ERCAssetLibraryTestEntity)object;
 
 		return Objects.equals(toString(), ercAssetLibraryTestEntity.toString());
 	}
@@ -453,7 +453,7 @@ public class ErcAssetLibraryTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.ErcAssetLibraryTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCAssetLibraryTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

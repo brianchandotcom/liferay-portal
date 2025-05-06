@@ -267,6 +267,10 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				utilityPage::getPageSpecifications);
 		}
 
+		if (utilityPage.getThumbnail() != null) {
+			existingUtilityPage.setThumbnail(utilityPage::getThumbnail);
+		}
+
 		if (utilityPage.getUtilityPageSettings() != null) {
 			existingUtilityPage.setUtilityPageSettings(
 				utilityPage::getUtilityPageSettings);

@@ -99,6 +99,13 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().deleteObjectEntryVersion(objectEntryVersionId);
 	}
 
+	public static ObjectEntryVersion deleteObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		return getService().deleteObjectEntryVersion(objectEntryId, version);
+	}
+
 	/**
 	 * Deletes the object entry version from the database. Also notifies the appropriate model listeners.
 	 *

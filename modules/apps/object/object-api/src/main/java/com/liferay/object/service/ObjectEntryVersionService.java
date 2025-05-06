@@ -42,6 +42,10 @@ public interface ObjectEntryVersionService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object entry version remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectEntryVersionServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectEntryVersion deleteObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)

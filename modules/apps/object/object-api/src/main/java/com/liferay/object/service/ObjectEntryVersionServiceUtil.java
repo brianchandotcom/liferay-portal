@@ -30,6 +30,13 @@ public class ObjectEntryVersionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectEntryVersion deleteObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		return getService().deleteObjectEntryVersion(objectEntryId, version);
+	}
+
 	public static ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {

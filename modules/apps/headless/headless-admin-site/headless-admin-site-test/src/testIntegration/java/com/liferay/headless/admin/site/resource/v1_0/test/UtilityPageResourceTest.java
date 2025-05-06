@@ -232,11 +232,18 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
+		UtilityPage utilityPage =
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				layoutUtilityPageEntry.getExternalReferenceCode());
+
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
-			Boolean.FALSE,
-			_getUtilityPage(
-				Boolean.FALSE,
-				layoutUtilityPageEntry.getExternalReferenceCode()));
+			Boolean.FALSE, utilityPage,
+			new UtilityPage() {
+				{
+					setMarkedAsDefault(Boolean.FALSE);
+				}
+			});
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
@@ -244,14 +251,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
-			Boolean.TRUE,
-			_getUtilityPage(
-				Boolean.TRUE,
-				layoutUtilityPageEntry.getExternalReferenceCode()));
+			Boolean.TRUE, utilityPage,
+			new UtilityPage() {
+				{
+					setMarkedAsDefault(Boolean.TRUE);
+				}
+			});
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
-			Boolean.TRUE,
-			_getUtilityPage(
-				null, layoutUtilityPageEntry.getExternalReferenceCode()));
+			Boolean.TRUE, utilityPage, new UtilityPage());
 
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
@@ -760,15 +767,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeUtilityPage(
-			Boolean expectedMarkedAsDefault, UtilityPage utilityPage)
+			Boolean expectedMarkedAsDefault, UtilityPage expectedUtilityPage,
+			UtilityPage utilityPage)
 		throws Exception {
 
 		UtilityPage pathUtilityPage =
 			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
 				testGroup.getExternalReferenceCode(),
-				utilityPage.getExternalReferenceCode(), utilityPage);
+				expectedUtilityPage.getExternalReferenceCode(), utilityPage);
 
-		assertEquals(utilityPage, pathUtilityPage);
+		assertEquals(expectedUtilityPage, pathUtilityPage);
 		assertValid(pathUtilityPage);
 
 		Assert.assertEquals(

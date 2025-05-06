@@ -26,10 +26,6 @@ public class ThumbnailUtil {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			fileEntryId);
 
-		if (fileEntry == null) {
-			return null;
-		}
-
 		return new ItemExternalReference() {
 			{
 				setClassName(() -> FileEntry.class.getName());

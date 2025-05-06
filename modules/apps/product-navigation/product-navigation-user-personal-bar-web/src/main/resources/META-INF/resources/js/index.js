@@ -7,97 +7,91 @@ import {openModal} from 'frontend-js-components-web';
 import {addParams, fetch, navigate} from 'frontend-js-web';
 
 export function signInButtonPropsTransformer({
-	additionalProps: {redirect, signInURL},
+	additionalProps: {redirect: initialRedirect, signInURL},
 	...props
 }) {
-	const signInLink = document.querySelector('.sign-in > div > button');
-
+	const signInButton = document.querySelector('.sign-in > div > button');
 	const modalSignInURL = addParams('windowState=exclusive', signInURL);
+	let loading = false;
+	let modalContentHTML = '';
+	let isModalOpen = false;
+	let shouldRedirect = initialRedirect;
 
-	const setModalContent = function (html) {
+	const updateModalContent = (html) => {
 		const modalBody = document.querySelector('.liferay-modal-body');
-
 		if (modalBody) {
 			const fragment = document
 				.createRange()
 				.createContextualFragment(html);
-
 			modalBody.innerHTML = '';
-
 			modalBody.appendChild(fragment);
 		}
 	};
 
-	let loading = false;
-	let html = '';
-	let modalOpen = false;
-
-	const fetchModalSignIn = function () {
-		if (loading || html) {
+	const loadModalContent = () => {
+		if (loading || modalContentHTML) {
 			return;
 		}
 
 		loading = true;
 
 		fetch(modalSignInURL)
-			.then((response) => {
-				return response.text();
-			})
-			.then((response) => {
+			.then((response) => response.text())
+			.then((responseHTML) => {
 				if (!loading) {
 					return;
 				}
 
 				loading = false;
 
-				if (!response) {
-					redirect = true;
+				if (!responseHTML) {
+					shouldRedirect = true;
 
 					return;
 				}
 
-				html = response;
+				modalContentHTML = responseHTML;
 
-				if (modalOpen) {
-					setModalContent(response);
+				if (isModalOpen) {
+					updateModalContent(responseHTML);
 				}
 			})
 			.catch(() => {
-				redirect = true;
+				shouldRedirect = true;
 			});
 	};
 
 	return {
 		...props,
 		onClick() {
-			fetchModalSignIn();
+			loadModalContent();
 
-			if (redirect) {
+			if (shouldRedirect) {
 				navigate(signInURL);
 
 				return;
 			}
 
-			if (signInLink) {
+			if (signInButton) {
 				openModal({
-					bodyHTML: html ? html : '<span class="loading-animation">',
+					bodyHTML:
+						modalContentHTML || '<span class="loading-animation">',
 					containerProps: {
 						className: '',
 					},
 					onClose() {
 						loading = false;
-						redirect = false;
-						html = '';
-						modalOpen = false;
+						shouldRedirect = initialRedirect;
+						modalContentHTML = '';
+						isModalOpen = false;
 					},
 					onOpen() {
-						modalOpen = true;
-
+						isModalOpen = true;
 						if (
-							html &&
+							modalContentHTML &&
 							document.querySelector('.loading-animation')
 						) {
-							setModalContent(html);
+							updateModalContent(modalContentHTML);
 						}
 					},
 					size: 'md',

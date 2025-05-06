@@ -1277,6 +1277,7 @@
 		<exception>ObjectViewSortColumnObjectFieldName</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectEntryFolder</exception>
+		<exception>RequiredObjectEntryVersion</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>
 		<exception>RequiredObjectValidationRuleSetting</exception>

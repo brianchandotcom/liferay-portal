@@ -33,11 +33,22 @@ public class ObjectEntryVersionServiceImpl
 	extends ObjectEntryVersionServiceBaseImpl {
 
 	@Override
+	public ObjectEntryVersion deleteObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		_checkModelResourcePermission(objectEntryId, ActionKeys.DELETE);
+
+		return objectEntryVersionLocalService.deleteObjectEntryVersion(
+			objectEntryId, version);
+	}
+
+	@Override
 	public ObjectEntryVersion getObjectEntryVersion(
 			long objectEntryId, int version)
 		throws PortalException {
 
-		_checkModelResourcePermission(objectEntryId);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersion(
 			objectEntryId, version);
@@ -48,7 +59,7 @@ public class ObjectEntryVersionServiceImpl
 			long objectEntryId, int start, int end)
 		throws PortalException {
 
-		_checkModelResourcePermission(objectEntryId);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersions(
 			objectEntryId, start, end);
@@ -58,21 +69,21 @@ public class ObjectEntryVersionServiceImpl
 	public int getObjectEntryVersionsCount(long objectEntryId)
 		throws PortalException {
 
-		_checkModelResourcePermission(objectEntryId);
+		_checkModelResourcePermission(objectEntryId, ActionKeys.UPDATE);
 
 		return objectEntryVersionLocalService.getObjectEntryVersionsCount(
 			objectEntryId);
 	}
 
-	private void _checkModelResourcePermission(long objectEntryId)
+	private void _checkModelResourcePermission(
+			long objectEntryId, String actionId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
 		_objectEntryService.checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntryId,
-			ActionKeys.UPDATE);
+			objectEntry.getObjectDefinitionId(), objectEntryId, actionId);
 	}
 
 	@Reference

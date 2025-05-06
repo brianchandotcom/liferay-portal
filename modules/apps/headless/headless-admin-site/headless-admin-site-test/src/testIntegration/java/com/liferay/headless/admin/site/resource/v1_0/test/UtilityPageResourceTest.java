@@ -255,15 +255,48 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		utilityPage.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(() -> FileEntry.class.getName());
+					setExternalReferenceCode(
+						() -> {
+							FileEntry fileEntry = _addPortletFileEntry(
+								repository.getDlFolderId());
+
+							return fileEntry.getExternalReferenceCode();
+						});
+				}
+			});
+
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
 			Boolean.TRUE, utilityPage,
 			new UtilityPage() {
 				{
 					setMarkedAsDefault(Boolean.TRUE);
+					setThumbnail(utilityPage::getThumbnail);
 				}
 			});
 
 		utilityPage.setName(RandomTestUtil::randomString);
+		utilityPage.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(() -> FileEntry.class.getName());
+					setExternalReferenceCode(
+						() -> {
+							FileEntry fileEntry = _addPortletFileEntry(
+								repository.getDlFolderId());
+
+							return fileEntry.getExternalReferenceCode();
+						});
+				}
+			});
 		utilityPage.setUtilityPageSettings(
 			() -> new UtilityPageSettings() {
 				{
@@ -290,6 +323,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			new UtilityPage() {
 				{
 					setName(utilityPage::getName);
+					setThumbnail(utilityPage::getThumbnail);
 					setUtilityPageSettings(utilityPage::getUtilityPageSettings);
 				}
 			});
@@ -867,6 +901,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, pathUtilityPage.getMarkedAsDefault());
+
+		Assert.assertEquals(
+			expectedUtilityPage.getThumbnail(), pathUtilityPage.getThumbnail());
 	}
 
 	private void

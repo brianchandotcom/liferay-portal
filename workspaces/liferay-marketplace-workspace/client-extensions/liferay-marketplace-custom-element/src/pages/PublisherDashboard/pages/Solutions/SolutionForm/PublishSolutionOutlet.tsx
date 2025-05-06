@@ -4,26 +4,25 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Link, Outlet} from 'react-router-dom';
-
-import {useAccount} from '../../../../../hooks/data/useAccounts';
-
-import './PublishSolutionOutlet.scss';
-
-import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
+import {Link, Outlet} from 'react-router-dom';
 
 import AppPublish from '../../../../../components/AppPublish';
 import PublishNav from '../../../../../components/AppPublish/Sidebar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
 import {ProductWorkflowStatusCode} from '../../../../../enums/Product';
+import {useAccount} from '../../../../../hooks/data/useAccounts';
 import i18n from '../../../../../i18n';
 import usePublishHeader from '../../../hooks/usePublishHeader';
 import usePublishNavigation from '../../../hooks/usePublishNavigation';
 import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
 import {SOLUTION_FLOW_ITEMS} from '../constants';
+
+import 'react-quill/dist/quill.snow.css';
+
+import './PublishSolutionOutlet.scss';
 
 const PublishSolutionOutlet = () => {
 	usePublishHeader();
@@ -175,15 +174,13 @@ const PublishSolutionOutlet = () => {
 			{onExitModal.open && (
 				<Modal
 					last={
-						<>
-							<ClayButton
-								className="btn btn-primary ml-2"
-								displayType="primary"
-								onClick={onExit}
-							>
-								{i18n.translate('exit')}
-							</ClayButton>
-						</>
+						<ClayButton
+							className="btn btn-primary ml-2"
+							displayType="primary"
+							onClick={onExit}
+						>
+							{i18n.translate('exit')}
+						</ClayButton>
 					}
 					observer={onExitModal.observer}
 					size={'md' as any}

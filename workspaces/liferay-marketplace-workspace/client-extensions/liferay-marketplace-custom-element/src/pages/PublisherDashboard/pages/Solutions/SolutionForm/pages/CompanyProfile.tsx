@@ -39,6 +39,7 @@ const CompanyProfile = () => {
 				<h3 className="mb-0 mr-2">
 					{i18n.translate('company-profile')}
 				</h3>
+
 				<Tooltip
 					tooltip={tooltipInfo.companyProfileInfo}
 					tooltipText={i18n.translate('more-info')}

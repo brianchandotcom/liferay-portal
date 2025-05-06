@@ -37,9 +37,6 @@ buildscript {
 task jarTransformed
 
 jar {
-	enabled = true
-	setActions([])
-
 	doLast {
 		JakartaTransformerCLI jakartaTransformerCLI = new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath})
 
@@ -57,4 +54,7 @@ jar {
 
 		JarTransformer.transform(jar.archivePath)
 	}
+
+	enabled = true
+	setActions([])
 }

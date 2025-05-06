@@ -50,6 +50,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TestEntityResource {
 
+	public Response deleteTestEntity(Long testEntityId, Boolean permanent)
+		throws Exception;
+
+	public Response deleteTestEntityBatch(
+			Boolean permanent, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<TestEntity> getTestEntitiesPage() throws Exception;
 
 	public TestEntity getTestEntity(Long testEntityId) throws Exception;

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -137,6 +139,16 @@ public abstract class BaseTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -213,6 +225,67 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteTestEntity() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TestEntity testEntity = testDeleteTestEntity_addTestEntity();
+
+		assertHttpResponseStatusCode(
+			204,
+			testEntityResource.deleteTestEntityHttpResponse(
+				testEntity.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			testEntityResource.getTestEntityHttpResponse(testEntity.getId()));
+		assertHttpResponseStatusCode(
+			404, testEntityResource.getTestEntityHttpResponse(0L));
+	}
+
+	protected TestEntity testDeleteTestEntity_addTestEntity() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteTestEntityBatch() throws Exception {
+		TestEntity testEntity1 = testDeleteTestEntityBatch_addTestEntity();
+
+		testDeleteTestEntityBatch_deleteTestEntity(
+			"COMPLETED", null, testEntity1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			testEntityResource.getTestEntityHttpResponse(testEntity1.getId()));
+	}
+
+	protected TestEntity testDeleteTestEntityBatch_addTestEntity()
+		throws Exception {
+
+		return testDeleteTestEntity_addTestEntity();
+	}
+
+	protected void testDeleteTestEntityBatch_deleteTestEntity(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			testEntityResource.deleteTestEntityBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetTestEntitiesPage() throws Exception {
 		Page<TestEntity> page = testEntityResource.getTestEntitiesPage();
 
@@ -231,6 +304,10 @@ public abstract class BaseTestEntityResourceTestCase {
 		assertContains(testEntity1, (List<TestEntity>)page.getItems());
 		assertContains(testEntity2, (List<TestEntity>)page.getItems());
 		assertValid(page, testGetTestEntitiesPage_getExpectedActions());
+
+		testEntityResource.deleteTestEntity(testEntity1.getId(), null);
+
+		testEntityResource.deleteTestEntity(testEntity2.getId(), null);
 	}
 
 	protected Map<String, Map<String, String>>
@@ -1618,7 +1695,30 @@ public abstract class BaseTestEntityResourceTestCase {
 		return randomTestEntity();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected TestEntityResource testEntityResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

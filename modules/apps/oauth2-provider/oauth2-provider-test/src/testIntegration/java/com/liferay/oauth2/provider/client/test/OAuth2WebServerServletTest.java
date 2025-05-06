@@ -128,14 +128,13 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
 
-		Company testCompany = CompanyLocalServiceUtil.getCompany(
+		Company company = CompanyLocalServiceUtil.getCompany(
 			TestPropsValues.getCompanyId());
 
 		return client.target(
 			uriBuilder.uri(
 				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8080",
-					path)));
+					"http://", company.getVirtualHostname(), ":8080", path)));
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";

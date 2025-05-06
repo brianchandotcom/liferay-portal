@@ -7,6 +7,7 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -117,9 +118,9 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		protected void prepareTest() throws Exception {
 			long companyId = TestPropsValues.getCompanyId();
 
-			_host = CompanyLocalServiceUtil.getCompany(
-				companyId
-			).getVirtualHostname();
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			_host = company.getVirtualHostname();
 
 			_user = UserTestUtil.getAdminUser(companyId);
 

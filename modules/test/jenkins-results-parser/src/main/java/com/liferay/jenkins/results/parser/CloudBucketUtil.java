@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -334,15 +335,23 @@ public class CloudBucketUtil {
 		return new File(sb.toString());
 	}
 
-	private static String _replaceS3ObjectPath(String path) {
-		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(path);
+	private static String _replaceS3ObjectPath(String s3ObjectPath) {
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			s3ObjectPath);
 
 		if (s3ObjectPathMatcher.find()) {
-			File s3ObjectRefFile = _getS3ObjectRefFile(path);
+			File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
 
 			if (s3ObjectRefFile.exists()) {
 				try {
-					return JenkinsResultsParserUtil.read(s3ObjectRefFile);
+					String s3ObjectRefFileContent =
+						JenkinsResultsParserUtil.read(s3ObjectRefFile);
+
+					if (Objects.equals(s3ObjectRefFileContent, s3ObjectPath)) {
+						return s3ObjectRefFileContent;
+					}
+
+					return _replaceS3ObjectPath(s3ObjectRefFileContent);
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
@@ -350,7 +359,7 @@ public class CloudBucketUtil {
 			}
 		}
 
-		return path;
+		return s3ObjectPath;
 	}
 
 	private static void _validateS3ObjectPath(String s3ObjectPath) {

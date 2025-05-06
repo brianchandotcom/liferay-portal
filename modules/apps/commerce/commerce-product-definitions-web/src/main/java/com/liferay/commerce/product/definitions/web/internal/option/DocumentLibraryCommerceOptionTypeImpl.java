@@ -81,13 +81,13 @@ public class DocumentLibraryCommerceOptionTypeImpl
 
 		DDMForm ddmForm = new DDMForm();
 
+		Locale locale = _portal.getLocale(httpServletRequest);
+
 		ddmForm.addAvailableLocale(locale);
 
 		DDMFormField ddmFormField = new DDMFormField(
 			cpDefinitionOptionRel.getKey(),
 			cpDefinitionOptionRel.getCommerceOptionTypeKey());
-
-		Locale locale = _portal.getLocale(httpServletRequest);
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			locale);

@@ -1223,6 +1223,7 @@
 		<column name="statusListTypeId" type="long" />
 		<column name="comments" type="String" />
 		<column name="logoId" type="long" />
+		<column name="status" type="int" />
 
 		<!-- Relationships -->
 

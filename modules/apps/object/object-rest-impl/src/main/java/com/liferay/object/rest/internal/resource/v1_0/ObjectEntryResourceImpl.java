@@ -382,6 +382,25 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry postByExternalReferenceCodeByVersionExpire(
+			String externalReferenceCode, Integer version)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.expireObjectEntryByVersion(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, version);
+	}
+
+	@Override
 	public Response postObjectEntriesPageExportBatch(
 			String search, Filter filter, Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
@@ -415,6 +434,25 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectDefinition.getName());
 
 		return super.postObjectEntryBatch(callbackURL, object);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryByVersionExpire(
+			Long objectEntryId, Integer version)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.expireObjectEntryByVersion(
+			_getDTOConverterContext(null), _objectDefinition, objectEntryId,
+			version);
 	}
 
 	@Override

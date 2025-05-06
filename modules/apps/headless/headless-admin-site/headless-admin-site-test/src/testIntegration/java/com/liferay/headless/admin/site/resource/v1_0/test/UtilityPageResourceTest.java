@@ -915,19 +915,20 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			UtilityPage utilityPage)
 		throws Exception {
 
-		UtilityPage pathUtilityPage =
+		UtilityPage patchUtilityPage =
 			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
 				testGroup.getExternalReferenceCode(),
 				expectedUtilityPage.getExternalReferenceCode(), utilityPage);
 
-		assertEquals(expectedUtilityPage, pathUtilityPage);
-		assertValid(pathUtilityPage);
+		assertEquals(expectedUtilityPage, patchUtilityPage);
+		assertValid(patchUtilityPage);
 
 		Assert.assertEquals(
-			expectedMarkedAsDefault, pathUtilityPage.getMarkedAsDefault());
+			expectedMarkedAsDefault, patchUtilityPage.getMarkedAsDefault());
 
 		Assert.assertEquals(
-			expectedUtilityPage.getThumbnail(), pathUtilityPage.getThumbnail());
+			expectedUtilityPage.getThumbnail(),
+			patchUtilityPage.getThumbnail());
 	}
 
 	private void

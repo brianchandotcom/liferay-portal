@@ -71,6 +71,7 @@ test('color column in manage calendar page is updated when the user changes the 
 	await calendarWidgetPage.openCalendarGroupActionsDropdownMenu(
 		'My Calendars'
 	);
+
 	await calendarWidgetPage.manageCalendarsMenuItem.click();
 
 	await expect(
@@ -78,7 +79,7 @@ test('color column in manage calendar page is updated when the user changes the 
 	).toHaveCSS('background-color', 'rgb(224, 194, 64)');
 });
 
-test('can choose color when adding a calendar', async ({
+test('can choose color when adding a calendar and then change it', async ({
 	calendarWidgetPage,
 }) => {
 	await calendarWidgetPage.unhideSidebar();
@@ -108,7 +109,29 @@ test('can choose color when adding a calendar', async ({
 
 	await calendarWidgetPage.openCalendarActionsDropdownMenu(calendarName);
 
+	// check if the color we chose while adding a calendar was applied
+
 	await expect(
 		calendarWidgetPage.page.locator('.simple-color-picker-item-selected')
 	).toHaveCSS('background-color', 'rgb(133, 170, 165)');
+
+	await calendarWidgetPage.clickCalendarColor('#4CB052');
+
+	const eventTitle = 'Event' + getRandomInt();
+
+	await calendarWidgetPage.addEvent({
+		allDay: false,
+		publishEvent: true,
+		throughCalendarActionMenu: {calendarName},
+		title: eventTitle,
+	});
+
+	await calendarWidgetPage.page.keyboard.press('Escape');
+
+	// check if the color we changed to was applied in the regular event element
+
+	expect(calendarWidgetPage.page.getByTitle(eventTitle)).toHaveCSS(
+		'background-color',
+		'rgb(76, 176, 82)'
+	);
 });

@@ -1055,6 +1055,7 @@
 			<hint name="display-width">400</hint>
 		</field>
 		<field name="logoId" type="long" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.OrgLabor">
 		<field name="mvccVersion" type="long" />

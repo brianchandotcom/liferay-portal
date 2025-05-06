@@ -8,6 +8,7 @@ package com.liferay.portal.test.rule;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
@@ -108,42 +109,9 @@ public class FeatureFlagTestRule
 			).build());
 	}
 
-	private Map<String, String> _updateFeatureFlags(Description description) {
-		Map<String, String> previousValues = new HashMap<>();
-
-		FeatureFlags featureFlags = description.getAnnotation(
-			FeatureFlags.class);
-
-		if (featureFlags != null) {
-			for (FeatureFlag featureFlag : featureFlags.featureFlags()) {
-				if (featureFlag == null) {
-					continue;
-				}
-
-				KeyValuePair previousKeyValuePair = _updateFeatureFlags(
-					featureFlag);
-
-				previousValues.put(
-					previousKeyValuePair.getKey(),
-					previousKeyValuePair.getValue());
-			}
-		}
-
-		FeatureFlag featureFlag = description.getAnnotation(FeatureFlag.class);
-
-		if (featureFlag != null) {
-			KeyValuePair previousKeyValuePair = _updateFeatureFlags(
-				featureFlag);
-
-			previousValues.put(
-				previousKeyValuePair.getKey(), previousKeyValuePair.getValue());
-		}
-
-		return previousValues;
-	}
-
-	private KeyValuePair _updateFeatureFlags(FeatureFlag featureFlag) {
-		String featureFlagKey = "feature.flag." + featureFlag.value();
+	private KeyValuePair _updateFeatureFlag(FeatureFlag featureFlag) {
+		String featureFlagKey = FeatureFlagConstants.getKey(
+			featureFlag.value());
 
 		KeyValuePair previousKeyValuePair = new KeyValuePair(
 			featureFlagKey, PropsUtil.get(featureFlagKey));
@@ -156,6 +124,39 @@ public class FeatureFlagTestRule
 		_invokeFeatureFlagListeners(featureFlag.value(), featureFlag.enable());
 
 		return previousKeyValuePair;
+	}
+
+	private Map<String, String> _updateFeatureFlags(Description description) {
+		Map<String, String> previousValues = new HashMap<>();
+
+		FeatureFlags featureFlags = description.getAnnotation(
+			FeatureFlags.class);
+
+		if (featureFlags != null) {
+			for (FeatureFlag featureFlag : featureFlags.featureFlags()) {
+				if (featureFlag == null) {
+					continue;
+				}
+
+				KeyValuePair previousKeyValuePair = _updateFeatureFlag(
+					featureFlag);
+
+				previousValues.put(
+					previousKeyValuePair.getKey(),
+					previousKeyValuePair.getValue());
+			}
+		}
+
+		FeatureFlag featureFlag = description.getAnnotation(FeatureFlag.class);
+
+		if (featureFlag != null) {
+			KeyValuePair previousKeyValuePair = _updateFeatureFlag(featureFlag);
+
+			previousValues.put(
+				previousKeyValuePair.getKey(), previousKeyValuePair.getValue());
+		}
+
+		return previousValues;
 	}
 
 	private final boolean _enableFeatureFlagListeners;

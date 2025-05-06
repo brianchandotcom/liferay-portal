@@ -1,6 +1,6 @@
 .sv-table {
-	.sv-name-link {
-		text-decoration: none;
+	.sv-name {
+		color: var(--color-action-primary-default);
 	}
 
 	.sv-row {

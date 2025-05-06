@@ -35,6 +35,40 @@ type TWebContent = {
 	version?: number | string;
 };
 
+type TWebContentDetailed = TWebContent & {
+	articleURL?: string;
+	autoArticleId?: boolean;
+	classNameId?: number;
+	classPK?: number;
+	displayDateDay?: number;
+	displayDateHour?: number;
+	displayDateMinute?: number;
+	displayDateMonth?: number;
+	displayDateYear?: number;
+	expirationDateDay?: number;
+	expirationDateHour?: number;
+	expirationDateMinute?: number;
+	expirationDateMonth?: number;
+	expirationDateYear?: number;
+	friendlyURLMap?: Record<string, string>;
+	images?: Record<string, any>;
+	indexable?: boolean;
+	layoutUuid?: string;
+	neverExpire?: boolean;
+	neverReview?: boolean;
+	reviewDateDay?: number;
+	reviewDateHour?: number;
+	reviewDateMinute?: number;
+	reviewDateMonth?: number;
+	reviewDateYear?: number;
+	smallFile?: any;
+	smallImage?: boolean;
+	smallImageId?: number;
+	smallImageSource?: number;
+	smallImageURL?: string;
+	titleMap?: Record<string, string>;
+};
+
 export class JSONWebServicesJournalApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly baseFolderPath: string;
@@ -125,6 +159,187 @@ export class JSONWebServicesJournalApiHelper {
 			JSON.stringify(webContent.serviceContext)
 		);
 
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/add-article`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
+	async addWebContentDetailed(
+		webContent?: TWebContentDetailed
+	): Promise<TWebContentDetailed> {
+		const urlSearchParams = new URLSearchParams();
+
+		webContent = {
+			articleId: '',
+			articleURL: '',
+			autoArticleId: true,
+			classNameId: 0,
+			classPK: 0,
+			content: getRandomString(),
+			ddmStructureId: 0,
+			ddmTemplateKey: 'BASIC-WEB-CONTENT',
+			descriptionMap: {en_US: getRandomString()},
+			displayDateDay: 0,
+			displayDateHour: 0,
+			displayDateMinute: 0,
+			displayDateMonth: 0,
+			displayDateYear: 0,
+			expirationDateDay: 0,
+			expirationDateHour: 0,
+			expirationDateMinute: 0,
+			expirationDateMonth: 0,
+			expirationDateYear: 0,
+			externalReferenceCode: getRandomString(),
+			folderId: 0,
+			friendlyURLMap: {en_US: getRandomString()},
+			groupId: 0,
+			images: {},
+			indexable: false,
+			layoutUuid: '',
+			neverExpire: true,
+			neverReview: true,
+			reviewDateDay: 0,
+			reviewDateHour: 0,
+			reviewDateMinute: 0,
+			reviewDateMonth: 0,
+			reviewDateYear: 0,
+			serviceContext: {},
+			smallFile: new Blob(['']),
+			smallImage: false,
+			smallImageId: 0,
+			smallImageSource: 0,
+			smallImageURL: '',
+			titleMap: {en_US: getRandomString()},
+			...(webContent || {}),
+		};
+
+		urlSearchParams.append(
+			'externalReferenceCode',
+			webContent.externalReferenceCode
+		);
+		urlSearchParams.append('groupId', String(webContent.groupId));
+		urlSearchParams.append('folderId', String(webContent.folderId));
+		urlSearchParams.append('classNameId', String(webContent.classNameId));
+		urlSearchParams.append('classPK', String(webContent.classPK));
+		urlSearchParams.append('articleId', webContent.articleId);
+		urlSearchParams.append(
+			'autoArticleId',
+			String(webContent.autoArticleId)
+		);
+		urlSearchParams.append('titleMap', JSON.stringify(webContent.titleMap));
+		urlSearchParams.append(
+			'descriptionMap',
+			JSON.stringify(webContent.descriptionMap)
+		);
+		urlSearchParams.append(
+			'friendlyURLMap',
+			JSON.stringify(webContent.friendlyURLMap)
+		);
+
+		urlSearchParams.append(
+			'content',
+			`<root>
+				<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
+				<dynamic-content><![CDATA[<p>${webContent.content}</p>]]></dynamic-content>
+				</dynamic-element>
+			</root>`
+		);
+
+		urlSearchParams.append(
+			'ddmStructureId',
+			String(webContent.ddmStructureId)
+		);
+		urlSearchParams.append('ddmTemplateKey', webContent.ddmTemplateKey);
+		urlSearchParams.append('layoutUuid', webContent.layoutUuid);
+
+		urlSearchParams.append(
+			'displayDateMonth',
+			String(webContent.displayDateMonth)
+		);
+		urlSearchParams.append(
+			'displayDateDay',
+			String(webContent.displayDateDay)
+		);
+		urlSearchParams.append(
+			'displayDateYear',
+			String(webContent.displayDateYear)
+		);
+		urlSearchParams.append(
+			'displayDateHour',
+			String(webContent.displayDateHour)
+		);
+		urlSearchParams.append(
+			'displayDateMinute',
+			String(webContent.displayDateMinute)
+		);
+
+		urlSearchParams.append(
+			'expirationDateMonth',
+			String(webContent.expirationDateMonth)
+		);
+		urlSearchParams.append(
+			'expirationDateDay',
+			String(webContent.expirationDateDay)
+		);
+		urlSearchParams.append(
+			'expirationDateYear',
+			String(webContent.expirationDateYear)
+		);
+		urlSearchParams.append(
+			'expirationDateHour',
+			String(webContent.expirationDateHour)
+		);
+		urlSearchParams.append(
+			'expirationDateMinute',
+			String(webContent.expirationDateMinute)
+		);
+		urlSearchParams.append('neverExpire', String(webContent.neverExpire));
+
+		urlSearchParams.append(
+			'reviewDateMonth',
+			String(webContent.reviewDateMonth)
+		);
+		urlSearchParams.append(
+			'reviewDateDay',
+			String(webContent.reviewDateDay)
+		);
+		urlSearchParams.append(
+			'reviewDateYear',
+			String(webContent.reviewDateYear)
+		);
+		urlSearchParams.append(
+			'reviewDateHour',
+			String(webContent.reviewDateHour)
+		);
+		urlSearchParams.append(
+			'reviewDateMinute',
+			String(webContent.reviewDateMinute)
+		);
+		urlSearchParams.append('neverReview', String(webContent.neverReview));
+
+		urlSearchParams.append('indexable', String(webContent.indexable));
+		urlSearchParams.append(
+			'smallFile',
+			JSON.stringify(webContent.smallFile)
+		);
+		urlSearchParams.append('smallImage', String(webContent.smallImage));
+		urlSearchParams.append('smallImageId', String(webContent.smallImageId));
+		urlSearchParams.append(
+			'smallImageSource',
+			String(webContent.smallImageSource)
+		);
+		urlSearchParams.append('smallImageURL', webContent.smallImageURL);
+		urlSearchParams.append('articleURL', webContent.articleURL);
+		urlSearchParams.append('images', JSON.stringify(webContent.images));
+		urlSearchParams.append(
+			'serviceContext',
+			JSON.stringify(webContent.serviceContext || {})
+		);
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-article`,
 			{

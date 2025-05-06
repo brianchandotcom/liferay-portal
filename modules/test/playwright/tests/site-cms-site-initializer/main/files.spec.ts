@@ -26,6 +26,7 @@ test(
 	'Document can be downloaded from the Files section and saved correctly',
 	{tag: '@LPD-54566'},
 	async ({apiHelpers, filesPage, page}) => {
+		const applicationName = 'cms/basic-documents';
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
@@ -34,28 +35,36 @@ test(
 				},
 				title: `title ${getRandomString()}`,
 			},
-			'cms/basic-documents',
+			applicationName,
 			'Default'
 		);
 
-		apiHelpers.data.push({
-			id: objectEntry.file.id,
-			type: 'document',
-		});
+		try {
+			apiHelpers.data.push({
+				id: objectEntry.file.id,
+				type: 'document',
+			});
 
-		await filesPage.goto();
-		await filesPage.changeVisualizationMode('Table');
+			await filesPage.goto();
+			await filesPage.changeVisualizationMode('Table');
 
-		const downloadPromise = page.waitForEvent('download');
-		await filesPage.execItemAction({
-			action: 'Download',
-			filter: objectEntry.title,
-		});
+			const downloadPromise = page.waitForEvent('download');
+			await filesPage.execItemAction({
+				action: 'Download',
+				filter: objectEntry.title,
+			});
 
-		const download = await downloadPromise;
-		expect(download.suggestedFilename()).toBe(objectEntry.file.name);
+			const download = await downloadPromise;
+			expect(download.suggestedFilename()).toBe(objectEntry.file.name);
 
-		const downloadStat = await fs.stat(await download.path());
-		expect(downloadStat.size).toBeGreaterThan(10);
+			const downloadStat = await fs.stat(await download.path());
+			expect(downloadStat.size).toBeGreaterThan(10);
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+		}
 	}
 );

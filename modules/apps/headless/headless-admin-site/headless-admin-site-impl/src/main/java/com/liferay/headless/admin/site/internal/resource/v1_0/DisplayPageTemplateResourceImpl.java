@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -351,7 +349,7 @@ public class DisplayPageTemplateResourceImpl
 						displayPageTemplate.getMarkedAsDefault()));
 		}
 
-		long previewFileEntryId = _getPreviewFileEntryId(
+		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, displayPageTemplate.getThumbnail());
 
 		if (previewFileEntryId !=
@@ -494,7 +492,7 @@ public class DisplayPageTemplateResourceImpl
 			_layoutLocalService.updateLayout(layout);
 		}
 
-		long previewFileEntryId = _getPreviewFileEntryId(
+		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, displayPageTemplate.getThumbnail());
 
 		if (previewFileEntryId !=
@@ -573,24 +571,6 @@ public class DisplayPageTemplateResourceImpl
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
 	}
 
-	private long _getPreviewFileEntryId(
-			long groupId, ItemExternalReference itemExternalReference)
-		throws Exception {
-
-		if ((itemExternalReference == null) ||
-			Validator.isNull(
-				itemExternalReference.getExternalReferenceCode())) {
-
-			return 0;
-		}
-
-		FileEntry fileEntry =
-			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
-				itemExternalReference.getExternalReferenceCode(), groupId);
-
-		return fileEntry.getFileEntryId();
-	}
-
 	private ServiceContext _getServiceContext(
 		DisplayPageTemplate displayPageTemplate, long groupId) {
 
@@ -635,8 +615,5 @@ public class DisplayPageTemplateResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 }

@@ -201,12 +201,12 @@ public class DDMFormValuesUtil {
 	}
 
 	private static List<DDMFormFieldValue> _toDDMFormFieldValues(
-		List<ContentField> contentFields, DDMFormField ddmFormField,
+		List<ContentField> contentFieldsList, DDMFormField ddmFormField,
 		DLAppService dlAppService, long groupId,
 		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService, Locale locale) {
 
-		if (ListUtil.isEmpty(contentFields)) {
+		if (ListUtil.isEmpty(contentFieldsList)) {
 			if (ddmFormField.isRequired()) {
 				throw new BadRequestException(
 					"No value is specified for field " +
@@ -221,7 +221,7 @@ public class DDMFormValuesUtil {
 		}
 
 		return TransformUtil.transform(
-			contentFields,
+			contentFieldsList,
 			contentField -> _toDDMFormFieldValue(
 				contentField.getNestedContentFields(), ddmFormField,
 				dlAppService, groupId, journalArticleService,

@@ -233,9 +233,14 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		long classPK = _getClassPK(infoItemReference, jsonObject);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-39437") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-39437") ||
 			!fragmentRendererContext.isViewMode() || (classPK <= 0)) {
 
 			_render(

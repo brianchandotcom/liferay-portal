@@ -165,7 +165,8 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				element.removeAttr("data-lfr-background-image-id");
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					fragmentEntryLink.getCompanyId(), "LPD-39437") &&
 				fragmentEntryProcessorContext.isViewMode()) {
 
 				AnalyticsAttributesUtil.addAnalyticsAttributes(

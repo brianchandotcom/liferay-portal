@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSEOSettings;
@@ -26,7 +27,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -316,6 +321,47 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-48984")
+	public void testPostSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		super.testPostSiteSiteByExternalReferenceCodeUtilityPage();
+
+		UtilityPage utilityPage = randomUtilityPage();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setClassName(() -> FileEntry.class.getName());
+					setExternalReferenceCode(
+						() -> {
+							FileEntry fileEntry = _addPortletFileEntry(
+								repository.getDlFolderId());
+
+							return fileEntry.getExternalReferenceCode();
+						});
+				}
+			};
+
+		utilityPage.setThumbnail(itemExternalReference);
+
+		UtilityPage postUtilityPage =
+			testPostSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage(
+				utilityPage);
+
+		assertEquals(utilityPage, postUtilityPage);
+		assertValid(postUtilityPage);
+		Assert.assertEquals(
+			itemExternalReference, postUtilityPage.getThumbnail());
+	}
+
+	@Override
+	@Test
 	@TestInfo("LPD-48987")
 	public void testPostSiteSiteByExternalReferenceCodeUtilityPagePageSpecification()
 		throws Exception {
@@ -521,6 +567,17 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		throws Exception {
 
 		return super.testPutSiteUtilityPagePermissionsPage_addUtilityPage();
+	}
+
+	private FileEntry _addPortletFileEntry(long folderId) throws Exception {
+		Class<?> clazz = getClass();
+
+		return _portletFileRepository.addPortletFileEntry(
+			null, testGroup.getGroupId(), TestPropsValues.getUserId(),
+			LayoutUtilityPageEntry.class.getName(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString(), folderId,
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 	}
 
 	private void _assertNestedFields(UtilityPage utilityPage) throws Exception {
@@ -962,6 +1019,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 	@Inject
 	private UserLocalService _userLocalService;

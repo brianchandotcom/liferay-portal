@@ -2045,14 +2045,16 @@ public class ArrayUtil {
 		return newArray;
 	}
 
-	public static short[] toShortArray(Collection<Short> collection) {
+	public static short[] toShortArray(
+		Collection<? extends Number> collection) {
+
 		short[] newArray = new short[collection.size()];
 
 		if (collection instanceof List) {
-			List<Short> list = (List<Short>)collection;
+			List<Number> list = (List<Number>)collection;
 
 			for (int i = 0; i < list.size(); i++) {
-				Short value = list.get(i);
+				Number value = list.get(i);
 
 				newArray[i] = value.shortValue();
 			}
@@ -2060,10 +2062,10 @@ public class ArrayUtil {
 		else {
 			int i = 0;
 
-			Iterator<Short> iterator = collection.iterator();
+			Iterator<? extends Number> iterator = collection.iterator();
 
 			while (iterator.hasNext()) {
-				Short value = iterator.next();
+				Number value = iterator.next();
 
 				newArray[i++] = value.shortValue();
 			}

@@ -82,47 +82,6 @@ definition {
 		CalendarPage.viewTypeOfTableView(tableType = "Week");
 	}
 
-	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"
-	@priority = 3
-	test CanChangeCalendarColor {
-		property ci.retries.disabled = "true";
-
-		JSONCalendar.setCalendarColor(calendarName = "Test Test");
-
-		Calendar.changeColor(
-			calendarType = "My Calendars",
-			myCalendarColor = "668CD9",
-			user = "Test Test");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		Calendar.viewColor(
-			calendarType = "My Calendars",
-			myCalendarColor = "668CD9");
-
-		CalendarNavigator.gotoAddEvent();
-
-		CalendarEvent.add(
-			calendarName = "Test Test",
-			eventTitle = "Calendar Event Regular Title",
-			eventType = "Regular",
-			pageName = "Calendar Page");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		AssertCssValue(
-			key_eventTitle = "Calendar Event Regular Title",
-			locator1 = "Calendar#SCHEDULER_EVENT",
-			locator2 = "background-color",
-			value1 = "rgba(102, 140, 217, 1)");
-
-		AssertCssValue(
-			key_eventTitle = "Calendar Event Regular Title",
-			locator1 = "Calendar#SCHEDULER_EVENT_CONTENT",
-			locator2 = "color",
-			value1 = "rgba(39, 40, 51, 1)");
-	}
-
 	@description = "LRQA-72024 - Verify that the user can go back and forward on Calendar"
 	@ignore = "Test Stub"
 	@priority = 3

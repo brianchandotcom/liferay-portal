@@ -247,19 +247,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 				</div>
 			</c:if>
 
-			<div class="form-group">
-				<h3 class="mb-2 sheet-subtitle"><liferay-ui:message key="verification" /></h3>
+			<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
+				<div class="form-group">
+					<h3 class="mb-2 sheet-subtitle"><liferay-ui:message key="verification" /></h3>
 
-				<clay:row>
-					<clay:col
-						md="6"
-					>
-						<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
+					<clay:row>
+						<clay:col
+							md="6"
+						>
 							<liferay-captcha:captcha />
-						</c:if>
-					</clay:col>
-				</clay:row>
-			</div>
+						</clay:col>
+					</clay:row>
+				</div>
+			</c:if>
 
 			<div class="form-group">
 				<aui:button-row>

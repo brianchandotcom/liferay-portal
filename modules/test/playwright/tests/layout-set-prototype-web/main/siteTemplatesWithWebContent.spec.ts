@@ -490,10 +490,10 @@ test(
 			);
 
 		const baseURL = liferayConfig.environment.baseUrl;
-		const cleanBaseURL = baseURL.replace('http://', '');
+		const baseURLNoProtocol = baseURL.replace('http://', '');
 
 		await apiHelpers.jsonWebServicesJournal.addWebContent({
-			content: `<a href="${cleanBaseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}">${baseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}</a>`,
+			content: `<a href="${baseURLNoProtocol}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}">${baseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}</a>`,
 			ddmStructureId: basicWebContentStructureId,
 			groupId: site.id,
 			titleMap: {en_US: webContentName},
@@ -541,7 +541,7 @@ test(
 				})
 				.getAttribute('href')
 		).toEqual(
-			`${cleanBaseURL}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}`
+			`${baseURLNoProtocol}/group/template-${layoutSetPrototype.layoutSetPrototypeId}/${page2Name}`
 		);
 	}
 );

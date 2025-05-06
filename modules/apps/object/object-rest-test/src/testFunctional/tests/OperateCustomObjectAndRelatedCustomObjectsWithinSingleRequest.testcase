@@ -156,51 +156,6 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = 4
-	test CanCreateCustomObjectEntriesWithPutChildObjectInManyToManyRelationshipWithItself {
-		property portal.acceptance = "true";
-
-		task ("And Given two Student entries are created with postStudent including studentsStudents with another Student entry information") {
-			var response = CustomObjectAPI.createObjectEntryAndRelatedObjects(
-				en_US_plural_label = "students",
-				externalReferenceCode = "ableErc",
-				fieldName = "name",
-				fieldValue = "Able",
-				nestedField = "studentsStudents",
-				numberOfRelatedObjectEntries = 1,
-				relatedEntryFieldName = "name");
-		}
-
-		task ("When with putStudent and studentId including studentsStudents with new Student entry information to update Student entry") {
-			var studentId = JSONPathUtil.getIdValue(response = ${response});
-
-			CustomObjectAPI.updateObjectEntryAndRelatedObjectsByPut(
-				en_US_plural_label = "students",
-				externalReferenceCode = "ableErc",
-				fieldName = "name",
-				fieldValue = "Able-update",
-				nestedField = "studentsStudents",
-				numberOfRelatedObjectEntries = 1,
-				objectEntryId = ${studentId},
-				relatedEntryFieldName = "name");
-		}
-
-		task ("Then the original Student entry is updated") {
-			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				en_US_plural_label = "students",
-				expectedValues = "Able-update,name0,name0-update",
-				objectJsonPath = "$.items[*].name");
-		}
-
-		task ("And Then one more Student entry is created") {
-			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
-				en_US_plural_label = "students",
-				expectedValues = 3,
-				objectJsonPath = "$.totalCount");
-		}
-	}
-
-	@disable-webdriver = "true"
 	@priority = 3
 	test CanCreateCustomObjectEntriesWithPutParentObjectInManyToManyRelationship {
 		property portal.acceptance = "true";

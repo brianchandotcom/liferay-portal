@@ -1,15 +1,9 @@
 package ${configYAML.apiPackagePath}.internal.jaxrs.application;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.ws.rs.core.Application;
-
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.ws.rs.core.Application;
-</#if>
+import ${javaEePrefix}.annotation.Generated;
+import ${javaEePrefix}.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
 

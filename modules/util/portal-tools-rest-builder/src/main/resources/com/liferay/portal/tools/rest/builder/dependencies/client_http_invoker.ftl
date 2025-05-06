@@ -1,11 +1,8 @@
 package ${configYAML.apiPackagePath}.client.http;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-<#else>
-	import jakarta.annotation.Generated;
-</#if>
+import ${javaEePrefix}.annotation.Generated;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

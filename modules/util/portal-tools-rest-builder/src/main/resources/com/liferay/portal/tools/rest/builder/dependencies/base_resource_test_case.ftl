@@ -136,28 +136,17 @@ import java.util.Set;
 	import java.util.function.Supplier;
 </#if>
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.servlet.http.HttpServletRequest;
+import ${javaEePrefix}.annotation.Generated;
 
-	import javax.ws.rs.core.MultivaluedHashMap;
-	import javax.ws.rs.core.MultivaluedMap;
-	import javax.ws.rs.core.PathSegment;
-	import javax.ws.rs.core.UriBuilder;
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.servlet.http.HttpServletRequest;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.servlet.http.HttpServletRequest;
-
-	import jakarta.ws.rs.core.MultivaluedHashMap;
-	import jakarta.ws.rs.core.MultivaluedMap;
-	import jakarta.ws.rs.core.PathSegment;
-	import jakarta.ws.rs.core.UriBuilder;
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.core.MultivaluedHashMap;
+import ${javaEePrefix}.ws.rs.core.MultivaluedMap;
+import ${javaEePrefix}.ws.rs.core.PathSegment;
+import ${javaEePrefix}.ws.rs.core.UriBuilder;
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;

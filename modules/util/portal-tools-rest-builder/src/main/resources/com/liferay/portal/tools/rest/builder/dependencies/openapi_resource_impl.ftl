@@ -6,34 +6,20 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.servlet.http.HttpServletRequest;
+import ${javaEePrefix}.annotation.Generated;
 
-	import javax.ws.rs.GET;
-	import javax.ws.rs.Path;
-	import javax.ws.rs.PathParam;
-	import javax.ws.rs.Produces;
-	import javax.ws.rs.core.Context;
-	import javax.ws.rs.core.MediaType;
-	import javax.ws.rs.core.Response;
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.servlet.http.HttpServletRequest;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.servlet.http.HttpServletRequest;
-
-	import jakarta.ws.rs.GET;
-	import jakarta.ws.rs.Path;
-	import jakarta.ws.rs.PathParam;
-	import jakarta.ws.rs.Produces;
-	import jakarta.ws.rs.core.Context;
-	import jakarta.ws.rs.core.MediaType;
-	import jakarta.ws.rs.core.Response;
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.GET;
+import ${javaEePrefix}.ws.rs.Path;
+import ${javaEePrefix}.ws.rs.PathParam;
+import ${javaEePrefix}.ws.rs.Produces;
+import ${javaEePrefix}.ws.rs.core.Context;
+import ${javaEePrefix}.ws.rs.core.MediaType;
+import ${javaEePrefix}.ws.rs.core.Response;
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
 

@@ -638,6 +638,14 @@ public class FreeMarkerTool {
 		return javaDataTypeMap.get(schemaName);
 	}
 
+	public String getJavaEePrefix(ConfigYAML configYAML) {
+		if (ConfigUtil.isUseJavax(configYAML)) {
+			return "javax";
+		}
+
+		return "jakarta";
+	}
+
 	public JavaMethodSignature getJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String methodName) {
 
@@ -1243,10 +1251,6 @@ public class FreeMarkerTool {
 		}
 
 		return false;
-	}
-
-	public boolean isUseJavax(ConfigYAML configYAML) {
-		return ConfigUtil.isUseJavax(configYAML);
 	}
 
 	public boolean isVersionCompatible(ConfigYAML configYAML, int version) {

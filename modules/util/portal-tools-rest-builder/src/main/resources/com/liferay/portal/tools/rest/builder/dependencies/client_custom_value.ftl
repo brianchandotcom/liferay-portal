@@ -3,12 +3,9 @@ package ${configYAML.apiPackagePath}.client.custom.field;
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-<#else>
-	import jakarta.annotation.Generated;
-</#if>
+import ${javaEePrefix}.annotation.Generated;
 
 import java.util.Iterator;
 import java.util.Map;

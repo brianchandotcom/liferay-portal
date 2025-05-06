@@ -25,22 +25,14 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
+import ${javaEePrefix}.annotation.Generated;
 
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.servlet.http.HttpServletRequest;
+import ${javaEePrefix}.servlet.http.HttpServletResponse;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.servlet.http.HttpServletRequest;
-	import jakarta.servlet.http.HttpServletResponse;
-
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;

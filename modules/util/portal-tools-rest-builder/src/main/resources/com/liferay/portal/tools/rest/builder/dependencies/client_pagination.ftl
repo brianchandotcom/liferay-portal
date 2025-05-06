@@ -1,11 +1,8 @@
 package ${configYAML.apiPackagePath}.client.pagination;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-<#else>
-	import jakarta.annotation.Generated;
-</#if>
+import ${javaEePrefix}.annotation.Generated;
 
 /**
  * @author ${configYAML.author}

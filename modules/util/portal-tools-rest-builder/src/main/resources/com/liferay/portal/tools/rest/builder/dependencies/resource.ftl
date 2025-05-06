@@ -23,24 +23,15 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
+import ${javaEePrefix}.annotation.Generated;
 
-	import javax.ws.rs.core.Response;
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.servlet.http.HttpServletRequest;
+import ${javaEePrefix}.servlet.http.HttpServletResponse;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.servlet.http.HttpServletRequest;
-	import jakarta.servlet.http.HttpServletResponse;
-
-	import jakarta.ws.rs.core.Response;
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.core.Response;
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import java.util.Collections;
 import java.util.Date;

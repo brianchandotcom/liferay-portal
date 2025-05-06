@@ -4,11 +4,6 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 </#list>
 
-<#macro responseBuilderMacro>
-	<#assign responseBuilderPackage = (freeMarkerTool.isUseJavax(configYAML))?then("javax", "jakarta") />
-	${responseBuilderPackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${responseBuilderPackage}.ws.rs.core.Response.accepted();
-</#macro>
-
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -75,32 +70,19 @@ import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.servlet.ServletContext;
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
+import ${javaEePrefix}.annotation.Generated;
 
-	import javax.ws.rs.NotSupportedException;
-	import javax.ws.rs.core.MultivaluedHashMap;
-	import javax.ws.rs.core.MultivaluedMap;
-	import javax.ws.rs.core.Response;
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.servlet.ServletContext;
+import ${javaEePrefix}.servlet.http.HttpServletRequest;
+import ${javaEePrefix}.servlet.http.HttpServletResponse;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.servlet.ServletContext;
-	import jakarta.servlet.http.HttpServletRequest;
-	import jakarta.servlet.http.HttpServletResponse;
-
-	import jakarta.ws.rs.NotSupportedException;
-	import jakarta.ws.rs.core.MultivaluedHashMap;
-	import jakarta.ws.rs.core.MultivaluedMap;
-	import jakarta.ws.rs.core.Response;
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.NotSupportedException;
+import ${javaEePrefix}.ws.rs.core.MultivaluedHashMap;
+import ${javaEePrefix}.ws.rs.core.MultivaluedMap;
+import ${javaEePrefix}.ws.rs.core.Response;
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import java.io.Serializable;
 
@@ -123,11 +105,7 @@ import java.util.Set;
  */
 @Generated("")
 <#if configYAML.application??>
-	<#if freeMarkerTool.isUseJavax(configYAML)>
-		@javax.ws.rs.Path("/${openAPIYAML.info.version}")
-	<#else>
-		@jakarta.ws.rs.Path("/${openAPIYAML.info.version}")
-	</#if>
+	@${javaEePrefix}.ws.rs.Path("/${openAPIYAML.info.version}")
 </#if>
 public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
@@ -345,7 +323,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<@responseBuilderMacro />
+				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
@@ -358,7 +336,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
 				vulcanBatchEngineExportTaskResource.setGroupLocalService(groupLocalService);
 
-				<@responseBuilderMacro />
+				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, contentType, fieldNames)
@@ -370,7 +348,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<@responseBuilderMacro />
+				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.postImportTask(${javaDataType}.class.getName(), callbackURL, null, object)
@@ -382,7 +360,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				<@responseBuilderMacro />
+				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)

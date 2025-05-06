@@ -14,23 +14,6 @@ import ${configYAML.apiPackagePath}.client.aggregation.Aggregation;
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 </#list>
 
-<#macro processedReturnType
-	returnType
->
-	<#assign
-		responseTypeToReplace = (freeMarkerTool.isUseJavax(configYAML))?then("javax.ws.rs.core.Response", "jakarta.ws.rs.core.Response")
-		_processedReturnType = returnType
-		?replace(".constant.", ".client.constant.")
-		?replace(".dto.", ".client.dto.")
-		?replace("com.liferay.portal.vulcan.aggregation.", "")
-		?replace("com.liferay.portal.vulcan.pagination.", "")
-		?replace("com.liferay.portal.vulcan.permission.", "")
-		?replace(responseTypeToReplace, "void")
-	/>
-
-	${_processedReturnType}
-</#macro>
-
 import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
@@ -46,12 +29,9 @@ import ${configYAML.apiPackagePath}.client.problem.Problem;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-<#else>
-	import jakarta.annotation.Generated;
-</#if>
+import ${javaEePrefix}.annotation.Generated;
 
 import java.io.File;
 
@@ -85,7 +65,7 @@ public interface ${schemaName}Resource {
 			parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 		/>
 
-		public <@processedReturnType returnType=javaMethodSignature.returnType /> ${javaMethodSignature.methodName}(${parameters}) throws Exception;
+		public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace(javaEePrefix + ".ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
 
 		public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception;
 	</#list>
@@ -203,7 +183,7 @@ public interface ${schemaName}Resource {
 				parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 			/>
 
-			public <@processedReturnType returnType=javaMethodSignature.returnType /> ${javaMethodSignature.methodName}(${parameters}) throws Exception {
+			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${javaMethodSignature.methodName}HttpResponse(${arguments});
 
 				String content = httpResponse.getContent();
@@ -236,13 +216,7 @@ public interface ${schemaName}Resource {
 					_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 				}
 
-				<#assign responseTypeToExclude =
-					(freeMarkerTool.isUseJavax(configYAML))?then(
-						"javax.ws.rs.core.Response",
-						"jakarta.ws.rs.core.Response"
-					) />
-
-				<#if !javaMethodSignature.returnType?contains(responseTypeToExclude)>
+				<#if !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
 					try {
 						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
 							return Page.of(content, Permission::toDTO);
@@ -255,6 +229,7 @@ public interface ${schemaName}Resource {
 								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
 								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer") ||
 								 stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
+
 							return ${javaMethodSignature.returnType}.valueOf(content);
 						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
 							return Double.valueOf(content);
@@ -269,8 +244,10 @@ public interface ${schemaName}Resource {
 						<#else>
 							return;
 						</#if>
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
+
 						throw new Problem.ProblemException(Problem.toDTO(content));
 					}
 				</#if>

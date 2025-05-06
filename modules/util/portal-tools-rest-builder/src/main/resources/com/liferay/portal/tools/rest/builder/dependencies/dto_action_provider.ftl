@@ -7,16 +7,11 @@ import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
-<#if freeMarkerTool.isUseJavax(configYAML)>
-	import javax.annotation.Generated;
+<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
 
-	import javax.ws.rs.core.UriInfo;
+import ${javaEePrefix}.annotation.Generated;
 
-<#else>
-	import jakarta.annotation.Generated;
-
-	import jakarta.ws.rs.core.UriInfo;
-</#if>
+import ${javaEePrefix}.ws.rs.core.UriInfo;
 
 import java.util.HashMap;
 import java.util.Map;

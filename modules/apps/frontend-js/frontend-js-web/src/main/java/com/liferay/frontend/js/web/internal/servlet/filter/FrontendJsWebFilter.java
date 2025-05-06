@@ -8,6 +8,9 @@ package com.liferay.frontend.js.web.internal.servlet.filter;
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
 import com.liferay.frontend.js.web.internal.hashed.files.request.AbstractRequestHelper;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.ModuleRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.SourceMapRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.StylesRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -73,6 +76,21 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 		_abstractRequestHelpers.add(
 			new LanguageRequestHelper(
 				_configurationProvider, _jsonFactory, _language, _portal,
+				_serviceTrackerMap));
+
+		_abstractRequestHelpers.add(
+			new ModuleRequestHelper(
+				_configurationProvider, _hashedFilesRegistry, _portal,
+				_serviceTrackerMap));
+
+		_abstractRequestHelpers.add(
+			new SourceMapRequestHelper(
+				_configurationProvider, _hashedFilesRegistry, _portal,
+				_serviceTrackerMap));
+
+		_abstractRequestHelpers.add(
+			new StylesRequestHelper(
+				_configurationProvider, _hashedFilesRegistry, _portal,
 				_serviceTrackerMap));
 	}
 

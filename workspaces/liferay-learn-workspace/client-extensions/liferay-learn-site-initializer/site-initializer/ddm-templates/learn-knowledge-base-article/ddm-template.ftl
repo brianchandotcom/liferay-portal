@@ -94,8 +94,8 @@
 				</#if>
 			</article>
 
-			<div class="attachment-container">
-				Attachment Space
+			<div class="attachments-container">
+				
 			</div>
 
 			<div class="align-items-center d-flex flex-row p-3 rating-box bold">
@@ -187,8 +187,69 @@ window.addEventListener("load", function() {
 
 const assetId = ${assetId}
 let knowledgeArticleContent = null;
+let attachments = null;
+	
+async function fetchAttachments(assetId) {
+	try {
+		const response = await fetch(`/o/c/p2s3knowledgearticles/${assetId}?fields=p2s3KnowledgeArticleToP2S3Attachments&nestedFields=p2s3KnowledgeArticleToP2S3Attachments`, {
+			headers: {
+				'x-csrf-token': Liferay.authToken,
+			},
+		});
 
-async function fetchKnowledgeArticles(assetId) {
+		if (!response.ok) {
+			console.error('Request Error:', response.statusText);
+			return;
+		}
+
+		const data = await response.json();
+
+		if (data && data.p2s3KnowledgeArticleToP2S3Attachments) {
+			attachments = data.p2s3KnowledgeArticleToP2S3Attachments;
+			const attachmentsContainer= document.querySelector('.attachments-container');
+
+			if (attachmentsContainer) {
+				generateAttachmentCards();
+			}
+		} else {
+			console.error('Data not found:', data);
+		}
+	} catch (error) {
+		console.error('Error fetching data:', error);
+	}
+}
+	
+function generateAttachmentCards() {
+	const attachmentsContainer= document.querySelector('.attachments-container');
+
+	if (!attachmentsContainer) {
+		console.warn('Container not found');
+		return;
+	}
+
+    attachments.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'attachment-card'; 
+
+      const title = document.createElement('p');
+      title.textContent = item.name;
+
+      const downloadBtn = document.createElement('a');
+      downloadBtn.href = item.file?.link?.href || '#';
+      downloadBtn.textContent = 'Download';
+      downloadBtn.className = 'download-button'; 
+      downloadBtn.target = '_blank'; 
+      downloadBtn.download = item.file?.name || 'file';
+
+      card.appendChild(title);
+      card.appendChild(downloadBtn);
+      attachmentsContainer.appendChild(card);
+    });
+}
+	
+fetchAttachments(assetId);
+
+async function fetchKnowledgeArticle(assetId) {
 	try {
 		const response = await fetch(`https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}`, {
 			headers: {
@@ -260,7 +321,7 @@ function generateButtonsFromRenderedContent() {
 	});
 }
 
-fetchKnowledgeArticles(assetId);
+fetchKnowledgeArticle(assetId);
 
 async function fetchCategories(input) {
 	const response = await fetch('https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory', {
@@ -337,6 +398,66 @@ fetchCategories().then((taxonomyCategoryBriefs) => {
 </script>
 
 <style>
+.attachment-card {
+  width: 32rem;	
+  display: flex;
+  border: 1px solid #E2E2E4;
+  border-radius: 0.75rem;
+  height: 5rem;
+  justify-content: space-between;
+  padding: 1rem;
+	align-items: center;
+	
+	p {
+	  font-weight: 600;
+		display: inline-flex;        
+    align-items: center;  
+		margin: 0;
+		
+		&::before {
+		
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_1031_5862' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='4' y='1' width='24' height='30'%3E%3Cpath d='M20.5 1H7C5.3418 1 4 2.3418 4 4V28C4 29.6582 5.3418 31 7 31H25C26.6582 31 28 29.6582 28 28V8.5L20.5 1Z' fill='%236B6C7E'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_1031_5862)'%3E%3Crect width='32' height='32' fill='%23377CFF'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+	margin-right: 0.5rem;
+
+
+		}
+	}
+}
+	
+.attachments-container {
+	  display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+	  margin-top: 1rem;
+}
+	
+.download-button {
+    color: black;
+    height: 2rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;	
+	  display: inline-flex;       
+    align-items: center;  
+	
+	&::after {
+  content: '';
+  display: inline-block;
+  width: 17px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2217%22%20height%3D%2216%22%20viewBox%3D%220%200%2017%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cmask%20id%3D%22mask0_1031_5875%22%20style%3D%22mask-type%3Aalpha%22%20maskUnits%3D%22userSpaceOnUse%22%20x%3D%222%22%20y%3D%220%22%20width%3D%2213%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M8.5%2012C8.23145%2012%207.97461%2011.8937%207.78418%2011.7031L5.54688%209.46564C5.14941%209.0719%205.14941%208.43127%205.54688%208.03436C5.94043%207.63751%206.58105%207.63751%206.97754%208.03436L7.5%208.55627V1C7.5%200.446899%207.94629%200%208.5%200C9.05273%200%209.5%200.446899%209.5%201V8.55627L10.0215%208.03436C10.2188%207.83752%2010.4775%207.73749%2010.7373%207.73749C10.9971%207.73749%2011.2559%207.83752%2011.4531%208.03436C11.8496%208.4281%2011.8496%209.06873%2011.4531%209.46564L9.21582%2011.7031C9.02441%2011.8937%208.76855%2012%208.5%2012Z%22%20fill%3D%22%236B6C7E%22/%3E%3Cpath%20d%3D%22M12.5%2012C12.5%2011.4469%2012.9473%2011%2013.5%2011C14.0527%2011%2014.5%2011.4469%2014.5%2012V14C14.5%2015.1046%2013.6046%2016%2012.5%2016H4.5C3.39543%2016%202.5%2015.1046%202.5%2014V12C2.5%2011.4469%202.94727%2011%203.5%2011C4.05273%2011%204.5%2011.4469%204.5%2012V14H12.5V12Z%22%20fill%3D%22%236B6C7E%22/%3E%3C/mask%3E%3Cg%20mask%3D%22url(%23mask0_1031_5875)%22%3E%3Crect%20x%3D%220.5%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%232B3A4B%22/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 0.5em;
+
+	}
+}
+
 article h2 {
 	scroll-margin-top: 11rem;
 }

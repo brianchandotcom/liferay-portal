@@ -575,6 +575,18 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.10.0", "10.11.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntryVersion", "objectDefinitionId LONG"));
+
+		registry.register(
+			"10.11.0", "10.12.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntry", "expirationDate DATE null"));
+
+		registry.register(
+			"10.12.0", "10.13.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntryVersion", "expirationDate DATE null",
+				"statusByUserId LONG", "statusByUserName VARCHAR(75) null",
+				"statusDate DATE null"));
 	}
 
 	@Reference

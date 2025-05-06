@@ -14,7 +14,7 @@ type Item = {
 	value: string;
 };
 
-interface IActionsDropdown {
+export interface IActionsDropdown {
 	items: Item[];
 	onChange: (value: string) => void;
 }

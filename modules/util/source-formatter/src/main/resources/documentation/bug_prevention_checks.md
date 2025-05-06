@@ -25,9 +25,9 @@ BNDBreakingChangeCommitMessageCheck | .bnd | Checks that commit message should c
 CDNCheck | | Checks the URL in `artifact.properties` files. |
 CIMergeAndGitRepoFileCheck | .gitrepo or ci-merge | Checks that `ci-merge` and `.gitrepo` files can not be added or modified. |
 CQLKeywordCheck | .cql | Checks that Cassandra keywords are upper case. |
-CSPIllegalTagsCheck | .ftl, .jsp, .jspf, .jspx, or .vm | Finds cases of incorrect use of certain tags. |
-CSPTagIllegalAttributesCheck | .ftl, .jsp, .jspf, .jspx, or .vm | Finds cases of incorrect use of tag attributes. |
-CSPTagMissingAttributesCheck | .ftl, .jsp, .jspf, .jspx, or .vm | Checks for missing tag attributes. |
+CSPIllegalTagsCheck | .ftl, .html, .jsp, .jspf, .jspx, or .vm | Finds cases of incorrect use of certain tags. |
+CSPTagIllegalAttributesCheck | .ftl, .html, .jsp, .jspf, .jspx, or .vm | Finds cases of incorrect use of tag attributes. |
+CSPTagMissingAttributesCheck | .ftl, .html, .jsp, .jspf, .jspx, or .vm | Checks for missing tag attributes. |
 ClassNameIdCheck | .java | Avoid caching noncompany scoped class name IDs. |
 [CodeownersFileLocationCheck](check/codeowners_file_location_check.md#codeownersfilelocationcheck) | CODEOWNERS | Checks that `CODEOWNERS` files are located in `.github` directory. |
 [CompanyIterationCheck](check/company_iteration_check.md#companyiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |

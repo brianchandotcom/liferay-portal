@@ -109,7 +109,7 @@ Checks are configured in the following files:
    - [.eslintignore, .prettierignore, or .properties](src/main/resources/documentation/properties_source_processor_checks.md#checks-for-eslintignore-prettierignore-or-properties)
    - [.expect or .sh](src/main/resources/documentation/sh_source_processor_checks.md#checks-for-expect-or-sh)
    - [.ftl](src/main/resources/documentation/ftl_source_processor_checks.md#checks-for-ftl)
-   - [.ftl, .jsp, .jspf, .jspx, or .vm](src/main/resources/documentation/csp_source_processor_checks.md#checks-for-ftl-jsp-jspf-jspx-or-vm)
+   - [.ftl, .html, .jsp, .jspf, .jspx, or .vm](src/main/resources/documentation/csp_source_processor_checks.md#checks-for-ftl-html-jsp-jspf-jspx-or-vm)
    - [.function, .jar, .lar, .macro, .path, .testcase, .war, or .zip](src/main/resources/documentation/poshi_source_processor_checks.md#checks-for-function-jar-lar-macro-path-testcase-war-or-zip)
    - [.gitrepo or ci-merge](src/main/resources/documentation/ci_merge_and_git_repo_source_processor_checks.md#checks-for-gitrepo-or-cimerge)
    - [.gradle](src/main/resources/documentation/gradle_source_processor_checks.md#checks-for-gradle)

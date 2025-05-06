@@ -426,6 +426,12 @@ public interface OrganizationLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getNoAssetOrganizations();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization getOrAddIncompleteOrganization(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws Exception;
+
 	/**
 	 * Returns the organization with the primary key.
 	 *

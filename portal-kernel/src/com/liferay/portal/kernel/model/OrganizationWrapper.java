@@ -55,6 +55,7 @@ public class OrganizationWrapper
 		attributes.put("statusListTypeId", getStatusListTypeId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -181,6 +182,12 @@ public class OrganizationWrapper
 
 		if (logoId != null) {
 			setLogoId(logoId);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -432,6 +439,16 @@ public class OrganizationWrapper
 	@Override
 	public java.util.Set<String> getReminderQueryQuestions(String languageId) {
 		return model.getReminderQueryQuestions(languageId);
+	}
+
+	/**
+	 * Returns the status of this organization.
+	 *
+	 * @return the status of this organization
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -707,6 +724,16 @@ public class OrganizationWrapper
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
+	}
+
+	/**
+	 * Sets the status of this organization.
+	 *
+	 * @param status the status of this organization
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

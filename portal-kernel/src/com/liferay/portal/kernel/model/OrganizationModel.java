@@ -378,6 +378,20 @@ public interface OrganizationModel
 	 */
 	public void setLogoId(long logoId);
 
+	/**
+	 * Returns the status of this organization.
+	 *
+	 * @return the status of this organization
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this organization.
+	 *
+	 * @param status the status of this organization
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public Organization cloneWithOriginalValues();
 

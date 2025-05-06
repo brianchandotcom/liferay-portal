@@ -611,6 +611,16 @@ public class OrganizationLocalServiceWrapper
 		return _organizationLocalService.getNoAssetOrganizations();
 	}
 
+	@Override
+	public Organization getOrAddIncompleteOrganization(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws Exception {
+
+		return _organizationLocalService.getOrAddIncompleteOrganization(
+			externalReferenceCode, companyId, userId, name);
+	}
+
 	/**
 	 * Returns the organization with the primary key.
 	 *

@@ -6,7 +6,7 @@
 import {Text} from '@clayui/core';
 import React from 'react';
 
-interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
+export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 	Preferences?: React.ReactNode;
 	description?: string;
 	title: string;

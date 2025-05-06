@@ -8,12 +8,14 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectDefinitionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +48,42 @@ public class StructureBuilderDisplayContext {
 			JSONUtil.put(
 				"objectFolderExternalReferenceCode",
 				_getObjectFolderExternalReferenceCode())
+		).put(
+			"editStructureDisplayPageURL",
+			() -> {
+				ObjectDefinition objectDefinition = _getObjectDefinition();
+
+				if ((objectDefinition == null) ||
+					!GetterUtil.getBoolean(_objectDefinition.getActive())) {
+
+					return null;
+				}
+
+				return StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/edit_structure_display_page?objectDefinitionId=",
+					ParamUtil.getLong(
+						_httpServletRequest, "objectDefinitionId"),
+					"&redirect=", _themeDisplay.getURLCurrent());
+			}
+		).put(
+			"resetStructureDisplayPageURL",
+			() -> {
+				ObjectDefinition objectDefinition = _getObjectDefinition();
+
+				if ((objectDefinition == null) ||
+					!GetterUtil.getBoolean(_objectDefinition.getActive())) {
+
+					return null;
+				}
+
+				return StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/reset_structure_display_page?objectDefinitionId=",
+					ParamUtil.getLong(
+						_httpServletRequest, "objectDefinitionId"),
+					"&redirect=", _themeDisplay.getURLCurrent());
+			}
 		).put(
 			"state",
 			JSONUtil.put("objectDefinition", _getObjectDefinitionJSONObject())

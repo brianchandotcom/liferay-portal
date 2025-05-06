@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -23,10 +24,12 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -55,6 +58,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -630,6 +634,37 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddIncompleteCategory() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_assetCategoryLocalService.getOrAddIncompleteCategory(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId());
+
+			Assert.fail();
+		}
+		catch (NoSuchCategoryException noSuchCategoryException) {
+			Assert.assertNotNull(noSuchCategoryException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.getOrAddIncompleteCategory(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, assetCategory.getStatus());
+		}
+	}
+
+	@Test
 	public void testSearch() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -849,6 +884,42 @@ public class AssetCategoryLocalServiceTest {
 
 		Assert.assertTrue(assetCategories.contains(assetCategory1));
 		Assert.assertTrue(assetCategories.contains(assetCategory2));
+	}
+
+	@Test
+	public void testUpdateAssetCategoryWithLazyReferencingEnabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.getOrAddIncompleteCategory(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, assetCategory.getStatus());
+
+			String name = RandomTestUtil.randomString();
+
+			assetCategory = _assetCategoryLocalService.updateCategory(
+				TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				Collections.singletonMap(LocaleUtil.getSiteDefault(), name),
+				assetCategory.getDescriptionMap(),
+				_assetVocabulary.getVocabularyId(), null, new ServiceContext());
+
+			Assert.assertEquals(name, assetCategory.getName());
+			Assert.assertEquals(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				assetCategory.getParentCategoryId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, assetCategory.getStatus());
+			Assert.assertEquals(
+				_assetVocabulary.getVocabularyId(),
+				assetCategory.getVocabularyId());
+		}
 	}
 
 	@Test

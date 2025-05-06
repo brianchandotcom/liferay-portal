@@ -17,6 +17,12 @@
 			"url": "https://learn.liferay.com/w/dxp/using-search/installing-and-upgrading-a-search-engine/elasticsearch/installing-elasticsearch"
 		}
 	},
+	"install-opensearch": {
+		"en_US": {
+			"message": "Install OpenSearch",
+			"url": "https://learn.liferay.com/w/dxp/using-search/installing-and-upgrading-a-search-engine/opensearch"
+		}
+	},
 	"search-bar-suggestions": {
 		"en_US": {
 			"message": "Learn more.",
@@ -44,12 +50,6 @@
 		"en_US": {
 			"message": "Learn more.",
 			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets"
-		}
-	},
-	"sidecar-not-supported": {
-		"en_US": {
-			"message": "Learn more",
-			"url": "https://learn.liferay.com/web/guest/w/dxp/using-search/installing-and-upgrading-a-search-engine/elasticsearch/using-the-sidecar-or-embedded-elasticsearch"
 		}
 	},
 	"sorting-search-results": {

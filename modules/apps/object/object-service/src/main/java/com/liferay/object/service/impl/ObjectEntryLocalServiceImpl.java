@@ -399,9 +399,13 @@ public class ObjectEntryLocalServiceImpl
 				});
 		}
 
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if (objectDefinition.isRootDescendantNode() ||
+			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
 			try {
-				ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
+				if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+					ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
+				}
 
 				objectEntry = objectEntryPersistence.update(objectEntry);
 			}
@@ -5088,11 +5092,16 @@ public class ObjectEntryLocalServiceImpl
 					_objectDefinitionPersistence.fetchByPrimaryKey(
 						objectDefinition.getRootObjectDefinitionId());
 
+				ServiceContext workflowServiceContext =
+					(ServiceContext)serviceContext.clone();
+
+				workflowServiceContext.setStrictAdd(false);
+
 				_startWorkflowInstance(
 					userId, rootObjectDefinition.getClassName(),
 					objectEntryPersistence.fetchByPrimaryKey(
 						objectEntry.getRootObjectEntryId()),
-					serviceContext);
+					workflowServiceContext);
 			}
 			else {
 				_skipModelListeners.set(skipModelListener);

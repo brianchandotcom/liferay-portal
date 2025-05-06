@@ -21,6 +21,7 @@ import {waitForAlert} from '../../../../utils/waitForAlert';
 import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -1110,4 +1111,58 @@ test('LPD-39067 Can product media and relation show correct date format', async 
 	verifyDateFormat(
 		await newProductRelationFrameTableModifiedDate.textContent()
 	);
+});
+
+test('LPD-52731 Product shows in catalog after updating Account Group Visibility Filter through Batch API', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	page,
+}) => {
+	const siteName = 'minium-' + getRandomInt();
+
+	const {site} = await miniumSetUp(apiHelpers, siteName);
+
+	const catalogs =
+		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(siteName);
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalogs.items[0].id,
+		productAccountGroupFilter: true,
+	});
+
+	const accountGroup = await apiHelpers.headlessAdminUser.postAccountGroup({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
+
+	const account1 = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Account1',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account1.id,
+		['test@liferay.com']
+	);
+
+	await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+		account1.externalReferenceCode,
+		accountGroup.externalReferenceCode
+	);
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProductBatch([
+		{
+			catalogId: catalogs.items[0].id,
+			externalReferenceCode: product.externalReferenceCode,
+			productAccountGroupFilter: true,
+			productAccountGroups: [{accountGroupId: accountGroup.id, id: 0}],
+		},
+	]);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await expect(page.getByText(product.name['en_US'])).toBeVisible();
 });

@@ -422,12 +422,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/CompanyTestEntity"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/CompanyTestEntity"
@@ -467,10 +467,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
                     description:
@@ -495,10 +495,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
                     description:
@@ -517,10 +517,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
                     description:
@@ -546,10 +546,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
                     description:
@@ -575,10 +575,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/CompanyTestEntity"
                     description:
@@ -631,12 +631,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/EntityModelResourceTestEntity1"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/EntityModelResourceTestEntity1"
@@ -660,10 +660,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/EntityModelResourceTestEntity2"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/EntityModelResourceTestEntity2"
                     description:
@@ -675,12 +675,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Filter"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Filter"
@@ -711,12 +711,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Schema"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Schema"
@@ -737,10 +737,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SimpleTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SimpleTestEntity"
                     description:
@@ -766,10 +766,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SimpleTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SimpleTestEntity"
                     description:
@@ -792,7 +792,7 @@ paths:
             responses:
                 200:
                     content:
-                        "multipart/form-data":
+                        multipart/form-data:
                             schema:
                                 $ref: "#/components/schemas/SimpleTestEntity"
                     description:
@@ -811,10 +811,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
                     description:
@@ -842,10 +842,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
                     description:
@@ -871,10 +871,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
                     description:
@@ -1042,12 +1042,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/SiteTestEntity"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/SiteTestEntity"
@@ -1100,10 +1100,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
                     description:
@@ -1134,10 +1134,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/SiteTestEntity"
                     description:
@@ -1149,12 +1149,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Sort"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Sort"
@@ -1168,12 +1168,12 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/TestEntity"
                                 type: array
-                        "application/xml":
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/TestEntity"
@@ -1230,10 +1230,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
                     description:
@@ -1265,10 +1265,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
                     description:
@@ -1300,10 +1300,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/TestEntity"
                     description:
@@ -1324,10 +1324,10 @@ paths:
             responses:
                 200:
                     content:
-                        "application/json":
+                        application/json:
                             schema:
                                 $ref: "#/components/schemas/TestEntityAddress"
-                        "application/xml":
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/TestEntityAddress"
                     description:

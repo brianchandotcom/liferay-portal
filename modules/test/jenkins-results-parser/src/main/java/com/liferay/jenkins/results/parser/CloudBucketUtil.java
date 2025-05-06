@@ -41,7 +41,8 @@ public class CloudBucketUtil {
 	public static void copyS3File(String destination, String source) {
 		_executeCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress", destination, source));
+				"aws s3 cp --no-progress", _replaceS3ObjectPath(destination),
+				_replaceS3ObjectPath(source)));
 
 		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
 			destination);
@@ -56,6 +57,8 @@ public class CloudBucketUtil {
 		if (sourceS3ObjectPathMatcher.find()) {
 			createS3ObjectRef(source);
 		}
+
+		System.out.println("Copied " + source + " to " + destination);
 	}
 
 	public static void createS3ObjectRef(String s3ObjectPath) {
@@ -196,6 +199,8 @@ public class CloudBucketUtil {
 		catch (IOException | TimeoutException exception) {
 			throw new RuntimeException(exception);
 		}
+
+		System.out.println("Synced " + source + " to " + destination);
 	}
 
 	private static String _escapeParentheses(String s) {
@@ -315,6 +320,25 @@ public class CloudBucketUtil {
 		sb.append(".s3.ref");
 
 		return new File(sb.toString());
+	}
+
+	private static String _replaceS3ObjectPath(String path) {
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(path);
+
+		if (s3ObjectPathMatcher.find()) {
+			File s3ObjectRefFile = _getS3ObjectRefFile(path);
+
+			if (s3ObjectRefFile.exists()) {
+				try {
+					return JenkinsResultsParserUtil.read(s3ObjectRefFile);
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+		}
+
+		return path;
 	}
 
 	private static void _validateS3ObjectPath(String s3ObjectPath) {

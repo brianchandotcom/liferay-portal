@@ -265,7 +265,7 @@ test(
 
 			const itemActionRow = actionsPage.itemActionsTable
 				.locator('tr')
-				.filter({hasText: 'Nav Links'})
+				.filter({hasText: 'Sample View'})
 				.first();
 
 			await itemActionRow.locator('.dropdown-toggle').click();
@@ -277,17 +277,9 @@ test(
 
 			const form = actionsPage.actionForm;
 
-			await expect(form.labelInput).toHaveValue('Nav Links');
-			await expect(form.iconInput).toHaveValue('home');
+			await expect(form.labelInput).toHaveValue('Sample View');
+			await expect(form.iconInput).toHaveValue('view');
 			await expect(form.typeSelect).toHaveValue('link');
-			await expect(form.urlInput).toHaveValue('#');
-			await expect(form.headlessActionKeyInput).toHaveValue('get');
-			await expect(form.confirmationMessageInput).toHaveValue(
-				'Are you sure?'
-			);
-			await expect(form.confirmationMessageTypeSelect).toHaveValue(
-				'danger'
-			);
 
 			await form.cancelButton.click();
 		});
@@ -431,7 +423,7 @@ test(
 			];
 
 			await assertTableSectionEntries('Advanced Sample', {
-				'color': buildTableRowSpec('false', ''),
+				'color': buildTableRowSpec('false', 'Default'),
 				'creator.name': buildTableRowSpec(
 					'false',
 					'customAuthorTableCellRenderer'

@@ -240,6 +240,18 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 		}
 
+		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
+			groupId, utilityPage.getThumbnail());
+
+		if (previewFileEntryId !=
+				layoutUtilityPageEntry.getPreviewFileEntryId()) {
+
+			layoutUtilityPageEntry =
+				_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
+					layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+					previewFileEntryId);
+		}
+
 		return _utilityPageDTOConverter.toDTO(
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),

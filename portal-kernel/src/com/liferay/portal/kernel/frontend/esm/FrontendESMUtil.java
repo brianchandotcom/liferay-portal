@@ -37,4 +37,14 @@ public class FrontendESMUtil {
 			submodule, ".js");
 	}
 
+	public static boolean isInternalESMRequest(String requestURI) {
+		if (requestURI.contains("/__liferay__/") ||
+			requestURI.startsWith("/o/js/language/")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

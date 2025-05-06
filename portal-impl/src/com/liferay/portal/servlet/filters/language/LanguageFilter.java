@@ -7,6 +7,7 @@ package com.liferay.portal.servlet.filters.language;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +47,20 @@ public class LanguageFilter extends BasePortalFilter {
 	@Override
 	public void init(FilterConfig filterConfig) {
 		super.init(filterConfig);
+	}
+
+	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		if (FrontendESMUtil.isInternalESMRequest(
+				httpServletRequest.getRequestURI())) {
+
+			return false;
+		}
+
+		return super.isFilterEnabled(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

@@ -2834,6 +2834,86 @@ public class DefaultObjectEntryManagerImplTest
 			ActionKeys.VIEW, tree);
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testExpireObjectEntryByVersion() throws Exception {
+		_enableObjectEntryVersioning();
+
+		String objectEntryExternalReferenceCode = RandomTestUtil.randomString();
+
+		_defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					externalReferenceCode = objectEntryExternalReferenceCode;
+					keywords = new String[] {RandomTestUtil.randomString()};
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+					systemProperties = new SystemProperties() {
+						{
+							version = new Version() {
+								{
+									number = 1;
+								}
+							};
+						}
+					};
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntryExternalReferenceCode, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					keywords = new String[] {RandomTestUtil.randomString()};
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+					systemProperties = new SystemProperties() {
+						{
+							version = new Version() {
+								{
+									number = 2;
+								}
+							};
+						}
+					};
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry =
+			_defaultObjectEntryManager.expireObjectEntryByVersion(
+				dtoConverterContext, objectEntryExternalReferenceCode,
+				_objectDefinition1, 1);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntryByVersion(
+			dtoConverterContext, objectEntryExternalReferenceCode,
+			_objectDefinition1, 2);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+
+		objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			companyId, _simpleDTOConverterContext,
+			objectEntryExternalReferenceCode, _objectDefinition1, null);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			objectEntry.getStatus(
+			).getCode());
+	}
+
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		testGetObjectEntries(Collections.emptyMap());
@@ -4486,11 +4566,7 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetVersionedObjectEntries() throws Exception {
-		_objectDefinition1.setEnableObjectEntryVersioning(true);
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
+		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
@@ -5010,11 +5086,7 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryByVersion() throws Exception {
-		_objectDefinition1.setEnableObjectEntryVersioning(true);
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
+		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
@@ -6700,6 +6772,13 @@ public class DefaultObjectEntryManagerImplTest
 			deleteAccountEntryOrganizationRel(
 				accountEntry.getAccountEntryId(),
 				organization.getOrganizationId());
+	}
+
+	private ObjectDefinition _enableObjectEntryVersioning() {
+		_objectDefinition1.setEnableObjectEntryVersioning(true);
+
+		return objectDefinitionLocalService.updateObjectDefinition(
+			_objectDefinition1);
 	}
 
 	private Long _getAttachmentObjectFieldValue() throws Exception {

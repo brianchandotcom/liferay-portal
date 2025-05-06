@@ -55,7 +55,8 @@ public class TicketAttachmentsInitiateUploadRestController
 
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.fetchTicketAttachment(
-					jwt, fileName, md5Checksum, zendeskTicketId);
+					"Bearer " + jwt.getTokenValue(), fileName, md5Checksum,
+					zendeskTicketId);
 
 			if (ticketAttachment != null) {
 				if (ticketAttachment.isApproved()) {
@@ -73,7 +74,8 @@ public class TicketAttachmentsInitiateUploadRestController
 				String type = jsonObject.optString("type");
 
 				ticketAttachment = _ticketAttachmentService.addTicketAttachment(
-					jwt, _getAccountKey(zendeskTicketId), externalReferenceCode,
+					"Bearer " + jwt.getTokenValue(),
+					_getAccountKey(zendeskTicketId), externalReferenceCode,
 					fileName, fileSize, md5Checksum,
 					TicketAttachment.STATUS_DRAFT, type, zendeskTicketId);
 			}

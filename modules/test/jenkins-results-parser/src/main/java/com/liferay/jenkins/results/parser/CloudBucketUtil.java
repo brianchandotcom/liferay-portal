@@ -42,6 +42,54 @@ public class CloudBucketUtil {
 		_executeCommands(
 			_getFileTransferCommand(
 				"aws s3 cp --no-progress", destination, source));
+
+		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			destination);
+
+		if (destinationS3ObjectPathMatcher.find()) {
+			createS3ObjectRef(destination);
+		}
+
+		Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			source);
+
+		if (sourceS3ObjectPathMatcher.find()) {
+			createS3ObjectRef(source);
+		}
+	}
+
+	public static void createS3ObjectRef(String s3ObjectPath) {
+		_validateS3ObjectPath(s3ObjectPath);
+
+		createS3ObjectRef(s3ObjectPath, s3ObjectPath);
+	}
+
+	public static void createS3ObjectRef(
+		String sourceS3ObjectPath, String destinationS3ObjectPath) {
+
+		_validateS3ObjectPath(sourceS3ObjectPath);
+		_validateS3ObjectPath(destinationS3ObjectPath);
+
+		File destinationS3ObjectFile = _getS3ObjectRefFile(
+			destinationS3ObjectPath);
+
+		if (destinationS3ObjectFile.exists()) {
+			return;
+		}
+
+		try {
+			File parentFile = destinationS3ObjectFile.getParentFile();
+
+			parentFile.mkdirs();
+
+			JenkinsResultsParserUtil.write(
+				destinationS3ObjectFile, sourceS3ObjectPath);
+
+			System.out.println("Created " + destinationS3ObjectFile);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static String getSignedURL(int duration, String file, String url)
@@ -90,6 +138,10 @@ public class CloudBucketUtil {
 	public static String listS3Files(String path)
 		throws IOException, TimeoutException {
 
+		if (!path.endsWith("/")) {
+			path += "/";
+		}
+
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			true, "aws s3 ls " + _escapeParentheses(path));
 
@@ -110,6 +162,40 @@ public class CloudBucketUtil {
 		_executeCommands(
 			_getFileTransferCommand(
 				"aws s3 sync --no-progress", destination, source));
+
+		try {
+			Matcher destinationS3ObjectPathMatcher =
+				_s3ObjectPathPattern.matcher(destination);
+
+			if (destinationS3ObjectPathMatcher.find()) {
+				Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
+					listS3Files(destination));
+
+				while (listS3FilesMatcher.find()) {
+					createS3ObjectRef(
+						JenkinsResultsParserUtil.combine(
+							destination, "/",
+							listS3FilesMatcher.group("fileName")));
+				}
+			}
+
+			Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+				source);
+
+			if (sourceS3ObjectPathMatcher.find()) {
+				Matcher listS3FilesMatcher = _listS3FilesPattern.matcher(
+					listS3Files(source));
+
+				while (listS3FilesMatcher.find()) {
+					createS3ObjectRef(
+						JenkinsResultsParserUtil.combine(
+							source, "/", listS3FilesMatcher.group("fileName")));
+				}
+			}
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private static String _escapeParentheses(String s) {
@@ -203,7 +289,49 @@ public class CloudBucketUtil {
 		throw new IOException("Unable to find GCP application credential file");
 	}
 
+	private static File _getS3ObjectRefFile(String s3ObjectPath) {
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			s3ObjectPath);
+
+		if (!s3ObjectPathMatcher.find()) {
+			throw new RuntimeException(
+				"Invalid S3 object path: " + s3ObjectPath);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			sb.append(
+				JenkinsResultsParserUtil.getBuildProperty("mirrors.cache.dir"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		sb.append("/s3/");
+		sb.append(s3ObjectPathMatcher.group("bucketName"));
+		sb.append("/");
+		sb.append(s3ObjectPathMatcher.group("objectPath"));
+		sb.append(".s3.ref");
+
+		return new File(sb.toString());
+	}
+
+	private static void _validateS3ObjectPath(String s3ObjectPath) {
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			s3ObjectPath);
+
+		if (!s3ObjectPathMatcher.find()) {
+			throw new RuntimeException(
+				"Invalid S3 object path: " + s3ObjectPath);
+		}
+	}
+
 	private static final Properties _buildProperties;
+	private static final Pattern _listS3FilesPattern = Pattern.compile(
+		"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} +\\d+ (?<fileName>.+)");
+	private static final Pattern _s3ObjectPathPattern = Pattern.compile(
+		"s3://(?<bucketName>[^/]+)/(?<objectPath>.+)");
 	private static final Pattern _signedURLPattern = Pattern.compile(
 		"https:\\/\\/storage.googleapis.com\\/.*");
 

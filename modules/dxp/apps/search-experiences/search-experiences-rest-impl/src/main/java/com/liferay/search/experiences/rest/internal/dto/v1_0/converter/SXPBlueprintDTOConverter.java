@@ -294,8 +294,7 @@ public class SXPBlueprintDTOConverter
 						LocaleUtil.toLanguageId(locale));
 				}
 			}
-
-			if (!_collectionProviderTypes.contains(className)) {
+			else if (!_collectionProviderTypes.contains(className)) {
 				typeName = ResourceActionsUtil.getModelResource(
 					locale, AssetEntry.class.getName());
 			}

@@ -73,7 +73,8 @@ public class OrganizationModelImpl
 		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR},
 		{"recursable", Types.BOOLEAN}, {"regionId", Types.BIGINT},
 		{"countryId", Types.BIGINT}, {"statusListTypeId", Types.BIGINT},
-		{"comments", Types.VARCHAR}, {"logoId", Types.BIGINT}
+		{"comments", Types.VARCHAR}, {"logoId", Types.BIGINT},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -100,10 +101,11 @@ public class OrganizationModelImpl
 		TABLE_COLUMNS_MAP.put("statusListTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Organization_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusListTypeId LONG,comments STRING null,logoId LONG,primary key (organizationId, ctCollectionId))";
+		"create table Organization_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusListTypeId LONG,comments STRING null,logoId LONG,status INTEGER,primary key (organizationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 
@@ -345,6 +347,7 @@ public class OrganizationModelImpl
 				"statusListTypeId", Organization::getStatusListTypeId);
 			attributeGetterFunctions.put("comments", Organization::getComments);
 			attributeGetterFunctions.put("logoId", Organization::getLogoId);
+			attributeGetterFunctions.put("status", Organization::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -427,6 +430,9 @@ public class OrganizationModelImpl
 			attributeSetterBiConsumers.put(
 				"logoId",
 				(BiConsumer<Organization, Long>)Organization::setLogoId);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<Organization, Integer>)Organization::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -863,6 +869,21 @@ public class OrganizationModelImpl
 		_logoId = logoId;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -945,6 +966,7 @@ public class OrganizationModelImpl
 		organizationImpl.setStatusListTypeId(getStatusListTypeId());
 		organizationImpl.setComments(getComments());
 		organizationImpl.setLogoId(getLogoId());
+		organizationImpl.setStatus(getStatus());
 
 		organizationImpl.resetOriginalValues();
 
@@ -990,6 +1012,8 @@ public class OrganizationModelImpl
 		organizationImpl.setComments(
 			this.<String>getColumnOriginalValue("comments"));
 		organizationImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
+		organizationImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return organizationImpl;
 	}
@@ -1166,6 +1190,8 @@ public class OrganizationModelImpl
 
 		organizationCacheModel.logoId = getLogoId();
 
+		organizationCacheModel.status = getStatus();
+
 		return organizationCacheModel;
 	}
 
@@ -1248,6 +1274,7 @@ public class OrganizationModelImpl
 	private long _statusListTypeId;
 	private String _comments;
 	private long _logoId;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1301,6 +1328,7 @@ public class OrganizationModelImpl
 		_columnOriginalValues.put("statusListTypeId", _statusListTypeId);
 		_columnOriginalValues.put("comments", _comments);
 		_columnOriginalValues.put("logoId", _logoId);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1365,6 +1393,8 @@ public class OrganizationModelImpl
 		columnBitmasks.put("comments", 262144L);
 
 		columnBitmasks.put("logoId", 524288L);
+
+		columnBitmasks.put("status", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

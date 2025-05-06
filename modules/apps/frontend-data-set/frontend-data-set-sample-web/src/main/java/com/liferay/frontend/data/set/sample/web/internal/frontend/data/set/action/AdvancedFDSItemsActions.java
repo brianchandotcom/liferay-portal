@@ -97,16 +97,17 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				null, "view", "sampleMessage", "Sample View", null, null, null),
+				null, "view", "sampleMessage", "Sample View", null, null,
+				"link"),
 			new FDSActionDropdownItem(
 				"#test-pencil", "pencil", "sampleEditMessage", "Sample Edit",
-				null, null, null),
+				null, null, "link"),
 			new FDSActionDropdownItem(
 				"#test-delete", "times-circle", "sampleDeleteMessage",
-				"Sample Delete", null, null, null),
+				"Sample Delete", null, null, "link"),
 			new FDSActionDropdownItem(
 				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
-				null, null, null),
+				null, null, "link"),
 			new FDSActionDropdownItem(
 				href, "truck", "asyncSuccess", "Async Success", "get", null,
 				"async"),
@@ -130,15 +131,15 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 				href + "/abc", "staging", "asyncErrorResourceNotFound",
 				"Async Resource Not Found", "get", null, "async"),
 			new FDSActionDropdownItem(
-				null, "reload", "reload", "Reload Data", null, null, null),
+				null, "reload", "reload", "Reload Data", null, null, "link"),
 			new FDSActionDropdownItem(
 				null, "rectangle-split", "openSidePanel", "Open Side Panel",
-				null, null, null));
+				null, null, "link"));
 	}
 
 	@Override
 	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
-		return FDSEntryItemImportPolicy.DETACHED;
+		return FDSEntryItemImportPolicy.ITEM_PROXY;
 	}
 
 	@Reference

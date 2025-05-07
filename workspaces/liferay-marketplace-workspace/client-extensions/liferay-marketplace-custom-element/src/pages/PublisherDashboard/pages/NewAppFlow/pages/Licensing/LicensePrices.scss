@@ -1,0 +1,46 @@
+.add-currency-button {
+	background: #edf3fe;
+	border: 1px solid #0053f0;
+	color: #0b5fff;
+}
+
+.add-currency-button:hover {
+	background: #edf3fe;
+	border: 1px solid #0053f0;
+	color: #0b5fff;
+	opacity: 0.8;
+}
+
+.currency-selector-modal .modal-subtitle-section {
+	display: flex;
+	padding-inline: 1.5rem;
+	color: #6c6c75;
+}
+
+.currency-selector-modal .modal-header {
+	border: none;
+	height: 4;
+	padding-top: 1.5rem;
+}
+
+.currency-selector-modal .modal-title {
+	font-family: Source Sans 3;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 40px;
+	letter-spacing: 0%;
+	vertical-align: middle;
+}
+
+.modal-body {
+	border: none;
+}
+
+.currency-selector {
+	margin-top: 0.5rem;
+}
+
+.currency-selector-container {
+	padding-top: 24px;
+	padding-bottom: 64px;
+}

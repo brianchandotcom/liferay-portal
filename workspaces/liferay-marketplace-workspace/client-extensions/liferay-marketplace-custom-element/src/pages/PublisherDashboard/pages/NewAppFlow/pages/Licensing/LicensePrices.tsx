@@ -3,115 +3,253 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Section} from '../../../../../../components/Section/Section';
+import ClayButton from '@clayui/button';
+import {Option, Picker, useModal} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import React, {useState} from 'react';
+
+import EurFlag from '../../../../../../assets/icons/eur_flag.svg';
 import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../../context/NewAppContext';
-import {ProductType} from '../../../../../../enums/Product';
 import {LicenseTier} from '../../../../../../enums/licenseTier';
+import {currenciesCode} from '../../../../../../utils/currencies';
 import {LicensePrice} from '../../../Apps/AppCreationFlow/AppContext/AppManageState';
-import IconButton from '../../../Apps/AppCreationFlow/InformLicensingTermsPage/components/IconButton';
-import LicensePriceCard from '../../../Apps/AppCreationFlow/InformLicensingTermsPage/components/LicensePriceCard';
+
+import './LicensePrices.scss';
+
+import ClayForm from '@clayui/form';
+
+import Modal from '../../../../../../components/Modal';
+import LicensePricePanel from '../../components/LicensePricePanel/LicensePricePanel';
 
 const LicensePrices = () => {
 	const [
 		{
-			build: {appType},
-			licensing: {
-				prices: {developer: developerPrices, standard: standardPrices},
-			},
+			build: {cloudCompatible},
+			licensing: {prices},
 		},
 		dispatch,
 	] = useNewAppContext();
 
-	const handleAddPriceTier = (licenseTier: LicenseTier) =>
-		dispatch({
-			payload: {licenseTier},
-			type: NewAppTypes.SET_LICENSING_ADD_PRICE,
-		});
+	const defaultCurrency = 'USD';
 
-	const handleDeletePriceTier = (licenseTier: LicenseTier, key: number) =>
+	const [activeCurrencies, setActiveCurrencies] = useState([defaultCurrency]);
+	const [selectedNewCurrency, setSelectedNewCurrency] = useState('');
+
+	const {observer, onClose, onOpenChange, open} = useModal({
+		onClose: () => {
+			setSelectedNewCurrency('');
+		},
+	});
+
+	const handleAddPriceTier = (licenseTier: LicenseTier, currency: string) => {
 		dispatch({
 			payload: {
+				currency,
+				licenseTier,
+			},
+			type: NewAppTypes.SET_LICENSING_ADD_PRICE,
+		});
+	};
+
+	const handleDeletePriceTier = (
+		licenseTier: LicenseTier,
+		key: number,
+		currency: string,
+		deleteCurrency?: boolean
+	) => {
+		if (deleteCurrency) {
+			setActiveCurrencies((prev) =>
+				prev.filter((currencyCode) => currencyCode !== currency)
+			);
+		}
+
+		dispatch({
+			payload: {
+				currency,
+				deleteCurrency,
 				key,
 				licenseTier,
 			},
 			type: NewAppTypes.SET_LICENSING_DELETE_PRICE,
 		});
+	};
 
 	const handleEditPriceTier = (
 		licenseTier: LicenseTier,
 		index: number,
-		price: LicensePrice
-	) =>
+		price: LicensePrice,
+		currency: string
+	) => {
 		dispatch({
 			payload: {
+				currency,
 				index,
 				licenseTier,
-				price,
+				price: price.value,
+				quantity: price.key,
 			},
 			type: NewAppTypes.SET_LICENSING_UPDATE_PRICES,
 		});
+	};
+
+	const handleAddCurrency = () => {
+		if (
+			selectedNewCurrency &&
+			!activeCurrencies.includes(selectedNewCurrency)
+		) {
+			setActiveCurrencies((prev) => [...prev, selectedNewCurrency]);
+
+			dispatch({
+				payload: {
+					currency: selectedNewCurrency,
+					licenseTier: LicenseTier.STANDARD,
+				},
+				type: NewAppTypes.SET_LICENSING_ADD_PRICE,
+			});
+
+			onClose();
+
+			setSelectedNewCurrency('');
+		}
+	};
+
+	const renderCurrencyFlag = (code: string, flag: string) => {
+		if (code === 'EUR') {
+			return (
+				<img
+					alt="EUR Flag"
+					className="currency-selector-icon ml-2"
+					src={EurFlag}
+				/>
+			);
+		}
+
+		return (
+			<ClayIcon
+				className="currency-selector-icon ml-2"
+				symbol={flag || 'en-us'}
+			/>
+		);
+	};
+
+	const CurrencyTrigger = React.forwardRef(({children, ...props}, ref) => {
+		const selected = currenciesCode.find(
+			(item) => item.code === selectedNewCurrency
+		);
+
+		return (
+			<div
+				ref={ref}
+				{...props}
+				className="form-control form-control-select"
+				tabIndex={0}
+			>
+				{children || 'Choose a option'}
+				{selected && (
+					<span className="ml-2">
+						{renderCurrencyFlag(selected.code, selected.flag)}
+					</span>
+				)}
+			</div>
+		);
+	});
 
 	return (
 		<div className="informing-licensing-terms-page-container">
-			<Section
-				className="mb-6"
-				label="Standard License prices"
-				required
-				tooltip="Standard licenses cover the following DXP environments: production, non-production (UAT) and backup (DR) for both standalone and virtual cluster servers."
-				tooltipText="More Info"
-			>
-				<LicensePriceCard
-					licensePrices={standardPrices}
-					onAdd={() => handleAddPriceTier(LicenseTier.STANDARD)}
-					onChange={(index: number, price: LicensePrice) => {
-						handleEditPriceTier(LicenseTier.STANDARD, index, price);
-					}}
-					onDelete={(key: number) =>
-						handleDeletePriceTier(LicenseTier.STANDARD, key)
+			<div className="p-4">
+				{activeCurrencies.map((currencyCode) => {
+					if (!prices[currencyCode]) {
+						return null;
 					}
-				/>
-			</Section>
 
-			{appType !== ProductType.CLOUD && (
-				<Section
-					label="Developer License prices"
-					tooltip="Developer licenses are limited to 5 unique addresses and should not be used for full scale production deployments."
-					tooltipText="More Info"
+					return (
+						<div key={currencyCode}>
+							<LicensePricePanel
+								cloudCompatible={cloudCompatible}
+								currencyCode={currencyCode}
+								handleAddPriceTier={handleAddPriceTier}
+								handleDeletePriceTier={handleDeletePriceTier}
+								handleEditPriceTier={handleEditPriceTier}
+								prices={prices[currencyCode] || {}}
+							/>
+						</div>
+					);
+				})}
+
+				<ClayButton
+					className="add-currency-button w-100"
+					onClick={() => onOpenChange(true)}
 				>
-					{developerPrices.length ? (
-						<LicensePriceCard
-							licensePrices={developerPrices}
-							onAdd={() =>
-								handleAddPriceTier(LicenseTier.DEVELOPER)
-							}
-							onChange={(index: number, price: LicensePrice) =>
-								handleEditPriceTier(
-									LicenseTier.DEVELOPER,
-									index,
-									price
-								)
-							}
-							onDelete={(key: number) =>
-								handleDeletePriceTier(
-									LicenseTier.DEVELOPER,
-									key
-								)
-							}
-						/>
-					) : (
-						<IconButton
-							className="icon-button py-3 w-100"
-							onClick={() =>
-								handleAddPriceTier(LicenseTier.DEVELOPER)
-							}
-						>
-							Add Developer Licenses
-						</IconButton>
-					)}
-				</Section>
+					+ Add Currency
+				</ClayButton>
+			</div>
+
+			{open && (
+				<Modal
+					className="currency-selector-modal"
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								Cancel
+							</ClayButton>
+							<ClayButton
+								disabled={!selectedNewCurrency}
+								onClick={handleAddCurrency}
+							>
+								Confirm
+							</ClayButton>
+						</ClayButton.Group>
+					}
+					observer={observer}
+					size="md"
+					subtitle="Choose one of the following currencies"
+					title="Select Desired Currency"
+					visible
+				>
+					<div className="currency-selector-container">
+						<ClayForm.Group>
+							<label
+								htmlFor="currency-picker"
+								id="currency-picker-label"
+							>
+								Choose Currency
+							</label>
+							<Picker
+								as={CurrencyTrigger}
+								id="currency-picker"
+								items={currenciesCode}
+								onSelectionChange={(key) =>
+									setSelectedNewCurrency(key)
+								}
+								width={200}
+							>
+								{(item) => (
+									<Option
+										disabled={activeCurrencies.includes(
+											item.code
+										)}
+										key={item.code}
+										textValue={item.code}
+									>
+										<span className="align-items-center d-flex">
+											<span>{item.code}</span>
+											{renderCurrencyFlag(
+												item.code,
+												item.flag
+											)}
+										</span>
+									</Option>
+								)}
+							</Picker>
+						</ClayForm.Group>
+					</div>
+				</Modal>
 			)}
 		</div>
 	);

@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot3.service;
 
+import java.net.URI;
+
 import java.time.Duration;
 
 import java.util.Collections;
@@ -31,6 +33,7 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriBuilder;
 
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
@@ -165,6 +168,24 @@ public abstract class BaseService {
 	}
 
 	protected String delete(
+		String body, Map<String, String> httpHeadersMap,
+		Function<UriBuilder, URI> uriFunction) {
+
+		return _getWebClient(
+		).method(
+			HttpMethod.DELETE
+		).uri(
+			uriFunction
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
+		).bodyValue(
+			body
+		).exchangeToMono(
+			_getExchangeToMonoFunction()
+		).block();
+	}
+
+	protected String delete(
 		String body, Map<String, String> httpHeadersMap, String path) {
 
 		return _getWebClient(
@@ -179,6 +200,16 @@ public abstract class BaseService {
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
+	}
+
+	protected String delete(
+		String authorization, String body,
+		Function<UriBuilder, URI> uriFunction) {
+
+		return delete(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			uriFunction);
 	}
 
 	protected String delete(String authorization, String body, String path) {

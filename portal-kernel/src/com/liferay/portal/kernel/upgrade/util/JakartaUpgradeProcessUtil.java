@@ -18,8 +18,8 @@ public class JakartaUpgradeProcessUtil {
 
 	public static String replace(String value, char... customSeparators) {
 		for (String subpackageName : _subpackageNames) {
-			String javaxPackage = "javax." + subpackageName;
 			String jakartaPackage = "jakarta." + subpackageName;
+			String javaxPackage = "javax." + subpackageName;
 
 			value = StringUtil.replace(value, javaxPackage, jakartaPackage);
 
@@ -37,8 +37,8 @@ public class JakartaUpgradeProcessUtil {
 		}
 
 		for (String fixupSubpackageName : _fixupSubpackageNames) {
-			String fixupJavaxPackage = "javax." + fixupSubpackageName;
 			String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
+			String fixupJavaxPackage = "javax." + fixupSubpackageName;
 
 			value = StringUtil.replace(
 				value, fixupJakartaPackage, fixupJavaxPackage);

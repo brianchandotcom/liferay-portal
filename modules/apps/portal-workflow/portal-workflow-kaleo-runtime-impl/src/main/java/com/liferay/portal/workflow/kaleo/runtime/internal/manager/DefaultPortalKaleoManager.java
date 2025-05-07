@@ -71,7 +71,7 @@ public class DefaultPortalKaleoManager
 					Group companyGroup = groupLocalService.getCompanyGroup(
 						companyId);
 
-					String definitionName = _DEFINITION_NAME;
+					String definitionName = _WORKFLOW_DEFINITION_NAME;
 
 					if (_definitionAssets.containsKey(assetClassName)) {
 						definitionName = _definitionAssets.get(assetClassName);
@@ -176,7 +176,8 @@ public class DefaultPortalKaleoManager
 			User guestUser = userLocalService.getGuestUser(companyId);
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, serviceContext.getCompanyId(), guestUser.getUserId(),
+				_WORKFLOW_DEFINITION_ERC, serviceContext.getCompanyId(),
+				guestUser.getUserId(),
 				_getLocalizedTitle(companyId, definitionName), definitionName,
 				FileUtil.getBytes(inputStream));
 		}
@@ -297,7 +298,7 @@ public class DefaultPortalKaleoManager
 	private String _getLocalizedTitle(long companyId, String definitionName)
 		throws Exception {
 
-		if (!Objects.equals(_DEFINITION_NAME, definitionName)) {
+		if (!Objects.equals(_WORKFLOW_DEFINITION_NAME, definitionName)) {
 			return _localization.updateLocalization(
 				StringPool.BLANK, "title", definitionName,
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
@@ -321,7 +322,9 @@ public class DefaultPortalKaleoManager
 		return _localization.getXml(localizedValuesMap, "title");
 	}
 
-	private static final String _DEFINITION_NAME = "Single Approver";
+	private static final String _WORKFLOW_DEFINITION_ERC = "L_SINGLE_APPROVER";
+
+	private static final String _WORKFLOW_DEFINITION_NAME = "Single Approver";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalKaleoManager.class);
@@ -329,7 +332,7 @@ public class DefaultPortalKaleoManager
 	private final Map<String, String> _defaultRoles = new HashMap<>();
 	private final Map<String, String> _definitionAssets = new HashMap<>();
 	private final Map<String, String> _definitionFiles = HashMapBuilder.put(
-		_DEFINITION_NAME,
+		_WORKFLOW_DEFINITION_NAME,
 		"META-INF/definitions/single-approver-workflow-definition.xml"
 	).build();
 

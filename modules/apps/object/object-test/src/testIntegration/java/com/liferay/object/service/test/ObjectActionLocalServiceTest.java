@@ -2859,6 +2859,58 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
+	private NotificationTemplate _addEmailNotificationTemplate(
+			String body, String description, String name,
+			long objectDefinitionId, String subject, long userId)
+		throws Exception {
+
+		NotificationTemplate notificationTemplate =
+			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
+				RandomTestUtil.randomInt());
+
+		notificationTemplate.setUserId(userId);
+		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
+		notificationTemplate.setBody(body);
+		notificationTemplate.setDescription(description);
+		notificationTemplate.setEditorType(
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
+		notificationTemplate.setName(name);
+		notificationTemplate.setSubject(subject);
+		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
+
+		NotificationContext notificationContext = new NotificationContext();
+
+		notificationContext.setAttachmentObjectFieldIds(
+			Collections.emptyList());
+		notificationContext.setNotificationRecipient(
+			NotificationRecipientLocalServiceUtil.createNotificationRecipient(
+				RandomTestUtil.randomInt()));
+		notificationContext.setNotificationRecipientSettings(
+			Arrays.asList(
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"fromName",
+						Collections.singletonMap(
+							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"to", "[%CURRENT_USER_EMAIL_ADDRESS%]")));
+		notificationContext.setNotificationTemplate(notificationTemplate);
+		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
+
+		return _notificationTemplateLocalService.addNotificationTemplate(
+			notificationContext);
+	}
+
 	private void _addModelResourcePermissions(
 			String objectActionName, long objectEntryId, long userId)
 		throws Exception {

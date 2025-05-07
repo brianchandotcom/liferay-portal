@@ -728,20 +728,27 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write("\" data-layout-structure-item-id=\"");
 		jspWriter.write(containerStyledLayoutStructureItem.getItemId());
-		jspWriter.write("\" style=\"");
 
-		String contentVisibility =
-			containerStyledLayoutStructureItem.getContentVisibility();
+		StringBundler sb = new StringBundler(4);
 
-		if (Validator.isNotNull(contentVisibility)) {
-			jspWriter.append("content-visibility:");
-			jspWriter.append(contentVisibility);
-			jspWriter.append(StringPool.SEMICOLON);
+		if (Validator.isNotNull(
+				containerStyledLayoutStructureItem.getContentVisibility())) {
+
+			sb.append("content-visibility:");
+			sb.append(
+				containerStyledLayoutStructureItem.getContentVisibility());
+			sb.append(StringPool.SEMICOLON);
 		}
 
-		jspWriter.write(
+		sb.append(
 			_renderLayoutStructureDisplayContext.getStyle(
 				containerStyledLayoutStructureItem));
+
+		if (sb.length() > 0) {
+			jspWriter.write("\" style=\"");
+			jspWriter.write(sb.toString());
+		}
+
 		jspWriter.write("\">");
 
 		_renderLayoutStructure(
@@ -1444,10 +1451,15 @@ public class LayoutStructureRenderer {
 		jspWriter.write(rowStyledLayoutStructureItem.getStyledCssClasses());
 		jspWriter.write("\" data-layout-structure-item-id=\"");
 		jspWriter.write(rowStyledLayoutStructureItem.getItemId());
-		jspWriter.write("\" style=\"");
-		jspWriter.write(
-			_renderLayoutStructureDisplayContext.getStyle(
-				rowStyledLayoutStructureItem));
+
+		String style = _renderLayoutStructureDisplayContext.getStyle(
+			rowStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(style)) {
+			jspWriter.write("\" style=\"");
+			jspWriter.write(style);
+		}
+
 		jspWriter.write("\">");
 
 		if (_renderLayoutStructureDisplayContext.isIncludeContainer(

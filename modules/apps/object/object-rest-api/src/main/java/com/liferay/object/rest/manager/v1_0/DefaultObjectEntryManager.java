@@ -42,6 +42,15 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;
 
+	public void deleteObjectEntryByVersion(
+			ObjectDefinition objectDefinition, long objectEntryId, int version)
+		throws Exception;
+
+	public void deleteObjectEntryByVersion(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			int version)
+		throws Exception;
+
 	public void disassociateRelatedModels(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,

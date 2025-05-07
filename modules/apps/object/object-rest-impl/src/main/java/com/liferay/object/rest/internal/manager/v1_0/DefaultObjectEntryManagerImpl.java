@@ -264,6 +264,37 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public void deleteObjectEntryByVersion(
+			ObjectDefinition objectDefinition, long objectEntryId, int version)
+		throws Exception {
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition,
+			_objectEntryService.getObjectEntry(objectEntryId));
+
+		_objectEntryVersionService.deleteObjectEntryVersion(
+			objectEntryId, version);
+	}
+
+	@Override
+	public void deleteObjectEntryByVersion(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, null));
+
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
+
+		_objectEntryVersionService.deleteObjectEntryVersion(
+			serviceBuilderObjectEntry.getObjectEntryId(), version);
+	}
+
+	@Override
 	public void disassociateRelatedModels(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,

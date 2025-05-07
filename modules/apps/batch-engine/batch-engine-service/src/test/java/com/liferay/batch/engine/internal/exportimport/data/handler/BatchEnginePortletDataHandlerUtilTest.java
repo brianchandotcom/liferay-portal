@@ -60,11 +60,11 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithEndDate() {
+	public void testBuildExportParametersWithEndDate() {
 		Date endDate = _getDate(0);
 
 		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockPortletDataContext(endDate, null));
 
 		Assert.assertEquals(
@@ -73,12 +73,12 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithEndDateAndStartDate() {
+	public void testBuildExportParametersWithEndDateAndStartDate() {
 		Date endDate = _getDate(0);
 		Date startDate = _getDate(-1);
 
 		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockPortletDataContext(endDate, startDate));
 
 		Assert.assertEquals(
@@ -89,20 +89,20 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithNoDates() {
+	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockPortletDataContext(null, null));
 
 		Assert.assertNull(parameters.get("filter"));
 	}
 
 	@Test
-	public void testBuildParametersWithStartDate() {
+	public void testBuildExportParametersWithStartDate() {
 		Date startDate = _getDate(-1);
 
 		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockPortletDataContext(null, startDate));
 
 		Assert.assertEquals(

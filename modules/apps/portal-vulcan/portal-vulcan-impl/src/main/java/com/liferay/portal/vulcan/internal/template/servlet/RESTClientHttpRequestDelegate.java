@@ -124,6 +124,22 @@ public class RESTClientHttpRequestDelegate {
 		return HttpMethods.GET;
 	}
 
+	public String getParameter(String name) {
+		return null;
+	}
+
+	public Map<String, String[]> getParameterMap() {
+		return Collections.emptyMap();
+	}
+
+	public Enumeration<String> getParameterNames() {
+		return Collections.emptyEnumeration();
+	}
+
+	public String[] getParameterValues(String name) {
+		return new String[0];
+	}
+
 	public String getPathInfo() {
 		return _pathInfo;
 	}

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
@@ -36,6 +37,21 @@ export default function StructureBuilderManagementBar() {
 					: Liferay.Language.get('new-structure')
 			}
 		>
+			<ManagementToolbar.Item>
+				<ClayLink
+					className="btn btn-outline-borderless btn-outline-primary btn-sm"
+					href="structures"
+				>
+					{Liferay.Language.get('customize-experience')}
+
+					<ClayIcon className="ml-2" symbol="shortcut" />
+				</ClayLink>
+			</ManagementToolbar.Item>
+
+			<ManagementToolbar.Item>
+				<div className="vertical-divider"></div>
+			</ManagementToolbar.Item>
+
 			<ManagementToolbar.Item>
 				<ClayLink
 					className="btn btn-outline-borderless btn-outline-secondary btn-sm"

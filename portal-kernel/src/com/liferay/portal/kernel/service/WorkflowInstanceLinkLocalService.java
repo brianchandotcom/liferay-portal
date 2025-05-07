@@ -290,6 +290,10 @@ public interface WorkflowInstanceLinkLocalService
 	public List<WorkflowInstanceLink> getWorkflowInstanceLinks(
 		long companyId, long groupId, String className, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, String className);
+
 	/**
 	 * Returns the number of workflow instance links.
 	 *

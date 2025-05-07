@@ -373,6 +373,14 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 			companyId, groupId, className, classPK);
 	}
 
+	@Override
+	public java.util.List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, String className) {
+
+		return _workflowInstanceLinkLocalService.getWorkflowInstanceLinks(
+			companyId, className);
+	}
+
 	/**
 	 * Returns the number of workflow instance links.
 	 *

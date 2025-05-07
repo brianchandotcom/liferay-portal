@@ -142,6 +142,8 @@ public interface WorkflowDefinitionLinkLocalService
 	public WorkflowDefinitionLink deleteWorkflowDefinitionLink(
 		WorkflowDefinitionLink workflowDefinitionLink);
 
+	public void deleteWorkflowDefinitionLinks(long companyId, String className);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
@@ -338,6 +340,10 @@ public interface WorkflowDefinitionLinkLocalService
 	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(

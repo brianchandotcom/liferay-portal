@@ -327,44 +327,7 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
-		System.out.println(toString());
-
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		if (_rebase) {
-			gitWorkingDirectory.createLocalGitBranch(
-				getUpstreamBranchName(), true, getBaseBranchSHA());
-		}
-
-		LocalGitBranch localGitBranch = getLocalGitBranch();
-
-		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
-
-		LocalGitBranch baseLocalGitBranch =
-			gitWorkingDirectory.createLocalGitBranch(
-				getUpstreamBranchName(), true, getBaseBranchSHA());
-
-		if (_rebase) {
-			gitWorkingDirectory.rebase(
-				true, baseLocalGitBranch, localGitBranch);
-		}
-
-		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
-
-		if ((_patchSHAs != null) && !_patchSHAs.isEmpty()) {
-			for (String patchSHA : _patchSHAs) {
-				try {
-					gitWorkingDirectory.cherryPick(patchSHA.trim());
-				}
-				catch (Exception exception) {
-					gitWorkingDirectory.reset("--hard");
-				}
-			}
-		}
-
-		gitWorkingDirectory.clean();
-
-		gitWorkingDirectory.displayLog();
+		_prepareGitWorkingDirectory();
 
 		_setUp = true;
 	}
@@ -754,6 +717,47 @@ public abstract class BaseWorkspaceGitRepository
 
 	private boolean _isPullRequest() {
 		return PullRequest.isValidGitHubPullRequestURL(getGitHubURL());
+	}
+
+	private void _prepareGitWorkingDirectory() {
+		System.out.println(toString());
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		if (_rebase) {
+			gitWorkingDirectory.createLocalGitBranch(
+				getUpstreamBranchName(), true, getBaseBranchSHA());
+		}
+
+		LocalGitBranch localGitBranch = getLocalGitBranch();
+
+		gitWorkingDirectory.checkoutLocalGitBranch(localGitBranch);
+
+		LocalGitBranch baseLocalGitBranch =
+			gitWorkingDirectory.createLocalGitBranch(
+				getUpstreamBranchName(), true, getBaseBranchSHA());
+
+		if (_rebase) {
+			gitWorkingDirectory.rebase(
+				true, baseLocalGitBranch, localGitBranch);
+		}
+
+		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		if ((_patchSHAs != null) && !_patchSHAs.isEmpty()) {
+			for (String patchSHA : _patchSHAs) {
+				try {
+					gitWorkingDirectory.cherryPick(patchSHA.trim());
+				}
+				catch (Exception exception) {
+					gitWorkingDirectory.reset("--hard");
+				}
+			}
+		}
+
+		gitWorkingDirectory.clean();
+
+		gitWorkingDirectory.displayLog();
 	}
 
 	private void _setBaseBranchHeadSHA(String branchSHA) {

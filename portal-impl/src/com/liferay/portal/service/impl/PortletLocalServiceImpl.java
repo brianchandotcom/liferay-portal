@@ -1418,7 +1418,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			PortletCategory curPortletCategory = new PortletCategory(name);
 
-			portletCategory.addCategory(curPortletCategory);
+			portletCategory.addCategory(curPortletCategory.getRootCategory());
 
 			Set<String> curPortletIds = curPortletCategory.getPortletIds();
 

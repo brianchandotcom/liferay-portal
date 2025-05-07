@@ -66,7 +66,8 @@ public class
 					"/message-boards-moderation-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, companyId, guestUserId,
+				MBModerationConstants.WORKFLOW_DEFINITION_ERC, companyId,
+				guestUserId,
 				_localization.getXml(
 					_getTitleMap(companyId),
 					_language.getLanguageId(company.getLocale()), "title"),

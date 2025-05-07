@@ -10,6 +10,9 @@ package com.liferay.message.boards.moderation.internal.constants;
  */
 public class MBModerationConstants {
 
+	public static final String WORKFLOW_DEFINITION_ERC =
+		"L_MESSAGE_BOARDS_USER_STATS_MODERATION";
+
 	public static final String WORKFLOW_DEFINITION_NAME =
 		"message-boards-user-stats-moderation";
 

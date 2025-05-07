@@ -5,7 +5,6 @@
 
 import ClayPanel from '@clayui/panel';
 import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
@@ -36,7 +35,6 @@ interface EditObjectDetailsProps {
 	isRootDescendantNode: boolean;
 	isRootNode: boolean;
 	label: LocalizedValue<string>;
-	learnResourceContext: any;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -82,7 +80,6 @@ export default function EditObjectDetails({
 	isRootDescendantNode,
 	isRootNode,
 	label,
-	learnResourceContext,
 	nonRelationshipObjectFieldsInfo,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
@@ -279,18 +276,6 @@ export default function EditObjectDetails({
 											'external-data-source'
 										)}
 									</span>
-
-									{values.storageType === 'salesforce' && (
-										<div className="lfr__object-web-edit-object-details-external-data-source-panel-container-beta">
-											<FeatureIndicator
-												interactive
-												learnResourceContext={
-													learnResourceContext
-												}
-												type="beta"
-											/>
-										</div>
-									)}
 								</div>
 							}
 							displayType="unstyled"

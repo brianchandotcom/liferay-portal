@@ -43,7 +43,10 @@ test('Can publish a Publication containing an added Blog Entry with cover image'
 	await apiHelpers.headlessDelivery.postDocument(
 		site.id,
 		createReadStream(
-			path.join(__dirname, '/../blogs-web/dependencies/image1.jpeg')
+			path.join(
+				__dirname,
+				'/../../blogs-web/main/dependencies/image1.jpeg'
+			)
 		),
 		{
 			description: getRandomString(),

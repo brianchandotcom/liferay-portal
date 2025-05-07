@@ -6,7 +6,7 @@
 package com.liferay.change.tracking.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.configuration.CTConflictConfiguration;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
@@ -164,7 +164,7 @@ public class ReleaseModelListenerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						CTConflictConfiguration.class.getName(),
+						CTSettingsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"schemaVersionCheckEnabled", false
 						).build())) {
@@ -217,7 +217,7 @@ public class ReleaseModelListenerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						CTConflictConfiguration.class.getName(),
+						CTSettingsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"schemaVersionCheckEnabled", true
 						).build())) {

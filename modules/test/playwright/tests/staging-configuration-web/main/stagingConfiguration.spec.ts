@@ -132,9 +132,9 @@ test(
 		await apiHelpers.jsonWebServicesJournal.addWebContentDetailed({
 			content: 'Web Content Content2',
 			ddmStructureId: basicWebContentStructureId,
+			friendlyURLMap: {en_US: 'special-char-a-c5-90b'},
 			groupId: site.id,
 			titleMap: {en_US: 'Web Content Title'},
-			friendlyURLMap: {en_US: 'special-char-a-c5-90b'}
 		});
 
 		await stagingConfigurationPage.gotoStagingConfiguration(
@@ -143,7 +143,7 @@ test(
 
 		await stagingConfigurationPage.enableLocalStaging({});
 	}
-)
+);
 
 testFlagsEnabled(
 	'Check if local staging with page-scoped Web Content can be enabled',

@@ -131,6 +131,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
@@ -184,6 +185,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
@@ -5042,32 +5044,197 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_PENDING, objectEntry.getStatus());
 
-			List<WorkflowTask> workflowTasks =
-				_workflowTaskManager.getWorkflowTasksBySubmittingUser(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					false, 0, 1, null);
+			_completeWorkflowTask();
 
-			WorkflowTask workflowTask = workflowTasks.get(0);
-
-			_workflowTaskManager.assignWorkflowTaskToUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, null, null);
-
-			_workflowTaskManager.completeWorkflowTask(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-				StringPool.BLANK, null);
-
-			objectEntry = _objectEntryLocalService.getObjectEntry(
-				objectEntry.getObjectEntryId());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_APPROVED, objectEntry);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
+	}
+
+	@Test
+	public void testUpdateStatusWithHierarchy() throws Exception {
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).build();
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+
+		Assert.assertNotNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionA.getClassName()));
+		Assert.assertNotNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionAA.getClassName()));
+		Assert.assertNotNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionAAA.getClassName()));
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionA,
+					objectDefinitionAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship1"),
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					objectDefinitionAAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship2")));
+
+		Assert.assertNotNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionA.getClassName()));
+		Assert.assertNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionAA.getClassName()));
+		Assert.assertNull(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionAAA.getClassName()));
+
+		ObjectEntry objectEntryA = _addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).build());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryA);
+
+		ObjectEntry objectEntryAA = _addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship1_" +
+					objectDefinitionA.getPKObjectFieldName(),
+				objectEntryA.getObjectEntryId()
+			).build());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+				objectDefinitionA.getClassName(), 0, 0, "Single Approver", 1);
+
+		ObjectEntry objectEntryAAA = _addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship2_" +
+					objectDefinitionAA.getPKObjectFieldName(),
+				objectEntryAA.getObjectEntryId()
+			).build());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAAA);
+
+		_completeWorkflowTask();
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAAA);
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntryAAA.getObjectEntryId());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAA);
+
+		_completeWorkflowTask();
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
+
+		objectEntryAA = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntryAA.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship1_" +
+					objectDefinitionA.getPKObjectFieldName(),
+				objectEntryA.getObjectEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAA);
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED,
+			_addObjectEntry(
+				0, objectDefinitionA.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					objectField.getName(), RandomTestUtil.randomString()
+				).build()));
+
+		objectEntryAAA = _addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship2_" +
+					objectDefinitionAA.getPKObjectFieldName(),
+				objectEntryAA.getObjectEntryId()
+			).build());
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_PENDING, objectEntryAAA);
+
+		_completeWorkflowTask();
+
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
+		_assertObjectEntryStatus(
+			WorkflowConstants.STATUS_APPROVED, objectEntryAAA);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName(),
+				objectDefinitionAAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test
@@ -5422,6 +5589,16 @@ public class ObjectEntryLocalServiceTest {
 			actualLocalizedValues.get(objectField.getI18nObjectFieldName()));
 	}
 
+	private void _assertObjectEntryStatus(
+			int expectedStatus, ObjectEntry objectEntry)
+		throws Exception {
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(expectedStatus, objectEntry.getStatus());
+	}
+
 	private void _assertObjectEntryValues(
 		int expectedValuesSize, Map<String, Serializable> expectedValues,
 		Map<String, Serializable> actualValues) {
@@ -5473,6 +5650,25 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryThreadLocal.class, "_validatedObjectEntryIds");
 
 		threadLocal.set(new HashSet<>());
+	}
+
+	private void _completeWorkflowTask() throws Exception {
+		List<WorkflowTask> workflowTasks =
+			_workflowTaskManager.getWorkflowTasksBySubmittingUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				false, 0, 1, null);
+
+		WorkflowTask workflowTask = workflowTasks.get(0);
+
+		_workflowTaskManager.assignWorkflowTaskToUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, null, null);
+
+		_workflowTaskManager.completeWorkflowTask(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+			StringPool.BLANK, null);
 	}
 
 	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {

@@ -68,8 +68,7 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolver
 			return super.getLayoutDisplayPageProvider(friendlyURL);
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-			GetterUtil.getLong(parts[0]));
+		DepotEntry depotEntry = _fetchDepotEntry(GetterUtil.getLong(parts[0]));
 
 		if (depotEntry == null) {
 			return super.getLayoutDisplayPageProvider(friendlyURL);
@@ -77,6 +76,17 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolver
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(DepotEntry.class.getName());
+	}
+
+	private DepotEntry _fetchDepotEntry(long classPK) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			classPK);
+
+		if (depotEntry != null) {
+			return depotEntry;
+		}
+
+		return _depotEntryLocalService.fetchGroupDepotEntry(classPK);
 	}
 
 	@Reference

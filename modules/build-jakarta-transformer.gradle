@@ -34,27 +34,29 @@ buildscript {
 	}
 }
 
-task jarTransformed
-
 jar {
-	doLast {
-		JakartaTransformerCLI jakartaTransformerCLI = new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath})
-
-		Map<String, String> optionDefaults = jakartaTransformerCLI.getOptionDefaults()
-
-		File file = new File(rootDir, "liferay-jakarta-renames.properties")
-
-		optionDefaults.put("renames", String.valueOf(file.toURI()))
-
-		file = new File(rootDir, "liferay-jakarta-versions.properties")
-
-		optionDefaults.put("versions", String.valueOf(file.toURI()))
-
-		JakartaTransformerCLI.runWith(jakartaTransformerCLI)
-
-		JarTransformer.transform(jar.archivePath)
-	}
-
 	enabled = true
-	setActions([])
+	setActions([
+		new Action<Jar>() {
+
+			public void execute(Jar jar) {
+				JakartaTransformerCLI jakartaTransformerCLI = new JakartaTransformerCLI(System.out, System.out, new String[] {configurations.compileOnly.singleFile, jar.archivePath})
+
+				Map<String, String> optionDefaults = jakartaTransformerCLI.getOptionDefaults()
+
+				File file = new File(rootDir, "liferay-jakarta-renames.properties")
+
+				optionDefaults.put("renames", String.valueOf(file.toURI()))
+
+				file = new File(rootDir, "liferay-jakarta-versions.properties")
+
+				optionDefaults.put("versions", String.valueOf(file.toURI()))
+
+				JakartaTransformerCLI.runWith(jakartaTransformerCLI)
+
+				JarTransformer.transform(jar.archivePath)
+			}
+
+		}
+	])
 }

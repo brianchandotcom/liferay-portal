@@ -1,0 +1,742 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableIndexSearch": true,
+			"enableObjectEntryDraft": true,
+			"externalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+			"label": {
+				"en_US": "U3A2 Distributor Application"
+			},
+			"modifiable": true,
+			"name": "U3A2DistributorApplication",
+			"objectActions": [],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Annual Purchase Volume"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_ANNUAL_PURCHASE_VOLUMES",
+					"name": "annualPurchaseVolume",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Applicant Email Address"
+					},
+					"name": "applicantEmailAddress",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Applicant Name"
+					},
+					"name": "applicantName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "open",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Application State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_APPLICATION_STATES",
+					"name": "applicationState",
+					"objectFieldSettings": [
+						{
+							"name": "defaultValue",
+							"value": "open"
+						},
+						{
+							"name": "defaultValueType",
+							"value": "inputAsValue"
+						},
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "approved",
+										"objectStateTransitions": [
+											{
+												"key": "underReview"
+											}
+										]
+									},
+									{
+										"key": "denied",
+										"objectStateTransitions": [
+											{
+												"key": "underReview"
+											}
+										]
+									},
+									{
+										"key": "onHold",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "underReview"
+											}
+										]
+									},
+									{
+										"key": "open",
+										"objectStateTransitions": [
+											{
+												"key": "underReview"
+											},
+											{
+												"key": "withdrawn"
+											}
+										]
+									},
+									{
+										"key": "underReview",
+										"objectStateTransitions": [
+											{
+												"key": "approved"
+											},
+											{
+												"key": "denied"
+											},
+											{
+												"key": "onHold"
+											},
+											{
+												"key": "withdrawn"
+											}
+										]
+									},
+									{
+										"key": "withdrawn",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business License"
+					},
+					"name": "businessLicense",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": true
+						},
+						{
+							"name": "storageDLFolderPath",
+							"value": "/DistributorApplication"
+						}
+					],
+					"readOnly": "false",
+					"state": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Name"
+					},
+					"name": "businessName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Phone Number"
+					},
+					"name": "businessPhoneNumber",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Tax ID Number"
+					},
+					"name": "businessTaxIDNumber",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Website URL"
+					},
+					"name": "businessWebsiteURL",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Comments"
+					},
+					"name": "comments",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"state": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Distribution Channels"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_DISTRIBUTION_CHANNELS",
+					"name": "distributionChannels",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Distribution Regions"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_DISTRIBUTION_REGIONS",
+					"name": "distributionRegions",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Products of Interest"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_PRODUCT_TYPES",
+					"name": "productsOfInterest",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "U3A2_DISTRIBUTOR_MANAGEMENT",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Basic Layout"
+					},
+					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Application"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "General Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "applicantName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "applicantEmailAddress",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessWebsiteURL",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessPhoneNumber",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessTaxIDNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "applicationState",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Evaluations"
+							},
+							"objectRelationshipExternalReferenceCode": "APPLICATION_TO_EVALUATIONS",
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
+					"label": {
+						"en_US": "U3A2 Application to Evaluations"
+					},
+					"name": "U3A2ApplicationToEvaluations",
+					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
+					"objectDefinitionExternalReferenceCode2": "U3A2_APPLICATION_EVALUATION",
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "en_US",
+						"label": {
+							"en_US": "Application to Evaluations"
+						},
+						"name": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationId",
+						"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "DistributorApplication"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationERC"
+							}
+						],
+						"objectRelationshipExternalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
+						"readOnly": "false",
+						"relationshipType": "oneToMany",
+						"required": true,
+						"state": false,
+						"system": false,
+						"type": "Long"
+					},
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid applicant email address."
+					},
+					"name": {
+						"en_US": "Email Address, applicantEmailAddress"
+					},
+					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "isEmailAddress(applicantEmailAddress) OR applicantEmailAddress == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid business phone number."
+					},
+					"name": {
+						"en_US": "Phone Number, businessPhoneNumber"
+					},
+					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "match(businessPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR businessPhoneNumber == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid website URL."
+					},
+					"name": {
+						"en_US": "URL, businessWebsiteURL"
+					},
+					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "isURL(businessWebsiteURL) OR businessWebsiteURL == \"\""
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Basic View"
+					},
+					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "ID"
+							},
+							"objectFieldName": "id",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Applicant Name"
+							},
+							"objectFieldName": "applicantName",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Business Name"
+							},
+							"objectFieldName": "businessName",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Create Date"
+							},
+							"objectFieldName": "createDate",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Application State"
+							},
+							"objectFieldName": "applicationState",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Status"
+							},
+							"objectFieldName": "status",
+							"priority": 5
+						}
+					]
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.custom.apps",
+			"pluralLabel": {
+				"en_US": "U3A2 Distributor Applications"
+			},
+			"restContextPath": "/o/c/u3a2distributorapplications",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "businessName"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"externalReferenceCode": "U3A2_APPLICATION_EVALUATION",
+			"label": {
+				"en_US": "U3A2 Application Evaluation"
+			},
+			"modifiable": true,
+			"name": "U3A2ApplicationEvaluation",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Relationship",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "U3A2 Application to Evaluations"
+					},
+					"name": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationId",
+					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "DistributorApplication"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationERC"
+						}
+					],
+					"objectRelationshipExternalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
+					"readOnly": "false",
+					"relationshipType": "oneToMany",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Assessment Score"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_ASSESSMENT_SCORES",
+					"name": "assessmentScore",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Decision"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_DECISIONS",
+					"name": "decision",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Interview Notes"
+					},
+					"name": "interviewNotes",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendation Comments"
+					},
+					"name": "recommendationComments",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendations"
+					},
+					"listTypeDefinitionExternalReferenceCode": "U3A2_RECOMMENDATIONS",
+					"name": "recommendations",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "U3A2_DISTRIBUTOR_MANAGEMENT",
+			"panelCategoryKey": "applications_menu.applications.custom.apps",
+			"pluralLabel": {
+				"en_US": "U3A2 Application Evaluations"
+			},
+			"restContextPath": "/o/c/u3a2applicationevaluations",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "creator"
+		}
+	]
+}

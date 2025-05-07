@@ -5,10 +5,15 @@
 
 package com.liferay.batch.engine.internal.exportimport.data.handler;
 
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -25,7 +30,7 @@ import java.util.Map;
  */
 public class BatchEnginePortletDataHandlerUtil {
 
-	public static Map<String, Serializable> buildParameters(
+	public static Map<String, Serializable> buildExportParameters(
 		PortletDataContext portletDataContext) {
 
 		return HashMapBuilder.<String, Serializable>put(
@@ -68,6 +73,57 @@ public class BatchEnginePortletDataHandlerUtil {
 
 				return sb.toString();
 			}
+		).put(
+			"siteId",
+			() -> {
+				Map<String, String[]> map =
+					portletDataContext.getParameterMap();
+
+				String[] siteIds = GetterUtil.getStringValues(
+					map.get("siteId"));
+
+				if (ArrayUtil.isNotEmpty(siteIds)) {
+					return siteIds[0];
+				}
+
+				return portletDataContext.getScopeGroupId();
+			}
+		).build();
+	}
+
+	public static Map<String, Serializable> buildImportParameters(
+		PortletDataContext portletDataContext) {
+
+		return HashMapBuilder.<String, Serializable>put(
+			"batchRestrictFields",
+			() -> {
+				if (!MapUtil.getBoolean(
+						portletDataContext.getParameterMap(),
+						PortletDataHandlerKeys.PERMISSIONS)) {
+
+					return "permissions";
+				}
+
+				return null;
+			}
+		).put(
+			"createStrategy", CreateStrategy.UPSERT.getDBOperation()
+		).put(
+			"importCreatorStrategy",
+			() -> {
+				if (!UserIdStrategy.CURRENT_USER_ID.equals(
+						MapUtil.getString(
+							portletDataContext.getParameterMap(),
+							PortletDataHandlerKeys.USER_ID_STRATEGY))) {
+
+					return null;
+				}
+
+				return BatchEngineImportTaskConstants.
+					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
+			}
+		).put(
+			"siteId", portletDataContext.getScopeGroupId()
 		).build();
 	}
 

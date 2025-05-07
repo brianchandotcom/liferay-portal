@@ -173,7 +173,7 @@ components:
                 property1:
                     type: string
             type: object
-        SimpleTestEntity:
+        MultipartTestEntity:
             properties:
                 name:
                     type: string
@@ -724,12 +724,12 @@ paths:
                     description:
                         "OK"
             tags: ["Schema"]
-    /simple-test-entities/{simpleEntityId}:
+    /multipart-test-entities/{multipartTestEntityId}:
         get:
-            operationId: getSimpleTestEntity
+            operationId: getMultipartTestEntity
             parameters:
                 -   in: path
-                    name: simpleTestEntityId
+                    name: multipartTestEntityId
                     required: true
                     schema:
                         format: int64
@@ -739,18 +739,18 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
+                                $ref: "#/components/schemas/MultipartTestEntity"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
+                                $ref: "#/components/schemas/MultipartTestEntity"
                     description:
                         "OK"
-            tags: ["SimpleTestEntity"]
+            tags: ["MultipartTestEntity"]
         patch:
-            operationId: patchSimpleTestEntity
+            operationId: patchMultipartTestEntity
             parameters:
                 -   in: path
-                    name: simpleTestEntityId
+                    name: multipartTestEntityId
                     required: true
                     schema:
                         format: int64
@@ -759,27 +759,27 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
+                            $ref: "#/components/schemas/MultipartTestEntity"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
+                            $ref: "#/components/schemas/MultipartTestEntity"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
+                                $ref: "#/components/schemas/MultipartTestEntity"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
+                                $ref: "#/components/schemas/MultipartTestEntity"
                     description:
                         "OK"
-            tags: ["SimpleTestEntity"]
+            tags: ["MultipartTestEntity"]
         put:
-            operationId: putSimpleTestEntity
+            operationId: putMultipartTestEntity
             parameters:
                 -   in: path
-                    name: simpleTestEntityId
+                    name: multipartTestEntityId
                     required: true
                     schema:
                         format: int64
@@ -788,16 +788,16 @@ paths:
                 content:
                     multipart/form-data:
                         schema:
-                            $ref: "#/components/schemas/SimpleTestEntity"
+                            $ref: "#/components/schemas/MultipartTestEntity"
             responses:
                 200:
                     content:
                         multipart/form-data:
                             schema:
-                                $ref: "#/components/schemas/SimpleTestEntity"
+                                $ref: "#/components/schemas/MultipartTestEntity"
                     description:
                         "OK"
-            tags: ["SimpleTestEntity"]
+            tags: ["MultipartTestEntity"]
     /site-test-entities/{siteTestEntityId}:
         get:
             operationId: getSiteTestEntity

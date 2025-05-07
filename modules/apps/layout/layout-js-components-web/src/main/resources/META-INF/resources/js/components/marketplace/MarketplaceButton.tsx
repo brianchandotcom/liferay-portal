@@ -10,7 +10,7 @@ import openModalComponent from '../modals/openModalComponent';
 import MarketplaceModal from './MarketplaceModal';
 import MarketplacePresentationModal from './MarketplacePresentationModal';
 
-import '../../../css/MarketplaceButton.scss';
+import './MarketplaceButton.scss';
 
 import {AppsPermissions} from '@liferay/marketplace-js-components-web';
 import classNames from 'classnames';

@@ -11,16 +11,5 @@ html#{$cadmin-selector} {
 				color: $cadmin-dark;
 			}
 		}
-
-		.marketplace-button.notification:after {
-			background-color: $cadmin-primary;
-			border: 2px $white solid;
-			border-radius: 50%;
-			content: '';
-			padding: 3px;
-			position: absolute;
-			transform: translate(7px, -7px);
-			z-index: 1;
-		}
 	}
 }

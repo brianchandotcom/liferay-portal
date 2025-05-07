@@ -6,14 +6,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {AppsPermissions} from '@liferay/marketplace-js-components-web';
 import React, {ComponentProps, useState} from 'react';
 
 import MarketplaceModal from './MarketplaceModal';
-
-import '../../../css/MarketplaceModal.scss';
-
-import {AppsPermissions} from '@liferay/marketplace-js-components-web';
-
 import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplacePresentationModalProps {
@@ -51,17 +47,28 @@ export default function MarketplacePresentationModal({
 		/>
 	) : (
 		<ClayModal center observer={observer}>
-			<ClayModal.Header>{heading}</ClayModal.Header>
-
 			<ClayModal.Body className="c-p-0">
-				<div className="marketplace-modal__image-background">
-					<img
-						alt=""
-						src={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
-					/>
+				<ClayButton
+					aria-label={Liferay.Language.get('close')}
+					className="close"
+					displayType="unstyled"
+					onClick={onClose}
+				>
+					<ClayIcon symbol="times" />
+				</ClayButton>
+
+				<div className="aspect-ratio aspect-ratio-16-to-9 bg-primary-l3">
+					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+						<img
+							alt=""
+							src={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
+						/>
+					</div>
 				</div>
 
-				<p className="c-p-4">{body}</p>
+				<ClayModal.Title className="c-mx-4">{heading}</ClayModal.Title>
+
+				<p className="c-m-4">{body}</p>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

@@ -31,7 +31,6 @@ public class OverdueBusinessEventService extends BaseService {
 	@Scheduled(cron = "0 0 0 * * *")
 	public void scheduled() {
 		Date date = new Date();
-
 		DateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 

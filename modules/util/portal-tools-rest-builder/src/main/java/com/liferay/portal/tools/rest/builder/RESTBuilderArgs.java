@@ -22,6 +22,10 @@ public class RESTBuilderArgs {
 		return _copyrightFile;
 	}
 
+	public String getJavaEePackage() {
+		return _javaEePackage;
+	}
+
 	public File getRESTConfigDir() {
 		return _restConfigDir;
 	}
@@ -32,10 +36,6 @@ public class RESTBuilderArgs {
 
 	public Boolean isForcePredictableOperationId() {
 		return _forcePredictableOperationId;
-	}
-
-	public Boolean isUseJavax() {
-		return _useJavax;
 	}
 
 	public void setCopyrightFile(File copyrightFile) {
@@ -54,12 +54,12 @@ public class RESTBuilderArgs {
 		_forcePredictableOperationId = forcePredictableOperationId;
 	}
 
-	public void setRESTConfigDir(File restConfigDir) {
-		_restConfigDir = restConfigDir;
+	public void setJavaEePackage(String javaEePackage) {
+		_javaEePackage = javaEePackage;
 	}
 
-	public void setUseJavax(Boolean useJavax) {
-		_useJavax = useJavax;
+	public void setRESTConfigDir(File restConfigDir) {
+		_restConfigDir = restConfigDir;
 	}
 
 	protected boolean isHelp() {
@@ -94,17 +94,17 @@ public class RESTBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
+		converter = BooleanConverter.class,
+		description = "Defines the Java EE package to use (javax or jakarta).",
+		names = {"-j", "--javaee-package"}
+	)
+	private String _javaEePackage;
+
+	@Parameter(
 		converter = FileConverter.class,
 		description = "The directory that contains the REST configuration files.",
 		names = {"-r", "--rest-config-dir"}
 	)
 	private File _restConfigDir = new File(REST_CONFIG_DIR_NAME);
-
-	@Parameter(
-		converter = BooleanConverter.class,
-		description = "Use javax.* imports instead of the default jakarta.* ones",
-		names = {"-j", "--use-javax"}
-	)
-	private Boolean _useJavax;
 
 }

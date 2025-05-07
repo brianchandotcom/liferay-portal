@@ -1,8 +1,6 @@
 package ${configYAML.apiPackagePath}.client.aggregation;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.util.ArrayList;
 import java.util.List;

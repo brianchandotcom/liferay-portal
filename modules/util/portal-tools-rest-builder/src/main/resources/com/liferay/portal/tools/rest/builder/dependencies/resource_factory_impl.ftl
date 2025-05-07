@@ -24,15 +24,12 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEePackage}.servlet.http.HttpServletResponse;
 
-import ${javaEePrefix}.annotation.Generated;
-
-import ${javaEePrefix}.servlet.http.HttpServletRequest;
-import ${javaEePrefix}.servlet.http.HttpServletResponse;
-
-import ${javaEePrefix}.ws.rs.core.UriInfo;
+import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;

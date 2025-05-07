@@ -30,20 +30,17 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.jackson.databind.deser.JSONStringStdDeserializer;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.validation.Valid;
+import ${configYAML.javaEePackage}.validation.constraints.DecimalMax;
+import ${configYAML.javaEePackage}.validation.constraints.DecimalMin;
+import ${configYAML.javaEePackage}.validation.constraints.NotEmpty;
+import ${configYAML.javaEePackage}.validation.constraints.NotNull;
+import ${configYAML.javaEePackage}.validation.constraints.Size;
 
-import ${javaEePrefix}.annotation.Generated;
-
-import ${javaEePrefix}.validation.Valid;
-import ${javaEePrefix}.validation.constraints.DecimalMax;
-import ${javaEePrefix}.validation.constraints.DecimalMin;
-import ${javaEePrefix}.validation.constraints.NotEmpty;
-import ${javaEePrefix}.validation.constraints.NotNull;
-import ${javaEePrefix}.validation.constraints.Size;
-
-import ${javaEePrefix}.xml.bind.annotation.XmlElement;
-import ${javaEePrefix}.xml.bind.annotation.XmlRootElement;
+import ${configYAML.javaEePackage}.xml.bind.annotation.XmlElement;
+import ${configYAML.javaEePackage}.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 

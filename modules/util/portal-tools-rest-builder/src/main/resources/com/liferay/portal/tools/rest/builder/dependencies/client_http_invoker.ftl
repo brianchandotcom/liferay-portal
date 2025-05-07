@@ -1,8 +1,6 @@
 package ${configYAML.apiPackagePath}.client.http;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

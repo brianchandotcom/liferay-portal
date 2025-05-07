@@ -3,9 +3,7 @@ package ${configYAML.apiPackagePath}.client.custom.field;
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.util.Map;
 import java.util.Objects;

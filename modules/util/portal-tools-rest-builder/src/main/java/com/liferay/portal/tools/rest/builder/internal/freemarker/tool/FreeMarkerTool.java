@@ -638,10 +638,6 @@ public class FreeMarkerTool {
 		return javaDataTypeMap.get(schemaName);
 	}
 
-	public String getJavaEePrefix(ConfigYAML configYAML) {
-		return ConfigUtil.packageName(configYAML);
-	}
-
 	public JavaMethodSignature getJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String methodName) {
 

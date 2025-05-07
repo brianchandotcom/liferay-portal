@@ -63,15 +63,15 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setRESTConfigDir(File restConfigDir) {
-		_restBuilderArgs.setRESTConfigDir(restConfigDir);
+	public void setJavaEePackage(String javaEePackage) {
+		_restBuilderArgs.setJavaEePackage(javaEePackage);
 	}
 
 	/**
 	 * @parameter
 	 */
-	public void setUseJavax(Boolean useJavax) {
-		_restBuilderArgs.setUseJavax(useJavax);
+	public void setRESTConfigDir(File restConfigDir) {
+		_restBuilderArgs.setRESTConfigDir(restConfigDir);
 	}
 
 	/**

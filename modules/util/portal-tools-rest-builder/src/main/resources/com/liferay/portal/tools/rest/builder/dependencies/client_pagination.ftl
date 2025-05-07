@@ -1,8 +1,6 @@
 package ${configYAML.apiPackagePath}.client.pagination;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 /**
  * @author ${configYAML.author}

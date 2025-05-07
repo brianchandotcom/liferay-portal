@@ -1,9 +1,8 @@
 package ${configYAML.apiPackagePath}.internal.jaxrs.application;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-import ${javaEePrefix}.annotation.Generated;
-import ${javaEePrefix}.ws.rs.core.Application;
+import ${configYAML.javaEePackage}.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -1,8 +1,6 @@
 package ${configYAML.apiPackagePath}.client.json;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.math.BigDecimal;
 

@@ -69,20 +69,17 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.servlet.ServletContext;
+import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEePackage}.servlet.http.HttpServletResponse;
 
-import ${javaEePrefix}.annotation.Generated;
-
-import ${javaEePrefix}.servlet.ServletContext;
-import ${javaEePrefix}.servlet.http.HttpServletRequest;
-import ${javaEePrefix}.servlet.http.HttpServletResponse;
-
-import ${javaEePrefix}.ws.rs.NotSupportedException;
-import ${javaEePrefix}.ws.rs.core.MultivaluedHashMap;
-import ${javaEePrefix}.ws.rs.core.MultivaluedMap;
-import ${javaEePrefix}.ws.rs.core.Response;
-import ${javaEePrefix}.ws.rs.core.UriInfo;
+import ${configYAML.javaEePackage}.ws.rs.NotSupportedException;
+import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedHashMap;
+import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedMap;
+import ${configYAML.javaEePackage}.ws.rs.core.Response;
+import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
 
 import java.io.Serializable;
 
@@ -105,7 +102,7 @@ import java.util.Set;
  */
 @Generated("")
 <#if configYAML.application??>
-	@${javaEePrefix}.ws.rs.Path("/${openAPIYAML.info.version}")
+	@${configYAML.javaEePackage}.ws.rs.Path("/${openAPIYAML.info.version}")
 </#if>
 public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
@@ -323,7 +320,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
+				${configYAML.javaEePackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${configYAML.javaEePackage}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
@@ -336,7 +333,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
 				vulcanBatchEngineExportTaskResource.setGroupLocalService(groupLocalService);
 
-				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
+				${configYAML.javaEePackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${configYAML.javaEePackage}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, contentType, fieldNames)
@@ -348,7 +345,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
+				${configYAML.javaEePackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${configYAML.javaEePackage}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.postImportTask(${javaDataType}.class.getName(), callbackURL, null, object)
@@ -360,7 +357,7 @@ public abstract class Base${schemaName}ResourceImpl
 				vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
 				vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
 
-				${javaEePrefix}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${javaEePrefix}.ws.rs.core.Response.accepted();
+				${configYAML.javaEePackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${configYAML.javaEePackage}.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)

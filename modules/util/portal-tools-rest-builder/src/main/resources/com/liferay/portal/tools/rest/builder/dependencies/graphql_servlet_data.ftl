@@ -15,10 +15,7 @@ import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Que
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
-
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.util.HashMap;
 import java.util.Map;

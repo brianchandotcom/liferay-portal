@@ -15,9 +15,7 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.io.Serializable;
 

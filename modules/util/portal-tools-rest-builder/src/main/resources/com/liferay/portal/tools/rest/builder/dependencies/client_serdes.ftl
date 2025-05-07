@@ -14,9 +14,7 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.math.BigDecimal;
 

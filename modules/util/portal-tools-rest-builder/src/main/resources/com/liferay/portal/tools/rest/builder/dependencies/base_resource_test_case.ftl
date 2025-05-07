@@ -136,17 +136,15 @@ import java.util.Set;
 	import java.util.function.Supplier;
 </#if>
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
 
-import ${javaEePrefix}.servlet.http.HttpServletRequest;
-
-import ${javaEePrefix}.ws.rs.core.MultivaluedHashMap;
-import ${javaEePrefix}.ws.rs.core.MultivaluedMap;
-import ${javaEePrefix}.ws.rs.core.PathSegment;
-import ${javaEePrefix}.ws.rs.core.UriBuilder;
-import ${javaEePrefix}.ws.rs.core.UriInfo;
+import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedHashMap;
+import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedMap;
+import ${configYAML.javaEePackage}.ws.rs.core.PathSegment;
+import ${configYAML.javaEePackage}.ws.rs.core.UriBuilder;
+import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;

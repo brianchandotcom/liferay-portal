@@ -29,9 +29,7 @@ import ${configYAML.apiPackagePath}.client.problem.Problem;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.io.File;
 
@@ -65,7 +63,7 @@ public interface ${schemaName}Resource {
 			parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 		/>
 
-		public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace(javaEePrefix + ".ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
+		public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace(configYAML.javaEePackage + ".ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
 
 		public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception;
 	</#list>

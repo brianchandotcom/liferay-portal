@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
@@ -143,8 +142,7 @@ public class ResourceTestCaseOpenAPIParser {
 		else if (returnType.contains(".") &&
 				 !returnType.equals("com.liferay.portal.vulcan") &&
 				 !returnType.equals(
-					 ConfigUtil.packageName(configYAML) +
-						 ".ws.rs.core.Response") &&
+					 configYAML.getJavaEePackage() + ".ws.rs.core.Response") &&
 				 !returnType.startsWith("java.lang") &&
 				 !returnType.startsWith("java.util") &&
 				 !returnType.startsWith(apiPackage)) {

@@ -123,7 +123,7 @@ public class RESTBuilder {
 	public RESTBuilder(
 			File copyrightFile, File configDir,
 			Boolean forceClientVersionDescription,
-			Boolean forcePredictableOperationId)
+			Boolean forcePredictableOperationId, String javaEePackage)
 		throws Exception {
 
 		_copyrightFile = copyrightFile;
@@ -144,6 +144,15 @@ public class RESTBuilder {
 				_configYAML.setForcePredictableOperationId(
 					forcePredictableOperationId);
 			}
+
+			if (javaEePackage != null) {
+				_configYAML.setJavaEePackage(javaEePackage);
+			}
+			else {
+				_configYAML.setJavaEePackage(
+					ConfigUtil.isVersionCompatible(_configYAML, 9) ? "jakarta" :
+						"javax");
+			}
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
@@ -157,11 +166,8 @@ public class RESTBuilder {
 			restBuilderArgs.getCopyrightFile(),
 			restBuilderArgs.getRESTConfigDir(),
 			restBuilderArgs.isForceClientVersionDescription(),
-			restBuilderArgs.isForcePredictableOperationId());
-
-		_useJavax = Boolean.TRUE.equals(restBuilderArgs.isUseJavax());
-
-		ConfigUtil.setUseJavax(_useJavax);
+			restBuilderArgs.isForcePredictableOperationId(),
+			restBuilderArgs.getJavaEePackage());
 	}
 
 	public void build() throws Exception {
@@ -173,8 +179,6 @@ public class RESTBuilder {
 			"freeMarkerTool", freeMarkerTool
 		).put(
 			"stringUtil", StringUtil_IW.getInstance()
-		).put(
-			"useJavax", _useJavax
 		).put(
 			"validator", Validator_IW.getInstance()
 		).build();
@@ -1893,6 +1897,5 @@ public class RESTBuilder {
 	private final ConfigYAML _configYAML;
 	private final File _copyrightFile;
 	private final List<File> _files = new ArrayList<>();
-	private Boolean _useJavax;
 
 }

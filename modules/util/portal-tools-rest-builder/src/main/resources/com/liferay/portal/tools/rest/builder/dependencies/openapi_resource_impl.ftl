@@ -5,21 +5,18 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
 
-import ${javaEePrefix}.annotation.Generated;
-
-import ${javaEePrefix}.servlet.http.HttpServletRequest;
-
-import ${javaEePrefix}.ws.rs.GET;
-import ${javaEePrefix}.ws.rs.Path;
-import ${javaEePrefix}.ws.rs.PathParam;
-import ${javaEePrefix}.ws.rs.Produces;
-import ${javaEePrefix}.ws.rs.core.Context;
-import ${javaEePrefix}.ws.rs.core.MediaType;
-import ${javaEePrefix}.ws.rs.core.Response;
-import ${javaEePrefix}.ws.rs.core.UriInfo;
+import ${configYAML.javaEePackage}.ws.rs.GET;
+import ${configYAML.javaEePackage}.ws.rs.Path;
+import ${configYAML.javaEePackage}.ws.rs.PathParam;
+import ${configYAML.javaEePackage}.ws.rs.Produces;
+import ${configYAML.javaEePackage}.ws.rs.core.Context;
+import ${configYAML.javaEePackage}.ws.rs.core.MediaType;
+import ${configYAML.javaEePackage}.ws.rs.core.Response;
+import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
 

@@ -22,16 +22,13 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
+import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEePackage}.servlet.http.HttpServletResponse;
 
-import ${javaEePrefix}.annotation.Generated;
-
-import ${javaEePrefix}.servlet.http.HttpServletRequest;
-import ${javaEePrefix}.servlet.http.HttpServletResponse;
-
-import ${javaEePrefix}.ws.rs.core.Response;
-import ${javaEePrefix}.ws.rs.core.UriInfo;
+import ${configYAML.javaEePackage}.ws.rs.core.Response;
+import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
 
 import java.util.Collections;
 import java.util.Date;

@@ -3,9 +3,7 @@ package ${configYAML.apiPackagePath}.client.pagination;
 import ${configYAML.apiPackagePath}.client.aggregation.Facet;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#assign javaEePrefix = freeMarkerTool.getJavaEePrefix(configYAML) />
-
-import ${javaEePrefix}.annotation.Generated;
+import ${configYAML.javaEePackage}.annotation.Generated;
 
 import java.util.ArrayList;
 import java.util.Collection;

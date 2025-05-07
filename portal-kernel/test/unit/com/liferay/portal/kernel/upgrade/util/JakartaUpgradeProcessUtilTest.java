@@ -7,10 +7,7 @@ package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,7 +39,7 @@ public class JakartaUpgradeProcessUtilTest {
 			).put(
 				"javax@batch@operations", "jakarta@batch@operations"
 			).build(),
-			new HashSet<>(Arrays.asList('@', '$')));
+			new char[] {'@', '$'});
 	}
 
 	@Test
@@ -67,7 +64,7 @@ public class JakartaUpgradeProcessUtilTest {
 				"javax@annotation@processing@Processor",
 				"javax@annotation@processing@Processor"
 			).build(),
-			new HashSet<>(Arrays.asList('@', '$')));
+			new char[] {'@', '$'});
 	}
 
 	@Test
@@ -88,7 +85,7 @@ public class JakartaUpgradeProcessUtilTest {
 				"import jakarta@portlet@Portlet;\nimport " +
 					"jakarta$batch$operations;"
 			).build(),
-			new HashSet<>(Arrays.asList('@', '$')));
+			new char[] {'@', '$'});
 	}
 
 	@Test
@@ -110,7 +107,7 @@ public class JakartaUpgradeProcessUtilTest {
 				"javax$activity$ActivityCompletedException",
 				"javax$activity$ActivityCompletedException"
 			).build(),
-			new HashSet<>(Arrays.asList('@', '$')));
+			new char[] {'@', '$'});
 	}
 
 	@Test
@@ -131,7 +128,7 @@ public class JakartaUpgradeProcessUtilTest {
 	}
 
 	private void _testReplace(
-		Map<String, String> replacements, Set<Character> customSeparators) {
+		Map<String, String> replacements, char[] customSeparators) {
 
 		for (Map.Entry<String, String> entry : replacements.entrySet()) {
 			Assert.assertEquals(

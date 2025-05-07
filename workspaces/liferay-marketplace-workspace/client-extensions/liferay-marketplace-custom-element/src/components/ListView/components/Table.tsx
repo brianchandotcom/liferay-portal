@@ -73,8 +73,8 @@ const Table = <T extends Record<string, any>>({
 				name: '',
 				render: (_, item) => (
 					<ClayDropDown
-						closeOnClick
 						alignmentPosition={Align.BottomCenter}
+						closeOnClick
 						items={actions.map((action) => ({
 							...action,
 							disabled:

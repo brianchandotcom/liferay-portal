@@ -36,6 +36,13 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.headless.delivery.client.custom.field.CustomField;
+import com.liferay.headless.delivery.client.custom.field.CustomValue;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
@@ -77,6 +84,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -94,6 +102,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -109,6 +118,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -169,6 +179,10 @@ public class StructuredContentResourceTest
 			testGroup, "test-localized-ddm-structure.json");
 		_unlocalizedDDMStructure = _addDDMStructure(
 			testGroup, "test-unlocalized-ddm-structure.json");
+
+		_expandoTable = ExpandoTestUtil.addTable(
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"CUSTOM_FIELDS");
 	}
 
 	@After
@@ -712,6 +726,16 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutSiteStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutSiteStructuredContentByExternalReferenceCode();
+
+		_testPutSiteStructuredContentByExternalReferenceCodeWithExpandoField();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"contentStructureId", "description", "priority", "title"
@@ -935,6 +959,30 @@ public class StructuredContentResourceTest
 			_read("test-structured-content-template.vm"), LocaleUtil.US);
 	}
 
+	private ExpandoColumn _addExpandoColumn(
+			Object defaultData, String displayType, ExpandoTable expandoTable,
+			int type)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "A" + RandomTestUtil.randomString(), type,
+			defaultData);
+
+		if (displayType != null) {
+			UnicodeProperties unicodeProperties =
+				expandoColumn.getTypeSettingsProperties();
+
+			unicodeProperties.putAll(
+				HashMapBuilder.put(
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE, displayType
+				).build());
+
+			expandoColumn.setTypeSettingsProperties(unicodeProperties);
+		}
+
+		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+	}
+
 	private void _assertFilterSiteStructuredContentsPageFilteredByDateField(
 			Locale locale)
 		throws Exception {
@@ -1069,6 +1117,18 @@ public class StructuredContentResourceTest
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	private CustomField _getCustomField(
+		CustomField[] customFields, String name) {
+
+		for (CustomField customField : customFields) {
+			if (Objects.equals(customField.getName(), name)) {
+				return customField;
+			}
+		}
+
+		return null;
 	}
 
 	private String _randomColor() {
@@ -2429,6 +2489,102 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(1, jsonObject.getLong("totalItemsCount"));
 	}
 
+	private void _testPutSiteStructuredContentByExternalReferenceCodeWithExpandoField()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			testPutSiteStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		long randomLong = RandomTestUtil.randomLong(
+			Long.MIN_VALUE, Long.MAX_VALUE);
+		short randomShort1 = (short)RandomTestUtil.randomInt(
+			Short.MIN_VALUE, Short.MAX_VALUE);
+		short randomShort2 = (short)RandomTestUtil.randomInt(
+			Short.MIN_VALUE, Short.MAX_VALUE);
+
+		ExpandoColumn longExpandoColumn = _addExpandoColumn(
+			null, null, _expandoTable, ExpandoColumnConstants.LONG);
+		ExpandoColumn shortExpandoColumn = _addExpandoColumn(
+			null, null, _expandoTable, ExpandoColumnConstants.SHORT);
+		ExpandoColumn shortArrayExpandoColumn = _addExpandoColumn(
+			null, null, _expandoTable, ExpandoColumnConstants.SHORT_ARRAY);
+
+		CustomField longCustomField = new CustomField() {
+			{
+				customValue = new CustomValue() {
+					{
+						data = randomLong;
+					}
+				};
+				dataType = "Integer";
+				name = longExpandoColumn.getName();
+			}
+		};
+
+		CustomField shortCustomField = new CustomField() {
+			{
+				customValue = new CustomValue() {
+					{
+						data = randomShort1;
+					}
+				};
+				dataType = "Integer";
+				name = shortExpandoColumn.getName();
+			}
+		};
+
+		CustomField shortArrayCustomField = new CustomField() {
+			{
+				customValue = new CustomValue() {
+					{
+						data = Arrays.asList(randomShort2);
+					}
+				};
+				dataType = "Integer";
+				name = shortArrayExpandoColumn.getName();
+			}
+		};
+
+		StructuredContent randomStructuredContent = new StructuredContent() {
+			{
+				contentStructureId = _ddmStructure.getStructureId();
+				customFields = new CustomField[] {
+					longCustomField, shortCustomField, shortArrayCustomField
+				};
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+
+		StructuredContent putStructuredContent =
+			structuredContentResource.
+				putSiteStructuredContentByExternalReferenceCode(
+					testPutSiteStructuredContentByExternalReferenceCode_getSiteId(
+						postStructuredContent),
+					postStructuredContent.getExternalReferenceCode(),
+					randomStructuredContent);
+
+		assertValid(putStructuredContent);
+
+		CustomField[] customFields = putStructuredContent.getCustomFields();
+
+		Assert.assertNotNull(customFields);
+
+		CustomField customField = _getCustomField(
+			customFields, longExpandoColumn.getName());
+
+		Assert.assertNotNull(customField);
+
+		customField = _getCustomField(
+			customFields, shortExpandoColumn.getName());
+
+		Assert.assertNotNull(customField);
+
+		customField = _getCustomField(
+			customFields, shortArrayCustomField.getName());
+
+		Assert.assertNotNull(customField);
+	}
+
 	private JSONObject _waitForFinish(
 			String expectedExecuteStatus, boolean importTask,
 			JSONObject jsonObject)
@@ -2484,6 +2640,13 @@ public class StructuredContentResourceTest
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _depotDDMStructure;
 	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@DeleteAfterTestRun
+	private ExpandoTable _expandoTable;
+
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 

@@ -81,7 +81,7 @@ if (selLayout != null) {
 
 		<div class="layout-type">
 			<p class="small text-secondary">
-				<liferay-ui:message key='<%= "layout.types." + type + ".description" %>' />
+				<liferay-ui:message key='<%= "layout.types." + HtmlUtil.escape(type) + ".description" %>' />
 			</p>
 
 			<%= layoutTypeController.includeEditContent(request, response, selLayout) %>

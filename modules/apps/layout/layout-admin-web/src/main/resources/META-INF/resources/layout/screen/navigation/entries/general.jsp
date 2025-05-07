@@ -128,7 +128,7 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 			%>
 
 			<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
-				<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
+				<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? HtmlUtil.escape(type) : "layout.types." + HtmlUtil.escape(lte.getLayoutType()) %>' key="the-first-page-cannot-be-of-type-x" />
 			</c:if>
 
 			<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT_PERMISSION %>">
@@ -136,11 +136,11 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 			</c:if>
 
 			<c:if test="<%= lte.getType() == LayoutTypeException.NOT_INSTANCEABLE %>">
-				<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-be-selected" />
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(type) %>" key="pages-of-type-x-cannot-be-selected" />
 			</c:if>
 
 			<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
-				<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(type) %>" key="pages-of-type-x-cannot-have-child-pages" />
 			</c:if>
 		</liferay-ui:error>
 

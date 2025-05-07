@@ -57,11 +57,17 @@ public class ReinvokeRule implements Comparable<ReinvokeRule> {
 
 	@Override
 	public int compareTo(ReinvokeRule reinvokeRule) {
-		if (priority == reinvokeRule.getPriority()) {
-			return name.compareTo(reinvokeRule.getName());
+		if (reinvokeRule == null) {
+			return -1;
 		}
 
-		return Integer.compare(priority, reinvokeRule.getPriority());
+		int result = priority.compareTo(reinvokeRule.getPriority());
+
+		if (result != 0) {
+			return result;
+		}
+
+		return name.compareTo(reinvokeRule.getName());
 	}
 
 	@Override

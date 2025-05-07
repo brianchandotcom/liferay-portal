@@ -83,7 +83,7 @@ test(
 				.selectOption(currentInstanceLanguages[i]);
 			await page
 				.getByRole('button', {
-					name: 'Move selected items from Current to Available',
+					name: 'Transfer Item Left to Right',
 				})
 				.click({force: true});
 		}
@@ -113,7 +113,7 @@ test(
 				.selectOption(currentInstanceLanguages[i]);
 			await page
 				.getByRole('button', {
-					name: 'Move selected items from Available to Current',
+					name: 'Transfer Item Right to Left',
 				})
 				.click({force: true});
 		}

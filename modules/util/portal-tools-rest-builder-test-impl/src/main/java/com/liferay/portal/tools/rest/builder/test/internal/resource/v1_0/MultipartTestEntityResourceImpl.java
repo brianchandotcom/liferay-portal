@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SimpleTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipartTestEntityResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -14,9 +14,9 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alejandro Tardín
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/simple-test-entity.properties",
-	scope = ServiceScope.PROTOTYPE, service = SimpleTestEntityResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/multipart-test-entity.properties",
+	scope = ServiceScope.PROTOTYPE, service = MultipartTestEntityResource.class
 )
-public class SimpleTestEntityResourceImpl
-	extends BaseSimpleTestEntityResourceImpl {
+public class MultipartTestEntityResourceImpl
+	extends BaseMultipartTestEntityResourceImpl {
 }

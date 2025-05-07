@@ -97,9 +97,9 @@ public class OpenAPIResourceImpl {
 
 			add(FilterResourceImpl.class);
 
-			add(SchemaResourceImpl.class);
+			add(MultipartTestEntityResourceImpl.class);
 
-			add(SimpleTestEntityResourceImpl.class);
+			add(SchemaResourceImpl.class);
 
 			add(SiteTestEntityResourceImpl.class);
 

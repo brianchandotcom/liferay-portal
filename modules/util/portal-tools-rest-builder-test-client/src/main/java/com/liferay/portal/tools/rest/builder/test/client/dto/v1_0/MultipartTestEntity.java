@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.SimpleTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipartTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SimpleTestEntity implements Cloneable, Serializable {
+public class MultipartTestEntity implements Cloneable, Serializable {
 
-	public static SimpleTestEntity toDTO(String json) {
-		return SimpleTestEntitySerDes.toDTO(json);
+	public static MultipartTestEntity toDTO(String json) {
+		return MultipartTestEntitySerDes.toDTO(json);
 	}
 
 	public String getName() {
@@ -45,8 +45,8 @@ public class SimpleTestEntity implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public SimpleTestEntity clone() throws CloneNotSupportedException {
-		return (SimpleTestEntity)super.clone();
+	public MultipartTestEntity clone() throws CloneNotSupportedException {
+		return (MultipartTestEntity)super.clone();
 	}
 
 	@Override
@@ -55,13 +55,13 @@ public class SimpleTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SimpleTestEntity)) {
+		if (!(object instanceof MultipartTestEntity)) {
 			return false;
 		}
 
-		SimpleTestEntity simpleTestEntity = (SimpleTestEntity)object;
+		MultipartTestEntity multipartTestEntity = (MultipartTestEntity)object;
 
-		return Objects.equals(toString(), simpleTestEntity.toString());
+		return Objects.equals(toString(), multipartTestEntity.toString());
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class SimpleTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return SimpleTestEntitySerDes.toJSON(this);
+		return MultipartTestEntitySerDes.toJSON(this);
 	}
 
 }

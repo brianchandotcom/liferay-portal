@@ -5,10 +5,10 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.resource.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SimpleTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.problem.Problem;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.SimpleTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipartTestEntitySerDes;
 
 import java.io.File;
 
@@ -28,45 +28,46 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface SimpleTestEntityResource {
+public interface MultipartTestEntityResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public SimpleTestEntity getSimpleTestEntity(Long simpleTestEntityId)
+	public MultipartTestEntity getMultipartTestEntity(
+			Long multipartTestEntityId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSimpleTestEntityHttpResponse(
-			Long simpleTestEntityId)
+	public HttpInvoker.HttpResponse getMultipartTestEntityHttpResponse(
+			Long multipartTestEntityId)
 		throws Exception;
 
-	public SimpleTestEntity patchSimpleTestEntity(
-			Long simpleTestEntityId, SimpleTestEntity simpleTestEntity)
+	public MultipartTestEntity patchMultipartTestEntity(
+			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchSimpleTestEntityHttpResponse(
-			Long simpleTestEntityId, SimpleTestEntity simpleTestEntity)
+	public HttpInvoker.HttpResponse patchMultipartTestEntityHttpResponse(
+			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity)
 		throws Exception;
 
-	public SimpleTestEntity putSimpleTestEntity(
-			Long simpleTestEntityId, SimpleTestEntity simpleTestEntity,
+	public MultipartTestEntity putMultipartTestEntity(
+			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSimpleTestEntityHttpResponse(
-			Long simpleTestEntityId, SimpleTestEntity simpleTestEntity,
+	public HttpInvoker.HttpResponse putMultipartTestEntityHttpResponse(
+			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public void putSimpleTestEntityBatch(
-			SimpleTestEntity simpleTestEntity, Map<String, File> multipartFiles,
-			String callbackURL, Object object)
+	public void putMultipartTestEntityBatch(
+			MultipartTestEntity multipartTestEntity,
+			Map<String, File> multipartFiles, String callbackURL, Object object)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSimpleTestEntityBatchHttpResponse(
-			SimpleTestEntity simpleTestEntity, Map<String, File> multipartFiles,
-			String callbackURL, Object object)
+	public HttpInvoker.HttpResponse putMultipartTestEntityBatchHttpResponse(
+			MultipartTestEntity multipartTestEntity,
+			Map<String, File> multipartFiles, String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -82,8 +83,8 @@ public interface SimpleTestEntityResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public SimpleTestEntityResource build() {
-			return new SimpleTestEntityResourceImpl(this);
+		public MultipartTestEntityResource build() {
+			return new MultipartTestEntityResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -175,14 +176,15 @@ public interface SimpleTestEntityResource {
 
 	}
 
-	public static class SimpleTestEntityResourceImpl
-		implements SimpleTestEntityResource {
+	public static class MultipartTestEntityResourceImpl
+		implements MultipartTestEntityResource {
 
-		public SimpleTestEntity getSimpleTestEntity(Long simpleTestEntityId)
+		public MultipartTestEntity getMultipartTestEntity(
+				Long multipartTestEntityId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSimpleTestEntityHttpResponse(simpleTestEntityId);
+				getMultipartTestEntityHttpResponse(multipartTestEntityId);
 
 			String content = httpResponse.getContent();
 
@@ -232,7 +234,7 @@ public interface SimpleTestEntityResource {
 			}
 
 			try {
-				return SimpleTestEntitySerDes.toDTO(content);
+				return MultipartTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -243,8 +245,8 @@ public interface SimpleTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSimpleTestEntityHttpResponse(
-				Long simpleTestEntityId)
+		public HttpInvoker.HttpResponse getMultipartTestEntityHttpResponse(
+				Long multipartTestEntityId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -271,9 +273,9 @@ public interface SimpleTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/simple-test-entities/{simpleEntityId}");
+						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
-			httpInvoker.path("simpleTestEntityId", simpleTestEntityId);
+			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -283,13 +285,14 @@ public interface SimpleTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public SimpleTestEntity patchSimpleTestEntity(
-				Long simpleTestEntityId, SimpleTestEntity simpleTestEntity)
+		public MultipartTestEntity patchMultipartTestEntity(
+				Long multipartTestEntityId,
+				MultipartTestEntity multipartTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchSimpleTestEntityHttpResponse(
-					simpleTestEntityId, simpleTestEntity);
+				patchMultipartTestEntityHttpResponse(
+					multipartTestEntityId, multipartTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -339,7 +342,7 @@ public interface SimpleTestEntityResource {
 			}
 
 			try {
-				return SimpleTestEntitySerDes.toDTO(content);
+				return MultipartTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -350,13 +353,15 @@ public interface SimpleTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchSimpleTestEntityHttpResponse(
-				Long simpleTestEntityId, SimpleTestEntity simpleTestEntity)
+		public HttpInvoker.HttpResponse patchMultipartTestEntityHttpResponse(
+				Long multipartTestEntityId,
+				MultipartTestEntity multipartTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(simpleTestEntity.toString(), "application/json");
+			httpInvoker.body(
+				multipartTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -380,9 +385,9 @@ public interface SimpleTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/simple-test-entities/{simpleEntityId}");
+						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
-			httpInvoker.path("simpleTestEntityId", simpleTestEntityId);
+			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -392,14 +397,15 @@ public interface SimpleTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public SimpleTestEntity putSimpleTestEntity(
-				Long simpleTestEntityId, SimpleTestEntity simpleTestEntity,
+		public MultipartTestEntity putMultipartTestEntity(
+				Long multipartTestEntityId,
+				MultipartTestEntity multipartTestEntity,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSimpleTestEntityHttpResponse(
-					simpleTestEntityId, simpleTestEntity, multipartFiles);
+				putMultipartTestEntityHttpResponse(
+					multipartTestEntityId, multipartTestEntity, multipartFiles);
 
 			String content = httpResponse.getContent();
 
@@ -449,7 +455,7 @@ public interface SimpleTestEntityResource {
 			}
 
 			try {
-				return SimpleTestEntitySerDes.toDTO(content);
+				return MultipartTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -460,8 +466,9 @@ public interface SimpleTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSimpleTestEntityHttpResponse(
-				Long simpleTestEntityId, SimpleTestEntity simpleTestEntity,
+		public HttpInvoker.HttpResponse putMultipartTestEntityHttpResponse(
+				Long multipartTestEntityId,
+				MultipartTestEntity multipartTestEntity,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
@@ -470,8 +477,8 @@ public interface SimpleTestEntityResource {
 			httpInvoker.multipart();
 
 			httpInvoker.part(
-				"simpleTestEntity",
-				SimpleTestEntitySerDes.toJSON(simpleTestEntity));
+				"multipartTestEntity",
+				MultipartTestEntitySerDes.toJSON(multipartTestEntity));
 
 			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
 				httpInvoker.part(entry.getKey(), entry.getValue());
@@ -499,9 +506,9 @@ public interface SimpleTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/simple-test-entities/{simpleEntityId}");
+						"/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}");
 
-			httpInvoker.path("simpleTestEntityId", simpleTestEntityId);
+			httpInvoker.path("multipartTestEntityId", multipartTestEntityId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -511,15 +518,15 @@ public interface SimpleTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSimpleTestEntityBatch(
-				SimpleTestEntity simpleTestEntity,
+		public void putMultipartTestEntityBatch(
+				MultipartTestEntity multipartTestEntity,
 				Map<String, File> multipartFiles, String callbackURL,
 				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSimpleTestEntityBatchHttpResponse(
-					simpleTestEntity, multipartFiles, callbackURL, object);
+				putMultipartTestEntityBatchHttpResponse(
+					multipartTestEntity, multipartFiles, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -569,8 +576,8 @@ public interface SimpleTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSimpleTestEntityBatchHttpResponse(
-				SimpleTestEntity simpleTestEntity,
+		public HttpInvoker.HttpResponse putMultipartTestEntityBatchHttpResponse(
+				MultipartTestEntity multipartTestEntity,
 				Map<String, File> multipartFiles, String callbackURL,
 				Object object)
 			throws Exception {
@@ -606,7 +613,7 @@ public interface SimpleTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/simple-test-entities/{simpleEntityId}/batch");
+						"/o/test/v1.0/multipart-test-entities/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -616,12 +623,12 @@ public interface SimpleTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		private SimpleTestEntityResourceImpl(Builder builder) {
+		private MultipartTestEntityResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			SimpleTestEntityResource.class.getName());
+			MultipartTestEntityResource.class.getName());
 
 		private Builder _builder;
 

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SimpleTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SimpleTestEntitySerDes {
+public class MultipartTestEntitySerDes {
 
-	public static SimpleTestEntity toDTO(String json) {
-		SimpleTestEntityJSONParser simpleTestEntityJSONParser =
-			new SimpleTestEntityJSONParser();
+	public static MultipartTestEntity toDTO(String json) {
+		MultipartTestEntityJSONParser multipartTestEntityJSONParser =
+			new MultipartTestEntityJSONParser();
 
-		return simpleTestEntityJSONParser.parseToDTO(json);
+		return multipartTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static SimpleTestEntity[] toDTOs(String json) {
-		SimpleTestEntityJSONParser simpleTestEntityJSONParser =
-			new SimpleTestEntityJSONParser();
+	public static MultipartTestEntity[] toDTOs(String json) {
+		MultipartTestEntityJSONParser multipartTestEntityJSONParser =
+			new MultipartTestEntityJSONParser();
 
-		return simpleTestEntityJSONParser.parseToDTOs(json);
+		return multipartTestEntityJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SimpleTestEntity simpleTestEntity) {
-		if (simpleTestEntity == null) {
+	public static String toJSON(MultipartTestEntity multipartTestEntity) {
+		if (multipartTestEntity == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class SimpleTestEntitySerDes {
 
 		sb.append("{");
 
-		if (simpleTestEntity.getName() != null) {
+		if (multipartTestEntity.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,7 +55,7 @@ public class SimpleTestEntitySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(simpleTestEntity.getName()));
+			sb.append(_escape(multipartTestEntity.getName()));
 
 			sb.append("\"");
 		}
@@ -66,40 +66,42 @@ public class SimpleTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SimpleTestEntityJSONParser simpleTestEntityJSONParser =
-			new SimpleTestEntityJSONParser();
+		MultipartTestEntityJSONParser multipartTestEntityJSONParser =
+			new MultipartTestEntityJSONParser();
 
-		return simpleTestEntityJSONParser.parseToMap(json);
+		return multipartTestEntityJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(SimpleTestEntity simpleTestEntity) {
-		if (simpleTestEntity == null) {
+	public static Map<String, String> toMap(
+		MultipartTestEntity multipartTestEntity) {
+
+		if (multipartTestEntity == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (simpleTestEntity.getName() == null) {
+		if (multipartTestEntity.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(simpleTestEntity.getName()));
+			map.put("name", String.valueOf(multipartTestEntity.getName()));
 		}
 
 		return map;
 	}
 
-	public static class SimpleTestEntityJSONParser
-		extends BaseJSONParser<SimpleTestEntity> {
+	public static class MultipartTestEntityJSONParser
+		extends BaseJSONParser<MultipartTestEntity> {
 
 		@Override
-		protected SimpleTestEntity createDTO() {
-			return new SimpleTestEntity();
+		protected MultipartTestEntity createDTO() {
+			return new MultipartTestEntity();
 		}
 
 		@Override
-		protected SimpleTestEntity[] createDTOArray(int size) {
-			return new SimpleTestEntity[size];
+		protected MultipartTestEntity[] createDTOArray(int size) {
+			return new MultipartTestEntity[size];
 		}
 
 		@Override
@@ -113,12 +115,12 @@ public class SimpleTestEntitySerDes {
 
 		@Override
 		protected void setField(
-			SimpleTestEntity simpleTestEntity, String jsonParserFieldName,
+			MultipartTestEntity multipartTestEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					simpleTestEntity.setName((String)jsonParserFieldValue);
+					multipartTestEntity.setName((String)jsonParserFieldValue);
 				}
 			}
 		}

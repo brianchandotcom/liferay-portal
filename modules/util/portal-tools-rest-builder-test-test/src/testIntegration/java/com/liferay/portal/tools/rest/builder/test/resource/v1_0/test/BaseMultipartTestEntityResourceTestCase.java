@@ -40,11 +40,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SimpleTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SimpleTestEntityResource;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.SimpleTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.MultipartTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipartTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -81,7 +81,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSimpleTestEntityResourceTestCase {
+public abstract class BaseMultipartTestEntityResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -104,12 +104,12 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_simpleTestEntityResource.setContextCompany(testCompany);
+		_multipartTestEntityResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		simpleTestEntityResource = SimpleTestEntityResource.builder(
+		multipartTestEntityResource = MultipartTestEntityResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -130,23 +130,24 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		SimpleTestEntity simpleTestEntity1 = randomSimpleTestEntity();
+		MultipartTestEntity multipartTestEntity1 = randomMultipartTestEntity();
 
-		String json = objectMapper.writeValueAsString(simpleTestEntity1);
+		String json = objectMapper.writeValueAsString(multipartTestEntity1);
 
-		SimpleTestEntity simpleTestEntity2 = SimpleTestEntitySerDes.toDTO(json);
+		MultipartTestEntity multipartTestEntity2 =
+			MultipartTestEntitySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(simpleTestEntity1, simpleTestEntity2));
+		Assert.assertTrue(equals(multipartTestEntity1, multipartTestEntity2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		SimpleTestEntity simpleTestEntity = randomSimpleTestEntity();
+		MultipartTestEntity multipartTestEntity = randomMultipartTestEntity();
 
-		String json1 = objectMapper.writeValueAsString(simpleTestEntity);
-		String json2 = SimpleTestEntitySerDes.toJSON(simpleTestEntity);
+		String json1 = objectMapper.writeValueAsString(multipartTestEntity);
+		String json2 = MultipartTestEntitySerDes.toJSON(multipartTestEntity);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -174,42 +175,42 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		SimpleTestEntity simpleTestEntity = randomSimpleTestEntity();
+		MultipartTestEntity multipartTestEntity = randomMultipartTestEntity();
 
-		simpleTestEntity.setName(regex);
+		multipartTestEntity.setName(regex);
 
-		String json = SimpleTestEntitySerDes.toJSON(simpleTestEntity);
+		String json = MultipartTestEntitySerDes.toJSON(multipartTestEntity);
 
 		Assert.assertFalse(json.contains(regex));
 
-		simpleTestEntity = SimpleTestEntitySerDes.toDTO(json);
+		multipartTestEntity = MultipartTestEntitySerDes.toDTO(json);
 
-		Assert.assertEquals(regex, simpleTestEntity.getName());
+		Assert.assertEquals(regex, multipartTestEntity.getName());
 	}
 
 	@Test
-	public void testGetSimpleTestEntity() throws Exception {
+	public void testGetMultipartTestEntity() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPatchSimpleTestEntity() throws Exception {
+	public void testPatchMultipartTestEntity() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPutSimpleTestEntity() throws Exception {
+	public void testPutMultipartTestEntity() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(
-		SimpleTestEntity simpleTestEntity,
-		List<SimpleTestEntity> simpleTestEntities) {
+		MultipartTestEntity multipartTestEntity,
+		List<MultipartTestEntity> multipartTestEntities) {
 
 		boolean contains = false;
 
-		for (SimpleTestEntity item : simpleTestEntities) {
-			if (equals(simpleTestEntity, item)) {
+		for (MultipartTestEntity item : multipartTestEntities) {
+			if (equals(multipartTestEntity, item)) {
 				contains = true;
 
 				break;
@@ -217,7 +218,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			simpleTestEntities + " does not contain " + simpleTestEntity,
+			multipartTestEntities + " does not contain " + multipartTestEntity,
 			contains);
 	}
 
@@ -230,41 +231,47 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	}
 
 	protected void assertEquals(
-		SimpleTestEntity simpleTestEntity1,
-		SimpleTestEntity simpleTestEntity2) {
+		MultipartTestEntity multipartTestEntity1,
+		MultipartTestEntity multipartTestEntity2) {
 
 		Assert.assertTrue(
-			simpleTestEntity1 + " does not equal " + simpleTestEntity2,
-			equals(simpleTestEntity1, simpleTestEntity2));
+			multipartTestEntity1 + " does not equal " + multipartTestEntity2,
+			equals(multipartTestEntity1, multipartTestEntity2));
 	}
 
 	protected void assertEquals(
-		List<SimpleTestEntity> simpleTestEntities1,
-		List<SimpleTestEntity> simpleTestEntities2) {
+		List<MultipartTestEntity> multipartTestEntities1,
+		List<MultipartTestEntity> multipartTestEntities2) {
 
 		Assert.assertEquals(
-			simpleTestEntities1.size(), simpleTestEntities2.size());
+			multipartTestEntities1.size(), multipartTestEntities2.size());
 
-		for (int i = 0; i < simpleTestEntities1.size(); i++) {
-			SimpleTestEntity simpleTestEntity1 = simpleTestEntities1.get(i);
-			SimpleTestEntity simpleTestEntity2 = simpleTestEntities2.get(i);
+		for (int i = 0; i < multipartTestEntities1.size(); i++) {
+			MultipartTestEntity multipartTestEntity1 =
+				multipartTestEntities1.get(i);
+			MultipartTestEntity multipartTestEntity2 =
+				multipartTestEntities2.get(i);
 
-			assertEquals(simpleTestEntity1, simpleTestEntity2);
+			assertEquals(multipartTestEntity1, multipartTestEntity2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<SimpleTestEntity> simpleTestEntities1,
-		List<SimpleTestEntity> simpleTestEntities2) {
+		List<MultipartTestEntity> multipartTestEntities1,
+		List<MultipartTestEntity> multipartTestEntities2) {
 
 		Assert.assertEquals(
-			simpleTestEntities1.size(), simpleTestEntities2.size());
+			multipartTestEntities1.size(), multipartTestEntities2.size());
 
-		for (SimpleTestEntity simpleTestEntity1 : simpleTestEntities1) {
+		for (MultipartTestEntity multipartTestEntity1 :
+				multipartTestEntities1) {
+
 			boolean contains = false;
 
-			for (SimpleTestEntity simpleTestEntity2 : simpleTestEntities2) {
-				if (equals(simpleTestEntity1, simpleTestEntity2)) {
+			for (MultipartTestEntity multipartTestEntity2 :
+					multipartTestEntities2) {
+
+				if (equals(multipartTestEntity1, multipartTestEntity2)) {
 					contains = true;
 
 					break;
@@ -272,12 +279,13 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				simpleTestEntities2 + " does not contain " + simpleTestEntity1,
+				multipartTestEntities2 + " does not contain " +
+					multipartTestEntity1,
 				contains);
 		}
 	}
 
-	protected void assertValid(SimpleTestEntity simpleTestEntity)
+	protected void assertValid(MultipartTestEntity multipartTestEntity)
 		throws Exception {
 
 		boolean valid = true;
@@ -286,7 +294,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (simpleTestEntity.getName() == null) {
+				if (multipartTestEntity.getName() == null) {
 					valid = false;
 				}
 
@@ -301,20 +309,20 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SimpleTestEntity> page) {
+	protected void assertValid(Page<MultipartTestEntity> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<SimpleTestEntity> page,
+		Page<MultipartTestEntity> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<SimpleTestEntity> simpleTestEntities =
+		java.util.Collection<MultipartTestEntity> multipartTestEntities =
 			page.getItems();
 
-		int size = simpleTestEntities.size();
+		int size = multipartTestEntities.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -355,7 +363,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						SimpleTestEntity.class)) {
+						MultipartTestEntity.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -404,10 +412,10 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	}
 
 	protected boolean equals(
-		SimpleTestEntity simpleTestEntity1,
-		SimpleTestEntity simpleTestEntity2) {
+		MultipartTestEntity multipartTestEntity1,
+		MultipartTestEntity multipartTestEntity2) {
 
-		if (simpleTestEntity1 == simpleTestEntity2) {
+		if (multipartTestEntity1 == multipartTestEntity2) {
 			return true;
 		}
 
@@ -416,8 +424,8 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						simpleTestEntity1.getName(),
-						simpleTestEntity2.getName())) {
+						multipartTestEntity1.getName(),
+						multipartTestEntity2.getName())) {
 
 					return false;
 				}
@@ -481,13 +489,13 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_simpleTestEntityResource instanceof EntityModelResource)) {
+		if (!(_multipartTestEntityResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_simpleTestEntityResource;
+			(EntityModelResource)_multipartTestEntityResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -521,7 +529,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		SimpleTestEntity simpleTestEntity) {
+		MultipartTestEntity multipartTestEntity) {
 
 		StringBundler sb = new StringBundler();
 
@@ -534,7 +542,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("name")) {
-			Object object = simpleTestEntity.getName();
+			Object object = multipartTestEntity.getName();
 
 			String value = String.valueOf(object);
 
@@ -621,28 +629,30 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected SimpleTestEntity randomSimpleTestEntity() throws Exception {
-		return new SimpleTestEntity() {
+	protected MultipartTestEntity randomMultipartTestEntity() throws Exception {
+		return new MultipartTestEntity() {
 			{
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected SimpleTestEntity randomIrrelevantSimpleTestEntity()
+	protected MultipartTestEntity randomIrrelevantMultipartTestEntity()
 		throws Exception {
 
-		SimpleTestEntity randomIrrelevantSimpleTestEntity =
-			randomSimpleTestEntity();
+		MultipartTestEntity randomIrrelevantMultipartTestEntity =
+			randomMultipartTestEntity();
 
-		return randomIrrelevantSimpleTestEntity;
+		return randomIrrelevantMultipartTestEntity;
 	}
 
-	protected SimpleTestEntity randomPatchSimpleTestEntity() throws Exception {
-		return randomSimpleTestEntity();
+	protected MultipartTestEntity randomPatchMultipartTestEntity()
+		throws Exception {
+
+		return randomMultipartTestEntity();
 	}
 
-	protected SimpleTestEntityResource simpleTestEntityResource;
+	protected MultipartTestEntityResource multipartTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -841,7 +851,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSimpleTestEntityResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseMultipartTestEntityResourceTestCase.class);
 
 	private static Format _format;
 
@@ -849,7 +859,7 @@ public abstract class BaseSimpleTestEntityResourceTestCase {
 
 	@Inject
 	private com.liferay.portal.tools.rest.builder.test.resource.v1_0.
-		SimpleTestEntityResource _simpleTestEntityResource;
+		MultipartTestEntityResource _multipartTestEntityResource;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

@@ -14,7 +14,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SimpleTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -47,20 +47,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface SimpleTestEntityResource {
+public interface MultipartTestEntityResource {
 
-	public SimpleTestEntity getSimpleTestEntity(Long simpleTestEntityId)
+	public MultipartTestEntity getMultipartTestEntity(
+			Long multipartTestEntityId)
 		throws Exception;
 
-	public SimpleTestEntity patchSimpleTestEntity(
-			Long simpleTestEntityId, SimpleTestEntity simpleTestEntity)
+	public MultipartTestEntity patchMultipartTestEntity(
+			Long multipartTestEntityId, MultipartTestEntity multipartTestEntity)
 		throws Exception;
 
-	public SimpleTestEntity putSimpleTestEntity(
-			Long simpleTestEntityId, MultipartBody multipartBody)
+	public MultipartTestEntity putMultipartTestEntity(
+			Long multipartTestEntityId, MultipartBody multipartBody)
 		throws Exception;
 
-	public Response putSimpleTestEntityBatch(
+	public Response putMultipartTestEntityBatch(
 			MultipartBody multipartBody, String callbackURL, Object object)
 		throws Exception;
 
@@ -134,7 +135,7 @@ public interface SimpleTestEntityResource {
 	@ProviderType
 	public interface Builder {
 
-		public SimpleTestEntityResource build();
+		public MultipartTestEntityResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

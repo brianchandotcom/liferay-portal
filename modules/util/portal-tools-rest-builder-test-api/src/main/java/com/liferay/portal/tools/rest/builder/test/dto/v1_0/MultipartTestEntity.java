@@ -33,17 +33,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SimpleTestEntity")
+@GraphQLName("MultipartTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SimpleTestEntity")
-public class SimpleTestEntity implements Serializable {
+@XmlRootElement(name = "MultipartTestEntity")
+public class MultipartTestEntity implements Serializable {
 
-	public static SimpleTestEntity toDTO(String json) {
-		return ObjectMapperUtil.readValue(SimpleTestEntity.class, json);
+	public static MultipartTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(MultipartTestEntity.class, json);
 	}
 
-	public static SimpleTestEntity unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(SimpleTestEntity.class, json);
+	public static MultipartTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			MultipartTestEntity.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -91,13 +92,13 @@ public class SimpleTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SimpleTestEntity)) {
+		if (!(object instanceof MultipartTestEntity)) {
 			return false;
 		}
 
-		SimpleTestEntity simpleTestEntity = (SimpleTestEntity)object;
+		MultipartTestEntity multipartTestEntity = (MultipartTestEntity)object;
 
-		return Objects.equals(toString(), simpleTestEntity.toString());
+		return Objects.equals(toString(), multipartTestEntity.toString());
 	}
 
 	@Override
@@ -135,7 +136,7 @@ public class SimpleTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.SimpleTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

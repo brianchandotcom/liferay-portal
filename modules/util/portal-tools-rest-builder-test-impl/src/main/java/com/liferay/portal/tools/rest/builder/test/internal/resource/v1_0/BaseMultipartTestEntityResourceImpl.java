@@ -27,9 +27,9 @@ import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SimpleTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SimpleTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipartTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -68,115 +68,121 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseSimpleTestEntityResourceImpl
-	implements EntityModelResource, SimpleTestEntityResource,
-			   VulcanBatchEngineTaskItemDelegate<SimpleTestEntity>,
-			   VulcanCRUDItemDelegate<SimpleTestEntity> {
+public abstract class BaseMultipartTestEntityResourceImpl
+	implements EntityModelResource, MultipartTestEntityResource,
+			   VulcanBatchEngineTaskItemDelegate<MultipartTestEntity>,
+			   VulcanCRUDItemDelegate<MultipartTestEntity> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/simple-test-entities/{simpleEntityId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "simpleTestEntityId"
+				name = "multipartTestEntityId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
 		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/simple-test-entities/{simpleEntityId}")
+	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SimpleTestEntity getSimpleTestEntity(
+	public MultipartTestEntity getMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("simpleTestEntityId")
-			Long simpleTestEntityId)
+			@javax.ws.rs.PathParam("multipartTestEntityId")
+			Long multipartTestEntityId)
 		throws Exception {
 
-		return new SimpleTestEntity();
+		return new MultipartTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/simple-test-entities/{simpleEntityId}' -d $'{"name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}' -d $'{"name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "simpleTestEntityId"
+				name = "multipartTestEntityId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/simple-test-entities/{simpleEntityId}")
+	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SimpleTestEntity patchSimpleTestEntity(
+	public MultipartTestEntity patchMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("simpleTestEntityId")
-			Long simpleTestEntityId,
-			SimpleTestEntity simpleTestEntity)
+			@javax.ws.rs.PathParam("multipartTestEntityId")
+			Long multipartTestEntityId,
+			MultipartTestEntity multipartTestEntity)
 		throws Exception {
 
-		return new SimpleTestEntity();
+		return new MultipartTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/simple-test-entities/{simpleEntityId}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/{multipartTestEntityId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "simpleTestEntityId"
+				name = "multipartTestEntityId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
 		}
 	)
 	@javax.ws.rs.Consumes("multipart/form-data")
-	@javax.ws.rs.Path("/simple-test-entities/{simpleEntityId}")
+	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
 	@javax.ws.rs.Produces("multipart/form-data")
 	@javax.ws.rs.PUT
 	@Override
-	public SimpleTestEntity putSimpleTestEntity(
+	public MultipartTestEntity putMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("simpleTestEntityId")
-			Long simpleTestEntityId,
+			@javax.ws.rs.PathParam("multipartTestEntityId")
+			Long multipartTestEntityId,
 			MultipartBody multipartBody)
 		throws Exception {
 
-		return new SimpleTestEntity();
+		return new MultipartTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/simple-test-entities/{simpleEntityId}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/multipart-test-entities/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -188,15 +194,17 @@ public abstract class BaseSimpleTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "SimpleTestEntity")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "MultipartTestEntity"
+			)
 		}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/simple-test-entities/{simpleEntityId}/batch")
+	@javax.ws.rs.Path("/multipart-test-entities/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
-	public Response putSimpleTestEntityBatch(
+	public Response putMultipartTestEntityBatch(
 			MultipartBody multipartBody,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
@@ -216,14 +224,14 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.putImportTask(
-				SimpleTestEntity.class.getName(), callbackURL, object)
+				MultipartTestEntity.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<SimpleTestEntity> simpleTestEntities,
+			Collection<MultipartTestEntity> multipartTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -233,7 +241,7 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 	@Override
 	public void delete(
-			Collection<SimpleTestEntity> simpleTestEntities,
+			Collection<MultipartTestEntity> multipartTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -265,7 +273,7 @@ public abstract class BaseSimpleTestEntityResourceImpl
 	}
 
 	public String getResourceName() {
-		return "SimpleTestEntity";
+		return "MultipartTestEntity";
 	}
 
 	public String getVersion() {
@@ -273,7 +281,7 @@ public abstract class BaseSimpleTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<SimpleTestEntity> read(
+	public Page<MultipartTestEntity> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -308,47 +316,50 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 	@Override
 	public void update(
-			Collection<SimpleTestEntity> simpleTestEntities,
+			Collection<MultipartTestEntity> multipartTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<SimpleTestEntity, SimpleTestEntity, Exception>
-			simpleTestEntityUnsafeFunction = null;
+		UnsafeFunction<MultipartTestEntity, MultipartTestEntity, Exception>
+			multipartTestEntityUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			simpleTestEntityUnsafeFunction =
-				simpleTestEntity -> patchSimpleTestEntity(
-					_parseLong((String)parameters.get("simpleTestEntityId")),
-					simpleTestEntity);
+			multipartTestEntityUnsafeFunction =
+				multipartTestEntity -> patchMultipartTestEntity(
+					_parseLong((String)parameters.get("multipartTestEntityId")),
+					multipartTestEntity);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			simpleTestEntityUnsafeFunction =
-				simpleTestEntity -> putSimpleTestEntity(
-					_parseLong((String)parameters.get("simpleTestEntityId")),
+			multipartTestEntityUnsafeFunction =
+				multipartTestEntity -> putMultipartTestEntity(
+					_parseLong((String)parameters.get("multipartTestEntityId")),
 					null);
 		}
 
-		if (simpleTestEntityUnsafeFunction == null) {
+		if (multipartTestEntityUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
-					"\" is not supported for SimpleTestEntity");
+					"\" is not supported for MultipartTestEntity");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				simpleTestEntities, simpleTestEntityUnsafeFunction);
+				multipartTestEntities, multipartTestEntityUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				simpleTestEntities, simpleTestEntityUnsafeFunction::apply);
+				multipartTestEntities,
+				multipartTestEntityUnsafeFunction::apply);
 		}
 		else {
-			for (SimpleTestEntity simpleTestEntity : simpleTestEntities) {
-				simpleTestEntityUnsafeFunction.apply(simpleTestEntity);
+			for (MultipartTestEntity multipartTestEntity :
+					multipartTestEntities) {
+
+				multipartTestEntityUnsafeFunction.apply(multipartTestEntity);
 			}
 		}
 	}
@@ -362,8 +373,8 @@ public abstract class BaseSimpleTestEntityResourceImpl
 	}
 
 	@Override
-	public SimpleTestEntity getItem(Long id) throws Exception {
-		return getSimpleTestEntity(id);
+	public MultipartTestEntity getItem(Long id) throws Exception {
+		return getMultipartTestEntity(id);
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -372,8 +383,9 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<SimpleTestEntity>,
-			 UnsafeFunction<SimpleTestEntity, SimpleTestEntity, Exception>,
+			<Collection<MultipartTestEntity>,
+			 UnsafeFunction
+				 <MultipartTestEntity, MultipartTestEntity, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -381,8 +393,8 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<SimpleTestEntity>,
-			 UnsafeConsumer<SimpleTestEntity, Exception>, Exception>
+			<Collection<MultipartTestEntity>,
+			 UnsafeConsumer<MultipartTestEntity, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -649,12 +661,12 @@ public abstract class BaseSimpleTestEntityResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<SimpleTestEntity>,
-		 UnsafeFunction<SimpleTestEntity, SimpleTestEntity, Exception>,
+		<Collection<MultipartTestEntity>,
+		 UnsafeFunction<MultipartTestEntity, MultipartTestEntity, Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<SimpleTestEntity>,
-		 UnsafeConsumer<SimpleTestEntity, Exception>, Exception>
+		<Collection<MultipartTestEntity>,
+		 UnsafeConsumer<MultipartTestEntity, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -676,6 +688,6 @@ public abstract class BaseSimpleTestEntityResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSimpleTestEntityResourceImpl.class);
+		LogFactoryUtil.getLog(BaseMultipartTestEntityResourceImpl.class);
 
 }

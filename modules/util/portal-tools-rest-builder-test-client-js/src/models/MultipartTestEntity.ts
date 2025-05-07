@@ -9,7 +9,7 @@
  * @generated
  */
 
-	export class SimpleTestEntity {
+	export class MultipartTestEntity {
 			"name"?: string;
 
 		static "discriminator": string | undefined = undefined;
@@ -27,6 +27,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return SimpleTestEntity.attributeTypeMap;
+				return MultipartTestEntity.attributeTypeMap;
 		}
 	}

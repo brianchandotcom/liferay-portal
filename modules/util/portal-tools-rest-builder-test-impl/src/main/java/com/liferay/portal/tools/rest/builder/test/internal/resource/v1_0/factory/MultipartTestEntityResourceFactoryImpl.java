@@ -25,7 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SimpleTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipartTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -55,29 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/v1.0/SimpleTestEntity",
-	service = SimpleTestEntityResource.Factory.class
+	property = "resource.locator.key=/test/v1.0/MultipartTestEntity",
+	service = MultipartTestEntityResource.Factory.class
 )
 @Generated("")
-public class SimpleTestEntityResourceFactoryImpl
-	implements SimpleTestEntityResource.Factory {
+public class MultipartTestEntityResourceFactoryImpl
+	implements MultipartTestEntityResource.Factory {
 
 	@Override
-	public SimpleTestEntityResource.Builder create() {
-		return new SimpleTestEntityResource.Builder() {
+	public MultipartTestEntityResource.Builder create() {
+		return new MultipartTestEntityResource.Builder() {
 
 			@Override
-			public SimpleTestEntityResource build() {
+			public MultipartTestEntityResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, SimpleTestEntityResource>
-					simpleTestEntityResourceProxyProviderFunction =
+				Function<InvocationHandler, MultipartTestEntityResource>
+					multipartTestEntityResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_simpleTestEntityResourceProxyProviderFunction;
+							_multipartTestEntityResourceProxyProviderFunction;
 
-				return simpleTestEntityResourceProxyProviderFunction.apply(
+				return multipartTestEntityResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -85,7 +85,7 @@ public class SimpleTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder checkPermissions(
+			public MultipartTestEntityResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -94,7 +94,7 @@ public class SimpleTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder httpServletRequest(
+			public MultipartTestEntityResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -103,7 +103,7 @@ public class SimpleTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder httpServletResponse(
+			public MultipartTestEntityResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -112,7 +112,7 @@ public class SimpleTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder preferredLocale(
+			public MultipartTestEntityResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -121,14 +121,16 @@ public class SimpleTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder uriInfo(UriInfo uriInfo) {
+			public MultipartTestEntityResource.Builder uriInfo(
+				UriInfo uriInfo) {
+
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public SimpleTestEntityResource.Builder user(User user) {
+			public MultipartTestEntityResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -144,16 +146,16 @@ public class SimpleTestEntityResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, SimpleTestEntityResource>
+	private static Function<InvocationHandler, MultipartTestEntityResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SimpleTestEntityResource.class.getClassLoader(),
-			SimpleTestEntityResource.class);
+			MultipartTestEntityResource.class.getClassLoader(),
+			MultipartTestEntityResource.class);
 
 		try {
-			Constructor<SimpleTestEntityResource> constructor =
-				(Constructor<SimpleTestEntityResource>)
+			Constructor<MultipartTestEntityResource> constructor =
+				(Constructor<MultipartTestEntityResource>)
 					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -195,40 +197,41 @@ public class SimpleTestEntityResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		SimpleTestEntityResource simpleTestEntityResource =
+		MultipartTestEntityResource multipartTestEntityResource =
 			_componentServiceObjects.getService();
 
-		simpleTestEntityResource.setContextAcceptLanguage(
+		multipartTestEntityResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		simpleTestEntityResource.setContextCompany(company);
+		multipartTestEntityResource.setContextCompany(company);
 
-		simpleTestEntityResource.setContextHttpServletRequest(
+		multipartTestEntityResource.setContextHttpServletRequest(
 			httpServletRequest);
-		simpleTestEntityResource.setContextHttpServletResponse(
+		multipartTestEntityResource.setContextHttpServletResponse(
 			httpServletResponse);
-		simpleTestEntityResource.setContextUriInfo(uriInfo);
-		simpleTestEntityResource.setContextUser(user);
-		simpleTestEntityResource.setExpressionConvert(_expressionConvert);
-		simpleTestEntityResource.setFilterParserProvider(_filterParserProvider);
-		simpleTestEntityResource.setGroupLocalService(_groupLocalService);
-		simpleTestEntityResource.setResourceActionLocalService(
+		multipartTestEntityResource.setContextUriInfo(uriInfo);
+		multipartTestEntityResource.setContextUser(user);
+		multipartTestEntityResource.setExpressionConvert(_expressionConvert);
+		multipartTestEntityResource.setFilterParserProvider(
+			_filterParserProvider);
+		multipartTestEntityResource.setGroupLocalService(_groupLocalService);
+		multipartTestEntityResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		simpleTestEntityResource.setResourcePermissionLocalService(
+		multipartTestEntityResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		simpleTestEntityResource.setRoleLocalService(_roleLocalService);
-		simpleTestEntityResource.setSortParserProvider(_sortParserProvider);
+		multipartTestEntityResource.setRoleLocalService(_roleLocalService);
+		multipartTestEntityResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(simpleTestEntityResource, arguments);
+			return method.invoke(multipartTestEntityResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(simpleTestEntityResource);
+			_componentServiceObjects.ungetService(multipartTestEntityResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -240,7 +243,7 @@ public class SimpleTestEntityResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SimpleTestEntityResource>
+	private ComponentServiceObjects<MultipartTestEntityResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -275,8 +278,8 @@ public class SimpleTestEntityResourceFactoryImpl
 	private static class ResourceProxyProviderFunctionHolder {
 
 		private static final Function
-			<InvocationHandler, SimpleTestEntityResource>
-				_simpleTestEntityResourceProxyProviderFunction =
+			<InvocationHandler, MultipartTestEntityResource>
+				_multipartTestEntityResourceProxyProviderFunction =
 					_getProxyProviderFunction();
 
 	}

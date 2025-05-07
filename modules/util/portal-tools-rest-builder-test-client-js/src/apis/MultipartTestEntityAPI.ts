@@ -5,14 +5,14 @@
 
 import {ObjectSerializer} from '../utils/SerDes';
 
-		import {SimpleTestEntity} from '../models/SimpleTestEntity';
+		import {MultipartTestEntity} from '../models/MultipartTestEntity';
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 
-export class SimpleTestEntityAPI {
+export class MultipartTestEntityAPI {
 	protected _basePath: string;
 	protected _defaultHeaders: any = {};
 
@@ -28,25 +28,25 @@ export class SimpleTestEntityAPI {
 
 		/**
 		 * 
-				 * @param simpleTestEntityId
+				 * @param multipartTestEntityId
 		 * @param headers Optional custom request headers
 		 */
-		public async getSimpleTestEntity(
-						simpleTestEntityId: number,
+		public async getMultipartTestEntity(
+						multipartTestEntityId: number,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: SimpleTestEntity;
+				body: MultipartTestEntity;
 			response: Response;
 		}> {
 
-			const path = this._basePath + "/test/v1.0/simple-test-entities/{simpleEntityId}"
-						.replace("{simpleTestEntityId}",encodeURIComponent(simpleTestEntityId))
+			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
 			const queryParameters: any = {};
 
-						if (simpleTestEntityId === null || simpleTestEntityId === undefined) {
-							throw new Error("Required parameter simpleTestEntityId was null or undefined when calling getSimpleTestEntity.");
+						if (multipartTestEntityId === null || multipartTestEntityId === undefined) {
+							throw new Error("Required parameter multipartTestEntityId was null or undefined when calling getMultipartTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -68,7 +68,7 @@ export class SimpleTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "SimpleTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "MultipartTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -81,48 +81,48 @@ export class SimpleTestEntityAPI {
 
 		/**
 		 * 
-				 * @param simpleTestEntityId
+				 * @param multipartTestEntityId
 		 		* @param requestBody Request body that can be one of multiple content types
 		 * @param headers Optional custom request headers
 		 */
-		public async patchSimpleTestEntityWithContentType(
-						simpleTestEntityId: number,
+		public async patchMultipartTestEntityWithContentType(
+						multipartTestEntityId: number,
 					requestBody:
 							{
 								parameters: {
-										simpleTestEntity?: SimpleTestEntity
+										multipartTestEntity?: MultipartTestEntity
 								},
 								type: "application/json"
 							}
 								|
 							{
 								parameters: {
-										simpleTestEntity?: SimpleTestEntity
+										multipartTestEntity?: MultipartTestEntity
 								},
 								type: "application/xml"
 							}
 								,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: SimpleTestEntity;
+				body: MultipartTestEntity;
 			response: Response;
 		}> {
 				let body;
 						if (requestBody.type === "application/json") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.simpleTestEntity, "SimpleTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.multipartTestEntity, "MultipartTestEntity"));
 						}
 						if (requestBody.type === "application/xml") {
-								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.simpleTestEntity, "SimpleTestEntity"));
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.multipartTestEntity, "MultipartTestEntity"));
 						}
 
-			const path = this._basePath + "/test/v1.0/simple-test-entities/{simpleEntityId}"
-						.replace("{simpleTestEntityId}",encodeURIComponent(simpleTestEntityId))
+			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
 			const queryParameters: any = {};
 
-						if (simpleTestEntityId === null || simpleTestEntityId === undefined) {
-							throw new Error("Required parameter simpleTestEntityId was null or undefined when calling patchSimpleTestEntity.");
+						if (multipartTestEntityId === null || multipartTestEntityId === undefined) {
+							throw new Error("Required parameter multipartTestEntityId was null or undefined when calling patchMultipartTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -146,7 +146,7 @@ export class SimpleTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "SimpleTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "MultipartTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
@@ -159,22 +159,22 @@ export class SimpleTestEntityAPI {
 
 					/**
 					 *  - Default method for JSON body
-							 * @param simpleTestEntityId
-						 * @param simpleTestEntity
+							 * @param multipartTestEntityId
+						 * @param multipartTestEntity
 					 */
-					public async patchSimpleTestEntity(
-									simpleTestEntityId: number,
-							simpleTestEntity?: SimpleTestEntity,
+					public async patchMultipartTestEntity(
+									multipartTestEntityId: number,
+							multipartTestEntity?: MultipartTestEntity,
 						headers?: {[name: string]: string}
 					): Promise<{
-							body: SimpleTestEntity;
+							body: MultipartTestEntity;
 						response: Response;
 					}> {
-						return this.patchSimpleTestEntityWithContentType(
-										simpleTestEntityId,
+						return this.patchMultipartTestEntityWithContentType(
+										multipartTestEntityId,
 							{
 								parameters: {
-										simpleTestEntity: simpleTestEntity
+										multipartTestEntity: multipartTestEntity
 								},
 								type: "application/json"
 							},
@@ -183,31 +183,31 @@ export class SimpleTestEntityAPI {
 					}
 		/**
 		 * 
-				 * @param simpleTestEntityId
-				 	* @param simpleTestEntity
+				 * @param multipartTestEntityId
+				 	* @param multipartTestEntity
 		 * @param headers Optional custom request headers
 		 */
-		public async putSimpleTestEntity(
-						simpleTestEntityId: number,
-						simpleTestEntity?: SimpleTestEntity,
+		public async putMultipartTestEntity(
+						multipartTestEntityId: number,
+						multipartTestEntity?: MultipartTestEntity,
 			headers?: {[name: string]: string},
 		): Promise<{
-				body: SimpleTestEntity;
+				body: MultipartTestEntity;
 			response: Response;
 		}> {
 				let body;
 						const formData = new FormData();
-								formData.append("simpleTestEntity", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.simpleTestEntity, "SimpleTestEntity")));
+								formData.append("multipartTestEntity", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.multipartTestEntity, "MultipartTestEntity")));
 						body = formData;
 
-			const path = this._basePath + "/test/v1.0/simple-test-entities/{simpleEntityId}"
-						.replace("{simpleTestEntityId}",encodeURIComponent(simpleTestEntityId))
+			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"
+						.replace("{multipartTestEntityId}",encodeURIComponent(multipartTestEntityId))
 				;
 
 			const queryParameters: any = {};
 
-						if (simpleTestEntityId === null || simpleTestEntityId === undefined) {
-							throw new Error("Required parameter simpleTestEntityId was null or undefined when calling putSimpleTestEntity.");
+						if (multipartTestEntityId === null || multipartTestEntityId === undefined) {
+							throw new Error("Required parameter multipartTestEntityId was null or undefined when calling putMultipartTestEntity.");
 						}
 
 			const queryString = Object.keys(queryParameters).length ?
@@ -230,7 +230,7 @@ export class SimpleTestEntityAPI {
 				const contentType = response.headers.get("content-type") || "";
 
 					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "SimpleTestEntity"), response};
+						return {body: ObjectSerializer.deserialize(await response.json(), "MultipartTestEntity"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};

@@ -28,8 +28,25 @@ export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
 
 type LicensingPrices = {
-	developer: {key: number; value: number}[];
-	standard: {key: number; value: number}[];
+	[currency: string]: {
+		developer: {
+			[key: number]: number;
+		};
+		standard: {
+			[key: number]: number;
+		};
+	};
+};
+
+export type PriceEntry = {
+	hasTierPrice: boolean;
+	id: number;
+	price: number;
+	priceEntryId?: number;
+	priceListId: number;
+	sku: string;
+	skuExternalReferenceCode: string;
+	skuId: number;
 };
 
 export enum NewAppTypes {
@@ -123,15 +140,22 @@ type NewAppPayload = {
 	[NewAppTypes.SET_CONTEXT]: Product;
 	[NewAppTypes.SET_DELETE_IMAGE]: string;
 	[NewAppTypes.SET_LICENSING]: Partial<NewAppInitialState['licensing']>;
-	[NewAppTypes.SET_LICENSING_ADD_PRICE]: {licenseTier: LicenseTier};
+	[NewAppTypes.SET_LICENSING_ADD_PRICE]: {
+		currency: string;
+		licenseTier: LicenseTier;
+	};
 	[NewAppTypes.SET_LICENSING_DELETE_PRICE]: {
+		currency: string;
+		deleteCurrency?: boolean;
 		key: number;
 		licenseTier: LicenseTier;
 	};
 	[NewAppTypes.SET_LICENSING_UPDATE_PRICES]: {
+		currency: string;
 		index: number;
 		licenseTier: LicenseTier;
-		price: LicensePrice;
+		price: number;
+		quantity?: number;
 	};
 	[NewAppTypes.SET_LOADING]: boolean;
 	[NewAppTypes.SET_PRICING]: Partial<NewAppInitialState['pricing']>;
@@ -158,8 +182,12 @@ const newAppInitialState: NewAppInitialState = {
 	licensing: {
 		licenseType: 'Perpetual',
 		prices: {
-			developer: [],
-			standard: [{key: 1, value: 0}],
+			USD: {
+				developer: {},
+				standard: {
+					1: 0,
+				},
+			},
 		},
 		trial30Day: false,
 	},
@@ -196,13 +224,6 @@ const newAppInitialState: NewAppInitialState = {
 
 export type AppActions =
 	ActionMap<NewAppPayload>[keyof ActionMap<NewAppPayload>];
-
-const sortLicenses = (
-	firstPriceTier: LicensePrice,
-	secondPriceTier: LicensePrice
-) => {
-	return firstPriceTier.key - secondPriceTier.key;
-};
 
 const filterProductVocabularies = (product: Product, vocabulary: string) =>
 	product.categories
@@ -439,89 +460,114 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 		}
 
 		case NewAppTypes.SET_LICENSING_ADD_PRICE: {
+			const currency = action.payload.currency;
 			const licenseTier: LicenseTier = action.payload.licenseTier;
 
-			const sortedOldLicensePrice = {
-				developer: state.licensing.prices.developer.sort(sortLicenses),
-				standard: state.licensing.prices.standard.sort(sortLicenses),
-			};
+			const oldPrices = state.licensing.prices;
 
-			if (!sortedOldLicensePrice[licenseTier].length) {
-				return {
-					...state,
-					licensing: {
-						...state.licensing,
-						prices: {
-							...state.licensing.prices,
-							...sortedOldLicensePrice,
-							[licenseTier]: [{key: 1, value: 0}],
-						},
-					},
-				};
+			if (!oldPrices[currency]) {
+				oldPrices[currency] = {};
+			}
+			if (!oldPrices[currency][licenseTier]) {
+				oldPrices[currency][licenseTier] = {};
 			}
 
-			const newKey =
-				sortedOldLicensePrice[licenseTier].slice(-1)[0].key + 1;
-			const newPriceTier = {key: newKey, value: 0};
+			const currentPrices = oldPrices[currency][licenseTier];
+			const newKey = Object.keys(currentPrices).length
+				? Math.max(...Object.keys(currentPrices).map(Number)) + 1
+				: 1;
+
+			oldPrices[currency][licenseTier][newKey] = 0;
 
 			return {
 				...state,
 				licensing: {
 					...state.licensing,
 					prices: {
-						...state.licensing.prices,
-						...sortedOldLicensePrice,
-						[licenseTier]: [
-							...sortedOldLicensePrice[licenseTier],
-							newPriceTier,
-						],
+						...oldPrices,
 					},
 				},
 			};
 		}
 
 		case NewAppTypes.SET_LICENSING_DELETE_PRICE: {
-			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const {currency, deleteCurrency, key, licenseTier} = action.payload;
 
-			const sortedOldLicensePrice = {
-				developer: state.licensing.prices.developer.sort(sortLicenses),
-				standard: state.licensing.prices.standard.sort(sortLicenses),
-			};
+			const oldPrices = state.licensing.prices;
 
-			const filteredLicensePriceTier = sortedOldLicensePrice[
-				licenseTier
-			].filter(
-				(priceTier: {key: any}) => priceTier.key !== action.payload.key
-			);
+			if (key && licenseTier && !deleteCurrency) {
+				if (!oldPrices[currency] || !oldPrices[currency][licenseTier]) {
+					return state;
+				}
 
-			return {
-				...state,
-				licensing: {
-					...state.licensing,
-					prices: {
-						...state.licensing.prices,
-						...sortedOldLicensePrice,
-						[licenseTier]: filteredLicensePriceTier,
+				const updatedLicenseTierPrices = {
+					...oldPrices[currency][licenseTier],
+				};
+
+				if (key in updatedLicenseTierPrices) {
+					delete updatedLicenseTierPrices[key];
+				}
+
+				return {
+					...state,
+					licensing: {
+						...state.licensing,
+						prices: {
+							...oldPrices,
+							[currency]: {
+								...oldPrices[currency],
+								[licenseTier]: updatedLicenseTierPrices,
+							},
+						},
 					},
-				},
-			};
+				};
+			}
+
+			if (currency && deleteCurrency) {
+				const updatedPrices = {...oldPrices};
+
+				delete updatedPrices[currency];
+
+				return {
+					...state,
+					licensing: {
+						...state.licensing,
+						prices: updatedPrices,
+					},
+				};
+			}
+
+			return state;
 		}
 
 		case NewAppTypes.SET_LICENSING_UPDATE_PRICES: {
-			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const {currency, index, licenseTier, price, quantity} =
+				action.payload;
+
 			const oldLicensePrice = state.licensing.prices;
 
-			const newLicensePrices = [...(oldLicensePrice[licenseTier] ?? [])];
-			newLicensePrices[action.payload.index] = action.payload.price;
+			const updatedPrices = {
+				...(oldLicensePrice[currency]?.[licenseTier] || {}),
+			};
+
+			const newKey = quantity ?? index;
+
+			if (quantity && quantity !== index) {
+				delete updatedPrices[index];
+			}
+
+			updatedPrices[newKey] = price;
 
 			return {
 				...state,
 				licensing: {
 					...state.licensing,
 					prices: {
-						...state.licensing.prices,
 						...oldLicensePrice,
-						[licenseTier]: newLicensePrices,
+						[currency]: {
+							...oldLicensePrice[currency],
+							[licenseTier]: updatedPrices,
+						},
 					},
 				},
 			};

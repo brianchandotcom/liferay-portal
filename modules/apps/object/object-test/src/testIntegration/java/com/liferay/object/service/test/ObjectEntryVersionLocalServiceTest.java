@@ -9,8 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.exception.ObjectEntryVersionCountException;
-import com.liferay.object.exception.ObjectEntryVersionLatestException;
+import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -440,7 +439,8 @@ public class ObjectEntryVersionLocalServiceTest {
 		long objectEntryId = objectEntry.getObjectEntryId();
 
 		AssertUtils.assertFailure(
-			ObjectEntryVersionLatestException.class,
+			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
+				class,
 			"The latest version cannot be deleted",
 			() -> _objectEntryVersionLocalService.deleteObjectEntryVersion(
 				objectEntryId, 2));
@@ -454,7 +454,8 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 
 		AssertUtils.assertFailure(
-			ObjectEntryVersionCountException.class,
+			RequiredObjectEntryVersionException.MustNotDeleteUniqueVersion.
+				class,
 			"At least one version must remain",
 			() -> _objectEntryVersionLocalService.deleteObjectEntryVersion(
 				objectEntryId, 2));

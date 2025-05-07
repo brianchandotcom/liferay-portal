@@ -6,8 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
-import com.liferay.object.exception.ObjectEntryVersionCountException;
-import com.liferay.object.exception.ObjectEntryVersionLatestException;
+import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
@@ -53,8 +52,10 @@ public class ObjectEntryVersionLocalServiceImpl
 		throws PortalException {
 
 		if (getObjectEntryVersionsCount(objectEntryId) == 1) {
-			throw new ObjectEntryVersionCountException(
-				"At least one version must remain");
+			throw new RequiredObjectEntryVersionException.
+				MustNotDeleteUniqueVersion(
+					"At least one version must remain",
+					"at-least-one-version-must-remain");
 		}
 
 		ObjectEntryVersion objectEntryVersion =
@@ -63,8 +64,10 @@ public class ObjectEntryVersionLocalServiceImpl
 				ObjectEntryVersionVersionComparator.getInstance(false));
 
 		if (version == objectEntryVersion.getVersion()) {
-			throw new ObjectEntryVersionLatestException(
-				"The latest version cannot be deleted");
+			throw new RequiredObjectEntryVersionException.
+				MustNotDeleteLatestVersion(
+					"The latest version cannot be deleted",
+					"the-last-version-cannot-be-deleted");
 		}
 
 		objectEntryVersion = objectEntryVersionPersistence.findByOEI_V(

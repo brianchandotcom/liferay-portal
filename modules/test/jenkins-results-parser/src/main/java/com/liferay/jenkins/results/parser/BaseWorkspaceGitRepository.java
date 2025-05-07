@@ -38,6 +38,11 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void fetchGitHubDevBranch() {
+		if (_snapshot) {
+			System.out.println(
+				"Using git archive, unable to fetch from GitHub dev");
+		}
+
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		List<GitRemote> gitHubDevGitRemotes =
@@ -136,6 +141,16 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String getGitHubURL() {
 		return getString("git_hub_url");
+	}
+
+	@Override
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (_snapshot) {
+			throw new RuntimeException(
+				"Using git archive, unable to get git working directory");
+		}
+
+		return super.getGitWorkingDirectory();
 	}
 
 	@Override
@@ -406,6 +421,11 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void synchronizeToGitHubDev() {
+		if (_snapshot) {
+			throw new RuntimeException(
+				"Using git archive, unable to synchronize to GitHub dev");
+		}
+
 		GitHubDevSyncUtil.synchronizeToGitHubDev(getLocalGitBranch(), this);
 	}
 

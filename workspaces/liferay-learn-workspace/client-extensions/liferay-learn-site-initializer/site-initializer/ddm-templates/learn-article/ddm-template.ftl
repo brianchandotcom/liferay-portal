@@ -166,7 +166,7 @@
 					</#list>
 				</div>
 
-				<div class="article-related-recipes" data-article-id="${.vars["reserved-article-id"].data}" id="article-related-recipes"></div>
+				<div class="article-related-how-to" data-article-id="${.vars["reserved-article-id"].data}" id="article-related-how-to"></div>
 			</div>
 
 			<div class="learn-article-page-nav">

@@ -95,8 +95,13 @@ const Solutions = () => {
 
 			<ListView<Product>
 				emptyStateProps={{
-					description: 'Click on “New Solution Template” to start.',
+					className:
+						'border px-4 pb-6 d-flex align-items-center flex-column justify-content-center',
+					description: marketplaceUserAccount.isSolutionPublisher
+						? 'Click on “New Solution Template” to start.'
+						: ' ',
 					title: 'No Solutions Yet',
+					type: 'BLANK',
 				}}
 				resource={function getPublisherSolutions({page, pageSize}) {
 					return HeadlessCommerceAdminCatalog.getProducts(

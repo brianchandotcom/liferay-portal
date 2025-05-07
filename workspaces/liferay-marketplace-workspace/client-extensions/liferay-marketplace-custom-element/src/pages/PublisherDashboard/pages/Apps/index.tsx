@@ -38,16 +38,28 @@ const Apps = () => {
 			}
 			title={i18n.translate('apps')}
 		>
-			{catalogId && (
+			{
 				<ListView<Product>
+					emptyStateProps={{
+						className:
+							'border px-4 pb-6 d-flex align-items-center flex-column justify-content-center',
+						title: i18n.translate('no-apps-yet'),
+						description:
+							"Publish apps and they will show up hereClick on 'Add Apps' to start.",
+						type: 'BLANK',
+					}}
 					resource={function getPublisherProducts({page, pageSize}) {
 						return HeadlessCommerceAdminCatalog.getProducts(
 							new URLSearchParams({
 								'accountId': '-1',
 								'filter': new SearchBuilder()
-									.eq('catalogId', catalogId as number, {
-										unquote: true,
-									})
+									.eq(
+										'catalogId',
+										(catalogId || 0) as number,
+										{
+											unquote: true,
+										}
+									)
 									.and()
 									.lambda(
 										'categoryNames',
@@ -144,7 +156,7 @@ const Apps = () => {
 						navigateTo: (item) => `/app/${item.productId}`,
 					}}
 				/>
-			)}
+			}
 		</Page>
 	);
 };

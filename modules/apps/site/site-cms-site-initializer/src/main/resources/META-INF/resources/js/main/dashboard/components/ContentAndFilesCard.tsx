@@ -16,7 +16,7 @@ export enum TrendClassification {
 	Positive = 'POSITIVE',
 }
 
-interface IContentAndFilesCard {
+export interface IContentAndFilesCard {
 	categories: number;
 	tags: number;
 	title: string;

@@ -119,11 +119,9 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 };
 
 const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
-	const {appId} = useParams();
+	const {appId: productId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
-
-	const productId = Number(appId) + 1;
 
 	const {
 		data: selectedApp,
@@ -131,7 +129,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 		mutate,
 	} = useSWR(`/published-app/${productId}`, () =>
 		HeadlessCommerceAdminCatalog.getProduct(
-			productId,
+			productId as unknown as number,
 			new URLSearchParams({
 				nestedFields: 'attachments,images,productSpecifications',
 			})
@@ -245,7 +243,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 						<div className="app-details-page-app-info-buttons-container">
 							<AdministratorButtons
 								mutate={mutate}
-								productId={productId}
+								productId={productId as unknown as number}
 								selectedApp={selectedApp}
 							/>
 						</div>

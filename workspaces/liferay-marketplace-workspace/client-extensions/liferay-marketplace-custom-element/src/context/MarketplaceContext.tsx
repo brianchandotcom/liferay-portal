@@ -41,11 +41,15 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 			value={
 				{
 					channel: {
-						channelId: Liferay.CommerceContext.commerceChannelId,
+						id: Number(Liferay.CommerceContext.commerceChannelId),
 						currencyCode:
 							Liferay.CommerceContext.currency.currencyCode,
 						name: 'Marketplace',
-					} as unknown as Channel,
+						channelId: 1,
+						externalReferenceCode: 'MARKETPLACE',
+						siteGroupId: 1,
+						type: 'site',
+					},
 					marketplaceUserAccount: new MarketplaceUserAccount(
 						myUserAccount as UserAccount
 					),

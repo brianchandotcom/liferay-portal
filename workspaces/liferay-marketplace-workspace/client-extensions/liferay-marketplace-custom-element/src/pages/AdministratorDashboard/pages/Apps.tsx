@@ -114,7 +114,7 @@ export function AdministratorAppsListView({
 						),
 					},
 				],
-				navigateTo: ({id}) => `/apps/${id}`,
+				navigateTo: ({productId}) => `/apps/${productId}`,
 			}}
 			{...listViewProps}
 		/>

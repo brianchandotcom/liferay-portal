@@ -495,7 +495,13 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (portletIds.contains(portlet.getPortletId())) {
 			Set<String> categoryNames = portlet.getCategoryNames();
 
-			categoryNames.add(portletCategory.getPath());
+			String categoryName = portletCategory.getPath();
+
+			if (categoryName.startsWith("root//")) {
+				categoryName = categoryName.substring(6);
+			}
+
+			categoryNames.add(categoryName);
 		}
 
 		for (PortletCategory childPortletCategory :

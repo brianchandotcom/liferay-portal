@@ -1282,6 +1282,9 @@ public class ObjectDefinitionLocalServiceImpl
 		_resourceActions.removeModelResource(
 			objectDefinition.getClassName(), ActionKeys.VIEW);
 
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinks(
+			objectDefinition.getCompanyId(), objectDefinition.getClassName());
+
 		return objectDefinition;
 	}
 

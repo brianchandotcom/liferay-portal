@@ -1195,15 +1195,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					new FDSCardSchemaBuilderImpl();
 
 				return fdsCardSchemaBuilder.add(
-					"success", "Approved"
+					DISPLAY_TYPE_KEYS[0], DISPLAY_TYPE_VALUES[0]
 				).add(
-					"status.label",
+					DISPLAY_TYPE_KEYS[1],
 					HashMapBuilder.put(
-						"approved", "success"
+						DISPLAY_TYPE_KEYS[2], DISPLAY_TYPE_VALUES[1]
 					).put(
-						"expired", "danger"
+						DISPLAY_TYPE_KEYS[3], DISPLAY_TYPE_VALUES[2]
 					).build(),
-					"status.label_i18n"
+					DISPLAY_TYPE_VALUES[3]
 				).build();
 			}
 
@@ -1263,21 +1263,21 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 						"labels",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"displayType", "success"
+								"displayType", DISPLAY_TYPE_KEYS[0]
 							).put(
-								"value", "Approved"
+								"value", DISPLAY_TYPE_VALUES[0]
 							),
 							JSONUtil.put(
-								"displayTypeKey", "status.label"
+								"displayTypeKey", DISPLAY_TYPE_KEYS[1]
 							).put(
 								"displayTypeValues",
 								JSONUtil.put(
-									"approved", "success"
+									DISPLAY_TYPE_KEYS[2], DISPLAY_TYPE_VALUES[1]
 								).put(
-									"expired", "danger"
+									DISPLAY_TYPE_KEYS[3], DISPLAY_TYPE_VALUES[2]
 								)
 							).put(
-								"value", "status.label_i18n"
+								"value", DISPLAY_TYPE_VALUES[3]
 							))
 					).put(
 						"link", LINK

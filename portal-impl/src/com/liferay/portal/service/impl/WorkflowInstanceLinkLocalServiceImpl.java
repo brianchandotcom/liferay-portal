@@ -199,6 +199,14 @@ public class WorkflowInstanceLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, String className) {
+
+		return workflowInstanceLinkPersistence.findByC_C(
+			companyId, _classNameLocalService.getClassNameId(className));
+	}
+
+	@Override
 	public boolean hasWorkflowInstanceLink(
 		long companyId, long groupId, String className, long classPK) {
 

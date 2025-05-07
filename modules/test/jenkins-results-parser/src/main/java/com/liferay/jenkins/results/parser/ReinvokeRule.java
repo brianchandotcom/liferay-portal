@@ -78,7 +78,9 @@ public class ReinvokeRule implements Comparable<ReinvokeRule> {
 
 		ReinvokeRule reinvokeRule = (ReinvokeRule)object;
 
-		if (Objects.equals(getName(), reinvokeRule.getName())) {
+		if (Objects.equals(getName(), reinvokeRule.getName()) &&
+			Objects.equals(getPriority(), reinvokeRule.getPriority())) {
+
 			return true;
 		}
 

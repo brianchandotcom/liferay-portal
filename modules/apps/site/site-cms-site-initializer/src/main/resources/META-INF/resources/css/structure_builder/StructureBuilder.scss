@@ -52,3 +52,12 @@ $structureFieldsWidth: 448px;
 		height: calc(100vh - (var(--control-menu-container-height)));
 	}
 }
+
+.structure-builder__wrapper {
+	.management-bar {
+		.vertical-divider {
+			border-left: 1px solid $cadmin-secondary-l1;
+			height: 16px;
+		}
+	}
+}

@@ -66,7 +66,7 @@ public class DepotEntryLayoutDisplayPageProvider
 			(ClassPKInfoItemIdentifier)
 				infoItemReference.getInfoItemIdentifier();
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+		DepotEntry depotEntry = _fetchDepotEntry(
 			classPKInfoItemIdentifier.getClassPK());
 
 		if (depotEntry == null) {
@@ -86,6 +86,17 @@ public class DepotEntryLayoutDisplayPageProvider
 
 		return new DepotEntryLayoutDisplayPageObjectProvider(
 			depotEntry, _infoItemFriendlyURLProvider, _language);
+	}
+
+	private DepotEntry _fetchDepotEntry(long classPK) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			classPK);
+
+		if (depotEntry != null) {
+			return depotEntry;
+		}
+
+		return _depotEntryLocalService.fetchGroupDepotEntry(classPK);
 	}
 
 	@Reference

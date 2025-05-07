@@ -282,6 +282,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
+		<finder name="ROEI_NotS" return-type="Collection">
+			<finder-column name="rootObjectEntryId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 		<finder name="ERC_G_C" return-type="ObjectEntry" unique="true">
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="groupId" />

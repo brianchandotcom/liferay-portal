@@ -58,7 +58,7 @@ const getHelpModal = () => `
 	
 			<li style="color: #54555F;">
 				Install fragments directly from Page Builder. 
-				Check <a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace" target="_blank">
+				Check <a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/adding-marketplace-fragments-to-pages" target="_blank">
 				here</a> to learn how.
 			</li>
 		</ol>

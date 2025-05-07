@@ -11,7 +11,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "ANNUAL_PURCHASE_VOLUMES",
+			"externalReferenceCode": "U3A2_ANNUAL_PURCHASE_VOLUMES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "FIRST_TIER",
@@ -46,13 +46,13 @@
 					}
 				}
 			],
-			"name": "Annual Purchase Volumes",
+			"name": "U3A2 Annual Purchase Volumes",
 			"name_i18n": {
-				"en-US": "Annual Purchase Volumes"
+				"en-US": "U3A2 Annual Purchase Volumes"
 			}
 		},
 		{
-			"externalReferenceCode": "APPLICATION_STATES",
+			"externalReferenceCode": "U3A2_APPLICATION_STATES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "APPLICATION_STATE_APPROVED",
@@ -103,13 +103,13 @@
 					}
 				}
 			],
-			"name": "Application States",
+			"name": "U3A2 Application States",
 			"name_i18n": {
-				"en-US": "Application States"
+				"en-US": "U3A2 Application States"
 			}
 		},
 		{
-			"externalReferenceCode": "ASSESSMENT_SCORES",
+			"externalReferenceCode": "U3A2_ASSESSMENT_SCORES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "AVERAGE",
@@ -152,13 +152,13 @@
 					}
 				}
 			],
-			"name": "Assessment Scores",
+			"name": "U3A2 Assessment Scores",
 			"name_i18n": {
-				"en-US": "Assessment Scores"
+				"en-US": "U3A2 Assessment Scores"
 			}
 		},
 		{
-			"externalReferenceCode": "DECISIONS",
+			"externalReferenceCode": "U3A2_DECISIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "APPROVED",
@@ -201,13 +201,13 @@
 					}
 				}
 			],
-			"name": "Decisions",
+			"name": "U3A2 Decisions",
 			"name_i18n": {
-				"en-US": "Decisions"
+				"en-US": "U3A2 Decisions"
 			}
 		},
 		{
-			"externalReferenceCode": "DISTRIBUTION_CHANNELS",
+			"externalReferenceCode": "U3A2_DISTRIBUTION_CHANNELS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "E_COMMERCE",
@@ -234,13 +234,13 @@
 					}
 				}
 			],
-			"name": "Distribution Channels",
+			"name": "U3A2 Distribution Channels",
 			"name_i18n": {
-				"en-US": "Distribution Channels"
+				"en-US": "U3A2 Distribution Channels"
 			}
 		},
 		{
-			"externalReferenceCode": "DISTRIBUTION_REGIONS",
+			"externalReferenceCode": "U3A2_DISTRIBUTION_REGIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "AFRICA",
@@ -323,13 +323,13 @@
 					}
 				}
 			],
-			"name": "Distribution Regions",
+			"name": "U3A2 Distribution Regions",
 			"name_i18n": {
-				"en-US": "Distribution Regions"
+				"en-US": "U3A2 Distribution Regions"
 			}
 		},
 		{
-			"externalReferenceCode": "PRODUCT_TYPES",
+			"externalReferenceCode": "U3A2_PRODUCT_TYPES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "PRODUCT_TYPE_CONTACTS",
@@ -364,13 +364,13 @@
 					}
 				}
 			],
-			"name": "Product Types",
+			"name": "U3A2 Product Types",
 			"name_i18n": {
-				"en-US": "Product Types"
+				"en-US": "U3A2 Product Types"
 			}
 		},
 		{
-			"externalReferenceCode": "RECOMMENDATIONS",
+			"externalReferenceCode": "U3A2_RECOMMENDATIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "DECLINE_APPLICATION",
@@ -421,9 +421,9 @@
 					}
 				}
 			],
-			"name": "Recommendations",
+			"name": "U3A2 Recommendations",
 			"name_i18n": {
-				"en-US": "Recommendations"
+				"en-US": "U3A2 Recommendations"
 			}
 		}
 	]

@@ -512,6 +512,26 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
     "/by-external-reference-code/{externalReferenceCode}/by-version/{version}":
+        delete:
+            operationId: deleteByExternalReferenceCodeByVersion
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: version
+                    required: true
+                    schema:
+                        format: int32
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntry"]
         get:
             operationId: getByExternalReferenceCodeByVersion
             parameters:
@@ -1023,6 +1043,27 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
     "/{objectEntryId}/by-version/{version}":
+        delete:
+            operationId: deleteObjectEntryByVersion
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: version
+                    required: true
+                    schema:
+                        format: int32
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntry"]
         get:
             operationId: getObjectEntryByVersion
             parameters:

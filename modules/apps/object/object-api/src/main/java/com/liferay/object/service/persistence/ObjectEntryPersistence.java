@@ -1146,6 +1146,161 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	public int countByODI_NotS(long objectDefinitionId, int status);
 
 	/**
+	 * Returns all the object entries where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @return the matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByROEI_NotS(
+		long rootObjectEntryId, int status);
+
+	/**
+	 * Returns a range of all the object entries where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @return the range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByROEI_NotS(
+		long rootObjectEntryId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object entries where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByROEI_NotS(
+		long rootObjectEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object entries where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByROEI_NotS(
+		long rootObjectEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByROEI_NotS_First(
+			long rootObjectEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the first object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByROEI_NotS_First(
+		long rootObjectEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByROEI_NotS_Last(
+			long rootObjectEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the last object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByROEI_NotS_Last(
+		long rootObjectEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the object entries before and after the current object entry in the ordered set where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param objectEntryId the primary key of the current object entry
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry
+	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
+	 */
+	public ObjectEntry[] findByROEI_NotS_PrevAndNext(
+			long objectEntryId, long rootObjectEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Removes all the object entries where rootObjectEntryId = &#63; and status &ne; &#63; from the database.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 */
+	public void removeByROEI_NotS(long rootObjectEntryId, int status);
+
+	/**
+	 * Returns the number of object entries where rootObjectEntryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param rootObjectEntryId the root object entry ID
+	 * @param status the status
+	 * @return the number of matching object entries
+	 */
+	public int countByROEI_NotS(long rootObjectEntryId, int status);
+
+	/**
 	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

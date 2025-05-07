@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -173,28 +173,19 @@ public class SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
 			return AssetEntry.class.getName();
 		}
 
-		String[] searchableAssetTypes =
-			generalConfiguration.getSearchableAssetTypes();
+		String collectionProviderType =
+			generalConfiguration.getCollectionProviderType();
 
-		if (ArrayUtil.isEmpty(searchableAssetTypes)) {
+		if (Validator.isNull(collectionProviderType)) {
 			return AssetEntry.class.getName();
 		}
 
-		String[] searchableAssetTypeWithSubtype = StringUtil.split(
-			searchableAssetTypes[0], "&&");
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_assetSubtypeIdentifierBuilder.searchableAssetType(
+				collectionProviderType
+			).build();
 
-		String className = searchableAssetTypeWithSubtype[0];
-
-		for (int i = 1; i < searchableAssetTypes.length; i++) {
-			searchableAssetTypeWithSubtype = StringUtil.split(
-				searchableAssetTypes[i], "&&");
-
-			if (!className.equals(searchableAssetTypeWithSubtype[0])) {
-				return AssetEntry.class.getName();
-			}
-		}
-
-		return className;
+		return assetSubtypeIdentifier.getClassName();
 	}
 
 	private final AssetHelper _assetHelper;

@@ -13,12 +13,15 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	loginTest(),
 	notificationPagesTest
 );
+
+let notificationTemplate;
 
 let objectDefinition: ObjectDefinition;
 
@@ -34,6 +37,11 @@ const notificationTemplateInfo = {
 };
 
 test.beforeEach(async ({apiHelpers}) => {
+	notificationTemplate =
+		await apiHelpers.notification.postRandomNotificationTemplate(
+			'notification template test ' + getRandomInt()
+		);
+
 	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
 		objectFolderExternalReferenceCode: 'default',
 		status: {code: 0},
@@ -70,6 +78,10 @@ test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 			throw new Error(error);
 		}
 	}
+
+	await apiHelpers.notification.deleteNotificationTemplate(
+		notificationTemplate.id
+	);
 });
 
 test.describe('Email notification template', () => {
@@ -123,6 +135,73 @@ test.describe('Email notification template', () => {
 
 		await expect(emailNotificationTemplatePage.contentSubject).toHaveValue(
 			notificationTemplateInfo.subject
+		);
+	});
+
+	test('can be edited correctly', async ({
+		emailNotificationTemplatePage,
+		notificationTemplatesPage,
+	}) => {
+		await notificationTemplatesPage.goto();
+
+		await notificationTemplatesPage
+			.getFrontEndDatasetItemLocator(notificationTemplate.name)
+			.click();
+
+		const editedNotificationTemplateInfo = {
+			bcc: getRandomString(),
+			cc: getRandomString(),
+			description: getRandomString(),
+			recipients: getRandomString(),
+			senderAddress: getRandomString(),
+			senderName: getRandomString(),
+			subject: getRandomString(),
+			term: getRandomString(),
+		};
+
+		const editedNotificationTemplateName = getRandomString();
+
+		await emailNotificationTemplatePage.fillNotificationTemplateInfo(
+			editedNotificationTemplateName,
+			editedNotificationTemplateInfo
+		);
+
+		await emailNotificationTemplatePage.saveButton.click();
+
+		await notificationTemplatesPage
+			.getFrontEndDatasetItemLocator(editedNotificationTemplateName)
+			.click();
+
+		await expect(emailNotificationTemplatePage.basicInfoName).toHaveValue(
+			editedNotificationTemplateName
+		);
+
+		await expect(
+			emailNotificationTemplatePage.descriptionInput
+		).toHaveValue(editedNotificationTemplateInfo.description);
+
+		await expect(
+			emailNotificationTemplatePage.senderEmailAddress
+		).toHaveValue(editedNotificationTemplateInfo.senderAddress);
+
+		await expect(emailNotificationTemplatePage.senderName).toHaveValue(
+			editedNotificationTemplateInfo.senderName
+		);
+
+		await expect(
+			emailNotificationTemplatePage.primaryRecipientUserEmailAddress
+		).toHaveValue(editedNotificationTemplateInfo.recipients);
+
+		await expect(
+			emailNotificationTemplatePage.secondaryRecipientsCCInput
+		).toHaveValue(editedNotificationTemplateInfo.cc);
+
+		await expect(
+			emailNotificationTemplatePage.secondaryRecipientsBCCInput
+		).toHaveValue(editedNotificationTemplateInfo.bcc);
+
+		await expect(emailNotificationTemplatePage.contentSubject).toHaveValue(
+			editedNotificationTemplateInfo.subject
 		);
 	});
 

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -231,16 +233,21 @@ public class SXPBlueprintLocalServiceImpl
 					searchableAssetTypesArray[0]);
 			}
 
-			String[] searchableAssetTypeWithSubtype = StringUtil.split(
-				searchableAssetTypesArray[0], StringPool.POUND);
-
-			String className = searchableAssetTypeWithSubtype[0];
+			AssetSubtypeIdentifier assetSubtypeIdentifier1 =
+				_assetSubtypeIdentifierBuilder.searchableAssetType(
+					searchableAssetTypesArray[0]
+				).build();
 
 			for (int i = 1; i < searchableAssetTypesArray.length; i++) {
-				searchableAssetTypeWithSubtype = StringUtil.split(
-					searchableAssetTypesArray[i], StringPool.POUND);
+				AssetSubtypeIdentifier assetSubtypeIdentifier2 =
+					_assetSubtypeIdentifierBuilder.searchableAssetType(
+						searchableAssetTypesArray[i]
+					).build();
 
-				if (!className.equals(searchableAssetTypeWithSubtype[0])) {
+				if (!StringUtil.equals(
+						assetSubtypeIdentifier1.getClassName(),
+						assetSubtypeIdentifier2.getClassName())) {
+
 					return _setCollectionProviderType(
 						configurationJSONObject, generalConfigurationJSONObject,
 						AssetEntry.class.getName());
@@ -249,7 +256,7 @@ public class SXPBlueprintLocalServiceImpl
 
 			return _setCollectionProviderType(
 				configurationJSONObject, generalConfigurationJSONObject,
-				className);
+				assetSubtypeIdentifier1.getClassName());
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -314,6 +321,9 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private static final String[] _WILDCARD = {StringPool.STAR};
+
+	@Reference
+	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
 	@Reference
 	private JSONFactory _jsonFactory;

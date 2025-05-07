@@ -302,6 +302,11 @@ type CustomField = {
 	name: string;
 };
 
+type Currency = {
+	code: string;
+	symbol?: string;
+};
+
 type DefaultProperties = {
 	analyticsCloudURL: string;
 	cloudConsoleURL: string;

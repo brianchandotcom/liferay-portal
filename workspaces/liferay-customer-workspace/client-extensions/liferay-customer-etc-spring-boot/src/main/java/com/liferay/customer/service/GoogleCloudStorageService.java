@@ -44,8 +44,11 @@ public class GoogleCloudStorageService extends BaseService {
 
 		delete(
 			"Bearer " + _getAccessToken(), "",
-			StringBundler.concat(
-				"/storage/v1/b/", bucketName, "/o/", objectName));
+			uriBuilder -> uriBuilder.path(
+				"/storage/v1/b/{bucketName}/o/{objectName}"
+			).build(
+				bucketName, objectName
+			));
 	}
 
 	public String getDownloadURL(String bucketName, String objectName)

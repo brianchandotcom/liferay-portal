@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -27,6 +26,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
+import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -41,9 +43,6 @@ import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.util.SXPD
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -178,13 +177,13 @@ public class SXPBlueprintDTOConverter
 		};
 	}
 
-	private String[] _getCollectionProviderType(String json) {
+	private AssetSubtypeIdentifier _getAssetSubtypeIdentifier(String json) {
 		try {
 			JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
 				json);
 
 			if (configurationJSONObject == null) {
-				return new String[0];
+				return null;
 			}
 
 			JSONObject generalConfigurationJSONObject =
@@ -194,40 +193,45 @@ public class SXPBlueprintDTOConverter
 				!generalConfigurationJSONObject.getBoolean(
 					"collectionProvider", false)) {
 
-				return new String[0];
+				return null;
 			}
 
-			String collectionProviderTypes =
+			return _assetSubtypeIdentifierBuilder.searchableAssetType(
 				generalConfigurationJSONObject.getString(
-					"collectionProviderType");
-
-			return StringUtil.split(collectionProviderTypes, "&&");
+					"collectionProviderType")
+			).build();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
 
-			return new String[0];
+			return null;
 		}
 	}
 
 	private String _getSubtypeName(long companyId, Locale locale, String json) {
-		String[] collectionProviderTypes = _getCollectionProviderType(json);
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_getAssetSubtypeIdentifier(json);
 
-		if (collectionProviderTypes.length != 3) {
+		if ((assetSubtypeIdentifier == null) ||
+			Validator.isNull(
+				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
+
 			return StringPool.BLANK;
 		}
 
-		String className = collectionProviderTypes[0];
-		String groupExternalReferenceCode = collectionProviderTypes[1];
-		String subTypeExternalReferenceCode = collectionProviderTypes[2];
-
 		try {
-			if (className.equals(DLFileEntry.class.getName())) {
+			if (StringUtil.equals(
+					assetSubtypeIdentifier.getClassName(),
+					DLFileEntry.class.getName())) {
+
 				DLFileEntryType dlFileEntryType;
 
-				if (groupExternalReferenceCode.equals(StringPool.BLANK)) {
+				if (StringUtil.equals(
+						assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+						StringPool.BLANK)) {
+
 					dlFileEntryType =
 						_dlFileEntryTypeLocalService.
 							getBasicDocumentDLFileEntryType();
@@ -235,26 +239,35 @@ public class SXPBlueprintDTOConverter
 				else {
 					Group group =
 						_groupLocalService.getGroupByExternalReferenceCode(
-							groupExternalReferenceCode, companyId);
+							assetSubtypeIdentifier.
+								getGroupExternalReferenceCode(),
+							companyId);
 
 					dlFileEntryType =
 						_dlFileEntryTypeLocalService.
 							getDLFileEntryTypeByExternalReferenceCode(
-								subTypeExternalReferenceCode,
+								assetSubtypeIdentifier.
+									getSubtypeExternalReferenceCode(),
 								group.getGroupId());
 				}
 
 				return dlFileEntryType.getName(locale);
 			}
-			else if (className.equals(JournalArticle.class.getName())) {
+			else if (StringUtil.equals(
+						assetSubtypeIdentifier.getClassName(),
+						JournalArticle.class.getName())) {
+
 				Group group =
 					_groupLocalService.getGroupByExternalReferenceCode(
-						groupExternalReferenceCode, companyId);
+						assetSubtypeIdentifier.getGroupExternalReferenceCode(),
+						companyId);
 
 				DDMStructure ddmStructure =
 					_ddmStructureLocalService.
 						fetchStructureByExternalReferenceCode(
-							subTypeExternalReferenceCode, group.getGroupId(),
+							assetSubtypeIdentifier.
+								getSubtypeExternalReferenceCode(),
+							group.getGroupId(),
 							_classNameLocalService.getClassNameId(
 								JournalArticle.class));
 
@@ -269,13 +282,14 @@ public class SXPBlueprintDTOConverter
 	}
 
 	private String _getTypeName(long companyId, Locale locale, String json) {
-		String[] collectionProviderTypes = _getCollectionProviderType(json);
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_getAssetSubtypeIdentifier(json);
 
-		if (collectionProviderTypes.length == 0) {
+		if (assetSubtypeIdentifier == null) {
 			return StringPool.BLANK;
 		}
 
-		String className = collectionProviderTypes[0];
+		String className = assetSubtypeIdentifier.getClassName();
 
 		try {
 			String typeName = ResourceActionsUtil.getModelResource(
@@ -293,10 +307,6 @@ public class SXPBlueprintDTOConverter
 					typeName = objectDefinition.getLabel(
 						LocaleUtil.toLanguageId(locale));
 				}
-			}
-			else if (!_collectionProviderTypes.contains(className)) {
-				typeName = ResourceActionsUtil.getModelResource(
-					locale, AssetEntry.class.getName());
 			}
 
 			return typeName;
@@ -381,14 +391,10 @@ public class SXPBlueprintDTOConverter
 		SXPBlueprintDTOConverter.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
 
-	private final List<String> _collectionProviderTypes = new ArrayList<>(
-		Arrays.asList(
-			"com.liferay.blogs.model.BlogsEntry",
-			"com.liferay.document.library.kernel.model.DLFileEntry",
-			"com.liferay.journal.model.JournalArticle",
-			"com.liferay.knowledge.base.model.KBArticle"));
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

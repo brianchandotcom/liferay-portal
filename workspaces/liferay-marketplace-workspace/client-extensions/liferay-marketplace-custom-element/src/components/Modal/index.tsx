@@ -9,6 +9,7 @@ import {ReactElement, ReactNode} from 'react';
 
 type ModalProps = {
 	children: ReactNode;
+	className?: string
 	first?: ReactElement;
 	last?: ReactElement;
 	observer: Observer;
@@ -21,6 +22,7 @@ type ModalProps = {
 
 const Modal = ({
 	children,
+	className,
 	first,
 	last,
 	observer,
@@ -35,7 +37,7 @@ const Modal = ({
 	}
 
 	return (
-		<ClayModal center observer={observer} size={size} status={status}>
+		<ClayModal center observer={observer} size={size} status={status} className={className}>
 			{title && <ClayModal.Header>{title}</ClayModal.Header>}
 
 			{subtitle && (

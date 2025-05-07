@@ -11,6 +11,7 @@ import com.liferay.change.tracking.internal.upgrade.v2_12_4.CTProcessResourceUpg
 import com.liferay.change.tracking.internal.upgrade.v2_3_0.UpgradeCompanyId;
 import com.liferay.change.tracking.internal.upgrade.v2_4_0.CTSchemaVersionUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_7_0.CTProcessUpgradeProcess;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -143,7 +145,19 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 			"2.12.4", "2.13.0",
 			new com.liferay.change.tracking.internal.upgrade.v2_13_0.
 				SchemaUpgradeProcess());
+
+		registry.register(
+			"2.13.0", "2.13.1",
+			new com.liferay.change.tracking.internal.upgrade.v2_13_1.
+				CTConflictConfigurationUpgradeProcess(
+					_configurationAdmin, _configurationProvider));
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

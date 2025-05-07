@@ -101,7 +101,7 @@ export class CompanyExportImportPage {
 		await this.page
 			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
 			.first()
-			.locator('../../..')
+			.locator('../..')
 			.getByText('Successful')
 			.waitFor();
 

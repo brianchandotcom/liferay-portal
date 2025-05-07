@@ -16,29 +16,20 @@ import java.util.Set;
  */
 public class JakartaUpgradeProcessUtil {
 
-	public static String replace(String value) {
-		return _replace(value, _separators);
-	}
-
-	public static String replace(
-		String value, Set<Character> customSeparators) {
-
-		Set<Character> separators = new HashSet<>();
-
-		separators.addAll(_separators);
-		separators.addAll(customSeparators);
-
-		return _replace(value, separators);
-	}
-
-	private static String _replace(String value, Set<Character> separators) {
+	public static String replace(String value, char... customSeparators) {
 		for (String subpackageName : _subpackageNames) {
 			String javaxPackage = "javax." + subpackageName;
 			String jakartaPackage = "jakarta." + subpackageName;
 
 			value = StringUtil.replace(value, javaxPackage, jakartaPackage);
 
-			for (Character separator : separators) {
+			for (char separator : _SEPARATORS) {
+				value = StringUtil.replace(
+					value, StringUtil.replace(javaxPackage, '.', separator),
+					StringUtil.replace(jakartaPackage, '.', separator));
+			}
+
+			for (Character separator : customSeparators) {
 				value = StringUtil.replace(
 					value, StringUtil.replace(javaxPackage, '.', separator),
 					StringUtil.replace(jakartaPackage, '.', separator));
@@ -52,7 +43,14 @@ public class JakartaUpgradeProcessUtil {
 			value = StringUtil.replace(
 				value, fixupJakartaPackage, fixupJavaxPackage);
 
-			for (Character separator : separators) {
+			for (char separator : _SEPARATORS) {
+				value = StringUtil.replace(
+					value,
+					StringUtil.replace(fixupJakartaPackage, '.', separator),
+					StringUtil.replace(fixupJavaxPackage, '.', separator));
+			}
+
+			for (Character separator : customSeparators) {
 				value = StringUtil.replace(
 					value,
 					StringUtil.replace(fixupJakartaPackage, '.', separator),
@@ -65,10 +63,10 @@ public class JakartaUpgradeProcessUtil {
 			"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE");
 	}
 
+	private static final char[] _SEPARATORS = {'-', '/'};
+
 	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
-	private static final Set<Character> _separators = new HashSet<>(
-		Arrays.asList('-', '/'));
 	private static final Set<String> _subpackageNames = new HashSet<>(
 		Arrays.asList(
 			"activation", "annotation", "batch", "decorator", "ejb", "el",

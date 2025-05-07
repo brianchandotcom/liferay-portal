@@ -83,6 +83,14 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		workflowDefinitionLinkPersistence.removeByC_C(
+			companyId, _classNameLocalService.getClassNameId(className));
+	}
+
+	@Override
 	public WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
 		long companyId, String className) {
 
@@ -173,6 +181,14 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
 			companyId, StagingUtil.getLiveGroupId(groupId),
 			_classNameLocalService.getClassNameId(className), classPK);
+	}
+
+	@Override
+	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		return workflowDefinitionLinkPersistence.findByC_C(
+			companyId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Override

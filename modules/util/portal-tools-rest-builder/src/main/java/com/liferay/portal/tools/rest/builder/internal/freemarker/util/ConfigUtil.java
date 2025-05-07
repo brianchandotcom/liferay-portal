@@ -35,7 +35,7 @@ public class ConfigUtil {
 	}
 
 	public static String packageName(ConfigYAML configYAML) {
-		if (!isVersionCompatible(configYAML, 9) || _useJavax) {
+		if (isUseJavax(configYAML)) {
 			return "javax";
 		}
 

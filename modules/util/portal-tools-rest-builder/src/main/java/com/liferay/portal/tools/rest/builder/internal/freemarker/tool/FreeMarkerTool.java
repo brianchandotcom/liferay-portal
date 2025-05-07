@@ -639,11 +639,7 @@ public class FreeMarkerTool {
 	}
 
 	public String getJavaEePrefix(ConfigYAML configYAML) {
-		if (ConfigUtil.isUseJavax(configYAML)) {
-			return "javax";
-		}
-
-		return "jakarta";
+		return ConfigUtil.packageName(configYAML);
 	}
 
 	public JavaMethodSignature getJavaMethodSignature(

@@ -11,7 +11,6 @@ import {
 	useContext,
 	useMemo,
 } from 'react';
-import {useLocation} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
 import i18n from '../../i18n';
@@ -45,13 +44,33 @@ export type ListViewProps<T extends Record<string, any>> = {
 		response: APIResponse<T>,
 		options: ChildrenOptions
 	) => ReactNode;
+
 	emptyStateProps?: ComponentProps<typeof EmptyState>;
-	forceRefetch?: number;
 	initialContext?: ListViewContextProviderProps;
+
+	/**
+	 * The key of SWR Cache for the list view.
+	 * It must be provided to avoid cache collisions.
+	 *
+	 * @default 'listView:{id}?page={page}&pageSize={pageSize}'
+	 */
+	id: string;
+
+	/**
+	 * The options for the pagination.
+	 *
+	 * @default {displayType: 'auto'}
+	 */
 	paginationOptions?: {
 		displayType: 'always' | 'auto' | 'never';
 	};
+
+	/**
+	 * The resource of the list view.
+	 * It can be an async function or a string.
+	 */
 	resource: Resource<T>;
+
 	tableProps: Omit<
 		TableProps<T>,
 		'items' | 'mutate' | 'onSelectAllRows' | 'onSort'
@@ -65,10 +84,9 @@ const ListView = <T extends Record<string, any>>({
 	resource,
 	tableProps,
 }: ListViewProps<T>) => {
-	const {pathname} = useLocation();
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
-	const {page, pageSize, sort} = listViewContext;
+	const {id, page, pageSize, sort} = listViewContext;
 
 	const params = useMemo(() => {
 		const isResourceString = typeof resource === 'string';
@@ -86,9 +104,9 @@ const ListView = <T extends Record<string, any>>({
 					page,
 					pageSize,
 				}),
-			resourceKey: `${pathname}/${resource.name}?page=${page}&pageSize=${pageSize}`,
+			resourceKey: `listView:${id}?page=${page}&pageSize=${pageSize}`,
 		};
-	}, [page, pageSize, resource, pathname]);
+	}, [id, page, pageSize, resource]);
 
 	const {
 		data: response,
@@ -110,11 +128,12 @@ const ListView = <T extends Record<string, any>>({
 	);
 
 	const Pagination = useMemo(() => {
-		if (paginationOptions?.displayType === 'never') {
-			return null;
-		}
+		const paginationDisplayType = paginationOptions?.displayType;
 
-		if (paginationOptions?.displayType === 'auto' && totalCount < 5) {
+		if (
+			(paginationDisplayType === 'auto' && totalCount < 5) ||
+			paginationDisplayType === 'never'
+		) {
 			return null;
 		}
 
@@ -187,10 +206,7 @@ const ListViewWithContext = <T extends Record<string, any>>({
 	initialContext,
 	...otherProps
 }: ListViewProps<T>): React.ReactElement => (
-	<ListViewContextProvider
-		{...initialContext}
-		id={otherProps.resource.length.toString()}
-	>
+	<ListViewContextProvider {...initialContext} id={otherProps.id}>
 		<ListView {...otherProps} />
 	</ListViewContextProvider>
 );

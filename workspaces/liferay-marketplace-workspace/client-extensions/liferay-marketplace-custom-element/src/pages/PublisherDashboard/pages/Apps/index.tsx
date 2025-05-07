@@ -40,6 +40,7 @@ const Apps = () => {
 		>
 			{
 				<ListView<Product>
+					id={`publisher-apps/${catalogId}`}
 					emptyStateProps={{
 						className:
 							'border px-4 pb-6 d-flex align-items-center flex-column justify-content-center',

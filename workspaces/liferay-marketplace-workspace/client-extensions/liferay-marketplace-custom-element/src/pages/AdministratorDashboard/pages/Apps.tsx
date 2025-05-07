@@ -29,8 +29,9 @@ export function AdministratorAppsListView({
 }: AdministratorAppsListViewProps) {
 	return (
 		<ListView<Product>
-			resource={async function getProducts({page, pageSize}) {
-				const response = await HeadlessCommerceAdminCatalog.getProducts(
+			id="administrator-apps"
+			resource={function getProducts({page, pageSize}) {
+				return HeadlessCommerceAdminCatalog.getProducts(
 					new URLSearchParams({
 						'nestedFields': 'catalog,productSpecifications',
 						'page': page.toString(),
@@ -40,14 +41,6 @@ export function AdministratorAppsListView({
 						...(filter ? {filter} : {}),
 					})
 				);
-
-				return {
-					...response,
-					items: response.items.map((item) => ({
-						...item,
-						marketplaceProduct: new MarketplaceProduct(item),
-					})),
-				};
 			}}
 			tableProps={{
 				columns: [

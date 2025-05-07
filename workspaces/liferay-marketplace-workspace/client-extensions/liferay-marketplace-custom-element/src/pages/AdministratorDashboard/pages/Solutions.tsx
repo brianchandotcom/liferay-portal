@@ -12,6 +12,7 @@ export default function Solutions() {
 	return (
 		<Page title="Solutions">
 			<AdministratorAppsListView
+				listViewProps={{id: 'administrator-solutions'}}
 				filter={SearchBuilder.lambda(
 					'categoryNames',
 					ProductTypeVocabulary.SOLUTION

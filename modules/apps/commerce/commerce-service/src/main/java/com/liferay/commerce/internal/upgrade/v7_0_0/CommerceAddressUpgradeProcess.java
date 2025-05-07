@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -134,15 +135,17 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			"Unable to migrate commerceAddress to Address");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select CommerceAddress.commerceAddressId, ",
-					"CommerceAddress.classPK, CommerceAddress.defaultBilling, ",
-					"CommerceAddress.defaultShipping from CommerceAddress ",
-					"inner join ClassName_ on CommerceAddress.classNameId = ",
-					"ClassName_.classNameId where ",
-					"(CommerceAddress.defaultBilling = 1 or ",
-					"CommerceAddress.defaultShipping = 1) and ",
-					"(ClassName_.value = ? or ClassName_.value = ?)"))) {
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select CommerceAddress.commerceAddressId, ",
+						"CommerceAddress.classPK, ",
+						"CommerceAddress.defaultBilling, ",
+						"CommerceAddress.defaultShipping from CommerceAddress ",
+						"inner join ClassName_ on CommerceAddress.classNameId ",
+						"= ClassName_.classNameId where ",
+						"(CommerceAddress.defaultBilling = [$TRUE$] or ",
+						"CommerceAddress.defaultShipping = [$TRUE$]) and ",
+						"(ClassName_.value = ? or ClassName_.value = ?)")))) {
 
 			preparedStatement.setString(1, AccountEntry.class.getName());
 			preparedStatement.setString(

@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -88,6 +89,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1541,6 +1543,32 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition2.getResourceName(), null);
 	}
 
+	private void _copyWorkflowDefinitionLinks(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws PortalException {
+
+		if (!objectDefinition1.isApproved() ||
+			!objectDefinition2.isApproved()) {
+
+			return;
+		}
+
+		for (WorkflowDefinitionLink workflowDefinitionLink :
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					objectDefinition1.getCompanyId(),
+					objectDefinition1.getClassName())) {
+
+			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				workflowDefinitionLink.getUserId(),
+				workflowDefinitionLink.getCompanyId(),
+				workflowDefinitionLink.getGroupId(),
+				objectDefinition2.getClassName(), 0, 0,
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				workflowDefinitionLink.getWorkflowDefinitionVersion());
+		}
+	}
+
 	private void _deleteObjectFields(
 			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException {
@@ -1753,6 +1781,8 @@ public class ObjectRelationshipLocalServiceImpl
 			newRootObjectDefinitionId2);
 
 		_copyResourcePermissions(objectDefinition1, objectDefinition2);
+
+		_copyWorkflowDefinitionLinks(objectDefinition1, objectDefinition2);
 
 		_updateObjectEntries(
 			objectDefinition2, oldRootObjectDefinitionId2,
@@ -2425,5 +2455,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

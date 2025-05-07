@@ -15,15 +15,16 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -62,7 +63,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		String className, String itemClassName, String taskItemDelegateName) {
+		String className, String itemClassName, String scope,
+		String taskItemDelegateName) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskService = batchEngineExportTaskService;
@@ -74,6 +76,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		_deletionsFileName = taskItemDelegateName + "_deletions.json";
 		_fileName = taskItemDelegateName + ".json";
+
+		if (StringUtil.equalsIgnoreCase(scope, "company")) {
+			setDataLevel(DataLevel.PORTAL);
+		}
+		else {
+			setDataLevel(DataLevel.SITE);
+		}
 
 		setEmptyControlsAllowed(true);
 	}
@@ -93,7 +102,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addZipEntry(
-			_deletionsFileName, jsonArray.toString());
+			_toFullPath(
+				_deletionsFileName, portletDataContext.getScopeGroupId()),
+			jsonArray.toString());
 	}
 
 	@Override
@@ -117,7 +128,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public boolean isCompany() {
+	public boolean isBatch() {
 		return true;
 	}
 
@@ -137,7 +148,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
-			_deletionsFileName);
+			_toFullPath(
+				_deletionsFileName, portletDataContext.getSourceGroupId()));
 
 		if (inputStream == null) {
 			return portletPreferences;
@@ -146,8 +158,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineImportTask batchEngineDeleteTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
-				null, _className, _getBytes(_fileName, inputStream), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				null, _className,
+				_getBytes(
+					_toFullPath(
+						_fileName, portletDataContext.getSourceGroupId()),
+					inputStream),
+				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyMap(),
 				BatchEngineImportTaskConstants.
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
@@ -175,7 +191,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					_className, "JSON",
 					BatchEngineTaskExecuteStatus.INITIAL.name(),
 					Collections.emptyList(),
-					BatchEnginePortletDataHandlerUtil.buildParameters(
+					BatchEnginePortletDataHandlerUtil.buildExportParameters(
 						portletDataContext),
 					_taskItemDelegateName),
 				new BatchEngineExportTaskExecutor.Settings() {
@@ -192,7 +208,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				});
 
-		portletDataContext.addZipEntry(_fileName, result.getInputStream());
+		portletDataContext.addZipEntry(
+			_toFullPath(_fileName, portletDataContext.getScopeGroupId()),
+			result.getInputStream());
 
 		portletDataContext.setValidateExistingDataHandler(true);
 
@@ -206,8 +224,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
+		String fileNameWithFullPath = _toFullPath(
+			_fileName, portletDataContext.getSourceGroupId());
+
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
-			_fileName);
+			fileNameWithFullPath);
 
 		if (inputStream == null) {
 			return portletPreferences;
@@ -216,41 +237,14 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
-				null, _className, _getBytes(_fileName, inputStream), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				null, _className, _getBytes(fileNameWithFullPath, inputStream),
+				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyMap(),
 				BatchEngineImportTaskConstants.
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
 				BatchEngineTaskOperation.CREATE.name(),
-				HashMapBuilder.<String, Serializable>put(
-					"batchRestrictFields",
-					() -> {
-						if (!MapUtil.getBoolean(
-								portletDataContext.getParameterMap(),
-								PortletDataHandlerKeys.PERMISSIONS)) {
-
-							return "permissions";
-						}
-
-						return null;
-					}
-				).put(
-					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
-				).put(
-					"importCreatorStrategy",
-					() -> {
-						if (!UserIdStrategy.CURRENT_USER_ID.equals(
-								MapUtil.getString(
-									portletDataContext.getParameterMap(),
-									PortletDataHandlerKeys.USER_ID_STRATEGY))) {
-
-							return null;
-						}
-
-						return BatchEngineImportTaskConstants.
-							IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
-					}
-				).build(),
+				BatchEnginePortletDataHandlerUtil.buildImportParameters(
+					portletDataContext),
 				_taskItemDelegateName);
 
 		try {
@@ -327,6 +321,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PermissionThreadLocal.getPermissionChecker();
 
 		return permissionChecker.getUserId();
+	}
+
+	private String _toFullPath(String fileName, long groupId) {
+		return StringBundler.concat(
+			StringPool.FORWARD_SLASH, ExportImportPathUtil.PATH_PREFIX_GROUP,
+			StringPool.FORWARD_SLASH, groupId, StringPool.FORWARD_SLASH,
+			fileName);
 	}
 
 	private final BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;

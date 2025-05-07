@@ -1376,56 +1376,56 @@ public class UserLocalServiceTest {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0, 0,
 			"Single Approver", 1);
 
+		User user = _userLocalService.addUserWithWorkflow(
+			0, TestPropsValues.getCompanyId(), false, "test", "test", false,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+			StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
+			null, true,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		Assert.assertNotEquals(
+			WorkflowConstants.STATUS_APPROVED, user.getStatus());
+
+		_userLocalService.updatePassword(
+			user.getUserId(), "test2", "test2", false);
+
+		Assert.assertFalse(
+			MailServiceTestUtil.lastMailMessageContains(
+				"The request for a new password"));
+
+		for (WorkflowTask workflowTask :
+				_workflowTaskManager.getWorkflowTasks(
+					TestPropsValues.getCompanyId(), false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, null, null);
+
+			workflowTask = _workflowTaskManager.completeWorkflowTask(
+				user.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
+
+			Assert.assertTrue(workflowTask.isCompleted());
+		}
+
+		user = _userLocalService.getUser(user.getUserId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, user.getStatus());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				user.getGroupId(), user.getUserId()));
+
 		try {
-			User user = _userLocalService.addUserWithWorkflow(
-				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
-				RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
-				StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
-				null, true,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(),
-					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-
-			Assert.assertNotEquals(
-				WorkflowConstants.STATUS_APPROVED, user.getStatus());
-
-			_userLocalService.updatePassword(
-				user.getUserId(), "test2", "test2", false);
-
-			Assert.assertFalse(
-				MailServiceTestUtil.lastMailMessageContains(
-					"The request for a new password"));
-
-			for (WorkflowTask workflowTask :
-					_workflowTaskManager.getWorkflowTasks(
-						TestPropsValues.getCompanyId(), false,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-				workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					workflowTask.getWorkflowTaskId(),
-					TestPropsValues.getUserId(), StringPool.BLANK, null, null);
-
-				workflowTask = _workflowTaskManager.completeWorkflowTask(
-					user.getCompanyId(), TestPropsValues.getUserId(),
-					workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-					StringPool.BLANK, null);
-
-				Assert.assertTrue(workflowTask.isCompleted());
-			}
-
-			user = _userLocalService.getUser(user.getUserId());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, user.getStatus());
-
-			ServiceContextThreadLocal.pushServiceContext(
-				ServiceContextTestUtil.getServiceContext(
-					user.getGroupId(), user.getUserId()));
-
 			_userLocalService.updatePassword(
 				user.getUserId(), "newpassword", "newpassword", false);
 

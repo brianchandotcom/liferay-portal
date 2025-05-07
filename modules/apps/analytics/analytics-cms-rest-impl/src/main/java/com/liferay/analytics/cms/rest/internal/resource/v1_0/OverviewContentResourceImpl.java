@@ -12,16 +12,36 @@ import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
 import com.liferay.asset.kernel.model.AssetEntryTable;
+import com.liferay.asset.kernel.model.AssetTagGroupRelTable;
+import com.liferay.asset.kernel.model.AssetTagTable;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRelTable;
+import com.liferay.asset.kernel.model.AssetVocabularyTable;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectFolderTable;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -44,22 +64,66 @@ public class OverviewContentResourceImpl
 			String languageId, Integer rangeKey, Integer spaceId)
 		throws Exception {
 
+		List<DepotEntry> depotEntries = new ArrayList<>();
+
+		if (spaceId == null) {
+			depotEntries.addAll(_getViewableDepotEntries());
+		}
+		else {
+			depotEntries.add(_depotEntryService.getDepotEntry(spaceId));
+		}
+
+		if (depotEntries.isEmpty()) {
+			return _toOverviewContent(
+				0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
+		}
+
+		Long[] groupIds = new Long[0];
+
+		for (DepotEntry depotEntry : depotEntries) {
+			groupIds = ArrayUtil.append(groupIds, depotEntry.getGroupId());
+
+			List<DepotEntryGroupRel> depotEntryGroupRels =
+				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+					depotEntry);
+
+			for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+				groupIds = ArrayUtil.append(
+					groupIds, depotEntryGroupRel.getGroupId());
+			}
+		}
+
 		return _toOverviewContent(
-			_getOverviewContentObjects(rangeKey),
-			_getPreviousTotalCount(rangeKey));
+			_getOverviewContentObjects(groupIds, languageId, rangeKey),
+			_getPreviousTotalCount(groupIds, languageId, rangeKey));
 	}
 
-	private Object[] _getOverviewContentObjects(int rangeKey) {
+	private Object[] _getOverviewContentObjects(
+		Long[] groupIds, String languageId, int rangeKey) {
+
 		AssetCategoryTable assetCategoryTable = AssetCategoryTable.INSTANCE;
 		AssetEntries_AssetTagsTable assetEntriesAssetTagsTable =
 			AssetEntries_AssetTagsTable.INSTANCE;
 		AssetEntryAssetCategoryRelTable assetEntryAssetCategoryRelTable =
 			AssetEntryAssetCategoryRelTable.INSTANCE;
 		AssetEntryTable assetEntryTable = AssetEntryTable.INSTANCE;
+		AssetTagTable assetTagTable = AssetTagTable.INSTANCE;
+		AssetTagGroupRelTable assetTagGroupRelTable =
+			AssetTagGroupRelTable.INSTANCE;
+		AssetVocabularyTable assetVocabularyTable =
+			AssetVocabularyTable.INSTANCE;
+		AssetVocabularyGroupRelTable assetVocabularyGroupRelTable =
+			AssetVocabularyGroupRelTable.INSTANCE;
 		ObjectDefinitionTable objectDefinitionTable =
 			ObjectDefinitionTable.INSTANCE;
 		ObjectEntryTable objectEntryTable = ObjectEntryTable.INSTANCE;
 		ObjectFolderTable objectFolderTable = ObjectFolderTable.INSTANCE;
+
+		Long[] assetGroupIds = groupIds;
+
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			assetGroupIds = ArrayUtil.append(assetGroupIds, -1L);
+		}
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			DSLFunctionFactoryUtil.countDistinct(
@@ -99,6 +163,16 @@ public class OverviewContentResourceImpl
 			assetEntriesAssetTagsTable,
 			assetEntriesAssetTagsTable.entryId.eq(assetEntryTable.entryId)
 		).leftJoinOn(
+			assetTagTable,
+			assetTagTable.tagId.eq(assetEntriesAssetTagsTable.tagId)
+		).leftJoinOn(
+			assetTagGroupRelTable,
+			assetTagGroupRelTable.tagId.eq(
+				assetTagTable.tagId
+			).and(
+				assetTagGroupRelTable.groupId.in(assetGroupIds)
+			)
+		).leftJoinOn(
 			assetEntryAssetCategoryRelTable,
 			assetEntryAssetCategoryRelTable.assetEntryId.eq(
 				assetEntryTable.entryId)
@@ -106,12 +180,19 @@ public class OverviewContentResourceImpl
 			assetCategoryTable,
 			assetCategoryTable.categoryId.eq(
 				assetEntryAssetCategoryRelTable.assetCategoryId)
-		).where(
-			objectFolderTable.externalReferenceCode.eq(
-				"L_CMS_CONTENT_STRUCTURES"
+		).leftJoinOn(
+			assetVocabularyTable,
+			assetVocabularyTable.vocabularyId.eq(
+				assetCategoryTable.vocabularyId)
+		).leftJoinOn(
+			assetVocabularyGroupRelTable,
+			assetVocabularyGroupRelTable.vocabularyId.eq(
+				assetVocabularyTable.vocabularyId
 			).and(
-				objectEntryTable.createDate.gte(_getStartDate(rangeKey))
+				assetVocabularyGroupRelTable.groupId.in(assetGroupIds)
 			)
+		).where(
+			_getWhereClause(groupIds, languageId, false, rangeKey)
 		);
 
 		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
@@ -136,7 +217,9 @@ public class OverviewContentResourceImpl
 		return calendar.getTime();
 	}
 
-	private long _getPreviousTotalCount(int rangeKey) {
+	private long _getPreviousTotalCount(
+		Long[] groupIds, String languageId, int rangeKey) {
+
 		AssetEntryTable assetEntryTable = AssetEntryTable.INSTANCE;
 		ObjectDefinitionTable objectDefinitionTable =
 			ObjectDefinitionTable.INSTANCE;
@@ -163,13 +246,7 @@ public class OverviewContentResourceImpl
 			assetEntryTable,
 			assetEntryTable.classPK.eq(objectEntryTable.objectEntryId)
 		).where(
-			objectFolderTable.externalReferenceCode.eq(
-				"L_CMS_CONTENT_STRUCTURES"
-			).and(
-				objectEntryTable.createDate.gte(_getPreviousStartDate(rangeKey))
-			).and(
-				objectEntryTable.createDate.lt(_getStartDate(rangeKey))
-			)
+			_getWhereClause(groupIds, languageId, true, rangeKey)
 		);
 
 		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
@@ -192,6 +269,76 @@ public class OverviewContentResourceImpl
 		calendar.set(Calendar.SECOND, 0);
 
 		return calendar.getTime();
+	}
+
+	private List<DepotEntry> _getViewableDepotEntries() throws Exception {
+		List<DepotEntry> depotEntries = new ArrayList<>();
+
+		SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+			},
+			null, DepotEntry.class.getName(), null,
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			queryConfig -> {
+			},
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			null,
+			document -> {
+				try {
+					depotEntries.add(
+						_depotEntryService.getDepotEntry(
+							GetterUtil.getLong(
+								document.get(Field.ENTRY_CLASS_PK))));
+				}
+				catch (PortalException portalException) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"User does not have access to view space " +
+								document.get(Field.ENTRY_CLASS_PK),
+							portalException);
+					}
+				}
+
+				return null;
+			});
+
+		return depotEntries;
+	}
+
+	private Predicate _getWhereClause(
+		Long[] groupIds, String languageId, boolean previous, int rangeKey) {
+
+		Predicate predicate =
+			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
+				"L_CMS_CONTENT_STRUCTURES");
+
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.groupId.in(groupIds));
+		}
+
+		if (!Validator.isBlank(languageId)) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.defaultLanguageId.eq(languageId));
+		}
+
+		if (!previous) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.createDate.gte(
+					_getStartDate(rangeKey)));
+		}
+		else {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.createDate.gte(
+					_getPreviousStartDate(rangeKey))
+			).and(
+				ObjectEntryTable.INSTANCE.createDate.lt(_getStartDate(rangeKey))
+			);
+		}
+
+		return predicate;
 	}
 
 	private OverviewContent _toOverviewContent(
@@ -247,6 +394,15 @@ public class OverviewContentResourceImpl
 			categoriesCount, classification, percentage, tagsCount, totalCount,
 			vocabulariesCount);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OverviewContentResourceImpl.class);
+
+	@Reference
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

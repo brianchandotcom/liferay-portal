@@ -193,7 +193,9 @@
 
 								mv ./build/docker/bundles/tomcat-${app.server.tomcat.version} ./build/docker/bundles/tomcat
 
-								ln -s ./build/docker/bundles/tomcat ./build/docker/bundles/tomcat-${app.server.tomcat.version}
+								if [ -f ./build/docker/bundles/tomcat/webapps/ROOT/WEB-INF/classes/portal-ext.properties ]; then
+									rm ./build/docker/bundles/tomcat/webapps/ROOT/WEB-INF/classes/portal-ext.properties
+								fi
 
 								cd ./build/docker
 

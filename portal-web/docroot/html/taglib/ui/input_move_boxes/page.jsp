@@ -88,6 +88,10 @@ Map<String, Object> data = new HashMap<String, Object>();
 		return React.createElement(
 			ClayDualListBox,
 			{
+				ariaLabels: {
+					transferRTL: '<%= LanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
+					transferLTR: '<%= LanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>'
+				},
 				items: items,
 				left: {
 					id: '<portlet:namespace /><%= leftBoxName %>',
@@ -95,7 +99,21 @@ Map<String, Object> data = new HashMap<String, Object>();
 				},
 				leftMaxItems: <%= leftBoxMaxItems %>,
 				onItemsChange: (newItems) => {
+					const initialLeftItemsLength = items[0].length;
+					const newLeftItemsLength = newItems[0].length;
+
+					let fromBox = document.getElementById('<portlet:namespace /><%= leftBoxName %>');
+					let toBox = document.getElementById('<portlet:namespace /><%= rightBoxName %>');
+
+					if (initialLeftItemsLength > newLeftItemsLength) {
+						fromBox = document.getElementById('<portlet:namespace /><%= rightBoxName %>');
+						toBox = document.getElementById('<portlet:namespace /><%= leftBoxName %>');
+					}
+
 					setItems(newItems);
+
+					Liferay.fire('inputmoveboxes:moveItem', {fromBox, toBox});
+					Liferay.fire('inputmoveboxes:orderItem');
 				},
 				right: {
 					id: '<portlet:namespace /><%= rightBoxName %>',

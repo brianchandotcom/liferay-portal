@@ -313,22 +313,26 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			selectedHTML = selectedHTML.concat(selected[i].innerHTML);
 		}
 
-		Liferay.on('inputmoveboxes:moveItem', (event) => {
-			var currSelectedHTML = '';
+		Liferay.on('inputmoveboxes:moveItem', () => {
+			setTimeout(() => {
+				var currSelectedHTML = '';
 
-			for (var i = selected.length - 1; i >= 0; --i) {
-				currSelectedHTML = currSelectedHTML.concat(selected[i].innerHTML);
-			}
-
-			if (selectedHTML != currSelectedHTML) {
-				var announcementsDisplayedPanel = document.getElementById(
-					'<portlet:namespace />announcementsDisplayedPanel'
-				);
-
-				if (announcementsDisplayedPanel) {
-					modified(announcementsDisplayedPanel);
+				for (var i = selected.length - 1; i >= 0; --i) {
+					currSelectedHTML = currSelectedHTML.concat(
+						selected[i].innerHTML
+					);
 				}
-			}
+
+				if (selectedHTML != currSelectedHTML) {
+					var announcementsDisplayedPanel = document.getElementById(
+						'<portlet:namespace />announcementsDisplayedPanel'
+					);
+
+					if (announcementsDisplayedPanel) {
+						modified(announcementsDisplayedPanel);
+					}
+				}
+			});
 		});
 
 		var pageDeltaInput = <portlet:namespace />form.querySelector(

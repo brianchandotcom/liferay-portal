@@ -123,20 +123,25 @@
 	}
 
 	function <portlet:namespace />saveLocales() {
-		var form = document.<portlet:namespace />fm;
 
-		var currentLanguageIdsElement = Liferay.Util.getFormElement(
-			form,
-			'currentLanguageIds'
-		);
+		// Wrapping in a timeout to deal with React's async rendering
 
-		if (currentLanguageIdsElement) {
-			Liferay.Util.setFormValues(form, {
-				<%= PropsKeys.LOCALES %>: Liferay.Util.getSelectedOptionValues(
-					currentLanguageIdsElement
-				),
-			});
-		}
+		setTimeout(() => {
+			var form = document.<portlet:namespace />fm;
+
+			var currentLanguageIdsElement = Liferay.Util.getFormElement(
+				form,
+				'currentLanguageIds'
+			);
+
+			if (currentLanguageIdsElement) {
+				Liferay.Util.setFormValues(form, {
+					<%= PropsKeys.LOCALES %>: Liferay.Util.getSelectedOptionValues(
+						currentLanguageIdsElement
+					),
+				});
+			}
+		});
 	}
 
 	Liferay.after(

@@ -87,11 +87,11 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 			'<portlet:namespace />currentTypes'
 		);
 
-		Liferay.after('inputmoveboxes:moveItem', (event) => {
+		Liferay.after('inputmoveboxes:moveItem', () => {
 			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
 		});
 
-		Liferay.after('inputmoveboxes:orderItem', (event) => {
+		Liferay.after('inputmoveboxes:orderItem', () => {
 			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
 		});
 	})();

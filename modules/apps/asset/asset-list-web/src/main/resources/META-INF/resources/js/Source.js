@@ -347,7 +347,10 @@ export default function ({classTypes, namespace}) {
 	Liferay.after('inputmoveboxes:moveItem', ({fromBox, toBox}) => {
 		const id = `${namespace}currentClassNameIds`;
 
-		if (fromBox.attr('id') === id || toBox.attr('id') === id) {
+		if (
+			fromBox.getAttribute('id') === id ||
+			toBox.getAttribute('id') === id
+		) {
 			toggleSubclasses();
 
 			if (!document.getElementById(id).options.length) {

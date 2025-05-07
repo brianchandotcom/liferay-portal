@@ -38,7 +38,7 @@ export class DocumentLibraryEditDocumentTypesPage {
 	) {
 		await this.goto(siteUrl);
 		await this.addField('Numeric', siteUrl);
-		await this.titleSelector.fill(title);
+		await fillAndClickOutside(this.page, this.titleSelector, title);
 		await this.saveButton.click();
 	}
 

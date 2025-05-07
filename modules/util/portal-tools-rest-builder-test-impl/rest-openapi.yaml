@@ -134,6 +134,11 @@ components:
                     x-json-map: true
             title: JSONMapAttributeTestEntity
             type: object
+        MultipartTestEntity:
+            properties:
+                name:
+                    type: string
+            type: object
         NestedArrayItemsTestEntity:
             description:
                 Test Component to test the REST Builder support for nested array items
@@ -171,11 +176,6 @@ components:
         Schema:
             properties:
                 property1:
-                    type: string
-            type: object
-        MultipartTestEntity:
-            properties:
-                name:
                     type: string
             type: object
         SiteTestEntity:
@@ -688,42 +688,6 @@ paths:
                     description:
                         "OK"
             tags: ["Filter"]
-    /reserved-word:
-        post:
-            operationId: postReservedWord
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            type: boolean
-                    application/xml:
-                        schema:
-                            type: boolean
-                required: true
-            responses:
-                "200":
-                    description:
-                        "OK"
-            tags: ["TestEntity"]
-    /schemas:
-        get:
-            operationId: getSchemasPage
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Schema"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Schema"
-                                type: array
-                    description:
-                        "OK"
-            tags: ["Schema"]
     /multipart-test-entities/{multipartTestEntityId}:
         get:
             operationId: getMultipartTestEntity
@@ -798,6 +762,42 @@ paths:
                     description:
                         "OK"
             tags: ["MultipartTestEntity"]
+    /reserved-word:
+        post:
+            operationId: postReservedWord
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: boolean
+                    application/xml:
+                        schema:
+                            type: boolean
+                required: true
+            responses:
+                "200":
+                    description:
+                        "OK"
+            tags: ["TestEntity"]
+    /schemas:
+        get:
+            operationId: getSchemasPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Schema"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Schema"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["Schema"]
     /site-test-entities/{siteTestEntityId}:
         get:
             operationId: getSiteTestEntity

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.Authenticator;
@@ -1372,11 +1371,10 @@ public class UserLocalServiceTest {
 	public void testUpdatePasswordNotificationUserNotApproved()
 		throws Exception {
 
-		WorkflowDefinitionLink workflowDefinitionLink =
-			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0,
-				0, "Single Approver", 1);
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, User.class.getName(), 0, 0,
+			"Single Approver", 1);
 
 		try {
 			User user = _userLocalService.addUserWithWorkflow(
@@ -1437,8 +1435,6 @@ public class UserLocalServiceTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
-			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
 		}
 	}
 

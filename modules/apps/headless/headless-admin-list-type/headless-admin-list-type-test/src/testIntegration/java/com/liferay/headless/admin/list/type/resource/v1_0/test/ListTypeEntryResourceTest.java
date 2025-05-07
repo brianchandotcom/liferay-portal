@@ -7,19 +7,25 @@ package com.liferay.headless.admin.list.type.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
+import com.liferay.headless.admin.list.type.client.pagination.Page;
+import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -94,6 +100,63 @@ public class ListTypeEntryResourceTest
 						listTypeEntry2, entityField.getName(), 1);
 				}
 			});
+	}
+
+	@FeatureFlag("LPD-24055")
+	@Override
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPage()
+		throws Exception {
+
+		super.testGetListTypeDefinitionListTypeEntriesPage();
+
+		Page<ListTypeEntry> page =
+			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+				_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
+				null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		ListTypeEntry systemListTypeEntry = randomListTypeEntry();
+
+		systemListTypeEntry.setSystem(true);
+
+		systemListTypeEntry =
+			listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId(),
+				systemListTypeEntry);
+
+		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+			_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertValid(
+			_getListTypeEntryExpectedActions(
+				_systemListTypeDefinition.getListTypeDefinitionId(),
+				systemListTypeEntry.getSystem()),
+			_getListTypeEntryActions(systemListTypeEntry.getId(), page));
+
+		ListTypeEntry listTypeEntry = _addListTypeEntry(
+			_systemListTypeDefinition);
+
+		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+			_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		List<ListTypeEntry> items = (List<ListTypeEntry>)page.getItems();
+
+		assertContains(listTypeEntry, items);
+		assertContains(systemListTypeEntry, items);
+
+		assertValid(
+			_getListTypeEntryExpectedActions(
+				_systemListTypeDefinition.getListTypeDefinitionId(),
+				listTypeEntry.getSystem()),
+			_getListTypeEntryActions(listTypeEntry.getId(), page));
 	}
 
 	@Override
@@ -255,6 +318,14 @@ public class ListTypeEntryResourceTest
 		return _addListTypeEntry(_listTypeDefinition);
 	}
 
+	private Map<String, String> _addExpectedAction(String href, String method) {
+		return HashMapBuilder.put(
+			"href", href
+		).put(
+			"method", method
+		).build();
+	}
+
 	private ListTypeEntry _addListTypeEntry(
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
@@ -273,6 +344,41 @@ public class ListTypeEntryResourceTest
 		Assert.assertEquals(
 			listTypeEntry.getName(),
 			nameLocalizedMap.get(LocaleUtil.getSiteDefault()));
+	}
+
+	private Map<String, Map<String, String>> _getListTypeEntryActions(
+		Long listTypeEntryId, Page<ListTypeEntry> page) {
+
+		for (ListTypeEntry item : page.getItems()) {
+			if (Objects.equals(item.getId(), listTypeEntryId)) {
+				return item.getActions();
+			}
+		}
+
+		return new HashMap<>();
+	}
+
+	private Map<String, Map<String, String>> _getListTypeEntryExpectedActions(
+		Long listTypeDefinitionId, boolean system) {
+
+		String listTypeEntryHref =
+			"http://localhost:8080/o/headless-admin-list-type/v1.0" +
+				"/list-type-entries/" + listTypeDefinitionId;
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			() -> {
+				if (system) {
+					return null;
+				}
+
+				return _addExpectedAction(listTypeEntryHref, "DELETE");
+			}
+		).put(
+			"get", _addExpectedAction(listTypeEntryHref, "GET")
+		).put(
+			"update", _addExpectedAction(listTypeEntryHref, "PUT")
+		).build();
 	}
 
 	@DeleteAfterTestRun

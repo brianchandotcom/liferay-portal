@@ -284,10 +284,15 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write(" id=\"analytics-targetable-collection-");
 		jspWriter.write(collectionStyledLayoutStructureItem.getItemId());
-		jspWriter.write("\" style=\"");
-		jspWriter.write(
-			_renderLayoutStructureDisplayContext.getStyle(
-				collectionStyledLayoutStructureItem));
+
+		String style = _renderLayoutStructureDisplayContext.getStyle(
+			collectionStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(style)) {
+			jspWriter.write("\" style=\"");
+			jspWriter.write(style);
+		}
+
 		jspWriter.write("\">");
 
 		List<String> collectionStyledLayoutStructureItemIds =

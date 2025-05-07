@@ -5,9 +5,9 @@
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"taskItemDelegateName": "DEFAULT"
+		}
 	},
 	"items": [
 		{
@@ -16,40 +16,25 @@
 				{
 					"externalReferenceCode": "FIRST_TIER",
 					"key": "firstTier",
-					"name": "$50,000 - $100,000 USD",
-					"name_i18n": {
-						"en-US": "$50,000 - $100,000 USD"
-					}
+					"name": "$50,000 - $100,000 USD"
 				},
 				{
 					"externalReferenceCode": "FOURTH_TIER",
 					"key": "fourthTier",
-					"name": "$1M+ USD",
-					"name_i18n": {
-						"en-US": "$1M+ USD"
-					}
+					"name": "$1M+ USD"
 				},
 				{
 					"externalReferenceCode": "SECOND_TIER",
 					"key": "secondTier",
-					"name": "$200,000 - $500,000 USD",
-					"name_i18n": {
-						"en-US": "$200,000 - $500,000 USD"
-					}
+					"name": "$200,000 - $500,000 USD"
 				},
 				{
 					"externalReferenceCode": "THIRD_TIER",
 					"key": "thirdTier",
-					"name": "$500,000 - $1M USD",
-					"name_i18n": {
-						"en-US": "$500,000 - $1M USD"
-					}
+					"name": "$500,000 - $1M USD"
 				}
 			],
-			"name": "U3A2 Annual Purchase Volumes",
-			"name_i18n": {
-				"en-US": "U3A2 Annual Purchase Volumes"
-			}
+			"name": "U3A2 Annual Purchase Volumes"
 		},
 		{
 			"externalReferenceCode": "U3A2_APPLICATION_STATES",
@@ -57,56 +42,35 @@
 				{
 					"externalReferenceCode": "APPLICATION_STATE_APPROVED",
 					"key": "approved",
-					"name": "Approved",
-					"name_i18n": {
-						"en-US": "Approved"
-					}
+					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "APPLICATION_STATE_DENIED",
 					"key": "denied",
-					"name": "Denied",
-					"name_i18n": {
-						"en-US": "Denied"
-					}
+					"name": "Denied"
 				},
 				{
 					"externalReferenceCode": "APPLICATION_STATE_ON_HOLD",
 					"key": "onHold",
-					"name": "On Hold",
-					"name_i18n": {
-						"en-US": "On Hold"
-					}
+					"name": "On Hold"
 				},
 				{
 					"externalReferenceCode": "APPLICATION_STATE_OPEN",
 					"key": "open",
-					"name": "Open",
-					"name_i18n": {
-						"en-US": "Open"
-					}
+					"name": "Open"
 				},
 				{
 					"externalReferenceCode": "APPLICATION_STATE_UNDER_REVIEW",
 					"key": "underReview",
-					"name": "Under Review",
-					"name_i18n": {
-						"en-US": "Under Review"
-					}
+					"name": "Under Review"
 				},
 				{
 					"externalReferenceCode": "APPLICATION_STATE_WITHDRAWN",
 					"key": "withdrawn",
-					"name": "Withdrawn",
-					"name_i18n": {
-						"en-US": "Withdrawn"
-					}
+					"name": "Withdrawn"
 				}
 			],
-			"name": "U3A2 Application States",
-			"name_i18n": {
-				"en-US": "U3A2 Application States"
-			}
+			"name": "U3A2 Application States"
 		},
 		{
 			"externalReferenceCode": "U3A2_ASSESSMENT_SCORES",
@@ -114,48 +78,30 @@
 				{
 					"externalReferenceCode": "AVERAGE",
 					"key": "average",
-					"name": "Average",
-					"name_i18n": {
-						"en-US": "Average"
-					}
+					"name": "Average"
 				},
 				{
 					"externalReferenceCode": "EXCELLENT",
 					"key": "excellent",
-					"name": "Excellent",
-					"name_i18n": {
-						"en-US": "Excellent"
-					}
+					"name": "Excellent"
 				},
 				{
 					"externalReferenceCode": "FAIR",
 					"key": "fair",
-					"name": "Fair",
-					"name_i18n": {
-						"en-US": "Fair"
-					}
+					"name": "Fair"
 				},
 				{
 					"externalReferenceCode": "GOOD",
 					"key": "good",
-					"name": "Good",
-					"name_i18n": {
-						"en-US": "Good"
-					}
+					"name": "Good"
 				},
 				{
 					"externalReferenceCode": "POOR",
 					"key": "poor",
-					"name": "Poor",
-					"name_i18n": {
-						"en-US": "Poor"
-					}
+					"name": "Poor"
 				}
 			],
-			"name": "U3A2 Assessment Scores",
-			"name_i18n": {
-				"en-US": "U3A2 Assessment Scores"
-			}
+			"name": "U3A2 Assessment Scores"
 		},
 		{
 			"externalReferenceCode": "U3A2_DECISIONS",
@@ -163,48 +109,30 @@
 				{
 					"externalReferenceCode": "APPROVED",
 					"key": "approved",
-					"name": "Approved",
-					"name_i18n": {
-						"en-US": "Approved"
-					}
+					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "APPROVED_WITH_CONDITIONS",
 					"key": "approvedWithConditions",
-					"name": "Approved With Conditions",
-					"name_i18n": {
-						"en-US": "Approved With Conditions"
-					}
+					"name": "Approved With Conditions"
 				},
 				{
 					"externalReferenceCode": "HOLD_FOR_FUTURE_CONSIDERATION",
 					"key": "holdForFutureConsideration",
-					"name": "Hold for Future Consideration",
-					"name_i18n": {
-						"en-US": "Hold for Future Consideration"
-					}
+					"name": "Hold for Future Consideration"
 				},
 				{
 					"externalReferenceCode": "REJECTED",
 					"key": "rejected",
-					"name": "Rejected",
-					"name_i18n": {
-						"en-US": "Rejected"
-					}
+					"name": "Rejected"
 				},
 				{
 					"externalReferenceCode": "WITHDRAWN",
 					"key": "withdrawn",
-					"name": "Withdrawn",
-					"name_i18n": {
-						"en-US": "Withdrawn"
-					}
+					"name": "Withdrawn"
 				}
 			],
-			"name": "U3A2 Decisions",
-			"name_i18n": {
-				"en-US": "U3A2 Decisions"
-			}
+			"name": "U3A2 Decisions"
 		},
 		{
 			"externalReferenceCode": "U3A2_DISTRIBUTION_CHANNELS",
@@ -212,32 +140,20 @@
 				{
 					"externalReferenceCode": "E_COMMERCE",
 					"key": "eCommerce",
-					"name": "E-Commerce",
-					"name_i18n": {
-						"en-US": "E-Commerce"
-					}
+					"name": "E-Commerce"
 				},
 				{
 					"externalReferenceCode": "OTHER_RETAILERS",
 					"key": "otherRetailers",
-					"name": "Distribute to Other Retailers",
-					"name_i18n": {
-						"en-US": "Distribute to Other Retailers"
-					}
+					"name": "Distribute to Other Retailers"
 				},
 				{
 					"externalReferenceCode": "OWN_RETAIL",
 					"key": "ownRetail",
-					"name": "Sell Through Own Retail",
-					"name_i18n": {
-						"en-US": "Sell Through Own Retail"
-					}
+					"name": "Sell Through Own Retail"
 				}
 			],
-			"name": "U3A2 Distribution Channels",
-			"name_i18n": {
-				"en-US": "U3A2 Distribution Channels"
-			}
+			"name": "U3A2 Distribution Channels"
 		},
 		{
 			"externalReferenceCode": "U3A2_DISTRIBUTION_REGIONS",
@@ -245,88 +161,55 @@
 				{
 					"externalReferenceCode": "AFRICA",
 					"key": "africa",
-					"name": "Africa",
-					"name_i18n": {
-						"en-US": "Africa"
-					}
+					"name": "Africa"
 				},
 				{
 					"externalReferenceCode": "ASIA_PACIFIC_RIM",
 					"key": "asiaPacificRim",
-					"name": "Asia & Pacific Rim",
-					"name_i18n": {
-						"en-US": "Asia & Pacific Rim"
-					}
+					"name": "Asia & Pacific Rim"
 				},
 				{
 					"externalReferenceCode": "CARIBBEAN",
 					"key": "caribbean",
-					"name": "Caribbean",
-					"name_i18n": {
-						"en-US": "Caribbean"
-					}
+					"name": "Caribbean"
 				},
 				{
 					"externalReferenceCode": "CENTRAL_ASIA",
 					"key": "centralAsia",
-					"name": "Central Asia",
-					"name_i18n": {
-						"en-US": "Central Asia"
-					}
+					"name": "Central Asia"
 				},
 				{
 					"externalReferenceCode": "EASTERN_EUROPE",
 					"key": "easternEurope",
-					"name": "Eastern Europe",
-					"name_i18n": {
-						"en-US": "Eastern Europe"
-					}
+					"name": "Eastern Europe"
 				},
 				{
 					"externalReferenceCode": "INDIA",
 					"key": "india",
-					"name": "India",
-					"name_i18n": {
-						"en-US": "India"
-					}
+					"name": "India"
 				},
 				{
 					"externalReferenceCode": "LATIN_AMERICA",
 					"key": "latinAmerica",
-					"name": "Latin America",
-					"name_i18n": {
-						"en-US": "Latin America"
-					}
+					"name": "Latin America"
 				},
 				{
 					"externalReferenceCode": "MIDDLE_EAST",
 					"key": "middleEast",
-					"name": "Middle East",
-					"name_i18n": {
-						"en-US": "Middle East"
-					}
+					"name": "Middle East"
 				},
 				{
 					"externalReferenceCode": "NORTH_AMERICA",
 					"key": "northAmerica",
-					"name": "North America",
-					"name_i18n": {
-						"en-US": "North America"
-					}
+					"name": "North America"
 				},
 				{
 					"externalReferenceCode": "WESTERN_EUROPE",
 					"key": "westernEurope",
-					"name": "Western Europe",
-					"name_i18n": {
-						"en-US": "Western Europe"
-					}
+					"name": "Western Europe"
 				}
 			],
-			"name": "U3A2 Distribution Regions",
-			"name_i18n": {
-				"en-US": "U3A2 Distribution Regions"
-			}
+			"name": "U3A2 Distribution Regions"
 		},
 		{
 			"externalReferenceCode": "U3A2_PRODUCT_TYPES",
@@ -334,40 +217,25 @@
 				{
 					"externalReferenceCode": "PRODUCT_TYPE_CONTACTS",
 					"key": "contacts",
-					"name": "Contacts",
-					"name_i18n": {
-						"en-US": "Contacts"
-					}
+					"name": "Contacts"
 				},
 				{
 					"externalReferenceCode": "PRODUCT_TYPE_EYEGLASSES",
 					"key": "eyeglasses",
-					"name": "Eyeglasses",
-					"name_i18n": {
-						"en-US": "Eyeglasses"
-					}
+					"name": "Eyeglasses"
 				},
 				{
 					"externalReferenceCode": "PRODUCT_TYPE_LENSES",
 					"key": "lenses",
-					"name": "Lenses",
-					"name_i18n": {
-						"en-US": "Lenses"
-					}
+					"name": "Lenses"
 				},
 				{
 					"externalReferenceCode": "PRODUCT_TYPE_SUNGLASSES",
 					"key": "sunglasses",
-					"name": "Sunglasses",
-					"name_i18n": {
-						"en-US": "Sunglasses"
-					}
+					"name": "Sunglasses"
 				}
 			],
-			"name": "U3A2 Product Types",
-			"name_i18n": {
-				"en-US": "U3A2 Product Types"
-			}
+			"name": "U3A2 Product Types"
 		},
 		{
 			"externalReferenceCode": "U3A2_RECOMMENDATIONS",
@@ -375,56 +243,35 @@
 				{
 					"externalReferenceCode": "DECLINE_APPLICATION",
 					"key": "declineApplication",
-					"name": "Decline Application",
-					"name_i18n": {
-						"en-US": "Decline Application"
-					}
+					"name": "Decline Application"
 				},
 				{
 					"externalReferenceCode": "PROPOSE_APPROVAL",
 					"key": "proposeApproval",
-					"name": "Propose Approval",
-					"name_i18n": {
-						"en-US": "Propose Approval"
-					}
+					"name": "Propose Approval"
 				},
 				{
 					"externalReferenceCode": "PROPOSE_CONDITIONAL_APPROVAL",
 					"key": "proposeConditionalApproval",
-					"name": "Propose Conditional Approval",
-					"name_i18n": {
-						"en-US": "Propose Conditional Approval"
-					}
+					"name": "Propose Conditional Approval"
 				},
 				{
 					"externalReferenceCode": "REQUEST_ADDITIONAL_DOCUMENTS",
 					"key": "requestAdditionalDocuments",
-					"name": "Request Additional Documents",
-					"name_i18n": {
-						"en-US": "Request Additional Documents"
-					}
+					"name": "Request Additional Documents"
 				},
 				{
 					"externalReferenceCode": "SCHEDULE_FOLLOWUP_INTERVIEW",
 					"key": "scheduleFollowupInterview",
-					"name": "Schedule Follow-up Interview",
-					"name_i18n": {
-						"en-US": "Schedule Follow-up Interview"
-					}
+					"name": "Schedule Follow-up Interview"
 				},
 				{
 					"externalReferenceCode": "SEEK_LEGAL_REVIEW",
 					"key": "seekLegalReview",
-					"name": "Seek Legal Review",
-					"name_i18n": {
-						"en-US": "Seek Legal Review"
-					}
+					"name": "Seek Legal Review"
 				}
 			],
-			"name": "U3A2 Recommendations",
-			"name_i18n": {
-				"en-US": "U3A2 Recommendations"
-			}
+			"name": "U3A2 Recommendations"
 		}
 	]
 }

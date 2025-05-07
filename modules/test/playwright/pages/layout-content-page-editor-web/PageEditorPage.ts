@@ -1427,7 +1427,10 @@ export class PageEditorPage {
 					target: iframe
 						.locator('.sheet-title')
 						.getByText(entity, {exact: true}),
-					trigger: iframe.getByRole('menuitem', {name: entity}),
+					trigger: iframe.getByRole('menuitem', {
+						exact: true,
+						name: entity,
+					}),
 				});
 			}
 

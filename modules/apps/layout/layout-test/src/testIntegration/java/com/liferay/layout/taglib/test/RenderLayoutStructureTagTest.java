@@ -558,6 +558,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo({"LPD-33573", "LPD-55091"})
 	public void testEnsureFileURLWhenChangingGroupFriendlyURL()
 		throws Exception {
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.document.Document;
@@ -91,19 +92,14 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		GeneralConfiguration generalConfiguration =
 			configuration.getGeneralConfiguration();
 
-		String[] searchableAssetTypes =
-			generalConfiguration.getSearchableAssetTypes();
-
-		if (searchableAssetTypes.length != 1) {
-			return "0";
-		}
-
 		AssetSubtypeIdentifier assetSubtypeIdentifier =
 			_assetSubtypeIdentifierBuilder.searchableAssetType(
-				searchableAssetTypes[0]
+				generalConfiguration.getCollectionProviderType()
 			).build();
 
-		if (assetSubtypeIdentifier.getGroupExternalReferenceCode() == null) {
+		if (Validator.isNull(
+				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
+
 			return "0";
 		}
 

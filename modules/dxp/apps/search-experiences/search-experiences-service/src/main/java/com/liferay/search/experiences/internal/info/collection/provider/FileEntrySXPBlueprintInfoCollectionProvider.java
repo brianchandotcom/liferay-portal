@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.document.Document;
@@ -92,25 +92,19 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		GeneralConfiguration generalConfiguration =
 			configuration.getGeneralConfiguration();
 
-		String[] searchableAssetTypes =
-			generalConfiguration.getSearchableAssetTypes();
-
-		if (searchableAssetTypes.length != 1) {
-			return StringPool.BLANK;
-		}
-
 		AssetSubtypeIdentifier assetSubtypeIdentifier =
 			_assetSubtypeIdentifierBuilder.searchableAssetType(
-				searchableAssetTypes[0]
+				generalConfiguration.getCollectionProviderType()
 			).build();
 
-		if (assetSubtypeIdentifier.getSubtypeExternalReferenceCode() == null) {
+		if (Validator.isNull(
+				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
+
 			return StringPool.BLANK;
 		}
 
-		if (StringUtil.equals(
-				assetSubtypeIdentifier.getGroupExternalReferenceCode(),
-				StringPool.BLANK)) {
+		if (Validator.isNull(
+				assetSubtypeIdentifier.getGroupExternalReferenceCode())) {
 
 			return "0";
 		}

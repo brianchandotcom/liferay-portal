@@ -126,7 +126,7 @@ export default function AdministratorSummary() {
 				>
 					<AdministratorOrdersListView
 						listViewProps={{
-							initialContext: {pageSize: 10},
+							initialContext: {pageSize: 5},
 							paginationOptions: {displayType: 'never'},
 						}}
 					/>
@@ -138,7 +138,7 @@ export default function AdministratorSummary() {
 				>
 					<AdministratorAppsListView
 						listViewProps={{
-							initialContext: {pageSize: 10},
+							initialContext: {pageSize: 5},
 							paginationOptions: {displayType: 'never'},
 						}}
 					/>

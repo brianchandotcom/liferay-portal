@@ -29,7 +29,6 @@ export function AdministratorAppsListView({
 }: AdministratorAppsListViewProps) {
 	return (
 		<ListView<Product>
-			initialContext={{pageSize: 30}}
 			resource={async function getProducts({page, pageSize}) {
 				const response = await HeadlessCommerceAdminCatalog.getProducts(
 					new URLSearchParams({

@@ -116,7 +116,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				_createDefaultUserFieldExpressionHandler(
 					_userLocalService, _prefsProps),
 				_createMembershipsUserFieldExpressionHandler(
-					_userGroupLocalService));
+					_userGroupLocalService, _userLocalService));
 
 		_testUserFieldExpressionResolver =
 			new TestUserFieldExpressionResolver();
@@ -390,7 +390,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_attributes.add(
 			OpenSamlUtil.buildAttribute(
 				"membership:userGroups",
-				new String[] {_USER_GROUP_NAME, "INVALID_USER_GROUP"}));
+				new String[] {
+					_EXISTING_USER_GROUP_NAME, _NEW_USER_GROUP_NAME
+				}));
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
@@ -398,16 +400,34 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
+		Mockito.verify(
+			_userGroupLocalService, Mockito.times(1)
+		).addUserGroup(
+			Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+			Mockito.eq(_NEW_USER_GROUP_NAME), Mockito.anyString(),
+			Mockito.eq(null)
+		);
+
+		Mockito.verify(
+			_userGroupLocalService, Mockito.times(1)
+		).fetchUserGroup(
+			Mockito.anyLong(), Mockito.eq(_EXISTING_USER_GROUP_NAME)
+		);
+
 		Assert.assertNotNull(user);
 
 		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
 			user.getUserId());
 
-		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
 
 		UserGroup userGroup = userGroups.get(0);
 
-		Assert.assertEquals(_USER_GROUP_NAME, userGroup.getName());
+		Assert.assertEquals(_EXISTING_USER_GROUP_NAME, userGroup.getName());
+
+		userGroup = userGroups.get(1);
+
+		Assert.assertEquals(_NEW_USER_GROUP_NAME, userGroup.getName());
 	}
 
 	private User _createBlankUser() {
@@ -439,7 +459,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	private MembershipsUserFieldExpressionHandler
 		_createMembershipsUserFieldExpressionHandler(
-			UserGroupLocalService userGroupLocalService) {
+			UserGroupLocalService userGroupLocalService,
+			UserLocalService userLocalService) {
 
 		MembershipsUserFieldExpressionHandler
 			membershipsUserFieldExpressionHandler =
@@ -450,6 +471,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			membershipsUserFieldExpressionHandler, "_userGroupLocalService",
 			userGroupLocalService);
+		ReflectionTestUtil.setFieldValue(
+			membershipsUserFieldExpressionHandler, "_userLocalService",
+			userLocalService);
 
 		return membershipsUserFieldExpressionHandler;
 	}
@@ -879,16 +903,30 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		UserGroupLocalService userGroupLocalService = Mockito.mock(
 			UserGroupLocalService.class);
 
-		UserGroup userGroup = new UserGroupImpl();
+		UserGroup existingUserGroup = new UserGroupImpl();
 
-		userGroup.setUserGroupId(1);
-		userGroup.setName(_USER_GROUP_NAME);
+		existingUserGroup.setUserGroupId(1);
+		existingUserGroup.setName(_EXISTING_USER_GROUP_NAME);
 
 		Mockito.when(
 			userGroupLocalService.fetchUserGroup(
-				Mockito.anyLong(), Mockito.eq(userGroup.getName()))
+				Mockito.anyLong(), Mockito.eq(existingUserGroup.getName()))
 		).thenReturn(
-			userGroup
+			existingUserGroup
+		);
+
+		UserGroup newUserGroup = new UserGroupImpl();
+
+		newUserGroup.setUserGroupId(2);
+		newUserGroup.setName(_NEW_USER_GROUP_NAME);
+
+		Mockito.when(
+			userGroupLocalService.addUserGroup(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.eq(newUserGroup.getName()), Mockito.anyString(),
+				Mockito.eq(null))
+		).thenReturn(
+			newUserGroup
 		);
 
 		List<UserGroup> userGroups = new ArrayList<>();
@@ -906,8 +944,11 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				for (long userGroupId :
 						(long[])invocationOnMock.getArgument(1)) {
 
-					if (userGroupId == userGroup.getUserGroupId()) {
-						userGroups.add(userGroup);
+					if (userGroupId == existingUserGroup.getUserGroupId()) {
+						userGroups.add(existingUserGroup);
+					}
+					else if (userGroupId == newUserGroup.getUserGroupId()) {
+						userGroups.add(newUserGroup);
 					}
 				}
 
@@ -939,15 +980,18 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		"emailAddress=emailAddress\nfirstName=firstName\nlastName=lastName\n" +
 			"screenName=screenName";
 
+	private static final String _EXISTING_USER_GROUP_NAME =
+		RandomTestUtil.randomString();
+
+	private static final String _NEW_USER_GROUP_NAME =
+		RandomTestUtil.randomString();
+
 	private static final String _SAML_NAME_IDENTIFIER_VALUE = "testNameIdValue";
 
 	private static final String _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS =
 		"test@liferay.com";
 
 	private static final String _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME = "test";
-
-	private static final String _USER_GROUP_NAME =
-		RandomTestUtil.randomString();
 
 	private List<Attribute> _attributes;
 	private Company _company;

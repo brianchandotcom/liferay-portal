@@ -12,6 +12,7 @@ import ListView, {ListViewProps} from '../../../components/ListView';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
+	OrderTypes,
 	OrderWorkflowDisplayType,
 	PaymentWorkflowDisplayType,
 } from '../../../enums/Order';
@@ -49,22 +50,20 @@ export function AdministratorOrdersListView({
 	return (
 		<ListView<Order>
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
-			initialContext={{pageSize: 30}}
 			paginationOptions={{displayType: 'always'}}
 			resource={function getAdministratorOrders({page, pageSize}) {
 				return HeadlessCommerceAdminOrder.getOrders(
 					new URLSearchParams({
-
-						// filter: SearchBuilder.in(
-						// 	'orderTypeExternalReferenceCode',
-						// 	[
-						// 		OrderTypes.CLIENT_EXTENSION,
-						// 		OrderTypes.CLOUDAPP,
-						// 		OrderTypes.DXPAPP,
-						// 		OrderTypes.COMPOSITE_APP,
-						// 		OrderTypes.LOW_CODE_CONFIGURATION,
-						// 	]
-						// ),
+						filter: SearchBuilder.in(
+							'orderTypeExternalReferenceCode',
+							[
+								OrderTypes.CLIENT_EXTENSION,
+								OrderTypes.CLOUDAPP,
+								OrderTypes.DXPAPP,
+								OrderTypes.COMPOSITE_APP,
+								OrderTypes.LOW_CODE_CONFIGURATION,
+							]
+						),
 
 						nestedFields: 'account,orderItems',
 						page: page.toString(),

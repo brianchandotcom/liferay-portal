@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +36,8 @@ import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -217,14 +220,18 @@ public class SXPBlueprintLocalServiceImpl
 					"searchableAssetTypes");
 
 			if (searchableAssetTypesJSONArray == null) {
-				return configuration;
+				return _setCollectionProviderType(
+					configurationJSONObject, generalConfigurationJSONObject,
+					AssetEntry.class.getName());
 			}
 
 			String[] searchableAssetTypesArray = JSONUtil.toStringArray(
 				searchableAssetTypesJSONArray);
 
 			if (searchableAssetTypesArray.length == 0) {
-				return configuration;
+				return _setCollectionProviderType(
+					configurationJSONObject, generalConfigurationJSONObject,
+					AssetEntry.class.getName());
 			}
 
 			if (searchableAssetTypesArray.length == 1) {
@@ -266,6 +273,21 @@ public class SXPBlueprintLocalServiceImpl
 	private String _setCollectionProviderType(
 		JSONObject configurationJSONObject,
 		JSONObject generalConfigurationJSONObject, String type) {
+
+		AssetSubtypeIdentifier assetSubtypeIdentifier =
+			_assetSubtypeIdentifierBuilder.searchableAssetType(
+				type
+			).build();
+
+		String className = assetSubtypeIdentifier.getClassName();
+
+		if (!_collectionProviderTypes.contains(className) &&
+			!className.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
+			type = AssetEntry.class.getName();
+		}
 
 		generalConfigurationJSONObject.put("collectionProviderType", type);
 
@@ -324,6 +346,13 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Reference
 	private AssetSubtypeIdentifierBuilder _assetSubtypeIdentifierBuilder;
+
+	private final List<String> _collectionProviderTypes = new ArrayList<>(
+		Arrays.asList(
+			"com.liferay.blogs.model.BlogsEntry",
+			"com.liferay.document.library.kernel.model.DLFileEntry",
+			"com.liferay.journal.model.JournalArticle",
+			"com.liferay.knowledge.base.model.KBArticle"));
 
 	@Reference
 	private JSONFactory _jsonFactory;

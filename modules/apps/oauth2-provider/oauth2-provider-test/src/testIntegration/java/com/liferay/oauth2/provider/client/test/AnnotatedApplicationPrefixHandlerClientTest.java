@@ -50,9 +50,13 @@ public class AnnotatedApplicationPrefixHandlerClientTest
 		Assert.assertEquals("everything.read", builder.get(String.class));
 	}
 
-	public static class
-		AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator
-			extends BaseTestPreparatorBundleActivator {
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator();
+	}
+
+	private class AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -77,11 +81,6 @@ public class AnnotatedApplicationPrefixHandlerClientTest
 				Collections.singletonList("test/everything"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator();
 	}
 
 }

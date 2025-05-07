@@ -80,7 +80,12 @@ public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(401, response.getStatus());
 	}
 
-	public static class ExpiredAuthorizationTestPreparator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new ExpiredAuthorizationTestPreparator();
+	}
+
+	private class ExpiredAuthorizationTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -100,11 +105,6 @@ public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 			createOAuth2Application(companyId, user, "oauthTestApplication");
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new ExpiredAuthorizationTestPreparator();
 	}
 
 }

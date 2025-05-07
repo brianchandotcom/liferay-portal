@@ -90,7 +90,50 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class ScopeCheckerGuestAllowedTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new ScopeCheckerGuestAllowedTestPreparatorBundleActivator();
+	}
+
+	protected void testApplication(
+		String path, String expectedValidTokenResponse,
+		int expectedNoTokenStatus) {
+
+		WebTarget webTarget = getWebTarget(path);
+
+		Invocation.Builder invocationBuilder = webTarget.request();
+
+		Response response = invocationBuilder.get();
+
+		Assert.assertEquals(
+			"No token: ", expectedNoTokenStatus, response.getStatus());
+
+		for (String invalidToken : _INVALID_TOKENS) {
+			invocationBuilder = webTarget.request();
+
+			if (invalidToken != null) {
+				invocationBuilder = authorize(invocationBuilder, invalidToken);
+			}
+
+			response = invocationBuilder.get();
+
+			Assert.assertEquals(
+				"Token: " + invalidToken, 401, response.getStatus());
+		}
+
+		invocationBuilder = authorize(
+			webTarget.request(), getToken("oauthTestApplication"));
+
+		Assert.assertEquals(
+			expectedValidTokenResponse, invocationBuilder.get(String.class));
+	}
+
+	private static final String[] _INVALID_TOKENS = {
+		OAuth2ProviderConstants.EXPIRED_TOKEN, StringPool.BLANK,
+		StringPool.NULL, "Invalid Token"
+	};
+
+	private class ScopeCheckerGuestAllowedTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -169,48 +212,5 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new ScopeCheckerGuestAllowedTestPreparatorBundleActivator();
-	}
-
-	protected void testApplication(
-		String path, String expectedValidTokenResponse,
-		int expectedNoTokenStatus) {
-
-		WebTarget webTarget = getWebTarget(path);
-
-		Invocation.Builder invocationBuilder = webTarget.request();
-
-		Response response = invocationBuilder.get();
-
-		Assert.assertEquals(
-			"No token: ", expectedNoTokenStatus, response.getStatus());
-
-		for (String invalidToken : _INVALID_TOKENS) {
-			invocationBuilder = webTarget.request();
-
-			if (invalidToken != null) {
-				invocationBuilder = authorize(invocationBuilder, invalidToken);
-			}
-
-			response = invocationBuilder.get();
-
-			Assert.assertEquals(
-				"Token: " + invalidToken, 401, response.getStatus());
-		}
-
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplication"));
-
-		Assert.assertEquals(
-			expectedValidTokenResponse, invocationBuilder.get(String.class));
-	}
-
-	private static final String[] _INVALID_TOKENS = {
-		OAuth2ProviderConstants.EXPIRED_TOKEN, StringPool.BLANK,
-		StringPool.NULL, "Invalid Token"
-	};
 
 }

@@ -69,7 +69,14 @@ public class RevokedTokenTest extends BaseClientTestCase {
 		Assert.assertEquals(401, response.getStatus());
 	}
 
-	public static class RevokedTokenTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new RevokedTokenTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class RevokedTokenTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -84,12 +91,5 @@ public class RevokedTokenTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new RevokedTokenTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

@@ -63,9 +63,16 @@ public class ExpiredAuthorizationsAfterlifeTest extends BaseClientTestCase {
 		Assert.assertNotNull(oAuth2Authorization3);
 	}
 
-	public static class
-		ExpiredAuthorizationsAfterlifeTestPreparatorBundleActivator
-			extends BaseTestPreparatorBundleActivator {
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new ExpiredAuthorizationsAfterlifeTestPreparatorBundleActivator();
+	}
+
+	@Inject
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+
+	private class ExpiredAuthorizationsAfterlifeTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -94,13 +101,5 @@ public class ExpiredAuthorizationsAfterlifeTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new ExpiredAuthorizationsAfterlifeTestPreparatorBundleActivator();
-	}
-
-	@Inject
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

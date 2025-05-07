@@ -86,7 +86,12 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 		}
 	}
 
-	public static class AnnotationsAndHttpPrefixTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new AnnotationsAndHttpPrefixTestPreparatorBundleActivator();
+	}
+
+	private class AnnotationsAndHttpPrefixTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -157,11 +162,6 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 				Collections.singletonList("everything"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new AnnotationsAndHttpPrefixTestPreparatorBundleActivator();
 	}
 
 }

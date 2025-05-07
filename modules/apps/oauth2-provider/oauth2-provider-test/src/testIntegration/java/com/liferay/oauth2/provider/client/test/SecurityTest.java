@@ -193,35 +193,6 @@ public class SecurityTest extends BaseClientTestCase {
 				this::parseError));
 	}
 
-	public static class SecurityTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
-
-		@Override
-		protected void prepareTest() throws Exception {
-			long companyId = TestPropsValues.getCompanyId();
-
-			_user = UserTestUtil.getAdminUser(companyId);
-
-			createOAuth2Application(
-				companyId, _user, "oauthTestApplicationCode",
-				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
-				Collections.singletonList("everything"));
-
-			createOAuth2ApplicationWithNone(
-				companyId, _user, "oauthTestApplicationCodePKCE",
-				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("http://redirecturi:8080"), false,
-				Collections.singletonList("everything"), false);
-
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-			createOAuth2Application(
-				companyId, company.getGuestUser(),
-				"oauthTestApplicationDefaultUser");
-		}
-
-	}
-
 	protected String getBodyAsString(Response response) {
 		return response.readEntity(String.class);
 	}
@@ -258,6 +229,35 @@ public class SecurityTest extends BaseClientTestCase {
 		return response.getHeaderString("x-frame-options");
 	}
 
-	private static User _user;
+	private User _user;
+
+	private class SecurityTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
+
+		@Override
+		protected void prepareTest() throws Exception {
+			long companyId = TestPropsValues.getCompanyId();
+
+			_user = UserTestUtil.getAdminUser(companyId);
+
+			createOAuth2Application(
+				companyId, _user, "oauthTestApplicationCode",
+				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
+				Collections.singletonList("everything"));
+
+			createOAuth2ApplicationWithNone(
+				companyId, _user, "oauthTestApplicationCodePKCE",
+				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
+				Collections.singletonList("http://redirecturi:8080"), false,
+				Collections.singletonList("everything"), false);
+
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			createOAuth2Application(
+				companyId, company.getGuestUser(),
+				"oauthTestApplicationDefaultUser");
+		}
+
+	}
 
 }

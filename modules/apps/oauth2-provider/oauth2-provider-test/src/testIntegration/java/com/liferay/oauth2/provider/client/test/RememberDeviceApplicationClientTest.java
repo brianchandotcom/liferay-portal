@@ -754,7 +754,31 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 						cookieName, newCookie.getValue()))));
 	}
 
-	public static class RememberApplicationClientTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new RememberApplicationClientTestPreparatorBundleActivator();
+	}
+
+	private MultivaluedMap<String, String> _getExtraParameters() {
+		MultivaluedMap<String, String> multivaluedMap =
+			new MultivaluedHashMap<>();
+
+		multivaluedMap.add(
+			"_com_liferay_oauth2_provider_web_internal_portlet_" +
+				"OAuth2AuthorizePortlet_rememberDevice",
+			StringPool.TRUE);
+
+		return multivaluedMap;
+	}
+
+	private static final String _COOKIE_NAME_PREFIX = "OAUTH2_REMEMBER_DEVICE_";
+
+	@Inject
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+
+	private User _user;
+
+	private class RememberApplicationClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -784,29 +808,5 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new RememberApplicationClientTestPreparatorBundleActivator();
-	}
-
-	private MultivaluedMap<String, String> _getExtraParameters() {
-		MultivaluedMap<String, String> multivaluedMap =
-			new MultivaluedHashMap<>();
-
-		multivaluedMap.add(
-			"_com_liferay_oauth2_provider_web_internal_portlet_" +
-				"OAuth2AuthorizePortlet_rememberDevice",
-			StringPool.TRUE);
-
-		return multivaluedMap;
-	}
-
-	private static final String _COOKIE_NAME_PREFIX = "OAUTH2_REMEMBER_DEVICE_";
-
-	private static User _user;
-
-	@Inject
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

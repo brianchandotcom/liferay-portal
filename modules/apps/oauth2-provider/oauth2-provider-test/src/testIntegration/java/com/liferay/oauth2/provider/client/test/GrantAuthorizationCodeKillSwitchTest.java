@@ -54,9 +54,15 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 						)))));
 	}
 
-	public static class
-		GrantKillClientCredentialsSwitchTestPreparatorBundleActivator
-			extends BaseTestPreparatorBundleActivator {
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new GrantKillClientCredentialsSwitchTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class GrantKillClientCredentialsSwitchTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -81,12 +87,5 @@ public class GrantAuthorizationCodeKillSwitchTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new GrantKillClientCredentialsSwitchTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

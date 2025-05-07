@@ -63,7 +63,12 @@ public class DisabledUserClientTest extends BaseClientTestCase {
 		Assert.assertEquals(403, response.getStatus());
 	}
 
-	public static class DisabledUserTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new DisabledUserTestPreparatorBundleActivator();
+	}
+
+	private class DisabledUserTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -88,11 +93,6 @@ public class DisabledUserClientTest extends BaseClientTestCase {
 				Arrays.asList("GET"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new DisabledUserTestPreparatorBundleActivator();
 	}
 
 }

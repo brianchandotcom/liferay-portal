@@ -97,7 +97,12 @@ public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 			"everything.read", invocationBuilder.get(String.class));
 	}
 
-	public static class ScopeMapperNarrowDownClientTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new ScopeMapperNarrowDownClientTestPreparatorBundleActivator();
+	}
+
+	private class ScopeMapperNarrowDownClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -131,11 +136,6 @@ public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 				Arrays.asList("everything", "everything.read"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new ScopeMapperNarrowDownClientTestPreparatorBundleActivator();
 	}
 
 }

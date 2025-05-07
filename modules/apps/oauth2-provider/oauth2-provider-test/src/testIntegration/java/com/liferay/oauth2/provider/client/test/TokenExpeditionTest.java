@@ -153,7 +153,12 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class TokenExpeditionTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new TokenExpeditionTestPreparatorBundleActivator();
+	}
+
+	private class TokenExpeditionTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -173,11 +178,6 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 			createOAuth2Application(companyId, user, "oauthTestApplication");
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TokenExpeditionTestPreparatorBundleActivator();
 	}
 
 }

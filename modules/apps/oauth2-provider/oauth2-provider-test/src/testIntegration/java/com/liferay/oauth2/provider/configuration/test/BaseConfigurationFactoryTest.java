@@ -156,15 +156,15 @@ public class BaseConfigurationFactoryTest {
 	}
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
-	private static OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

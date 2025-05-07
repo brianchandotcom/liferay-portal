@@ -59,7 +59,12 @@ public class AnnotationsAndHttpApplicationClientTest
 		Assert.assertEquals("everything.read", builder.get(String.class));
 	}
 
-	public static class AnnotationsAndHttpTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new AnnotationsAndHttpTestPreparatorBundleActivator();
+	}
+
+	private class AnnotationsAndHttpTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -103,11 +108,6 @@ public class AnnotationsAndHttpApplicationClientTest
 				Collections.singletonList("everything"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new AnnotationsAndHttpTestPreparatorBundleActivator();
 	}
 
 }

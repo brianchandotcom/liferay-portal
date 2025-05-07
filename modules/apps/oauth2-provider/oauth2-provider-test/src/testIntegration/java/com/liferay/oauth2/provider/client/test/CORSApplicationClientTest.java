@@ -159,7 +159,16 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class CORSApplicationTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new CORSApplicationTestPreparatorBundleActivator();
+	}
+
+	private static final String _TEST_CORS_URI = "http://test-cors.com";
+
+	private User _user;
+
+	private class CORSApplicationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -174,14 +183,5 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new CORSApplicationTestPreparatorBundleActivator();
-	}
-
-	private static final String _TEST_CORS_URI = "http://test-cors.com";
-
-	private static User _user;
 
 }

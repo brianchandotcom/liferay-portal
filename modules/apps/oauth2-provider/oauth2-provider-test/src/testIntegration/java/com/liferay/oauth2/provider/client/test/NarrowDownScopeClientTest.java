@@ -105,7 +105,14 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 				this::parseError));
 	}
 
-	public static class NarrowDownScopeTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new NarrowDownScopeTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class NarrowDownScopeTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -129,12 +136,5 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new NarrowDownScopeTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

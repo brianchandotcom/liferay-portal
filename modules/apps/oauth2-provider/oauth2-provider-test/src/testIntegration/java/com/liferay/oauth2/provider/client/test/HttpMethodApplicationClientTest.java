@@ -129,7 +129,12 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(403, response.getStatus());
 	}
 
-	public static class MethodApplicationTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new MethodApplicationTestPreparatorBundleActivator();
+	}
+
+	private class MethodApplicationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -167,11 +172,6 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 				Collections.singletonList("everything"));
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new MethodApplicationTestPreparatorBundleActivator();
 	}
 
 }

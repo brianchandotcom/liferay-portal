@@ -69,7 +69,12 @@ public class SAPClientTest extends BaseClientTestCase {
 		Assert.assertTrue(builder.get(Boolean.class));
 	}
 
-	public static class SAPTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new SAPTestPreparatorBundleActivator();
+	}
+
+	private class SAPTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -100,11 +105,6 @@ public class SAPClientTest extends BaseClientTestCase {
 				user.getUserId(), "#is*", false, true, "CUSTOM_SAP");
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new SAPTestPreparatorBundleActivator();
 	}
 
 }

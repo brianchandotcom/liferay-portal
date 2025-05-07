@@ -102,7 +102,14 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		Assert.assertNotNull(tokenString);
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new AnnotatedApplicationTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class AnnotatedApplicationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -140,12 +147,5 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new AnnotatedApplicationTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

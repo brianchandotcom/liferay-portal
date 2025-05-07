@@ -93,7 +93,24 @@ public class RefreshTokenAuthorizationGrantTest
 		}
 	}
 
-	public static class TokenExpeditionTestPreparatorBundleActivator
+	@Override
+	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
+		return new RefreshTokenAuthorizationGrant(
+			getRefreshToken(
+				new PasswordAuthorizationGrant(
+					_user.getEmailAddress(),
+					PropsValues.DEFAULT_ADMIN_PASSWORD),
+				clientAuthentications.get(clientId)));
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new TokenExpeditionTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class TokenExpeditionTestPreparatorBundleActivator
 		extends BaseTokenEndpointTestCase.TestPreparatorBundleActivator {
 
 		@Override
@@ -120,22 +137,5 @@ public class RefreshTokenAuthorizationGrantTest
 		}
 
 	}
-
-	@Override
-	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
-		return new RefreshTokenAuthorizationGrant(
-			getRefreshToken(
-				new PasswordAuthorizationGrant(
-					_user.getEmailAddress(),
-					PropsValues.DEFAULT_ADMIN_PASSWORD),
-				clientAuthentications.get(clientId)));
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TokenExpeditionTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

@@ -111,7 +111,16 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNotEquals(locationURI.getHost(), _host);
 	}
 
-	public static class TrustedApplicationClientTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new TrustedApplicationClientTest.
+			TrustedApplicationClientTestPreparatorBundleActivator();
+	}
+
+	private String _host;
+	private User _user;
+
+	private class TrustedApplicationClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -145,14 +154,5 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TrustedApplicationClientTest.
-			TrustedApplicationClientTestPreparatorBundleActivator();
-	}
-
-	private static String _host;
-	private static User _user;
 
 }

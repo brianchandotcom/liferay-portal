@@ -68,7 +68,7 @@ public class IssueJWTAccessTokenTest extends BaseTokenEndpointTestCase {
 				jwsJwtCompactConsumer.getDecodedSignature()));
 	}
 
-	private static class IssueJWTAccessTokenTestPreparatorBundleActivator
+	private class IssueJWTAccessTokenTestPreparatorBundleActivator
 		extends TestPreparatorBundleActivator {
 
 		@Override

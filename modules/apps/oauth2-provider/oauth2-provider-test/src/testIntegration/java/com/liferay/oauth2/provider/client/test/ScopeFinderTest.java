@@ -121,7 +121,20 @@ public class ScopeFinderTest extends BaseClientTestCase {
 			).getStatus());
 	}
 
-	public static class ScopeFinderTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new ScopeFinderTestPreparatorBundleActivator();
+	}
+
+	private long _oAuth2ApplicationId;
+
+	@Inject
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Inject
+	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+
+	private class ScopeFinderTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -172,18 +185,5 @@ public class ScopeFinderTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new ScopeFinderTestPreparatorBundleActivator();
-	}
-
-	private static long _oAuth2ApplicationId;
-
-	@Inject
-	private static OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Inject
-	private static OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 }

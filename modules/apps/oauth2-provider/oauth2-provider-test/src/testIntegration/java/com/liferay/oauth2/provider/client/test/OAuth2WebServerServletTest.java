@@ -83,7 +83,38 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		Assert.assertEquals(_TEST_FILE_CONTENT, fileContent);
 	}
 
-	public static class OAuth2WebServerServletTestPreparator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new OAuth2WebServerServletTestPreparator();
+	}
+
+	private WebTarget _getRootWebTarget(String path) throws Exception {
+		ClientBuilder clientBuilder = new ClientBuilderImpl();
+
+		Client client = clientBuilder.build();
+
+		RuntimeDelegate runtimeDelegate = new RuntimeDelegateImpl();
+
+		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		return client.target(
+			uriBuilder.uri(
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":8080", path)));
+	}
+
+	private static final String _TEST_FILE_CONTENT = "Test File Content";
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
+
+	private class OAuth2WebServerServletTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -113,36 +144,5 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new OAuth2WebServerServletTestPreparator();
-	}
-
-	private WebTarget _getRootWebTarget(String path) throws Exception {
-		ClientBuilder clientBuilder = new ClientBuilderImpl();
-
-		Client client = clientBuilder.build();
-
-		RuntimeDelegate runtimeDelegate = new RuntimeDelegateImpl();
-
-		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		return client.target(
-			uriBuilder.uri(
-				StringBundler.concat(
-					"http://", company.getVirtualHostname(), ":8080", path)));
-	}
-
-	private static final String _TEST_FILE_CONTENT = "Test File Content";
-
-	@Inject
-	private static DLAppLocalService _dlAppLocalService;
-
-	@Inject
-	private static DLURLHelper _dlURLHelper;
 
 }

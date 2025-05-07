@@ -92,7 +92,12 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class IsolationAccrossCompaniesTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new IsolationAccrossCompaniesTestPreparatorBundleActivator();
+	}
+
+	private class IsolationAccrossCompaniesTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -134,11 +139,6 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 			}
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new IsolationAccrossCompaniesTestPreparatorBundleActivator();
 	}
 
 }

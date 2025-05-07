@@ -167,7 +167,14 @@ public class TOCTOUTest extends BaseClientTestCase {
 			"everything.read", webTarget2InvocationBuilder.get(String.class));
 	}
 
-	public static class SecurityTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new SecurityTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class SecurityTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		public OAuth2Application updateOAuth2ApplicationScopeAliases(
@@ -248,12 +255,5 @@ public class TOCTOUTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new SecurityTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

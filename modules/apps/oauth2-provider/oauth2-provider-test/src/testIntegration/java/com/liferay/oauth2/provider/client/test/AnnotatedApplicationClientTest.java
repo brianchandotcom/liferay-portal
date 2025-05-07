@@ -57,37 +57,6 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
-
-		@Override
-		protected void prepareTest() throws Exception {
-			long companyId = TestPropsValues.getCompanyId();
-
-			User user = UserTestUtil.getAdminUser(companyId);
-
-			Dictionary<String, Object> properties =
-				HashMapDictionaryBuilder.<String, Object>put(
-					"auth.verifier.guest.allowed", false
-				).put(
-					"oauth2.scope.checker.type", "annotations"
-				).build();
-
-			registerJaxRsApplication(
-				new TestInterfaceAnnotatedApplication(), "annotated-interface",
-				properties);
-
-			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated-impl", properties);
-
-			createOAuth2Application(
-				companyId, user, "oauthTestApplication",
-				Arrays.asList(
-					"everything", "everything.read", "everything.write"));
-		}
-
-	}
-
 	@Override
 	protected BundleActivator getBundleActivator() {
 		return new AnnotatedApplicationTestPreparatorBundleActivator();
@@ -145,6 +114,37 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 		Assert.assertEquals(
 			"everything.read", invocationBuilder.get(String.class));
+	}
+
+	private class AnnotatedApplicationTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
+
+		@Override
+		protected void prepareTest() throws Exception {
+			long companyId = TestPropsValues.getCompanyId();
+
+			User user = UserTestUtil.getAdminUser(companyId);
+
+			Dictionary<String, Object> properties =
+				HashMapDictionaryBuilder.<String, Object>put(
+					"auth.verifier.guest.allowed", false
+				).put(
+					"oauth2.scope.checker.type", "annotations"
+				).build();
+
+			registerJaxRsApplication(
+				new TestInterfaceAnnotatedApplication(), "annotated-interface",
+				properties);
+
+			registerJaxRsApplication(
+				new TestAnnotatedApplication(), "annotated-impl", properties);
+
+			createOAuth2Application(
+				companyId, user, "oauthTestApplication",
+				Arrays.asList(
+					"everything", "everything.read", "everything.write"));
+		}
+
 	}
 
 }

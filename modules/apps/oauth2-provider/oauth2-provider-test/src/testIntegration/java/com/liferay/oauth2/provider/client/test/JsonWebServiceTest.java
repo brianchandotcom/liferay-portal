@@ -137,7 +137,14 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		}
 	}
 
-	public static class JsonWebServiceTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new JsonWebServiceTestPreparatorBundleActivator();
+	}
+
+	private User _user;
+
+	private class JsonWebServiceTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -158,12 +165,5 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new JsonWebServiceTestPreparatorBundleActivator();
-	}
-
-	private static User _user;
 
 }

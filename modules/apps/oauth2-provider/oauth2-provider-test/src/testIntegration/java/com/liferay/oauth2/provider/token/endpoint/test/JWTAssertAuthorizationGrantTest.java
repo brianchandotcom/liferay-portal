@@ -79,7 +79,7 @@ public class JWTAssertAuthorizationGrantTest
 		return new JWTBearerGrantTestPreparatorBundleActivator();
 	}
 
-	private static class JWTBearerGrantTestPreparatorBundleActivator
+	private class JWTBearerGrantTestPreparatorBundleActivator
 		extends BaseTokenEndpointTestCase.TestPreparatorBundleActivator {
 
 		@Override

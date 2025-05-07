@@ -46,9 +46,13 @@ public class GrantResourceOwnerKillSwitchTest extends BaseClientTestCase {
 				this::parseError));
 	}
 
-	public static class
-		GrantKillClientCredentialsSwitchTestPreparatorBundleActivator
-			extends BaseTestPreparatorBundleActivator {
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new GrantKillClientCredentialsSwitchTestPreparatorBundleActivator();
+	}
+
+	private class GrantKillClientCredentialsSwitchTestPreparatorBundleActivator
+		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -70,11 +74,6 @@ public class GrantResourceOwnerKillSwitchTest extends BaseClientTestCase {
 			createOAuth2Application(companyId, user, "oauthTestApplication");
 		}
 
-	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new GrantKillClientCredentialsSwitchTestPreparatorBundleActivator();
 	}
 
 }

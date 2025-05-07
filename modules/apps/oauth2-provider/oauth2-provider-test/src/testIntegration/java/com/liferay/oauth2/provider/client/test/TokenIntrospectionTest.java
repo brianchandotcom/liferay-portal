@@ -105,7 +105,25 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 			applicationClientId, parseJsonField(response, "client_id"));
 	}
 
-	public static class TokenIntrospectionTestPreparatorBundleActivator
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new TokenIntrospectionTest.
+			TokenIntrospectionTestPreparatorBundleActivator();
+	}
+
+	private WebTarget _getTokenIntrospectionWebTarget() {
+		WebTarget webTarget = getWebTarget();
+
+		webTarget = webTarget.path("o");
+		webTarget = webTarget.path("oauth2");
+		webTarget = webTarget.path("introspect");
+
+		return webTarget;
+	}
+
+	private User _user;
+
+	private class TokenIntrospectionTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -126,23 +144,5 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TokenIntrospectionTest.
-			TokenIntrospectionTestPreparatorBundleActivator();
-	}
-
-	private WebTarget _getTokenIntrospectionWebTarget() {
-		WebTarget webTarget = getWebTarget();
-
-		webTarget = webTarget.path("o");
-		webTarget = webTarget.path("oauth2");
-		webTarget = webTarget.path("introspect");
-
-		return webTarget;
-	}
-
-	private static User _user;
 
 }

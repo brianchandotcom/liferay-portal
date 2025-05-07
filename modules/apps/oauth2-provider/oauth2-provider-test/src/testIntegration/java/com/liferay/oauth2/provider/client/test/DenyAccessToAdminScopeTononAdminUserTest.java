@@ -67,7 +67,15 @@ public class DenyAccessToAdminScopeTononAdminUserTest
 		Assert.assertEquals(400, response.getStatus());
 	}
 
-	public static class
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new DenyAccessToAdminScopeTononAdminUserTestPreparatorBundleActivator();
+	}
+
+	@Inject
+	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+
+	private class
 		DenyAccessToAdminScopeTononAdminUserTestPreparatorBundleActivator
 			extends BaseTestPreparatorBundleActivator {
 
@@ -105,13 +113,5 @@ public class DenyAccessToAdminScopeTononAdminUserTest
 		}
 
 	}
-
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new DenyAccessToAdminScopeTononAdminUserTestPreparatorBundleActivator();
-	}
-
-	@Inject
-	private static OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 }

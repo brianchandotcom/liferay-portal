@@ -785,9 +785,14 @@ public abstract class BaseWorkspaceGitRepository
 				gitArchiveFile.getCanonicalPath(),
 				_getGitArchiveS3BucketPath());
 
+			File directory = getDirectory();
+
+			if (directory.exists()) {
+				JenkinsResultsParserUtil.delete(directory);
+			}
+
 			JenkinsResultsParserUtil.unzip(
-				new File(baseRepositoryDir, _getGitArchiveName()),
-				getDirectory());
+				new File(baseRepositoryDir, _getGitArchiveName()), directory);
 
 			return;
 		}

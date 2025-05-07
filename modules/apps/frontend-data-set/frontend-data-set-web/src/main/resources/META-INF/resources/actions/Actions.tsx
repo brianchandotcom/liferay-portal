@@ -27,6 +27,7 @@ function Actions({
 	itemId: string | number;
 }) {
 	const {
+		allItemsSelectedActive,
 		executeAsyncItemAction,
 		highlightItems,
 		inlineEditingSettings,
@@ -34,8 +35,16 @@ function Actions({
 		onActionDropdownItemClick,
 		openModal,
 		openSidePanel,
+		selectedItemsValue,
 		toggleItemInlineEdit,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
+
+	const isRowChecked =
+		allItemsSelectedActive ||
+		(selectedItemsValue &&
+			!!selectedItemsValue.find(
+				(element: any) => String(element) === String(itemId)
+			));
 
 	const [
 		{
@@ -89,17 +98,20 @@ function Actions({
 
 	return (
 		<>
-			{quickActionsEnabled && formattedActions.length > 1 && (
-				<QuickActions
-					actions={formattedActions.slice(
-						0,
-						QUICK_ACTIONS_MAX_NUMBER
-					)}
-					itemData={itemData}
-					itemId={itemId}
-					onClick={handleClick}
-				/>
-			)}
+			{quickActionsEnabled &&
+				formattedActions.length > 1 &&
+				!isRowChecked && (
+					<QuickActions
+						actions={formattedActions.slice(
+							0,
+							QUICK_ACTIONS_MAX_NUMBER
+						)}
+						itemData={itemData}
+						itemId={itemId}
+						onClick={handleClick}
+					/>
+				)}
+
 			<ActionsDropdown
 				actions={formattedActions}
 				itemData={itemData}

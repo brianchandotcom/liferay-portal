@@ -120,8 +120,6 @@ public class ResourceTestCaseOpenAPIParser {
 
 		String apiPackage = configYAML.getApiPackagePath();
 
-		String packageName = ConfigUtil.packageName(configYAML);
-
 		String versionPackage = StringUtil.replace(version, '.', '_');
 
 		if (returnType.startsWith(
@@ -144,7 +142,9 @@ public class ResourceTestCaseOpenAPIParser {
 		}
 		else if (returnType.contains(".") &&
 				 !returnType.equals("com.liferay.portal.vulcan") &&
-				 !returnType.equals(packageName + ".ws.rs.core.Response") &&
+				 !returnType.equals(
+					 ConfigUtil.packageName(configYAML) +
+						 ".ws.rs.core.Response") &&
 				 !returnType.startsWith("java.lang") &&
 				 !returnType.startsWith("java.util") &&
 				 !returnType.startsWith(apiPackage)) {

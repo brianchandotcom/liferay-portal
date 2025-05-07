@@ -170,7 +170,7 @@ export class JSONWebServicesJournalApiHelper {
 	}
 
 	async addWebContentDetailed(
-		webContent?: TWebContentDetailed
+		webContent: TWebContentDetailed
 	): Promise<TWebContentDetailed> {
 		const urlSearchParams = new URLSearchParams();
 

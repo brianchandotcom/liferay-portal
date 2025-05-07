@@ -327,6 +327,12 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 			companyId, groupId, className, classPK);
 	}
 
+	public static List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, String className) {
+
+		return getService().getWorkflowInstanceLinks(companyId, className);
+	}
+
 	/**
 	 * Returns the number of workflow instance links.
 	 *

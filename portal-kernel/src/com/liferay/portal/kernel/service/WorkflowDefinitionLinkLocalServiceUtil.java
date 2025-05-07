@@ -139,6 +139,12 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 			workflowDefinitionLink);
 	}
 
+	public static void deleteWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		getService().deleteWorkflowDefinitionLinks(companyId, className);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
@@ -401,6 +407,12 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 		return getService().getWorkflowDefinitionLinks(
 			companyId, groupId, className, classPK);
+	}
+
+	public static List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		return getService().getWorkflowDefinitionLinks(companyId, className);
 	}
 
 	public static List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(

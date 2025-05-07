@@ -148,6 +148,14 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinks(
+			companyId, className);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _workflowDefinitionLinkLocalService.dslQuery(dslQuery);
 	}
@@ -454,6 +462,14 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
 			companyId, groupId, className, classPK);
+	}
+
+	@Override
+	public java.util.List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, String className) {
+
+		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+			companyId, className);
 	}
 
 	@Override

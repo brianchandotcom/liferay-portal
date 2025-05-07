@@ -324,6 +324,9 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(userId);
 		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setCommerceAccountId(commerceAccountId);
+		commerceOrder.setCommerceCurrencyCode(commerceCurrencyCode);
+		commerceOrder.setCommerceOrderTypeId(commerceOrderTypeId);
 
 		if (billingAddressId > 0) {
 			commerceOrder.setBillingAddressId(billingAddressId);
@@ -331,11 +334,6 @@ public class CommerceOrderLocalServiceImpl
 		else {
 			_setAccountDefaultBillingAddress(commerceChannel, commerceOrder);
 		}
-
-		commerceOrder.setCommerceAccountId(commerceAccountId);
-		commerceOrder.setCommerceCurrencyCode(commerceCurrencyCode);
-		commerceOrder.setCommerceOrderTypeId(commerceOrderTypeId);
-		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 
 		if (shippingAddressId > 0) {
 			commerceOrder.setShippingAddressId(shippingAddressId);
@@ -352,11 +350,20 @@ public class CommerceOrderLocalServiceImpl
 				commerceChannel, commerceOrder);
 		}
 
-		_setAccountDefaultPaymentTerm(commerceChannel, commerceOrder, user);
-
 		commerceOrder.setName(name);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
-		commerceOrder.setShippingOptionName(shippingOptionName);
+
+		if ((commerceShippingMethodId > 0) && (shippingOptionName != null)) {
+			commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+			commerceOrder.setShippingOptionName(shippingOptionName);
+		}
+		else {
+			_setAccountDefaultShippingOption(
+				commerceChannel, commerceOrder, user);
+		}
+
+		_setAccountDefaultDeliveryTerm(commerceChannel, commerceOrder, user);
+		_setAccountDefaultPaymentTerm(commerceChannel, commerceOrder, user);
 
 		_setCommerceOrderPrices(
 			commerceOrder, shippingAmount, shippingWithTaxAmount, subtotal,

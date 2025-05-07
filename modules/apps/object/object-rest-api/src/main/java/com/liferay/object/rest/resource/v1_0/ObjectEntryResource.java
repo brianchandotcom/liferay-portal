@@ -47,9 +47,16 @@ public interface ObjectEntryResource {
 	public void deleteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
+	public void deleteByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
 
 	public Response deleteObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteObjectEntryByVersion(Long objectEntryId, Integer version)
 		throws Exception;
 
 	public void deleteScopeScopeKeyByExternalReferenceCode(

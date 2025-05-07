@@ -12,11 +12,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectEntryVersionCountException extends PortalException {
 
-	public ObjectEntryVersionCountException() {
-	}
-
 	public ObjectEntryVersionCountException(String msg) {
 		super(msg);
+	}
+
+	public ObjectEntryVersionCountException(String message, String messageKey) {
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
 	public ObjectEntryVersionCountException(String msg, Throwable throwable) {
@@ -26,5 +29,11 @@ public class ObjectEntryVersionCountException extends PortalException {
 	public ObjectEntryVersionCountException(Throwable throwable) {
 		super(throwable);
 	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
+	private String _messageKey;
 
 }

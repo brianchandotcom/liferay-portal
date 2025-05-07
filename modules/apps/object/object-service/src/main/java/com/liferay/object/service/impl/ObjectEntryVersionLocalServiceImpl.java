@@ -54,7 +54,8 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		if (getObjectEntryVersionsCount(objectEntryId) == 1) {
 			throw new ObjectEntryVersionCountException(
-				"At least one version must remain");
+				"At least one version must remain",
+				"at-least-one-version-must-remain");
 		}
 
 		ObjectEntryVersion objectEntryVersion =
@@ -64,7 +65,8 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		if (version == objectEntryVersion.getVersion()) {
 			throw new ObjectEntryVersionLatestException(
-				"The latest version cannot be deleted");
+				"The latest version cannot be deleted",
+				"the-last-version-cannot-be-deleted");
 		}
 
 		objectEntryVersion = objectEntryVersionPersistence.findByOEI_V(

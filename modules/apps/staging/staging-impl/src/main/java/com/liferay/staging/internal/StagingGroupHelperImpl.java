@@ -175,11 +175,14 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public boolean isCompanyGroup(Group group) {
-		Group companyGroup = fetchCompanyGroup(group.getCompanyId());
+		return isCompanyGroup(group.getCompanyId(), group.getGroupId());
+	}
 
-		if ((companyGroup != null) &&
-			(companyGroup.getGroupId() == group.getGroupId())) {
+	@Override
+	public boolean isCompanyGroup(long companyId, long groupId) {
+		Group companyGroup = fetchCompanyGroup(companyId);
 
+		if ((companyGroup != null) && (companyGroup.getGroupId() == groupId)) {
 			return true;
 		}
 

@@ -30,7 +30,7 @@ public class OverdueBusinessEventService extends BaseService {
 
 	@Scheduled(cron = "0 0 0 * * *")
 	public void scheduled() {
-		Date now = new Date();
+		Date date = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -44,7 +44,7 @@ public class OverdueBusinessEventService extends BaseService {
 					StringBundler.concat(
 						"/o/c/businessevents?page=", page,
 						"&pageSize=500&filter=eventStatus eq 'open' and ",
-						"targetGoLiveDateTime lt ", dateFormat.format(now))));
+						"targetGoLiveDateTime lt ", dateFormat.format(date))));
 
 			JSONArray jsonArray = jsonObject.getJSONArray("items");
 

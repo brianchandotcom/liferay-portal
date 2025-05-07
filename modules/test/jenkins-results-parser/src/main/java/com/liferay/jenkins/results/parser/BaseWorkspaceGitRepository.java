@@ -183,6 +183,10 @@ public abstract class BaseWorkspaceGitRepository
 		return getString("sender_branch_username");
 	}
 
+	public boolean getSnapshot() {
+		return getBoolean("snapshot");
+	}
+
 	@Override
 	public List<List<LocalGitCommit>> partitionLocalGitCommits(
 		List<LocalGitCommit> localGitCommits, int count) {
@@ -327,7 +331,16 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
-		_prepareGitWorkingDirectory();
+		if (!_snapshot) {
+			_prepareGitWorkingDirectory();
+		}
+
+		try {
+			_prepareGitArchive();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		_setUp = true;
 	}
@@ -450,6 +463,8 @@ public abstract class BaseWorkspaceGitRepository
 		super(jsonObject);
 
 		validateKeys(_REQUIRED_KEYS);
+
+		_snapshot = getSnapshot();
 	}
 
 	protected BaseWorkspaceGitRepository(
@@ -680,6 +695,18 @@ public abstract class BaseWorkspaceGitRepository
 		return getString("base_branch_username");
 	}
 
+	private String _getGitArchiveName() {
+		return getDirectoryName() + ".zip";
+	}
+
+	private String _getGitArchiveS3BucketPath() throws IOException {
+		return JenkinsResultsParserUtil.combine(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"cloud.ci.s3.bucket.dist.path"),
+			"/git-archives/", getDirectoryName(), "/", getBaseBranchSHA(), "/",
+			getSenderBranchSHA(), "/", _getGitArchiveName());
+	}
+
 	private String _getSenderBranchHeadSHA() {
 		return getString("sender_branch_head_sha");
 	}
@@ -717,6 +744,44 @@ public abstract class BaseWorkspaceGitRepository
 
 	private boolean _isPullRequest() {
 		return PullRequest.isValidGitHubPullRequestURL(getGitHubURL());
+	}
+
+	private void _prepareGitArchive() throws IOException {
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return;
+		}
+
+		if (_snapshot) {
+			String baseRepositoryDir =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"base.repository.dir");
+
+			File gitArchiveFile = new File(
+				baseRepositoryDir, _getGitArchiveName());
+
+			CloudBucketUtil.copyS3File(
+				gitArchiveFile.getCanonicalPath(),
+				_getGitArchiveS3BucketPath());
+
+			JenkinsResultsParserUtil.unzip(
+				new File(baseRepositoryDir, _getGitArchiveName()),
+				getDirectory());
+
+			return;
+		}
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		File archiveFile = gitWorkingDirectory.archive(_getGitArchiveName());
+
+		CloudBucketUtil.copyS3File(
+			_getGitArchiveS3BucketPath(), archiveFile.getCanonicalPath());
+
+		_setSnapshot(true);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
 	private void _prepareGitWorkingDirectory() {
@@ -798,6 +863,10 @@ public abstract class BaseWorkspaceGitRepository
 		put("sender_branch_username", username);
 	}
 
+	private void _setSnapshot(boolean snapshot) {
+		put("snapshot", snapshot);
+	}
+
 	private static final String[] _REQUIRED_KEYS = {
 		"base_branch_head_sha", "base_branch_sha", "base_branch_username",
 		"git_hub_url", "sender_branch_head_sha", "sender_branch_name",
@@ -812,6 +881,7 @@ public abstract class BaseWorkspaceGitRepository
 	private boolean _rebase;
 	private RemoteGitRef _senderRemoteGitRef;
 	private boolean _setUp;
+	private boolean _snapshot;
 	private RemoteGitRef _upstreamRemoteGitRef;
 
 }

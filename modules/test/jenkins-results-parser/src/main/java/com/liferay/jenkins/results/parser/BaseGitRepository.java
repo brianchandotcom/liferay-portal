@@ -46,6 +46,10 @@ public abstract class BaseGitRepository implements GitRepository {
 		validateKeys(_KEYS_REQUIRED);
 	}
 
+	protected boolean getBoolean(String key) {
+		return _jsonObject.getBoolean(key);
+	}
+
 	protected File getFile(String key) {
 		return new File(getString(key));
 	}

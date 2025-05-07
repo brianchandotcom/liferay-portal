@@ -103,12 +103,6 @@ public class SXPBlueprintInfoCollectionProviderSXPBlueprintModelListener
 	protected InfoCollectionProvider<?> createInfoCollectionProvider(
 		SXPBlueprint sxpBlueprint) {
 
-		if (_className.equals(AssetEntry.class.getName())) {
-			return new AssetEntrySXPBlueprintInfoCollectionProvider(
-				_assetHelper, _searcher, _searchRequestBuilderFactory,
-				sxpBlueprint);
-		}
-
 		if (_className.equals(BlogsEntry.class.getName())) {
 			return new BlogsEntrySXPBlueprintInfoCollectionProvider(
 				_assetHelper, _blogsEntryLocalService, _searcher,

@@ -1555,10 +1555,15 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write("\" data-layout-structure-item-id=\"");
 		jspWriter.write(fragmentStyledLayoutStructureItem.getItemId());
-		jspWriter.write("\" style=\"");
-		jspWriter.write(
-			_renderLayoutStructureDisplayContext.getStyle(
-				fragmentStyledLayoutStructureItem));
+
+		String style = _renderLayoutStructureDisplayContext.getStyle(
+			fragmentStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(style)) {
+			jspWriter.write("\" style=\"");
+			jspWriter.write(style);
+		}
+
 		jspWriter.write("\">");
 	}
 

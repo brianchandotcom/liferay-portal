@@ -22,7 +22,8 @@
 			},
 			"modifiable": true,
 			"name": "U3A2DistributorApplication",
-			"objectActions": [],
+			"objectActions": [
+			],
 			"objectFields": [
 				{
 					"DBType": "String",

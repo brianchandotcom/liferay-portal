@@ -129,13 +129,12 @@ public class CommerceOrderPriceCalculationV2Impl
 				subtotalDiscounted = subtotalDiscounted.subtract(
 					discountAmountCommerceMoney.getPrice());
 
-				BigDecimal subtotalDiscountPercentage =
-					orderSubtotalCommerceDiscountValue.getDiscountPercentage();
-
 				BigDecimal subtotalTaxAmount = taxValueCommerceMoney.getPrice();
 
 				BigDecimal subtotalTaxValueDifference =
-					subtotalTaxAmount.multiply(subtotalDiscountPercentage);
+					subtotalTaxAmount.multiply(
+						orderSubtotalCommerceDiscountValue.
+							getDiscountPercentage());
 
 				subtotalTaxValueDifference = subtotalTaxValueDifference.divide(
 					_ONE_HUNDRED);

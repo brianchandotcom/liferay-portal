@@ -32,7 +32,7 @@ else {
 	}
 }
 
-List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
+List<Portlet> portlets = ExportImportHelperUtil.getExportablePortlets(company.getCompanyId(), themeDisplay.getScopeGroupId(), false);
 
 DateRange dateRange = null;
 Map<String, Serializable> settingsMap = Collections.emptyMap();

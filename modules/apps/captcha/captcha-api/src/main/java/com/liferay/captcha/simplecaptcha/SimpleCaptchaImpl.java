@@ -234,18 +234,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
 
-		String[] backgroundProducerClassNames =
+		String[] simpleCaptchaBackgroundProducers =
 			captchaConfiguration.simpleCaptchaBackgroundProducers();
 
 		BackgroundProducer[] backgroundProducers =
-			new BackgroundProducer[backgroundProducerClassNames.length];
+			new BackgroundProducer[simpleCaptchaBackgroundProducers.length];
 
-		for (int i = 0; i < backgroundProducerClassNames.length; i++) {
-			String backgroundProducerClassName =
-				backgroundProducerClassNames[i];
-
+		for (int i = 0; i < simpleCaptchaBackgroundProducers.length; i++) {
 			backgroundProducers[i] = (BackgroundProducer)_getInstance(
-				backgroundProducerClassName);
+				simpleCaptchaBackgroundProducers[i]);
 		}
 
 		if (backgroundProducers.length == 1) {
@@ -261,17 +258,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
 
-		String[] gimpyRendererClassNames =
+		String[] simpleCaptchaGimpyRenderers =
 			captchaConfiguration.simpleCaptchaGimpyRenderers();
 
 		GimpyRenderer[] gimpyRenderers =
-			new GimpyRenderer[gimpyRendererClassNames.length];
+			new GimpyRenderer[simpleCaptchaGimpyRenderers.length];
 
-		for (int i = 0; i < gimpyRendererClassNames.length; i++) {
-			String gimpyRendererClassName = gimpyRendererClassNames[i];
-
+		for (int i = 0; i < simpleCaptchaGimpyRenderers.length; i++) {
 			gimpyRenderers[i] = (GimpyRenderer)_getInstance(
-				gimpyRendererClassName);
+				simpleCaptchaGimpyRenderers[i]);
 		}
 
 		if (gimpyRenderers.length == 1) {
@@ -294,17 +289,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
 
-		String[] noiseProducerClassNames =
+		String[] simpleCaptchaNoiseProducers =
 			captchaConfiguration.simpleCaptchaNoiseProducers();
 
 		NoiseProducer[] noiseProducers =
-			new NoiseProducer[noiseProducerClassNames.length];
+			new NoiseProducer[simpleCaptchaNoiseProducers.length];
 
-		for (int i = 0; i < noiseProducerClassNames.length; i++) {
-			String noiseProducerClassName = noiseProducerClassNames[i];
-
+		for (int i = 0; i < simpleCaptchaNoiseProducers.length; i++) {
 			noiseProducers[i] = (NoiseProducer)_getInstance(
-				noiseProducerClassName);
+				simpleCaptchaNoiseProducers[i]);
 		}
 
 		if (noiseProducers.length == 1) {
@@ -337,17 +330,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
 
-		String[] textProducerClassNames =
+		String[] simpleCaptchaTextProducers =
 			captchaConfiguration.simpleCaptchaTextProducers();
 
 		TextProducer[] textProducers =
-			new TextProducer[textProducerClassNames.length];
+			new TextProducer[simpleCaptchaTextProducers.length];
 
-		for (int i = 0; i < textProducerClassNames.length; i++) {
-			String textProducerClassName = textProducerClassNames[i];
-
+		for (int i = 0; i < simpleCaptchaTextProducers.length; i++) {
 			textProducers[i] = (TextProducer)_getInstance(
-				textProducerClassName);
+				simpleCaptchaTextProducers[i]);
 		}
 
 		if (textProducers.length == 1) {
@@ -370,17 +361,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
 
-		String[] wordRendererClassNames =
+		String[] simpleCaptchaWordRenderers =
 			captchaConfiguration.simpleCaptchaWordRenderers();
 
 		WordRenderer[] wordRenderers =
-			new WordRenderer[wordRendererClassNames.length];
+			new WordRenderer[simpleCaptchaWordRenderers.length];
 
-		for (int i = 0; i < wordRendererClassNames.length; i++) {
-			String wordRendererClassName = wordRendererClassNames[i];
-
+		for (int i = 0; i < simpleCaptchaWordRenderers.length; i++) {
 			wordRenderers[i] = (WordRenderer)_getInstance(
-				wordRendererClassName);
+				simpleCaptchaWordRenderers[i]);
 		}
 
 		if (wordRenderers.length == 1) {

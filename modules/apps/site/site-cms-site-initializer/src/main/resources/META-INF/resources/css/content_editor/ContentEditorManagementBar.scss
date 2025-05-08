@@ -1,0 +1,42 @@
+@import 'cadmin-variables';
+@import 'variables';
+
+// View mode
+
+#wrapper {
+	&:has(.content-editor__management-bar) {
+		margin-top: $contentEditorManagementBarHeight;
+	}
+
+	.content-editor__management-bar {
+		top: var(--control-menu-container-height);
+		width: 100%;
+		z-index: 1;
+	}
+}
+
+// Edit mode
+
+html#{$cadmin-selector} .page-editor__wrapper {
+	&:has(.content-editor__management-bar) {
+		margin-top: $contentEditorManagementBarHeight;
+	}
+
+	.content-editor__management-bar {
+		left: $pageEditorSidebarButtonsWidth;
+		opacity: 50%;
+		top: calc(
+			var(--control-menu-container-height) +
+				$pageEditorManagamentBarHeight
+		);
+		transition: padding-left ease 0.5s;
+		width: calc(
+			100% - #{$pageEditorSidebarWidth} - #{$pageEditorSidebarButtonsWidth}
+		);
+		z-index: $pageEditorTopperZIndex + 1;
+	}
+
+	&--padded-start .content-editor__management-bar {
+		padding-left: $pageEditorSidebarWidth + $pageEditorSidebarButtonsWidth;
+	}
+}

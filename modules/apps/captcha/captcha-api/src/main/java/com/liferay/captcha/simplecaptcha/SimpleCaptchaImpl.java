@@ -248,10 +248,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			GimpyRenderer.class);
 	}
 
-	protected int getHeight() {
-		CaptchaConfiguration captchaConfiguration =
-			captchaProvider.getCaptchaConfiguration();
-
+	protected int getHeight(CaptchaConfiguration captchaConfiguration) {
 		return captchaConfiguration.simpleCaptchaHeight();
 	}
 
@@ -264,11 +261,13 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected nl.captcha.Captcha getSimpleCaptcha() {
-		nl.captcha.Captcha.Builder captchaBuilder =
-			new nl.captcha.Captcha.Builder(getWidth(), getHeight());
-
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
+
+		nl.captcha.Captcha.Builder captchaBuilder =
+			new nl.captcha.Captcha.Builder(
+				getWidth(captchaConfiguration),
+				getHeight(captchaConfiguration));
 
 		captchaBuilder.addText(
 			getTextProducer(captchaConfiguration),
@@ -295,10 +294,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			TextProducer.class);
 	}
 
-	protected int getWidth() {
-		CaptchaConfiguration captchaConfiguration =
-			captchaProvider.getCaptchaConfiguration();
-
+	protected int getWidth(CaptchaConfiguration captchaConfiguration) {
 		return captchaConfiguration.simpleCaptchaWidth();
 	}
 

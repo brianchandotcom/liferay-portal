@@ -46,44 +46,47 @@ public class StructureBuilderDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			JSONUtil.put(
+				"editStructureDisplayPageURL",
+				() -> {
+					ObjectDefinition objectDefinition = _getObjectDefinition();
+
+					if ((objectDefinition == null) ||
+						!GetterUtil.getBoolean(_objectDefinition.getActive())) {
+
+						return null;
+					}
+
+					return StringBundler.concat(
+						_themeDisplay.getPortalURL(),
+						_themeDisplay.getPathMain(),
+						"/cms/edit_structure_display_page?objectDefinitionId=",
+						ParamUtil.getLong(
+							_httpServletRequest, "objectDefinitionId"),
+						"&redirect=", _themeDisplay.getURLCurrent());
+				}
+			).put(
 				"objectFolderExternalReferenceCode",
-				_getObjectFolderExternalReferenceCode())
-		).put(
-			"editStructureDisplayPageURL",
-			() -> {
-				ObjectDefinition objectDefinition = _getObjectDefinition();
+				_getObjectFolderExternalReferenceCode()
+			).put(
+				"resetStructureDisplayPageURL",
+				() -> {
+					ObjectDefinition objectDefinition = _getObjectDefinition();
 
-				if ((objectDefinition == null) ||
-					!GetterUtil.getBoolean(_objectDefinition.getActive())) {
+					if ((objectDefinition == null) ||
+						!GetterUtil.getBoolean(_objectDefinition.getActive())) {
 
-					return null;
+						return null;
+					}
+
+					return StringBundler.concat(
+						_themeDisplay.getPortalURL(),
+						_themeDisplay.getPathMain(),
+						"/cms/reset_structure_display_page?objectDefinitionId=",
+						ParamUtil.getLong(
+							_httpServletRequest, "objectDefinitionId"),
+						"&redirect=", _themeDisplay.getURLCurrent());
 				}
-
-				return StringBundler.concat(
-					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/edit_structure_display_page?objectDefinitionId=",
-					ParamUtil.getLong(
-						_httpServletRequest, "objectDefinitionId"),
-					"&redirect=", _themeDisplay.getURLCurrent());
-			}
-		).put(
-			"resetStructureDisplayPageURL",
-			() -> {
-				ObjectDefinition objectDefinition = _getObjectDefinition();
-
-				if ((objectDefinition == null) ||
-					!GetterUtil.getBoolean(_objectDefinition.getActive())) {
-
-					return null;
-				}
-
-				return StringBundler.concat(
-					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/reset_structure_display_page?objectDefinitionId=",
-					ParamUtil.getLong(
-						_httpServletRequest, "objectDefinitionId"),
-					"&redirect=", _themeDisplay.getURLCurrent());
-			}
+			)
 		).put(
 			"state",
 			JSONUtil.put("objectDefinition", _getObjectDefinitionJSONObject())

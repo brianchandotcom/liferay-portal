@@ -81,7 +81,12 @@ public class SystemFDSSerializer
 			return null;
 		}
 
-		return systemFDSEntry.getAdditionalAPIURLParameters();
+		return createFDSAPIURLBuilder(
+			httpServletRequest, systemFDSEntry.getRESTApplication(),
+			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
+		).addQueryString(
+			systemFDSEntry.getAdditionalAPIURLParameters()
+		).buildQuery();
 	}
 
 	@Override

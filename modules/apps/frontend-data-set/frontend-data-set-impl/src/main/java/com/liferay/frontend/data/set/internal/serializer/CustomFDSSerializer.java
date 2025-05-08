@@ -113,7 +113,14 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		return String.valueOf(properties.get("additionalAPIURLParameters"));
+		return createFDSAPIURLBuilder(
+			httpServletRequest,
+			String.valueOf(properties.get("restApplication")),
+			String.valueOf(properties.get("restEndpoint")),
+			String.valueOf(properties.get("restSchema"))
+		).addQueryString(
+			String.valueOf(properties.get("additionalAPIURLParameters"))
+		).buildQuery();
 	}
 
 	@Override

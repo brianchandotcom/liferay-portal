@@ -84,12 +84,10 @@ test(
 		productMenuPage,
 		stagingConfigurationPage,
 	}) => {
-		const siteName: string = getRandomString();
-
 		await applicationsMenuPage.goToSites();
 
 		const site = await apiHelpers.headlessSite.createSite({
-			name: siteName,
+			name: getRandomString(),
 		});
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
@@ -97,9 +95,8 @@ test(
 		await journalPage.goto(site.friendlyUrlPath);
 		await productMenuPage.goToPages();
 
-		const pageName = getRandomString();
 		await pagesAdminPage.createNewPage({
-			name: pageName,
+			name: getRandomString(),
 		});
 
 		const basicWebContentStructureId =

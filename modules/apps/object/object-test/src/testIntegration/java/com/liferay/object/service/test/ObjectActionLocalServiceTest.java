@@ -2617,6 +2617,64 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testSendUpdatedNotificationWhenNotificationChanges()
+		throws Exception {
+
+		MailServiceTestUtil.clearMessages();
+
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition();
+
+		String notificationBody = RandomTestUtil.randomString();
+
+		NotificationTemplate notificationTemplate =
+			_addEmailNotificationTemplate(
+				notificationBody, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				objectDefinition.getObjectDefinitionId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId());
+
+		_addObjectAction(
+			objectDefinition.getObjectDefinitionId(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				String.valueOf(notificationTemplate.getNotificationTemplateId())
+			).build());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertEmailNotificationSent(1, notificationBody);
+
+		notificationBody = RandomTestUtil.randomString();
+
+		notificationTemplate.setBody(notificationBody);
+
+		_notificationTemplateLocalService.updateNotificationTemplate(
+			notificationTemplate);
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertEmailNotificationSent(2, notificationBody);
+	}
+
+	@Test
 	public void testSequentialObjectActions() throws Exception {
 		_publishCustomObjectDefinition();
 

@@ -138,6 +138,8 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
+import com.liferay.portal.test.mail.MailMessage;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -3025,6 +3027,27 @@ public class ObjectActionLocalServiceTest {
 				"firstName"));
 
 		return objectEntry;
+	}
+
+	private void _assertEmailNotificationSent(
+		int inboxSize, String notificationBody) {
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), inboxSize,
+			notificationQueueEntries.size());
+
+		Assert.assertEquals(inboxSize, MailServiceTestUtil.getInboxSize());
+
+		MailMessage lastMessage = MailServiceTestUtil.getLastMailMessage();
+
+		String messageBody = lastMessage.getBody();
+
+		Assert.assertTrue(messageBody.contains(notificationBody));
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(

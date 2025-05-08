@@ -5,9 +5,12 @@ liferay-customer-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay Customer Etc Spring Boot OAuth Application Headless Server
     scopes:
-        -   Liferay.Headless.Admin.List.Type.everything
-        -   c_businesseventversion.everything
+        -   Liferay.Headless.Admin.List.Type.everything.read
+        -   Liferay.Notification.REST.everything
+        -   c_accountsubscription.everything.read
         -   c_businessevent.everything
+        -   c_businesseventversion.everything
+        -   c_koroneikiaccount.everything.read
     type: oAuthApplicationHeadlessServer
 liferay-customer-etc-spring-boot-oaua:
     .serviceAddress: localhost:58081
@@ -15,7 +18,6 @@ liferay-customer-etc-spring-boot-oaua:
     name: Liferay Customer Etc Spring Boot OAuth Application User Agent
     scopes:
         -   Liferay.Headless.Admin.User.everything.read
-        -   c_businesseventversion.everything.write
         -   c_ticketattachment.everything
     type: oAuthApplicationUserAgent
 liferay-customer-etc-spring-boot-object-action-business-event:

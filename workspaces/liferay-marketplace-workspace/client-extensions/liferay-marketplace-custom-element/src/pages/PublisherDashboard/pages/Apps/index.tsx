@@ -38,126 +38,116 @@ const Apps = () => {
 			}
 			title={i18n.translate('apps')}
 		>
-			{
-				<ListView<Product>
-					id={`publisher-apps/${catalogId}`}
-					emptyStateProps={{
-						className:
-							'border px-4 pb-6 d-flex align-items-center flex-column justify-content-center',
-						title: i18n.translate('no-apps-yet'),
-						description:
-							"Publish apps and they will show up hereClick on 'Add Apps' to start.",
-						type: 'BLANK',
-					}}
-					resource={function getPublisherProducts({page, pageSize}) {
-						return HeadlessCommerceAdminCatalog.getProducts(
-							new URLSearchParams({
-								'accountId': '-1',
-								'filter': new SearchBuilder()
-									.eq(
-										'catalogId',
-										(catalogId || 0) as number,
-										{
-											unquote: true,
-										}
-									)
-									.and()
-									.lambda(
-										'categoryNames',
-										ProductTypeVocabulary.APP
-									)
-									.build(),
-								'nestedFields': 'productSpecifications,skus',
-								'page': page.toString(),
-								'pageSize': pageSize.toString(),
-								'skus.accountId': '-1',
-								'sort': 'createDate:desc',
-							})
-						);
-					}}
-					tableProps={{
-						actions: properties.featureFlags.includes('LPD-24546')
-							? [
-									{
-										icon: 'pencil',
-										name: i18n.translate('edit'),
-										onClick: (row: Product) =>
-											navigate(
-												`newapp/${row.productId}/publisher/profile`
-											),
-									},
-								]
-							: undefined,
-						columns: [
-							{
-								clickable: true,
-								id: 'name',
-								name: i18n.translate('name'),
-								render: (name, item) => {
-									return (
-										<>
-											<img
-												alt={`${name.en_US} app icon`}
-												className="app-details-page-table-icon"
-												draggable={false}
-												height={32}
-												src={item.thumbnail}
-												width={32}
-											/>
-
-											<span className="font-weight-semi-bold ml-2">
-												{name.en_US}
-											</span>
-										</>
-									);
+			<ListView<Product>
+				emptyStateProps={{
+					className:
+						'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
+					description:
+						"Publish apps and they will show up hereClick on 'Add Apps' to start.",
+					title: i18n.translate('no-apps-yet'),
+					type: 'BLANK',
+				}}
+				id={`publisher-apps/${catalogId}`}
+				resource={function getPublisherProducts({page, pageSize}) {
+					return HeadlessCommerceAdminCatalog.getProducts(
+						new URLSearchParams({
+							'accountId': '-1',
+							'filter': new SearchBuilder()
+								.eq('catalogId', (catalogId || 0) as number, {
+									unquote: true,
+								})
+								.and()
+								.lambda(
+									'categoryNames',
+									ProductTypeVocabulary.APP
+								)
+								.build(),
+							'nestedFields': 'productSpecifications,skus',
+							'page': page.toString(),
+							'pageSize': pageSize.toString(),
+							'skus.accountId': '-1',
+							'sort': 'createDate:desc',
+						})
+					);
+				}}
+				tableProps={{
+					actions: properties.featureFlags.includes('LPD-24546')
+						? [
+								{
+									icon: 'pencil',
+									name: i18n.translate('edit'),
+									onClick: (row: Product) =>
+										navigate(
+											`newapp/${row.productId}/publisher/profile`
+										),
 								},
-								size: 'sm',
-							},
-							{
-								id: '__marketplaceProduct',
-								name: i18n.translate('version'),
-								render: (
-									marketplaceProduct: MarketplaceProduct
-								) => marketplaceProduct.appVersion || '',
-							},
-							{
-								id: '__marketplaceProduct',
-								name: i18n.translate('app-type'),
-								render: (
-									marketplaceProduct: MarketplaceProduct
-								) => marketplaceProduct.appType,
-							},
-							{
-								id: 'modifiedDate',
-								name: i18n.translate('last-update'),
-								render: (modifiedDate) => (
-									<b>{formatDate(modifiedDate ?? '')}</b>
-								),
-							},
-							{
-								id: 'workflowStatusInfo',
-								name: i18n.translate('status'),
-								render: (workflowStatusInfo) => {
-									if (!workflowStatusInfo?.label) {
-										return null;
-									}
+							]
+						: undefined,
+					columns: [
+						{
+							clickable: true,
+							id: 'name',
+							name: i18n.translate('name'),
+							render: (name, item) => {
+								return (
+									<>
+										<img
+											alt={`${name.en_US} app icon`}
+											className="app-details-page-table-icon"
+											draggable={false}
+											height={32}
+											src={item.thumbnail}
+											width={32}
+										/>
 
-									return (
-										<OrderStatus
-											orderStatus={
-												workflowStatusInfo.label
-											}
-										>
-											{workflowStatusInfo.label}
-										</OrderStatus>
-									);
-								},
+										<span className="font-weight-semi-bold ml-2">
+											{name.en_US}
+										</span>
+									</>
+								);
 							},
-						],
-						navigateTo: (item) => `/app/${item.productId}`,
-					}}
-				/>
-			}
+							size: 'sm',
+						},
+						{
+							id: '__marketplaceProduct',
+							name: i18n.translate('version'),
+							render: (marketplaceProduct: MarketplaceProduct) =>
+								marketplaceProduct.appVersion || '',
+						},
+						{
+							id: '__marketplaceProduct',
+							name: i18n.translate('app-type'),
+							render: (marketplaceProduct: MarketplaceProduct) =>
+								marketplaceProduct.appType,
+						},
+						{
+							id: 'modifiedDate',
+							name: i18n.translate('last-update'),
+							render: (modifiedDate) => (
+								<b>{formatDate(modifiedDate ?? '')}</b>
+							),
+						},
+						{
+							id: 'workflowStatusInfo',
+							name: i18n.translate('status'),
+							render: (workflowStatusInfo) => {
+								if (!workflowStatusInfo?.label) {
+									return null;
+								}
+
+								return (
+									<OrderStatus
+										orderStatus={workflowStatusInfo.label}
+									>
+										{workflowStatusInfo.label}
+									</OrderStatus>
+								);
+							},
+						},
+					],
+					navigateTo: (item) => `/app/${item.productId}`,
+				}}
+			/>
 		</Page>
 	);
 };

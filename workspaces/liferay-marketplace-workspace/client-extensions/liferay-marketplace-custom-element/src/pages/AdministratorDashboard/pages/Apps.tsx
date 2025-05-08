@@ -9,7 +9,6 @@ import {ComponentProps} from 'react';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
-import {MarketplaceProduct} from '../../../entity/MarketplaceProduct';
 import {
 	ProductTypeVocabulary,
 	ProductWorkflowDisplayType,

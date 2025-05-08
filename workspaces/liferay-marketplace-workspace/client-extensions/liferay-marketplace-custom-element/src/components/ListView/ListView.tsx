@@ -46,7 +46,6 @@ export type ListViewProps<T extends Record<string, any>> = {
 	) => ReactNode;
 
 	emptyStateProps?: ComponentProps<typeof EmptyState>;
-	initialContext?: ListViewContextProviderProps;
 
 	/**
 	 * The key of SWR Cache for the list view.
@@ -55,6 +54,8 @@ export type ListViewProps<T extends Record<string, any>> = {
 	 * @default 'listView:{id}?page={page}&pageSize={pageSize}'
 	 */
 	id: string;
+
+	initialContext?: ListViewContextProviderProps;
 
 	/**
 	 * The options for the pagination.

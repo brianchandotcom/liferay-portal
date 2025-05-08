@@ -49,8 +49,8 @@ export function AdministratorOrdersListView({
 }: AdministratorOrdersListViewProps) {
 	return (
 		<ListView<Order>
-			id="administrator-orders"
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
+			id="administrator-orders"
 			paginationOptions={{displayType: 'always'}}
 			resource={function getAdministratorOrders({page, pageSize}) {
 				return HeadlessCommerceAdminOrder.getOrders(

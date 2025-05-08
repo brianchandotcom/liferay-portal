@@ -33,7 +33,7 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 		Liferay.ThemeDisplay.isSignedIn()
 			? '/marketplace/my-user-account'
 			: null,
-		() => HeadlessAdminUser.getMyUserAccount()
+		HeadlessAdminUser.getMyUserAccount
 	);
 
 	return (
@@ -41,15 +41,14 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 			value={
 				{
 					channel: {
-						id: Number(Liferay.CommerceContext.commerceChannelId),
+						channelId: Number(
+							Liferay.CommerceContext.commerceChannelId
+						),
 						currencyCode:
 							Liferay.CommerceContext.currency.currencyCode,
-						name: 'Marketplace',
-						channelId: 1,
 						externalReferenceCode: 'MARKETPLACE',
-						siteGroupId: 1,
-						type: 'site',
-					},
+						id: Number(Liferay.CommerceContext.commerceChannelId),
+					} as Channel,
 					marketplaceUserAccount: new MarketplaceUserAccount(
 						myUserAccount as UserAccount
 					),

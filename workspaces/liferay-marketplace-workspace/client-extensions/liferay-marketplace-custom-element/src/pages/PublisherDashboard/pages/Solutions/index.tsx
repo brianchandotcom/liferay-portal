@@ -96,13 +96,14 @@ const Solutions = () => {
 			<ListView<Product>
 				emptyStateProps={{
 					className:
-						'border px-4 pb-6 d-flex align-items-center flex-column justify-content-center',
+						'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
 					description: marketplaceUserAccount.isSolutionPublisher
 						? 'Click on “New Solution Template” to start.'
-						: ' ',
+						: '',
 					title: 'No Solutions Yet',
 					type: 'BLANK',
 				}}
+				id={`publisher-solutions/${catalogId}`}
 				resource={function getPublisherSolutions({page, pageSize}) {
 					return HeadlessCommerceAdminCatalog.getProducts(
 						new URLSearchParams({

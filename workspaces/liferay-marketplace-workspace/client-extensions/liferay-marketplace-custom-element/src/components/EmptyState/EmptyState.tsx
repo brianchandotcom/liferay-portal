@@ -40,8 +40,8 @@ export const States = {
 };
 
 export type EmptyStateProps = {
-	className?: string;
 	children?: ReactNode;
+	className?: string;
 	description?: string;
 	imgSrc?: string;
 	title?: string;
@@ -50,16 +50,16 @@ export type EmptyStateProps = {
 
 const EmptyState: React.FC<EmptyStateProps> = ({
 	children,
+	className,
 	description,
 	imgSrc,
 	title,
 	type,
-	className,
 }) => (
 	<ClayEmptyState
 		className={className}
 		description={
-			description || i18n.translate('sorry-there-are-no-results-found')
+			description ?? i18n.translate('sorry-there-are-no-results-found')
 		}
 		imgSrc={imgSrc ?? (type ? States[type] : States.EMPTY_STATE)}
 		title={title || i18n.translate('no-results-found')}

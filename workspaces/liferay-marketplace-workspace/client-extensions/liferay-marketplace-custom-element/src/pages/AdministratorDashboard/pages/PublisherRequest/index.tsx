@@ -27,6 +27,7 @@ const PublisherRequest = () => {
 			title={i18n.translate('publisher-requests')}
 		>
 			<ListView<PublisherRequestInfo>
+				id="request-publisher-account"
 				resource="o/c/requestpublisheraccounts?sort=dateCreated:desc"
 				tableProps={{
 					columns: [

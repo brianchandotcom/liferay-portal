@@ -274,9 +274,7 @@ export default function EditAPISchema({
 						mainObjectDefinitionERC:
 							localUIData.mainObjectDefinitionERC,
 					},
-					method: localUIData.schemaProperties.length
-						? 'PATCH'
-						: 'PUT',
+					method: 'PATCH',
 					onError: (error: string) => {
 						openToast({
 							message: error,

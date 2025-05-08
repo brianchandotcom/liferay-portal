@@ -2013,10 +2013,37 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship objectRelationship, String type)
 		throws PortalException {
 
-		if (!edge ||
-			((objectRelationship != null) && objectRelationship.isEdge()) ||
-			!FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				objectDefinition1.getCompanyId(), "LPD-34594")) {
+
+			return;
+		}
+
+		if (!edge && (objectRelationship != null) &&
+			objectRelationship.isEdge()) {
+
+			List<Object> arguments = new ArrayList<>();
+
+			_addArguments(
+				arguments,
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectDefinition1.getRootObjectDefinitionId()));
+
+			if (ListUtil.isNotEmpty(arguments)) {
+				throw new ObjectRelationshipEdgeException(
+					arguments,
+					String.format(
+						"These ongoing workflow instances must be completed " +
+							"to disable inheritance: \"%s\" (\"%s\" object " +
+								"entries)",
+						arguments.get(0), arguments.get(1)),
+					"these-ongoing-workflow-instances-must-be-completed-to-" +
+						"disable-inheritance-x-(x-object-entries)");
+			}
+		}
+
+		if (!edge ||
+			((objectRelationship != null) && objectRelationship.isEdge())) {
 
 			return;
 		}

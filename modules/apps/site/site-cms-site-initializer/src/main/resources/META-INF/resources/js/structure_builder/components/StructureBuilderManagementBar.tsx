@@ -28,6 +28,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
+import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import StructureService from '../services/StructureService';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
@@ -84,6 +85,7 @@ function CustomizeExperienceButton() {
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const state = useSelector(selectState);
 	const status = useSelector(selectStructureStatus);
+	const unsavedChanges = useSelector(selectUnsavedChanges);
 
 	const onPublish = async () => {
 		openToast({
@@ -116,7 +118,7 @@ function CustomizeExperienceButton() {
 			className="font-weight-semi-bold"
 			displayType="link"
 			onClick={() => {
-				if (status !== 'published') {
+				if (status !== 'published' || unsavedChanges) {
 					openConfirmModal({
 						buttonLabel: Liferay.Language.get('publish'),
 						center: true,

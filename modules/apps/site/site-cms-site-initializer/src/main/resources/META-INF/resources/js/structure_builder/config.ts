@@ -4,6 +4,7 @@
  */
 
 export type Config = {
+	editStructureDisplayPageURL: string;
 	objectFolderExternalReferenceCode: string;
 };
 

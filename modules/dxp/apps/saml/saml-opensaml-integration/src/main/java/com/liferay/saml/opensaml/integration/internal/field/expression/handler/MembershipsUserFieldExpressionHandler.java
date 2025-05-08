@@ -91,9 +91,11 @@ public class MembershipsUserFieldExpressionHandler
 									"Unable to create User Group",
 									portalException);
 							}
-
-							continue;
 						}
+					}
+
+					if (userGroup == null) {
+						continue;
 					}
 
 					userGroupIds.add(userGroup.getUserGroupId());

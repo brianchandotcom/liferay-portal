@@ -36,6 +36,8 @@ public class ImportCommerceOrderTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
+			"externalReferenceCode", "external-reference-code"
+		).add(
 			"date", "order-date"
 		).add(
 			"accountName", "account"

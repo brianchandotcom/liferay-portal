@@ -218,29 +218,14 @@ export class JSONWebServicesJournalApiHelper {
 			...(webContent || {}),
 		};
 
-		urlSearchParams.append(
-			'externalReferenceCode',
-			webContent.externalReferenceCode
-		);
-		urlSearchParams.append('groupId', String(webContent.groupId));
-		urlSearchParams.append('folderId', String(webContent.folderId));
-		urlSearchParams.append('classNameId', String(webContent.classNameId));
-		urlSearchParams.append('classPK', String(webContent.classPK));
 		urlSearchParams.append('articleId', webContent.articleId);
+		urlSearchParams.append('articleURL', webContent.articleURL);
 		urlSearchParams.append(
 			'autoArticleId',
 			String(webContent.autoArticleId)
 		);
-		urlSearchParams.append('titleMap', JSON.stringify(webContent.titleMap));
-		urlSearchParams.append(
-			'descriptionMap',
-			JSON.stringify(webContent.descriptionMap)
-		);
-		urlSearchParams.append(
-			'friendlyURLMap',
-			JSON.stringify(webContent.friendlyURLMap)
-		);
-
+		urlSearchParams.append('classNameId', String(webContent.classNameId));
+		urlSearchParams.append('classPK', String(webContent.classPK));
 		urlSearchParams.append(
 			'content',
 			`<root>
@@ -249,25 +234,18 @@ export class JSONWebServicesJournalApiHelper {
 				</dynamic-element>
 			</root>`
 		);
-
 		urlSearchParams.append(
 			'ddmStructureId',
 			String(webContent.ddmStructureId)
 		);
 		urlSearchParams.append('ddmTemplateKey', webContent.ddmTemplateKey);
-		urlSearchParams.append('layoutUuid', webContent.layoutUuid);
-
 		urlSearchParams.append(
-			'displayDateMonth',
-			String(webContent.displayDateMonth)
+			'descriptionMap',
+			JSON.stringify(webContent.descriptionMap)
 		);
 		urlSearchParams.append(
 			'displayDateDay',
 			String(webContent.displayDateDay)
-		);
-		urlSearchParams.append(
-			'displayDateYear',
-			String(webContent.displayDateYear)
 		);
 		urlSearchParams.append(
 			'displayDateHour',
@@ -277,18 +255,17 @@ export class JSONWebServicesJournalApiHelper {
 			'displayDateMinute',
 			String(webContent.displayDateMinute)
 		);
-
 		urlSearchParams.append(
-			'expirationDateMonth',
-			String(webContent.expirationDateMonth)
+			'displayDateMonth',
+			String(webContent.displayDateMonth)
+		);
+		urlSearchParams.append(
+			'displayDateYear',
+			String(webContent.displayDateYear)
 		);
 		urlSearchParams.append(
 			'expirationDateDay',
 			String(webContent.expirationDateDay)
-		);
-		urlSearchParams.append(
-			'expirationDateYear',
-			String(webContent.expirationDateYear)
 		);
 		urlSearchParams.append(
 			'expirationDateHour',
@@ -298,19 +275,32 @@ export class JSONWebServicesJournalApiHelper {
 			'expirationDateMinute',
 			String(webContent.expirationDateMinute)
 		);
-		urlSearchParams.append('neverExpire', String(webContent.neverExpire));
-
 		urlSearchParams.append(
-			'reviewDateMonth',
-			String(webContent.reviewDateMonth)
+			'expirationDateMonth',
+			String(webContent.expirationDateMonth)
 		);
+		urlSearchParams.append(
+			'expirationDateYear',
+			String(webContent.expirationDateYear)
+		);
+		urlSearchParams.append(
+			'externalReferenceCode',
+			webContent.externalReferenceCode
+		);
+		urlSearchParams.append('folderId', String(webContent.folderId));
+		urlSearchParams.append(
+			'friendlyURLMap',
+			JSON.stringify(webContent.friendlyURLMap)
+		);
+		urlSearchParams.append('groupId', String(webContent.groupId));
+		urlSearchParams.append('images', JSON.stringify(webContent.images));
+		urlSearchParams.append('indexable', String(webContent.indexable));
+		urlSearchParams.append('layoutUuid', webContent.layoutUuid);
+		urlSearchParams.append('neverExpire', String(webContent.neverExpire));
+		urlSearchParams.append('neverReview', String(webContent.neverReview));
 		urlSearchParams.append(
 			'reviewDateDay',
 			String(webContent.reviewDateDay)
-		);
-		urlSearchParams.append(
-			'reviewDateYear',
-			String(webContent.reviewDateYear)
 		);
 		urlSearchParams.append(
 			'reviewDateHour',
@@ -320,9 +310,18 @@ export class JSONWebServicesJournalApiHelper {
 			'reviewDateMinute',
 			String(webContent.reviewDateMinute)
 		);
-		urlSearchParams.append('neverReview', String(webContent.neverReview));
-
-		urlSearchParams.append('indexable', String(webContent.indexable));
+		urlSearchParams.append(
+			'reviewDateMonth',
+			String(webContent.reviewDateMonth)
+		);
+		urlSearchParams.append(
+			'reviewDateYear',
+			String(webContent.reviewDateYear)
+		);
+		urlSearchParams.append(
+			'serviceContext',
+			JSON.stringify(webContent.serviceContext || {})
+		);
 		urlSearchParams.append(
 			'smallFile',
 			JSON.stringify(webContent.smallFile)
@@ -334,12 +333,8 @@ export class JSONWebServicesJournalApiHelper {
 			String(webContent.smallImageSource)
 		);
 		urlSearchParams.append('smallImageURL', webContent.smallImageURL);
-		urlSearchParams.append('articleURL', webContent.articleURL);
-		urlSearchParams.append('images', JSON.stringify(webContent.images));
-		urlSearchParams.append(
-			'serviceContext',
-			JSON.stringify(webContent.serviceContext || {})
-		);
+		urlSearchParams.append('titleMap', JSON.stringify(webContent.titleMap));
+
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-article`,
 			{

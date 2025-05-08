@@ -131,7 +131,9 @@ public class AssetCategoryLocalServiceImpl
 				parentCategoryId);
 		}
 
-		_assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
+		if (vocabularyId != AssetVocabularyConstants.INCOMPLETE_VOCABULARY_ID) {
+			_assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
+		}
 
 		long categoryId = counterLocalService.increment();
 

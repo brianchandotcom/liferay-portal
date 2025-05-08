@@ -1013,16 +1013,7 @@ public abstract class Base${schemaName}ResourceImpl
 						${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.${getterMethodName}()
 							<#list deleteByIdJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 								<#if javaMethodParameter?index gt 0>
-									,
-									<#if stringUtil.equals(javaMethodParameter.parameterType, "Boolean")>
-										(Boolean)parameters.getOrDefault("${javaMethodParameter.parameterName}", ${javaMethodParameter.defaultValue?has_content?then(javaMethodParameter.defaultValue, "false")})
-									<#elseif stringUtil.equals(javaMethodParameter.parameterType, "String")>
-										(String)parameters.getOrDefault("${javaMethodParameter.parameterName}", ${javaMethodParameter.defaultValue?has_content?then('"' + javaMethodParameter.defaultValue + '"', "null")})
-									<#elseif javaMethodParameter.parameterType?contains("Long") || javaMethodParameter.parameterType?contains("Integer")>
-										(${javaMethodParameter.parameterType})parameters.getOrDefault("${javaMethodParameter.parameterName}", ${javaMethodParameter.defaultValue?has_content?then(javaMethodParameter.defaultValue, "null")})
-									<#else>
-										(${javaMethodParameter.parameterType})parameters.getOrDefault("${javaMethodParameter.parameterName}", null)
-									</#if>
+									, (${javaMethodParameter.parameterType}) parameters.get("${javaMethodParameter.parameterName}")
 								</#if>
 							</#list>
 						);

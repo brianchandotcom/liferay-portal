@@ -11,8 +11,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.Date;
 
 /**
  * @author Drew Brokke
@@ -27,39 +26,36 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectCommerceAccountGroupRelSQL =
+		processConcurrently(
 			"select * from CommerceAccountGroupRel order by " +
-				"commerceAccountGroupRelId asc";
-
-		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet resultSet = selectStatement.executeQuery(
-				selectCommerceAccountGroupRelSQL);
-
-			while (resultSet.next()) {
-				long accountGroupRelId = resultSet.getLong(
-					"commerceAccountGroupRelId");
-
+				"commerceAccountGroupRelId asc",
+			resultSet -> new Object[] {
+				resultSet.getLong("commerceAccountGroupRelId"),
+				resultSet.getLong("companyId"), resultSet.getLong("userId"),
+				resultSet.getString("userName"),
+				resultSet.getTimestamp("createDate"),
+				resultSet.getTimestamp("modifiedDate"),
+				resultSet.getLong("commerceAccountGroupId"),
+				resultSet.getLong("classNameId"), resultSet.getLong("classPK")
+			},
+			values -> {
 				AccountGroupRel accountGroupRel =
 					_accountGroupRelLocalService.createAccountGroupRel(
-						accountGroupRelId);
+						(Long)values[0]);
 
-				accountGroupRel.setCompanyId(resultSet.getLong("companyId"));
-				accountGroupRel.setUserId(resultSet.getLong("userId"));
-				accountGroupRel.setUserName(resultSet.getString("userName"));
-				accountGroupRel.setCreateDate(
-					resultSet.getTimestamp("createDate"));
-				accountGroupRel.setModifiedDate(
-					resultSet.getTimestamp("modifiedDate"));
-				accountGroupRel.setAccountGroupId(
-					resultSet.getLong("commerceAccountGroupId"));
-				accountGroupRel.setClassNameId(
-					resultSet.getLong("classNameId"));
-				accountGroupRel.setClassPK(resultSet.getLong("classPK"));
+				accountGroupRel.setCompanyId((Long)values[1]);
+				accountGroupRel.setUserId((Long)values[2]);
+				accountGroupRel.setUserName((String)values[3]);
+				accountGroupRel.setCreateDate((Date)values[4]);
+				accountGroupRel.setModifiedDate((Date)values[5]);
+				accountGroupRel.setAccountGroupId((Long)values[6]);
+				accountGroupRel.setClassNameId((Long)values[7]);
+				accountGroupRel.setClassPK((Long)values[8]);
 
 				_accountGroupRelLocalService.addAccountGroupRel(
 					accountGroupRel);
-			}
-		}
+			},
+			"Unable to migrate CommerceAccountGroupRel to AccountGroupRel");
 	}
 
 	@Override

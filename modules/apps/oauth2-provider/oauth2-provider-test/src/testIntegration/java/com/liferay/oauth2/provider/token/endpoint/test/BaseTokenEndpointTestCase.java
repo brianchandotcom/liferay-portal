@@ -136,6 +136,8 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 		AuthorizationGrant authorizationGrant,
 		ClientAuthentication clientAuthentication) {
 
+		Invocation.Builder invocationBuilder = _getInvocationBuilder();
+
 		MultivaluedMap<String, String> multivaluedMap =
 			new MultivaluedHashMap<>();
 
@@ -143,8 +145,6 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 			authorizationGrant.getAuthorizationGrantParameters());
 		multivaluedMap.putAll(
 			clientAuthentication.getClientAuthenticationParameters());
-
-		Invocation.Builder invocationBuilder = _getInvocationBuilder();
 
 		return invocationBuilder.post(Entity.form(multivaluedMap));
 	}

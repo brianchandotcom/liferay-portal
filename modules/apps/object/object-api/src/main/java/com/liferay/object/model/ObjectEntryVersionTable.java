@@ -57,11 +57,24 @@ public class ObjectEntryVersionTable
 			"objectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Clob> content = createColumn(
 		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Date> expirationDate =
+		createColumn(
+			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Integer> version =
 		createColumn(
 			"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Long> statusByUserId =
+		createColumn(
+			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, String> statusByUserName =
+		createColumn(
+			"statusByUserName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Date> statusDate =
+		createColumn(
+			"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private ObjectEntryVersionTable() {
 		super("ObjectEntryVersion", ObjectEntryVersionTable::new);

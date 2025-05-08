@@ -72,6 +72,11 @@ public interface ObjectEntryService extends BaseService {
 			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException;
 
+	public ObjectEntry expireObjectEntry(
+			long userId, long objectEntryId, int version,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry fetchManyToOneObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)

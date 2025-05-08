@@ -115,6 +115,7 @@
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="expirationDate" type="Date" />
 		<field name="version" type="int" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
@@ -154,8 +155,12 @@
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="expirationDate" type="Date" />
 		<field name="version" type="int" />
 		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.object.model.ObjectField">
 		<field name="mvccVersion" type="long" />

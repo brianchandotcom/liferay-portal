@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
@@ -205,7 +207,10 @@ public class PortletHotDeployListenerTest {
 
 		HotDeployEvent hotDeployEvent = new HotDeployEvent(servletContext);
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.plugin.PluginPackageUtil",
+				LoggerTestUtil.ERROR)) {
+
 			HotDeployUtil.fireDeployEvent(hotDeployEvent);
 
 			Map<String, List<Portlet>> portlets =

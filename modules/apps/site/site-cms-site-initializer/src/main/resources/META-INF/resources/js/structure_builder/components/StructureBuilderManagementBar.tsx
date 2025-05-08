@@ -77,12 +77,91 @@ export default function StructureBuilderManagementBar() {
 }
 
 function CustomizeExperienceButton() {
+	const dispatch = useStateDispatch();
+	const validate = useValidate();
+
+	const history = useSelector(selectHistory);
+	const localizedLabel = useSelector(selectStructureLocalizedLabel);
+	const state = useSelector(selectState);
+	const status = useSelector(selectStructureStatus);
+
+	const onPublish = async () => {
+		openToast({
+			message: Liferay.Util.sub(
+				Liferay.Language.get(
+					'x-was-published-successfully.-remember-to-review-the-customized-experience-if-needed'
+				),
+				localizedLabel
+			),
+			toastProps: {
+				actions: (
+					<ClayButton
+						displayType="success"
+						onClick={() =>
+							navigate(config.editStructureDisplayPageURL)
+						}
+						size="sm"
+					>
+						{Liferay.Language.get('customize-experience')}
+
+						<ClayIcon className="ml-2" symbol="shortcut" />
+					</ClayButton>
+				),
+			},
+		});
+	};
+
 	return (
 		<ClayButton
 			className="font-weight-semi-bold"
 			displayType="link"
 			onClick={() => {
-				navigate(config.editStructureDisplayPageURL);
+				if (status !== 'published') {
+					openConfirmModal({
+						buttonLabel: Liferay.Language.get('publish'),
+						center: true,
+						onConfirm: async () => {
+							await publishStructure({
+								dispatch,
+								onSuccess: onPublish,
+								state,
+								validate,
+							});
+						},
+						status: 'warning',
+						text: Liferay.Language.get(
+							'to-customize-the-experience-you-need-to-publish-the-structure-first'
+						),
+						title: Liferay.Language.get(
+							'publish-to-customize-experience'
+						),
+					});
+				}
+				else if (history.deletedFields) {
+					openConfirmModal({
+						buttonLabel: Liferay.Language.get('publish'),
+						center: true,
+						onConfirm: async () => {
+							await publishStructure({
+								checkDeletedFields: false,
+								dispatch,
+								onSuccess: onPublish,
+								state,
+								validate,
+							});
+						},
+						status: 'danger',
+						text: Liferay.Language.get(
+							'to-customize-the-experience-you-need-to-publish-the-structure-first.-you-removed-one-or-more-fields-from-the-structure'
+						),
+						title: Liferay.Language.get(
+							'publish-to-customize-experience'
+						),
+					});
+				}
+				else {
+					navigate(config.editStructureDisplayPageURL);
+				}
 			}}
 			size="sm"
 		>
@@ -204,6 +283,7 @@ function PublishButton() {
 async function publishStructure({
 	checkDeletedFields = true,
 	dispatch,
+	onSuccess,
 	state,
 	validate,
 }: {

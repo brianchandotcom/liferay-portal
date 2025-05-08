@@ -5,16 +5,22 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
 
@@ -30,8 +36,8 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService
-			objectDefinitionSettingLocalService) {
+		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
+		Portal portal) {
 
 		super(
 			depotEntryLocalService, groupLocalService, httpServletRequest,
@@ -39,6 +45,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 			objectDefinitionSettingLocalService);
 
 		_depotEntryLocalService = depotEntryLocalService;
+		_portal = portal;
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -60,6 +67,21 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 							getDepotEntriesJSONArray(
 								_depotEntryLocalService.getDepotEntries(
 									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+						dropdownItem.putData(
+							"baseAssetLibraryViewURL",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+								_portal.getClassNameId(DepotEntry.class),
+								StringPool.SLASH));
+						dropdownItem.putData(
+							"baseFolderViewURL",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL,
+								"/e/view-folder/",
+								_portal.getClassNameId(ObjectEntryFolder.class),
+								StringPool.SLASH));
 						dropdownItem.setIcon("folder");
 						dropdownItem.setLabel(
 							language.get(httpServletRequest, "folder"));
@@ -97,5 +119,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private final Portal _portal;
 
 }

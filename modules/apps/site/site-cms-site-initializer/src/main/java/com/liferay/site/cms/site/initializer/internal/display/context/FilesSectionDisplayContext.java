@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,14 +74,15 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 							"baseAssetLibraryViewURL",
 							StringBundler.concat(
 								themeDisplay.getPathFriendlyURLPublic(),
-								themeDisplay.getPathCms(), "/e/space/",
+								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
 								_portal.getClassNameId(DepotEntry.class),
 								StringPool.SLASH));
 						dropdownItem.putData(
 							"baseFolderViewURL",
 							StringBundler.concat(
 								themeDisplay.getPathFriendlyURLPublic(),
-								themeDisplay.getPathCms(), "/e/view-folder/",
+								GroupConstants.CMS_FRIENDLY_URL,
+								"/e/view-folder/",
 								_portal.getClassNameId(ObjectEntryFolder.class),
 								StringPool.SLASH));
 						dropdownItem.setIcon("folder");

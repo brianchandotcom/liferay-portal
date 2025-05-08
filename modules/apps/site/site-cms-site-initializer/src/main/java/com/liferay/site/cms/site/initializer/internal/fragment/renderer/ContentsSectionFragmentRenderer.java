@@ -12,6 +12,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext;
 
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class ContentsSectionFragmentRenderer
 				new ContentsSectionDisplayContext(
 					_depotEntryLocalService, _groupLocalService,
 					httpServletRequest, _language, _objectDefinitionService,
-					_objectDefinitionSettingLocalService));
+					_objectDefinitionSettingLocalService, _portal));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -83,6 +84,9 @@ public class ContentsSectionFragmentRenderer
 	@Reference
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

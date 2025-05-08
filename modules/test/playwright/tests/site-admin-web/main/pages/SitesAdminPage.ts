@@ -29,7 +29,7 @@ export class SitesAdminPage {
 		this.searchInput = this.page.getByPlaceholder('Search for');
 	}
 
-	async addBlankSite(siteName: string) {
+	async addBlankSite(siteName: string, closeModal: boolean = false) {
 		await this.blankSiteButton.click();
 
 		await this.addSiteIFrame.getByLabel('Name').fill(siteName);
@@ -42,7 +42,23 @@ export class SitesAdminPage {
 			)
 		).toBeVisible();
 
-		await waitForAlert(this.page, 'Success: Site was successfully added.');
+		if (closeModal) {
+			await this.page.getByLabel('close').click();
+
+			await expect(
+				this.page.getByRole('heading', {name: 'Provided by Liferay'})
+			).toBeVisible();
+
+			// Wait for site to finish being created
+
+			await this.page.waitForTimeout(1000);
+		}
+		else {
+			await waitForAlert(
+				this.page,
+				'Success: Site was successfully added.'
+			);
+		}
 	}
 
 	async addChildSite(childSiteName: string, parentSiteName: string) {

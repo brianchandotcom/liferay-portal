@@ -52,3 +52,23 @@ test('User can add and delete site and child site', async ({
 
 	await expect(page.getByText(parentSiteName)).not.toBeVisible();
 });
+
+test('Site is still created even if modal window is closed', async ({
+	page,
+	sitesAdminPage,
+}) => {
+	const siteName = getRandomString();
+
+	await sitesAdminPage.goto();
+
+	await page.getByRole('link', {name: 'Add Site'}).click();
+	await sitesAdminPage.addBlankSite(siteName, true);
+
+	await sitesAdminPage.goto();
+
+	await expect(page.getByText(siteName)).toBeVisible();
+
+	await sitesAdminPage.deleteSite(siteName);
+
+	await expect(page.getByText(siteName)).not.toBeVisible();
+});

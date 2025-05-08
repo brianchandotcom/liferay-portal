@@ -104,6 +104,38 @@
 			<finder-column name="toGroupId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="DepotEntryPin" remote-service="true" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="depotEntryPinId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="depotEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="DepotEntryId" return-type="Collection">
+			<finder-column name="depotEntryId" />
+		</finder>
+		<finder name="U_D" return-type="DepotEntryPin" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="depotEntryId" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>DepotEntryGroup</exception>
 		<exception>DepotEntryGroupRelStagedGroup</exception>

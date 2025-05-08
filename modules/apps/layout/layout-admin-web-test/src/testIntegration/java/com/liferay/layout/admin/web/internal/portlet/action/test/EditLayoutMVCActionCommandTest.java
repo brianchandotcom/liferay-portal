@@ -83,11 +83,7 @@ public class EditLayoutMVCActionCommandTest {
 
 		layout = _layoutLocalService.getLayout(layout.getPlid());
 
-		Assert.assertTrue(
-			layout.getModifiedDate(
-			).after(
-				modifiedDate
-			));
+		Assert.assertTrue(modifiedDate.before(layout.getModifiedDate()));
 		Assert.assertEquals(
 			nameMap.get(LocaleUtil.US), layout.getName(LocaleUtil.US));
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());

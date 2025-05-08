@@ -62,7 +62,7 @@ public class StructureBuilderDisplayContext {
 						"/cms/edit_structure_display_page?objectDefinitionId=",
 						ParamUtil.getLong(
 							_httpServletRequest, "objectDefinitionId"),
-						"&redirect=", _themeDisplay.getURLCurrent());
+						"&p_l_back_url=", _themeDisplay.getURLCurrent());
 				}
 			).put(
 				"objectFolderExternalReferenceCode",
@@ -84,7 +84,7 @@ public class StructureBuilderDisplayContext {
 						"/cms/reset_structure_display_page?objectDefinitionId=",
 						ParamUtil.getLong(
 							_httpServletRequest, "objectDefinitionId"),
-						"&redirect=", _themeDisplay.getURLCurrent(),
+						"&p_l_back_url=", _themeDisplay.getURLCurrent(),
 						"&redirectToEdit=true");
 				}
 			)

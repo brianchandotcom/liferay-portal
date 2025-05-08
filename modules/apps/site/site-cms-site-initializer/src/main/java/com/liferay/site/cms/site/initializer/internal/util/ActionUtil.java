@@ -81,12 +81,12 @@ public class ActionUtil {
 					layout.fetchDraftLayout(), themeDisplay),
 				"p_l_mode", Constants.EDIT);
 
-			String redirect = ParamUtil.getString(
-				httpServletRequest, "redirect");
+			String backURL = ParamUtil.getString(
+				httpServletRequest, "p_l_back_url");
 
-			if (Validator.isNotNull(redirect)) {
+			if (Validator.isNotNull(backURL)) {
 				editURL = HttpComponentsUtil.addParameter(
-					editURL, "redirect", redirect);
+					editURL, "p_l_back_url", backURL);
 			}
 
 			return editURL;

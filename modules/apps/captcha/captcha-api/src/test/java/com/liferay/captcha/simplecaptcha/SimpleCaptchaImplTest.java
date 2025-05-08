@@ -34,34 +34,32 @@ public class SimpleCaptchaImplTest {
 	public void testGetNoiseProducer() {
 		SimpleCaptchaImpl simpleCaptchaImpl = new SimpleCaptchaImpl();
 
-		_mockCaptchaProvider(
-			new String[] {
-				"nl.captcha.noise.CurvedLineNoiseProducer",
-				"nl.captcha.noise.StraightLineNoiseProducer"
-			});
-
 		ReflectionTestUtil.setFieldValue(
-			simpleCaptchaImpl, "captchaProvider", _captchaProvider);
+			simpleCaptchaImpl, "captchaProvider",
+			_mockCaptchaProvider(
+				new String[] {
+					"nl.captcha.noise.CurvedLineNoiseProducer",
+					"nl.captcha.noise.StraightLineNoiseProducer"
+				}));
 
 		NoiseProducer noiseProducer = simpleCaptchaImpl.getNoiseProducer();
 
-		_mockCaptchaProvider(new String[] {StringPool.BLANK});
-
 		ReflectionTestUtil.setFieldValue(
-			simpleCaptchaImpl, "captchaProvider", _captchaProvider);
+			simpleCaptchaImpl, "captchaProvider",
+			_mockCaptchaProvider(new String[] {StringPool.BLANK}));
 
 		Assert.assertNotEquals(
 			noiseProducer, simpleCaptchaImpl.getNoiseProducer());
 	}
 
-	private void _mockCaptchaProvider(String[] expectedClassNames) {
-		_captchaProvider = Mockito.mock(CaptchaProvider.class);
-
+	private CaptchaProvider _mockCaptchaProvider(String[] expectedClassNames) {
 		CaptchaConfiguration captchaConfiguration = Mockito.mock(
 			CaptchaConfiguration.class);
 
+		CaptchaProvider captchaProvider = Mockito.mock(CaptchaProvider.class);
+
 		Mockito.when(
-			_captchaProvider.getCaptchaConfiguration()
+			captchaProvider.getCaptchaConfiguration()
 		).thenReturn(
 			captchaConfiguration
 		);
@@ -71,8 +69,8 @@ public class SimpleCaptchaImplTest {
 		).thenReturn(
 			expectedClassNames
 		);
-	}
 
-	private static CaptchaProvider _captchaProvider;
+		return captchaProvider;
+	}
 
 }

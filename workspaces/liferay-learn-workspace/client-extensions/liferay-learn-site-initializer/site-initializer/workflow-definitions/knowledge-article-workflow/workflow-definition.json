@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "Workflow for Knowledge Article content creation",
+	"description": "Workflow that ensures new knowledge articles are approved for quality and relevance.",
 	"name": "Knowledge Article Workflow",
 	"title": "Knowledge Article Workflow",
 	"title_i18n": {

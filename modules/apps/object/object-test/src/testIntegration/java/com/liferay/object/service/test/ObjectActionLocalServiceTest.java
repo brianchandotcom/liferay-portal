@@ -155,13 +155,13 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.hamcrest.CoreMatchers;
 
@@ -3608,7 +3608,8 @@ public class ObjectActionLocalServiceTest {
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	private final Queue<Object[]> _argumentsList = new LinkedList<>();
+	private final Queue<Object[]> _argumentsList =
+		new ConcurrentLinkedQueue<>();
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
 

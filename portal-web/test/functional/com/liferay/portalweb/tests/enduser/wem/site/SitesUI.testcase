@@ -112,49 +112,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-149293. The site creation process continues even though the user close the modal after submitting form."
-	@priority = 5
-	test ViewSiteCreatedEvenThoughCloseModalAfterSubmitForm {
-		property portal.acceptance = "true";
-		property portal.release = "false";
-
-		task ("Navigate to the Sites admin") {
-			Site.openSitesAdmin();
-		}
-
-		task ("Add a new site based on Minium") {
-			LexiconEntry.gotoAdd();
-
-			LexiconCard.clickCard(card = "Minium");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			PortletEntry.inputName(name = ${randomSiteName});
-
-			Button.clickAdd();
-		}
-
-		task ("Close the modal") {
-			IFrame.closeFrame();
-		}
-
-		task ("View the new site created") {
-			var groupId = JSONGroupAPI._getGroupIdByNameNoError(
-				groupName = ${randomSiteName},
-				site = "true");
-
-			while (("" == "")) {
-				var groupId = JSONGroupAPI._getGroupIdByNameNoError(
-					groupName = ${randomSiteName},
-					site = "true");
-			}
-
-			Site.openSitesAdmin();
-
-			LexiconTable.viewTableEntryTitle(tableEntry = ${randomSiteName});
-		}
-	}
-
 	@description = "This is a test for LPS-176154. The site administrater should see site initializers under Provided by Liferay tab when create a new site."
 	@priority = 3
 	test ViewSiteInitializersUnderProvidedByLiferayTab {

@@ -17,13 +17,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
@@ -75,10 +72,9 @@ public class FDSRendererImpl implements FDSRenderer {
 				HashMapBuilder.<String, Object>put(
 					"additionalAPIURLParameters",
 					() -> {
-						String additionalAPIURLParameters = _interpolate(
-							httpServletRequest,
+						String additionalAPIURLParameters =
 							fdsSerializer.serializeAdditionalAPIURLParameters(
-								fdsName, httpServletRequest));
+								fdsName, httpServletRequest);
 
 						if (Validator.isNull(additionalAPIURLParameters)) {
 							return null;
@@ -89,10 +85,8 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"apiURL",
 					() -> {
-						String apiURL = _interpolate(
-							httpServletRequest,
-							fdsSerializer.serializeAPIURL(
-								fdsName, httpServletRequest));
+						String apiURL = fdsSerializer.serializeAPIURL(
+							fdsName, httpServletRequest);
 
 						if (Validator.isNull(apiURL)) {
 							return null;
@@ -239,29 +233,6 @@ public class FDSRendererImpl implements FDSRenderer {
 		}
 
 		return null;
-	}
-
-	private String _interpolate(
-		HttpServletRequest httpServletRequest, String segmentURL) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		segmentURL = StringUtil.replace(
-			segmentURL, "{siteId}",
-			String.valueOf(themeDisplay.getScopeGroupId()));
-		segmentURL = StringUtil.replace(
-			segmentURL, "{scopeKey}",
-			String.valueOf(themeDisplay.getScopeGroupId()));
-		segmentURL = StringUtil.replace(
-			segmentURL, "{userId}", String.valueOf(themeDisplay.getUserId()));
-
-		if (StringUtil.contains(segmentURL, "{") && _log.isWarnEnabled()) {
-			_log.warn("Unsupported parameter in URL: " + segmentURL);
-		}
-
-		return segmentURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

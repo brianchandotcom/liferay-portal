@@ -8,17 +8,16 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -26,7 +25,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -35,9 +34,10 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
-import javax.portlet.PortletException;
+import javax.portlet.ActionRequest;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,6 +45,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Javier Moral
@@ -131,32 +133,19 @@ public class EditLayoutMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(layout);
 
-		ReflectionTestUtil.setFieldValue(
-			_mvcActionCommand, "_portal",
-			ProxyUtil.newProxyInstance(
-				Portal.class.getClassLoader(), new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						LiferayPortletRequest liferayPortletRequest =
-							_portal.getLiferayPortletRequest(
-								mockLiferayPortletActionRequest);
-
-						return UploadTestUtil.createUploadPortletRequest(
-							_portal.getUploadServletRequest(
-								liferayPortletRequest.getHttpServletRequest()),
-							liferayPortletRequest,
-							_portal.getPortletNamespace(
-								liferayPortletRequest.getPortletName()));
-					}
-
-					return method.invoke(_portal, args);
-				}));
-
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_editLayout",
+			new Class<?>[] {
+				ActionRequest.class, HttpServletResponse.class,
+				UploadPortletRequest.class
+			},
+			mockLiferayPortletActionRequest, new MockHttpServletResponse(),
+			UploadTestUtil.createUploadPortletRequest(
+				_portal.getUploadServletRequest(
+					mockLiferayPortletActionRequest.getHttpServletRequest()),
+				mockLiferayPortletActionRequest,
+				_portal.getPortletNamespace(
+					mockLiferayPortletActionRequest.getPortletName())));
 	}
 
 	@Inject

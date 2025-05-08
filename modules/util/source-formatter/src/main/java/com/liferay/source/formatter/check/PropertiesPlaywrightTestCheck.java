@@ -39,6 +39,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		}
 
 		if (absolutePath.contains("/modules/test/playwright/tests/")) {
+			_checkMissingConfigTs(fileName, absolutePath);
+
 			Properties properties = new Properties();
 
 			properties.load(new StringReader(content));
@@ -149,6 +151,19 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private void _checkMissingConfigTs(String fileName, String absolutePath) {
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		String playwrightTestDirLocation = absolutePath.substring(0, x);
+
+		File file = new File(playwrightTestDirLocation + "/config.ts");
+
+		if (!file.exists()) {
+			addMessage(
+				fileName, "Missing config.ts in " + playwrightTestDirLocation);
+		}
 	}
 
 	private void _checkMissingPlaywrightTestProjectProperty(

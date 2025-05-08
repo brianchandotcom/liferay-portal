@@ -11,6 +11,7 @@ import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.exception.DepotEntryStagedException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -151,6 +152,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				"Unstage depot entry " + depotEntry.getDepotEntryId() +
 					" before deleting it");
 		}
+
+		_depotEntryPinLocalService.deleteDepotEntryDepotEntryPins(
+			depotEntry.getDepotEntryId());
 
 		_resourceLocalService.deleteResource(
 			depotEntry, ResourceConstants.SCOPE_INDIVIDUAL);
@@ -377,6 +381,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Reference
 	private DepotEntryGroupRelPersistence _depotEntryGroupRelPersistence;
+
+	@Reference
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

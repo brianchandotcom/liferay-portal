@@ -14,6 +14,8 @@ import CreationModalContent, {
 export type FolderData = {
 	action: 'createFolder';
 	assetLibraries: AssetLibrary[];
+	baseAssetLibraryViewURL: string;
+	baseFolderViewURL: string;
 };
 
 export default function createFolderAction(
@@ -28,24 +30,40 @@ export default function createFolderAction(
 				...data,
 				closeModal,
 				onSubmit: async ({groupId, name: title}) => {
-					const {errorMessage, success} =
-						await postScopeScopeKeyObjectEntryFolder(
-							groupId,
-							title,
-							additionalProps.parentObjectEntryFolderExternalReferenceCode
-						);
+					const {
+						data: folderData,
+						errorMessage,
+						success,
+					} = await postScopeScopeKeyObjectEntryFolder<{
+						id: string;
+						scopeKey: string;
+						title: string;
+					}>(
+						additionalProps.parentObjectEntryFolderExternalReferenceCode,
+						groupId,
+						title
+					);
 
 					if (success) {
 						loadData?.();
 
 						closeModal();
 
+						const {
+							id: folderId,
+							scopeKey: spaceName,
+							title: folderName,
+						} = folderData || {};
+
 						openToast({
 							message: sub(
 								Liferay.Language.get(
-									'x-was-created-successfully'
+									'x-was-created-successfully-to-x-space'
 								),
-								`<strong>${title}</strong>`
+								[
+									`<a href="${data.baseFolderViewURL}${folderId}" class="alert-link lead"><strong>${folderName}</strong></a>`,
+									`<a href="${data.baseAssetLibraryViewURL}${groupId}" class="alert-link lead"><strong>${spaceName}</strong></a>`,
+								]
 							),
 							type: 'success',
 						});

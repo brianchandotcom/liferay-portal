@@ -102,22 +102,24 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	return (await result.json()) as T;
 }
 
-export async function postScopeScopeKeyObjectEntryFolder(
+export async function postScopeScopeKeyObjectEntryFolder<DataType = unknown>(
 	scopeKey: string,
 	title: string,
 	parentObjectEntryFolderExternalReferenceCode: string
 ) {
-	return await handleRequest(() =>
-		fetch(
-			`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
-			{
-				body: JSON.stringify({
-					parentObjectEntryFolderExternalReferenceCode,
-					title,
-				}),
-				headers,
-				method: 'POST',
-			}
-		)
+	return await handleRequest<DataType>(
+		() =>
+			fetch(
+				`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
+				{
+					body: JSON.stringify({
+						parentObjectEntryFolderExternalReferenceCode,
+						title,
+					}),
+					headers,
+					method: 'POST',
+				}
+			),
+		{returnValue: true}
 	);
 }

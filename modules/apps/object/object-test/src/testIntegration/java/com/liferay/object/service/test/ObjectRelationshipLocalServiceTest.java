@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -84,6 +85,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -91,12 +93,18 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1398,6 +1406,103 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testBindPublishedObjectDefinitionsWithObjectEntriesAndWorkflowInstance()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			_addAndPublishCustomObjectDefinition();
+		ObjectDefinition objectDefinitionAA =
+			_addAndPublishCustomObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinitionA.getClassName(), 0, 0, "Single Approver", 1);
+
+		ObjectEntry objectEntryA1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(),
+			Collections.emptyMap());
+		ObjectEntry objectEntryA2 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinitionAA.getClassName(), 0, 0, "Single Approver", 1);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			Collections.singletonMap(
+				objectField.getName(), objectEntryA1.getObjectEntryId()));
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"These ongoing workflow instances must be completed to " +
+					"enable inheritance: \"%s\" (\"%s\" object entries) and " +
+						"\"%s\" (\"%s\" object entries)",
+				objectDefinitionA.getLabel(LocaleUtil.US), 2,
+				objectDefinitionAA.getLabel(LocaleUtil.US), 1),
+			() -> _bindObjectDefinitions(objectRelationship));
+
+		_completeWorkflowTask(
+			objectDefinitionA.getClassName(), objectEntryA1.getObjectEntryId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"These ongoing workflow instances must be completed to " +
+					"enable inheritance: \"%s\" (\"%s\" object entries) and " +
+						"\"%s\" (\"%s\" object entries)",
+				objectDefinitionA.getLabel(LocaleUtil.US), 1,
+				objectDefinitionAA.getLabel(LocaleUtil.US), 1),
+			() -> _bindObjectDefinitions(objectRelationship));
+
+		_completeWorkflowTask(
+			objectDefinitionA.getClassName(), objectEntryA2.getObjectEntryId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"These ongoing workflow instances must be completed to " +
+					"enable inheritance: \"%s\" (\"%s\" object entries)",
+				objectDefinitionAA.getLabel(LocaleUtil.US), 1),
+			() -> _bindObjectDefinitions(objectRelationship));
+
+		_completeWorkflowTask(
+			objectDefinitionAA.getClassName(),
+			objectEntryAA.getObjectEntryId());
+
+		_bindObjectDefinitions(objectRelationship);
+
+		objectEntryAA = _objectEntryLocalService.getObjectEntry(
+			objectEntryAA.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntryA1.getObjectEntryId(),
+			objectEntryAA.getRootObjectEntryId());
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
 	public void testDeleteObjectRelationship() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
@@ -2417,6 +2522,40 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship.getLabelMap(), null);
 	}
 
+	private void _completeWorkflowTask(String className, long classPK)
+		throws Exception {
+
+		List<WorkflowInstance> workflowInstances =
+			_workflowInstanceManager.getWorkflowInstances(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				className, classPK, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		WorkflowInstance workflowInstance = workflowInstances.get(0);
+
+		for (WorkflowTask workflowTask :
+				_workflowTaskManager.getWorkflowTasksBySubmittingUser(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			if (workflowInstance.getWorkflowInstanceId() !=
+					workflowTask.getWorkflowInstanceId()) {
+
+				continue;
+			}
+
+			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, null, null);
+
+			_workflowTaskManager.completeWorkflowTask(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
+		}
+	}
+
 	private boolean _hasColumn(String tableName, String columnName)
 		throws Exception {
 
@@ -2930,5 +3069,15 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _systemObjectDefinition2;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Inject
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

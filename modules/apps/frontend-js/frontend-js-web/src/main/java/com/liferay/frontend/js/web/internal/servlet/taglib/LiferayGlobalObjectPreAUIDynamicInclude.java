@@ -115,7 +115,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 			String currentURL = _portal.getCurrentURL(httpServletRequest);
 
-			_renderValue("currentURL", sb, currentURL);
+			_renderValue("currentURL", sb, HtmlUtil.escapeJS(currentURL));
 			_renderValue(
 				"currentURLEncoded", sb,
 				HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)));

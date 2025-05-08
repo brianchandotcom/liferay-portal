@@ -4575,6 +4575,12 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (!values.containsKey(objectField.getName())) {
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				return false;
+			}
+
 			if (_log.isDebugEnabled()) {
 				String logMessage =
 					"No value was provided for object field \"" +

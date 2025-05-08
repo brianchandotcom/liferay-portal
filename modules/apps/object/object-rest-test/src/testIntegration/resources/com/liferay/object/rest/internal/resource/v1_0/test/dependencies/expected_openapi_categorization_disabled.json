@@ -1143,6 +1143,41 @@
 			}
 		},
 		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}": {
+			"delete": {
+				"operationId": "deleteByExternalReferenceCodeByVersion",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			},
 			"get": {
 				"operationId": "getByExternalReferenceCodeByVersion",
 				"parameters": [
@@ -1766,6 +1801,41 @@
 			}
 		},
 		"/{object9Id}/by-version/{version}": {
+			"delete": {
+				"operationId": "deleteObject9ByVersion",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/xml": {
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			},
 			"get": {
 				"operationId": "getObject9ByVersion",
 				"parameters": [

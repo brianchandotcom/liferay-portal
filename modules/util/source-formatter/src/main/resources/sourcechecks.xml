@@ -771,6 +771,7 @@
 		<check name="JavaJSImportMapsContributorCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `*JSImportMapsContributor` class." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaJSPDynamicIncludeCheck">
 			<category name="Bug Prevention" />

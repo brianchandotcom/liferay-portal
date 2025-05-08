@@ -103,19 +103,20 @@ public class JSUnitModulesBatchTestClassGroup
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
 
-		List<String> excludedTestMethods = new ArrayList<>();
+		List<String> excludedTestMethodNames = new ArrayList<>();
 
-		for (JobProperty jobProperty : getExcludesJobProperties()) {
-			String jobPropertyValue = jobProperty.getValue();
+		for (JobProperty execludesJobProperty : getExcludesJobProperties()) {
+			String excludesJobPropertyValue = execludesJobProperty.getValue();
 
-			if (jobPropertyValue != null) {
-				String[] methodNames = jobPropertyValue.split(",");
+			if (excludesJobPropertyValue != null) {
+				String[] excludedMethodNames = excludesJobPropertyValue.split(
+					",");
 
-				for (String methodName : methodNames) {
-					methodName = methodName.replace("/", ":");
+				for (String excludedMethodName : excludedMethodNames) {
+					excludedMethodName = excludedMethodName.replace("/", ":");
 
-					excludedTestMethods.add(
-						methodName.replaceAll("[^a-zA-Z-:]", ""));
+					excludedTestMethodNames.add(
+						excludedMethodName.replaceAll("[^a-zA-Z-:]", ""));
 				}
 			}
 		}
@@ -140,12 +141,10 @@ public class JSUnitModulesBatchTestClassGroup
 			while (iterator.hasNext()) {
 				TestClassMethod testClassMethod = iterator.next();
 
-				for (String excludedMethodName : excludedTestMethods) {
-					if (testClassMethod.getName(
-						).contains(
-							excludedMethodName
-						)) {
+				String testClassMethodName = testClassMethod.getName();
 
+				for (String excludedMethodName : excludedTestMethodNames) {
+					if (testClassMethodName.contains(excludedMethodName)) {
 						iterator.remove();
 
 						break;

@@ -1447,42 +1447,42 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public boolean hasMaximumInvocationCount() {	
+	public boolean hasMaximumInvocationCount() {
 		Map<ReinvokeRule, Integer> invocationCounts = new HashMap<>();
-		
+
 		for (Invocation invocation : _invocations) {
 			ReinvokeRule reinvokeRule = invocation.getReinvokeRule();
-			
+
 			if (reinvokeRule == null) {
 				continue;
 			}
-			
+
 			Integer invocationCount = invocationCounts.getOrDefault(
 				reinvokeRule, 0);
-				
-				invocationCount++;
-				
-				invocationCounts.put(reinvokeRule, invocationCount);
+
+			invocationCount++;
+
+			invocationCounts.put(reinvokeRule, invocationCount);
 		}
-			
+
 		for (Map.Entry<ReinvokeRule, Integer> entry :
-			invocationCounts.entrySet()) {
-			
+				invocationCounts.entrySet()) {
+
 			ReinvokeRule reinvokeRule = entry.getKey();
-			
+
 			Integer invocationCount = entry.getValue();
-			
+
 			if (invocationCount > reinvokeRule.getMaximumInvocationCount()) {
 				return true;
-			} else {
-				return false;
 			}
+
+			return false;
 		}
 
 		if (_invocations.size() >= _getMaximumInvocationCount()) {
 			return true;
 		}
-			
+
 		return false;
 	}
 

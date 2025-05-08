@@ -9,6 +9,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -66,6 +67,11 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 								<div class="autofit-col autofit-col-expand">
 									<div class="autofit-section">
 										<strong><liferay-ui:message key="warning" /></strong>: <liferay-ui:message key="compatibility-with-elasticsearch-7-deprecation-warning" />
+
+										<liferay-learn:message
+											key="elasticsearch-end-of-life"
+											resource="portal-search-web"
+										/>
 									</div>
 								</div>
 
@@ -73,22 +79,8 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 									<div class="autofit-section">
 
 										<%
-										LearnMessage elasticsearchEOLLearnMessage = LearnMessageUtil.getLearnMessage("elasticsearch-end-of-life", themeDisplay.getLanguageId(), "portal-search-web");
 										LearnMessage searchEngineCompatibilityLearnMessage = LearnMessageUtil.getLearnMessage("search-engine-compatibility", themeDisplay.getLanguageId(), "portal-search-web");
 										%>
-
-										<c:if test="<%= elasticsearchEOLLearnMessage.getURL() != StringPool.BLANK %>">
-											<div class="btn-group-item">
-												<clay:link
-													cssClass="btn btn-sm btn-warning"
-													displayType="warning"
-													href="<%= elasticsearchEOLLearnMessage.getURL() %>"
-													label="<%= elasticsearchEOLLearnMessage.getMessage() %>"
-													target="_blank"
-													type="button"
-												/>
-											</div>
-										</c:if>
 
 										<c:if test="<%= searchEngineCompatibilityLearnMessage.getURL() != StringPool.BLANK %>">
 											<div class="btn-group-item">
@@ -96,7 +88,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 													cssClass="alert-btn btn btn-sm btn-warning"
 													displayType="warning"
 													href="<%= searchEngineCompatibilityLearnMessage.getURL() %>"
-													label="<%= searchEngineCompatibilityLearnMessage.getMessage() %>"
+													label='<%= LanguageUtil.get(request, "view-compatibility") %>'
 													target="_blank"
 													type="button"
 												/>
@@ -123,6 +115,11 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 								<div class="autofit-col autofit-col-expand">
 									<div class="autofit-section">
 										<strong><liferay-ui:message key="warning" /></strong>: <liferay-ui:message key="sidecar-connection-not-supported-warning" />
+
+										<liferay-learn:message
+											key="sidecar-not-supported"
+											resource="portal-search-web"
+										/>
 									</div>
 								</div>
 
@@ -140,7 +137,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 													cssClass="alert-btn btn btn-sm btn-warning"
 													displayType="warning"
 													href="<%= installElasticsearchLearnMessage.getURL() %>"
-													label="<%= installElasticsearchLearnMessage.getMessage() %>"
+													label='<%= LanguageUtil.get(request, "install-elasticsearch") %>'
 													target="_blank"
 													type="button"
 												/>
@@ -153,7 +150,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 													cssClass="alert-btn btn btn-sm btn-warning"
 													displayType="warning"
 													href="<%= installOpenSearchLearnMessage.getURL() %>"
-													label="<%= installOpenSearchLearnMessage.getMessage() %>"
+													label='<%= LanguageUtil.get(request, "install-opensearch") %>'
 													target="_blank"
 													type="button"
 												/>

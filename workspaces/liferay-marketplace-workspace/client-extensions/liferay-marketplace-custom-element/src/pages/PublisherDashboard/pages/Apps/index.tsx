@@ -35,7 +35,9 @@ const Apps = () => {
 					disabled={!catalogId}
 					onClick={() =>
 						navigate(
-							isNewAppEnabled ? '/newapp/publish' : '/app/create'
+							isNewAppEnabled
+								? '/newapp/publisher'
+								: '/app/create'
 						)
 					}
 				>

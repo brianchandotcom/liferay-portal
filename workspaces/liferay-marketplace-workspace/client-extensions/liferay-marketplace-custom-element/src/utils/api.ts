@@ -452,7 +452,7 @@ export async function getPriceListByCatalogName(catalogName: string) {
 
 export async function getPriceListIdPriceEntries(priceListId: number) {
 	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries?nestedFields=sku`,
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries?pageSize=-1&nestedFields=sku,product`,
 		{
 			headers,
 			method: 'GET',
@@ -579,6 +579,19 @@ export async function patchPriceEntry(priceEntry: any, priceEntryId: number) {
 			body: JSON.stringify(priceEntry),
 			headers,
 			method: 'PATCH',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function postPriceListEntry(priceListId: number, priceEntry: any) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-pricing/v1.0/priceLists/${priceListId}/priceEntries`,
+		{
+			body: JSON.stringify(priceEntry),
+			headers,
+			method: 'POST',
 		}
 	);
 

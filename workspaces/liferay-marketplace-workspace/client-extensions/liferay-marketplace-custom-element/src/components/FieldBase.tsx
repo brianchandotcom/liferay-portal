@@ -5,14 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ReactNode} from 'react';
 
-import './FieldBase.scss';
-
-import ClayIcon from '@clayui/icon';
-
 import {Tooltip} from './Tooltip/Tooltip';
+
+import './FieldBase.scss';
 
 export function RequiredMask() {
 	return (

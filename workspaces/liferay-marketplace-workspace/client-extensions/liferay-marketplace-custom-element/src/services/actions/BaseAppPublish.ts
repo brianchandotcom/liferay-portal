@@ -62,10 +62,15 @@ export default class BaseAppPublish {
 	};
 
 	public static async deleteReferences(externalReferenceCodes: string[]) {
-		for (const externalReferenceCode of externalReferenceCodes) {
-			await HeadlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
-				externalReferenceCode
-			);
+		try {
+			for (const externalReferenceCode of externalReferenceCodes) {
+				await HeadlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
+					externalReferenceCode
+				);
+			}
+		}
+		catch (error) {
+			console.error(error);
 		}
 	}
 

@@ -76,7 +76,6 @@ public class CTConflictConfigurationUpgradeProcessTest {
 
 		Assert.assertTrue(
 			ctSettingsConfiguration.modificationDeletionConflictCheckEnabled());
-
 		Assert.assertTrue(ctSettingsConfiguration.schemaVersionCheckEnabled());
 	}
 
@@ -100,7 +99,6 @@ public class CTConflictConfigurationUpgradeProcessTest {
 
 		Assert.assertTrue(
 			ctSettingsConfiguration.modificationDeletionConflictCheckEnabled());
-
 		Assert.assertTrue(ctSettingsConfiguration.schemaVersionCheckEnabled());
 	}
 

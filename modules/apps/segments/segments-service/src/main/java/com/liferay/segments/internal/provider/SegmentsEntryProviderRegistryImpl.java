@@ -174,6 +174,16 @@ public class SegmentsEntryProviderRegistryImpl
 			return String.valueOf(classPK);
 		}
 
+		String requestParametersString = null;
+
+		String[] requestParameters = (String[])context.get(
+			Context.REQUEST_PARAMETERS);
+
+		if (requestParameters != null) {
+			requestParametersString = String.join(
+				StringPool.COMMA, requestParameters);
+		}
+
 		return String.valueOf(
 			Objects.hash(
 				classPK,
@@ -182,7 +192,8 @@ public class SegmentsEntryProviderRegistryImpl
 				GetterUtil.get(
 					context.get(Context.LANGUAGE_ID), StringPool.BLANK),
 				GetterUtil.get(
-					context.get(Context.USER_AGENT), StringPool.BLANK)));
+					context.get(Context.USER_AGENT), StringPool.BLANK),
+				GetterUtil.get(requestParametersString, StringPool.BLANK)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

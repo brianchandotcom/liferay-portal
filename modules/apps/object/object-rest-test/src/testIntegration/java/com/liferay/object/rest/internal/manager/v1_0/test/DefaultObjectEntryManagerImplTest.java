@@ -43,6 +43,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedExcept
 import com.liferay.object.exception.ObjectEntryDefaultLanguageIdException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
+import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -2587,6 +2588,87 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition1.getObjectDefinitionId());
 		objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition2.getObjectDefinitionId());
+	}
+
+	@Test
+	public void testDeleteObjectEntryVersion() throws Exception {
+		_objectDefinition1.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition1 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = 1;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		_defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition1, 1),
+			objectEntry);
+
+		objectEntry = _updateObjectEntryVersion(objectEntry, 2);
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition1, 2),
+			objectEntry);
+
+		Assert.assertEquals(
+			2,
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition1, null
+			).getItems(
+			).size());
+
+		long objectEntryId = objectEntry.getId();
+
+		AssertUtils.assertFailure(
+			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
+				class,
+			"The latest version cannot be deleted",
+			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
+				_objectDefinition1, objectEntryId, 2));
+
+		_defaultObjectEntryManager.deleteObjectEntryByVersion(
+			_objectDefinition1, objectEntry.getId(), 1);
+
+		Assert.assertEquals(
+			1,
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				_objectDefinition1, null
+			).getItems(
+			).size());
+
+		AssertUtils.assertFailure(
+			RequiredObjectEntryVersionException.MustNotDeleteUniqueVersion.
+				class,
+			"At least one version must remain",
+			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
+				_objectDefinition1, objectEntryId, 2));
 	}
 
 	@Test
@@ -7285,6 +7367,34 @@ public class DefaultObjectEntryManagerImplTest
 					properties = new HashMap<>(values);
 				}
 			});
+	}
+
+	private ObjectEntry _updateObjectEntryVersion(
+			ObjectEntry objectEntry, int versionNumber)
+		throws Exception {
+
+		return _defaultObjectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition1,
+			new ObjectEntry() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					keywords = new String[] {RandomTestUtil.randomString()};
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+					systemProperties = new SystemProperties() {
+						{
+							version = new Version() {
+								{
+									number = versionNumber;
+								}
+							};
+						}
+					};
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;

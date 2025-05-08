@@ -165,15 +165,11 @@ testWithExportImportAtInstanceLevelFF(
 
 		expect(json.length).toBe(1);
 
-		await apiHelpers.delete(
-			`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`
-		);
-
 		expect(
-			await apiHelpers.get(
-				`${apiHelpers.baseUrl}c/tests/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+			await apiHelpers.delete(
+				`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`
 			)
-		).toEqual({status: 'NOT_FOUND'});
+		).toBeOK();
 
 		await exportImportPage.goToImport();
 

@@ -5,9 +5,9 @@
 
 import {addParams} from 'frontend-js-web';
 
+import ApiHelper from '../../services/ApiHelper';
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
-import ApiHelper from './ApiHelper';
 
 async function resetDisplayPage({id}: {id: State['id']}) {
 	const resetStructureDisplayPageURL = addParams(

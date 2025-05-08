@@ -1,6 +1,6 @@
 // src/main/resources/META-INF/resources/C2P9/Slider.es.js
 import React, { useState } from "react";
-import { ReactFieldBase } from "@liferay/dynamic-data-mapping-form-field-type";
+import { ReactFieldBase } from "@liferay/dynamic-data-mapping-form-field-type/api";
 function Slider({
   label,
   name,

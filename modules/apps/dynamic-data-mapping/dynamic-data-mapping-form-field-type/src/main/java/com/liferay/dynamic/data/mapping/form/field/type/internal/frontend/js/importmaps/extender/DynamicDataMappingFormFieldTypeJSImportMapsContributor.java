@@ -32,8 +32,8 @@ public class DynamicDataMappingFormFieldTypeJSImportMapsContributor
 		_importMapsJSONObject = _jsonFactory.createJSONObject();
 
 		_importMapsJSONObject.put(
-			"@liferay/dynamic-data-mapping-form-field-type",
-			_servletContext.getContextPath() + "/__liferay__/index.js");
+			"@liferay/dynamic-data-mapping-form-field-type/api",
+			_servletContext.getContextPath() + "/__liferay__/api.js");
 	}
 
 	private JSONObject _importMapsJSONObject;

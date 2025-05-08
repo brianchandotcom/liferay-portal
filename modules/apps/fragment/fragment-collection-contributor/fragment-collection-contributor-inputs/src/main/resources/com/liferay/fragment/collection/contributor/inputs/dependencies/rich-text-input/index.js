@@ -22,7 +22,7 @@ if (layoutMode !== 'edit') {
 			`${fragmentEntryLinkNamespace}-rich-text-input`
 		);
 
-		import('@liferay/fragment-impl').then(
+		import('@liferay/fragment-impl/api').then(
 			({registerLocalizedInput, registerUnlocalizedInput}) => {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 

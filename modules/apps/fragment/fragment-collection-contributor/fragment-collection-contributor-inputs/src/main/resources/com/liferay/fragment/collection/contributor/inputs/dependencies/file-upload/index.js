@@ -130,7 +130,7 @@ else {
 
 		let currentLanguageId = defaultLanguageId;
 
-		import('@liferay/fragment-impl').then(
+		import('@liferay/fragment-impl/api').then(
 			({
 				getOrCreateTranslationInput,
 				registerLocalizedInput,

@@ -76,7 +76,7 @@ function main() {
 		if (Liferay.FeatureFlags['LPD-37927']) {
 			const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
-			import('@liferay/fragment-impl').then(
+			import('@liferay/fragment-impl/api').then(
 				({registerLocalizedInput, registerUnlocalizedInput}) => {
 					if (input.localizable) {
 						const {onChange} = registerLocalizedInput({

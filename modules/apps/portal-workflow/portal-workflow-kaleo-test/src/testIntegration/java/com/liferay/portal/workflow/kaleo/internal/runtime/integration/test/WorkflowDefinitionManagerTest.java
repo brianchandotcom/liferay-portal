@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -41,7 +42,9 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test(expected = WorkflowException.class)
 	public void testDeleteSaveWorkflowDefinition() throws Exception {
@@ -131,6 +134,12 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 
 		Assert.assertEquals(
 			workflowDefinition.getName(), deployedWorkflowDefinition.getName());
+	}
+
+	@Test
+	public void testGetWorkflowDefinition() throws Exception {
+		_testGetWorkflowDefinition("L_MESSAGE_BOARDS_USER_STATS_MODERATION");
+		_testGetWorkflowDefinition("L_SINGLE_APPROVER");
 	}
 
 	@Test
@@ -546,6 +555,19 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		return _workflowDefinitionManager.saveWorkflowDefinition(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			title, StringUtil.randomId(), bytes);
+	}
+
+	private void _testGetWorkflowDefinition(String externalReferenceCode)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			workflowDefinition.getExternalReferenceCode());
+		Assert.assertTrue(workflowDefinition.isActive());
 	}
 
 	@Inject

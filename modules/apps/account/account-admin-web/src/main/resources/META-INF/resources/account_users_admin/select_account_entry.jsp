@@ -12,16 +12,16 @@ long accountGroupId = ParamUtil.getLong(request, "accountGroupId");
 
 boolean filterManageableAccountEntries = true;
 
-if ((accountGroupId > 0) && AccountGroupPermission.contains(permissionChecker, accountGroupId, AccountActionKeys.ASSIGN_ACCOUNTS)) {
+LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+if (accountGroupId == 0) {
+	params.put("allowNewUserMembership", Boolean.TRUE);
+}
+else if (AccountGroupPermission.contains(permissionChecker, accountGroupId, AccountActionKeys.ASSIGN_ACCOUNTS)) {
 	filterManageableAccountEntries = false;
 }
 
-SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.createWithParams(
-	liferayPortletRequest, liferayPortletResponse,
-	LinkedHashMapBuilder.<String, Object>put(
-		"allowNewUserMembership", Boolean.TRUE
-	).build(),
-	filterManageableAccountEntries);
+SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.createWithParams(liferayPortletRequest, liferayPortletResponse, params, filterManageableAccountEntries);
 
 if (accountGroupId > 0) {
 	accountEntryDisplaySearchContainer.setRowChecker(new AccountGroupAccountEntryRowChecker(accountGroupId, liferayPortletResponse));

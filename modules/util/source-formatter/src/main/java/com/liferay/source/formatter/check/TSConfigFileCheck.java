@@ -5,9 +5,15 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -41,7 +47,74 @@ public class TSConfigFileCheck extends BaseFileCheck {
 				"Missing test.properties in " + playwrightTestDirLocation);
 		}
 
+		return _checkConfig(fileName, content, playwrightTestDirLocation);
+	}
+
+	private String _checkConfig(
+		String fileName, String content, String playwrightTestDirLocation) {
+
+		int x = content.indexOf("export const config = ");
+
+		if (x == -1) {
+			addMessage(fileName, "Missing 'export const config'");
+
+			return content;
+		}
+
+		String config = _getConfig(content, x);
+
+		if (config == null) {
+			return content;
+		}
+
+		Matcher matcher = _namePattern.matcher(config);
+
+		if (!matcher.find()) {
+			addMessage(fileName, "Missing 'name' in 'export const config'");
+
+			return content;
+		}
+
+		String[] parts = playwrightTestDirLocation.split("/");
+
+		int length = parts.length;
+
+		String projectName = parts[length - 2] + "." + parts[length - 1];
+
+		String newConfig = StringUtil.replaceFirst(
+			config, matcher.group(),
+			StringBundler.concat(matcher.group(1), ": '", projectName, "'"));
+
+		if (!config.equals(newConfig)) {
+			return StringUtil.replaceFirst(content, config, newConfig, x);
+		}
+
 		return content;
 	}
+
+	private String _getConfig(String content, int x) {
+		int y = x + 22;
+
+		while (true) {
+			y = content.indexOf("}", y + 1);
+
+			if (y == -1) {
+				return null;
+			}
+
+			if (ToolsUtil.isInsideQuotes(content, y)) {
+				continue;
+			}
+
+			String s = content.substring(x, y + 1);
+
+			if (getLevel(s, "{", "}") == 0) {
+				return s;
+			}
+		}
+	}
+
+	private static final Pattern _namePattern = Pattern.compile(
+		"([ \t]name)\s*:\s*'(.*)'");
 
 }

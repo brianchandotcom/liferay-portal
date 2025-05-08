@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ReactFieldBase } from "@liferay/dynamic-data-mapping-form-field-type";
+import { ReactFieldBase } from "@liferay/dynamic-data-mapping-form-field-type/api";
 
 export function Slider({
   label,

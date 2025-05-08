@@ -30,8 +30,8 @@ public class FragmentImplJSImportMapsContributor
 	@Activate
 	protected void activate() {
 		_importMapsJSONObject = JSONUtil.put(
-			"@liferay/fragment-impl",
-			_servletContext.getContextPath() + "/__liferay__/index.js");
+			"@liferay/fragment-impl/api",
+			_servletContext.getContextPath() + "/__liferay__/api.js");
 	}
 
 	private JSONObject _importMapsJSONObject;

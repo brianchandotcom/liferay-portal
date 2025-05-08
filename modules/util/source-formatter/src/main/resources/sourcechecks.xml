@@ -768,6 +768,10 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on class in `internal` package." />
 		</check>
+		<check name="JavaJSImportMapsContributorCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on `*JSImportMapsContributor` class." />
+		</check>
 		<check name="JavaJSPDynamicIncludeCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `*JSPDynamicInclude` class." />

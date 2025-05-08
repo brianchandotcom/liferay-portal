@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -90,6 +91,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -99,6 +101,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -108,6 +112,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -1062,6 +1067,30 @@ public class ObjectRelationshipLocalServiceImpl
 		super.runSQL(sql);
 	}
 
+	private void _addArguments(
+			List<Object> arguments, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		int incompleteWorkflowInstancesCount = 0;
+
+		if (objectDefinition.isRootDescendantNode()) {
+			incompleteWorkflowInstancesCount =
+				_getIncompleteWorkflowInstancesCount(
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						objectDefinition.getRootObjectDefinitionId()));
+		}
+		else {
+			incompleteWorkflowInstancesCount =
+				_getIncompleteWorkflowInstancesCount(objectDefinition);
+		}
+
+		if (incompleteWorkflowInstancesCount > 0) {
+			arguments.add(
+				objectDefinition.getLabel(LocaleUtil.getSiteDefault()));
+			arguments.add(incompleteWorkflowInstancesCount);
+		}
+	}
+
 	private ObjectField _addObjectField(
 			String externalReferenceCode, User user,
 			ObjectDefinition objectDefinition1,
@@ -1605,6 +1634,32 @@ public class ObjectRelationshipLocalServiceImpl
 		objectDefinitionLocalService.deployObjectDefinition(objectDefinition);
 	}
 
+	private int _getIncompleteWorkflowInstancesCount(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		Set<Long> classPKs = new HashSet<>();
+
+		for (WorkflowInstanceLink workflowInstanceLink :
+				_workflowInstanceLinkLocalService.getWorkflowInstanceLinks(
+					objectDefinition.getCompanyId(),
+					objectDefinition.getClassName())) {
+
+			WorkflowInstance workflowInstance =
+				WorkflowInstanceManagerUtil.getWorkflowInstance(
+					objectDefinition.getCompanyId(),
+					workflowInstanceLink.getWorkflowInstanceId());
+
+			if (workflowInstance.isComplete()) {
+				continue;
+			}
+
+			classPKs.add(workflowInstanceLink.getClassPK());
+		}
+
+		return classPKs.size();
+	}
+
 	private long _getRootObjectDefinitionId(ObjectDefinition objectDefinition)
 		throws PortalException {
 
@@ -2050,24 +2105,56 @@ public class ObjectRelationshipLocalServiceImpl
 						"height");
 		}
 
-		if (objectDefinition1.isApproved() && objectDefinition2.isApproved() &&
-			(objectRelationship != null) &&
-			(objectRelationship.getObjectRelationshipId() != 0)) {
+		if (objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+			if ((objectRelationship != null) &&
+				(objectRelationship.getObjectRelationshipId() != 0)) {
 
-			int relatedObjectEntriesCount =
-				_objectEntryLocalService.getOneToManyObjectEntriesCount(
-					0, objectRelationship.getObjectRelationshipId(), 0L, false,
-					null);
+				int relatedObjectEntriesCount =
+					_objectEntryLocalService.getOneToManyObjectEntriesCount(
+						0, objectRelationship.getObjectRelationshipId(), 0L,
+						false, null);
 
-			if (relatedObjectEntriesCount > 0) {
+				if (relatedObjectEntriesCount > 0) {
+					throw new ObjectRelationshipEdgeException(
+						StringBundler.concat(
+							"There must be no unrelated object entries when ",
+							"both object definitions are published so that ",
+							"the object relationship can be an edge to a root ",
+							"context"),
+						StringBundler.concat(
+							"there-must-be-no-unrelated-object-entries-when-",
+							"both-object-definitions-are-published-so-that-",
+							"the-object-relationship-can-be-an-edge-to-a-root-",
+							"context"));
+				}
+			}
+
+			List<Object> arguments = new ArrayList<>();
+
+			_addArguments(arguments, objectDefinition1);
+			_addArguments(arguments, objectDefinition2);
+
+			if (arguments.size() == 2) {
 				throw new ObjectRelationshipEdgeException(
-					StringBundler.concat(
-						"There must be no unrelated object entries when both ",
-						"object definitions are published so that the object ",
-						"relationship can be an edge to a root context"),
-					"there-must-be-no-unrelated-object-entries-when-both-" +
-						"object-definitions-are-published-so-that-the-object-" +
-							"relationship-can-be-an-edge-to-a-root-context");
+					arguments,
+					String.format(
+						"These ongoing workflow instances must be completed " +
+							"to enable inheritance: \"%s\" (\"%s\" entries)",
+						arguments.get(0), arguments.get(1)),
+					"these-ongoing-workflow-instances-must-be-completed-to-" +
+						"enable-inheritance-x-(x-entries)");
+			}
+			else if (arguments.size() == 4) {
+				throw new ObjectRelationshipEdgeException(
+					arguments,
+					String.format(
+						"These ongoing workflow instances must be completed " +
+							"to enable inheritance: \"%s\" (\"%s\" entries) " +
+								"and \"%s\" (\"%s\" entries)",
+						arguments.get(0), arguments.get(1), arguments.get(2),
+						arguments.get(3)),
+					"these-ongoing-workflow-instances-must-be-completed-to-" +
+						"enable-inheritance-x-(x-entries)-and-x-(x-entries)");
 			}
 		}
 
@@ -2459,5 +2546,8 @@ public class ObjectRelationshipLocalServiceImpl
 	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

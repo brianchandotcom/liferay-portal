@@ -248,7 +248,9 @@
 		<column name="objectEntryFolderId" type="long" />
 		<column name="rootObjectEntryId" type="long" />
 		<column name="defaultLanguageId" type="String" />
+		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
+		<column name="reviewDate" type="Date" />
 		<column name="treePath" type="String" />
 		<column name="version" type="int" />
 		<column name="lastPublishDate" type="Date" />
@@ -1238,6 +1240,7 @@
 		<exception>ObjectEntryFolderName</exception>
 		<exception>ObjectEntryFolderParentObjectEntryFolderId</exception>
 		<exception>ObjectEntryFolderScope</exception>
+		<exception>ObjectEntryReviewDate</exception>
 		<exception>ObjectEntryValues</exception>
 		<exception>ObjectFieldBusinessType</exception>
 		<exception>ObjectFieldDBType</exception>

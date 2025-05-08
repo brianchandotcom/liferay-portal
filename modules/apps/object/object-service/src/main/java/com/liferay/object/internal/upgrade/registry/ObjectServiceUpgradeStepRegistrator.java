@@ -604,6 +604,12 @@ public class ObjectServiceUpgradeStepRegistrator
 			new com.liferay.object.internal.upgrade.v10_15_0.
 				ObjectDefinitionUpgradeProcess(
 					_friendlyURLSeparatorConfigurationManager));
+
+		registry.register(
+			"10.15.0", "10.16.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntry", "publishDate DATE null",
+				"reviewDate DATE null"));
 	}
 
 	@Reference

@@ -260,28 +260,20 @@ test(
 			await creationModal.cancelButton.click();
 		});
 
-		await test.step('Item actions are imported with "detached" import policy', async () => {
+		await test.step('Advanced Sample items actions are imported with "item proxy" import policy', async () => {
 			await actionsPage.open({dataSetLabel: 'Advanced Sample'});
 
-			const itemActionRow = actionsPage.itemActionsTable
+			const itemActionRows = actionsPage.itemActionsTable
 				.locator('tr')
-				.filter({hasText: 'Sample View'})
-				.first();
+				.filter({hasText: 'System Action'});
 
-			await itemActionRow.locator('.dropdown-toggle').click();
+			await expect(itemActionRows).toHaveCount(12);
 
-			await actionsPage.page
-				.locator('.dropdown-menu.show')
-				.getByRole('menuitem', {name: 'Edit'})
-				.click();
-
-			const form = actionsPage.actionForm;
-
-			await expect(form.labelInput).toHaveValue('Sample View');
-			await expect(form.iconInput).toHaveValue('view');
-			await expect(form.typeSelect).toHaveValue('link');
-
-			await form.cancelButton.click();
+			for (const itemActionRow of await itemActionRows.all()) {
+				await expect(
+					itemActionRow.locator('.dropdown-toggle')
+				).not.toBeAttached();
+			}
 		});
 
 		await test.step('Creation actions are imported with "detached" import policy', async () => {
@@ -317,7 +309,7 @@ test(
 			await page.getByTitle('Back').click();
 		});
 
-		await test.step('Item actions are imported with "item proxy" import policy', async () => {
+		await test.step('Classic Sample items actions are imported with "item proxy" import policy', async () => {
 			await actionsPage.open({dataSetLabel: 'Classic Sample'});
 
 			const itemActionRows = actionsPage.itemActionsTable

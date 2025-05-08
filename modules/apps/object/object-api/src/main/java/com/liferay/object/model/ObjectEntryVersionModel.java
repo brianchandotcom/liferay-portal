@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -29,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectEntryVersionModel
 	extends BaseModel<ObjectEntryVersion>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+			StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -239,6 +240,20 @@ public interface ObjectEntryVersionModel
 	public void setContent(String content);
 
 	/**
+	 * Returns the expiration date of this object entry version.
+	 *
+	 * @return the expiration date of this object entry version
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this object entry version.
+	 *
+	 * @param expirationDate the expiration date of this object entry version
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
 	 * Returns the version of this object entry version.
 	 *
 	 * @return the version of this object entry version
@@ -257,6 +272,7 @@ public interface ObjectEntryVersionModel
 	 *
 	 * @return the status of this object entry version
 	 */
+	@Override
 	public int getStatus();
 
 	/**
@@ -264,7 +280,137 @@ public interface ObjectEntryVersionModel
 	 *
 	 * @param status the status of this object entry version
 	 */
+	@Override
 	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this object entry version.
+	 *
+	 * @return the status by user ID of this object entry version
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this object entry version.
+	 *
+	 * @param statusByUserId the status by user ID of this object entry version
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this object entry version.
+	 *
+	 * @return the status by user uuid of this object entry version
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this object entry version.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this object entry version
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this object entry version.
+	 *
+	 * @return the status by user name of this object entry version
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this object entry version.
+	 *
+	 * @param statusByUserName the status by user name of this object entry version
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this object entry version.
+	 *
+	 * @return the status date of this object entry version
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this object entry version.
+	 *
+	 * @param statusDate the status date of this object entry version
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this object entry version is approved.
+	 *
+	 * @return <code>true</code> if this object entry version is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is denied.
+	 *
+	 * @return <code>true</code> if this object entry version is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is a draft.
+	 *
+	 * @return <code>true</code> if this object entry version is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is expired.
+	 *
+	 * @return <code>true</code> if this object entry version is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is inactive.
+	 *
+	 * @return <code>true</code> if this object entry version is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is incomplete.
+	 *
+	 * @return <code>true</code> if this object entry version is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is pending.
+	 *
+	 * @return <code>true</code> if this object entry version is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this object entry version is scheduled.
+	 *
+	 * @return <code>true</code> if this object entry version is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public ObjectEntryVersion cloneWithOriginalValues();

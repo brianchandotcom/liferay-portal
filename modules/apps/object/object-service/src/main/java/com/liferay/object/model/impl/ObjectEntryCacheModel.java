@@ -68,7 +68,7 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class ObjectEntryCacheModel
 		sb.append(defaultLanguageId);
 		sb.append(", treePath=");
 		sb.append(treePath);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", lastPublishDate=");
@@ -181,6 +183,13 @@ public class ObjectEntryCacheModel
 			objectEntryImpl.setTreePath(treePath);
 		}
 
+		if (expirationDate == Long.MIN_VALUE) {
+			objectEntryImpl.setExpirationDate(null);
+		}
+		else {
+			objectEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
 		objectEntryImpl.setVersion(version);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -236,6 +245,7 @@ public class ObjectEntryCacheModel
 		rootObjectEntryId = objectInput.readLong();
 		defaultLanguageId = objectInput.readUTF();
 		treePath = objectInput.readUTF();
+		expirationDate = objectInput.readLong();
 
 		version = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -303,6 +313,8 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(treePath);
 		}
 
+		objectOutput.writeLong(expirationDate);
+
 		objectOutput.writeInt(version);
 		objectOutput.writeLong(lastPublishDate);
 
@@ -335,6 +347,7 @@ public class ObjectEntryCacheModel
 	public long rootObjectEntryId;
 	public String defaultLanguageId;
 	public String treePath;
+	public long expirationDate;
 	public int version;
 	public long lastPublishDate;
 	public int status;

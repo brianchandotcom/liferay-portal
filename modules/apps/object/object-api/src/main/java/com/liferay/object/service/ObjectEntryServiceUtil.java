@@ -77,6 +77,15 @@ public class ObjectEntryServiceUtil {
 			externalReferenceCode, companyId, groupId);
 	}
 
+	public static ObjectEntry expireObjectEntry(
+			long userId, long objectEntryId, int version,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().expireObjectEntry(
+			userId, objectEntryId, version, serviceContext);
+	}
+
 	public static ObjectEntry fetchManyToOneObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {

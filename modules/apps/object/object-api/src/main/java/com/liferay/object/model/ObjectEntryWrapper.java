@@ -51,6 +51,7 @@ public class ObjectEntryWrapper
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("treePath", getTreePath());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("version", getVersion());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -154,6 +155,12 @@ public class ObjectEntryWrapper
 			setTreePath(treePath);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
 		Integer version = (Integer)attributes.get("version");
 
 		if (version != null) {
@@ -231,6 +238,16 @@ public class ObjectEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the expiration date of this object entry.
+	 *
+	 * @return the expiration date of this object entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -611,6 +628,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		model.setDefaultLanguageId(defaultLanguageId);
+	}
+
+	/**
+	 * Sets the expiration date of this object entry.
+	 *
+	 * @param expirationDate the expiration date of this object entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**

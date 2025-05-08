@@ -122,7 +122,6 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -254,10 +253,11 @@ public class ObjectEntryResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_testGroupId = TestPropsValues.getGroupId();
+
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(TestPropsValues.getCompanyId()),
-			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
-			new ServiceContext());
+			_testGroupId, RandomTestUtil.randomString(), new ServiceContext());
 
 		Bundle bundle = FrameworkUtil.getBundle(ObjectEntryResourceTest.class);
 
@@ -7661,27 +7661,29 @@ public class ObjectEntryResourceTest {
 	public void testPatchByExternalReferenceCodeCustomObjectEntry()
 		throws Exception {
 
-		_testPatchByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			TestPropsValues.getGroupId());
-	}
-
-	@Test
-	@TestInfo("LPD-53245")
-	public void testPatchByExternalReferenceCodeSiteScopedCustomObjectEntry()
-		throws Exception {
-
-		_testPatchByExternalReferenceCodeCustomObjectEntry(
-			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
-			TestPropsValues.getGroupId());
+		_testPatchCustomObjectEntry(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode"),
+			_objectDefinition1, _objectDefinition2, _testGroupId);
 	}
 
 	@Test
 	@TestInfo("LPD-53245")
 	public void testPatchCustomObjectEntry() throws Exception {
 		_testPatchCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			TestPropsValues.getGroupId());
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
+			_objectDefinition1, _objectDefinition2, _testGroupId);
+
+		_testPatchCustomObjectEntry(
+			jsonObject ->
+				_siteScopedObjectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			_testGroupId);
 	}
 
 	@FeatureFlag("LPD-21926")
@@ -8120,45 +8122,47 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPatchPutScopeScopeKeyByExternalReferenceCode()
+	@TestInfo("LPD-53245")
+	public void testPatchScopeScopeKeyByExternalReferenceCode()
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+		Group group = _groupLocalService.fetchGroup(_testGroupId);
 
-		// Scope key as external reference code
+		// scopeKey: externalReferenceCode
 
-		_testPatchByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			group.getExternalReferenceCode());
+		String externalReferenceCodeEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, group.getExternalReferenceCode());
 
-		_testPutByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			group.getExternalReferenceCode());
-
-		// Scope key as group ID
-
-		_testPatchByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2, group.getGroupId());
-
-		_testPutByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2, group.getGroupId());
-
-		// Scope key as group key
-
-		_testPatchByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2, group.getGroupKey());
-
-		_testPutByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2, group.getGroupKey());
-	}
-
-	@Test
-	@TestInfo("LPD-53245")
-	public void testPatchSiteScopedCustomObjectEntry() throws Exception {
 		_testPatchCustomObjectEntry(
+			jsonObject ->
+				externalReferenceCodeEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
-			TestPropsValues.getGroupId());
+			group.getExternalReferenceCode());
+
+		// scopeKey: groupId
+
+		String groupIdEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, _testGroupId);
+
+		_testPatchCustomObjectEntry(
+			jsonObject ->
+				groupIdEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			_testGroupId);
+
+		// scopeKey: groupKey
+
+		String groupKeyEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, group.getGroupKey());
+
+		_testPatchCustomObjectEntry(
+			jsonObject ->
+				groupKeyEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			group.getGroupKey());
 	}
 
 	@FeatureFlag("LPD-39967")
@@ -9619,9 +9623,12 @@ public class ObjectEntryResourceTest {
 	public void testPutByExternalReferenceCodeCustomObjectEntry()
 		throws Exception {
 
-		_testPutByExternalReferenceCodeCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			TestPropsValues.getGroupId());
+		_testPutCustomObjectEntry(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode"),
+			_objectDefinition1, _objectDefinition2, _testGroupId);
 	}
 
 	@Test
@@ -10035,16 +10042,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-53245")
-	public void testPutByExternalReferenceCodeSiteScopedCustomObjectEntry()
-		throws Exception {
-
-		_testPutByExternalReferenceCodeCustomObjectEntry(
-			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
-			TestPropsValues.getGroupId());
-	}
-
-	@Test
 	public void testPutByExternalReferenceCodeWithNonexistentValueOneToManyRelationship()
 		throws Exception {
 
@@ -10091,8 +10088,17 @@ public class ObjectEntryResourceTest {
 	@TestInfo("LPD-53245")
 	public void testPutCustomObjectEntry() throws Exception {
 		_testPutCustomObjectEntry(
-			_objectDefinition1, _objectDefinition2,
-			TestPropsValues.getGroupId());
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
+			_objectDefinition1, _objectDefinition2, _testGroupId);
+
+		_testPutCustomObjectEntry(
+			jsonObject ->
+				_siteScopedObjectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			_testGroupId);
 	}
 
 	@Test
@@ -10697,10 +10703,44 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	@TestInfo("LPD-53245")
-	public void testPutSiteScopedCustomObjectEntry() throws Exception {
+	public void testPutScopeScopeKeyByExternalReferenceCode() throws Exception {
+		Group group = _groupLocalService.fetchGroup(_testGroupId);
+
+		// scopeKey: externalReferenceCode
+
+		String externalReferenceCodeEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, group.getExternalReferenceCode());
+
 		_testPutCustomObjectEntry(
+			jsonObject ->
+				externalReferenceCodeEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
-			TestPropsValues.getGroupId());
+			group.getExternalReferenceCode());
+
+		// scopeKey: groupId
+
+		String groupIdEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, _testGroupId);
+
+		_testPutCustomObjectEntry(
+			jsonObject ->
+				groupIdEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			_testGroupId);
+
+		// scopeKey: groupKey
+
+		String groupKeyEndpoint = _getEndpoint(
+			_siteScopedObjectDefinition1, group.getGroupKey());
+
+		_testPutCustomObjectEntry(
+			jsonObject ->
+				groupKeyEndpoint + "/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
+			group.getGroupKey());
 	}
 
 	@Test
@@ -14783,31 +14823,8 @@ public class ObjectEntryResourceTest {
 		unsafeTriConsumer.accept(actionJSONObject, jsonObject, objectAction);
 	}
 
-	private void _testPatchByExternalReferenceCodeCustomObjectEntry(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, Object scopeKey)
-		throws Exception {
-
-		_testPatchCustomObjectEntry(
-			_getEndpoint(objectDefinition1, scopeKey) +
-				"/by-external-reference-code",
-			jsonObject -> jsonObject.getString("externalReferenceCode"),
-			objectDefinition1, objectDefinition2, scopeKey);
-	}
-
 	private void _testPatchCustomObjectEntry(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, Object scopeKey)
-		throws Exception {
-
-		_testPatchCustomObjectEntry(
-			objectDefinition1.getRESTContextPath(),
-			jsonObject -> jsonObject.getLong("id"), objectDefinition1,
-			objectDefinition2, scopeKey);
-	}
-
-	private void _testPatchCustomObjectEntry(
-			String contextPath, Function<JSONObject, Object> keyGetterFunction,
+			Function<JSONObject, String> endpointFunction,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, Object scopeKey)
 		throws Exception {
@@ -14960,8 +14977,7 @@ public class ObjectEntryResourceTest {
 			"id", (Object)jsonObject.getLong("id")
 		);
 
-		String endpoint =
-			contextPath + "/" + keyGetterFunction.apply(jsonObject);
+		String endpoint = endpointFunction.apply(jsonObject);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(),
@@ -16999,31 +17015,8 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	private void _testPutByExternalReferenceCodeCustomObjectEntry(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, Object scopeKey)
-		throws Exception {
-
-		_testPutCustomObjectEntry(
-			_getEndpoint(objectDefinition1, scopeKey) +
-				"/by-external-reference-code",
-			jsonObject -> jsonObject.getString("externalReferenceCode"),
-			objectDefinition1, objectDefinition2, scopeKey);
-	}
-
 	private void _testPutCustomObjectEntry(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, Object scopeKey)
-		throws Exception {
-
-		_testPutCustomObjectEntry(
-			objectDefinition1.getRESTContextPath(),
-			jsonObject -> jsonObject.getLong("id"), objectDefinition1,
-			objectDefinition2, scopeKey);
-	}
-
-	private void _testPutCustomObjectEntry(
-			String contextPath, Function<JSONObject, Object> keyGetterFunction,
+			Function<JSONObject, String> endpointFunction,
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, Object scopeKey)
 		throws Exception {
@@ -17031,30 +17024,36 @@ public class ObjectEntryResourceTest {
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
+		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			objectDefinition2, objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectRelationship1ObjectField =
+			_objectFieldLocalService.getObjectField(
+				_objectRelationship1.getObjectFieldId2());
 
 		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			objectDefinition2, objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		ObjectField objectRelationship2ObjectField =
+			_objectFieldLocalService.getObjectField(
+				_objectRelationship2.getObjectFieldId2());
+
 		String objectRelationship1ERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-				_objectFieldLocalService.getObjectField(
-					_objectRelationship1.getObjectFieldId2()));
+				objectRelationship1ObjectField);
 
-		String objectRelationship2IdObjectFieldName =
+		String objectRelationship2ERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-				_objectFieldLocalService.getObjectField(
-					_objectRelationship2.getObjectFieldId2())
-			).replace(
-				"ERC", "Id"
-			);
+				objectRelationship2ObjectField);
 
 		BigDecimal randomBigDecimal = BigDecimal.valueOf(
 			RandomTestUtil.randomDouble()
@@ -17109,15 +17108,20 @@ public class ObjectEntryResourceTest {
 				objectRelationship1ERCObjectFieldName,
 				_objectEntry2.getExternalReferenceCode()
 			).put(
-				objectRelationship2IdObjectFieldName,
+				objectRelationship1ObjectField.getName(),
+				_objectEntry3.getObjectEntryId()
+			).put(
+				objectRelationship2ERCObjectFieldName,
+				_objectEntry3.getExternalReferenceCode()
+			).put(
+				objectRelationship2ObjectField.getName(),
 				_objectEntry2.getObjectEntryId()
 			).put(
 				"externalReferenceCode", randomExternalReferenceCode
 			).toString(),
 			_getEndpoint(objectDefinition1, scopeKey), Http.Method.POST);
 
-		String endpoint =
-			contextPath + "/" + keyGetterFunction.apply(jsonObject);
+		String endpoint = endpointFunction.apply(jsonObject);
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONFactoryUtil.getNullJSON(), endpoint, Http.Method.PUT);
@@ -17151,7 +17155,17 @@ public class ObjectEntryResourceTest {
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, ""
 			).put(
-				objectRelationship1ERCObjectFieldName, ""
+				objectRelationship1ERCObjectFieldName,
+				_objectEntry3.getExternalReferenceCode()
+			).put(
+				objectRelationship1ObjectField.getName(),
+				(int)_objectEntry3.getObjectEntryId()
+			).put(
+				objectRelationship2ERCObjectFieldName,
+				_objectEntry2.getExternalReferenceCode()
+			).put(
+				objectRelationship2ObjectField.getName(),
+				(int)_objectEntry2.getObjectEntryId()
 			).put(
 				"externalReferenceCode", randomExternalReferenceCode
 			).toString(),
@@ -17211,8 +17225,14 @@ public class ObjectEntryResourceTest {
 				objectRelationship1ERCObjectFieldName,
 				_objectEntry2.getExternalReferenceCode()
 			).put(
-				objectRelationship2IdObjectFieldName,
+				objectRelationship1ObjectField.getName(),
 				(int)_objectEntry2.getObjectEntryId()
+			).put(
+				objectRelationship2ERCObjectFieldName,
+				_objectEntry3.getExternalReferenceCode()
+			).put(
+				objectRelationship2ObjectField.getName(),
+				(int)_objectEntry3.getObjectEntryId()
 			).put(
 				"externalReferenceCode", randomExternalReferenceCode
 			).toString(),
@@ -17249,10 +17269,16 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_TEXT, randomString3
 				).put(
 					objectRelationship1ERCObjectFieldName,
+					_objectEntry3.getExternalReferenceCode()
+				).put(
+					objectRelationship1ObjectField.getName(),
+					_objectEntry2.getObjectEntryId()
+				).put(
+					objectRelationship2ERCObjectFieldName,
 					_objectEntry2.getExternalReferenceCode()
 				).put(
-					objectRelationship2IdObjectFieldName,
-					_objectEntry2.getObjectEntryId()
+					objectRelationship2ObjectField.getName(),
+					_objectEntry3.getObjectEntryId()
 				).toString(),
 				endpoint, Http.Method.PUT
 			).toString(),
@@ -18142,6 +18168,7 @@ public class ObjectEntryResourceTest {
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
 	private static final TestDLFileEntryModelListener
 		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
+	private static long _testGroupId;
 	private static final TestObjectEntryModelListener
 		_testObjectEntryModelListener = new TestObjectEntryModelListener();
 

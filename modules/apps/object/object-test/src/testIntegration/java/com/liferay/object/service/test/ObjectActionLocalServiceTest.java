@@ -2931,52 +2931,11 @@ public class ObjectActionLocalServiceTest {
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
-			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
-				RandomTestUtil.randomInt());
-
-		notificationTemplate.setUserId(_user.getUserId());
-		notificationTemplate.setObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId());
-		notificationTemplate.setBody(RandomTestUtil.randomString());
-		notificationTemplate.setDescription(RandomTestUtil.randomString());
-		notificationTemplate.setEditorType(
-			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
-		notificationTemplate.setName(RandomTestUtil.randomString());
-		notificationTemplate.setSubject(RandomTestUtil.randomString());
-		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
-
-		NotificationContext notificationContext = new NotificationContext();
-
-		notificationContext.setAttachmentObjectFieldIds(
-			Collections.emptyList());
-		notificationContext.setNotificationRecipient(
-			NotificationRecipientLocalServiceUtil.createNotificationRecipient(
-				RandomTestUtil.randomInt()));
-		notificationContext.setNotificationRecipientSettings(
-			Arrays.asList(
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"fromName",
-						Collections.singletonMap(
-							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting(
-						"to", "[%CURRENT_USER_EMAIL_ADDRESS%]")));
-		notificationContext.setNotificationTemplate(notificationTemplate);
-		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
-
-		notificationTemplate =
-			_notificationTemplateLocalService.addNotificationTemplate(
-				notificationContext);
+			_addEmailNotificationTemplate(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				objectDefinition.getObjectDefinitionId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
 		return _addObjectAction(
 			objectDefinition.getObjectDefinitionId(),

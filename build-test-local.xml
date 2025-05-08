@@ -306,7 +306,6 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 	</target>
 
 	<target name="setup-custom-suite">
-		<property name="integration" value="false" />
 		<if>
 			<not>
 				<isset property="custom.suite" />
@@ -344,7 +343,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		/>
 
 		<if>
-			<equals arg1="${integration}" arg2="true" />
+			<equals arg1="${integration.suite.enabled}" arg2="true" />
 			<then>
 				<replace
 					file="${project.dir}/test.properties"

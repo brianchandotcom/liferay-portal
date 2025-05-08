@@ -24,44 +24,47 @@ public class JavaJSImportMapsContributorCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("JSImportMapsContributor.java")) {
-			int x = -1;
+		if (!fileName.endsWith("JSImportMapsContributor.java")) {
+			return content;
+		}
 
-			while (true) {
-				x = content.indexOf(".put(", x + 1);
+		int x = -1;
 
-				if (x == -1) {
-					break;
-				}
+		while (true) {
+			x = content.indexOf(".put(", x + 1);
 
-				List<String> getParameterNames =
-					JavaSourceUtil.getParameterNames(
-						JavaSourceUtil.getMethodCall(content, x));
+			if (x == -1) {
+				break;
+			}
 
-				String importName = getParameterNames.get(0);
+			List<String> parameterNames = JavaSourceUtil.getParameterNames(
+				JavaSourceUtil.getMethodCall(content, x));
 
-				String resourcePath = getParameterNames.get(1);
+			if (parameterNames.size() != 2) {
+				continue;
+			}
 
-				if (SourceUtil.isLiteralString(importName) &&
-					SourceUtil.isLiteralString(resourcePath)) {
+			String importName = parameterNames.get(0);
 
-					if (!importName.contains("/api\"")) {
-						addMessage(
-							fileName,
-							"Import map name needs to end with '*/api', got " +
-								importName);
-					}
+			if (SourceUtil.isLiteralString(importName) &&
+				!importName.contains("/api\"")) {
 
-					if (!(resourcePath.contains("__liferay__/api.js") ||
-						  resourcePath.contains("__liferay__/exports"))) {
+				addMessage(
+					fileName,
+					"Import map name needs to end with '*/api', got " +
+						importName);
+			}
 
-						addMessage(
-							fileName,
-							"Import map resource path should only contain " +
-								"'__liferay__/api.js' or " +
-									"'__liferay__/exports'.");
-					}
-				}
+			String resourcePath = parameterNames.get(1);
+
+			if (SourceUtil.isLiteralString(resourcePath) &&
+				!resourcePath.contains("__liferay__/api.js") &&
+				!resourcePath.contains("__liferay__/exports")) {
+
+				addMessage(
+					fileName,
+					"Import map resource path should only contain " +
+						"'__liferay__/api.js' or '__liferay__/exports'.");
 			}
 		}
 

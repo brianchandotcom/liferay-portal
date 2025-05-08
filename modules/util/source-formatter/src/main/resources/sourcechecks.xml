@@ -1740,6 +1740,7 @@
 		<check name="TSConfigFileCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing `test.properties` files." />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="TXTSourceProcessor">

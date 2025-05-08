@@ -6,118 +6,166 @@
 package com.liferay.captcha.internal.configuration.settings;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.provider.CaptchaProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	service = CaptchaSettings.class
-)
+@Component(service = CaptchaSettings.class)
 public class CaptchaSettingsImpl implements CaptchaSettings {
 
 	@Override
 	public String getCaptchaEngine() {
-		return _captchaConfiguration.captchaEngine();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.captchaEngine();
 	}
 
 	@Override
 	public int getMaxChallenges() {
-		return _captchaConfiguration.maxChallenges();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.maxChallenges();
 	}
 
 	@Override
 	public String getReCaptchaNoScriptURL() {
-		return _captchaConfiguration.reCaptchaNoScriptURL();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.reCaptchaNoScriptURL();
 	}
 
 	@Override
 	public String getReCaptchaPrivateKey() {
-		return _captchaConfiguration.reCaptchaPrivateKey();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.reCaptchaPrivateKey();
 	}
 
 	@Override
 	public String getReCaptchaPublicKey() {
-		return _captchaConfiguration.reCaptchaPublicKey();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.reCaptchaPublicKey();
 	}
 
 	@Override
 	public String getReCaptchaScriptURL() {
-		return _captchaConfiguration.reCaptchaScriptURL();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.reCaptchaScriptURL();
 	}
 
 	@Override
 	public String getReCaptchaVerifyURL() {
-		return _captchaConfiguration.reCaptchaVerifyURL();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.reCaptchaVerifyURL();
 	}
 
 	@Override
 	public String[] getSimpleCaptchaBackgroundProducers() {
-		return _captchaConfiguration.simpleCaptchaBackgroundProducers();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaBackgroundProducers();
 	}
 
 	@Override
 	public String[] getSimpleCaptchaGimpyRenderers() {
-		return _captchaConfiguration.simpleCaptchaGimpyRenderers();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaGimpyRenderers();
 	}
 
 	@Override
 	public int getSimpleCaptchaHeight() {
-		return _captchaConfiguration.simpleCaptchaHeight();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaHeight();
 	}
 
 	@Override
 	public String[] getSimpleCaptchaNoiseProducers() {
-		return _captchaConfiguration.simpleCaptchaNoiseProducers();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaNoiseProducers();
 	}
 
 	@Override
 	public String[] getSimpleCaptchaTextProducers() {
-		return _captchaConfiguration.simpleCaptchaTextProducers();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaTextProducers();
 	}
 
 	@Override
 	public int getSimpleCaptchaWidth() {
-		return _captchaConfiguration.simpleCaptchaWidth();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaWidth();
 	}
 
 	@Override
 	public String[] getSimpleCaptchaWordRenderers() {
-		return _captchaConfiguration.simpleCaptchaWordRenderers();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaWordRenderers();
 	}
 
 	@Override
 	public boolean isCreateAccountCaptchaEnabled() {
-		return _captchaConfiguration.createAccountCaptchaEnabled();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.createAccountCaptchaEnabled();
 	}
 
 	@Override
 	public boolean isMessageBoardsEditCategoryCaptchaEnabled() {
-		return _captchaConfiguration.messageBoardsEditCategoryCaptchaEnabled();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.messageBoardsEditCategoryCaptchaEnabled();
 	}
 
 	@Override
 	public boolean isMessageBoardsEditMessageCaptchaEnabled() {
-		return _captchaConfiguration.messageBoardsEditMessageCaptchaEnabled();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.messageBoardsEditMessageCaptchaEnabled();
 	}
 
 	@Override
 	public boolean isSendPasswordCaptchaEnabled() {
-		return _captchaConfiguration.sendPasswordCaptchaEnabled();
+		CaptchaConfiguration captchaConfiguration =
+			_captchaProvider.getCaptchaConfiguration();
+
+		return captchaConfiguration.sendPasswordCaptchaEnabled();
 	}
 
 	@Override
@@ -137,14 +185,8 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 		configuration.update(properties);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_captchaConfiguration = ConfigurableUtil.createConfigurable(
-			CaptchaConfiguration.class, properties);
-	}
-
-	private volatile CaptchaConfiguration _captchaConfiguration;
+	@Reference
+	private CaptchaProvider _captchaProvider;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

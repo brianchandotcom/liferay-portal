@@ -84,7 +84,8 @@ public class StructureBuilderDisplayContext {
 						"/cms/reset_structure_display_page?objectDefinitionId=",
 						ParamUtil.getLong(
 							_httpServletRequest, "objectDefinitionId"),
-						"&redirect=", _themeDisplay.getURLCurrent());
+						"&redirect=", _themeDisplay.getURLCurrent(),
+						"&redirectToEdit=true");
 				}
 			)
 		).put(

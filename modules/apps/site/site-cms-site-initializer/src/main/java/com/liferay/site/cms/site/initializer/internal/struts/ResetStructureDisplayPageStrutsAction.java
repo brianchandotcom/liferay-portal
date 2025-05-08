@@ -5,7 +5,9 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,6 +89,16 @@ public class ResetStructureDisplayPageStrutsAction implements StrutsAction {
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry);
+
+			if (ParamUtil.getBoolean(httpServletRequest, "redirectToEdit")) {
+				httpServletResponse.sendRedirect(
+					ActionUtil.getDisplayPageEditURL(
+						_formManager, _fragmentEntryLinkListenerRegistry,
+						httpServletRequest,
+						_objectDefinitionService.getObjectDefinition(
+							ParamUtil.getLong(
+								httpServletRequest, "objectDefinitionId"))));
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -98,6 +111,13 @@ public class ResetStructureDisplayPageStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResetStructureDisplayPageStrutsAction.class);
+
+	@Reference
+	private FormManager _formManager;
+
+	@Reference
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -6,6 +6,7 @@
 export type Config = {
 	editStructureDisplayPageURL: string;
 	objectFolderExternalReferenceCode: string;
+	resetStructureDisplayPageURL: string;
 };
 
 export let config = {} as Config;

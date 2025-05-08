@@ -98,7 +98,7 @@ function CustomizeExperienceButton() {
 					<ClayButton
 						displayType="success"
 						onClick={() =>
-							navigate(config.editStructureDisplayPageURL)
+							navigate(config.resetStructureDisplayPageURL)
 						}
 						size="sm"
 					>

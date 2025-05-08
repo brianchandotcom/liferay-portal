@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {LicenseTier} from '../../../../../../enums/licenseTier';
+import {ProductLicenseTier} from '../../../../../../enums/Product';
 import {InitialStateProps, LicensePrice} from './AppManageState';
 import {ActionTypes} from './actionTypes';
 
@@ -96,11 +96,11 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 		}
 
 		case ActionTypes.ADD_APP_LICENSE_PRICE: {
-			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const licenseTier: ProductLicenseTier = action.payload.licenseTier;
 			const sortedOldLicensePrice = {
 				developer: state.appLicensePrice.developer.sort(sortLicenses),
 				standard: state.appLicensePrice.standard.sort(sortLicenses),
-			};
+			} as any;
 
 			if (!sortedOldLicensePrice[licenseTier].length) {
 				return {
@@ -129,11 +129,11 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 		}
 
 		case ActionTypes.DELETE_APP_LICENSE_PRICE: {
-			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const licenseTier: ProductLicenseTier = action.payload.licenseTier;
 			const sortedOldLicensePrice = {
 				developer: state.appLicensePrice.developer.sort(sortLicenses),
 				standard: state.appLicensePrice.standard.sort(sortLicenses),
-			};
+			} as any;
 
 			const filteredLicensePriceTier = sortedOldLicensePrice[
 				licenseTier
@@ -151,7 +151,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 		}
 
 		case ActionTypes.UPDATE_APP_LICENSE_PRICES: {
-			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const licenseTier: ProductLicenseTier = action.payload.licenseTier;
 			const oldLicensePrice = state.appLicensePrice;
 
 			const newLicensePrices = [...(oldLicensePrice[licenseTier] ?? [])];

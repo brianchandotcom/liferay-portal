@@ -19,6 +19,7 @@ export default {
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
+	'add-currency': 'Add Currency',
 	'add-developer-licenses': 'Add Developer Licenses',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
@@ -79,6 +80,7 @@ export default {
 	'categories': 'Categories',
 	'category': 'Category',
 	'choose-an-option': 'Choose an option',
+	'choose-currency': 'Choose Currency',
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
 		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching on a specific category name in the main Marketplace home page. Having your solution listed under the appropriate category will help them find your solution.',
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",

@@ -16,6 +16,7 @@ type Specification = {
 type LicenceTiersPrices = {
 	developer: LicensePrice[];
 	standard: LicensePrice[];
+	trial: any;
 };
 
 export type LicensePrice = {key: number; value: number};

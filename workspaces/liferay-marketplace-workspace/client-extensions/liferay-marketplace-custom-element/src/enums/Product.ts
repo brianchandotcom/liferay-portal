@@ -34,6 +34,12 @@ export enum ProductLicense {
 	DXP = 'dxp-license-usage-type',
 }
 
+export enum ProductLicenseTier {
+	DEVELOPER = 'developer',
+	STANDARD = 'standard',
+	TRIAL = 'trial',
+}
+
 export enum ProductLicenseType {
 	SUBSCRIPTION = 'Subscription',
 	PERPETUAL = 'Perpetual',
@@ -160,6 +166,19 @@ export const ProductTypeLabels = {
 	[ProductType.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[ProductType.OTHER]: 'Other',
 } as const;
+
+export const ProductTypeLicenseOptions = {
+	[ProductType.CLIENT_EXTENSION]: [ProductLicenseTier.STANDARD],
+	[ProductType.CLOUD]: [ProductLicenseTier.STANDARD],
+	[ProductType.COMPOSITE_APP]: [ProductLicenseTier.STANDARD],
+	[ProductType.DXP]: [
+		ProductLicenseTier.STANDARD,
+		ProductLicenseTier.DEVELOPER,
+		ProductLicenseTier.TRIAL,
+	],
+	[ProductType.LOW_CODE_CONFIGURATION]: [ProductLicenseTier.STANDARD],
+	[ProductType.OTHER]: [ProductLicenseTier.STANDARD],
+};
 
 export const ProductWorkflowStatusLabel = {
 	[ProductWorkflowStatusCode.APPROVED]: i18n.translate('approved'),

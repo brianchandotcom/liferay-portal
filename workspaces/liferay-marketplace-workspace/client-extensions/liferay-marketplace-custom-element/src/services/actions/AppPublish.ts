@@ -15,7 +15,9 @@ import {
 import {createProductVirtualEntry} from '../../utils/api';
 import {
 	getPriceListByCatalogName,
+	getPriceListIdPriceEntries,
 	getProductById,
+	patchPriceEntry,
 	postPriceEntryIdTierPrice,
 	postPriceListEntry,
 } from '../../utils/api';
@@ -354,20 +356,23 @@ export default class AppPublish extends BaseAppPublish {
 				const tierPrice = {
 					minimumQuantity: quantity,
 					price: tierPrices[quantity],
-					priceEntryId: priceEntry?.id,
+					priceEntryId: priceEntry?.priceEntryId || priceEntry.id,
 				};
 
-				await postPriceEntryIdTierPrice(priceEntry?.id, tierPrice);
+				await postPriceEntryIdTierPrice(
+					priceEntry?.priceEntryId || priceEntry.id,
+					tierPrice
+				);
 			}
 		};
 
 		for (const currencyCode of currencies) {
-			const producta = await getProductById({
+			const product = await getProductById({
 				nestedFields: 'catalog',
 				productId: _product?.productId,
 			});
 			const priceList = await getPriceListByCatalogName(
-				producta?.catalog?.name
+				product?.catalog?.name
 			);
 
 			const priceListResponse = priceList.items.filter(
@@ -399,7 +404,7 @@ export default class AppPublish extends BaseAppPublish {
 						continue;
 					}
 
-					const priceEntry = {
+					const newPriceEntry = {
 						hasTierPrice: true,
 						price: Number(basePrice),
 						sku: sku.sku,
@@ -407,16 +412,51 @@ export default class AppPublish extends BaseAppPublish {
 						skuId: sku.id,
 					};
 
-					const priceEntryResponse = await postPriceListEntry(
-						priceListId,
-						priceEntry
-					);
+					const priceEntries =
+						await getPriceListIdPriceEntries(priceListId);
 
-					await processTier(
-						priceEntryResponse,
-						currencyCode,
-						licenseTier
-					);
+					let matchedPriceEntry = null;
+
+					for (const currentPriceEntry of priceEntries?.items || []) {
+						if (currentPriceEntry?.sku?.id === sku?.id) {
+							matchedPriceEntry = currentPriceEntry;
+							break;
+						}
+					}
+
+					if (matchedPriceEntry) {
+						if (
+							!matchedPriceEntry?.bulkPricing ||
+							matchedPriceEntry?.hasTierPrice
+						) {
+							await patchPriceEntry(
+								{
+									bulkPricing: true,
+									hasTierPrice: false,
+									price: Number(basePrice),
+								},
+								matchedPriceEntry?.priceEntryId
+							);
+						}
+
+						await processTier(
+							matchedPriceEntry,
+							currencyCode,
+							licenseTier
+						);
+					}
+					else {
+						const NewPriceEntryResponse = await postPriceListEntry(
+							priceListId,
+							newPriceEntry
+						);
+
+						await processTier(
+							NewPriceEntryResponse,
+							currencyCode,
+							licenseTier
+						);
+					}
 				}
 			}
 		}

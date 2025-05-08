@@ -4,11 +4,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {LabelHTMLAttributes} from 'react';
 
 import './index.scss';
-
-import {ClayTooltipProvider} from '@clayui/tooltip';
 
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 	info?: string;

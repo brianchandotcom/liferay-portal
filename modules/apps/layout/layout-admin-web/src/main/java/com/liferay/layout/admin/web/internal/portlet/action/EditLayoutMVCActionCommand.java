@@ -45,6 +45,8 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,10 +67,18 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			UploadPortletRequest uploadPortletRequest =
-				_portal.getUploadPortletRequest(actionRequest);
+		_editLayout(
+			actionRequest, _portal.getHttpServletResponse(actionResponse),
+			_portal.getUploadPortletRequest(actionRequest));
+	}
 
+	private void _editLayout(
+			ActionRequest actionRequest,
+			HttpServletResponse httpServletResponse,
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -212,8 +222,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			EventsProcessorUtil.process(
 				PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
 				layoutTypePortlet.getConfigurationActionUpdate(),
-				uploadPortletRequest,
-				_portal.getHttpServletResponse(actionResponse));
+				uploadPortletRequest, httpServletResponse);
 
 			if (layout.isDraftLayout()) {
 				_layoutLocalService.updateStatus(

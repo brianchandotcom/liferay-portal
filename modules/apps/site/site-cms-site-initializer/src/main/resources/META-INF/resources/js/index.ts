@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// Content Editor
+
+export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
+
+// Main
+
 export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransformer';
 export {default as AllSpacesFDSPropsTransformer} from './main/FDSPropsTransformer/AllSpacesFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main/FDSPropsTransformer/CategoryFDSPropsTransformer';
@@ -20,5 +26,8 @@ export {default as SpaceSticker} from './main/components/SpaceSticker';
 export {default as EditFolder} from './main/components/folders/EditFolder';
 export {default as ViewDashboard} from './main/dashboard/ViewDashboard';
 export {default as SpacesNavigation} from './main/spaces_navigation/SpacesNavigation';
+
+// Structure Builder
+
 export {default as StructureBuilder} from './structure_builder/components/StructureBuilder';
 export {default as PicklistBuilder} from './structure_builder/components/picklist_builder/PicklistBuilder';

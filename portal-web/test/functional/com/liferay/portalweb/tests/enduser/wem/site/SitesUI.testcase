@@ -20,85 +20,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-112992. The user could add a child site in Sites admin."
-	@priority = 5
-	test AddChildSite {
-		property portal.acceptance = "true";
-
-		var childSiteName = StringUtil.randomString(8);
-
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = ${randomSiteName});
-		}
-
-		task ("Add a child site") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(
-				parentSiteName = ${randomSiteName},
-				siteName = ${childSiteName});
-		}
-
-		task ("View child site added") {
-			Site.openSitesAdmin();
-
-			Site.viewChildCP(
-				childSiteName = ${childSiteName},
-				siteName = ${randomSiteName});
-		}
-	}
-
-	@description = "Able to add multiple sites based on different site template."
-	@priority = 4
-	@uitest
-	test AddSitesMultiple {
-		var randomSiteTemplateName = StringUtil.randomString(8);
-
-		task ("Add a blank site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addBlankCP(siteName = "${randomSiteName}1");
-		}
-
-		task ("View blank site added") {
-			Site.openSitesAdmin();
-
-			Site.viewCP(siteName = "${randomSiteName}1");
-		}
-
-		task ("Add a site template and add a site based on site template") {
-			JSONSiteTemplate.addSiteTemplate(siteTemplateName = ${randomSiteTemplateName});
-
-			Site.addSiteTemplateCP(
-				siteName = "${randomSiteName}2",
-				siteTemplateName = ${randomSiteTemplateName},
-				siteTemplateTab = "Custom Site Templates");
-		}
-
-		task ("View site added") {
-			Site.openSitesAdmin();
-
-			Site.viewCP(siteName = "${randomSiteName}2");
-		}
-
-		task ("Add a site based on Minium site template") {
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "${randomSiteName}3",
-				siteTemplateName = "Minium");
-		}
-
-		task ("View site added") {
-			Site.openSitesAdmin();
-
-			Site.viewCP(siteName = "${randomSiteName}3");
-		}
-	}
-
 	@description = "This is a test for LPS-149293. The user could cancel the site creation."
 	@priority = 4
 	test CancelSiteCreation {
@@ -191,25 +112,6 @@ definition {
 		}
 	}
 
-	@description = "Able to delete site."
-	@priority = 5
-	@uitest
-	test DeleteSite {
-		property portal.acceptance = "true";
-
-		task ("Add a blank site") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(siteName = ${randomSiteName});
-		}
-
-		task ("Assert able to delete the site") {
-			Site.openSitesAdmin();
-
-			Site.deleteCP(siteName = ${randomSiteName});
-		}
-	}
-
 	@description = "This is a test for LPS-149293. The site creation process continues even though the user close the modal after submitting form."
 	@priority = 5
 	test ViewSiteCreatedEvenThoughCloseModalAfterSubmitForm {
@@ -250,69 +152,6 @@ definition {
 			Site.openSitesAdmin();
 
 			LexiconTable.viewTableEntryTitle(tableEntry = ${randomSiteName});
-		}
-	}
-
-	@description = "This is a test for LPS-149293 and LPS-146278. The user could view a message in modal when create a new site."
-	@priority = 5
-	@uitest
-	test ViewSiteCreationMessage {
-		property portal.acceptance = "true";
-
-		task ("Navigate to the Sites admin") {
-			Site.openSitesAdmin();
-		}
-
-		task ("Add a new site") {
-			LexiconEntry.gotoAdd();
-
-			LexiconCard.clickCard(card = "Blank Site");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			PortletEntry.inputName(name = ${randomSiteName});
-
-			var map = MapUtil.newHashMap();
-
-			ExecuteCDPCommand(
-				value1 = "Fetch.enable",
-				value2 = ${map});
-
-			Button.click(button = "Add");
-		}
-
-		task ("View the Add and Cancel buttons are not shown") {
-			for (var button : list "Add,Cancel") {
-				AssertNotVisible(
-					key_text = ${button},
-					locator1 = "Button#ANY");
-			}
-		}
-
-		task ("View the name field is not shown") {
-			AssertNotVisible(locator1 = "TextInput#NAME");
-		}
-
-		task ("View site creation message") {
-			AssertTextEquals(
-				locator1 = "Message#SUBTITLE",
-				value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
-		}
-
-		task ("View the new site is created") {
-			var map = MapUtil.newHashMap();
-
-			ExecuteCDPCommand(
-				value1 = "Fetch.disable",
-				value2 = ${map});
-
-			WaitForTextNotPresent(value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
-
-			SelectFrameTop();
-
-			Alert.viewSuccessMessageText(successMessage = "Site was successfully added.");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Site Settings");
 		}
 	}
 

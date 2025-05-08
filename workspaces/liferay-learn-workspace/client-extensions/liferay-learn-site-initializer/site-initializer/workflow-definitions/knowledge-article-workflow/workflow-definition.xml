@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Knowledge Article Workflow</name>
-	<description>A single approver can approve a workflow article.</description>
+	<description>A single approver can approve a knowledge article.</description>
 	<version>1</version>
 	<state>
 		<name>Submitted</name>
@@ -113,7 +113,7 @@
 		</metadata>
 		<actions>
 			<action>
-				<name>Knowledge Base</name>
+				<name>Knowledge Article</name>
 				<status>0</status>
 				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
@@ -121,7 +121,7 @@
 			<notification>
 				<name>Approved</name>
 				<template>
-					<![CDATA[Your ${entryType} was approved to be added to Liferay Learn knowledge base.]]>
+					<![CDATA[Your ${entryType} was approved to be added to Liferay Learn knowledge article.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
@@ -252,7 +252,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Publish as Knowledge Base
+						Publish as Knowledge Article
 					</label>
 				</labels>
 				<name>knowledge-base-knowledge-article</name>

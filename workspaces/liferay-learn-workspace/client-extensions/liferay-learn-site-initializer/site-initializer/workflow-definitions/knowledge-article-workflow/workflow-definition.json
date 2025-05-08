@@ -1,6 +1,6 @@
 {
 	"active": true,
-	"description": "Workflow for Knowledge Article content creation",
+	"description": "Workflow for knowledge article content creation.",
 	"name": "Knowledge Article Workflow",
 	"title": "Knowledge Article Workflow",
 	"title_i18n": {

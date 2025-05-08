@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -103,10 +103,7 @@ public class EditLayoutMVCActionCommandTest {
 		_processAction(layout);
 	}
 
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			Layout layout)
-		throws Exception {
-
+	private void _processAction(Layout layout) throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
@@ -125,13 +122,6 @@ public class EditLayoutMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"selPlid", String.valueOf(layout.getPlid()));
 		mockLiferayPortletActionRequest.addParameter("type", layout.getType());
-
-		return mockLiferayPortletActionRequest;
-	}
-
-	private void _processAction(Layout layout) throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(layout);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_editLayout",

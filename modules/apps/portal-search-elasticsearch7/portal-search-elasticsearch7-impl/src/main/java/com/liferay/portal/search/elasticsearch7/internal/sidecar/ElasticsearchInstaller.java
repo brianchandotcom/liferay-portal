@@ -145,6 +145,34 @@ public class ElasticsearchInstaller {
 		PathUtil.deleteDir(_temporaryDirectoryPath);
 	}
 
+	private Path _download(Distributable distributable) throws IOException {
+		String downloadURLString = distributable.getDownloadURLString();
+
+		String fileName = StringUtils.substringAfterLast(
+			downloadURLString, StringPool.FORWARD_SLASH);
+
+		Path distributableFilePath = _distributablesDirectoryPath.resolve(
+			fileName);
+
+		if (Files.exists(distributableFilePath)) {
+			_validateChecksum(
+				getChecksum(distributableFilePath), distributable.getChecksum(),
+				fileName);
+
+			return distributableFilePath;
+		}
+
+		Path downloadedFilePath = _temporaryDirectoryPath.resolve(fileName);
+
+		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
+
+		_validateChecksum(
+			getChecksum(downloadedFilePath), distributable.getChecksum(),
+			fileName);
+
+		return downloadedFilePath;
+	}
+
 	private void _downloadAndInstallElasticsearch() throws IOException {
 		String rootArchiveName = UncompressUtil.unarchive(
 			_download(_distribution.getElasticsearchDistributable()),
@@ -188,6 +216,10 @@ public class ElasticsearchInstaller {
 		}
 	}
 
+	private boolean _isAlreadyInstalled() {
+		return Files.exists(_installationDirectoryPath);
+	}
+
 	private void _validateChecksum(
 			String checksum, String distributableChecksum, String fileName)
 		throws IOException {
@@ -198,40 +230,6 @@ public class ElasticsearchInstaller {
 					"Checksum mismatch for ", fileName, StringPool.COLON,
 					StringPool.SPACE, checksum));
 		}
-	}
-
-	private boolean _isAlreadyInstalled() {
-		return Files.exists(_installationDirectoryPath);
-	}
-
-	private Path _download(Distributable distributable)
-		throws IOException {
-
-		String downloadURLString = distributable.getDownloadURLString();
-
-		String fileName = StringUtils.substringAfterLast(
-			downloadURLString, StringPool.FORWARD_SLASH);
-
-		Path distributableFilePath = _distributablesDirectoryPath.resolve(
-			fileName);
-
-		if (Files.exists(distributableFilePath)) {
-			_validateChecksum(
-				getChecksum(distributableFilePath), distributable.getChecksum(),
-				fileName);
-
-			return distributableFilePath;
-		}
-
-		Path downloadedFilePath = _temporaryDirectoryPath.resolve(fileName);
-
-		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
-
-		_validateChecksum(
-			getChecksum(downloadedFilePath), distributable.getChecksum(),
-			fileName);
-
-		return downloadedFilePath;
 	}
 
 	private static final Path _temporaryDirectoryPath =

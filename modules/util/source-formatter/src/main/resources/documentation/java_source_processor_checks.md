@@ -111,6 +111,7 @@ JavaInjectAnnotationsCheck | [Bug Prevention](bug_prevention_checks.md#bug-preve
 JavaInnerClassImportsCheck | [Styling](styling_checks.md#styling-checks) | Finds cases where inner classes are imported. |
 JavaInterfaceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that `interface` is not `static`. |
 JavaInternalPackageCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on class in `internal` package. |
+JavaJSImportMapsContributorCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*JSImportMapsContributor` class. |
 JavaJSPDynamicIncludeCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*JSPDynamicInclude` class. |
 [JavaLocalSensitiveComparisonCheck](check/java_local_sensitive_comparison_check.md#javalocalsensitivecomparisoncheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that `java.text.Collator` is used when comparing localized values. |
 JavaLocalServiceImplErcUsageCheck | [Productivity](productivity_checks.md#productivity-checks) | Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method. |

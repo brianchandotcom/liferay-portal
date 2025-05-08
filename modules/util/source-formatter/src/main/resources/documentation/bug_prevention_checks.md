@@ -107,6 +107,7 @@ JavaIgnoreAnnotationCheck | .java | Finds methods with `@Ignore` annotation in t
 JavaInjectAnnotationsCheck | .java | Performs several checks on classes with `@Inject` annotations. |
 JavaInterfaceCheck | .java | Checks that `interface` is not `static`. |
 JavaInternalPackageCheck | .java | Performs several checks on class in `internal` package. |
+JavaJSImportMapsContributorCheck | .java | Performs several checks on `*JSImportMapsContributor` class. |
 JavaJSPDynamicIncludeCheck | .java | Performs several checks on `*JSPDynamicInclude` class. |
 [JavaLocalSensitiveComparisonCheck](check/java_local_sensitive_comparison_check.md#javalocalsensitivecomparisoncheck) | .java | Checks that `java.text.Collator` is used when comparing localized values. |
 JavaLogClassNameCheck | .java | Checks the name of the class that is passed in `LogFactoryUtil.getLog`. |

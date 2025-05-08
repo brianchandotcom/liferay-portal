@@ -12830,6 +12830,7 @@ public class AssetCategoryPersistenceImpl
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("vocabularyId");
 		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

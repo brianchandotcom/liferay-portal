@@ -527,6 +527,20 @@ public interface AssetCategoryModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the status of this asset category.
+	 *
+	 * @return the status of this asset category
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this asset category.
+	 *
+	 * @param status the status of this asset category
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

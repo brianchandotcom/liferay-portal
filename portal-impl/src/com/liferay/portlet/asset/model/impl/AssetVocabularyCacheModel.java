@@ -68,7 +68,7 @@ public class AssetVocabularyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class AssetVocabularyCacheModel
 		sb.append(visibilityType);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -193,6 +195,8 @@ public class AssetVocabularyCacheModel
 			assetVocabularyImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		assetVocabularyImpl.setStatus(status);
+
 		assetVocabularyImpl.resetOriginalValues();
 
 		return assetVocabularyImpl;
@@ -223,6 +227,8 @@ public class AssetVocabularyCacheModel
 
 		visibilityType = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -293,6 +299,8 @@ public class AssetVocabularyCacheModel
 
 		objectOutput.writeInt(visibilityType);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -312,5 +320,6 @@ public class AssetVocabularyCacheModel
 	public String settings;
 	public int visibilityType;
 	public long lastPublishDate;
+	public int status;
 
 }

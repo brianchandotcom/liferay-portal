@@ -7217,6 +7217,7 @@ public class AssetVocabularyPersistenceImpl
 		ctMergeColumnNames.add("settings_");
 		ctMergeColumnNames.add("visibilityType");
 		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

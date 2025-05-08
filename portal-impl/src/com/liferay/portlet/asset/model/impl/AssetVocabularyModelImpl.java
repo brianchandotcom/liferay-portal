@@ -79,7 +79,7 @@ public class AssetVocabularyModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"settings_", Types.VARCHAR}, {"visibilityType", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -103,10 +103,11 @@ public class AssetVocabularyModelImpl
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("visibilityType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetVocabulary (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,visibilityType INTEGER,lastPublishDate DATE null,primary key (vocabularyId, ctCollectionId))";
+		"create table AssetVocabulary (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,vocabularyId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,visibilityType INTEGER,lastPublishDate DATE null,status INTEGER,primary key (vocabularyId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 
@@ -310,6 +311,7 @@ public class AssetVocabularyModelImpl
 				"visibilityType", AssetVocabulary::getVisibilityType);
 			attributeGetterFunctions.put(
 				"lastPublishDate", AssetVocabulary::getLastPublishDate);
+			attributeGetterFunctions.put("status", AssetVocabulary::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -390,6 +392,10 @@ public class AssetVocabularyModelImpl
 				"lastPublishDate",
 				(BiConsumer<AssetVocabulary, Date>)
 					AssetVocabulary::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<AssetVocabulary, Integer>)
+					AssetVocabulary::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -946,6 +952,21 @@ public class AssetVocabularyModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1114,6 +1135,7 @@ public class AssetVocabularyModelImpl
 		assetVocabularyImpl.setSettings(getSettings());
 		assetVocabularyImpl.setVisibilityType(getVisibilityType());
 		assetVocabularyImpl.setLastPublishDate(getLastPublishDate());
+		assetVocabularyImpl.setStatus(getStatus());
 
 		assetVocabularyImpl.resetOriginalValues();
 
@@ -1158,6 +1180,8 @@ public class AssetVocabularyModelImpl
 			this.<Integer>getColumnOriginalValue("visibilityType"));
 		assetVocabularyImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		assetVocabularyImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return assetVocabularyImpl;
 	}
@@ -1336,6 +1360,8 @@ public class AssetVocabularyModelImpl
 			assetVocabularyCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		assetVocabularyCacheModel.status = getStatus();
+
 		return assetVocabularyCacheModel;
 	}
 
@@ -1417,6 +1443,7 @@ public class AssetVocabularyModelImpl
 	private String _settings;
 	private int _visibilityType;
 	private Date _lastPublishDate;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1466,6 +1493,7 @@ public class AssetVocabularyModelImpl
 		_columnOriginalValues.put("settings_", _settings);
 		_columnOriginalValues.put("visibilityType", _visibilityType);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1523,6 +1551,8 @@ public class AssetVocabularyModelImpl
 		columnBitmasks.put("visibilityType", 32768L);
 
 		columnBitmasks.put("lastPublishDate", 65536L);
+
+		columnBitmasks.put("status", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

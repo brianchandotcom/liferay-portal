@@ -79,7 +79,8 @@ public class AssetCategoryModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"parentCategoryId", Types.BIGINT},
 		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"title", Types.CLOB}, {"description", Types.CLOB},
-		{"vocabularyId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"vocabularyId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,10 +105,11 @@ public class AssetCategoryModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("vocabularyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(255) null,title TEXT null,description TEXT null,vocabularyId LONG,lastPublishDate DATE null,primary key (categoryId, ctCollectionId))";
+		"create table AssetCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(255) null,title TEXT null,description TEXT null,vocabularyId LONG,lastPublishDate DATE null,status INTEGER,primary key (categoryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 
@@ -324,6 +326,7 @@ public class AssetCategoryModelImpl
 				"vocabularyId", AssetCategory::getVocabularyId);
 			attributeGetterFunctions.put(
 				"lastPublishDate", AssetCategory::getLastPublishDate);
+			attributeGetterFunctions.put("status", AssetCategory::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -402,6 +405,9 @@ public class AssetCategoryModelImpl
 				"lastPublishDate",
 				(BiConsumer<AssetCategory, Date>)
 					AssetCategory::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<AssetCategory, Integer>)AssetCategory::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -992,6 +998,21 @@ public class AssetCategoryModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1160,6 +1181,7 @@ public class AssetCategoryModelImpl
 		assetCategoryImpl.setDescription(getDescription());
 		assetCategoryImpl.setVocabularyId(getVocabularyId());
 		assetCategoryImpl.setLastPublishDate(getLastPublishDate());
+		assetCategoryImpl.setStatus(getStatus());
 
 		assetCategoryImpl.resetOriginalValues();
 
@@ -1204,6 +1226,8 @@ public class AssetCategoryModelImpl
 			this.<Long>getColumnOriginalValue("vocabularyId"));
 		assetCategoryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		assetCategoryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return assetCategoryImpl;
 	}
@@ -1383,6 +1407,8 @@ public class AssetCategoryModelImpl
 			assetCategoryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		assetCategoryCacheModel.status = getStatus();
+
 		return assetCategoryCacheModel;
 	}
 
@@ -1465,6 +1491,7 @@ public class AssetCategoryModelImpl
 	private String _descriptionCurrentLanguageId;
 	private long _vocabularyId;
 	private Date _lastPublishDate;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1515,6 +1542,7 @@ public class AssetCategoryModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("vocabularyId", _vocabularyId);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1573,6 +1601,8 @@ public class AssetCategoryModelImpl
 		columnBitmasks.put("vocabularyId", 65536L);
 
 		columnBitmasks.put("lastPublishDate", 131072L);
+
+		columnBitmasks.put("status", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -154,6 +154,8 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAssetCategory.setStatus(RandomTestUtil.nextInt());
+
 		_assetCategories.add(_persistence.update(newAssetCategory));
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(
@@ -208,6 +210,8 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingAssetCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetCategory.getLastPublishDate()));
+		Assert.assertEquals(
+			existingAssetCategory.getStatus(), newAssetCategory.getStatus());
 	}
 
 	@Test(expected = DuplicateAssetCategoryExternalReferenceCodeException.class)
@@ -437,7 +441,7 @@ public class AssetCategoryPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
 			true, "treePath", true, "name", true, "vocabularyId", true,
-			"lastPublishDate", true);
+			"lastPublishDate", true, "status", true);
 	}
 
 	@Test
@@ -781,6 +785,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
 		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetCategory.setStatus(RandomTestUtil.nextInt());
 
 		_assetCategories.add(_persistence.update(assetCategory));
 

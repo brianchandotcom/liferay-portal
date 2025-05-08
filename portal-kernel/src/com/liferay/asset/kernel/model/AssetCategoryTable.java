@@ -65,6 +65,8 @@ public class AssetCategoryTable extends BaseTable<AssetCategoryTable> {
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<AssetCategoryTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private AssetCategoryTable() {
 		super("AssetCategory", AssetCategoryTable::new);

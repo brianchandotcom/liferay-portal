@@ -109,6 +109,7 @@
 		</field>
 		<field name="vocabularyId" type="long" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetEntry">
 		<field name="mvccVersion" type="long" />
@@ -200,6 +201,7 @@
 		</field>
 		<field name="visibilityType" type="int" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetVocabularyGroupRel">
 		<field name="mvccVersion" type="long" />

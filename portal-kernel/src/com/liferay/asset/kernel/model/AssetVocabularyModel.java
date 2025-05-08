@@ -513,6 +513,20 @@ public interface AssetVocabularyModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the status of this asset vocabulary.
+	 *
+	 * @return the status of this asset vocabulary
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this asset vocabulary.
+	 *
+	 * @param status the status of this asset vocabulary
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

@@ -53,6 +53,7 @@ public class AssetVocabularyWrapper
 		attributes.put("settings", getSettings());
 		attributes.put("visibilityType", getVisibilityType());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -160,6 +161,12 @@ public class AssetVocabularyWrapper
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -387,6 +394,16 @@ public class AssetVocabularyWrapper
 	@Override
 	public String getSettings() {
 		return model.getSettings();
+	}
+
+	/**
+	 * Returns the status of this asset vocabulary.
+	 *
+	 * @return the status of this asset vocabulary
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -788,6 +805,16 @@ public class AssetVocabularyWrapper
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
+	}
+
+	/**
+	 * Sets the status of this asset vocabulary.
+	 *
+	 * @param status the status of this asset vocabulary
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

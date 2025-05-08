@@ -7449,10 +7449,11 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("Julia", values.get("firstName"));
 		Assert.assertEquals(
-			StringPool.BLANK,
+			objectEntry2.getExternalReferenceCode(),
 			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
-			0L, values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			objectEntry2.getObjectEntryId(),
+			values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
 
 		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,

@@ -63,7 +63,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			String moduleName = _getModuleName(absolutePath);
+			String moduleName = _getModuleName(absolutePath, 2);
 			List<String> testPropertiesFileNames = new ArrayList<>();
 
 			for (String buildGradleFileName : buildGradleFileNames) {
@@ -117,7 +117,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		if (absolutePath.contains("/modules/apps/") ||
 			absolutePath.contains("/modules/dxp/apps/")) {
 
-			String moduleName = _getModuleName(absolutePath);
+			String moduleName = _getModuleName(absolutePath, 1);
 
 			if (absolutePath.endsWith(
 					"/modules/apps/" + moduleName + "/test.properties") ||
@@ -128,8 +128,9 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 			}
 
 			File file = new File(
-				getPortalDir() + "/modules/test/playwright/tests/" +
-					moduleName);
+				StringBundler.concat(
+					getPortalDir(), "/modules/test/playwright/tests/",
+					moduleName, "/main"));
 
 			if (!file.exists()) {
 				return content;
@@ -141,7 +142,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Missing test.properties in playwright/tests/" +
-						moduleName);
+						moduleName + "/main");
 
 				return content;
 			}
@@ -215,13 +216,15 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 						playwrightProjectsIncludesPropertyName, "\"",
 						additionalMessage));
 			}
-			else if (!playwrightProjectsIncludesList.contains(moduleName)) {
+			else if (!playwrightProjectsIncludesList.contains(
+						moduleName + ".main")) {
+
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Missing property value \"", moduleName, "\" in \"",
-						playwrightProjectsIncludesPropertyName, "\"",
-						additionalMessage));
+						"Missing property value \"", moduleName, ".main",
+						"\" in \"", playwrightProjectsIncludesPropertyName,
+						"\"", additionalMessage));
 			}
 		}
 	}
@@ -240,12 +243,24 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		return _buildGradleFileNames;
 	}
 
-	private String _getModuleName(String absolutePath) {
+	private String _getModuleName(String absolutePath, int depth) {
+		int i = 1;
+
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
-		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+		String s = absolutePath.substring(0, x);
 
-		return absolutePath.substring(y + 1, x);
+		while (true) {
+			x = s.lastIndexOf(StringPool.SLASH);
+
+			if (i == depth) {
+				return s.substring(x + 1);
+			}
+
+			i = i + 1;
+
+			s = s.substring(0, x);
+		}
 	}
 
 	private static final String _RELEVANT_RULE_NAMES = "relevant.rule.names";

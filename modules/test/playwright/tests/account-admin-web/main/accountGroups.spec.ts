@@ -1429,3 +1429,56 @@ test(
 		).toHaveValue(accountGroup.externalReferenceCode);
 	}
 );
+
+test(
+	'Unable to associate Personal Account with Account Group',
+	{tag: ['@LPD-53669']},
+	async ({
+		accountGroupAccountSelectorPage,
+		accountGroupAccountsPage,
+		accountGroupsPage,
+		apiHelpers,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const accountGroup =
+			await apiHelpers.headlessAdminUser.postAccountGroup({
+				name: getRandomString(),
+			});
+
+		apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccount.emailAddress]
+		);
+
+		await accountGroupsPage.goto();
+
+		await expect(
+			accountGroupsPage.accountGroupLink(accountGroup.name)
+		).toBeVisible();
+
+		await accountGroupsPage.accountGroupLink(accountGroup.name).click();
+
+		await expect(async () => {
+			await expect(
+				accountGroupAccountsPage.accountsTable.searchInput
+			).toBeEditable();
+
+			await accountGroupAccountsPage.accountsTable.newButton.click();
+
+			await expect(
+				accountGroupAccountSelectorPage.accountsTable.cell(account.name)
+			).toBeVisible();
+		}).toPass();
+	}
+);

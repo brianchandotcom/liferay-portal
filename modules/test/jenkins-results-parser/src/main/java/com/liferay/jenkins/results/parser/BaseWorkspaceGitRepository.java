@@ -484,7 +484,9 @@ public abstract class BaseWorkspaceGitRepository
 
 		validateKeys(_REQUIRED_KEYS);
 
-		_snapshot = getSnapshot();
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			_snapshot = getSnapshot();
+		}
 	}
 
 	protected BaseWorkspaceGitRepository(

@@ -8,8 +8,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
+import {config} from '../config';
 import {
 	Action,
 	State,
@@ -79,7 +81,9 @@ function CustomizeExperienceButton() {
 		<ClayButton
 			className="font-weight-semi-bold"
 			displayType="link"
-			onClick={() => {}}
+			onClick={() => {
+				navigate(config.editStructureDisplayPageURL);
+			}}
 			size="sm"
 		>
 			{Liferay.Language.get('customize-experience')}

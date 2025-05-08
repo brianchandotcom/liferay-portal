@@ -103,7 +103,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource portal="true">
 		<model-name>com.liferay.commerce.product.model.CommerceCatalog</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet</portlet-name>

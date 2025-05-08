@@ -42,35 +42,38 @@ public class SimpleCaptchaImplTest {
 					"nl.captcha.noise.StraightLineNoiseProducer"
 				}));
 
-		NoiseProducer noiseProducer = simpleCaptchaImpl.getNoiseProducer();
+		NoiseProducer noiseProducer = simpleCaptchaImpl.getNoiseProducer(
+			_captchaConfiguration);
 
 		ReflectionTestUtil.setFieldValue(
 			simpleCaptchaImpl, "captchaProvider",
 			_mockCaptchaProvider(new String[] {StringPool.BLANK}));
 
 		Assert.assertNotEquals(
-			noiseProducer, simpleCaptchaImpl.getNoiseProducer());
+			noiseProducer,
+			simpleCaptchaImpl.getNoiseProducer(_captchaConfiguration));
 	}
 
 	private CaptchaProvider _mockCaptchaProvider(String[] expectedClassNames) {
-		CaptchaConfiguration captchaConfiguration = Mockito.mock(
-			CaptchaConfiguration.class);
-
 		CaptchaProvider captchaProvider = Mockito.mock(CaptchaProvider.class);
 
-		Mockito.when(
-			captchaProvider.getCaptchaConfiguration()
-		).thenReturn(
-			captchaConfiguration
-		);
+		_captchaConfiguration = Mockito.mock(CaptchaConfiguration.class);
 
 		Mockito.when(
-			captchaConfiguration.simpleCaptchaNoiseProducers()
+			_captchaConfiguration.simpleCaptchaNoiseProducers()
 		).thenReturn(
 			expectedClassNames
 		);
 
+		Mockito.when(
+			captchaProvider.getCaptchaConfiguration()
+		).thenReturn(
+			_captchaConfiguration
+		);
+
 		return captchaProvider;
 	}
+
+	private CaptchaConfiguration _captchaConfiguration;
 
 }

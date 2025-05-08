@@ -11,6 +11,7 @@ import React, {
 	useReducer,
 } from 'react';
 
+import actionGeneratesChanges from '../utils/actionGeneratesChanges';
 import {Field, MultiselectField, SingleSelectField} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
@@ -48,6 +49,7 @@ export type State = {
 	selection: Uuid[];
 	spaces: Spaces;
 	status: Status;
+	unsavedChanges: boolean;
 	uuid: Uuid;
 };
 
@@ -68,6 +70,7 @@ const INITIAL_STATE: State = {
 	selection: [],
 	spaces: [],
 	status: 'new',
+	unsavedChanges: false,
 	uuid: getUuid(),
 };
 
@@ -143,6 +146,10 @@ export type Action =
 	| ValidateAction;
 
 function reducer(state: State, action: Action): State {
+	if (actionGeneratesChanges(action.type)) {
+		state = {...state, unsavedChanges: true};
+	}
+
 	switch (action.type) {
 		case 'add-field': {
 			const {field} = action;
@@ -248,6 +255,7 @@ function reducer(state: State, action: Action): State {
 					Array.from(state.fields.values()).map((field) => field.uuid)
 				),
 				status: 'published' as Status,
+				unsavedChanges: false,
 			};
 
 			if (action.id) {

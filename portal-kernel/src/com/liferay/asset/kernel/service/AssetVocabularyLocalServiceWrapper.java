@@ -582,6 +582,15 @@ public class AssetVocabularyLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyLocalService.getOrAddIncompleteVocabulary(
+			externalReferenceCode, userId, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

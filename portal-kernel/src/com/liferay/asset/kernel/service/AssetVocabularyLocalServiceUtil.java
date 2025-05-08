@@ -505,6 +505,14 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long userId, long groupId)
+		throws PortalException {
+
+		return getService().getOrAddIncompleteVocabulary(
+			externalReferenceCode, userId, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

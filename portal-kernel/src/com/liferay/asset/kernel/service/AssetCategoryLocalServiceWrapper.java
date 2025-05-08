@@ -587,6 +587,15 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryLocalService.getOrAddIncompleteCategory(
+			externalReferenceCode, userId, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

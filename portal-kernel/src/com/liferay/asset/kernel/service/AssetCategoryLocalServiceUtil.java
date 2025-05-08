@@ -513,6 +513,14 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long userId, long groupId)
+		throws PortalException {
+
+		return getService().getOrAddIncompleteCategory(
+			externalReferenceCode, userId, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

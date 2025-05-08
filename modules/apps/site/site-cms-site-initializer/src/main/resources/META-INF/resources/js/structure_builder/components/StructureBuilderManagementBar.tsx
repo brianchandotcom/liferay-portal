@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectHistory from '../selectors/selectHistory';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
@@ -38,14 +39,7 @@ export default function StructureBuilderManagementBar() {
 			}
 		>
 			<ManagementToolbar.Item>
-				<ClayLink
-					className="btn btn-outline-borderless btn-outline-primary btn-sm"
-					href="structures"
-				>
-					{Liferay.Language.get('customize-experience')}
-
-					<ClayIcon className="ml-2" symbol="shortcut" />
-				</ClayLink>
+				<CustomizeExperienceButton />
 			</ManagementToolbar.Item>
 
 			<ManagementToolbar.Item>
@@ -71,6 +65,21 @@ export default function StructureBuilderManagementBar() {
 				<PublishButton />
 			</ManagementToolbar.Item>
 		</ManagementBar>
+	);
+}
+
+function CustomizeExperienceButton() {
+	return (
+		<ClayButton
+			className="font-weight-semi-bold"
+			displayType="link"
+			onClick={() => {}}
+			size="sm"
+		>
+			{Liferay.Language.get('customize-experience')}
+
+			<ClayIcon className="ml-2" symbol="shortcut" />
+		</ClayButton>
 	);
 }
 

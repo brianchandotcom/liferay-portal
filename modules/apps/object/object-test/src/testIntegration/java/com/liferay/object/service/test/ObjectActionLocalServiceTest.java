@@ -726,7 +726,7 @@ public class ObjectActionLocalServiceTest {
 
 			Assert.assertEquals(0, _argumentsList.size());
 
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
+			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "João"
@@ -784,7 +784,7 @@ public class ObjectActionLocalServiceTest {
 			// Execute standalone system action to update the current object
 			// entry
 
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
+			objectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomTestUtil.randomString()

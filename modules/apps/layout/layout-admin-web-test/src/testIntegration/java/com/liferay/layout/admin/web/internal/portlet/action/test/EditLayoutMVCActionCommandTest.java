@@ -93,7 +93,7 @@ public class EditLayoutMVCActionCommandTest {
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
 	}
 
-	@Test(expected = PortletException.class)
+	@Test(expected = LayoutTypeException.class)
 	@TestInfo("LPD-54782")
 	public void testEditLayoutNonexistentType() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);

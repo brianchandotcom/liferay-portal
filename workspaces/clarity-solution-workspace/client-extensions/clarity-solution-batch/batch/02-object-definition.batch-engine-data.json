@@ -417,42 +417,13 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
+					"externalReferenceCode": "U3A2_APPLICATION_TO_U3A2_EVALUATIONS",
 					"label": {
-						"en_US": "U3A2 Application to Evaluations"
+						"en_US": "U3A2 Application to U3A2 Evaluations"
 					},
-					"name": "U3A2ApplicationToEvaluations",
+					"name": "u3a2ApplicationToU3A2Evaluations",
 					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
 					"objectDefinitionExternalReferenceCode2": "U3A2_APPLICATION_EVALUATION",
-					"objectField": {
-						"DBType": "Long",
-						"businessType": "Relationship",
-						"indexed": true,
-						"indexedAsKeyword": false,
-						"indexedLanguageId": "en_US",
-						"label": {
-							"en_US": "Application to Evaluations"
-						},
-						"name": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationId",
-						"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
-						"objectFieldSettings": [
-							{
-								"name": "objectDefinition1ShortName",
-								"value": "DistributorApplication"
-							},
-							{
-								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationERC"
-							}
-						],
-						"objectRelationshipExternalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
-						"readOnly": "false",
-						"relationshipType": "oneToMany",
-						"required": true,
-						"state": false,
-						"system": false,
-						"type": "Long"
-					},
 					"type": "oneToMany"
 				}
 			],

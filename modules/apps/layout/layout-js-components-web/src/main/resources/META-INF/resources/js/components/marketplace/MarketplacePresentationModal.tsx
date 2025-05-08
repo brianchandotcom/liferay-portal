@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import ClayModal, {useModal} from '@clayui/modal';
 import {AppsPermissions} from '@liferay/marketplace-js-components-web';
 import React, {ComponentProps, useState} from 'react';
 
+import NewFeatureModal from '../modals/NewFeatureModal';
 import MarketplaceModal from './MarketplaceModal';
 import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplacePresentationModalProps {
 	body: string;
 	heading: string;
-	onCloseModal: () => void;
+	onCloseModal?: () => void;
 	permissions: AppsPermissions;
 	portletNamespace: string;
 }
@@ -31,12 +29,6 @@ export default function MarketplacePresentationModal({
 	ComponentProps<typeof MarketplaceViews>) {
 	const [openMarketplace, setOpenMarketplace] = useState(false);
 
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			onCloseModal();
-		},
-	});
-
 	return openMarketplace ? (
 		<MarketplaceModal
 			openOnRender={true}
@@ -46,56 +38,15 @@ export default function MarketplacePresentationModal({
 			{...marketplaceViewProps}
 		/>
 	) : (
-		<ClayModal center observer={observer}>
-			<ClayModal.Body className="c-p-0">
-				<ClayButton
-					aria-label={Liferay.Language.get('close')}
-					className="close"
-					displayType="unstyled"
-					onClick={onClose}
-				>
-					<ClayIcon symbol="times" />
-				</ClayButton>
-
-				<div className="aspect-ratio aspect-ratio-16-to-9 bg-primary-l3">
-					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<img
-							alt=""
-							src={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
-						/>
-					</div>
-				</div>
-
-				<ClayModal.Title className="c-mx-4">{heading}</ClayModal.Title>
-
-				<p className="c-m-4">{body}</p>
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'explore-marketplace'
-							)}
-							displayType="primary"
-							onClick={() => setOpenMarketplace(true)}
-							title={Liferay.Language.get('explore-marketplace')}
-						>
-							<ClayIcon
-								className="inline-item inline-item-before"
-								symbol="marketplace"
-							/>
-
-							{Liferay.Language.get('explore-marketplace')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</ClayModal>
+		<NewFeatureModal
+			body={body}
+			heading={heading}
+			imageSrc={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}
+			onCloseModal={onCloseModal}
+			onPrimaryButtonClick={() => setOpenMarketplace(true)}
+			primaryButtonIcon="marketplace"
+			primaryButtonLabel={Liferay.Language.get('explore-marketplace')}
+			secondaryButtonLabel={Liferay.Language.get('cancel')}
+		/>
 	);
 }

@@ -48,6 +48,14 @@ public class FDSAPIURLBuilder {
 		return this;
 	}
 
+	public FDSAPIURLBuilder addQueryString(String queryString) {
+		if (Validator.isNotNull(queryString)) {
+			_queryStringItems.add(queryString);
+		}
+
+		return this;
+	}
+
 	public String build() {
 		StringBundler sb = new StringBundler(
 			3 + (_queryStringItems.size() * 2));

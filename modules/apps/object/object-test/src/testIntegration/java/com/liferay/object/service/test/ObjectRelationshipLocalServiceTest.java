@@ -1981,6 +1981,70 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
+	public void testUnbindPublishedObjectDefinitionsWithObjectEntriesAndWorkflowInstance()
+		throws Exception {
+
+		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).build());
+
+		ObjectDefinition objectDefinitionA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinitionA.getClassName(), 0, 0, "Single Approver", 1);
+
+		Tree objectEntryTree1 = TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionA.getObjectDefinitionId());
+		Tree objectEntryTree2 = TreeTestUtil.createObjectEntryTree(
+			"2", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionA.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"These ongoing workflow instances must be completed to " +
+					"disable inheritance: \"%s\" (\"%s\" entries)",
+				objectDefinitionA.getLabel(LocaleUtil.US), 2),
+			() -> _unbindObjectDefinitionNode("AA", objectDefinitionTree));
+
+		Node rootNode1 = objectEntryTree1.getRootNode();
+
+		_completeWorkflowTask(
+			objectDefinitionA.getClassName(), rootNode1.getPrimaryKey());
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"These ongoing workflow instances must be completed to " +
+					"disable inheritance: \"%s\" (\"%s\" entries)",
+				objectDefinitionA.getLabel(LocaleUtil.US), 1),
+			() -> _unbindObjectDefinitionNode("AA", objectDefinitionTree));
+
+		Node rootNode2 = objectEntryTree2.getRootNode();
+
+		_completeWorkflowTask(
+			objectDefinitionA.getClassName(), rootNode2.getPrimaryKey());
+
+		_unbindObjectDefinitionNode("AA", objectDefinitionTree);
+
+		_assertRootObjectDefinitionIdIsZero("A");
+		_assertRootObjectDefinitionIdIsZero("AA");
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
 	public void testUpdateObjectRelationship() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 

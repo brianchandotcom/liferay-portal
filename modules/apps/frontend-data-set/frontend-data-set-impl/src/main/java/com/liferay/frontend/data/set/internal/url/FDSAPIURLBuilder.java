@@ -13,8 +13,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class FDSAPIURLBuilder {
 
 		_appendParameters(sb);
 
-		return _resolveParameters(sb.toString());
+		return _interpolate(_resolveParameters(sb.toString()));
 	}
 
 	private void _appendParameters(StringBundler sb) {
@@ -79,6 +81,26 @@ public class FDSAPIURLBuilder {
 				sb.append(CharPool.AMPERSAND);
 			}
 		}
+	}
+
+	private String _interpolate(String apiURL) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		apiURL = StringUtil.replace(
+			apiURL, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
+		apiURL = StringUtil.replace(
+			apiURL, "{scopeKey}",
+			String.valueOf(themeDisplay.getScopeGroupId()));
+		apiURL = StringUtil.replace(
+			apiURL, "{userId}", String.valueOf(themeDisplay.getUserId()));
+
+		if (StringUtil.contains(apiURL, "{") && _log.isWarnEnabled()) {
+			_log.warn("Unsupported parameter in API URL: " + apiURL);
+		}
+
+		return apiURL;
 	}
 
 	private String _resolveParameters(String apiURL) {

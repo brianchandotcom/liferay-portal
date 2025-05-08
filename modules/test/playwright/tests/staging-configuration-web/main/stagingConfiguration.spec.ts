@@ -84,15 +84,13 @@ test(
 		productMenuPage,
 		stagingConfigurationPage,
 	}) => {
-		await applicationsMenuPage.goToSites();
-
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
 
-		await journalPage.goto(site.friendlyUrlPath);
+		await applicationsMenuPage.goToSite(site.name);
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({
@@ -110,8 +108,7 @@ test(
 			titleMap: {en_US: webContentName},
 		});
 
-		await productMenuPage.openProductMenuIfClosed();
-		await productMenuPage.goToWebContent();
+		await journalPage.goto(site.friendlyUrlPath);
 
 		await expect(
 			page.getByRole('link', {

@@ -12,6 +12,14 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
  */
 public class ExportImportThreadLocal {
 
+	public static Long getClassNameId() {
+		return _classNameId.get();
+	}
+
+	public static Long getClassPK() {
+		return _classPK.get();
+	}
+
 	public static boolean isDataDeletionImportInProcess() {
 		if (isLayoutDataDeletionImportInProcess() ||
 			isPortletDataDeletionImportInProcess()) {
@@ -99,6 +107,14 @@ public class ExportImportThreadLocal {
 		return _stagingInProcessOnRemoteLive.get();
 	}
 
+	public static void setClassNameId(long classNameId) {
+		_classNameId.set(classNameId);
+	}
+
+	public static void setClassPK(long classPK) {
+		_classPK.set(classPK);
+	}
+
 	public static void setInitialLayoutStagingInProcess(
 		boolean initialLayoutStagingInProcess) {
 
@@ -169,6 +185,12 @@ public class ExportImportThreadLocal {
 		_stagingInProcessOnRemoteLive.set(stagingInProcessOnRemoteLive);
 	}
 
+	private static final ThreadLocal<Long> _classNameId =
+		new CentralizedThreadLocal<>(
+			ExportImportThreadLocal.class + "._classNameId", () -> 0L);
+	private static final ThreadLocal<Long> _classPK =
+		new CentralizedThreadLocal<>(
+			ExportImportThreadLocal.class + "._classPK", () -> 0L);
 	private static final ThreadLocal<Boolean> _initialLayoutStagingInProcess =
 		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._initialLayoutStagingInProcess",

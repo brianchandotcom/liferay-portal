@@ -5,21 +5,30 @@
 
 package com.liferay.batch.engine.internal.strategy;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.internal.util.ErrorMessageUtil;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportReportEntryLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Matija Petanjek
@@ -79,6 +88,27 @@ public abstract class BaseBatchEngineImportStrategy
 		}
 	}
 
+	protected void addBatchEngineImportReportEntry(
+		long companyId, long classNameId, long classPK, long entityClassNameId,
+		String entityExternalReferenceCode, String error, int type) {
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					BatchEngineImportReportEntryLocalServiceUtil.
+						addBatchEngineImportReportEntry(
+							companyId, classNameId, classPK, entityClassNameId,
+							entityExternalReferenceCode, error, type);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
+	}
+
 	protected void addBatchEngineImportTaskError(
 		long companyId, long userId, long batchEngineImportTaskId, String item,
 		int itemIndex, Exception exception) {
@@ -100,6 +130,22 @@ public abstract class BaseBatchEngineImportStrategy
 		catch (Throwable throwable) {
 			throw new RuntimeException(throwable);
 		}
+	}
+
+	protected String getExternalReferenceCode(Object item) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ObjectWriter objectWriter = objectMapper.writer(
+			new SimpleFilterProvider(
+			).addFilter(
+				"Liferay.Vulcan",
+				VulcanPropertyFilter.of(Set.of("externalReferenceCode"), null)
+			));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			objectWriter.writeValueAsString(item));
+
+		return jsonObject.getString("externalReferenceCode");
 	}
 
 	protected abstract <T> T importItem(

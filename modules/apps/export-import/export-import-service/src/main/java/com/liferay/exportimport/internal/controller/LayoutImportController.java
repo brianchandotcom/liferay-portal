@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -195,6 +196,11 @@ public class LayoutImportController implements ImportController {
 		PortletDataContext portletDataContext = null;
 
 		try {
+			ExportImportThreadLocal.setClassNameId(
+				_classNameLocalService.getClassNameId(
+					exportImportConfiguration.getClass()));
+			ExportImportThreadLocal.setClassPK(
+				exportImportConfiguration.getExportImportConfigurationId());
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
 			portletDataContext = getPortletDataContext(
@@ -1387,6 +1393,9 @@ public class LayoutImportController implements ImportController {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutImportController.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

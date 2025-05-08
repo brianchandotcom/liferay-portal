@@ -7,9 +7,12 @@ package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.constants.BatchEngineImportReportEntryConstants;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
 import java.util.List;
 
@@ -42,6 +45,16 @@ public class OnErrorFailBatchEngineImportStrategy
 				batchEngineImportTask.getUserId(),
 				batchEngineImportTask.getBatchEngineImportTaskId(),
 				item.toString(), ItemIndexThreadLocal.get(), exception);
+
+			if (ExportImportThreadLocal.isLayoutImportInProcess()) {
+				addBatchEngineImportReportEntry(
+					batchEngineImportTask.getCompanyId(),
+					ExportImportThreadLocal.getClassNameId(),
+					ExportImportThreadLocal.getClassPK(),
+					ClassNameLocalServiceUtil.getClassNameId(item.getClass()),
+					getExternalReferenceCode(item), exception.getMessage(),
+					BatchEngineImportReportEntryConstants.TYPE_ERROR);
+			}
 
 			throw exception;
 		}

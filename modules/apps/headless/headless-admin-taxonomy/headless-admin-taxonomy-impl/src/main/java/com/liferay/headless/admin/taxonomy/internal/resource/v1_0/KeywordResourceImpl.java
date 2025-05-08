@@ -384,16 +384,16 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public void putKeywordSubscribe(Long tagId) throws Exception {
-		AssetTag assetTag = _assetTagLocalService.getAssetTag(tagId);
+	public void putKeywordSubscribe(Long keywordId) throws Exception {
+		AssetTag assetTag = _assetTagLocalService.getAssetTag(keywordId);
 
 		_assetTagService.subscribeTag(
-			contextUser.getUserId(), assetTag.getGroupId(), tagId);
+			contextUser.getUserId(), assetTag.getGroupId(), keywordId);
 	}
 
 	@Override
-	public void putKeywordUnsubscribe(Long tagId) throws Exception {
-		_assetTagService.unsubscribeTag(contextUser.getUserId(), tagId);
+	public void putKeywordUnsubscribe(Long keywordId) throws Exception {
+		_assetTagService.unsubscribeTag(contextUser.getUserId(), keywordId);
 	}
 
 	@Override

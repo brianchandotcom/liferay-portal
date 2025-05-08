@@ -6,7 +6,7 @@
 import {AppsPermissions} from '@liferay/marketplace-js-components-web';
 import React, {ComponentProps, useState} from 'react';
 
-import NewFeatureModal from '../modals/NewFeatureModal';
+import CardStyleModal from '../modals/CardStyleModal';
 import MarketplaceModal from './MarketplaceModal';
 import MarketplaceViews from './MarketplaceViews';
 
@@ -38,7 +38,7 @@ export default function MarketplacePresentationModal({
 			{...marketplaceViewProps}
 		/>
 	) : (
-		<NewFeatureModal
+		<CardStyleModal
 			body={body}
 			heading={heading}
 			imageSrc={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/layout-js-components-web/images/marketplace.svg`}

@@ -9,7 +9,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
 
-import NewFeatureModal from '../../../src/main/resources/META-INF/resources/js/components/modals/NewFeatureModal';
+import ClayStyleModal from '../../../src/main/resources/META-INF/resources/js/components/modals/CardStyleModal';
 
 globalThis.Liferay = {
 	Language: {get: (key) => key},
@@ -27,9 +27,9 @@ const mockProps = {
 };
 
 const renderComponent = (props = mockProps) =>
-	render(<NewFeatureModal {...props} />);
+	render(<ClayStyleModal {...props} />);
 
-describe('NewFeatureModal', () => {
+describe('ClayStyleModal', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});

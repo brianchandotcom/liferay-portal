@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
-interface NewFeatureModalProps {
+interface CardStyleModalProps {
 	body: string;
 	heading: string;
 	imageSrc: string;
@@ -19,7 +19,7 @@ interface NewFeatureModalProps {
 	secondaryButtonLabel?: string;
 }
 
-const NewFeatureModal: React.FC<NewFeatureModalProps> = ({
+const CardStyleModal: React.FC<CardStyleModalProps> = ({
 	body,
 	heading,
 	imageSrc,
@@ -95,4 +95,4 @@ const NewFeatureModal: React.FC<NewFeatureModalProps> = ({
 	);
 };
 
-export default NewFeatureModal;
+export default CardStyleModal;

@@ -99,18 +99,29 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No parameters
 
-		_resetFDSSerializer();
+		ServiceTrackerMap
+			<String,
+			 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSAPIURLResolver>>
+				serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+					bundleContext, FDSAPIURLResolver.class,
+					"fds.rest.application.key",
+					ServiceTrackerCustomizerFactory.
+						<FDSAPIURLResolver>serviceWrapper(bundleContext));
+
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry =
+			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
+
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		_mockSerializeAdditionalAPIURLParameters(FDS_NAMES[0], "");
 
-		Assert.assertEquals(
-			StringPool.BLANK,
+		Assert.assertNull(
 			_customFDSSerializer.serializeAdditionalAPIURLParameters(
 				FDS_NAMES[0], httpServletRequest));
 
 		// Parameters
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		_mockSerializeAdditionalAPIURLParameters(
 			FDS_NAMES[0], API_URL_PARAMETERS);
@@ -142,8 +153,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeAPIURL(FDS_NAMES[0], new String[] {"creator.name"});
 
+		String path = "/o" + REST_APPLICATION + REST_ENDPOINT;
+
 		Assert.assertEquals(
-			"/o/app/endpoint?nestedFields=creator",
+			path + "?nestedFields=creator",
 			_customFDSSerializer.serializeAPIURL(
 				FDS_NAMES[0], httpServletRequest));
 
@@ -157,7 +170,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		String url = _customFDSSerializer.serializeAPIURL(
 			FDS_NAMES[0], httpServletRequest);
 
-		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
+		Assert.assertTrue(url.startsWith(path + "?"));
 
 		Map<String, String> parameterMap = _getParameterMap(url);
 
@@ -180,7 +193,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		url = _customFDSSerializer.serializeAPIURL(
 			FDS_NAMES[0], httpServletRequest);
 
-		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
+		Assert.assertTrue(url.startsWith(path + "?"));
 
 		parameterMap = _getParameterMap(url);
 
@@ -202,7 +215,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_mockSerializeAPIURL(FDS_NAMES[0], null);
 
 		Assert.assertEquals(
-			"/o/app/endpoint",
+			path,
 			_customFDSSerializer.serializeAPIURL(
 				FDS_NAMES[0], httpServletRequest));
 
@@ -1229,11 +1242,23 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		String fdsName, String additionalAPIURLParameters) {
 
 		Mockito.when(
+			_customFDSSerializer.createFDSAPIURLBuilder(
+				httpServletRequest, REST_APPLICATION, REST_ENDPOINT,
+				REST_SCHEMA)
+		).thenCallRealMethod();
+
+		Mockito.when(
 			_customFDSSerializer.getDataSetObjectEntryProperties(
 				fdsName, httpServletRequest)
 		).thenReturn(
 			HashMapBuilder.<String, Object>put(
 				"additionalAPIURLParameters", additionalAPIURLParameters
+			).put(
+				"restApplication", REST_APPLICATION
+			).put(
+				"restEndpoint", REST_ENDPOINT
+			).put(
+				"restSchema", REST_SCHEMA
 			).build()
 		);
 
@@ -1244,13 +1269,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private void _mockSerializeAPIURL(String fdsName, String[] fieldNames) {
-		String restApplication = "/app";
-		String restEndpoint = "/endpoint";
-		String restSchema = "schema";
-
 		Mockito.when(
 			_customFDSSerializer.createFDSAPIURLBuilder(
-				httpServletRequest, restApplication, restEndpoint, restSchema)
+				httpServletRequest, REST_APPLICATION, REST_ENDPOINT,
+				REST_SCHEMA)
 		).thenCallRealMethod();
 
 		Mockito.when(
@@ -1258,11 +1280,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				fdsName, httpServletRequest)
 		).thenReturn(
 			HashMapBuilder.<String, Object>put(
-				"restApplication", restApplication
+				"restApplication", REST_APPLICATION
 			).put(
-				"restEndpoint", restEndpoint
+				"restEndpoint", REST_ENDPOINT
 			).put(
-				"restSchema", restSchema
+				"restSchema", REST_SCHEMA
 			).build()
 		);
 

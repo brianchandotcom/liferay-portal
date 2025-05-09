@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.frontend.js.web.internal.hashed.files.request.AbstractRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
@@ -36,23 +35,23 @@ import javax.servlet.http.HttpServletResponse;
  * @author Iván Zaera Avellón
  */
 public class StaticFileRequestHelper
-	extends AbstractRequestHelper<StaticFileRequestInfo> {
+	extends AbstractRequestHelper<StaticFileRequestHelperInfo> {
 
 	public StaticFileRequestHelper(
-		String fileContentType, String fileExtension,
-		HashedFilesRegistry hashedFilesRegistry, long maxAgeDefaultValue,
-		String maxAgeKey, boolean sendNoCacheDefaultValue,
-		String sendNoCacheKey, Portal portal,
+		String contentType, String fileExtension,
+		HashedFileURIsRegistry hashedFileURIsRegistry, long maxAgeDefaultValue,
+		String maxAgeKey, Portal portal, boolean sendNoCacheDefaultValue,
+		String sendNoCacheKey,
 		ServiceTrackerMap<String, ServletContext> serviceTrackerMap) {
 
-		_fileContentType = fileContentType;
+		_contentType = contentType;
 		_fileExtension = fileExtension;
-		_hashedFilesRegistry = hashedFilesRegistry;
+		_hashedFileURIsRegistry = hashedFileURIsRegistry;
 		_maxAgeDefaultValue = maxAgeDefaultValue;
 		_maxAgeKey = maxAgeKey;
+		_portal = portal;
 		_sendNoCacheDefaultValue = sendNoCacheDefaultValue;
 		_sendNoCacheKey = sendNoCacheKey;
-		_portal = portal;
 		_serviceTrackerMap = serviceTrackerMap;
 	}
 
@@ -70,12 +69,17 @@ public class StaticFileRequestHelper
 	}
 
 	@Override
-	protected StaticFileRequestInfo getRequestInfo(
+	protected StaticFileRequestHelperInfo getRequestHelperInfo(
 		HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String realModuleURI = _hashedFilesRegistry.getHashedFile(requestURI);
+		String hashedFileURI = _hashedFileURIsRegistry.get(requestURI);
+
+		if (hashedFileURI == null) {
+			return new StaticFileRequestHelperInfo(
+				getHash(requestURI), true, 31536000, requestURI, false);
+		}
 
 		long maxAge = _maxAgeDefaultValue;
 		boolean sendNoCache = _sendNoCacheDefaultValue;
@@ -96,36 +100,33 @@ public class StaticFileRequestHelper
 				settings.getValue(
 					_sendNoCacheKey, String.valueOf(_sendNoCacheDefaultValue)));
 		}
-		catch (SettingsException settingsException) {
-			_log.error(
-				"Unable to get frontend caching configuration: will use " +
-					"reasonable defaults instead",
-				settingsException);
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get frontend caching configuration: will use " +
+						"reasonable defaults instead",
+					exception);
+			}
 		}
 
-		if (realModuleURI == null) {
-			return new StaticFileRequestInfo(
-				getHash(requestURI), maxAge, requestURI, sendNoCache, false);
-		}
-
-		return new StaticFileRequestInfo(
-			getHash(realModuleURI), maxAge, realModuleURI, sendNoCache, true);
+		return new StaticFileRequestHelperInfo(
+			getHash(hashedFileURI), false, maxAge, hashedFileURI, sendNoCache);
 	}
 
 	@Override
 	protected void sendContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			StaticFileRequestInfo staticFileRequestInfo)
+			StaticFileRequestHelperInfo requestHelperInfo)
 		throws IOException, ServletException {
 
-		String realModuleURI = staticFileRequestInfo.getRealModuleURI();
+		String resourceURI = requestHelperInfo.getResourceURI();
 
-		List<String> parts = Arrays.asList(
-			realModuleURI.split(StringPool.SLASH));
+		List<String> resourceURIParts = Arrays.asList(
+			resourceURI.split(StringPool.SLASH));
 
 		ServletContext servletContext = _serviceTrackerMap.getService(
-			StringUtil.merge(parts.subList(0, 3), StringPool.SLASH));
+			StringUtil.merge(resourceURIParts.subList(0, 3), StringPool.SLASH));
 
 		if (servletContext == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -134,9 +135,12 @@ public class StaticFileRequestHelper
 		}
 
 		String resourcePath = StringUtil.merge(
-			parts.subList(3, parts.size()), StringPool.SLASH);
+			resourceURIParts.subList(3, resourceURIParts.size()),
+			StringPool.SLASH);
 
-		URL url = servletContext.getResource(StringPool.SLASH + resourcePath);
+		resourcePath = StringPool.SLASH + resourcePath;
+
+		URL url = servletContext.getResource(resourcePath);
 
 		if (url == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -145,7 +149,7 @@ public class StaticFileRequestHelper
 		}
 
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
-		httpServletResponse.setContentType(_fileContentType);
+		httpServletResponse.setContentType(_contentType);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -155,9 +159,9 @@ public class StaticFileRequestHelper
 	private static final Log _log = LogFactoryUtil.getLog(
 		StaticFileRequestHelper.class);
 
-	private final String _fileContentType;
+	private final String _contentType;
 	private final String _fileExtension;
-	private final HashedFilesRegistry _hashedFilesRegistry;
+	private final HashedFileURIsRegistry _hashedFileURIsRegistry;
 	private final long _maxAgeDefaultValue;
 	private final String _maxAgeKey;
 	private final Portal _portal;

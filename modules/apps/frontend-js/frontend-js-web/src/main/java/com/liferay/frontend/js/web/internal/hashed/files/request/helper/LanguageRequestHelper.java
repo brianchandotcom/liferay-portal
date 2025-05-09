@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Iván Zaera Avellón
  */
 public class LanguageRequestHelper
-	extends AbstractRequestHelper<LanguageRequestInfo> {
+	extends AbstractRequestHelper<LanguageRequestHelperInfo> {
 
 	public static final String LANGUAGE_MODULE_PREFIX = "@liferay/language/";
 
@@ -66,16 +66,18 @@ public class LanguageRequestHelper
 	}
 
 	@Override
-	protected LanguageRequestInfo getRequestInfo(
+	protected LanguageRequestHelperInfo getRequestHelperInfo(
 		HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
 
 		requestURI = requestURI.substring(LANGUAGE_URI_PREFIX.length());
 
-		String[] parts = requestURI.split(StringPool.SLASH);
+		String[] requestURIParts = requestURI.split(StringPool.SLASH);
 
-		if ((parts.length != 3) || !parts[2].equals("all.js")) {
+		if ((requestURIParts.length != 3) ||
+			!requestURIParts[2].equals("all.js")) {
+
 			return null;
 		}
 
@@ -95,26 +97,27 @@ public class LanguageRequestHelper
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(
-				"Unable to get labels modules frontend caching " +
-					"configuration: will use reasonable defaults instead",
+				"Unable to get frontend caching configuration: will use " +
+					"reasonable defaults instead",
 				configurationException);
 		}
 
-		return new LanguageRequestInfo(parts[0], maxAge, sendNoCache, parts[1]);
+		return new LanguageRequestHelperInfo(
+			requestURIParts[0], maxAge, sendNoCache, requestURIParts[1]);
 	}
 
 	@Override
 	protected void sendContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			LanguageRequestInfo languageRequestInfo)
+			LanguageRequestHelperInfo languageRequestHelperInfo)
 		throws IOException {
 
 		// Check if resource exists
 
 		ServletContext servletContext = _serviceTrackerMap.getService(
 			Portal.PATH_MODULE + StringPool.SLASH +
-				languageRequestInfo.getWebContextPath());
+				languageRequestHelperInfo.getWebContextPath());
 
 		if (servletContext == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -125,7 +128,7 @@ public class LanguageRequestHelper
 		// Send resource
 
 		Locale locale = LocaleUtil.fromLanguageId(
-			languageRequestInfo.getLanguageId());
+			languageRequestHelperInfo.getLanguageId());
 
 		String content = _getContent(locale, servletContext);
 

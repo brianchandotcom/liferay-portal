@@ -5,9 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files;
 
-import com.liferay.frontend.js.web.internal.hashed.files.osgi.util.tracker.HashedFilesServiceTrackerCustomizer;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.frontend.js.web.internal.hashed.files.osgi.util.tracker.HashedFileURIsRegistryServiceTrackerCustomizer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,36 +17,35 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = HashedFilesRegistry.class)
-public class HashedFilesRegistry {
+@Component(service = HashedFileURIsRegistry.class)
+public class HashedFileURIsRegistry {
 
-	public void forEachHashedFile(BiConsumer<String, String> biConsumer) {
-		_loadHashedFiles();
+	public void forEach(BiConsumer<String, String> biConsumer) {
+		_loadMap();
 
-		for (Map.Entry<String, String> entry : _hashedFiles.entrySet()) {
+		for (Map.Entry<String, String> entry : _map.entrySet()) {
 			biConsumer.accept(entry.getKey(), entry.getValue());
 		}
 	}
 
-	public String getHashedFile(String virtualFile) {
-		_loadHashedFiles();
+	public String get(String nonhashedFileURI) {
+		_loadMap();
 
-		return _hashedFiles.get(virtualFile);
+		return _map.get(nonhashedFileURI);
 	}
 
-	public void putAll(Map<String, String> hashedFiles) {
-		_hashedFiles.putAll(hashedFiles);
+	public void putAll(Map<String, String> map) {
+		_map.putAll(map);
 	}
 
-	public void removeAll(Map<String, String> hashedFiles) {
-		for (String key : hashedFiles.keySet()) {
-			_hashedFiles.remove(key);
+	public void removeAll(Map<String, String> map) {
+		for (String key : map.keySet()) {
+			_map.remove(key);
 		}
 	}
 
@@ -67,10 +64,10 @@ public class HashedFilesRegistry {
 
 		_bundleContext = null;
 
-		_hashedFiles.clear();
+		_map.clear();
 	}
 
-	private synchronized void _loadHashedFiles() {
+	private synchronized void _loadMap() {
 		if (_serviceTracker != null) {
 			return;
 		}
@@ -81,21 +78,14 @@ public class HashedFilesRegistry {
 
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext, ServletContext.class,
-			new HashedFilesServiceTrackerCustomizer(_bundleContext, this));
+			new HashedFileURIsRegistryServiceTrackerCustomizer(
+				_bundleContext, this));
 
 		_serviceTracker.open();
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	private final Map<String, String> _hashedFiles = new ConcurrentHashMap<>();
-
-	@Reference
-	private Portal _portal;
-
+	private final Map<String, String> _map = new ConcurrentHashMap<>();
 	private ServiceTracker<ServletContext, Map<String, String>> _serviceTracker;
 
 }

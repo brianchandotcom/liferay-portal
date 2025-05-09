@@ -1017,6 +1017,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile" />
 
+			<antcall inheritAll="false" target="install-portal-snapshots" />
+
 			<if>
 				<and>
 					<equals arg1="@{app.server.type}" arg2="tomcat" />
@@ -1178,8 +1180,6 @@ app.server.type=@{app.server.type}]]></echo>
 					</then>
 				</elseif>
 			</if>
-
-			<antcall inheritAll="false" target="install-portal-snapshots" />
 
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 

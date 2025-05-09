@@ -421,15 +421,6 @@ public class AssetVocabularyLocalServiceImpl
 					"code ", externalReferenceCode, " and group ", groupId));
 		}
 
-		assetVocabulary = assetVocabularyLocalService.fetchGroupVocabulary(
-			groupId, externalReferenceCode);
-
-		if (assetVocabulary != null) {
-			throw new DuplicateVocabularyException(
-				"A category vocabulary with the name " + externalReferenceCode +
-					" already exists");
-		}
-
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
 					true)) {

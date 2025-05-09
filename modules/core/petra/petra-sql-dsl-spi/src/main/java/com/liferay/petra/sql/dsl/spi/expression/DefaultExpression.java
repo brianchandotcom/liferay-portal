@@ -19,11 +19,6 @@ import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
-	public default Alias<T> as(Class<?> javaType, String name) {
-		return new DefaultAlias<>(this, javaType, name);
-	}
-
-	@Override
 	public default Alias<T> as(String name) {
 		return new DefaultAlias<>(this, name);
 	}

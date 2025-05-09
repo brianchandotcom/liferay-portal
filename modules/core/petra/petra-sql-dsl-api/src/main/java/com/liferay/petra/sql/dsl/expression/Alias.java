@@ -12,8 +12,6 @@ public interface Alias<T> extends Expression<T> {
 
 	public Expression<T> getExpression();
 
-	public Class<?> getJavaType();
-
 	public String getName();
 
 }

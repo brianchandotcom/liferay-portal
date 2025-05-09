@@ -13,7 +13,6 @@ import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.ScalarDSLQueryAlias;
-import com.liferay.petra.sql.dsl.expression.TypeAlias;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -258,7 +257,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					if (expression instanceof Alias) {
 						Alias<?> alias = (Alias<?>)expression;
 
-						sqlQuery.addScalar(alias.getName(), _getType(alias));
+						sqlQuery.addScalar(
+							alias.getName(), _getType(alias.getExpression()));
 					}
 					else if (expression instanceof Column) {
 						Column<?, ?> column = (Column<?, ?>)expression;
@@ -1142,12 +1142,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			if (type != null) {
 				return type;
 			}
-		}
-
-		if (expression instanceof TypeAlias) {
-			TypeAlias<?> typeAlias = (TypeAlias<?>)expression;
-
-			return _types.get(typeAlias.getJavaType());
 		}
 
 		if (expression instanceof Alias) {

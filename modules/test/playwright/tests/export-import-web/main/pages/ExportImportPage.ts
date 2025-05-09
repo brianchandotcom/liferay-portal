@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 
 export class ExportImportPage {
@@ -150,18 +151,23 @@ export class ExportImportPage {
 		return filePath;
 	}
 
-	async goToExport() {
-		await this.productMenuPage.openProductMenuIfClosed();
-		await this.productMenuPage.goToPublishingExport();
+	async goToExport(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.export}`
+		);
 	}
 
-	async goToImport() {
-		await this.productMenuPage.openProductMenuIfClosed();
-		await this.productMenuPage.goToPublishingImport();
+	async goToImport(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.import}`
+		);
 	}
 
-	async goToImportOptions(folderPath: string) {
-		await this.goToImport();
+	async goToImportOptions(
+		folderPath: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goToImport(siteUrl);
 		await this.newImportButton.click();
 		await this.page.getByRole('button', {name: 'Select File'}).waitFor();
 

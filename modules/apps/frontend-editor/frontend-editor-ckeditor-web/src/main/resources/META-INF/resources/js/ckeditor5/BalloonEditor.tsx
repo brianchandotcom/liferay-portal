@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClassicEditor as BaseClassicEditor, EventInfo} from 'ckeditor5';
+import {BalloonEditor as BaseBalloonEditor, EventInfo} from 'ckeditor5';
 import React from 'react';
 
 import '../../css/ckeditor5/editor.scss';
@@ -17,7 +17,7 @@ import {
 	LiferayEditorConfig,
 } from './utils/types';
 
-const ClassicEditor = ({
+const BalloonEditor = ({
 	className,
 	config,
 	data,
@@ -27,47 +27,26 @@ const ClassicEditor = ({
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
-	id?: string;
-	onChange?: (event: EventInfo, editor: BaseClassicEditor) => void;
-	onReady?: (editor: BaseClassicEditor) => void;
+	onChange?: (event: EventInfo, editor: BaseBalloonEditor) => void;
+	onReady?: (editor: BaseBalloonEditor) => void;
 }) => {
 	return (
 		<div className={`lfr-ck ${className ? className : ''}`}>
 			<CKEditor
 				config={{
 					...getDefaultEditorConfig({
-						editorType: EEditorType.CLASSIC,
+						editorType: EEditorType.BALLOON,
 						preset: config?.preset || EEditorConfigPreset.ADVANCED,
 					}),
 					...config,
 				}}
 				data={data}
-				editor={BaseClassicEditor}
+				editor={BaseBalloonEditor}
 				onChange={onChange}
-				onReady={(editor: BaseClassicEditor) => {
-					editor.ui.view.toolbar.items.map((item: any) => {
-						if (item.buttonView) {
-							item.buttonView.tooltipPosition = 'n';
-						}
-
-						item.tooltipPosition = 'n';
-					});
-
-					const hasControlMenu = document.querySelector(
-						'.control-menu-container'
-					);
-
-					if (!hasControlMenu) {
-						editor.ui.viewportOffset = {
-							top: 0,
-						};
-					}
-
-					onReady?.(editor);
-				}}
+				onReady={onReady}
 			/>
 		</div>
 	);
 };
 
-export default ClassicEditor;
+export default BalloonEditor;

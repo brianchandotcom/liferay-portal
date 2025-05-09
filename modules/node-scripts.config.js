@@ -428,6 +428,7 @@ module.exports = {
 		'axe-core': ['*', 'default'],
 		'ckeditor5': [
 			'Alignment',
+			'BalloonEditor',
 			'BlockQuote',
 			'Bold',
 			'ButtonView',

@@ -6,7 +6,7 @@
 import {ButtonView, Command, Config, Plugin, icons} from 'ckeditor5';
 import {openSelectionModal} from 'frontend-js-components-web';
 
-import {ClassicEditorConfig} from '../utils/types';
+import {LiferayEditorConfig} from '../utils/types';
 
 class ItemSelector extends Plugin {
 	init() {
@@ -18,7 +18,7 @@ class ItemSelector extends Plugin {
 
 		const command = editor.commands.get(commandName)!;
 
-		const config: Config<ClassicEditorConfig> = editor.config;
+		const config: Config<LiferayEditorConfig> = editor.config;
 
 		const filebrowserImageBrowseUrl = config.get(
 			'filebrowserImageBrowseUrl'

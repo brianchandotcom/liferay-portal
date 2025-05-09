@@ -5,13 +5,18 @@
 
 import {EditorConfig} from 'ckeditor5';
 
-export enum EClassicEditorConfigPreset {
+export enum EEditorConfigPreset {
 	BASIC = 'basic',
 	ADVANCED = 'advanced',
 }
-export interface ClassicEditorConfig extends EditorConfig {
+
+export enum EEditorType {
+	BALLOON = 'balloon',
+	CLASSIC = 'classic',
+}
+export interface LiferayEditorConfig extends EditorConfig {
 	filebrowserImageBrowseUrl?: string;
 	filebrowserVideoBrowseUrl?: string;
 	itemSelectorEventName?: string;
-	preset?: EClassicEditorConfigPreset;
+	preset?: EEditorConfigPreset;
 }

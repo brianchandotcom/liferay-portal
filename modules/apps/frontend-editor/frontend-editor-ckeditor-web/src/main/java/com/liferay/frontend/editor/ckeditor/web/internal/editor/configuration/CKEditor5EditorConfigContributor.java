@@ -25,10 +25,12 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.editor.ckeditor.web.internal.configuration.CKEditor5Configuration",
-	property = "editor.name=ckeditor5_classic",
+	property = {
+		"editor.name=ckeditor5_balloon", "editor.name=ckeditor5_classic"
+	},
 	service = EditorConfigContributor.class
 )
-public class CKEditor5ClassicEditorConfigContributor
+public class CKEditor5EditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

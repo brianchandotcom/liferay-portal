@@ -359,7 +359,7 @@ public class DSLQueryEntryPersistenceImplTest {
 	}
 
 	@Test
-	public void testDSLQueryWithAlias() {
+	public void testDSLQueryWithoutTypeAlias() {
 		Assert.assertEquals(
 			Arrays.asList(0L, 1L, 1L),
 			_dslQueryEntryPersistence.dslQuery(
@@ -376,6 +376,10 @@ public class DSLQueryEntryPersistenceImplTest {
 					DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId.
 						ascending()
 				)));
+	}
+
+	@Test
+	public void testDSLQueryWithTypeAlias() {
 		Assert.assertEquals(
 			Arrays.asList(0.5, 1.0, 1.5),
 			_dslQueryEntryPersistence.dslQuery(

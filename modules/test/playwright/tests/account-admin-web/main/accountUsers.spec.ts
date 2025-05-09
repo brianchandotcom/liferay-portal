@@ -2758,24 +2758,23 @@ test(
 
 		await accountUsersPage.changeFilter('No Assigned Account');
 
-		await expect(accountUsersPage.clearButton).toBeVisible();
+		await expect(accountUsersPage.usersTable.clearButton).toBeVisible();
 
-		await accountUsersPage.filterButton.click();
+		await accountUsersPage.usersTable.filterButton.click();
 
 		await expect(
-			accountUsersPage.filterMenuItem('No Assigned Account')
+			accountUsersPage.usersTable.filterMenuItem('No Assigned Account')
 		).toHaveClass(/active/);
 
-		await accountUsersPage.filterButton.click();
+		await accountUsersPage.usersTable.filterButton.click();
+		await accountUsersPage.usersTable.clearButton.click();
 
-		await accountUsersPage.clearButton.click();
+		await expect(accountUsersPage.usersTable.clearButton).not.toBeVisible();
 
-		await expect(accountUsersPage.clearButton).not.toBeVisible();
-
-		await accountUsersPage.filterButton.click();
+		await accountUsersPage.usersTable.filterButton.click();
 
 		await expect(
-			accountUsersPage.filterMenuItem('Any Account')
+			accountUsersPage.usersTable.filterMenuItem('Any Account')
 		).toHaveClass(/active/);
 	}
 );

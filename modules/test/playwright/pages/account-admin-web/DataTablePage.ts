@@ -100,10 +100,7 @@ export class DataTablePage {
 			return null;
 		};
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
-		this.filterButton = page.getByRole('button', {
-			exact: true,
-			name: 'Filter',
-		});
+		this.filterButton = page.getByLabel('Filter', {exact: true});
 		this.filterMenuItem = (option: string) => {
 			return page.getByRole('menuitem', {
 				exact: true,

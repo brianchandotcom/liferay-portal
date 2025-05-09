@@ -40,6 +40,7 @@ import java.util.List;
 /**
  * @author David Nebinger
  * @author Petteri Karttunen
+ * @author Joshua Cords
  */
 public class JournalArticleSXPBlueprintInfoCollectionProvider
 	extends SXPBlueprintInfoCollectionProvider<JournalArticle>

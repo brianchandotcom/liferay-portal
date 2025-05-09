@@ -8,10 +8,16 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
-import React from 'react';
+import React, {Dispatch} from 'react';
 
-import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import {
+	Action,
+	State,
+	useSelector,
+	useStateDispatch,
+} from '../contexts/StateContext';
 import selectHistory from '../selectors/selectHistory';
+import selectState from '../selectors/selectState';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
@@ -162,101 +168,24 @@ function SaveButton() {
 function PublishButton() {
 	const dispatch = useStateDispatch();
 	const validate = useValidate();
-
-	const erc = useSelector(selectStructureERC);
-	const fields = useSelector(selectStructureFields);
-	const history = useSelector(selectHistory);
-	const label = useSelector(selectStructureLabel);
+	const state = useSelector(selectState);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
-	const name = useSelector(selectStructureName);
-	const spaces = useSelector(selectStructureSpaces);
-	const status = useSelector(selectStructureStatus);
-	const structureId = useSelector(selectStructureId);
 
 	const onPublish = async () => {
-		const valid = validate();
-
-		if (!valid) {
-			return;
-		}
-
-		if (history.deletedFields) {
-			if (
-				!(await openConfirmModal({
-					buttonLabel: Liferay.Language.get('publish'),
-					center: true,
-					status: 'danger',
-					text: Liferay.Language.get(
-						'you-removed-one-or-more-fields-from-the-structure'
+		await publishStructure({
+			dispatch,
+			onSuccess: () => {
+				openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-was-published-successfully'),
+						localizedLabel
 					),
-					title: Liferay.Language.get('publish-structure-changes'),
-				}))
-			) {
-				return;
-			}
-		}
-
-		try {
-			if (status === 'new') {
-				const {id} = await StructureService.createStructure({
-					erc,
-					fields,
-					label,
-					name,
-					spaces,
+					type: 'success',
 				});
-
-				await StructureService.publishStructure({id});
-
-				dispatch({id, type: 'publish-structure'});
-			}
-			else if (status === 'draft') {
-				await StructureService.updateStructure({
-					erc,
-					fields,
-					id: structureId,
-					label,
-					name,
-					spaces,
-				});
-
-				await StructureService.publishStructure({id: structureId});
-
-				dispatch({type: 'publish-structure'});
-			}
-			else if (status === 'published') {
-				await StructureService.updateStructure({
-					erc,
-					fields,
-					id: structureId,
-					label,
-					name,
-					spaces,
-				});
-
-				dispatch({type: 'publish-structure'});
-			}
-
-			openToast({
-				message: Liferay.Util.sub(
-					Liferay.Language.get('x-was-published-successfully'),
-					localizedLabel
-				),
-				type: 'success',
-			});
-		}
-		catch (error) {
-			const {message} = error as Error;
-
-			dispatch({
-				error:
-					message ||
-					Liferay.Language.get(
-						'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
-					),
-				type: 'set-error',
-			});
-		}
+			},
+			state,
+			validate,
+		});
 	};
 
 	return (
@@ -266,4 +195,106 @@ function PublishButton() {
 			onClick={onPublish}
 		/>
 	);
+}
+
+async function publishStructure({
+	checkDeletedFields = true,
+	dispatch,
+	state,
+	validate,
+}: {
+	checkDeletedFields?: boolean;
+	dispatch: Dispatch<Action>;
+	onSuccess: () => void;
+	state: State;
+	validate: () => boolean;
+}) {
+	const valid = validate();
+
+	if (!valid) {
+		return;
+	}
+
+	const history = selectHistory(state);
+
+	if (checkDeletedFields && history.deletedFields) {
+		if (
+			!(await openConfirmModal({
+				buttonLabel: Liferay.Language.get('publish'),
+				center: true,
+				status: 'danger',
+				text: Liferay.Language.get(
+					'you-removed-one-or-more-fields-from-the-structure'
+				),
+				title: Liferay.Language.get('publish-structure-changes'),
+			}))
+		) {
+			return;
+		}
+	}
+
+	const erc = selectStructureERC(state);
+	const fields = selectStructureFields(state);
+	const label = selectStructureLabel(state);
+
+	const name = selectStructureName(state);
+	const spaces = selectStructureSpaces(state);
+	const status = selectStructureStatus(state);
+	const structureId = selectStructureId(state);
+
+	try {
+		if (status === 'new') {
+			const {id} = await StructureService.createStructure({
+				erc,
+				fields,
+				label,
+				name,
+				spaces,
+			});
+
+			await StructureService.publishStructure({id});
+
+			dispatch({id, type: 'publish-structure'});
+		}
+		else if (status === 'draft') {
+			await StructureService.updateStructure({
+				erc,
+				fields,
+				id: structureId,
+				label,
+				name,
+				spaces,
+			});
+
+			await StructureService.publishStructure({id: structureId});
+
+			dispatch({type: 'publish-structure'});
+		}
+		else if (status === 'published') {
+			await StructureService.updateStructure({
+				erc,
+				fields,
+				id: structureId,
+				label,
+				name,
+				spaces,
+			});
+
+			dispatch({type: 'publish-structure'});
+		}
+
+		onSuccess();
+	}
+	catch (error) {
+		const {message} = error as Error;
+
+		dispatch({
+			error:
+				message ||
+				Liferay.Language.get(
+					'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+				),
+			type: 'set-error',
+		});
+	}
 }

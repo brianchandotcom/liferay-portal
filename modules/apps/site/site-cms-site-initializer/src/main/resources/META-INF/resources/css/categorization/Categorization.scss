@@ -88,6 +88,16 @@
 			}
 		}
 	}
+
+	.merge-tags {
+		.cell-select.table-head-title {
+			width: 72px !important;
+		}
+
+		[class='table-head-title'] {
+			display: none !important;
+		}
+	}
 }
 
 .modal-body .categorization-spaces .close {

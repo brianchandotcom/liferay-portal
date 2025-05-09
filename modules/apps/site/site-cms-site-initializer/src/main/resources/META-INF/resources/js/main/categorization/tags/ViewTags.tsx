@@ -13,13 +13,16 @@ import SpaceSticker from '../../components/SpaceSticker';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';
+import MergeTagsModal from './MergeTagsModal';
 
 export default function ViewTags({
 	dataSetId,
+	tagsList,
 	tagsURL,
 	vocabulariesURL,
 }: {
 	dataSetId: string;
+	tagsList: string;
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
@@ -195,6 +198,26 @@ export default function ViewTags({
 		});
 	};
 
+	const mergeTag = ({
+		itemData,
+		loadData,
+	}: {
+		itemData: any;
+		loadData: () => {};
+	}) => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: () => void}) =>
+				MergeTagsModal({
+					closeModal,
+					loadData,
+					tagId: itemData.id,
+					tagName: itemData.name,
+					tagsList,
+				}),
+			size: 'md',
+		});
+	};
+
 	const onActionDropdownItemClick = ({
 		action,
 		itemData,
@@ -206,6 +229,9 @@ export default function ViewTags({
 	}) => {
 		if (action.id === 'deleteTag') {
 			deleteTag({itemData, loadData});
+		}
+		else if (action.id === 'mergeTag') {
+			mergeTag({itemData, loadData});
 		}
 		else if (action.id === 'editTag') {
 			editTag({itemData, loadData});
@@ -243,6 +269,14 @@ export default function ViewTags({
 						icon: 'pencil',
 						id: 'editTag',
 						label: Liferay.Language.get('edit'),
+					},
+					{
+						data: {
+							permissionKey: 'get',
+						},
+						icon: 'merge',
+						id: 'mergeTag',
+						label: Liferay.Language.get('merge'),
 					},
 					{
 						data: {

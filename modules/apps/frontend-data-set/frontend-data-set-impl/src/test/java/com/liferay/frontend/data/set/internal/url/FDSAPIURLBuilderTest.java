@@ -147,11 +147,38 @@ public class FDSAPIURLBuilderTest {
 				"/{foo}/endpoint", "schema"
 			).addParameter(
 				"siteId", "{siteId}"
-			).addParameter(
-				"foo", "{foo}"
+			).addQueryString(
+				"foo={foo}"
 			).addParameter(
 				"{foo}", "{userId}"
 			).build());
+
+		Assert.assertNull(
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/endpoint", "schema"
+			).addParameter(
+				"", ""
+			).addQueryString(
+				""
+			).addParameter(
+				"foo", ""
+			).addParameter(
+				"", "foo"
+			).buildQuery());
+
+		Assert.assertEquals(
+			"siteId=12345&foo=bar&bar=67890",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/endpoint", "schema"
+			).addParameter(
+				"siteId", "{siteId}"
+			).addQueryString(
+				"foo={foo}"
+			).addParameter(
+				"{foo}", "{userId}"
+			).buildQuery());
 
 		serviceRegistration1.unregister();
 

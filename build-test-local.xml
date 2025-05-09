@@ -350,9 +350,9 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				>
 					<replacetoken><![CDATA[{test.batch.names[portal-release-acceptance]}]]></replacetoken>
 					<replacevalue><![CDATA[\
-					functional-tomcat-postgresql163-jdk21_zulu,\
-					modules-integration-postgresql163,\
-					playwright-js-tomcat90-postgresql163]]></replacevalue>
+		functional-tomcat-postgresql163-jdk21_zulu,\
+		modules-integration-postgresql163,\
+		playwright-js-tomcat90-postgresql163]]></replacevalue>
 				</replace>
 			</then>
 			<else>
@@ -361,8 +361,8 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				>
 					<replacetoken><![CDATA[{test.batch.names[portal-release-acceptance]}]]></replacetoken>
 					<replacevalue><![CDATA[\
-				functional-tomcat-postgresql163-jdk21_zulu,\
-				playwright-js-tomcat90-postgresql163]]></replacevalue>
+		functional-tomcat-postgresql163-jdk21_zulu,\
+		playwright-js-tomcat90-postgresql163]]></replacevalue>
 				</replace>
 			</else>
 		</if>

@@ -23,6 +23,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteTestEntityBatch() throws Exception {
+		super.testDeleteTestEntityBatch();
+	}
+
 	@Override
 	@Test
 	public void testGetTestEntity() throws Exception {

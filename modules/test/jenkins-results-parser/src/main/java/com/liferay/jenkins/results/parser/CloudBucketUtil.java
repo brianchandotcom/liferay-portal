@@ -52,8 +52,7 @@ public class CloudBucketUtil {
 	public static void copyS3File(String destination, String source) {
 		_executeCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress",
-				_replaceS3ObjectPath(destination),
+				"aws s3 cp --no-progress", _replaceS3ObjectPath(destination),
 				_replaceS3ObjectPath(source)));
 
 		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
@@ -226,47 +225,6 @@ public class CloudBucketUtil {
 		}
 
 		return false;
-	}
-
-	private static boolean _isOlderThan(
-		BasicFileAttributes basicFileAttributes, long ageSeconds) {
-
-		FileTime lastModifiedFileTime = basicFileAttributes.lastModifiedTime();
-
-		Instant lastModifiedInstant = lastModifiedFileTime.toInstant();
-
-		Instant instant = Instant.now();
-
-		if (lastModifiedInstant.isBefore(
-				instant.minus(ageSeconds, ChronoUnit.SECONDS))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static boolean _isOlderThan(File file, long ageSeconds) {
-		if ((file == null) || !file.exists()) {
-			return false;
-		}
-
-		return _isOlderThan(file.toPath(), ageSeconds);
-	}
-
-	private static boolean _isOlderThan(Path path, long ageSeconds) {
-		if (path == null) {
-			return false;
-		}
-
-		try {
-			return _isOlderThan(
-				Files.readAttributes(path, BasicFileAttributes.class),
-				ageSeconds);
-		}
-		catch (IOException ioException) {
-			return false;
-		}
 	}
 
 	public static boolean isS3ObjectRefAvailable(String s3ObjectPath) {
@@ -473,6 +431,47 @@ public class CloudBucketUtil {
 		sb.append(".s3.ref");
 
 		return new File(sb.toString());
+	}
+
+	private static boolean _isOlderThan(
+		BasicFileAttributes basicFileAttributes, long ageSeconds) {
+
+		FileTime lastModifiedFileTime = basicFileAttributes.lastModifiedTime();
+
+		Instant lastModifiedInstant = lastModifiedFileTime.toInstant();
+
+		Instant instant = Instant.now();
+
+		if (lastModifiedInstant.isBefore(
+				instant.minus(ageSeconds, ChronoUnit.SECONDS))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isOlderThan(File file, long ageSeconds) {
+		if ((file == null) || !file.exists()) {
+			return false;
+		}
+
+		return _isOlderThan(file.toPath(), ageSeconds);
+	}
+
+	private static boolean _isOlderThan(Path path, long ageSeconds) {
+		if (path == null) {
+			return false;
+		}
+
+		try {
+			return _isOlderThan(
+				Files.readAttributes(path, BasicFileAttributes.class),
+				ageSeconds);
+		}
+		catch (IOException ioException) {
+			return false;
+		}
 	}
 
 	private static String _replaceS3ObjectPath(String s3ObjectPath) {

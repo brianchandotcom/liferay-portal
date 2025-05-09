@@ -7,16 +7,20 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountGroupNameException;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -87,6 +92,13 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setName(name);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);
+
+		if (LazyReferencingThreadLocal.isIncompleteModel()) {
+			accountGroup.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		}
+		else {
+			accountGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		accountGroup = accountGroupPersistence.update(accountGroup);
 
@@ -258,6 +270,40 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws Exception {
+
+		AccountGroup accountGroup = fetchAccountGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (accountGroup != null) {
+			return accountGroup;
+		}
+
+		if (!LazyReferencingThreadLocal.isEnabled()) {
+			throw new NoSuchGroupException(
+				StringBundler.concat(
+					"Unable to find account group with external reference code",
+					externalReferenceCode, " and company ", companyId));
+		}
+
+		if (Validator.isNull(name)) {
+			name = externalReferenceCode;
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
+					true)) {
+
+			return accountGroupLocalService.addAccountGroup(
+				externalReferenceCode, userId, StringPool.BLANK, name,
+				new ServiceContext());
+		}
+	}
+
+	@Override
 	public boolean hasDefaultAccountGroup(long companyId) {
 		int count = accountGroupPersistence.countByC_D(companyId, true);
 
@@ -327,6 +373,10 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDescription(description);
 		accountGroup.setName(name);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);
+
+		if (accountGroup.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			accountGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
 
 		return accountGroupPersistence.update(accountGroup);
 	}

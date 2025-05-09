@@ -130,6 +130,9 @@
 						<equals arg1="${jar.file}" arg2="util-taglib" />
 					</or>
 					<then>
+
+						<!-- Temporary workaround for LPD-55207 -->
+
 						<unjar
 							dest="temp-unjar"
 							src="${jar.file}.jar"

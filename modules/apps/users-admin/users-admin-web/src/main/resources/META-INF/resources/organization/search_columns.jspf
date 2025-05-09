@@ -32,6 +32,15 @@
 				<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
 				<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
 			</div>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+				<div class="list-group-text">
+					<clay:label
+						displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
+						label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
+					/>
+				</div>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>
@@ -75,6 +84,18 @@
 			orderable="<%= true %>"
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
+				name="status"
+			>
+				<clay:label
+					displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
+					label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:search-container-column-text

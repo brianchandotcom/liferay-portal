@@ -5,15 +5,15 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
-import com.liferay.frontend.js.web.internal.hashed.files.request.RequestInfo;
+import com.liferay.frontend.js.web.internal.hashed.files.request.RequestHelperInfo;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class LanguageRequestInfo implements RequestInfo {
+public class LanguageRequestHelperInfo implements RequestHelperInfo {
 
 	@Override
-	public String getHash() {
+	public String getETag() {
 		return null;
 	}
 
@@ -26,21 +26,21 @@ public class LanguageRequestInfo implements RequestInfo {
 		return _maxAge;
 	}
 
-	@Override
-	public boolean getSendNoCache() {
-		return _sendNoCache;
-	}
-
 	public String getWebContextPath() {
 		return _webContextPath;
 	}
 
 	@Override
-	public boolean isVirtual() {
-		return true;
+	public boolean isImmutable() {
+		return false;
 	}
 
-	protected LanguageRequestInfo(
+	@Override
+	public boolean isSendNoCache() {
+		return _sendNoCache;
+	}
+
+	protected LanguageRequestHelperInfo(
 		String languageId, long maxAge, boolean sendNoCache,
 		String webContextPath) {
 

@@ -316,9 +316,8 @@ public class BlogsEntryServiceTest {
 
 			calendar = Calendar.getInstance();
 
-			calendar.set(Calendar.YEAR, 2000);
-
 			calendar.add(Calendar.HOUR, 3);
+			calendar.set(Calendar.YEAR, 2000);
 
 			List<BlogsEntry> blogsEntries =
 				_blogsEntryService.getCompanyEntries(
@@ -404,9 +403,8 @@ public class BlogsEntryServiceTest {
 
 			calendar = Calendar.getInstance();
 
-			calendar.set(Calendar.YEAR, 2000);
-
 			calendar.add(Calendar.HOUR, 3);
+			calendar.set(Calendar.YEAR, 2000);
 
 			List<BlogsEntry> blogsEntries =
 				_blogsEntryService.getCompanyEntries(
@@ -773,9 +771,8 @@ public class BlogsEntryServiceTest {
 
 			calendar = Calendar.getInstance();
 
-			calendar.set(Calendar.YEAR, 2000);
-
 			calendar.add(Calendar.HOUR, 3);
+			calendar.set(Calendar.YEAR, 2000);
 
 			List<BlogsEntry> blogsEntries = _blogsEntryService.getGroupEntries(
 				_group.getGroupId(), calendar.getTime(),
@@ -858,9 +855,8 @@ public class BlogsEntryServiceTest {
 
 			calendar = Calendar.getInstance();
 
-			calendar.set(Calendar.YEAR, 2000);
-
 			calendar.add(Calendar.HOUR, 3);
+			calendar.set(Calendar.YEAR, 2000);
 
 			List<BlogsEntry> blogsEntries = _blogsEntryService.getGroupEntries(
 				_group.getGroupId(), calendar.getTime(),

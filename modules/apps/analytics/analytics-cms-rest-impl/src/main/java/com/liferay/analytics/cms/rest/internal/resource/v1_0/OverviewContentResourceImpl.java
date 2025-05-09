@@ -208,7 +208,6 @@ public class OverviewContentResourceImpl
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.add(Calendar.DAY_OF_MONTH, -(rangeKey * 2));
-
 		calendar.set(Calendar.HOUR_OF_DAY, 12);
 		calendar.set(Calendar.MILLISECOND, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -262,7 +261,6 @@ public class OverviewContentResourceImpl
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.add(Calendar.DAY_OF_MONTH, -rangeKey);
-
 		calendar.set(Calendar.HOUR_OF_DAY, 12);
 		calendar.set(Calendar.MILLISECOND, 0);
 		calendar.set(Calendar.MINUTE, 0);

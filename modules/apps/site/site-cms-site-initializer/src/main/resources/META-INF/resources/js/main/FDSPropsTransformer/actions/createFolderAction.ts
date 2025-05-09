@@ -39,9 +39,9 @@ export default function createFolderAction(
 						scopeKey: string;
 						title: string;
 					}>(
-						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 						groupId,
-						title
+						title,
+						additionalProps.parentObjectEntryFolderExternalReferenceCode
 					);
 
 					if (success) {

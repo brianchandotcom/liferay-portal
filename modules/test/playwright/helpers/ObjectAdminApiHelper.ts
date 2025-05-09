@@ -35,6 +35,12 @@ export class ObjectAdminApiHelper {
 		this.basePath = 'object-admin/v1.0';
 	}
 
+	async getAllObjectDefinitions() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`
+		);
+	}
+
 	async postObjectDefinitionObjectFieldBatch(
 		objectDefinitionId: number,
 		objectFields: Partial<ObjectField>[]

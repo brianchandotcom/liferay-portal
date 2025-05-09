@@ -8,9 +8,13 @@ package com.liferay.captcha.internal.settings.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -35,14 +39,25 @@ public class CaptchaSettingsImplTest {
 
 	@Test
 	public void test() throws Exception {
+		Company company = CompanyTestUtil.addCompany(false);
+
 		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
+				companyConfigurationTemporarySwapper1 =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
 						CaptchaConfiguration.class.getName(),
 						new HashMapDictionaryBuilder(
 						).<String, Object>put(
 							"createAccountCaptchaEnabled", false
+						).build());
+			CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper2 =
+					new CompanyConfigurationTemporarySwapper(
+						company.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
+							"createAccountCaptchaEnabled", true
 						).build())) {
 
 			CaptchaConfiguration captchaConfiguration =
@@ -51,6 +66,18 @@ public class CaptchaSettingsImplTest {
 			Assert.assertEquals(
 				captchaConfiguration.createAccountCaptchaEnabled(),
 				_captchaSettings.isCreateAccountCaptchaEnabled());
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				captchaConfiguration =
+					_captchaProvider.getCaptchaConfiguration();
+
+				Assert.assertEquals(
+					captchaConfiguration.createAccountCaptchaEnabled(),
+					_captchaSettings.isCreateAccountCaptchaEnabled());
+			}
 		}
 	}
 

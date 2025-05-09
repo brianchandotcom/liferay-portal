@@ -67,10 +67,12 @@ export class DataTablePage {
 	readonly searchInput: Locator;
 	readonly selectAllItemsCheckbox: Locator;
 	readonly selectViewButton: Locator;
+	readonly selectViewCardButton: Locator;
 	readonly selectViewListButton: Locator;
 	readonly selectViewTableButton: Locator;
 	readonly table: Locator;
 	readonly valueLink: (value: string, exact?: boolean) => Locator;
+	readonly viewStatus: (status: string) => Locator;
 
 	constructor(page: Page | FrameLocator, table: Locator) {
 		this.page = page;
@@ -165,12 +167,17 @@ export class DataTablePage {
 			'Select All Items on the Page'
 		);
 		this.selectViewButton = page.getByLabel('Select View');
+		this.selectViewCardButton = page.getByRole('menuitem', {
+			name: 'Cards',
+		});
 		this.selectViewListButton = page.getByRole('menuitem', {name: 'List'});
 		this.selectViewTableButton = page.getByRole('menuitem', {
 			name: 'Table',
 		});
 		this.valueLink = (value, exact = true) =>
 			page.getByRole('link', {exact, name: value});
+		this.viewStatus = (status) =>
+			page.getByTitle(`Select View, Currently Selected: ${status}`);
 	}
 
 	async changeView(view: string) {
@@ -184,6 +191,21 @@ export class DataTablePage {
 			}).toPass();
 
 			await this.selectViewListButton.click();
+			await expect(this.viewStatus(view)).toBeVisible();
+
+			return;
+		}
+		else if (view === 'Cards') {
+			await expect(async () => {
+				await this.selectViewButton.click();
+
+				await expect(this.selectViewCardButton).toBeVisible({
+					timeout: 100,
+				});
+			}).toPass();
+
+			await this.selectViewCardButton.click();
+			await expect(this.viewStatus(view)).toBeVisible();
 
 			return;
 		}
@@ -197,6 +219,7 @@ export class DataTablePage {
 		}).toPass();
 
 		await this.selectViewTableButton.click();
+		await expect(this.viewStatus(view)).toBeVisible();
 	}
 
 	async search(value: string) {

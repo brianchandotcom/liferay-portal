@@ -10,6 +10,7 @@ import path from 'path';
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -25,6 +26,9 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-47858': {enabled: true},
+	}),
 	loginTest(),
 	usersAndOrganizationsPagesTest
 );
@@ -1445,5 +1449,59 @@ test(
 		await editUserPage.changeImageButton.click();
 
 		await expect(editUserPage.maxFileSizeText).toBeVisible();
+	}
+);
+
+test(
+	'Can search an organization and view its status',
+	{tag: ['@LPD-55108']},
+	async ({apiHelpers, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationDataTable.changeView(
+			'Table'
+		);
+
+		await usersAndOrganizationsPage.organizationDataTable.search(
+			organization.name
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationDataTable.cell(
+				organization.name
+			)
+		).toHaveCount(1);
+		await expect(
+			usersAndOrganizationsPage.organizationDataTable.cell('Approved')
+		).toBeVisible();
+
+		await usersAndOrganizationsPage.organizationDataTable.changeView(
+			'List'
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationDataTable.valueLink(
+				organization.name
+			)
+		).toHaveCount(1);
+		await expect(
+			usersAndOrganizationsPage.statusText('Approved')
+		).toBeVisible();
+
+		await usersAndOrganizationsPage.organizationDataTable.changeView(
+			'Cards'
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationDataTable.valueLink(
+				organization.name
+			)
+		).toHaveCount(1);
+		await expect(
+			usersAndOrganizationsPage.statusText('Approved')
+		).toBeVisible();
 	}
 );

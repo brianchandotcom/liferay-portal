@@ -7,6 +7,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export const searchTableRowByValue = async function (
@@ -114,6 +115,7 @@ export class UsersAndOrganizationsPage {
 	readonly optionsMenu: Locator;
 	readonly organizationChartLink: Locator;
 	readonly organizationsLink: Locator;
+	readonly organizationDataTable: DataTablePage;
 	readonly organizationsTable: Locator;
 	readonly organizationsTableRow: (
 		colPosition: number,
@@ -142,6 +144,7 @@ export class UsersAndOrganizationsPage {
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly selectAllUsersCheckBox: Locator;
+	readonly statusText: (value: string) => Locator;
 	readonly tableFilterMenu: Locator;
 	readonly tableFilterMenuItem: (option: string) => Locator;
 	readonly tableOrderMenu: Locator;
@@ -399,6 +402,14 @@ export class UsersAndOrganizationsPage {
 		this.organizationsLink = page.getByRole('link', {
 			name: 'Organizations',
 		});
+		this.organizationDataTable = new DataTablePage(
+			page,
+			page
+				.locator(
+					'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizations'
+				)
+				.first()
+		);
 		this.organizationsTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationsSearchContainer'
 		);
@@ -521,6 +532,7 @@ export class UsersAndOrganizationsPage {
 				strictEqual
 			);
 		};
+		this.statusText = (value) => page.getByText(value, {exact: true});
 		this.selectAllUsersCheckBox = page
 			.locator('.management-bar')
 			.getByLabel('Select All Users on the Page');

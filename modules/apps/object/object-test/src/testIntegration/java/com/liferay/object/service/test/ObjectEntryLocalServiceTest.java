@@ -7061,7 +7061,13 @@ public class ObjectEntryLocalServiceTest {
 			_objectRelationshipLocalService, objectDefinition,
 			_objectDefinition,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			"objectRelationship");
+			"objectRelationship1");
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition,
+			_objectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"objectRelationship2");
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -7084,11 +7090,24 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("Charles", values.get("firstName"));
 		Assert.assertEquals(
 			StringPool.BLANK,
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
-			0L, values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			0L,
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			0L,
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"name", RandomTestUtil.randomString()
@@ -7097,7 +7116,16 @@ public class ObjectEntryLocalServiceTest {
 		objectEntry1 = _objectEntryLocalService.partialUpdateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
 			HashMapBuilder.<String, Serializable>put(
-				"r_objectRelationship_c_relatedObjectDefinitionId",
+				"r_objectRelationship1_c_relatedObjectDefinitionERC",
+				objectEntry2.getObjectEntryId()
+			).put(
+				"r_objectRelationship1_c_relatedObjectDefinitionId",
+				objectEntry3.getObjectEntryId()
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionERC",
+				objectEntry3.getObjectEntryId()
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionId",
 				objectEntry2.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
@@ -7106,11 +7134,17 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("Charles", values.get("firstName"));
 		Assert.assertEquals(
+			objectEntry3.getExternalReferenceCode(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry3.getObjectEntryId(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
 			objectEntry2.getExternalReferenceCode(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			objectEntry2.getObjectEntryId(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		objectEntry1 = _objectEntryLocalService.partialUpdateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
@@ -7123,18 +7157,27 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("Julia", values.get("firstName"));
 		Assert.assertEquals(
+			objectEntry3.getExternalReferenceCode(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry3.getObjectEntryId(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
 			objectEntry2.getExternalReferenceCode(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			objectEntry2.getObjectEntryId(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		objectEntry1 = _objectEntryLocalService.partialUpdateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Zape"
 			).put(
-				"r_objectRelationship_c_relatedObjectDefinitionId", 0L
+				"r_objectRelationship1_c_relatedObjectDefinitionId", 0L
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionERC",
+				StringPool.BLANK
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -7143,13 +7186,22 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("Zape", values.get("firstName"));
 		Assert.assertEquals(
 			StringPool.BLANK,
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
-			0L, values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			0L,
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
+			objectEntry2.getExternalReferenceCode(),
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry2.getObjectEntryId(),
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId1);
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry2.getObjectEntryId());
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry3.getObjectEntryId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
@@ -7469,7 +7521,13 @@ public class ObjectEntryLocalServiceTest {
 			_objectRelationshipLocalService, objectDefinition,
 			_objectDefinition,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			"objectRelationship");
+			"objectRelationship1");
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition,
+			_objectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"objectRelationship2");
 
 		Map<String, Serializable> requiredValues =
 			HashMapBuilder.<String, Serializable>put(
@@ -7500,11 +7558,24 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("Charles", values.get("firstName"));
 		Assert.assertEquals(
 			StringPool.BLANK,
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
-			0L, values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			0L,
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			0L,
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"name", RandomTestUtil.randomString()
@@ -7513,7 +7584,16 @@ public class ObjectEntryLocalServiceTest {
 		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
 			HashMapBuilder.<String, Serializable>put(
-				"r_objectRelationship_c_relatedObjectDefinitionId",
+				"r_objectRelationship1_c_relatedObjectDefinitionERC",
+				objectEntry2.getObjectEntryId()
+			).put(
+				"r_objectRelationship1_c_relatedObjectDefinitionId",
+				objectEntry3.getObjectEntryId()
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionERC",
+				objectEntry3.getObjectEntryId()
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionId",
 				objectEntry2.getObjectEntryId()
 			).putAll(
 				requiredValues
@@ -7524,11 +7604,17 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(StringPool.BLANK, values.get("firstName"));
 		Assert.assertEquals(
+			objectEntry3.getExternalReferenceCode(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry3.getObjectEntryId(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
 			objectEntry2.getExternalReferenceCode(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			objectEntry2.getObjectEntryId(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
@@ -7543,18 +7629,27 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("Julia", values.get("firstName"));
 		Assert.assertEquals(
+			objectEntry3.getExternalReferenceCode(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry3.getObjectEntryId(),
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
 			objectEntry2.getExternalReferenceCode(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
 			objectEntry2.getObjectEntryId(),
-			values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Zape"
 			).put(
-				"r_objectRelationship_c_relatedObjectDefinitionId", 0L
+				"r_objectRelationship1_c_relatedObjectDefinitionId", 0L
+			).put(
+				"r_objectRelationship2_c_relatedObjectDefinitionERC",
+				StringPool.BLANK
 			).putAll(
 				requiredValues
 			).build(),
@@ -7565,13 +7660,22 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("Zape", values.get("firstName"));
 		Assert.assertEquals(
 			StringPool.BLANK,
-			values.get("r_objectRelationship_c_relatedObjectDefinitionERC"));
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionERC"));
 		Assert.assertEquals(
-			0L, values.get("r_objectRelationship_c_relatedObjectDefinitionId"));
+			0L,
+			values.get("r_objectRelationship1_c_relatedObjectDefinitionId"));
+		Assert.assertEquals(
+			objectEntry2.getExternalReferenceCode(),
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionERC"));
+		Assert.assertEquals(
+			objectEntry2.getObjectEntryId(),
+			values.get("r_objectRelationship2_c_relatedObjectDefinitionId"));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId1);
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry2.getObjectEntryId());
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry3.getObjectEntryId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());

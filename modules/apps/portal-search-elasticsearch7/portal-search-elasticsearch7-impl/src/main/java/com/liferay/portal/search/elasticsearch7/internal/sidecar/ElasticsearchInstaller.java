@@ -145,7 +145,13 @@ public class ElasticsearchInstaller {
 		PathUtil.deleteDir(_temporaryDirectoryPath);
 	}
 
-	private Path _locateOrDownload(Distributable distributable) throws IOException {
+	private boolean _isAlreadyInstalled() {
+		return Files.exists(_installationDirectoryPath);
+	}
+
+	private Path _locateOrDownload(Distributable distributable)
+		throws IOException {
+
 		String downloadURLString = distributable.getDownloadURLString();
 
 		String fileName = StringUtils.substringAfterLast(
@@ -214,10 +220,6 @@ public class ElasticsearchInstaller {
 
 			_locateOrDownloadAndInstallPlugin(distributable);
 		}
-	}
-
-	private boolean _isAlreadyInstalled() {
-		return Files.exists(_installationDirectoryPath);
 	}
 
 	private void _validateChecksum(

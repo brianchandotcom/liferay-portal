@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
@@ -15,7 +16,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -35,6 +38,27 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 	@Override
+	public Response deleteTestEntity(Long testEntityId, Boolean permanent)
+		throws Exception {
+
+		Iterator<TestEntity> testEntityIterator = _testEntities.iterator();
+
+		while (testEntityIterator.hasNext()) {
+			TestEntity testEntity = testEntityIterator.next();
+
+			if (Objects.equals(testEntity.getId(), testEntityId)) {
+				testEntityIterator.remove();
+
+				Response.ResponseBuilder responseBuilder = Response.noContent();
+
+				return responseBuilder.build();
+			}
+		}
+
+		throw new NoSuchModelException();
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return new TestEntityEntityModel();
 	}
@@ -45,8 +69,13 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
-	public TestEntity getTestEntity(Long testEntityId) {
-		return _testEntities.get(Math.toIntExact(testEntityId));
+	public TestEntity getTestEntity(Long testEntityId) throws Exception {
+		try {
+			return _testEntities.get(Math.toIntExact(testEntityId));
+		}
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+			throw new NoSuchModelException(indexOutOfBoundsException);
+		}
 	}
 
 	@Override

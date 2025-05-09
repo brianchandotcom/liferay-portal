@@ -138,6 +138,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	}
 
 	@Override
+	protected TestEntity testDeleteTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
 	protected TestEntity testGetTestEntitiesPage_addTestEntity(
 			TestEntity testEntity)
 		throws Exception {

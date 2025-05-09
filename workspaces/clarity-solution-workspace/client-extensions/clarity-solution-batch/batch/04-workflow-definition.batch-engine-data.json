@@ -20,7 +20,7 @@
 					},
 					{
 						"#tag-name": "description",
-						"#value": "An automated approval process that requires manager review when specified."
+						"#value": "This workflow establishes an automated approval process with mandatory manager review under certain conditions."
 					},
 					{
 						"#tag-name": "version",
@@ -664,7 +664,7 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
-			"description": "An automated approval process that requires manager review when specified.",
+			"description": "This workflow establishes an automated approval process with mandatory manager review under certain conditions.",
 			"name": "U3A2 Distribution Manager Approval",
 			"nodes": [
 				{

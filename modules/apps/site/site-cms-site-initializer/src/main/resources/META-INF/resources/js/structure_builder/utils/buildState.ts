@@ -79,6 +79,7 @@ export default function buildState(
 		selection: [],
 		spaces: getSpaces(objectDefinition),
 		status: isPublished ? 'published' : 'draft',
+		unsavedChanges: false,
 		uuid: getUuid(),
 	};
 }

@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {getTempDir} from '../../../../utils/temp';
 
 export class ExportImportPage {
@@ -164,6 +165,18 @@ export class ExportImportPage {
 		await this.productMenuPage.goToPublishingImport();
 
 		await this.newImportButton.click();
+
+		const previousFileAlert = this.page.getByText(
+			'Warning:This file was previously uploaded'
+		);
+		if (await previousFileAlert.isVisible()) {
+			await clickAndExpectToBeHidden({
+				target: previousFileAlert,
+				trigger: this.page.getByRole('link', {
+					name: 'Delete File',
+				}),
+			});
+		}
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 

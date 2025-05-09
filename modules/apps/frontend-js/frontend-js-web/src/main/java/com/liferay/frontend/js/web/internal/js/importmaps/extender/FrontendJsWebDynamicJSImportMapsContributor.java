@@ -7,7 +7,7 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -48,17 +48,17 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			return;
 		}
 
-		_hashedFilesRegistry.forEachHashedFile(
-			(key, value) -> {
-				if (!key.endsWith(".js")) {
+		_hashedFileURIsRegistry.forEach(
+			(nonhashedFileURI, hashedFileURI) -> {
+				if (!nonhashedFileURI.endsWith(".js")) {
 					return;
 				}
 
 				try {
 					writer.write(",\"");
-					writer.write(key);
+					writer.write(nonhashedFileURI);
 					writer.write("\": \"");
-					writer.write(value);
+					writer.write(hashedFileURI);
 					writer.write(StringPool.QUOTE);
 				}
 				catch (IOException ioException) {
@@ -96,7 +96,7 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private HashedFilesRegistry _hashedFilesRegistry;
+	private HashedFileURIsRegistry _hashedFileURIsRegistry;
 
 	@Reference
 	private Portal _portal;

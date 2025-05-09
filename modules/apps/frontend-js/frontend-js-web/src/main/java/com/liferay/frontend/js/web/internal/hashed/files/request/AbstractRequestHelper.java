@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class AbstractRequestHelper<T extends RequestInfo> {
+public abstract class AbstractRequestHelper<T extends RequestHelperInfo> {
 
 	public abstract boolean isAcceptableRequest(
 		HttpServletRequest httpServletRequest);
@@ -27,20 +27,20 @@ public abstract class AbstractRequestHelper<T extends RequestInfo> {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		T requestInfo = getRequestInfo(httpServletRequest);
+		T requestHelperInfo = getRequestHelperInfo(httpServletRequest);
 
-		if (requestInfo == null) {
+		if (requestHelperInfo == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
 
-		String hash = requestInfo.getHash();
+		String eTag = requestHelperInfo.getETag();
 
-		if (hash != null) {
+		if (eTag != null) {
 			if (StringUtil.equals(
 					httpServletRequest.getHeader(HttpHeaders.IF_NONE_MATCH),
-					hash)) {
+					eTag)) {
 
 				httpServletResponse.setStatus(
 					HttpServletResponse.SC_NOT_MODIFIED);
@@ -48,33 +48,33 @@ public abstract class AbstractRequestHelper<T extends RequestInfo> {
 				return;
 			}
 
-			httpServletResponse.setHeader(HttpHeaders.ETAG, hash);
+			httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
 		}
 
-		if (requestInfo.isVirtual()) {
-			StringBuilder cacheControlSB = new StringBuilder();
-
-			if (requestInfo.getSendNoCache()) {
-				cacheControlSB.append("no-cache, ");
-			}
-			else {
-				cacheControlSB.append("must-revalidate, ");
-			}
-
-			cacheControlSB.append("max-age=");
-			cacheControlSB.append(requestInfo.getMaxAge());
-			cacheControlSB.append(", public");
-
-			httpServletResponse.setHeader(
-				HttpHeaders.CACHE_CONTROL, cacheControlSB.toString());
-		}
-		else {
+		if (requestHelperInfo.isImmutable()) {
 			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				"immutable, max-age=31536000, public");
 		}
+		else {
+			StringBuilder sb = new StringBuilder();
 
-		sendContent(httpServletRequest, httpServletResponse, requestInfo);
+			if (requestHelperInfo.isSendNoCache()) {
+				sb.append("no-cache, ");
+			}
+			else {
+				sb.append("must-revalidate, ");
+			}
+
+			sb.append("max-age=");
+			sb.append(requestHelperInfo.getMaxAge());
+			sb.append(", public");
+
+			httpServletResponse.setHeader(
+				HttpHeaders.CACHE_CONTROL, sb.toString());
+		}
+
+		sendContent(httpServletRequest, httpServletResponse, requestHelperInfo);
 	}
 
 	protected String getHash(String uri) {
@@ -93,11 +93,12 @@ public abstract class AbstractRequestHelper<T extends RequestInfo> {
 		return uri.substring(i + 2, j);
 	}
 
-	protected abstract T getRequestInfo(HttpServletRequest httpServletRequest);
+	protected abstract T getRequestHelperInfo(
+		HttpServletRequest httpServletRequest);
 
 	protected abstract void sendContent(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T requestInfo)
+			HttpServletResponse httpServletResponse, T requestHelperInfo)
 		throws IOException, ServletException;
 
 }

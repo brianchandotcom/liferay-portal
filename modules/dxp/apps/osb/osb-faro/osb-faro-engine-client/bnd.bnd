@@ -80,6 +80,8 @@ Import-Package:\
 	\
 	!io.undertow.*,\
 	\
+	!jakarta.faces.*,\
+	\
 	!javax.annotation.*,\
 	\
 	!javax.ejb.*,\
@@ -98,7 +100,15 @@ Import-Package:\
 	\
 	!javax.money.*,\
 	\
+	!javax.persistence.*,\
+	\
+	!javax.servlet.*,\
+	\
+	!javax.transaction.*,\
+	\
 	!javax.validation.*,\
+	\
+	!javax.xml.ws.*,\
 	\
 	!jdk.jfr.*,\
 	\

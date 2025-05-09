@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files.osgi.util.tracker;
 
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Collections;
@@ -23,14 +23,15 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Iván Zaera Avellón
  */
-public class HashedFilesServiceTrackerCustomizer
+public class HashedFileURIsRegistryServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer<ServletContext, Map<String, String>> {
 
-	public HashedFilesServiceTrackerCustomizer(
-		BundleContext bundleContext, HashedFilesRegistry hashedFilesRegistry) {
+	public HashedFileURIsRegistryServiceTrackerCustomizer(
+		BundleContext bundleContext,
+		HashedFileURIsRegistry hashedFileURIsRegistry) {
 
 		_bundleContext = bundleContext;
-		_hashedFilesRegistry = hashedFilesRegistry;
+		_hashedFileURIsRegistry = hashedFileURIsRegistry;
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class HashedFilesServiceTrackerCustomizer
 			Set<String> hashedResourcePaths = _getHashedResourcePaths(
 				servletContext, "/META-INF/resources/__liferay__/");
 
-			Map<String, String> hashedFiles = new HashMap<>();
+			Map<String, String> map = new HashMap<>();
 
 			for (String hashedResourcePath : hashedResourcePaths) {
 
@@ -60,14 +61,14 @@ public class HashedFilesServiceTrackerCustomizer
 				String extension = hashedResourcePath.substring(
 					hashedResourcePath.lastIndexOf(").") + 1);
 
-				hashedFiles.put(
+				map.put(
 					contextPath + baseName + extension,
 					contextPath + hashedResourcePath);
 			}
 
-			_hashedFilesRegistry.putAll(hashedFiles);
+			_hashedFileURIsRegistry.putAll(map);
 
-			return hashedFiles;
+			return map;
 		}
 		finally {
 			_bundleContext.ungetService(serviceReference);
@@ -77,9 +78,9 @@ public class HashedFilesServiceTrackerCustomizer
 	@Override
 	public void modifiedService(
 		ServiceReference<ServletContext> serviceReference,
-		Map<String, String> hashedFiles) {
+		Map<String, String> map) {
 
-		removedService(serviceReference, hashedFiles);
+		removedService(serviceReference, map);
 
 		addingService(serviceReference);
 	}
@@ -87,9 +88,9 @@ public class HashedFilesServiceTrackerCustomizer
 	@Override
 	public void removedService(
 		ServiceReference<ServletContext> serviceReference,
-		Map<String, String> hashedFiles) {
+		Map<String, String> map) {
 
-		_hashedFilesRegistry.removeAll(hashedFiles);
+		_hashedFileURIsRegistry.removeAll(map);
 	}
 
 	private Set<String> _getHashedResourcePaths(
@@ -119,6 +120,6 @@ public class HashedFilesServiceTrackerCustomizer
 	}
 
 	private final BundleContext _bundleContext;
-	private final HashedFilesRegistry _hashedFilesRegistry;
+	private final HashedFileURIsRegistry _hashedFileURIsRegistry;
 
 }

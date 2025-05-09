@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -302,18 +302,18 @@ public class ModuleRequestHelperTest {
 		return frontendCachingConfiguration;
 	}
 
-	private HashedFilesRegistry _mockHashedFilesRegistry() {
-		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
-			HashedFilesRegistry.class);
+	private HashedFileURIsRegistry _mockHashedFilesRegistry() {
+		HashedFileURIsRegistry hashedFileURIsRegistry = Mockito.mock(
+			HashedFileURIsRegistry.class);
 
 		Mockito.when(
-			hashedFilesRegistry.getHashedFile(
+			hashedFileURIsRegistry.get(
 				Mockito.eq("/o/frontend-js-web/__liferay__/index.js"))
 		).thenReturn(
 			"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"
 		);
 
-		return hashedFilesRegistry;
+		return hashedFileURIsRegistry;
 	}
 
 	private MockHttpServletRequest _mockHttpServletRequest(String requestURI) {

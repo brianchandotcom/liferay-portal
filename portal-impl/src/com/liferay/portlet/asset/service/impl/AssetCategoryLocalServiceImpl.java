@@ -449,19 +449,6 @@ public class AssetCategoryLocalServiceImpl
 					"code ", externalReferenceCode, " and group ", groupId));
 		}
 
-		assetCategory = assetCategoryLocalService.fetchCategory(
-			groupId, AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID,
-			externalReferenceCode,
-			AssetVocabularyConstants.INCOMPLETE_VOCABULARY_ID);
-
-		if (assetCategory != null) {
-			throw new DuplicateCategoryException(
-				StringBundler.concat(
-					"There is another category named ", externalReferenceCode,
-					" as a child of category ",
-					AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID));
-		}
-
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
 					true)) {

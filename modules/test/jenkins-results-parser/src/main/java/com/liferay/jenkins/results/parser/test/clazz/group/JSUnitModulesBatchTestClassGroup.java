@@ -105,8 +105,8 @@ public class JSUnitModulesBatchTestClassGroup
 
 		List<String> excludedTestMethodNames = new ArrayList<>();
 
-		for (JobProperty execludesJobProperty : getExcludesJobProperties()) {
-			String excludesJobPropertyValue = execludesJobProperty.getValue();
+		for (JobProperty excludesJobProperty : getExcludesJobProperties()) {
+			String excludesJobPropertyValue = excludesJobProperty.getValue();
 
 			if (excludesJobPropertyValue != null) {
 				String[] excludedMethodNames = excludesJobPropertyValue.split(

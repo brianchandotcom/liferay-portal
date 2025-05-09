@@ -215,6 +215,10 @@ public class SXPBlueprintLocalServiceImpl
 			JSONObject generalConfigurationJSONObject =
 				configurationJSONObject.getJSONObject("generalConfiguration");
 
+			if (generalConfigurationJSONObject == null) {
+				return configuration;
+			}
+
 			JSONArray searchableAssetTypesJSONArray =
 				(JSONArray)generalConfigurationJSONObject.get(
 					"searchableAssetTypes");

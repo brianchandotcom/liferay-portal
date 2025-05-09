@@ -31,8 +31,6 @@ import java.io.PrintWriter;
 import java.net.URL;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -102,20 +100,7 @@ public class LanguageRequestHelper
 				configurationException);
 		}
 
-		Long lastMaxAgeUpdate = _lastMaxAgeUpdate.get(companyId);
-		long now = System.currentTimeMillis();
-
-		if ((lastMaxAgeUpdate == null) ||
-			((now - lastMaxAgeUpdate) > (maxAge * 1000))) {
-
-			lastMaxAgeUpdate = now;
-
-			_lastMaxAgeUpdate.put(companyId, lastMaxAgeUpdate);
-		}
-
-		return new LanguageRequestInfo(
-			parts[0], maxAge - ((now - lastMaxAgeUpdate) / 1000), sendNoCache,
-			parts[1]);
+		return new LanguageRequestInfo(parts[0], maxAge, sendNoCache, parts[1]);
 	}
 
 	@Override
@@ -234,7 +219,6 @@ public class LanguageRequestHelper
 	private final ConfigurationProvider _configurationProvider;
 	private final JSONFactory _jsonFactory;
 	private final Language _language;
-	private final Map<Long, Long> _lastMaxAgeUpdate = new ConcurrentHashMap<>();
 	private final Portal _portal;
 	private final ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 

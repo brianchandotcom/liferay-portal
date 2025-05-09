@@ -161,10 +161,9 @@ export class ExportImportPage {
 	}
 
 	async goToImportOptions(folderPath: string) {
-		await this.productMenuPage.openProductMenuIfClosed();
-		await this.productMenuPage.goToPublishingImport();
-
+		await this.goToImport();
 		await this.newImportButton.click();
+		await this.page.getByRole('button', {name: 'Select File'}).waitFor();
 
 		const previousFileAlert = this.page.getByText(
 			'Warning:This file was previously uploaded'
@@ -179,16 +178,11 @@ export class ExportImportPage {
 		}
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
-
 		await this.fileSelector.click();
-
 		const fileChooser = await fileChooserPromise;
-
 		await fileChooser.setFiles(folderPath);
 
 		await this.continueButton.click();
-
-		await this.page.waitForLoadState('domcontentloaded');
-		await this.page.waitForTimeout(1000);
+		await this.page.getByText('File Summary');
 	}
 }

@@ -4,6 +4,7 @@
  */
 
 import {Locator, expect, mergeTests} from '@playwright/test';
+import path from 'node:path';
 
 import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
@@ -14,6 +15,11 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -144,12 +150,6 @@ test(
 		usersAndOrganizationsPage,
 	}) => {
 		page.on('dialog', (dialog) => dialog.accept());
-
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const organization1 =
 			await apiHelpers.headlessAdminUser.postOrganization({
@@ -1541,5 +1541,763 @@ test(
 				`0 Results for ${account2.name}`
 			)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can edit, delete, remove an account in the widget if the necessary permissions are given',
+	{tag: ['@COMMERCE-12823']},
+	async ({apiHelpers, organizationManagementPage, page, site}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Org${getRandomInt()}`,
+			});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'Account A',
+		});
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			organization.id
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role1 = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role1.externalReferenceCode,
+			user.id
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.accountNode(account.name))
+			.click();
+
+		await expect(organizationManagementPage.deleteItem).toHaveCount(0);
+		await expect(organizationManagementPage.editItem).toHaveCount(0);
+		await expect(organizationManagementPage.removeItem).toHaveCount(0);
+		await expect(organizationManagementPage.viewItem).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		const role2 = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['DELETE', 'UPDATE'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role2.externalReferenceCode,
+			user.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.accountNode(account.name))
+			.click();
+
+		await expect(organizationManagementPage.deleteItem).toBeVisible();
+		await expect(organizationManagementPage.editItem).toBeVisible();
+		await expect(organizationManagementPage.removeItem).toBeVisible();
+		await expect(organizationManagementPage.viewItem).toBeVisible();
+	}
+);
+
+test(
+	'Can edit, delete, remove a user in the widget if the necessary permissions are given',
+	{tag: ['@COMMERCE-12823']},
+	async ({apiHelpers, organizationManagementPage, page, site}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Org${getRandomInt()}`,
+			});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'Account A',
+		});
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			organization.id
+		);
+
+		const userAccount = await apiHelpers.headlessAdminUser.postUserAccount({
+			familyName: 'A',
+			givenName: 'User',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccount.emailAddress]
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role1 = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role1.externalReferenceCode,
+			user.id
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage.accountNode(account.name).click();
+
+		await waitForAnimationEnd(
+			organizationManagementPage.userNode(userAccount.name).first()
+		);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.userNode(userAccount.name))
+			.click();
+
+		await expect(organizationManagementPage.deleteItem).toHaveCount(0);
+		await expect(organizationManagementPage.editItem).toHaveCount(0);
+		await expect(organizationManagementPage.removeItem).toHaveCount(0);
+		await expect(organizationManagementPage.viewItem).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		const role2 = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['DELETE', 'UPDATE'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role2.externalReferenceCode,
+			user.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage.accountNode(account.name).click();
+
+		await waitForAnimationEnd(
+			organizationManagementPage.userNode(userAccount.name).first()
+		);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.userNode(userAccount.name))
+			.click();
+
+		await expect(organizationManagementPage.deleteItem).toBeVisible();
+		await expect(organizationManagementPage.editItem).toBeVisible();
+		await expect(organizationManagementPage.removeItem).toBeVisible();
+		await expect(organizationManagementPage.viewItem).toBeVisible();
+	}
+);
+
+test(
+	'Can edit an account in the widget',
+	{tag: ['@COMMERCE-12824']},
+	async ({apiHelpers, organizationManagementPage, page, site}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Org${getRandomInt()}`,
+			});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'Account A',
+		});
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			organization.id
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE', 'VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.accountNode(account.name))
+			.click();
+		await organizationManagementPage.viewItem.click();
+
+		await expect(organizationManagementPage.sidebarTitle).toHaveText(
+			account.name
+		);
+		await expect(
+			organizationManagementPage.sidebarValue('Account ID')
+		).toHaveText(String(account.id));
+		await expect(
+			organizationManagementPage.sidebarValue('Account Name')
+		).toHaveText(account.name);
+		await expect(
+			organizationManagementPage.sidebarValue('Description')
+		).toHaveText(account.description || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('External Reference Code')
+		).toHaveText(account.externalReferenceCode);
+		await expect(
+			organizationManagementPage.sidebarValue('Image')
+		).toHaveText('Default');
+		await expect(
+			organizationManagementPage.sidebarValue('Tax ID')
+		).toHaveText(account.taxID || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Type')
+		).toHaveText('Business');
+
+		await organizationManagementPage.sidebarMoreAction.click();
+		await organizationManagementPage.editItem.click();
+
+		account.description = getRandomString();
+		account.externalReferenceCode = getRandomString();
+		account.name = String(getRandomInt());
+		account.taxID = getRandomString();
+
+		await organizationManagementPage.sidebarAccountNameField.fill(
+			account.name
+		);
+		await organizationManagementPage.sidebarDescriptionField.fill(
+			account.description
+		);
+		await organizationManagementPage.sidebarExternalReferenceCodeField.fill(
+			account.externalReferenceCode
+		);
+		await organizationManagementPage.sidebarTaxIDField.fill(account.taxID);
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await organizationManagementPage.sidebarChangeImageButton.click();
+		await organizationManagementPage.selectImage.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/liferay.png')
+		);
+
+		await organizationManagementPage.selectImageDoneButton.click();
+
+		await expect(
+			organizationManagementPage.sidebarAccountIDField
+		).toBeDisabled();
+		await expect(
+			organizationManagementPage.sidebarTypeField
+		).toBeDisabled();
+
+		await organizationManagementPage.sidebarSaveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(organizationManagementPage.sidebarTitle).toHaveText(
+			account.name
+		);
+		await expect(
+			organizationManagementPage.sidebarValue('Account ID')
+		).toHaveText(String(account.id));
+		await expect(
+			organizationManagementPage.sidebarValue('Account Name')
+		).toHaveText(account.name);
+		await expect(
+			organizationManagementPage.sidebarValue('Description')
+		).toHaveText(account.description || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('External Reference Code')
+		).toHaveText(account.externalReferenceCode);
+		await expect(
+			organizationManagementPage.sidebarValue('Image')
+		).toHaveText('Custom Image');
+		await expect(
+			organizationManagementPage.sidebarValue('Tax ID')
+		).toHaveText(account.taxID || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Type')
+		).toHaveText('Business');
+	}
+);
+
+test(
+	'Can edit a user in the widget',
+	{tag: ['@COMMERCE-12874']},
+	async ({apiHelpers, organizationManagementPage, page, site}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Org${getRandomInt()}`,
+			});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: 'Account A',
+		});
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			organization.id
+		);
+
+		const userAccount = (await apiHelpers.headlessAdminUser.postUserAccount(
+			{
+				familyName: 'A',
+				givenName: 'User',
+			}
+		)) as any;
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccount.emailAddress]
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+				{
+					actionIds: ['UPDATE', 'VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(organizationManagementPage.chart).toBeVisible();
+
+		await waitForAnimationEnd(
+			organizationManagementPage
+				.organizationNode(organization.name)
+				.first()
+		);
+
+		await expect(
+			organizationManagementPage.organizationNode(organization.name)
+		).toHaveCount(1);
+		await expect(
+			organizationManagementPage.accountNode(account.name)
+		).toHaveCount(1);
+
+		await organizationManagementPage.accountNode(account.name).click();
+
+		await waitForAnimationEnd(
+			organizationManagementPage.userNode(userAccount.name).first()
+		);
+
+		await organizationManagementPage
+			.menuButton(organizationManagementPage.userNode(userAccount.name))
+			.click();
+		await organizationManagementPage.viewItem.click();
+
+		await expect(organizationManagementPage.sidebarTitle).toHaveText(
+			userAccount.alternateName
+		);
+		await expect(
+			organizationManagementPage.sidebarValue('Email Address')
+		).toHaveText(userAccount.emailAddress);
+		await expect(
+			organizationManagementPage.sidebarValue('First Name')
+		).toHaveText(userAccount.givenName);
+		await expect(
+			organizationManagementPage.sidebarValue('Image')
+		).toHaveText('Default');
+		await expect(
+			organizationManagementPage.sidebarValue('Job Title')
+		).toHaveText(userAccount.jobTitle || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Language')
+		).toHaveText('English (United States)');
+		await expect(
+			organizationManagementPage.sidebarValue('Last Name')
+		).toHaveText(userAccount.familyName);
+		await expect(
+			organizationManagementPage.sidebarValue('Middle Name')
+		).toHaveText(userAccount.middleName || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Prefix')
+		).toHaveText(userAccount.prefix || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Screen Name')
+		).toHaveText(userAccount.alternateName);
+		await expect(
+			organizationManagementPage.sidebarValue('Suffix')
+		).toHaveText(userAccount.suffix || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('User ID')
+		).toHaveText(String(userAccount.id));
+
+		await organizationManagementPage.sidebarMoreAction.click();
+		await organizationManagementPage.editItem.click();
+
+		userAccount.alternateName = String(getRandomInt());
+		userAccount.emailAddress = `${getRandomString()}@liferay.com`;
+		userAccount.givenName = getRandomString();
+		userAccount.jobTitle = getRandomString();
+		userAccount.familyName = getRandomString();
+		userAccount.middleName = getRandomString();
+		userAccount.prefix = 'Mr';
+		userAccount.suffix = 'Jr';
+
+		await organizationManagementPage.sidebarEmailAddressField.fill(
+			userAccount.emailAddress
+		);
+		await organizationManagementPage.sidebarFirstNameField.fill(
+			userAccount.givenName
+		);
+		await organizationManagementPage.sidebarJobTitleField.fill(
+			userAccount.jobTitle
+		);
+		await organizationManagementPage.sidebarLanguageField.selectOption(
+			'pt_BR'
+		);
+		await organizationManagementPage.sidebarLastNameField.fill(
+			userAccount.familyName
+		);
+		await organizationManagementPage.sidebarMiddleNameField.fill(
+			userAccount.middleName
+		);
+		await organizationManagementPage.sidebarPrefixField.selectOption(
+			userAccount.prefix
+		);
+		await organizationManagementPage.sidebarScreenNameField.fill(
+			userAccount.alternateName
+		);
+		await organizationManagementPage.sidebarSuffixField.selectOption(
+			userAccount.suffix
+		);
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await organizationManagementPage.sidebarChangeImageButton.click();
+		await organizationManagementPage.selectImage.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/liferay.png')
+		);
+
+		await organizationManagementPage.selectImageDoneButton.click();
+
+		await expect(
+			organizationManagementPage.sidebarUserIDField
+		).toBeDisabled();
+
+		await organizationManagementPage.sidebarSaveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(organizationManagementPage.sidebarTitle).toHaveText(
+			userAccount.alternateName
+		);
+		await expect(
+			organizationManagementPage.sidebarValue('Email Address')
+		).toHaveText(userAccount.emailAddress);
+		await expect(
+			organizationManagementPage.sidebarValue('First Name')
+		).toHaveText(userAccount.givenName);
+		await expect(
+			organizationManagementPage.sidebarValue('Image')
+		).toHaveText('Custom Image');
+		await expect(
+			organizationManagementPage.sidebarValue('Job Title')
+		).toHaveText(userAccount.jobTitle || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Language')
+		).toHaveText('Portuguese (Brazil)');
+		await expect(
+			organizationManagementPage.sidebarValue('Last Name')
+		).toHaveText(userAccount.familyName);
+		await expect(
+			organizationManagementPage.sidebarValue('Middle Name')
+		).toHaveText(userAccount.middleName || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Prefix')
+		).toHaveText(userAccount.prefix || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('Screen Name')
+		).toHaveText(userAccount.alternateName);
+		await expect(
+			organizationManagementPage.sidebarValue('Suffix')
+		).toHaveText(userAccount.suffix || '-');
+		await expect(
+			organizationManagementPage.sidebarValue('User ID')
+		).toHaveText(String(userAccount.id));
 	}
 );

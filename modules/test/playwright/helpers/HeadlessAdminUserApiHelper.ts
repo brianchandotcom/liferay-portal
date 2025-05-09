@@ -13,6 +13,7 @@ type TAccount = {
 	id?: number;
 	name?: string;
 	status?: number;
+	taxID?: string;
 	type?: string;
 };
 

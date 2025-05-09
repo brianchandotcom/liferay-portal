@@ -19,7 +19,6 @@ import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +27,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -81,8 +81,7 @@ public class AccountsSyncBusinessEventsRestController
 			_updateZendesk(
 				_fetchZendeskOrganizationId(externalReferenceCode),
 				_getBusinessEventsSummary(jsonArray),
-				_getAssociatedTicketIds(jsonArray),
-				_getHighestHeatTag(jsonArray));
+				_getAssociatedTicketsHeatTagsMap(jsonArray));
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -157,22 +156,40 @@ public class AccountsSyncBusinessEventsRestController
 		return 0;
 	}
 
-	private Long[] _getAssociatedTicketIds(JSONArray jsonArray) {
-		Set<Long> associatedTicketIds = new HashSet<>();
+	private Map<Long, String> _getAssociatedTicketsHeatTagsMap(
+		JSONArray jsonArray) {
+
+		Map<Long, String> associatedTicketsHeatTagsMap = new HashMap<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONArray associatedTicketIdsJSONArray = jsonObject.getJSONArray(
-				"associatedTicketIds");
+			String heatTag = _getHeatTag(jsonObject);
+
+			String associatedTicketsString = jsonObject.getString(
+				"associatedTickets");
+
+			JSONArray associatedTicketIdsJSONArray = new JSONArray(
+				associatedTicketsString);
 
 			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
-				associatedTicketIds.add(
-					associatedTicketIdsJSONArray.getLong(j));
+				long associatedTicketId = associatedTicketIdsJSONArray.getLong(
+					j);
+
+				String highestHeatTag = associatedTicketsHeatTagsMap.get(
+					associatedTicketId);
+
+				if (Validator.isNull(highestHeatTag) ||
+					(HeatTagConstants.getScore(highestHeatTag) <=
+						HeatTagConstants.getScore(heatTag))) {
+
+					associatedTicketsHeatTagsMap.put(
+						associatedTicketId, heatTag);
+				}
 			}
 		}
 
-		return associatedTicketIds.toArray(new Long[0]);
+		return associatedTicketsHeatTagsMap;
 	}
 
 	private String _getAuthorization() {
@@ -218,7 +235,7 @@ public class AccountsSyncBusinessEventsRestController
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 
-				if (key.equals("associatedTicketIds")) {
+				if (key.equals("associatedTickets")) {
 					continue;
 				}
 
@@ -244,6 +261,16 @@ public class AccountsSyncBusinessEventsRestController
 	}
 
 	private String _getHeatTag(JSONObject jsonObject) {
+		String associatedTicketsString = jsonObject.getString(
+			"associatedTickets");
+
+		JSONArray associatedTicketIdsJSONArray = new JSONArray(
+			associatedTicketsString);
+
+		if (associatedTicketIdsJSONArray.length() == 0) {
+			return StringPool.BLANK;
+		}
+
 		JSONObject eventTypeJSONObject = jsonObject.getJSONObject("eventType");
 
 		String targetGoLiveDateTime = jsonObject.getString(
@@ -254,22 +281,6 @@ public class AccountsSyncBusinessEventsRestController
 			ChronoUnit.DAYS.between(
 				LocalDate.now(),
 				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
-	}
-
-	private String _getHighestHeatTag(JSONArray jsonArray) {
-		String highestHeatTag = StringPool.BLANK;
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String heatTag = _getHeatTag(jsonArray.getJSONObject(i));
-
-			if (HeatTagConstants.getScore(highestHeatTag) <=
-					HeatTagConstants.getScore(heatTag)) {
-
-				highestHeatTag = heatTag;
-			}
-		}
-
-		return highestHeatTag;
 	}
 
 	private void _updateAccountHeatTags(String externalReferenceCode)
@@ -287,7 +298,8 @@ public class AccountsSyncBusinessEventsRestController
 
 			_updateZendeskTickets(
 				_fetchZendeskOrganizationId(externalReferenceCode),
-				_getHighestHeatTag(jsonObject.getJSONArray("items")));
+				_getAssociatedTicketsHeatTagsMap(
+					jsonObject.getJSONArray("items")));
 
 			if (jsonObject.getInt("lastPage") == page) {
 				page = 0;
@@ -300,7 +312,7 @@ public class AccountsSyncBusinessEventsRestController
 
 	private void _updateZendesk(
 			long zendeskOrganizationId, String businessEvents,
-			Long[] associatedTicketIds, String highestHeatTag)
+			Map<Long, String> associatedTicketsHeatTagsMap)
 		throws Exception {
 
 		_zendeskService.updateZendeskOrganization(
@@ -324,16 +336,6 @@ public class AccountsSyncBusinessEventsRestController
 				Map<Long, String> customFields =
 					zendeskTicket.getCustomFields();
 
-				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
-
-				if ((HeatTagConstants.getScore(heatTag) <=
-						HeatTagConstants.getScore(highestHeatTag)) &&
-					!heatTag.equals(highestHeatTag)) {
-
-					customFields.put(
-						_zendeskHeatTagTicketFieldId, highestHeatTag);
-				}
-
 				customFields.put(
 					_zendeskBusinessEventTicketFieldId, businessEvents);
 
@@ -341,11 +343,24 @@ public class AccountsSyncBusinessEventsRestController
 
 				tags.remove("impacting_business_event");
 
-				if (ArrayUtil.contains(
-						associatedTicketIds,
+				if (associatedTicketsHeatTagsMap.containsKey(
 						zendeskTicket.getZendeskTicketId())) {
 
 					tags.add("impacting_business_event");
+
+					String heatTag = customFields.get(
+						_zendeskHeatTagTicketFieldId);
+
+					String highestHeatTag = associatedTicketsHeatTagsMap.get(
+						zendeskTicket.getZendeskTicketId());
+
+					if ((HeatTagConstants.getScore(heatTag) <=
+							HeatTagConstants.getScore(highestHeatTag)) &&
+						!heatTag.equals(highestHeatTag)) {
+
+						customFields.put(
+							_zendeskHeatTagTicketFieldId, highestHeatTag);
+					}
 				}
 
 				_zendeskService.updateZendeskTicket(
@@ -359,7 +374,8 @@ public class AccountsSyncBusinessEventsRestController
 	}
 
 	private void _updateZendeskTickets(
-			long zendeskOrganizationId, String highestHeatTag)
+			long zendeskOrganizationId,
+			Map<Long, String> associatedTicketsHeatTagsMap)
 		throws Exception {
 
 		ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
@@ -377,23 +393,32 @@ public class AccountsSyncBusinessEventsRestController
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				Map<Long, String> customFields =
-					zendeskTicket.getCustomFields();
+				if (associatedTicketsHeatTagsMap.containsKey(
+						zendeskTicket.getZendeskTicketId())) {
 
-				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
+					Map<Long, String> customFields =
+						zendeskTicket.getCustomFields();
 
-				if ((HeatTagConstants.getScore(heatTag) <=
-						HeatTagConstants.getScore(highestHeatTag)) &&
-					!heatTag.equals(highestHeatTag)) {
+					String heatTag = customFields.get(
+						_zendeskHeatTagTicketFieldId);
 
-					customFields.put(
-						_zendeskHeatTagTicketFieldId, highestHeatTag);
+					String highestHeatTag = associatedTicketsHeatTagsMap.get(
+						zendeskTicket.getZendeskTicketId());
 
-					_zendeskService.updateZendeskTicket(
-						zendeskTicket.getZendeskTicketId(),
-						zendeskOrganizationId, zendeskTicket.getRequesterId(),
-						zendeskTicket.getStatus(), customFields,
-						zendeskTicket.getTags());
+					if ((HeatTagConstants.getScore(heatTag) <=
+							HeatTagConstants.getScore(highestHeatTag)) &&
+						!heatTag.equals(highestHeatTag)) {
+
+						customFields.put(
+							_zendeskHeatTagTicketFieldId, highestHeatTag);
+
+						_zendeskService.updateZendeskTicket(
+							zendeskTicket.getZendeskTicketId(),
+							zendeskOrganizationId,
+							zendeskTicket.getRequesterId(),
+							zendeskTicket.getStatus(), customFields,
+							zendeskTicket.getTags());
+					}
 				}
 			}
 

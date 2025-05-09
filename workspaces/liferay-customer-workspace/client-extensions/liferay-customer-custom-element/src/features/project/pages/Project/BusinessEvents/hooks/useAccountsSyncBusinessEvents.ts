@@ -39,9 +39,7 @@ export default function useAccountsSyncBusinessEvents(
 		const formattedBusinessEvents = businessEventsResponse.items.map(
 			(businessEvent: IBusinessEvent) => {
 				return {
-					associatedTicketIds: JSON.parse(
-						businessEvent.associatedTickets!
-					).map((id: string) => Number(id)),
+					associatedTickets: businessEvent.associatedTickets,
 					currentVersion: businessEvent.currentLiferayVersion?.key
 						? businessEvent.currentLiferayVersion?.name
 						: null,
@@ -59,9 +57,7 @@ export default function useAccountsSyncBusinessEvents(
 
 		if (isEdition || !isRemoval) {
 			formattedBusinessEvents.push({
-				associatedTicketIds: JSON.parse(
-					businessEvent.associatedTickets!
-				).map((id: string) => Number(id)),
+				associatedTickets: businessEvent.associatedTickets,
 				currentVersion: businessEvent.currentLiferayVersion?.key
 					? businessEvent.currentLiferayVersion?.name
 					: null,

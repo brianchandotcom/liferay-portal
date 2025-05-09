@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
@@ -54,7 +55,8 @@ public class AllSpacesSectionFragmentRenderer
 			httpServletRequest.setAttribute(
 				AllSpacesSectionDisplayContext.class.getName(),
 				new AllSpacesSectionDisplayContext(
-					httpServletRequest, _language, _portal));
+					_depotEntryPinLocalService, httpServletRequest, _language,
+					_portal));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -62,6 +64,9 @@ public class AllSpacesSectionFragmentRenderer
 			throw new RuntimeException(exception);
 		}
 	}
+
+	@Reference
+	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 	@Reference
 	private Language _language;

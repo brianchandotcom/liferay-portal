@@ -1039,6 +1039,14 @@ test('Use client extensions', async ({fdsSamplePage, page}) => {
 		await expect(firstColorCell).toContainText('🍏');
 	});
 
+	await test.step('Assert that the cell renderer has access to data from other cells', async () => {
+		const firstColorCell = fdsSamplePage.table.container
+			.locator('td.cell-color')
+			.nth(1);
+
+		await expect(firstColorCell).toContainText('Sample100 is Blue');
+	});
+
 	await test.step('Assert that the filter client extension is working', async () => {
 		const clientExtensionMenuItem = page.getByRole('menuitem', {
 			name: 'Client Extension',

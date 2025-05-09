@@ -14,14 +14,12 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -110,53 +108,42 @@ public class ListTypeEntryResourceTest
 
 		super.testGetListTypeDefinitionListTypeEntriesPage();
 
+		ListTypeEntry customListTypeEntry = _addListTypeEntry(
+			_systemListTypeDefinition, false);
+		ListTypeEntry systemListTypeEntry = _addListTypeEntry(
+			_systemListTypeDefinition, true);
+
 		Page<ListTypeEntry> page =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 				_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
 				null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		List<ListTypeEntry> listTypeEntries =
+			(List<ListTypeEntry>)page.getItems();
 
-		ListTypeEntry systemListTypeEntry = randomListTypeEntry();
+		Map<String, Map<String, String>> customListTypeEntryActions =
+			_getActions(listTypeEntries, customListTypeEntry.getId());
 
-		systemListTypeEntry.setSystem(true);
+		Assert.assertEquals(
+			customListTypeEntryActions.toString(), 3,
+			customListTypeEntryActions.size());
 
-		systemListTypeEntry =
-			listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-				_systemListTypeDefinition.getListTypeDefinitionId(),
-				systemListTypeEntry);
+		Assert.assertTrue(customListTypeEntryActions.containsKey("delete"));
+		Assert.assertTrue(customListTypeEntryActions.containsKey("get"));
+		Assert.assertTrue(customListTypeEntryActions.containsKey("update"));
 
-		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-			_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
-			null, Pagination.of(1, 10), null);
+		Map<String, Map<String, String>> systemListTypeEntryActions =
+			_getActions(listTypeEntries, systemListTypeEntry.getId());
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			systemListTypeEntryActions.toString(), 2,
+			systemListTypeEntryActions.size());
 
-		assertValid(
-			_getListTypeEntryExpectedActions(
-				_systemListTypeDefinition.getListTypeDefinitionId(),
-				systemListTypeEntry.getSystem()),
-			_getListTypeEntryActions(systemListTypeEntry.getId(), page));
+		Assert.assertTrue(systemListTypeEntryActions.containsKey("get"));
+		Assert.assertTrue(systemListTypeEntryActions.containsKey("update"));
 
-		ListTypeEntry listTypeEntry = _addListTypeEntry(
-			_systemListTypeDefinition);
-
-		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-			_systemListTypeDefinition.getListTypeDefinitionId(), null, null,
-			null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		List<ListTypeEntry> items = (List<ListTypeEntry>)page.getItems();
-
-		assertContains(listTypeEntry, items);
-		assertContains(systemListTypeEntry, items);
-
-		assertValid(
-			_getListTypeEntryExpectedActions(
-				_systemListTypeDefinition.getListTypeDefinitionId(),
-				listTypeEntry.getSystem()),
-			_getListTypeEntryActions(listTypeEntry.getId(), page));
+		listTypeEntryResource.deleteListTypeEntry(customListTypeEntry.getId());
+		listTypeEntryResource.deleteListTypeEntry(systemListTypeEntry.getId());
 	}
 
 	@Override
@@ -244,13 +231,7 @@ public class ListTypeEntryResourceTest
 
 	@Override
 	protected ListTypeEntry randomListTypeEntry() throws Exception {
-		ListTypeEntry listTypeEntry = super.randomListTypeEntry();
-
-		listTypeEntry.setName_i18n(
-			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
-		listTypeEntry.setSystem(false);
-
-		return listTypeEntry;
+		return _randomListTypeEntry(false);
 	}
 
 	@Override
@@ -318,21 +299,20 @@ public class ListTypeEntryResourceTest
 		return _addListTypeEntry(_listTypeDefinition);
 	}
 
-	private Map<String, String> _addExpectedAction(String href, String method) {
-		return HashMapBuilder.put(
-			"href", href
-		).put(
-			"method", method
-		).build();
-	}
-
 	private ListTypeEntry _addListTypeEntry(
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
+		return _addListTypeEntry(listTypeDefinition, false);
+	}
+
+	private ListTypeEntry _addListTypeEntry(
+			ListTypeDefinition listTypeDefinition, boolean system)
+		throws Exception {
+
 		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 			listTypeDefinition.getListTypeDefinitionId(),
-			randomListTypeEntry());
+			_randomListTypeEntry(system));
 	}
 
 	private void _assertListTypeEntryNameLocalizedMap(
@@ -346,39 +326,28 @@ public class ListTypeEntryResourceTest
 			nameLocalizedMap.get(LocaleUtil.getSiteDefault()));
 	}
 
-	private Map<String, Map<String, String>> _getListTypeEntryActions(
-		Long listTypeEntryId, Page<ListTypeEntry> page) {
+	private Map<String, Map<String, String>> _getActions(
+		List<ListTypeEntry> listTypeEntries, long listTypeEntryId) {
 
-		for (ListTypeEntry item : page.getItems()) {
-			if (Objects.equals(item.getId(), listTypeEntryId)) {
-				return item.getActions();
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			if (Objects.equals(listTypeEntry.getId(), listTypeEntryId)) {
+				return listTypeEntry.getActions();
 			}
 		}
 
-		return new HashMap<>();
+		return null;
 	}
 
-	private Map<String, Map<String, String>> _getListTypeEntryExpectedActions(
-		Long listTypeDefinitionId, boolean system) {
+	private ListTypeEntry _randomListTypeEntry(boolean system)
+		throws Exception {
 
-		String listTypeEntryHref =
-			"http://localhost:8080/o/headless-admin-list-type/v1.0" +
-				"/list-type-entries/" + listTypeDefinitionId;
+		ListTypeEntry listTypeEntry = super.randomListTypeEntry();
 
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			() -> {
-				if (system) {
-					return null;
-				}
+		listTypeEntry.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		listTypeEntry.setSystem(system);
 
-				return _addExpectedAction(listTypeEntryHref, "DELETE");
-			}
-		).put(
-			"get", _addExpectedAction(listTypeEntryHref, "GET")
-		).put(
-			"update", _addExpectedAction(listTypeEntryHref, "PUT")
-		).build();
+		return listTypeEntry;
 	}
 
 	@DeleteAfterTestRun

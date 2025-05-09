@@ -78,12 +78,6 @@ definition {
 	test CannotRemoveSiteDefaultLanguageInInstanceSettings {
 		property portal.acceptance = "true";
 
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 1",
-				layoutName = "Test Page Name");
-		}
-
 		task ("Configure site languages") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 

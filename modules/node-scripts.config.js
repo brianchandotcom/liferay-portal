@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'e9b4ba0019a819fc18a0e58f38bc8e8c4461fe4e9e9cdb0b3086506bc453d182',
+	hash: '7510cbb2737c85ee91443a24728ec1117489b001bbecc22fdbd808debd0bdd56',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -73,7 +73,7 @@ module.exports = {
 		'@liferay/fragment-collection-filter-date': [],
 		'@liferay/fragment-collection-filter-keyword': [],
 		'@liferay/fragment-collection-filter-tags': [],
-		'@liferay/fragment-impl': [],
+		'@liferay/fragment-impl': ['./api'],
 		'@liferay/fragment-renderer-collection-filter-impl': [],
 		'@liferay/fragment-video-streaming': [],
 		'@liferay/friendly-url-taglib': [],
@@ -251,7 +251,10 @@ module.exports = {
 		'dynamic-data-lists-web': [],
 		'dynamic-data-mapping-data-provider-web': [],
 		'dynamic-data-mapping-form-builder': [],
-		'dynamic-data-mapping-form-field-type': ['leaflet/dist/leaflet.css'],
+		'dynamic-data-mapping-form-field-type': [
+			'leaflet/dist/leaflet.css',
+			'./api',
+		],
 		'dynamic-data-mapping-form-renderer': [],
 		'dynamic-data-mapping-form-web': [],
 		'dynamic-data-mapping-web': [],

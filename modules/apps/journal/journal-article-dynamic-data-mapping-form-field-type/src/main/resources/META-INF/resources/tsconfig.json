@@ -1,5 +1,5 @@
 {
-	"@generated": "b9e763ba481496f51e90aeb22e92924cbb8e84cf",
+	"@generated": "697960f615fd8f9906170b2cced8a183499dc9c2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -13,6 +13,9 @@
 		"paths": {
 			"dynamic-data-mapping-form-field-type": [
 				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/index.ts"
+			],
+			"dynamic-data-mapping-form-field-type/api": [
+				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/api.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"

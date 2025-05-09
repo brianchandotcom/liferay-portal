@@ -55,9 +55,9 @@ public class ElasticsearchInstaller {
 			_createTemporaryDownloadDirectory();
 
 			try {
-				_downloadAndInstallElasticsearch();
+				_locateOrDownloadAndInstallElasticsearch();
 
-				_downloadAndInstallPlugins();
+				_locateOrDownloadAndInstallPlugins();
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
@@ -145,7 +145,7 @@ public class ElasticsearchInstaller {
 		PathUtil.deleteDir(_temporaryDirectoryPath);
 	}
 
-	private Path _download(Distributable distributable) throws IOException {
+	private Path _locateOrDownload(Distributable distributable) throws IOException {
 		String downloadURLString = distributable.getDownloadURLString();
 
 		String fileName = StringUtils.substringAfterLast(
@@ -173,9 +173,9 @@ public class ElasticsearchInstaller {
 		return downloadedFilePath;
 	}
 
-	private void _downloadAndInstallElasticsearch() throws IOException {
+	private void _locateOrDownloadAndInstallElasticsearch() throws IOException {
 		String rootArchiveName = UncompressUtil.unarchive(
-			_download(_distribution.getElasticsearchDistributable()),
+			_locateOrDownload(_distribution.getElasticsearchDistributable()),
 			_temporaryDirectoryPath);
 
 		PathUtil.copyDirectory(
@@ -183,10 +183,10 @@ public class ElasticsearchInstaller {
 			_installationDirectoryPath);
 	}
 
-	private void _downloadAndInstallPlugin(Distributable distributable)
+	private void _locateOrDownloadAndInstallPlugin(Distributable distributable)
 		throws IOException {
 
-		Path filePath = _download(distributable);
+		Path filePath = _locateOrDownload(distributable);
 
 		String pluginName = StringUtils.substringBeforeLast(
 			String.valueOf(filePath.getFileName()), StringPool.DASH);
@@ -208,11 +208,11 @@ public class ElasticsearchInstaller {
 			extractedDirectoryPath, pluginDestinationDirectoryPath);
 	}
 
-	private void _downloadAndInstallPlugins() throws IOException {
+	private void _locateOrDownloadAndInstallPlugins() throws IOException {
 		for (Distributable distributable :
 				_distribution.getPluginDistributables()) {
 
-			_downloadAndInstallPlugin(distributable);
+			_locateOrDownloadAndInstallPlugin(distributable);
 		}
 	}
 

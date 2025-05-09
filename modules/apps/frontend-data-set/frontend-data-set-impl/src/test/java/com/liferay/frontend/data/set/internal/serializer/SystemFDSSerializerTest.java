@@ -1773,17 +1773,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public String getRESTApplication() {
-						return "/app";
+						return REST_APPLICATION;
 					}
 
 					@Override
 					public String getRESTEndpoint() {
-						return "/endpoint";
+						return REST_ENDPOINT;
 					}
 
 					@Override
 					public String getRESTSchema() {
-						return "schema";
+						return REST_SCHEMA;
 					}
 
 					@Override

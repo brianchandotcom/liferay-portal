@@ -236,6 +236,12 @@ public abstract class BaseFDSSerializerTestCase {
 	protected static final String[] PROPS_TRANSFORMERS =
 		RandomTestUtil.randomStrings(2);
 
+	protected static final String REST_APPLICATION = "/app";
+
+	protected static final String REST_ENDPOINT = "/endpoint";
+
+	protected static final String REST_SCHEMA = "schema";
+
 	protected static final String[] STICKERS = RandomTestUtil.randomStrings(2);
 
 	protected static final String[] SYMBOLS = RandomTestUtil.randomStrings(2);

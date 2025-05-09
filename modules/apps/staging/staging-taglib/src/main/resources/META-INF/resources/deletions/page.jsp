@@ -18,7 +18,7 @@
 			StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 			%>
 
-			<c:if test="<%= !cmd.equals(Constants.EXPORT) && !stagingGroupHelper.isCompanyGroup(group) %>">
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-44771") && !cmd.equals(Constants.EXPORT) && !stagingGroupHelper.isCompanyGroup(group) %>'>
 				<liferay-staging:checkbox
 					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>"
 					disabled="<%= disableInputs %>"

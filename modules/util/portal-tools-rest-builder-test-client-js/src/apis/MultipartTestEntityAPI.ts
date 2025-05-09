@@ -197,7 +197,7 @@ export class MultipartTestEntityAPI {
 		}> {
 				let body;
 						const formData = new FormData();
-								formData.append("multipartTestEntity", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.multipartTestEntity, "MultipartTestEntity")));
+								formData.append("multipartTestEntity", JSON.stringify(ObjectSerializer.serialize(multipartTestEntity, "MultipartTestEntity")));
 						body = formData;
 
 			const path = this._basePath + "/test/v1.0/multipart-test-entities/{multipartTestEntityId}"

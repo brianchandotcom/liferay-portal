@@ -3,11 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.js.web.internal.hashed.files.request;
+package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.internal.hashed.files.request.AbstractRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 
@@ -27,17 +35,24 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class AbstractStaticFileRequestHelper
+public class StaticFileRequestHelper
 	extends AbstractRequestHelper<StaticFileRequestInfo> {
 
-	public AbstractStaticFileRequestHelper(
+	public StaticFileRequestHelper(
 		String fileContentType, String fileExtension,
-		HashedFilesRegistry hashedFilesRegistry,
+		HashedFilesRegistry hashedFilesRegistry, long maxAgeDefaultValue,
+		String maxAgeKey, boolean sendNoCacheDefaultValue,
+		String sendNoCacheKey, Portal portal,
 		ServiceTrackerMap<String, ServletContext> serviceTrackerMap) {
 
 		_fileContentType = fileContentType;
 		_fileExtension = fileExtension;
 		_hashedFilesRegistry = hashedFilesRegistry;
+		_maxAgeDefaultValue = maxAgeDefaultValue;
+		_maxAgeKey = maxAgeKey;
+		_sendNoCacheDefaultValue = sendNoCacheDefaultValue;
+		_sendNoCacheKey = sendNoCacheKey;
+		_portal = portal;
 		_serviceTrackerMap = serviceTrackerMap;
 	}
 
@@ -62,22 +77,40 @@ public abstract class AbstractStaticFileRequestHelper
 
 		String realModuleURI = _hashedFilesRegistry.getHashedFile(requestURI);
 
-		StaticFileCachingInfo staticFileCachingInfo = getStaticFileCachingInfo(
-			httpServletRequest);
+		long maxAge = _maxAgeDefaultValue;
+		boolean sendNoCache = _sendNoCacheDefaultValue;
+
+		try {
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
+				new CompanyServiceSettingsLocator(
+					_portal.getCompanyId(httpServletRequest),
+					"com.liferay.frontend.js.web.internal.configuration." +
+						"FrontendCachingConfiguration",
+					"com.liferay.frontend.js.web.internal.configuration." +
+						"FrontendCachingConfiguration"));
+
+			maxAge = Long.valueOf(
+				settings.getValue(
+					_maxAgeKey, String.valueOf(_maxAgeDefaultValue)));
+			sendNoCache = Boolean.valueOf(
+				settings.getValue(
+					_sendNoCacheKey, String.valueOf(_sendNoCacheDefaultValue)));
+		}
+		catch (SettingsException settingsException) {
+			_log.error(
+				"Unable to get frontend caching configuration: will use " +
+					"reasonable defaults instead",
+				settingsException);
+		}
 
 		if (realModuleURI == null) {
 			return new StaticFileRequestInfo(
-				getHash(requestURI), staticFileCachingInfo.getMaxAge(),
-				requestURI, staticFileCachingInfo.getSendNoCache(), false);
+				getHash(requestURI), maxAge, requestURI, sendNoCache, false);
 		}
 
 		return new StaticFileRequestInfo(
-			getHash(realModuleURI), staticFileCachingInfo.getMaxAge(),
-			realModuleURI, staticFileCachingInfo.getSendNoCache(), true);
+			getHash(realModuleURI), maxAge, realModuleURI, sendNoCache, true);
 	}
-
-	protected abstract StaticFileCachingInfo getStaticFileCachingInfo(
-		HttpServletRequest httpServletRequest);
 
 	@Override
 	protected void sendContent(
@@ -119,9 +152,17 @@ public abstract class AbstractStaticFileRequestHelper
 		printWriter.write(URLUtil.toString(url));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		StaticFileRequestHelper.class);
+
 	private final String _fileContentType;
 	private final String _fileExtension;
 	private final HashedFilesRegistry _hashedFilesRegistry;
+	private final long _maxAgeDefaultValue;
+	private final String _maxAgeKey;
+	private final Portal _portal;
+	private final boolean _sendNoCacheDefaultValue;
+	private final String _sendNoCacheKey;
 	private final ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 
 }

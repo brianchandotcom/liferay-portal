@@ -5,10 +5,11 @@
 
 import type {FDSTableCellHTMLElementBuilder} from '@liferay/js-api/data-set';
 
-const fdsCellRenderer: FDSTableCellHTMLElementBuilder = ({value}) => {
+const fdsCellRenderer: FDSTableCellHTMLElementBuilder = ({itemData, value}) => {
 	const element = document.createElement('div');
 
-	element.innerHTML = value === 'Green' ? '🍏' : value.toString();
+	element.innerHTML =
+		value === 'Green' ? '🍏' : `${itemData.title} is ${value.toString()}`;
 
 	return element;
 };

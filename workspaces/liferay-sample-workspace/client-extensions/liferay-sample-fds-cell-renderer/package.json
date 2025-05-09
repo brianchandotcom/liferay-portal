@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@liferay/js-api": "0.6.0"
+		"@liferay/js-api": "0.6.2"
 	},
 	"description": "Liferay Sample Frontend Data Set Cell Renderer",
 	"devDependencies": {

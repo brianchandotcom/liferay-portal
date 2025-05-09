@@ -606,7 +606,7 @@ function CellRenderer({
 		return (
 			<>
 				<ClientExtension<FDSTableCellHTMLElementBuilderArgs>
-					args={{value}}
+					args={{itemData, value}}
 					htmlElementBuilder={cellRenderer.htmlElementBuilder}
 				/>
 			</>

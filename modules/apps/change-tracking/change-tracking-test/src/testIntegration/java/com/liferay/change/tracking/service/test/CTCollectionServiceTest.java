@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -142,10 +143,6 @@ public class CTCollectionServiceTest {
 							}
 						).build())) {
 
-			UserTestUtil.setUser(_user);
-
-			permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
 			_ctCollection = _ctCollectionLocalService.addCTCollection(
 				null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
 				RandomTestUtil.randomString(), null);
@@ -247,6 +244,42 @@ public class CTCollectionServiceTest {
 			searchRequestBuilder.build());
 
 		Assert.assertEquals(0, searchResponse.getTotalHits());
+	}
+
+	@Test
+	public void testExistingCTCollectionWithUpdatedOwnerPermissions()
+		throws Exception {
+
+		UserTestUtil.setUser(_user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
+			RandomTestUtil.randomString(), null);
+
+		Assert.assertTrue(
+			_ctCollectionModelResourcePermission.contains(
+				permissionChecker, _ctCollection, CTActionKeys.PUBLISH));
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			CTSettingsConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"defaultOwnerActionIds",
+				new String[] {
+					ActionKeys.UPDATE, ActionKeys.VIEW,
+					CTActionKeys.INVITE_USERS
+				}
+			).build());
+
+		Assert.assertFalse(
+			_ctCollectionModelResourcePermission.contains(
+				permissionChecker, _ctCollection, CTActionKeys.PUBLISH));
+
+		ConfigurationTestUtil.deleteConfiguration(pid);
 	}
 
 	@Test

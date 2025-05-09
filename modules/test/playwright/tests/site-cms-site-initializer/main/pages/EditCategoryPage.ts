@@ -92,6 +92,7 @@ export class EditCategoryPage {
 		await this.page.waitForLoadState();
 
 		await expect(this.page.getByText('Basic Info')).toBeVisible();
+		await expect(this.nameInput).toBeEmpty();
 	}
 
 	async gotoCreateCategory(vocabularyId: number | string) {

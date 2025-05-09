@@ -7,12 +7,19 @@ package com.liferay.users.admin.web.internal.frontend.taglib.clay.servlet.taglib
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -55,6 +62,29 @@ public class OrganizationVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getImageSrc() {
 		return _organization.getLogoURL();
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(_organization.getStatus())
+			).build();
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Map<String, String> getLabelStylesMap() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return HashMapBuilder.put(
+				"labelStylesMap",
+				WorkflowConstants.getStatusStyle(_organization.getStatus())
+			).build();
+		}
+
+		return Collections.emptyMap();
 	}
 
 	@Override

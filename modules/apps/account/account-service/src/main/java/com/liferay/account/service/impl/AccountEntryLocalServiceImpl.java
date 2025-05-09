@@ -20,9 +20,12 @@ import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.batch.engine.constants.BatchEngineImportReportEntryConstants;
+import com.liferay.batch.engine.service.BatchEngineImportReportEntryLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -61,6 +64,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -507,6 +511,17 @@ public class AccountEntryLocalServiceImpl
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
 					true)) {
+
+			if (ExportImportThreadLocal.isLayoutImportInProcess()) {
+				_batchEngineImportReportEntryLocalService.
+					addBatchEngineImportReportEntry(
+						companyId, ExportImportThreadLocal.getClassNameId(),
+						ExportImportThreadLocal.getClassPK(),
+						_classNameLocalService.getClassNameId(
+							AccountEntry.class),
+						externalReferenceCode, StringPool.BLANK,
+						BatchEngineImportReportEntryConstants.TYPE_INCOMPLETE);
+			}
 
 			return accountEntryLocalService.addAccountEntry(
 				externalReferenceCode, userId,
@@ -1314,6 +1329,13 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private BatchEngineImportReportEntryLocalService
+		_batchEngineImportReportEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

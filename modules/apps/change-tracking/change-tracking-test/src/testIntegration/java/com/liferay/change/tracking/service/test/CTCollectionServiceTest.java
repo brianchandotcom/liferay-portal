@@ -142,10 +142,6 @@ public class CTCollectionServiceTest {
 							}
 						).build())) {
 
-			UserTestUtil.setUser(_user);
-
-			permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
 			_ctCollection = _ctCollectionLocalService.addCTCollection(
 				null, TestPropsValues.getCompanyId(), _user.getUserId(), 0,
 				RandomTestUtil.randomString(), null);

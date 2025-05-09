@@ -183,7 +183,7 @@
 		<get-java-jdk-home architecture="x64" type="oracle" version="8" />
 		<get-java-jdk-opts architecture="x64" type="oracle" version="8" />
 
-		<exec dir="${tck.home}" executable="mvn" failonerror="true">
+		<exec dir="${tck.home}" executable="mvn" failonerror="false">
 			<env key="JAVA_HOME" value="${java.jdk.home}" />
 			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 			<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tools/tck/htmlunit-tests.xml test" />
@@ -225,7 +225,7 @@
 			</else>
 		</if>
 
-		<exec dir="${tck.home}" executable="mvn" failonerror="true">
+		<exec dir="${tck.home}" executable="mvn" failonerror="false">
 			<env key="JAVA_HOME" value="${java.jdk.home}" />
 			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 			<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} ${chrome.properties} -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test" />

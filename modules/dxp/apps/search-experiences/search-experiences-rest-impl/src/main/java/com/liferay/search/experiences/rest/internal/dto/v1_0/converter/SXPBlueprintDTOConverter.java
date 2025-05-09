@@ -253,9 +253,10 @@ public class SXPBlueprintDTOConverter
 
 				return dlFileEntryType.getName(locale);
 			}
-			else if (StringUtil.equals(
-						assetSubtypeIdentifier.getClassName(),
-						JournalArticle.class.getName())) {
+
+			if (StringUtil.equals(
+					assetSubtypeIdentifier.getClassName(),
+					JournalArticle.class.getName())) {
 
 				Group group =
 					_groupLocalService.getGroupByExternalReferenceCode(
@@ -292,9 +293,6 @@ public class SXPBlueprintDTOConverter
 		String className = assetSubtypeIdentifier.getClassName();
 
 		try {
-			String typeName = ResourceActionsUtil.getModelResource(
-				locale, className);
-
 			if (className.startsWith(
 					ObjectDefinitionConstants.
 						CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
@@ -304,12 +302,12 @@ public class SXPBlueprintDTOConverter
 						fetchObjectDefinitionByClassName(companyId, className);
 
 				if (objectDefinition != null) {
-					typeName = objectDefinition.getLabel(
+					return objectDefinition.getLabel(
 						LocaleUtil.toLanguageId(locale));
 				}
 			}
 
-			return typeName;
+			return ResourceActionsUtil.getModelResource(locale, className);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -332,7 +330,16 @@ public class SXPBlueprintDTOConverter
 	}
 
 	private Configuration _toConfiguration(String json) {
-		return ConfigurationUtil.toConfiguration(json);
+		try {
+			return ConfigurationUtil.toConfiguration(json);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return null;
+		}
 	}
 
 	private ElementInstance[] _toElementInstances(String json) {

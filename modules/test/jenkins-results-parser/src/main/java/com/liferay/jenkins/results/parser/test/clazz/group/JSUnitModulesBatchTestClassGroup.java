@@ -109,10 +109,10 @@ public class JSUnitModulesBatchTestClassGroup
 			String excludesJobPropertyValue = excludesJobProperty.getValue();
 
 			if (excludesJobPropertyValue != null) {
-				String[] excludedMethodNames = excludesJobPropertyValue.split(
-					",");
+				for (String excludesJobPropertyValueElement :
+						excludesJobPropertyValue.split("\\s*,\\s*")) {
 
-				for (String excludedMethodName : excludedMethodNames) {
+
 					excludedMethodName = excludedMethodName.replace("/", ":");
 
 					excludedTestMethodNames.add(

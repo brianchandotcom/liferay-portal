@@ -70,6 +70,17 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 			"CAST_CLOB_TEXT\\((.*)\\)", Pattern.CASE_INSENSITIVE);
 	}
 
+	protected Function<String, String> getCastFloatFunction() {
+		return _getCastFunction(
+			matcher -> replaceCastFloat(matcher), "CAST_FLOAT",
+			getCastFloatPattern());
+	}
+
+	protected Pattern getCastFloatPattern() {
+		return Pattern.compile(
+			"CAST_FLOAT\\((.*)\\)", Pattern.CASE_INSENSITIVE);
+	}
+
 	protected Function<String, String> getCastLongFunction() {
 		return _getCastFunction(
 			matcher -> replaceCastLong(matcher), "CAST_LONG",
@@ -214,6 +225,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected String replaceCastClobText(Matcher matcher) {
 		return replaceCastText(matcher);
+	}
+
+	protected String replaceCastFloat(Matcher matcher) {
+		return matcher.replaceAll("CAST($1 AS FLOAT)");
 	}
 
 	protected String replaceCastLong(Matcher matcher) {

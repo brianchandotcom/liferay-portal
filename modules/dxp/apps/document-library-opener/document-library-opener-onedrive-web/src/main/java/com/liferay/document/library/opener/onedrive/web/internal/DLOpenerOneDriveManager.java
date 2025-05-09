@@ -41,6 +41,7 @@ import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.models.extensions.Permission;
 import com.microsoft.graph.models.extensions.SharingLink;
 import com.microsoft.graph.models.extensions.User;
+import com.microsoft.graph.options.HeaderOption;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import com.microsoft.graph.requests.extensions.IDriveItemCreateLinkRequest;
 import com.microsoft.graph.requests.extensions.IDriveItemRequest;
@@ -52,6 +53,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -118,7 +120,9 @@ public class DLOpenerOneDriveManager {
 		).drive(
 		).items(
 			_getOneDriveReferenceKey(fileEntry)
-		).buildRequest();
+		).buildRequest(
+			Arrays.asList(new HeaderOption("Prefer", "bypass-shared-lock"))
+		);
 
 		try {
 			iDriveItemRequest.delete();

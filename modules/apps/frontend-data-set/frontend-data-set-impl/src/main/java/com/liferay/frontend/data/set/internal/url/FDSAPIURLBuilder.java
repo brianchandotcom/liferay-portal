@@ -76,7 +76,13 @@ public class FDSAPIURLBuilder {
 
 		_appendParameters(sb, false);
 
-		return _interpolate(_resolveParameters(sb.toString()));
+		String query = sb.toString();
+
+		if (Validator.isNull(query)) {
+			return null;
+		}
+
+		return _interpolate(_resolveParameters(query));
 	}
 
 	private void _appendParameters(

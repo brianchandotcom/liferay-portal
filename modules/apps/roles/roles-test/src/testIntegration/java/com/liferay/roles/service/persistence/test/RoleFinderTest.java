@@ -6,6 +6,7 @@
 package com.liferay.roles.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -28,7 +29,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -89,16 +89,9 @@ public class RoleFinderTest {
 	}
 
 	private List<String> _getExistingRoleNames() throws Exception {
-		List<Role> roles = _roleLocalService.getRoles(
-			TestPropsValues.getCompanyId(), _TYPES);
-
-		List<String> roleNames = new ArrayList<>(roles.size());
-
-		for (Role role : roles) {
-			roleNames.add(role.getName());
-		}
-
-		return roleNames;
+		return TransformUtil.transform(
+			_roleLocalService.getRoles(TestPropsValues.getCompanyId(), _TYPES),
+			role -> role.getName());
 	}
 
 	private static final int[] _TYPES = {RoleConstants.TYPE_REGULAR};

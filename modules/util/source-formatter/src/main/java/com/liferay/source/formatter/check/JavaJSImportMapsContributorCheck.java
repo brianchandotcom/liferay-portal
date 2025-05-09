@@ -45,19 +45,18 @@ public class JavaJSImportMapsContributorCheck extends BaseFileCheck {
 			}
 
 			String importName = parameterNames.get(0);
+			String resourcePath = parameterNames.get(1);
 
 			if (SourceUtil.isLiteralString(importName) &&
-				!importName.endsWith("/api\"")) {
+				!importName.endsWith("/api\"") &&
+				!resourcePath.contains("__liferay__/exports")) {
 
 				addMessage(
 					fileName, "Import map name should end with \"/api\"",
 					getLineNumber(content, x));
 			}
 
-			String resourcePath = parameterNames.get(1);
-
-			if (SourceUtil.isLiteralString(resourcePath) &&
-				!resourcePath.contains("__liferay__/api.js") &&
+			if (!resourcePath.contains("__liferay__/api.js") &&
 				!resourcePath.contains("__liferay__/exports")) {
 
 				addMessage(

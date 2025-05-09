@@ -15,11 +15,14 @@ import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest
 import {assetPublisherWidgetPagesTest} from '../../../fixtures/assetPublisherWidgetPagesTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {dataRemoteApiHelpersTest} from '../../../fixtures/dataRemoteApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {remotePageTest} from '../../../fixtures/remotePageTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
@@ -29,6 +32,9 @@ import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {remoteStagingPagesTest} from '../../export-import-service/main/fixtures/remoteStagingPagesTest';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
@@ -37,8 +43,12 @@ import {stagingPageTest} from './fixtures/stagingPageTest';
 import {StageableEntities} from './utils/stagingConstants';
 import {unzipAndCheckFolder} from './utils/stagingUtil';
 
+const remotePort = '9080';
+const remotePage = remotePageTest(remotePort);
+
 const test = mergeTests(
 	dataApiHelpersTest,
+	dataRemoteApiHelpersTest(remotePage, remotePort),
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
 	}),
@@ -48,15 +58,267 @@ const test = mergeTests(
 	collectionsPagesTest,
 	displayPageTemplatesPagesTest,
 	exportPageTest,
+	isolatedSiteTest,
 	journalPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
-	stagingConfigurationPageTest,
 	stagingPageTest,
 	systemSettingsPageTest,
 	webContentDisplayPageTest,
-	workflowPagesTest,
-	uiElementsPageTest
+	uiElementsPageTest,
+	stagingConfigurationPageTest,
+	remoteStagingPagesTest,
+	webContentDisplayPageTest,
+	workflowPagesTest
+);
+
+test(
+	'can publish web content with URL references to live via remote staging.',
+	{tag: '@LPS-159626'},
+	async ({
+		apiHelpers,
+		journalEditTemplatePage,
+		journalStructuresPage,
+		page,
+		pageEditorPage,
+		remoteApiHelpers,
+		remotePage,
+		remoteStagingPage,
+		site,
+		webContentDisplayPage,
+		widgetPagePage,
+	}) => {
+		test.slow();
+		
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
+			name: site.name,
+		});
+		console.log(remoteSite);
+
+		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
+			
+		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+			groupId: site.id,
+			remoteGroupId: remoteSite.id,
+			remotePort,
+		});
+
+		const layouts: Array<Layout> = [];
+
+		for (const i of [1, 2, 3]) {
+			let layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: `Page ${i}`,
+			});
+
+			layouts.push(layout);
+
+			for (const j of [1, 2]) {
+				layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+					groupId: site.id,
+					parentLayoutId: layout.layoutId,
+					title: `Page ${i}${j}`,
+				});
+
+				layouts.push(layout);
+
+				if (i === 1 && j === 1) {
+					layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+						groupId: site.id,
+						parentLayoutId: layout.layoutId,
+						title: 'Page 111',
+					});
+					layouts.push(layout);
+				}
+			}
+		}
+
+		
+
+		for (const layout of layouts) {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await widgetPagePage.addPortlet('Web Content Display');
+			await widgetPagePage.addPortlet('Web Content Display');
+		}
+		const fields: Array<any> = [];
+		const pageNumbers = [1, 11, 111, 12, 2, 21, 22, 3, 31, 32];
+
+		for (const num of pageNumbers) {
+			fields.push({name: `Openpage${num}`, repeatable: false});
+			fields.push({name: `URL${num}`, repeatable: false});
+		}
+
+		const structureName = getRandomString();
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+
+			fields,
+			name: structureName,
+		});
+		const structure = await apiHelpers.dataEngine.createStructure(
+			site.id,
+			dataDefinition
+		);
+
+		let i = 0;
+		const contentFields: Array<any> = [];
+		for (const layout of layouts) {
+			contentFields.push({
+				name: `Openpage${pageNumbers[i]}`,
+				value: layout.nameCurrentValue,
+			});
+			contentFields.push({
+				name: `URL${pageNumbers[i]}`,
+				value: `/web${site.friendlyUrlPath}` + layout.friendlyURL,
+			});
+			i++;
+		}
+
+		await journalStructuresPage.goto(site.friendlyUrlPath);
+		const templateName = getRandomString();
+		const templateScript =
+			'<p><a href="${URL1.getData()}">${Openpage1.getData()}</a></p>\n' +
+			'<p><a href="${URL2.getData()}">${Openpage2.getData()}</a></p>\n' +
+			'<p><a href="${URL3.getData()}">${Openpage3.getData()}</a></p>\n' +
+			'<p><a href="${URL11.getData()}">${Openpage11.getData()}</a></p>\n' +
+			'<p><a href="${URL12.getData()}">${Openpage12.getData()}</a></p>\n' +
+			'<p><a href="${URL111.getData()}">${Openpage111.getData()}</a></p>\n' +
+			'<p><a href="${URL21.getData()}">${Openpage21.getData()}</a></p>\n' +
+			'<p><a href="${URL22.getData()}">${Openpage22.getData()}</a></p>\n' +
+			'<p><a href="${URL31.getData()}">${Openpage31.getData()}</a></p>\n' +
+			'<p><a href="${URL32.getData()}">${Openpage32.getData()}</a></p>';
+
+		await journalEditTemplatePage.goto(site.friendlyUrlPath);
+		await journalEditTemplatePage.selectStructure(structureName);
+		await journalEditTemplatePage.editTemplate(
+			templateName,
+			templateScript
+		);
+		await journalEditTemplatePage.saveTemplate();
+		await journalEditTemplatePage.selectTemplateToEdit(templateName);
+
+		const templateKey = await journalEditTemplatePage.getDDMTemplateKey();
+		const webContentTitle = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			contentFields,
+			ddmStructureId: structure.id,
+			ddmTemplateKey: templateKey,
+			groupId: site.id,
+			titleMap: {en_US: webContentTitle},
+		});
+		const fields2: Array<any> = [];
+
+		fields2.push({name: 'Content1', repeatable: false});
+		fields2.push({name: 'Content2', repeatable: false});
+		const structureName2 = getRandomString();
+		const dataDefinition2 = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+
+			fields: fields2,
+			name: structureName2,
+		});
+
+		const structure2 = await apiHelpers.dataEngine.createStructure(
+			site.id,
+			dataDefinition2
+		);
+
+		const templateName2 = getRandomString();
+		const templateScript2 =
+			'<h1>${Content1.getData()}</h1>\n' + '<p>${Content2.getData()}</p>';
+
+		await journalEditTemplatePage.goto(site.friendlyUrlPath);
+		await journalEditTemplatePage.selectStructure(structureName2);
+		await journalEditTemplatePage.editTemplate(
+			templateName2,
+			templateScript2
+		);
+		await journalEditTemplatePage.saveTemplate();
+		await journalEditTemplatePage.selectTemplateToEdit(templateName2);
+
+		const templateKey2 = await journalEditTemplatePage.getDDMTemplateKey();
+
+		await webContentDisplayPage.gotoWebContentAdmin(site.name);
+
+		for (const num of pageNumbers) {
+			const contentFields3: Array<any> = [];
+
+			contentFields3.push({name: `Content1`, value: `Title-${num}`});
+			contentFields3.push({
+				name: `Content2`,
+				value: `Text Content-${num}`,
+			});
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				contentFields: contentFields3,
+				ddmStructureId: structure2.id,
+				ddmTemplateKey: templateKey2,
+				groupId: site.id,
+				titleMap: {en_US: `Title-${num}`},
+			});
+
+			await reloadUntilVisible({
+				myLocator: page.getByRole('link', {name: `Title-${num}`}),
+				page,
+			});
+		}
+
+		i = 0;
+		for (const layout of layouts) {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			try {
+				await webContentDisplayPage.addWebContentWithDisplay({
+					pageType: 'content',
+					webContentName: webContentTitle,
+				});
+			}
+			catch {}
+
+			await page.waitForTimeout(2000);
+			await page.reload();
+			try {
+				await webContentDisplayPage.addWebContentWithDisplay({
+					pageType: 'content',
+					webContentName: `Title-${pageNumbers[i]}`,
+				});
+			}
+			catch {}
+			await page.waitForTimeout(2000);
+			i++;
+		}
+
+		const remoteUrl = remoteApiHelpers.baseUrl.substring(
+			0,
+			remoteApiHelpers.baseUrl.length - 3
+		);
+
+		await remoteStagingPage.publishToLive({
+			layoutFriendlyURL: layouts[0].friendlyURL,
+			siteFriendlyUrl: site.friendlyUrlPath,
+		});
+		await page.waitForTimeout(500);
+
+		await remotePage.goto(
+			`${remoteUrl}/web${remoteSite.friendlyUrlPath}${layouts[0].friendlyURL}`
+		);
+
+		for (const num of [111, 21, 3]) {
+			await remotePage
+				.getByRole('link', {name: `Page ${num}`, exact: true})
+				.click();
+			await remotePage.waitForLoadState('domcontentloaded');
+
+			await expect(
+				remotePage.locator('h1').filter({hasText: `Title-${num}`})
+			).toBeVisible();
+
+			expect(remotePage.url()).toContain(`/web/${site.name}/page-${num}`);
+		}
+	}
 );
 
 test(
@@ -558,7 +820,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontentStructureId}`,
 );
 
 test(
-	'Non modified referred content cannot publish to live when enable include if modified option',
+	'non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
 	async ({apiHelpers, stagingConfigurationPage, stagingPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({

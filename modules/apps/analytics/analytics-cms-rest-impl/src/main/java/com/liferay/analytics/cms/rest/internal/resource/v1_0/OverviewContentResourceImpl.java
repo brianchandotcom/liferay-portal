@@ -346,17 +346,19 @@ public class OverviewContentResourceImpl
 		double percentage, long tagsCount, long totalCount,
 		long vocabulariesCount) {
 
-		Trend trend = new Trend();
-
-		trend.setClassification(() -> classification);
-		trend.setPercentage(() -> percentage);
-
 		OverviewContent overviewContent = new OverviewContent();
 
 		overviewContent.setCategoriesCount(() -> categoriesCount);
 		overviewContent.setTagsCount(() -> tagsCount);
 		overviewContent.setTotalCount(() -> totalCount);
+
+		Trend trend = new Trend();
+
+		trend.setClassification(() -> classification);
+		trend.setPercentage(() -> percentage);
+
 		overviewContent.setTrend(() -> trend);
+
 		overviewContent.setVocabulariesCount(() -> vocabulariesCount);
 
 		return overviewContent;

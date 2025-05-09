@@ -24,6 +24,15 @@ jest.mock('@liferay/layout-js-components-web', () => {
 	};
 });
 
+jest.mock('frontend-js-web', () => {
+	const actual = jest.requireActual('frontend-js-web');
+
+	return {
+		...actual,
+		navigate: jest.fn(),
+	};
+});
+
 type Props = {
 	state?: Partial<State>;
 };
@@ -154,5 +163,87 @@ describe('StructureBuilderManagementBar', () => {
 		expect(StructureService.createStructure).not.toBeCalled();
 		expect(StructureService.updateStructure).not.toBeCalled();
 		expect(StructureService.publishStructure).not.toBeCalled();
+	});
+
+	it('Shows modal to publish when trying to customize experience and the structure is not published', async () => {
+		renderComponent({
+			state: {status: 'new'},
+		});
+
+		const customizeExperienceButton = screen.getByText(
+			'customize-experience'
+		);
+
+		await userEvent.click(customizeExperienceButton);
+
+		await waitFor(() => {
+			expect(
+				require('@liferay/layout-js-components-web').openConfirmModal
+			).toBeCalledWith(
+				expect.objectContaining({
+					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first',
+				})
+			);
+		});
+	});
+
+	it('Shows modal to publish when trying to customize experience and the structure is published and there are changes', async () => {
+		renderComponent({
+			state: {status: 'published', unsavedChanges: true},
+		});
+
+		const customizeExperienceButton = screen.getByText(
+			'customize-experience'
+		);
+
+		await userEvent.click(customizeExperienceButton);
+
+		await waitFor(() => {
+			expect(
+				require('@liferay/layout-js-components-web').openConfirmModal
+			).toBeCalledWith(
+				expect.objectContaining({
+					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first',
+				})
+			);
+		});
+	});
+
+	it('Shows modal to publish when trying to customize experience and the structure is published and some fields have been deleted', async () => {
+		renderComponent({
+			state: {history: {deletedFields: true}, status: 'published'},
+		});
+
+		const customizeExperienceButton = screen.getByText(
+			'customize-experience'
+		);
+
+		await userEvent.click(customizeExperienceButton);
+
+		await waitFor(() => {
+			expect(
+				require('@liferay/layout-js-components-web').openConfirmModal
+			).toBeCalledWith(
+				expect.objectContaining({
+					text: 'to-customize-the-experience-you-need-to-publish-the-structure-first.-you-removed-one-or-more-fields-from-the-structure',
+				})
+			);
+		});
+	});
+
+	it('Navigates to customize experience if the structure is published', async () => {
+		renderComponent({
+			state: {status: 'published'},
+		});
+
+		const customizeExperienceButton = screen.getByText(
+			'customize-experience'
+		);
+
+		await userEvent.click(customizeExperienceButton);
+
+		await waitFor(() => {
+			expect(require('frontend-js-web').navigate).toBeCalled();
+		});
 	});
 });

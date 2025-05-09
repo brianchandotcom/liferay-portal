@@ -6,7 +6,7 @@
 import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import {postScopeScopeKeyObjectEntryFolder} from '../../../services/ApiHelper';
+import FolderService from '../../../services/FolderService';
 import CreationModalContent, {
 	AssetLibrary,
 } from '../../components/modal/CreationModalContent';
@@ -34,7 +34,7 @@ export default function createFolderAction(
 						data: folderData,
 						errorMessage,
 						success,
-					} = await postScopeScopeKeyObjectEntryFolder<{
+					} = await FolderService.createFolder<{
 						id: string;
 						scopeKey: string;
 						title: string;

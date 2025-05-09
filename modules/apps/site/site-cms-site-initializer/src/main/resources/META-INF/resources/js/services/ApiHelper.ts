@@ -93,8 +93,8 @@ async function get(url: string) {
 	throw new Error(title);
 }
 
-async function post<T>(url: string, data?: T) {
-	return handleRequest(() =>
+async function post<T>(url: string, data: Record<string, any>) {
+	return handleRequest<T>(() =>
 		fetch(url, {
 			body: JSON.stringify(data),
 			headers: HEADERS,
@@ -129,28 +129,6 @@ async function patch(data: any, url: string) {
 			headers: HEADERS,
 			method: 'PATCH',
 		})
-	);
-}
-
-export async function postScopeScopeKeyObjectEntryFolder<DataType = unknown>(
-	scopeKey: string,
-	title: string,
-	parentObjectEntryFolderExternalReferenceCode: string
-) {
-	return await handleRequest<DataType>(
-		() =>
-			fetch(
-				`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
-				{
-					body: JSON.stringify({
-						parentObjectEntryFolderExternalReferenceCode,
-						title,
-					}),
-					headers: HEADERS,
-					method: 'POST',
-				}
-			),
-		{returnValue: true}
 	);
 }
 

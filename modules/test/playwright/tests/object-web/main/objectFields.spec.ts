@@ -754,6 +754,58 @@ test.describe('Manage object fields through Model Builder', () => {
 			)
 		).toBeVisible();
 	});
+
+	test('navigates to documentation from the "unsupported translations" alert link', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+	}) => {
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['encrypted'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.label['en_US']})
+			.click();
+
+		await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+			objectDefinition.label['en_US'],
+			modelBuilderDiagramPage.objectDefinitionNodes
+		);
+
+		await page.getByText('Encrypted', {exact: true}).click();
+
+		const pagePromise = page.waitForEvent('popup');
+
+		await page
+			.getByRole('link', {name: 'Learn more. (Opens a new window)'})
+			.click();
+
+		const newPage = await pagePromise;
+
+		await expect(
+			newPage.getByRole('heading', {
+				name: 'Localizing Object Definitions',
+			})
+		).toBeVisible();
+	});
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {
@@ -1138,5 +1190,47 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		await expect(
 			page.getByRole('row').filter({hasText: fieldName})
 		).toHaveCount(0);
+	});
+
+	test('navigates to documentation from the "unsupported translations" alert link', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['encrypted'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.openObjectField(objectFields[0].label['en_US']);
+
+		const pagePromise = page.waitForEvent('popup');
+
+		await page
+			.frameLocator('iframe')
+			.getByRole('link', {name: 'Learn more. (Opens a new window)'})
+			.click();
+
+		const newPage = await pagePromise;
+
+		await expect(
+			newPage.getByRole('heading', {
+				name: 'Localizing Object Definitions',
+			})
+		).toBeVisible();
 	});
 });

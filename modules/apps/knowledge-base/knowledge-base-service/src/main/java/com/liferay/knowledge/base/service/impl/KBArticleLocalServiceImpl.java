@@ -1203,10 +1203,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public Lock lockKBArticle(long userId, long resourcePrimKey)
 		throws PortalException {
 
-		long userCompanyId = 0;
+		long companyId = 0;
 
 		try {
-			userCompanyId = _companyLocalService.getCompanyIdByUserId(userId);
+			companyId = _companyLocalService.getCompanyIdByUserId(userId);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -1214,7 +1214,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			}
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(userCompanyId, "LPD-11003")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11003")) {
 			return null;
 		}
 
@@ -1573,10 +1573,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public void unlockKBArticle(
 		long userId, long resourcePrimKey, boolean force) {
 
-		long userCompanyId = 0;
+		long companyId = 0;
 
 		try {
-			userCompanyId = _companyLocalService.getCompanyIdByUserId(userId);
+			companyId = _companyLocalService.getCompanyIdByUserId(userId);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -1584,7 +1584,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			}
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(userCompanyId, "LPD-11003")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11003")) {
 			return;
 		}
 

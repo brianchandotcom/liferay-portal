@@ -175,7 +175,7 @@ export type TAction =
 			type: TYPES.SET_OBJECT_VIEW_AS_DEFAULT;
 	  };
 
-const viewReducer = (state: TState, action: TAction) => {
+export function viewReducer(state: TState, action: TAction) {
 	switch (action.type) {
 		case TYPES.ADD_OBJECT_VIEW: {
 			const {creationLanguageId, objectFields, objectView} =
@@ -833,7 +833,7 @@ const viewReducer = (state: TState, action: TAction) => {
 		default:
 			return state;
 	}
-};
+}
 
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {

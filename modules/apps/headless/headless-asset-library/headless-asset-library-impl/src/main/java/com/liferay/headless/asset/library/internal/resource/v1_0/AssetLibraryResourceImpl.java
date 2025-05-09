@@ -461,6 +461,14 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					addAction(
 						ActionKeys.PERMISSIONS, depotEntry, "patchAssetLibrary")
 				).put(
+					"pin",
+					addAction(
+						ActionKeys.UPDATE, depotEntry, "putAssetLibraryPin")
+				).put(
+					"unpin",
+					addAction(
+						ActionKeys.UPDATE, depotEntry, "deleteAssetLibraryPin")
+				).put(
 					"update",
 					addAction(
 						ActionKeys.UPDATE, depotEntry, "patchAssetLibrary")

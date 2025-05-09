@@ -565,7 +565,6 @@ message.
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-			stylesheet="${project.dir}/tools/styles/dtddoc.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
@@ -648,7 +647,6 @@ message.
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			use="yes"
 			useexternalfile="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
@@ -678,7 +676,6 @@ message.
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			use="yes"
 			useexternalfile="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"

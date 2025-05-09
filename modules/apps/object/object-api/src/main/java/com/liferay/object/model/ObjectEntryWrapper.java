@@ -50,8 +50,8 @@ public class ObjectEntryWrapper
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("treePath", getTreePath());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("treePath", getTreePath());
 		attributes.put("version", getVersion());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -149,16 +149,16 @@ public class ObjectEntryWrapper
 			setDefaultLanguageId(defaultLanguageId);
 		}
 
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
 		Date expirationDate = (Date)attributes.get("expirationDate");
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Integer version = (Integer)attributes.get("version");

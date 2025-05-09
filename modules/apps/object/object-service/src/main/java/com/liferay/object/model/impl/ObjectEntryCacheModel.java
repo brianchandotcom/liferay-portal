@@ -98,10 +98,10 @@ public class ObjectEntryCacheModel
 		sb.append(rootObjectEntryId);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
-		sb.append(", treePath=");
-		sb.append(treePath);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", lastPublishDate=");
@@ -176,18 +176,18 @@ public class ObjectEntryCacheModel
 			objectEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
 
-		if (treePath == null) {
-			objectEntryImpl.setTreePath("");
-		}
-		else {
-			objectEntryImpl.setTreePath(treePath);
-		}
-
 		if (expirationDate == Long.MIN_VALUE) {
 			objectEntryImpl.setExpirationDate(null);
 		}
 		else {
 			objectEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (treePath == null) {
+			objectEntryImpl.setTreePath("");
+		}
+		else {
+			objectEntryImpl.setTreePath(treePath);
 		}
 
 		objectEntryImpl.setVersion(version);
@@ -244,8 +244,8 @@ public class ObjectEntryCacheModel
 
 		rootObjectEntryId = objectInput.readLong();
 		defaultLanguageId = objectInput.readUTF();
-		treePath = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
+		treePath = objectInput.readUTF();
 
 		version = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -306,14 +306,14 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(defaultLanguageId);
 		}
 
+		objectOutput.writeLong(expirationDate);
+
 		if (treePath == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(treePath);
 		}
-
-		objectOutput.writeLong(expirationDate);
 
 		objectOutput.writeInt(version);
 		objectOutput.writeLong(lastPublishDate);
@@ -346,8 +346,8 @@ public class ObjectEntryCacheModel
 	public long objectEntryFolderId;
 	public long rootObjectEntryId;
 	public String defaultLanguageId;
-	public String treePath;
 	public long expirationDate;
+	public String treePath;
 	public int version;
 	public long lastPublishDate;
 	public int status;

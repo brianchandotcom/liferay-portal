@@ -288,6 +288,20 @@ public interface ObjectEntryModel
 	public void setDefaultLanguageId(String defaultLanguageId);
 
 	/**
+	 * Returns the expiration date of this object entry.
+	 *
+	 * @return the expiration date of this object entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this object entry.
+	 *
+	 * @param expirationDate the expiration date of this object entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
 	 * Returns the tree path of this object entry.
 	 *
 	 * @return the tree path of this object entry
@@ -301,20 +315,6 @@ public interface ObjectEntryModel
 	 * @param treePath the tree path of this object entry
 	 */
 	public void setTreePath(String treePath);
-
-	/**
-	 * Returns the expiration date of this object entry.
-	 *
-	 * @return the expiration date of this object entry
-	 */
-	public Date getExpirationDate();
-
-	/**
-	 * Sets the expiration date of this object entry.
-	 *
-	 * @param expirationDate the expiration date of this object entry
-	 */
-	public void setExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns the version of this object entry.

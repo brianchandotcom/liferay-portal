@@ -112,10 +112,10 @@
 		<field name="objectEntryFolderId" type="long" />
 		<field name="rootObjectEntryId" type="long" />
 		<field name="defaultLanguageId" type="String" />
+		<field name="expirationDate" type="Date" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="expirationDate" type="Date" />
 		<field name="version" type="int" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />

@@ -8,6 +8,16 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
@@ -42,7 +52,8 @@ public class CloudBucketUtil {
 	public static void copyS3File(String destination, String source) {
 		_executeCommands(
 			_getFileTransferCommand(
-				"aws s3 cp --no-progress", _replaceS3ObjectPath(destination),
+				"aws s3 cp --no-progress",
+				_replaceS3ObjectPath(destination),
 				_replaceS3ObjectPath(source)));
 
 		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
@@ -77,10 +88,6 @@ public class CloudBucketUtil {
 		File destinationS3ObjectFile = _getS3ObjectRefFile(
 			destinationS3ObjectPath);
 
-		if (destinationS3ObjectFile.exists()) {
-			return;
-		}
-
 		try {
 			File parentFile = destinationS3ObjectFile.getParentFile();
 
@@ -94,6 +101,85 @@ public class CloudBucketUtil {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public static void deleteS3ObjectRefsOlderThan(long ageSeconds)
+		throws IOException {
+
+		File s3BucketDir = new File(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"cloud.ci.s3.bucket.object.refs.dir"));
+
+		Files.walkFileTree(
+			s3BucketDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+					Path path, IOException ioException) {
+
+					File dir = path.toFile();
+
+					if (!dir.exists()) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					File[] files = dir.listFiles();
+
+					if ((files == null) || (files.length == 0)) {
+						if (!_isOlderThan(path, ageSeconds)) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						JenkinsResultsParserUtil.delete(dir);
+
+						System.out.println("Delete " + path);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					File dir = path.toFile();
+
+					File[] files = dir.listFiles();
+
+					if ((files == null) || (files.length == 0)) {
+						if (!_isOlderThan(basicFileAttributes, ageSeconds)) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						JenkinsResultsParserUtil.delete(dir);
+
+						System.out.println("Delete " + path);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					if (!_isOlderThan(basicFileAttributes, ageSeconds)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					JenkinsResultsParserUtil.delete(path.toFile());
+
+					System.out.println("Delete " + path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	public static String getSignedURL(int duration, String file, String url)
@@ -126,6 +212,61 @@ public class CloudBucketUtil {
 		}
 
 		return null;
+	}
+
+	public static boolean isS3ObjectOlderThan(
+		String s3ObjectPath, long maxAgeSeconds) {
+
+		File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
+
+		if ((s3ObjectRefFile != null) && s3ObjectRefFile.exists() &&
+			_isOlderThan(s3ObjectRefFile, maxAgeSeconds)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isOlderThan(
+		BasicFileAttributes basicFileAttributes, long ageSeconds) {
+
+		FileTime lastModifiedFileTime = basicFileAttributes.lastModifiedTime();
+
+		Instant lastModifiedInstant = lastModifiedFileTime.toInstant();
+
+		Instant instant = Instant.now();
+
+		if (lastModifiedInstant.isBefore(
+				instant.minus(ageSeconds, ChronoUnit.SECONDS))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isOlderThan(File file, long ageSeconds) {
+		if ((file == null) || !file.exists()) {
+			return false;
+		}
+
+		return _isOlderThan(file.toPath(), ageSeconds);
+	}
+
+	private static boolean _isOlderThan(Path path, long ageSeconds) {
+		if (path == null) {
+			return false;
+		}
+
+		try {
+			return _isOlderThan(
+				Files.readAttributes(path, BasicFileAttributes.class),
+				ageSeconds);
+		}
+		catch (IOException ioException) {
+			return false;
+		}
 	}
 
 	public static boolean isS3ObjectRefAvailable(String s3ObjectPath) {
@@ -320,14 +461,13 @@ public class CloudBucketUtil {
 
 		try {
 			sb.append(
-				JenkinsResultsParserUtil.getBuildProperty("mirrors.cache.dir"));
+				JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.ci.s3.bucket.object.refs.dir"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 
-		sb.append("/s3/");
-		sb.append(s3ObjectPathMatcher.group("bucketName"));
 		sb.append("/");
 		sb.append(s3ObjectPathMatcher.group("objectPath"));
 		sb.append(".s3.ref");

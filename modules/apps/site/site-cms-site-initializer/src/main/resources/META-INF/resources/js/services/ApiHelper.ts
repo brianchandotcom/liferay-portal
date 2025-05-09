@@ -130,7 +130,7 @@ async function put<T>(url: string, data?: T) {
 	throw new Error(title);
 }
 
-export async function postFormData(formData: FormData, url: string) {
+async function postFormData(formData: FormData, url: string) {
 	return handleRequest(() =>
 		fetch(url, {
 			body: formData,
@@ -139,7 +139,7 @@ export async function postFormData(formData: FormData, url: string) {
 	);
 }
 
-export async function patch(data: any, url: string) {
+async function patch(data: any, url: string) {
 	return handleRequest(() =>
 		fetch(url, {
 			body: JSON.stringify(data),
@@ -171,4 +171,4 @@ export async function postScopeScopeKeyObjectEntryFolder<DataType = unknown>(
 	);
 }
 
-export default {get, post, put};
+export default {get, patch, post, postFormData, put};

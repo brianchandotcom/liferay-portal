@@ -63,7 +63,7 @@
 					: editorContent;
 
 			const imgElement = editorContentDocument.querySelector(
-				`div[data-fileentryid="${imageSrc.fileEntryId}"]`
+				`img[src='${imageSrc.url}']`
 			);
 
 			if (imgElement) {

@@ -1011,7 +1011,7 @@ test(
 		await usersAndOrganizationsPage.goToOrganizations();
 
 		await (
-			await usersAndOrganizationsPage.organizationActionsMenu(
+			await usersAndOrganizationsPage.organizationsTable.rowActions(
 				organization.name
 			)
 		).click();

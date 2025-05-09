@@ -175,7 +175,7 @@ test('LPD-30589 Add Organization Team', async ({
 	await usersAndOrganizationsPage.goToOrganizations();
 
 	await (
-		await usersAndOrganizationsPage.organizationActionsMenu(
+		await usersAndOrganizationsPage.organizationsTable.rowActions(
 			organization.name
 		)
 	).click();
@@ -222,7 +222,7 @@ test('LPD-31669 Check whether admin user is redirected to organization page afte
 	await usersAndOrganizationsPage.goToOrganizations();
 
 	await (
-		await usersAndOrganizationsPage.organizationActionsMenu(
+		await usersAndOrganizationsPage.organizationsTable.rowActions(
 			organization.name
 		)
 	).click();
@@ -258,11 +258,10 @@ test('LPD-31978 Remove member', async ({
 	});
 
 	await usersAndOrganizationsPage.goToOrganizations();
-	await (
-		await usersAndOrganizationsPage.organizationsTableRowLink(
-			organization.name
-		)
-	).click();
+
+	await usersAndOrganizationsPage.organizationsTable
+		.valueLink(organization.name)
+		.click();
 
 	await expect(
 		await organizationUsersPage.usersTableRowLink(
@@ -278,11 +277,10 @@ test('LPD-31978 Remove member', async ({
 	await organizationUsersPage.removeMenuItem.click();
 
 	await usersAndOrganizationsPage.goToOrganizations();
-	await (
-		await usersAndOrganizationsPage.organizationsTableRowLink(
-			organization.name
-		)
-	).click();
+
+	await usersAndOrganizationsPage.organizationsTable
+		.valueLink(organization.name)
+		.click();
 
 	await expect(organizationUsersPage.filterButton).toBeVisible();
 	await expect(
@@ -302,7 +300,7 @@ test('LPD-31020 Assign User', async ({
 	await usersAndOrganizationsPage.goToOrganizations();
 
 	await (
-		await usersAndOrganizationsPage.organizationActionsMenu(
+		await usersAndOrganizationsPage.organizationsTable.rowActions(
 			organization.name
 		)
 	).click();
@@ -322,11 +320,9 @@ test('LPD-31020 Assign User', async ({
 
 	await usersAndOrganizationsPage.goToOrganizations();
 
-	await (
-		await usersAndOrganizationsPage.organizationsTableRowLink(
-			organization.name
-		)
-	).click();
+	await usersAndOrganizationsPage.organizationsTable
+		.valueLink(organization.name)
+		.click();
 
 	await expect(
 		(
@@ -608,12 +604,9 @@ test('LPD-35634 Organization Administrator can activate and deactivate users', a
 
 	await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
 
-	await (
-		await usersAndOrganizationsPage.organizationsTableRowLink(
-			organization.name
-		)
-	).click();
-
+	await usersAndOrganizationsPage.organizationsTable
+		.valueLink(organization.name)
+		.click();
 	await (
 		await usersAndOrganizationsPage.organizationUsersTableRowActions(
 			`${user2.name}`
@@ -1119,7 +1112,7 @@ test(
 		await usersAndOrganizationsPage.goToOrganizations();
 
 		await (
-			await usersAndOrganizationsPage.organizationActionsMenu(
+			await usersAndOrganizationsPage.organizationsTable.rowActions(
 				organization.name
 			)
 		).click();
@@ -1256,11 +1249,9 @@ test(
 		});
 
 		await usersAndOrganizationsPage.goToOrganizations();
-		await (
-			await usersAndOrganizationsPage.organizationsTableRowLink(
-				organization.name
-			)
-		).click();
+		await usersAndOrganizationsPage.organizationsTable
+			.valueLink(organization.name)
+			.click();
 
 		await expect(
 			usersAndOrganizationsPage.organizationUsersTable
@@ -1303,7 +1294,7 @@ test(
 		await usersAndOrganizationsPage.goToOrganizations();
 
 		await (
-			await usersAndOrganizationsPage.organizationActionsMenu(
+			await usersAndOrganizationsPage.organizationsTable.rowActions(
 				organization.name
 			)
 		).click();
@@ -1461,29 +1452,23 @@ test(
 
 		await usersAndOrganizationsPage.goToOrganizations();
 
-		await usersAndOrganizationsPage.organizationDataTable.changeView(
-			'Table'
-		);
+		await usersAndOrganizationsPage.organizationsTable.changeView('Table');
 
-		await usersAndOrganizationsPage.organizationDataTable.search(
+		await usersAndOrganizationsPage.organizationsTable.search(
 			organization.name
 		);
 
 		await expect(
-			usersAndOrganizationsPage.organizationDataTable.cell(
-				organization.name
-			)
+			usersAndOrganizationsPage.organizationsTable.cell(organization.name)
 		).toHaveCount(1);
 		await expect(
-			usersAndOrganizationsPage.organizationDataTable.cell('Approved')
+			usersAndOrganizationsPage.organizationsTable.cell('Approved')
 		).toBeVisible();
 
-		await usersAndOrganizationsPage.organizationDataTable.changeView(
-			'List'
-		);
+		await usersAndOrganizationsPage.organizationsTable.changeView('List');
 
 		await expect(
-			usersAndOrganizationsPage.organizationDataTable.valueLink(
+			usersAndOrganizationsPage.organizationsTable.valueLink(
 				organization.name
 			)
 		).toHaveCount(1);
@@ -1491,12 +1476,10 @@ test(
 			usersAndOrganizationsPage.statusText('Approved')
 		).toBeVisible();
 
-		await usersAndOrganizationsPage.organizationDataTable.changeView(
-			'Cards'
-		);
+		await usersAndOrganizationsPage.organizationsTable.changeView('Cards');
 
 		await expect(
-			usersAndOrganizationsPage.organizationDataTable.valueLink(
+			usersAndOrganizationsPage.organizationsTable.valueLink(
 				organization.name
 			)
 		).toHaveCount(1);

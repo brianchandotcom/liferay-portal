@@ -47,7 +47,7 @@ export class EditOrganizationPage {
 
 	async gotoOrganizationEditOpeningHoursTab(organizationName: string) {
 		await (
-			await this.usersAndOrganizationsPage.organizationActionsMenu(
+			await this.usersAndOrganizationsPage.organizationsTable.rowActions(
 				organizationName
 			)
 		).click();

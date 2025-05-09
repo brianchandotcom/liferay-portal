@@ -27,6 +27,12 @@ String innerNavigation = ParamUtil.getString(request, "innerNavigation", "classi
 						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor5", "innerNavigation", "react");
 						navigationItem.setLabel("React");
 					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(innerNavigation.equals("balloon"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor5", "innerNavigation", "balloon");
+						navigationItem.setLabel("Balloon");
+					});
 			}
 		}
 	%>'
@@ -34,6 +40,9 @@ String innerNavigation = ParamUtil.getString(request, "innerNavigation", "classi
 
 <div class="mt-3">
 	<c:choose>
+		<c:when test='<%= StringUtil.equals(innerNavigation, "balloon") %>'>
+			<liferay-util:include page="/ckeditor5/partials/balloon.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test='<%= StringUtil.equals(innerNavigation, "classic") %>'>
 			<liferay-util:include page="/ckeditor5/partials/classic.jsp" servletContext="<%= application %>" />
 		</c:when>

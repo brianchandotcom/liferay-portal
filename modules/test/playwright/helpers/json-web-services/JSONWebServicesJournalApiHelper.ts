@@ -19,6 +19,7 @@ type TFolder = {
 type TWebContent = {
 	articleId?: string;
 	content?: string;
+	contentFields?: Array<any>;
 	ddmStructureId: number | string;
 	ddmTemplateKey?: string;
 	description?: string;
@@ -127,14 +128,30 @@ export class JSONWebServicesJournalApiHelper {
 			...(webContent || {}),
 		};
 
-		urlSearchParams.append(
-			'content',
-			`<root>
-				<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
-				<dynamic-content><![CDATA[<p>${webContent.content}</p>]]></dynamic-content>
-				</dynamic-element>
+		if (webContent.contentFields) {
+			let content = '<root>\n';
+			for (const cont of webContent.contentFields) {
+				content += `<dynamic-element field-reference="${cont.name}" index-type="keyword" name="${cont.name}" type="text">
+					<dynamic-content><![CDATA[${cont.value}]]></dynamic-content>
+					</dynamic-element>\n`;
+			}
+			content += '</root>';
+
+			urlSearchParams.append('content', content);
+		}
+		else if (webContent.content) {
+			urlSearchParams.append(
+				'content',
+				`<root>
+					<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
+					<dynamic-content><![CDATA[<p>${webContent.content}</p>]]></dynamic-content>
+					</dynamic-element>
 				</root>`
-		);
+			);
+		}
+		else {
+			urlSearchParams.append('content', '');
+		}
 
 		urlSearchParams.append(
 			'descriptionMap',

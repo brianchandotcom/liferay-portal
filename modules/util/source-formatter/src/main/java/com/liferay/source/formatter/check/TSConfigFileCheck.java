@@ -115,6 +115,6 @@ public class TSConfigFileCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _namePattern = Pattern.compile(
-		"([ \t]name)\s*:\s*'(.*)'");
+		"([ \t]name)\\s*:\\s*'(.*)'");
 
 }

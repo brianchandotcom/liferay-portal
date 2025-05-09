@@ -79,11 +79,11 @@ test(
 		for (let i = 0; i < currentInstanceLanguages.length; i++) {
 			await page.waitForTimeout(500);
 			await page
-				.getByLabel('Current')
+				.getByLabel('Current', {exact: true})
 				.selectOption(currentInstanceLanguages[i]);
 			await page
 				.getByRole('button', {
-					name: 'Transfer Item Left to Right',
+					name: 'Move selected items from Current to Available',
 				})
 				.click({force: true});
 		}
@@ -109,11 +109,11 @@ test(
 		for (let i = 0; i < currentInstanceLanguages.length; i++) {
 			await page.waitForTimeout(500);
 			await page
-				.getByLabel('Available')
+				.getByLabel('Available', {exact: true})
 				.selectOption(currentInstanceLanguages[i]);
 			await page
 				.getByRole('button', {
-					name: 'Transfer Item Right to Left',
+					name: 'Move selected items from Available to Current',
 				})
 				.click({force: true});
 		}

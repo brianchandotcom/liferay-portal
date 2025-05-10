@@ -784,7 +784,7 @@ public class CommercePriceListLocalServiceImpl
 			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
-		Expression<BigDecimal> expression = DSLFunctionFactoryUtil.divide(
+		Expression<Float> expression = DSLFunctionFactoryUtil.floatDivide(
 			CommercePriceEntryTable.INSTANCE.price,
 			CommerceCurrencyTable.INSTANCE.rate
 		).as(

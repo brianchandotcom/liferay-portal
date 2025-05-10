@@ -4063,20 +4063,18 @@ public class ObjectEntryLocalServiceImpl
 					_getQueryExpressions(
 						objectDefinition, primaryKey, String.valueOf(script)));
 
-				Class<?> clazz = Double.class;
-
-				String output = GetterUtil.getString(
-					objectFieldSettingsValues.get("output"));
-
-				if (Objects.equals(output, "Integer")) {
-					clazz = Integer.class;
-				}
-
 				try {
 					Expression<?> expression = ddmExpression.getDSLExpression();
 
-					selectExpressions.add(
-						expression.as(objectField.getName(), clazz));
+					String output = GetterUtil.getString(
+						objectFieldSettingsValues.get("output"));
+
+					if (Objects.equals(output, "Integer")) {
+						expression = DSLFunctionFactoryUtil.castLong(
+							expression);
+					}
+
+					selectExpressions.add(expression.as(objectField.getName()));
 				}
 				catch (Exception exception) {
 					_log.error(exception);

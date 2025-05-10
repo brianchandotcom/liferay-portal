@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -2491,23 +2492,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	private List<ObjectValuePair<Long, Integer>> _getPageVersionStatuses(
 		List<WikiPage> pages) {
 
-		List<ObjectValuePair<Long, Integer>> pageVersionStatusOVPs =
-			new ArrayList<>(pages.size());
+		return TransformUtil.transform(
+			pages,
+			page -> {
+				int status = page.getStatus();
 
-		for (WikiPage page : pages) {
-			int status = page.getStatus();
+				if (status == WorkflowConstants.STATUS_PENDING) {
+					status = WorkflowConstants.STATUS_DRAFT;
+				}
 
-			if (status == WorkflowConstants.STATUS_PENDING) {
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			ObjectValuePair<Long, Integer> pageVersionStatusOVP =
-				new ObjectValuePair<>(page.getPageId(), status);
-
-			pageVersionStatusOVPs.add(pageVersionStatusOVP);
-		}
-
-		return pageVersionStatusOVPs;
+				return new ObjectValuePair<>(page.getPageId(), status);
+			});
 	}
 
 	private String _getParentPageTitle(WikiPage page) {

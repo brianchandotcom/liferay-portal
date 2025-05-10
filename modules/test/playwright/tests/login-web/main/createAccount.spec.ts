@@ -12,7 +12,7 @@ import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 
-let isCaptchaDefaultValues: boolean = false;
+let captchaConfigurationResetRequired: boolean = false;
 
 export const test = mergeTests(
 	captchaConfigPageTest,
@@ -32,16 +32,15 @@ test.beforeEach(
 		await captchaConfigPage.goTo();
 
 		await captchaConfigPage.disableCreateAccountCaptcha();
+
+		captchaConfigurationResetRequired = true;
 	}
 );
 
 test.afterEach(
 	'Reset CAPTCHA configuration',
 	async ({captchaConfigPage, page}) => {
-		if (isCaptchaDefaultValues) {
-			isCaptchaDefaultValues = false;
-		}
-		else {
+		if (captchaConfigurationResetRequired) {
 			await page.goto(liferayConfig.environment.baseUrl);
 
 			if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
@@ -187,7 +186,7 @@ test('LPD-52901 Check CAPTCHA section title', async ({
 
 	await captchaConfigPage.resetCaptchaConfiguration();
 
-	isCaptchaDefaultValues = true;
+	captchaConfigurationResetRequired = false;
 
 	await performLogout(page);
 

@@ -390,12 +390,14 @@ test(
 
 				for (const fieldName of Object.keys(fields)) {
 					for (const cell of fields[fieldName]) {
-						await expect(
-							visualizationModesPage
-								.getRowByText(fieldName)
-								.locator('td')
-								.nth(cell.index)
-						).toHaveText(cell.expected);
+						const cellLocator = visualizationModesPage
+							.getRowByText(fieldName)
+							.locator('td')
+							.nth(cell.index);
+
+						await cellLocator.scrollIntoViewIfNeeded();
+
+						await expect(cellLocator).toHaveText(cell.expected);
 					}
 				}
 				await visualizationModesPage.assertTableFieldRowCount(

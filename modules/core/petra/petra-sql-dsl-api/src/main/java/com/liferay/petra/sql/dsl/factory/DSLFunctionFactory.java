@@ -53,6 +53,12 @@ public interface DSLFunctionFactory {
 	public <N extends Number> Expression<N> divide(
 		Expression<N> expression, N value);
 
+	public <N extends Number> Expression<Float> floatDivide(
+		Expression<N> expression1, Expression<N> expression2);
+
+	public <N extends Number> Expression<Float> floatDivide(
+		Expression<N> expression, N value);
+
 	public Expression<String> lower(Expression<String> expression);
 
 	public <T extends Comparable<T>> Expression<T> max(

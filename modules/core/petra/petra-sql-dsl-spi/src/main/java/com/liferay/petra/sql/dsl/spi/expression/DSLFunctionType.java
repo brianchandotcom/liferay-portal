@@ -5,6 +5,8 @@
 
 package com.liferay.petra.sql.dsl.spi.expression;
 
+import com.liferay.petra.string.StringPool;
+
 import java.util.Objects;
 
 /**
@@ -30,6 +32,9 @@ public class DSLFunctionType {
 		"CONCAT(", ")");
 
 	public static final DSLFunctionType DIVISION = new DSLFunctionType(" / ");
+
+	public static final DSLFunctionType FLOAT_DIVISION = new DSLFunctionType(
+		"CAST_FLOAT(", ") / ", StringPool.BLANK);
 
 	public static final DSLFunctionType LOWER = new DSLFunctionType(
 		"LOWER(", ")");

@@ -417,7 +417,7 @@ test(
 			];
 
 			await assertTableSectionEntries('Advanced Sample', {
-				'color': buildTableRowSpec('false', 'Default'),
+				'color': buildTableRowSpec('false', ''),
 				'creator.name': buildTableRowSpec(
 					'false',
 					'customAuthorTableCellRenderer'

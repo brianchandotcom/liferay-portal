@@ -359,7 +359,7 @@ public class DSLQueryEntryPersistenceImplTest {
 	}
 
 	@Test
-	public void testDSLQueryWithoutTypeAlias() {
+	public void testDSLQueryWithDivide() {
 		Assert.assertEquals(
 			Arrays.asList(0L, 1L, 1L),
 			_dslQueryEntryPersistence.dslQuery(
@@ -379,16 +379,16 @@ public class DSLQueryEntryPersistenceImplTest {
 	}
 
 	@Test
-	public void testDSLQueryWithTypeAlias() {
+	public void testDSLQueryWithFloatDivide() {
 		Assert.assertEquals(
-			Arrays.asList(0.5, 1.0, 1.5),
+			Arrays.asList(0.5F, 1.0F, 1.5F),
 			_dslQueryEntryPersistence.dslQuery(
 				DSLQueryFactoryUtil.select(
-					DSLFunctionFactoryUtil.divide(
+					DSLFunctionFactoryUtil.floatDivide(
 						DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId,
 						new Scalar<>(2L)
 					).as(
-						"alias", Double.class
+						"alias"
 					)
 				).from(
 					DSLQueryStatusEntryTable.INSTANCE

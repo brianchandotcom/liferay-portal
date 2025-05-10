@@ -1175,6 +1175,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				return Type.LONG;
 			}
 
+			if (dslFunctionType == DSLFunctionType.FLOAT_DIVISION) {
+				return Type.FLOAT;
+			}
+
 			return _getType(dslFunction.getExpressions()[0]);
 		}
 

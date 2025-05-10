@@ -55,6 +55,7 @@ describe('buildState', () => {
 			selection: [],
 			spaces: [],
 			status: 'draft',
+			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({
@@ -85,6 +86,7 @@ describe('buildState', () => {
 			selection: [],
 			spaces: [],
 			status: 'published',
+			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({
@@ -127,6 +129,7 @@ describe('buildState', () => {
 			selection: [],
 			spaces: ['space-1-erc', 'space-2-erc'],
 			status: 'published',
+			unsavedChanges: false,
 		};
 
 		const objectDefinition = buildObjectDefinition({

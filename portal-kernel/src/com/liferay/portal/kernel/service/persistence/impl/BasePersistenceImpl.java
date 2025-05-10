@@ -1053,12 +1053,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		for (Expression<?> expression : expressions) {
 			Type type = null;
 
-			if (expression instanceof TypeAlias) {
-				TypeAlias<?> typeAlias = (TypeAlias<?>)expression;
-
-				type = _types.get(typeAlias.getJavaType());
-			}
-			else if (expression instanceof Alias) {
+			if (expression instanceof Alias) {
 				Alias<?> alias = (Alias<?>)expression;
 
 				type = _getType(alias.getExpression());

@@ -17,7 +17,13 @@ export class EditCategoryPage {
 	private readonly permissionsFormGroup: Locator;
 	private readonly permissionsTable: Locator;
 	private readonly permissionsTableViewableByDropdown: Locator;
+	private readonly propertiesTable: Locator;
+	private readonly propertiesTableAddRowButton: (index: number) => Locator;
+	private readonly propertiesTableDeleteRowButton: (index: number) => Locator;
+	private readonly propertiesTableKeyInput: (index: number) => Locator;
+	private readonly propertiesTableValueInput: (index: number) => Locator;
 	private readonly saveAndAddAnotherButton: Locator;
+	private readonly sidebar: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -25,10 +31,7 @@ export class EditCategoryPage {
 		this.descriptionInput = page.getByTestId('description-input');
 		this.editConfirmationModal = page.locator('.modal-content');
 		this.nameInput = page.getByTestId('name-input');
-		this.saveAndAddAnotherButton = page.getByTestId(
-			'save-and-add-another-button'
-		);
-		this.saveButton = page.getByTestId('save-button');
+
 		this.permissionsFormGroup = page.getByTestId(
 			'categorization-permissions-form-group'
 		);
@@ -37,6 +40,43 @@ export class EditCategoryPage {
 		);
 		this.permissionsTableViewableByDropdown =
 			this.permissionsTable.locator('#viewableBy');
+		this.propertiesTable = page.getByTestId(
+			'edit-category-properties-table'
+		);
+		this.propertiesTableAddRowButton = (index: number) =>
+			page.getByTestId(`add-property-row-button-${index}`);
+		this.propertiesTableDeleteRowButton = (index: number) =>
+			page.getByTestId(`delete-property-row-button-${index}`);
+		this.propertiesTableKeyInput = (index: number) =>
+			page.getByTestId(`property-key-input-${index}`);
+		this.propertiesTableValueInput = (index: number) =>
+			page.getByTestId(`property-value-input-${index}`);
+		this.saveAndAddAnotherButton = page.getByTestId(
+			'save-and-add-another-button'
+		);
+		this.saveButton = page.getByTestId('save-button');
+		this.sidebar = page.getByTestId('categorization-sidebar');
+	}
+
+	async addPropertyRow(key?: string, value?: string) {
+		await this.propertiesTable.waitFor();
+		await this.propertiesTableAddRowButton(0).waitFor();
+
+		await this.propertiesTableAddRowButton(0).click();
+
+		await this.page.waitForLoadState();
+
+		if (key !== undefined && value !== undefined) {
+			const lastKeyInput = this.page.locator(
+				"(//input[contains(@data-testid, 'key')])[last()]"
+			);
+			await lastKeyInput.fill(key);
+
+			const lastValueInput = this.page.locator(
+				"(//input[contains(@data-testid, 'value')])[last()]"
+			);
+			await lastValueInput.fill(value);
+		}
 	}
 
 	async assertDefaultViewableByPermissions(roleName: string) {
@@ -77,7 +117,20 @@ export class EditCategoryPage {
 		await expect(guestViewCheckbox).toBeDisabled();
 		await expect(siteMemberViewCheckbox).toBeDisabled();
 	}
+	async assertProperties(propertyRows: {key: string; value: string}[]) {
+		await this.propertiesTable.waitFor();
+		await this.propertiesTableKeyInput(0).waitFor();
+		await this.page.waitForLoadState();
 
+		for (let i = 0; i < propertyRows.length; i++) {
+			await expect(this.propertiesTableKeyInput(i)).toHaveValue(
+				propertyRows[i].key
+			);
+			await expect(this.propertiesTableValueInput(i)).toHaveValue(
+				propertyRows[i].value
+			);
+		}
+	}
 	async clickSave() {
 		await this.saveButton.waitFor();
 		await this.saveButton.click();
@@ -93,6 +146,28 @@ export class EditCategoryPage {
 
 		await expect(this.page.getByText('Basic Info')).toBeVisible();
 		await expect(this.nameInput).toBeEmpty();
+		await expect(this.descriptionInput).toBeEmpty();
+	}
+
+	async clickSidebarTab(tabName: string) {
+		await this.sidebar.getByText(tabName).waitFor();
+
+		await this.sidebar.getByText(tabName).click();
+	}
+
+	async deleteNthPropertyRow(rowIndex: number) {
+		if (
+			rowIndex === 0 &&
+			(await this.propertiesTableDeleteRowButton(0).isDisabled())
+		) {
+			throw new Error(
+				"Can't delete the first property row if it is the only row in the table"
+			);
+		}
+		await this.propertiesTable.waitFor();
+		await this.propertiesTableDeleteRowButton(rowIndex).waitFor();
+
+		await this.propertiesTableDeleteRowButton(rowIndex).click();
 	}
 
 	async gotoCreateCategory(vocabularyId: number | string) {
@@ -119,6 +194,29 @@ export class EditCategoryPage {
 	async fillName(name: string) {
 		await this.nameInput.waitFor();
 		await this.nameInput.fill(name);
+	}
+
+	async fillProperties(propertyRows: {key: string; value: string}[]) {
+		await this.page.waitForLoadState();
+		await this.propertiesTable.waitFor();
+
+		for (let i = 0; i < propertyRows.length; i++) {
+			if (i !== 0) {
+				await this.addPropertyRow();
+
+				try {
+					await expect(this.propertiesTableKeyInput(i)).toBeVisible();
+				}
+				catch (error) {
+					await this.addPropertyRow();
+				}
+			}
+
+			await this.propertiesTableKeyInput(i).click();
+			await this.propertiesTableKeyInput(i).fill(propertyRows[i].key);
+			await this.propertiesTableValueInput(i).click();
+			await this.propertiesTableValueInput(i).fill(propertyRows[i].value);
+		}
 	}
 
 	async handleEditConfirmationModal(clickSave: boolean) {

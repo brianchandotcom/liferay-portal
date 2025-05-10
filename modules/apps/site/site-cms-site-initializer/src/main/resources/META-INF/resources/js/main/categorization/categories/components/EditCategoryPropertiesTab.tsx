@@ -73,6 +73,7 @@ const EditCategoryPropertiesTab = ({
 
 					<ClayInput
 						aria-label="Key"
+						data-testid={`property-key-input-${index}`}
 						onBlur={(event) =>
 							handleInputChange(index, 'key', event.target.value)
 						}
@@ -92,6 +93,7 @@ const EditCategoryPropertiesTab = ({
 							<ClayButtonWithIcon
 								aria-label="Delete Row"
 								className="category-property-row-button"
+								data-testid={`delete-property-row-button-${index}`}
 								disabled={properties.length <= 1}
 								onClick={() => deleteRow(index)}
 								spritemap={spritemap}
@@ -101,6 +103,7 @@ const EditCategoryPropertiesTab = ({
 							<ClayButtonWithIcon
 								aria-label="Add Row"
 								className="category-property-row-button"
+								data-testid={`add-property-row-button-${index}`}
 								onClick={() => addRow()}
 								spritemap={spritemap}
 								symbol="plus"
@@ -110,6 +113,7 @@ const EditCategoryPropertiesTab = ({
 
 					<ClayInput
 						aria-label="Value"
+						data-testid={`property-value-input-${index}`}
 						onBlur={(event) =>
 							handleInputChange(
 								index,

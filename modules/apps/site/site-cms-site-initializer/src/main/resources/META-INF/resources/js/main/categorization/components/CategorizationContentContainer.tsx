@@ -58,7 +58,10 @@ const CategorizationContentContainer = ({mainContentMap}: Props) => {
 						md={3}
 						sm={12}
 					>
-						<div className="p-4">
+						<div
+							className="p-4"
+							data-testid="categorization-sidebar"
+						>
 							<ClayVerticalNav items={verticalNavItems} />
 						</div>
 					</ClayLayout.Col>

@@ -6,6 +6,7 @@
 package com.liferay.staging.internal.service;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -94,17 +94,8 @@ public class LayoutSetLocalServiceStagingAdvice {
 	}
 
 	protected List<LayoutSet> wrapLayoutSets(List<LayoutSet> layoutSets) {
-		if (layoutSets.isEmpty()) {
-			return layoutSets;
-		}
-
-		List<LayoutSet> wrappedLayoutSets = new ArrayList<>(layoutSets.size());
-
-		for (LayoutSet layoutSet : layoutSets) {
-			wrappedLayoutSets.add(wrapLayoutSet(layoutSet));
-		}
-
-		return wrappedLayoutSets;
+		return TransformUtil.transform(
+			layoutSets, layoutSet -> wrapLayoutSet(layoutSet));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

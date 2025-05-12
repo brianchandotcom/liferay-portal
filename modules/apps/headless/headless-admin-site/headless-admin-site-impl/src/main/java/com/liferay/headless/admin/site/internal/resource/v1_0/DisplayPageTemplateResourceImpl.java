@@ -622,6 +622,7 @@ public class DisplayPageTemplateResourceImpl
 
 		serviceContext.setCreateDate(displayPageTemplate.getDateCreated());
 		serviceContext.setModifiedDate(displayPageTemplate.getDateModified());
+		serviceContext.setUserId(contextUser.getUserId());
 		serviceContext.setUuid(displayPageTemplate.getUuid());
 
 		return serviceContext;

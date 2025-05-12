@@ -20,6 +20,7 @@ import {config as assetTagsAdminWebConfig} from './tests/asset-tags-admin-web/ma
 import {config as batchPlannerConfig} from './tests/batch-planner/main/config';
 import {config as blogsWebConfig} from './tests/blogs-web/main/config';
 import {config as calendarWebConfig} from './tests/calendar-web/main/config';
+import {config as captchaWebClientExtensionConfig} from './tests/captcha-web/client-extension/config';
 import {config as captchaWebConfig} from './tests/captcha-web/main/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/main/config';
 import {config as clientExtensionWebClusterConfig} from './tests/client-extension-web/cluster/config';
@@ -166,6 +167,7 @@ export default defineConfig({
 		batchPlannerConfig,
 		blogsWebConfig,
 		calendarWebConfig,
+		captchaWebClientExtensionConfig,
 		captchaWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,

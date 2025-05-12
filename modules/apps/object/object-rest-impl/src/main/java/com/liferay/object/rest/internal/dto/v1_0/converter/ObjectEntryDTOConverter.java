@@ -380,6 +380,7 @@ public class ObjectEntryDTOConverter
 						ObjectEntryVersionModel::getReviewDate,
 						serviceBuilderObjectEntry,
 						ObjectEntryModel::getReviewDate));
+				setScopeId(serviceBuilderObjectEntry::getGroupId);
 				setScopeKey(
 					() -> _getScopeKey(
 						objectDefinition, serviceBuilderObjectEntry));

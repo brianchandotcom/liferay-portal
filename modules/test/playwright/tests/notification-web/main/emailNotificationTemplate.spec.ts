@@ -139,6 +139,11 @@ test.describe('Email notification template', () => {
 				'notification template test ' + getRandomInt()
 			);
 
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
 		await notificationTemplatesPage.goto();
 
 		await notificationTemplatesPage
@@ -208,11 +213,6 @@ test.describe('Email notification template', () => {
 			.toHaveValue(editedNotificationTemplateInfo.subject);
 
 		await expect(test.info().errors).toHaveLength(0);
-
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
-		});
 	});
 
 	test('can have rich text source code verifying that the source code is persisted', async ({

@@ -4,6 +4,6 @@
  */
 
 export type AssetLibrary = {
-	groupId: string;
+	groupId: number;
 	name: string;
 };

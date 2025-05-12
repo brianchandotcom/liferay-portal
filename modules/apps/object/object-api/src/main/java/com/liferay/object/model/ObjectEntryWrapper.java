@@ -50,6 +50,7 @@ public class ObjectEntryWrapper
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("treePath", getTreePath());
 		attributes.put("version", getVersion());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -148,6 +149,12 @@ public class ObjectEntryWrapper
 			setDefaultLanguageId(defaultLanguageId);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
 		String treePath = (String)attributes.get("treePath");
 
 		if (treePath != null) {
@@ -231,6 +238,16 @@ public class ObjectEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the expiration date of this object entry.
+	 *
+	 * @return the expiration date of this object entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -611,6 +628,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
 		model.setDefaultLanguageId(defaultLanguageId);
+	}
+
+	/**
+	 * Sets the expiration date of this object entry.
+	 *
+	 * @param expirationDate the expiration date of this object entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**

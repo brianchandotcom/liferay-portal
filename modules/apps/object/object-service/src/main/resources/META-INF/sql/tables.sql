@@ -94,6 +94,7 @@ create table ObjectEntry (
 	objectEntryFolderId LONG,
 	rootObjectEntryId LONG,
 	defaultLanguageId VARCHAR(75) null,
+	expirationDate DATE null,
 	treePath STRING null,
 	version INTEGER,
 	lastPublishDate DATE null,
@@ -132,8 +133,12 @@ create table ObjectEntryVersion (
 	objectDefinitionId LONG,
 	objectEntryId LONG,
 	content TEXT null,
+	expirationDate DATE null,
 	version INTEGER,
-	status INTEGER
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table ObjectField (

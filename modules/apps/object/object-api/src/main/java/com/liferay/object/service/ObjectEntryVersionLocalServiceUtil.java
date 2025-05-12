@@ -221,6 +221,14 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectEntryVersion expireObjectEntryVersion(
+			long userId, long objectEntryId, int version)
+		throws PortalException {
+
+		return getService().expireObjectEntryVersion(
+			userId, objectEntryId, version);
+	}
+
 	public static ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId) {
 

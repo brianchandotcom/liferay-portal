@@ -809,6 +809,60 @@ test.describe('Manage object fields through Model Builder', () => {
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {
+	test('can update custom object field in a system object', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const {items} = await apiHelpers.objectAdmin.getAllObjectDefinitions();
+
+		const systemObjectDefinition = items.find((item: ObjectDefinition) => {
+			return item.system === true;
+		});
+
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
+
+		const objectFieldLabel = 'objectFieldLabel';
+
+		await objectFieldAPIClient.postObjectDefinitionObjectField(
+			systemObjectDefinition.id,
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				label: {en_US: objectFieldLabel},
+				name: 'customField' + getRandomInt(),
+				required: false,
+			}
+		);
+
+		await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
+
+		await objectFieldsPage.openObjectField(objectFieldLabel);
+
+		const newObjectFieldLabel = 'newObjectFieldLabel';
+
+		await page
+			.frameLocator('iframe')
+			.getByLabel('Label')
+			.fill(newObjectFieldLabel);
+
+		await page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'save'})
+			.click();
+
+		await expect(
+			page.getByRole('row').filter({hasText: newObjectFieldLabel})
+		).toBeVisible();
+
+		await objectFieldsPage.deleteObjectFieldByLabel(newObjectFieldLabel);
+
+		await expect(
+			page.getByRole('row').filter({hasText: newObjectFieldLabel})
+		).toBeHidden();
+	});
+
 	test('can create custom object field in a system object definition', async ({
 		modelBuilderDiagramPage,
 		objectFieldsPage,

@@ -12,14 +12,17 @@ import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.headless.object.client.problem.Problem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -104,6 +107,92 @@ public class ObjectEntryFolderResourceTest
 				Collections.singletonList(objectEntryFolder1),
 				(List<ObjectEntryFolder>)page.getItems());
 		}
+	}
+
+	@Override
+	@Test
+	public void testPatchObjectEntryFolder() throws Exception {
+		super.testPatchObjectEntryFolder();
+
+		ObjectEntryFolder postParentObjectEntryFolder =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		// Change parent object entry folder to default object entry folder
+
+		ObjectEntryFolder postObjectEntryFolder1 =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		postObjectEntryFolder1.setParentObjectEntryFolderId(
+			postParentObjectEntryFolder.getId());
+
+		objectEntryFolderResource.patchObjectEntryFolder(
+			postObjectEntryFolder1.getId(), postObjectEntryFolder1);
+
+		postObjectEntryFolder1.setParentObjectEntryFolderId(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		ObjectEntryFolder patchObjectEntryFolder1 =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder1.getId(), postObjectEntryFolder1);
+
+		Assert.assertEquals(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			GetterUtil.getLong(
+				patchObjectEntryFolder1.getParentObjectEntryFolderId()));
+
+		// Change parent object entry folder to existing object entry folder
+
+		ObjectEntryFolder postObjectEntryFolder2 =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		postObjectEntryFolder2.setParentObjectEntryFolderId(
+			postParentObjectEntryFolder.getId());
+
+		ObjectEntryFolder patchObjectEntryFolder2 =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder2.getId(), postObjectEntryFolder2);
+
+		Assert.assertEquals(
+			postParentObjectEntryFolder.getId(),
+			patchObjectEntryFolder2.getParentObjectEntryFolderId());
+
+		// Change parent object entry folder to itself
+
+		ObjectEntryFolder postObjectEntryFolder3 =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		AssertUtils.assertFailure(
+			Problem.ProblemException.class,
+			"Can not set the parent entry folder ID of object entry folder " +
+				postObjectEntryFolder3.getId() + " to itself",
+			() -> {
+				postObjectEntryFolder3.setParentObjectEntryFolderId(
+					postObjectEntryFolder3.getId());
+
+				objectEntryFolderResource.patchObjectEntryFolder(
+					postObjectEntryFolder3.getId(), postObjectEntryFolder3);
+			});
+
+		// Preserve preexisting parent object entry folder ID
+
+		ObjectEntryFolder postObjectEntryFolder4 =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		postObjectEntryFolder4.setParentObjectEntryFolderId(
+			postParentObjectEntryFolder.getId());
+
+		objectEntryFolderResource.patchObjectEntryFolder(
+			postObjectEntryFolder4.getId(), postObjectEntryFolder4);
+
+		postObjectEntryFolder4.setParentObjectEntryFolderId((Long)null);
+
+		ObjectEntryFolder patchObjectEntryFolder4 =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder4.getId(), postObjectEntryFolder4);
+
+		Assert.assertEquals(
+			postParentObjectEntryFolder.getId(),
+			patchObjectEntryFolder4.getParentObjectEntryFolderId());
 	}
 
 	@Override

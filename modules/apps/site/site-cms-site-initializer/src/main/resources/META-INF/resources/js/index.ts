@@ -7,6 +7,7 @@
 
 export {default as ContentEditorManagementBar} from './content_editor/components/ContentEditorManagementBar';
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
+export {default as SpaceList} from './content_editor/components/SpaceList';
 
 // Main
 

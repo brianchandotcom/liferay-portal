@@ -140,6 +140,8 @@ public class AccountGroupPersistenceTest {
 
 		newAccountGroup.setType(RandomTestUtil.randomString());
 
+		newAccountGroup.setStatus(RandomTestUtil.nextInt());
+
 		_accountGroups.add(_persistence.update(newAccountGroup));
 
 		AccountGroup existingAccountGroup = _persistence.findByPrimaryKey(
@@ -179,6 +181,8 @@ public class AccountGroupPersistenceTest {
 			existingAccountGroup.getName(), newAccountGroup.getName());
 		Assert.assertEquals(
 			existingAccountGroup.getType(), newAccountGroup.getType());
+		Assert.assertEquals(
+			existingAccountGroup.getStatus(), newAccountGroup.getStatus());
 	}
 
 	@Test(expected = DuplicateAccountGroupExternalReferenceCodeException.class)
@@ -303,7 +307,7 @@ public class AccountGroupPersistenceTest {
 			"externalReferenceCode", true, "accountGroupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "defaultAccountGroup", true, "description",
-			true, "name", true, "type", true);
+			true, "name", true, "type", true, "status", true);
 	}
 
 	@Test
@@ -610,6 +614,8 @@ public class AccountGroupPersistenceTest {
 		accountGroup.setName(RandomTestUtil.randomString());
 
 		accountGroup.setType(RandomTestUtil.randomString());
+
+		accountGroup.setStatus(RandomTestUtil.nextInt());
 
 		_accountGroups.add(_persistence.update(accountGroup));
 

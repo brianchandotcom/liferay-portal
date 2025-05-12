@@ -319,6 +319,12 @@ public interface AccountGroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -69,6 +69,7 @@
 			<validator name="required" />
 		</field>
 		<field name="type" type="String" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.account.model.AccountGroupRel">
 		<field name="mvccVersion" type="long" />

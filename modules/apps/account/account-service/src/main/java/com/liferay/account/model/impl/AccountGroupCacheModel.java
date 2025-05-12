@@ -68,7 +68,7 @@ public class AccountGroupCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class AccountGroupCacheModel
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -169,6 +171,8 @@ public class AccountGroupCacheModel
 			accountGroupImpl.setType(type);
 		}
 
+		accountGroupImpl.setStatus(status);
+
 		accountGroupImpl.resetOriginalValues();
 
 		return accountGroupImpl;
@@ -193,6 +197,8 @@ public class AccountGroupCacheModel
 		description = objectInput.readUTF();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -251,6 +257,8 @@ public class AccountGroupCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -266,5 +274,6 @@ public class AccountGroupCacheModel
 	public String description;
 	public String name;
 	public String type;
+	public int status;
 
 }

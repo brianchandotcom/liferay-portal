@@ -56,7 +56,8 @@ create table AccountGroup (
 	defaultAccountGroup BOOLEAN,
 	description VARCHAR(75) null,
 	name VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	status INTEGER
 );
 
 create table AccountGroupRel (

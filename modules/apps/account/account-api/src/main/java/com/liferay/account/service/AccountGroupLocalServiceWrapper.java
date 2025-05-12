@@ -433,6 +433,17 @@ public class AccountGroupLocalServiceWrapper
 		return _accountGroupLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup
+			getOrAddIncompleteAccountGroup(
+				String externalReferenceCode, long companyId, long userId,
+				String name)
+		throws Exception {
+
+		return _accountGroupLocalService.getOrAddIncompleteAccountGroup(
+			externalReferenceCode, companyId, userId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -374,6 +374,15 @@ public class AccountGroupLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws Exception {
+
+		return getService().getOrAddIncompleteAccountGroup(
+			externalReferenceCode, companyId, userId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

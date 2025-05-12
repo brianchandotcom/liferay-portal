@@ -258,6 +258,19 @@ portletDisplay.setURLBack(backURL);
 							});
 						}
 
+						const scheduleContainerInputValue = JSON.parse(
+							document.getElementById(
+								'<portlet:namespace />scheduleContainer'
+							).value
+						);
+
+						if (scheduleContainerInputValue) {
+							values = {
+								...values,
+								...scheduleContainerInputValue,
+							};
+						}
+
 						Liferay.Util.fetch(path, {
 							body: JSON.stringify(values),
 							headers: new Headers({

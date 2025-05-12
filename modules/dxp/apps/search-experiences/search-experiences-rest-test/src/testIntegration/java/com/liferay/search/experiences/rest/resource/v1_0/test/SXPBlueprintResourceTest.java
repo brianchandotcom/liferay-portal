@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -132,6 +133,8 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
 			sxpBlueprint);
 
+		sxpBlueprint.setCollectionProviderTypeName(StringPool.BLANK);
+		sxpBlueprint.setCollectionProviderSubTypeName(StringPool.BLANK);
 		sxpBlueprint.setCreateDate(postSXPBlueprint.getCreateDate());
 		sxpBlueprint.setExternalReferenceCode(
 			postSXPBlueprint.getExternalReferenceCode());

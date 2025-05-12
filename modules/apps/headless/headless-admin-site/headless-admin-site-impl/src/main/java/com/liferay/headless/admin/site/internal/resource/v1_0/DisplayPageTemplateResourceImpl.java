@@ -456,7 +456,7 @@ public class DisplayPageTemplateResourceImpl
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, displayPageTemplate.getPageSpecifications(), false,
 			nameMap, nameMap, null, robotsMap,
-			LayoutConstants.TYPE_ASSET_DISPLAY, true, true,
+			LayoutConstants.TYPE_ASSET_DISPLAY, null, true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

@@ -7,6 +7,7 @@ package com.liferay.account.service.test;
 
 import com.liferay.account.exception.AccountGroupNameException;
 import com.liferay.account.exception.DefaultAccountGroupException;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
@@ -15,9 +16,11 @@ import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -145,6 +149,36 @@ public class AccountGroupLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddIncompleteAccountGroup() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_accountGroupLocalService.getOrAddIncompleteAccountGroup(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString());
+		}
+		catch (NoSuchGroupException noSuchGroupException) {
+			Assert.assertNotNull(noSuchGroupException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AccountGroup accountGroup =
+				_accountGroupLocalService.getOrAddIncompleteAccountGroup(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, accountGroup.getStatus());
+		}
+	}
+
+	@Test
 	public void testHasDefaultAccountGroupWhenCompanyIsCreated()
 		throws Exception {
 
@@ -233,6 +267,32 @@ public class AccountGroupLocalServiceTest {
 			comparator, expectedAccountGroups, keywords, false);
 		_testSearchAccountGroupsWithPagination(
 			comparator, expectedAccountGroups, keywords, true);
+	}
+
+	@Test
+	public void testUpdateAccountGroupWithLazyReferencingEnabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AccountGroup accountGroup =
+				_accountGroupLocalService.getOrAddIncompleteAccountGroup(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, accountGroup.getStatus());
+
+			accountGroup = _accountGroupLocalService.updateAccountGroup(
+				accountGroup.getExternalReferenceCode(),
+				accountGroup.getAccountGroupId(), accountGroup.getDescription(),
+				accountGroup.getName(), null);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, accountGroup.getStatus());
+		}
 	}
 
 	@Test

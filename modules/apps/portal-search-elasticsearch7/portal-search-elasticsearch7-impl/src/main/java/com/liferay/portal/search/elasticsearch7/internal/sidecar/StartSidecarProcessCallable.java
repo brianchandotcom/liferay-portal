@@ -7,12 +7,13 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.reflect.ReflectionUtil;
 
-import org.elasticsearch.common.inject.Injector;
+import java.lang.reflect.Method;
+
 import org.elasticsearch.common.transport.BoundTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.http.HttpServerTransport;
-import org.elasticsearch.node.Node;
 
 /**
  * @author Tina Tian
@@ -25,20 +26,38 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
 	@Override
 	public String call() throws ProcessException {
-		Node node = ElasticsearchServerUtil.start(_arguments);
+		Object nodeObject = ElasticsearchServerUtil.start(_arguments);
 
-		Injector injector = node.injector();
+		try {
+			ClassLoader classLoader =
+				StartSidecarProcessCallable.class.getClassLoader();
 
-		HttpServerTransport httpServerTransport = injector.getInstance(
-			HttpServerTransport.class);
+			Method injectorMethod = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass("org.elasticsearch.node.Node"),
+				"injector");
 
-		BoundTransportAddress boundTransportAddress =
-			httpServerTransport.boundAddress();
+			Object injectorObject = injectorMethod.invoke(nodeObject);
 
-		TransportAddress publishAddress =
-			boundTransportAddress.publishAddress();
+			Method method = ReflectionUtil.getDeclaredMethod(
+				classLoader.loadClass(
+					"org.elasticsearch.injection.guice.Injector"),
+				"getInstance", Class.class);
 
-		return publishAddress.toString();
+			HttpServerTransport httpServerTransport =
+				(HttpServerTransport)method.invoke(
+					injectorObject, HttpServerTransport.class);
+
+			BoundTransportAddress boundTransportAddress =
+				httpServerTransport.boundAddress();
+
+			TransportAddress publishAddress =
+				boundTransportAddress.publishAddress();
+
+			return publishAddress.toString();
+		}
+		catch (Exception exception) {
+			throw new ProcessException(exception);
+		}
 	}
 
 	private static final long serialVersionUID = 1L;

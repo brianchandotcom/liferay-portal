@@ -180,6 +180,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -2196,6 +2197,38 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
 		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddObjectEntryWithScheduleObjectFields() throws Exception {
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()));
+
+		Date date = _toDate("2000-11-29 10:00");
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build());
+
+					setReviewDate(date);
+				}
+			},
+			null);
+
+		Assert.assertEquals(date, objectEntry.getReviewDate());
 	}
 
 	@Test
@@ -6050,6 +6083,65 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testUpdateObjectEntryWithScheduleObjectFields()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()));
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build());
+					setReviewDate(_toDate("0001-12-25 00:00"));
+				}
+			},
+			null);
+
+		Date date = _toDate("2000-11-29 10:00");
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build());
+					setReviewDate(date);
+				}
+			});
+
+		Assert.assertEquals(date, objectEntry.getReviewDate());
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build());
+					setReviewDate((Date)null);
+				}
+			});
+
+		Assert.assertNull(objectEntry.getReviewDate());
+	}
+
 	@Rule
 	public TestName testName = new TestName();
 
@@ -7369,6 +7461,12 @@ public class DefaultObjectEntryManagerImplTest
 							_simpleDTOConverterContext, objectDefinition,
 							objectEntry.getObjectEntryId())));
 			});
+	}
+
+	private Date _toDate(String value) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+		return sdf.parse(value);
 	}
 
 	private void _updateAndAssertObjectEntryWithPicklistObjectField(

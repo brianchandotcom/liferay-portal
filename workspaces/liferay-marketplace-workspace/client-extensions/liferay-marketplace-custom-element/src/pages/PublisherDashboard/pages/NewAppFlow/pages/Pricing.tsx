@@ -9,16 +9,25 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
+import {ProductWorkflowStatusCode} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {PRICING_OPTIONS} from '../constants';
 
 const Pricing = () => {
 	const [
 		{
+			_product,
 			pricing: {priceModel},
 		},
 		dispatch,
 	] = useNewAppContext();
+
+	const isDraft = (status: number) =>
+		status === ProductWorkflowStatusCode.DRAFT;
+
+	const isSaveAsDraft = !_product || isDraft(_product.productStatus);
+
+	const isDisabled = !isSaveAsDraft && !!_product.id;
 
 	return (
 		<Section
@@ -32,6 +41,7 @@ const Pricing = () => {
 				<RadioCard
 					{...pricingOption}
 					className="mb-5"
+					disabled={isDisabled}
 					key={index}
 					onChange={() => {
 						dispatch({

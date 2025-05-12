@@ -12,12 +12,18 @@ import i18n from '../../../i18n';
 import {getAccountImage} from '../../../utils/util';
 
 import './index.scss';
+import {
+	ProductWorkflowStatusCode,
+	ProductWorkflowStatusLabel,
+} from '../../../enums/Product';
+import classNames from 'classnames';
 
 type NavbarProps = {
 	accountImage?: string;
 	accountName: string;
 	appImage?: string;
 	appName?: string;
+	appStatus?: ProductWorkflowStatusCode;
 	display?: {preview?: boolean; saveAsDraft?: boolean; submit?: boolean};
 	exitHref?: string;
 	exitProps?: ComponentProps<typeof ClayButton>;
@@ -34,108 +40,122 @@ const Navbar: React.FC<NavbarProps> = ({
 	accountName,
 	appImage,
 	appName,
+	appStatus,
 	display = {preview: false, saveAsDraft: false, submit: false},
 	exitProps,
 	saveAsDraftProps,
 	submitProps,
-}) => (
-	<>
-		<div className="new-app-tool-bar-container pb-4">
-			<ClayManagementToolbar.ItemList expand>
-				<div className="d-flex justify-content-between">
-					<div className="d-flex">
-						<div className="new-app-tool-bar-main-account-logo">
-							<img
-								alt="Main account logo"
-								className="new-app-tool-bar-main-account-logo-img"
-								src={getAccountImage(accountImage)}
+}) => {
+	return (
+		<>
+			<div className="new-app-tool-bar-container pb-4">
+				<ClayManagementToolbar.ItemList expand>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<div className="new-app-tool-bar-main-account-logo">
+								<img
+									alt="Main account logo"
+									className="new-app-tool-bar-main-account-logo-img"
+									src={getAccountImage(accountImage)}
+								/>
+
+								<span className="new-app-tool-bar-main-account-logo-text">
+									{accountName}
+								</span>
+							</div>
+
+							<ClayIcon
+								aria-label="Arrow right"
+								className="new-app-tool-bar-arrow-right"
+								symbol="angle-right"
 							/>
 
-							<span className="new-app-tool-bar-main-account-logo-text">
-								{accountName}
-							</span>
-						</div>
-
-						<ClayIcon
-							aria-label="Arrow right"
-							className="new-app-tool-bar-arrow-right"
-							symbol="angle-right"
-						/>
-
-						<div className="new-app-tool-bar-new-app-logo">
-							{appImage ? (
-								<img
-									alt="New App logo"
-									className="new-app-tool-bar-new-app-logo-img"
-									src={appImage}
-								/>
-							) : (
-								<div className="bg-light px-5 py-3 rounded">
-									<ClayIcon
-										aria-label="New App logo"
-										className="text-muted"
-										symbol="picture"
+							<div className="new-app-tool-bar-new-app-logo">
+								{appImage ? (
+									<img
+										alt="New App logo"
+										className="new-app-tool-bar-new-app-logo-img"
+										src={appImage}
 									/>
-								</div>
-							)}
+								) : (
+									<div className="bg-light px-5 py-3 rounded">
+										<ClayIcon
+											aria-label="New App logo"
+											className="text-muted"
+											symbol="picture"
+										/>
+									</div>
+								)}
 
-							<span className="new-app-tool-bar-new-app-logo-text">
-								{appName || 'New App'}
+								<span className="new-app-tool-bar-new-app-logo-text">
+									{appName || 'New App'}
+								</span>
+							</div>
+						</div>
+
+						<div className="flex-shrink-0 new-app-tool-bar-status-container">
+							<ClayIcon
+								className={classNames(
+									'solution-details-page-header-subtitle-icon',
+									{
+										'new-app-tool-bar-status-icon-approved':
+											appStatus ===
+											ProductWorkflowStatusCode.APPROVED,
+										'new-app-tool-bar-status-icon-draft':
+											appStatus ===
+											ProductWorkflowStatusCode.DRAFT,
+										'new-app-tool-bar-status-icon-hidden':
+											appStatus === undefined,
+									}
+								)}
+								symbol="circle"
+							/>
+							<span className="new-app-tool-bar-status-text">
+								{appStatus !== undefined &&
+									ProductWorkflowStatusLabel[appStatus]}
 							</span>
 						</div>
 					</div>
+				</ClayManagementToolbar.ItemList>
 
-					<div className="flex-shrink-0 new-app-tool-bar-status-container">
-						<ClayIcon
-							aria-label="Status"
-							className="new-app-tool-bar-status-icon"
-							symbol="circle"
-						/>
+				<ClayManagementToolbar.ItemList>
+					<div className="align-items-center d-flex flex-row gap-3 justify-content-between mkt-gap-1">
+						<ClayButton
+							className="new-app-tool-bar-button-text text-dark"
+							displayType="unstyled"
+							{...exitProps}
+						>
+							{i18n.translate('exit')}
+						</ClayButton>
 
-						<span className="new-app-tool-bar-status-text">
-							Draft
-						</span>
+						{display.saveAsDraft && (
+							<ClayButton
+								className="text-dark"
+								displayType="secondary"
+								size="xs"
+								{...saveAsDraftProps}
+							>
+								{i18n.translate('save-as-draft')}
+							</ClayButton>
+						)}
+
+						{display.submit && (
+							<ClayButton
+								className="text-dark"
+								displayType="secondary"
+								size="xs"
+								{...submitProps}
+							>
+								{i18n.translate('submit')}
+							</ClayButton>
+						)}
 					</div>
-				</div>
-			</ClayManagementToolbar.ItemList>
+				</ClayManagementToolbar.ItemList>
+			</div>
 
-			<ClayManagementToolbar.ItemList>
-				<div className="align-items-center d-flex flex-row gap-3 justify-content-between mkt-gap-1">
-					<ClayButton
-						className="new-app-tool-bar-button-text text-dark"
-						displayType="unstyled"
-						{...exitProps}
-					>
-						{i18n.translate('exit')}
-					</ClayButton>
-
-					{display.saveAsDraft && (
-						<ClayButton
-							className="text-dark"
-							displayType="secondary"
-							size="xs"
-							{...saveAsDraftProps}
-						>
-							{i18n.translate('save-as-draft')}
-						</ClayButton>
-					)}
-
-					{display.submit && (
-						<ClayButton
-							className="text-dark"
-							displayType="secondary"
-							size="xs"
-							{...submitProps}
-						>
-							{i18n.translate('submit')}
-						</ClayButton>
-					)}
-				</div>
-			</ClayManagementToolbar.ItemList>
-		</div>
-
-		<hr />
-	</>
-);
+			<hr />
+		</>
+	);
+};
 
 export default Navbar;

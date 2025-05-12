@@ -2191,7 +2191,7 @@
 		},
 		"/by-external-reference-code/{currentExternalReferenceCode}/relationship1/{relatedExternalReferenceCode}": {
 			"put": {
-				"operationId": "putObject2Relationship1Object1",
+				"operationId": "putByExternalReferenceCodeObject2Relationship1Object1",
 				"parameters": [
 					{
 						"in": "path",
@@ -2234,7 +2234,7 @@
 		},
 		"/by-external-reference-code/{currentExternalReferenceCode}/relationship3/{relatedExternalReferenceCode}": {
 			"put": {
-				"operationId": "putObject2Relationship3Object3",
+				"operationId": "putByExternalReferenceCodeObject2Relationship3Object3",
 				"parameters": [
 					{
 						"in": "path",
@@ -2277,7 +2277,7 @@
 		},
 		"/by-external-reference-code/{currentExternalReferenceCode}/relationship4/{relatedExternalReferenceCode}": {
 			"put": {
-				"operationId": "putObject2Relationship4Object3",
+				"operationId": "putByExternalReferenceCodeObject2Relationship4Object3",
 				"parameters": [
 					{
 						"in": "path",

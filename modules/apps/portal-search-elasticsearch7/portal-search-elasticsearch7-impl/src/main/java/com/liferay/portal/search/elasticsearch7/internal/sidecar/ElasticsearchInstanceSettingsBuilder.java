@@ -18,6 +18,7 @@ import java.net.InetAddress;
 
 import java.nio.file.Path;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.elasticsearch.common.settings.Settings;
@@ -137,6 +138,10 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_settingsHelperImpl.put(key, value);
 	}
 
+	protected void put(String key, List<String> values) {
+		_settingsHelperImpl.put(key, values);
+	}
+
 	protected void put(String key, String value) {
 		_settingsHelperImpl.put(key, value);
 	}
@@ -237,9 +242,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 	private void _disableXpack() {
 		put("xpack.ml.enabled", false);
-		put("xpack.monitoring.enabled", false);
 		put("xpack.security.enabled", false);
-		put("xpack.sql.enabled", false);
 		put("xpack.watcher.enabled", false);
 	}
 
@@ -266,9 +269,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_configureNetworking();
 
-		put("node.data", true);
-		put("node.ingest", true);
-		put("node.master", true);
+		put("node.roles", List.of("master", "ingest", "data"));
 		put("node.name", _nodeName);
 
 		_configurePaths();
@@ -285,7 +286,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 	}
 
 	private void _loadSidecarConfigurations() {
-		put("bootstrap.system_call_filter", false);
 		put("node.store.allow_mmap", false);
 	}
 

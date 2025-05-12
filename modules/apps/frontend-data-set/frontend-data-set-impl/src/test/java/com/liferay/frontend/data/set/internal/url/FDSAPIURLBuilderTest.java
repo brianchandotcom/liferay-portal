@@ -152,7 +152,18 @@ public class FDSAPIURLBuilderTest {
 			).addParameter(
 				"{foo}", "{userId}"
 			).build());
-
+		Assert.assertEquals(
+			"siteId=12345&foo=bar&bar=67890",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/endpoint", "schema"
+			).addParameter(
+				"siteId", "{siteId}"
+			).addQueryString(
+				"foo={foo}"
+			).addParameter(
+				"{foo}", "{userId}"
+			).buildQueryString());
 		Assert.assertNull(
 			new FDSAPIURLBuilder(
 				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
@@ -165,19 +176,6 @@ public class FDSAPIURLBuilderTest {
 				"foo", ""
 			).addParameter(
 				"", "foo"
-			).buildQueryString());
-
-		Assert.assertEquals(
-			"siteId=12345&foo=bar&bar=67890",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/endpoint", "schema"
-			).addParameter(
-				"siteId", "{siteId}"
-			).addQueryString(
-				"foo={foo}"
-			).addParameter(
-				"{foo}", "{userId}"
 			).buildQueryString());
 
 		serviceRegistration1.unregister();

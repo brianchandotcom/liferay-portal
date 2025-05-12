@@ -574,6 +574,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		String fileName = null;
 		String title = null;
+		String urlTitle = null;
 		String description = null;
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -581,6 +582,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		if (document != null) {
 			fileName = document.getFileName();
 			title = document.getTitle();
+			urlTitle = document.getFriendlyUrlPath();
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
@@ -612,7 +614,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		return _toDocument(
 			_dlAppService.addFileEntry(
 				externalReferenceCode, repositoryId, documentFolderId, fileName,
-				contentType, title, null, description, null,
+				contentType, title, urlTitle, description, null,
 				binaryFile.getInputStream(), binaryFile.getSize(), displayDate,
 				expirationDate, null,
 				_createServiceContext(
@@ -1019,6 +1021,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		String fileName = null;
 		String title = null;
+		String urlTitle = null;
 		String description = null;
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -1026,6 +1029,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		if (document != null) {
 			fileName = document.getFileName();
 			title = document.getTitle();
+			urlTitle = document.getFriendlyUrlPath();
 			description = document.getDescription();
 			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
@@ -1042,7 +1046,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		return _toDocument(
 			_dlAppService.updateFileEntry(
 				fileEntry.getFileEntryId(), fileName,
-				binaryFile.getContentType(), title, null, description, null,
+				binaryFile.getContentType(), title, urlTitle, description, null,
 				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
 				binaryFile.getSize(), displayDate, expirationDate,
 				fileEntry.getReviewDate(),

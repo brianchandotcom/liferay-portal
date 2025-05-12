@@ -11,9 +11,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.util.JakartaUpgradeProcessUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -23,10 +21,9 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Map<String, Map<String, Set<String>>> modifiedData =
-			new ConcurrentHashMap<>();
-
 		for (String[] tableAndColumnNames : getTableAndColumnNames()) {
+			Set<String> modifiedKeys = new CopyOnWriteArraySet<>();
+
 			String columnName = tableAndColumnNames[1];
 
 			String tableName = tableAndColumnNames[0];
@@ -51,13 +48,6 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 						return;
 					}
 
-					Map<String, Set<String>> modifiedColumns =
-						modifiedData.computeIfAbsent(
-							tableName, key -> new ConcurrentHashMap<>());
-
-					Set<String> modifiedKeys = modifiedColumns.computeIfAbsent(
-						columnName, key -> new CopyOnWriteArraySet<>());
-
 					modifiedKeys.add(modifiedKey);
 				},
 				StringBundler.concat(
@@ -65,39 +55,24 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 					" column ", columnName, " for company ",
 					CompanyThreadLocal.getCompanyId(
 					).toString()));
-		}
 
-		if (_log.isInfoEnabled()) {
-			for (Map.Entry<String, Map<String, Set<String>>> entry :
-					modifiedData.entrySet()) {
+			if (_log.isInfoEnabled()) {
+				StringBundler sb = new StringBundler();
 
-				Map<String, Set<String>> columnNames = entry.getValue();
-				String tableName = entry.getKey();
-
-				for (Map.Entry<String, Set<String>> columnEntry :
-						columnNames.entrySet()) {
-
-					String columnName = columnEntry.getKey();
-					Set<String> keys = columnEntry.getValue();
-
-					StringBundler sb = new StringBundler();
-
-					for (String key : keys) {
-						sb.append(key);
-						sb.append(", ");
-					}
-
-					sb.setIndex(sb.index() - 1);
-
-					_log.info(
-						StringBundler.concat(
-							"Table/column ", tableName, "/", columnName,
-							" for company ",
-							CompanyThreadLocal.getCompanyId(
-							).toString(),
-							" has been upgraded for next IDs: ",
-							sb.toString()));
+				for (String key : modifiedKeys) {
+					sb.append(key);
+					sb.append(", ");
 				}
+
+				sb.setIndex(sb.index() - 1);
+
+				_log.info(
+					StringBundler.concat(
+						"Table/column ", tableName, "/", columnName,
+						" for company ",
+						CompanyThreadLocal.getCompanyId(
+						).toString(),
+						" has been upgraded for next IDs: ", sb.toString()));
 			}
 		}
 	}

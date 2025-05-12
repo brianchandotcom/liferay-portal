@@ -40,10 +40,7 @@ export class StagingPage {
 	}
 
 	async addTemplate(templateName: string) {
-		await this.page.getByLabel('Options').click();
-		await this.page
-			.getByRole('menuitem', {name: 'Publish Templates'})
-			.click();
+		await this.page.waitForLoadState('domcontentloaded');
 		await this.page.getByRole('link', {exact: true, name: 'New'}).click();
 		await this.page.getByLabel('Title Required').fill(templateName);
 		await this.page.getByRole('button', {name: 'Save'}).click();
@@ -51,10 +48,14 @@ export class StagingPage {
 	}
 
 	async publishTemplate(templateName: string) {
+		await this.page.waitForLoadState('domcontentloaded');
+
 		await this.page
-			.locator(`tr:has-text("${templateName}")`)
+			.locator(`tr`)
+			.filter({hasText: templateName})
 			.getByRole('button')
 			.click();
+
 		await this.page.getByRole('menuitem', {name: 'Publish'}).click();
 		await this.page.getByRole('button', {name: 'Publish to Live'}).click();
 		await expect(
@@ -111,5 +112,13 @@ export class StagingPage {
 		await this.page.goto(
 			`/group/${siteKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet`
 		);
+	}
+
+	async gotoTemplatePage() {
+		await this.page.waitForLoadState('domcontentloaded');
+		await this.page.getByLabel('Options').click();
+		await this.page
+			.getByRole('menuitem', {name: 'Publish Templates'})
+			.click();
 	}
 }

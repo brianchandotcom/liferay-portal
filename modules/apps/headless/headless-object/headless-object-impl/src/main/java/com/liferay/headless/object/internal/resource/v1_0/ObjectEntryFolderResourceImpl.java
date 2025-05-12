@@ -349,26 +349,26 @@ public class ObjectEntryFolderResourceImpl
 		}
 
 		com.liferay.object.model.ObjectEntryFolder
-			objectEntryFolderPersistence =
+			persistedObjectEntryFolder =
 				_objectEntryFolderService.
 					fetchObjectEntryFolderByExternalReferenceCode(
 						parentObjectEntryFolderExternalReferenceCode, groupId,
 						contextUser.getCompanyId());
 
 		if ((parentObjectEntryFolderId != null) &&
-			((objectEntryFolderPersistence == null) ||
-			 (objectEntryFolderPersistence.getObjectEntryFolderId() !=
+			((persistedObjectEntryFolder == null) ||
+			 (persistedObjectEntryFolder.getObjectEntryFolderId() !=
 				 parentObjectEntryFolderId))) {
 
 			throw new NoSuchObjectEntryFolderException();
 		}
 
-		if (objectEntryFolderPersistence == null) {
+		if (persistedObjectEntryFolder == null) {
 			if (!addObjectEntryFolder) {
 				throw new NoSuchObjectEntryFolderException();
 			}
 
-			objectEntryFolderPersistence =
+			persistedObjectEntryFolder =
 				_objectEntryFolderService.addObjectEntryFolder(
 					parentObjectEntryFolderExternalReferenceCode, groupId,
 					ObjectEntryFolderConstants.
@@ -379,7 +379,7 @@ public class ObjectEntryFolderResourceImpl
 					).build());
 		}
 
-		return objectEntryFolderPersistence.getObjectEntryFolderId();
+		return persistedObjectEntryFolder.getObjectEntryFolderId();
 	}
 
 	private ObjectEntryFolder _patchObjectEntryFolder(

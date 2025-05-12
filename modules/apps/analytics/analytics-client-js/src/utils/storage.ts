@@ -7,6 +7,17 @@ import ProcessLock from 'browser-tabs-lock';
 
 import {Analytics} from '../types';
 
+const hasLiferayUserConsent = () => {
+	const Liferay = window.Liferay;
+
+	const hasLocalStorageApi = Liferay?.Util?.LocalStorage;
+	const performanceConsent = Liferay?.Util?.Cookie?.get?.(
+		'CONSENT_TYPE_PERFORMANCE'
+	);
+
+	return hasLocalStorageApi && performanceConsent === 'true';
+};
+
 const getItem = <T>(key: string) => {
 	const Liferay = window.Liferay;
 
@@ -15,7 +26,7 @@ const getItem = <T>(key: string) => {
 	try {
 		let item;
 
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (hasLiferayUserConsent()) {
 			item = Liferay?.Util?.LocalStorage?.getItem(
 				key,
 				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
@@ -38,7 +49,7 @@ const setItem = <T>(key: string, value: T) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (hasLiferayUserConsent()) {
 			Liferay?.Util?.LocalStorage?.setItem(
 				key,
 				JSON.stringify(value),
@@ -58,7 +69,7 @@ const removeItem = (key: string) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (hasLiferayUserConsent()) {
 			Liferay?.Util?.LocalStorage?.removeItem(
 				key,
 				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string

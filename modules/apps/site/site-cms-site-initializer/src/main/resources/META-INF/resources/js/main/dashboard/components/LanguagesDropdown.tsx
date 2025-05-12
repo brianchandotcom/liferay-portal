@@ -13,7 +13,7 @@ type AvailableLocales = Exclude<
 	'zh_Hans_CN' | 'zh_Hant_TW' | 'zh_TW'
 >;
 
-const localizations: Record<AvailableLocales, string> = {
+export const localizations: Record<AvailableLocales, string> = {
 	ar_SA: Liferay.Language.get('language.ar'),
 	ca_ES: Liferay.Language.get('language.ca'),
 	de_DE: Liferay.Language.get('language.de'),

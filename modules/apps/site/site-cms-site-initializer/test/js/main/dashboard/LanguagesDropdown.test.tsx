@@ -7,7 +7,10 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import {LanguagesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/LanguagesDropdown';
+import {
+	LanguagesDropdown,
+	localizations,
+} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/LanguagesDropdown';
 
 describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 	it('renders correctly', () => {
@@ -19,11 +22,16 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 
 		fireEvent.click(screen.getByRole('button', {name: 'all-languages'}));
 
-		expect(screen.getAllByRole('menuitem').length).toBeGreaterThanOrEqual(
-			1
-		);
 		expect(
 			screen.getByRole('menuitem', {name: 'all-languages'})
 		).toBeInTheDocument();
+
+		const availableLanguages = Object.values(localizations);
+
+		availableLanguages.forEach((translation) => {
+			expect(
+				screen.getByRole('menuitem', {name: translation})
+			).toBeInTheDocument();
+		});
 	});
 });

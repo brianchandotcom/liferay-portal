@@ -606,7 +606,8 @@ public abstract class BaseTestEntityResourceImpl
 		UnsafeFunction<TestEntity, TestEntity, Exception>
 			testEntityUnsafeFunction = testEntity -> {
 				deleteTestEntity(
-					testEntity.getId(), (Boolean)parameters.get("permanent"));
+					testEntity.getId(),
+					_parseBoolean((String)parameters.get("permanent")));
 
 				return testEntity;
 			};
@@ -737,6 +738,14 @@ public abstract class BaseTestEntityResourceImpl
 				testEntityUnsafeFunction.apply(testEntity);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
 	}
 
 	private Long _parseLong(String value) {

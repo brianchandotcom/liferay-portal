@@ -312,8 +312,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Integer version)
+			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 
 		return _expireObjectEntry(
@@ -325,7 +324,7 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Integer version)
+			int version)
 		throws Exception {
 
 		return _expireObjectEntry(
@@ -623,7 +622,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext, Long objectEntryId,
-			Integer version)
+			int version)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -642,7 +641,7 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Integer version)
+			int version)
 		throws Exception {
 
 		ObjectEntry objectEntry = getObjectEntry(
@@ -858,8 +857,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Integer version)
+			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 
 		return _restoreVersionedObjectEntry(
@@ -872,7 +870,7 @@ public class DefaultObjectEntryManagerImpl
 	public ObjectEntry restoreObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Integer version)
+			int version)
 		throws Exception {
 
 		return _restoreVersionedObjectEntry(
@@ -1292,7 +1290,7 @@ public class DefaultObjectEntryManagerImpl
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			Integer version)
+			int version)
 		throws Exception {
 
 		_checkObjectEntryObjectDefinitionId(

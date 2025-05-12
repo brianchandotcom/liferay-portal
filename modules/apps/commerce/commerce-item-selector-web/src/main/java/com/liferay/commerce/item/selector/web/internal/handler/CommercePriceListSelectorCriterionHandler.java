@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.item.selector.web.internal.handler;
 
-import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
+import com.liferay.commerce.item.selector.CommercePriceListItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

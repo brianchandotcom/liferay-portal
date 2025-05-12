@@ -7,7 +7,7 @@ package com.liferay.commerce.channel.web.internal.display.context;
 
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.item.selector.criterion.SimpleSiteItemSelectorCriterion;
+import com.liferay.commerce.item.selector.SimpleSiteItemSelectorCriterion;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;

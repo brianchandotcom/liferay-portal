@@ -45,10 +45,14 @@ export class ExportImportPage {
 		);
 	}
 
-	async export(title: string) {
+	async export(title: string, itemLabel?: string) {
 		await this.newExportButton.click();
 
 		await this.title.fill(title);
+
+		if (itemLabel) {
+			await this.page.getByLabel(itemLabel, {exact: true}).click();
+		}
 
 		await this.exportButton.click();
 	}

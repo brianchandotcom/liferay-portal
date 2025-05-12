@@ -8,7 +8,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
-import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
+import com.liferay.commerce.product.item.selector.CPOptionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.option.CommerceOptionType;

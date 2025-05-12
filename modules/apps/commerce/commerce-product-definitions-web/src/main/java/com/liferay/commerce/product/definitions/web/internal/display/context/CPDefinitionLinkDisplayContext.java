@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
-import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
+import com.liferay.commerce.product.item.selector.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;

@@ -399,7 +399,7 @@ public class ObjectEntryFolderResourceImpl
 
 		if (parentObjectEntryFolderId == null) {
 			parentObjectEntryFolderId =
-				persistedObjectEntryFolder.getObjectEntryFolderId();
+				persistedObjectEntryFolder.getParentObjectEntryFolderId();
 		}
 
 		return _toObjectEntryFolder(

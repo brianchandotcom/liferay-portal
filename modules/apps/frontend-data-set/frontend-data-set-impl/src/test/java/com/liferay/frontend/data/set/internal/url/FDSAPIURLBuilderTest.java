@@ -165,7 +165,7 @@ public class FDSAPIURLBuilderTest {
 				"foo", ""
 			).addParameter(
 				"", "foo"
-			).buildQuery());
+			).buildQueryString());
 
 		Assert.assertEquals(
 			"siteId=12345&foo=bar&bar=67890",
@@ -178,7 +178,7 @@ public class FDSAPIURLBuilderTest {
 				"foo={foo}"
 			).addParameter(
 				"{foo}", "{userId}"
-			).buildQuery());
+			).buildQueryString());
 
 		serviceRegistration1.unregister();
 

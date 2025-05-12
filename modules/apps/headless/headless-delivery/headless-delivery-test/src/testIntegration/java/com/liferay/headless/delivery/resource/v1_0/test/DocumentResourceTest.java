@@ -65,6 +65,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -219,6 +220,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testPostSiteDocument() throws Exception {
 		super.testPostSiteDocument();
 
+		_testPostSiteDocumentWithFriendlyUrlPath();
 		_testPostSiteDocumentWithNoMultipartFiles();
 	}
 
@@ -227,6 +229,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testPutDocument() throws Exception {
 		super.testPutDocument();
 
+		_testPutSiteDocumentWithFriendlyUrlPath();
 		_testPutSiteDocumentWithNoMultipartFiles();
 	}
 
@@ -535,6 +538,20 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		_assertDocumentType(dlFileEntryType, postDocument);
 	}
 
+	private void _testPostSiteDocumentWithFriendlyUrlPath() throws Exception {
+		Document randomDocument = randomDocument();
+
+		String friendlyUrlPath = StringUtil.toLowerCase(
+			StringUtil.randomString());
+
+		randomDocument.setFriendlyUrlPath(friendlyUrlPath);
+
+		Document postDocument = testPostSiteDocument_addDocument(
+			randomDocument, Collections.emptyMap());
+
+		Assert.assertEquals(friendlyUrlPath, postDocument.getFriendlyUrlPath());
+	}
+
 	private void _testPostSiteDocumentWithNoMultipartFiles() throws Exception {
 		Document randomDocument = randomDocument();
 
@@ -547,6 +564,23 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		Assert.assertEquals(StringPool.BLANK, postDocument.getContentUrl());
 		Assert.assertEquals(
 			0, GetterUtil.getLong(postDocument.getSizeInBytes()));
+	}
+
+	private void _testPutSiteDocumentWithFriendlyUrlPath() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Document postDocument = testPostSiteDocument_addDocument(
+			randomDocument, Collections.emptyMap());
+
+		String friendlyUrlPath = StringUtil.toLowerCase(
+			StringUtil.randomString());
+
+		postDocument.setFriendlyUrlPath(friendlyUrlPath);
+
+		Document putDocument = documentResource.putDocument(
+			postDocument.getId(), postDocument, Collections.emptyMap());
+
+		Assert.assertEquals(friendlyUrlPath, putDocument.getFriendlyUrlPath());
 	}
 
 	private void _testPutSiteDocumentWithNoMultipartFiles() throws Exception {

@@ -7,7 +7,6 @@ package com.liferay.captcha.internal.settings.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.provider.CaptchaProvider;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
@@ -44,45 +43,34 @@ public class CaptchaSettingsImplTest {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper1 =
 					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						CaptchaConfiguration.class.getName(),
-						new HashMapDictionaryBuilder(
-						).<String, Object>put(
-							"createAccountCaptchaEnabled", false
-						).build());
-			CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper2 =
-					new CompanyConfigurationTemporarySwapper(
 						company.getCompanyId(),
 						CaptchaConfiguration.class.getName(),
 						new HashMapDictionaryBuilder(
 						).<String, Object>put(
 							"createAccountCaptchaEnabled", true
+						).build());
+			CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper2 =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
+							"createAccountCaptchaEnabled", false
 						).build())) {
 
-			CaptchaConfiguration captchaConfiguration =
-				_captchaProvider.getCaptchaConfiguration();
-
-			Assert.assertEquals(
-				captchaConfiguration.createAccountCaptchaEnabled(),
+			Assert.assertFalse(
 				_captchaSettings.isCreateAccountCaptchaEnabled());
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						company.getCompanyId())) {
 
-				captchaConfiguration =
-					_captchaProvider.getCaptchaConfiguration();
-
-				Assert.assertEquals(
-					captchaConfiguration.createAccountCaptchaEnabled(),
+				Assert.assertTrue(
 					_captchaSettings.isCreateAccountCaptchaEnabled());
 			}
 		}
 	}
-
-	@Inject
-	private CaptchaProvider _captchaProvider;
 
 	@Inject
 	private CaptchaSettings _captchaSettings;

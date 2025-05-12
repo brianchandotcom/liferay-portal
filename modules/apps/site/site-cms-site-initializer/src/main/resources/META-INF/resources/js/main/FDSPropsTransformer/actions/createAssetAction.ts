@@ -22,7 +22,7 @@ export default function createAssetAction(data: AssetData) {
 		const url = new URL(data.redirect);
 
 		url.searchParams.set('name', '');
-		url.searchParams.set('groupId', data.assetLibraries[0].groupId);
+		url.searchParams.set('groupId', String(data.assetLibraries[0].groupId));
 
 		navigate(url.pathname + url.search);
 

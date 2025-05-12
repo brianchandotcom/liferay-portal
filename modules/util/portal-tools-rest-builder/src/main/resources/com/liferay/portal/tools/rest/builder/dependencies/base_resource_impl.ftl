@@ -768,7 +768,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 											<@castParameters
 												type = javaMethodParameter.parameterType
-												value = "${javaMethodParameter.parameterName}"
+												value = javaMethodParameter.parameterName
 											/>
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 											${schemaVarName}
@@ -951,7 +951,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 									<@castParameters
 										type = javaMethodParameter.parameterType
-										value = "${javaMethodParameter.parameterName}"
+										value = javaMethodParameter.parameterName
 									/>
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 									${schemaVarName}
@@ -1017,7 +1017,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 								<@castParameters
 									type = javaMethodParameter.parameterType
-									value = "${javaMethodParameter.parameterName}"
+									value = javaMethodParameter.parameterName
 								/>
 							</#if>
 						</#list>

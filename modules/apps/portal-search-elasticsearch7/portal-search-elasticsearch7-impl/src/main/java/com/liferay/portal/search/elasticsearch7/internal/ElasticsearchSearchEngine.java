@@ -383,7 +383,8 @@ public class ElasticsearchSearchEngine
 					StringBundler.concat(
 						"Connecting to Elasticsearch 7 nodes is now ",
 						"deprecated. Upgrade the Elasticsearch nodes ",
-						"corresponding to the following connection IDs: ", sb));
+						"corresponding to the following connection IDs: ", sb,
+						"."));
 			}
 		}
 

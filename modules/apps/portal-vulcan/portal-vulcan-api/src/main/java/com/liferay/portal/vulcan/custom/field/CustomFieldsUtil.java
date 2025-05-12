@@ -30,6 +30,8 @@ import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -109,6 +111,9 @@ public class CustomFieldsUtil {
 			}
 			else if (ExpandoColumnConstants.DATE == attributeType) {
 				map.put(name, _parseDate(String.valueOf(data)));
+			}
+			else if (ExpandoColumnConstants.DATE_ARRAY == attributeType) {
+				map.put(name, _toArray(data, CustomFieldsUtil::_toDateArray));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
@@ -272,7 +277,7 @@ public class CustomFieldsUtil {
 		return false;
 	}
 
-	private static Serializable _parseDate(String data) {
+	private static Date _parseDate(String data) {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -359,6 +364,29 @@ public class CustomFieldsUtil {
 				setName(entry::getKey);
 			}
 		};
+	}
+
+	private static Date[] _toDateArray(Collection<String> collection) {
+		Date[] newArray = new Date[collection.size()];
+
+		if (collection instanceof List) {
+			List<String> list = (List<String>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				newArray[i] = _parseDate(list.get(i));
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<String> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				newArray[i++] = _parseDate(iterator.next());
+			}
+		}
+
+		return newArray;
 	}
 
 }

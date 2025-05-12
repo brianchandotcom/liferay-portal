@@ -1347,6 +1347,34 @@ public class CustomFieldsUtilTest {
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 	}
 
+	@Test
+	public void testToMapWithIntegerValueForLongField() throws Exception {
+		CustomField[] customFields = new CustomField[] {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = _DATA_INT;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn14.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals((long)_DATA_INT, map.get(_expandoColumn14.getName()));
+
+		Assert.assertTrue(
+			"Value should be of type Long but was " + 
+			map.get(_expandoColumn14.getName()).getClass().getName(),
+			map.get(_expandoColumn14.getName()) instanceof Long);
+	}
+
 	private ExpandoColumn _addExpandoColumn(
 			Object defaultData, String displayType, ExpandoTable expandoTable,
 			int type)
@@ -1432,6 +1460,8 @@ public class CustomFieldsUtilTest {
 	private static final double _DATA_DOUBLE = RandomTestUtil.randomDouble();
 
 	private static final long _DATA_LONG = RandomTestUtil.randomLong();
+
+	private static final int _DATA_INT = RandomTestUtil.randomInt();
 
 	private static final String _DATA_STRING = RandomTestUtil.randomString();
 

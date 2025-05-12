@@ -207,6 +207,8 @@ public abstract class BaseSectionDisplayContext {
 				).setParameter(
 					"modelResourceDescription", "{embedded.name}"
 				).setParameter(
+					"resourceGroupId", "{embedded.scopeId}"
+				).setParameter(
 					"resourcePrimKey", "{embedded.id}"
 				).setWindowState(
 					LiferayWindowState.POP_UP

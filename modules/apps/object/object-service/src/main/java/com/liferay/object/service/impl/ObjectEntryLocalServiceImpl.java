@@ -170,6 +170,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -218,6 +219,8 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
@@ -5106,10 +5109,52 @@ public class ObjectEntryLocalServiceImpl
 					_objectDefinitionPersistence.fetchByPrimaryKey(
 						objectDefinition.getRootObjectDefinitionId());
 
+				if (serviceContext.getWorkflowAction() ==
+						WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+					WorkflowInstanceLink workflowInstanceLink =
+						_workflowInstanceLinkLocalService.
+							fetchWorkflowInstanceLink(
+								rootObjectDefinition.getCompanyId(),
+								rootObjectEntry.getNonzeroGroupId(),
+								rootObjectDefinition.getClassName(),
+								rootObjectEntry.getObjectEntryId());
+
+					if (workflowInstanceLink != null) {
+						WorkflowInstance workflowInstance =
+							WorkflowInstanceManagerUtil.getWorkflowInstance(
+								objectDefinition.getCompanyId(),
+								workflowInstanceLink.getWorkflowInstanceId());
+
+						if (!workflowInstance.isComplete()) {
+							throw new ObjectEntryStatusException(
+								"Draft root descendant nodes cannot be added " +
+									"when the root node has incomplete " +
+										"workflow instance");
+						}
+					}
+
+					if (rootObjectEntry.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						rootObjectEntry.setStatus(
+							WorkflowConstants.STATUS_DRAFT);
+
+						rootObjectEntry = updateObjectEntry(rootObjectEntry);
+					}
+				}
+
 				ServiceContext workflowServiceContext =
 					(ServiceContext)serviceContext.clone();
 
 				workflowServiceContext.setStrictAdd(false);
+
+				if (rootObjectEntry.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT) {
+
+					workflowServiceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_SAVE_DRAFT);
+				}
 
 				int originalStatus = rootObjectEntry.getStatus();
 

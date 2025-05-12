@@ -319,8 +319,9 @@ public class PageSpecificationResourceImpl
 			return _pageSpecificationDTOConverter.toDTO(
 				LayoutUtil.updateLayout(
 					layout, layout.getNameMap(), layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getFriendlyURLMap(),
-					pageSpecification.getSettings(), serviceContext));
+					layout.getDescriptionMap(), layout.getRobotsMap(),
+					layout.getFriendlyURLMap(), pageSpecification.getSettings(),
+					serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -338,8 +339,9 @@ public class PageSpecificationResourceImpl
 			LayoutUtil.updateLayout(
 				(ContentPageSpecification)pageSpecification, layout,
 				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getFriendlyURLMap(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext));
+				layout.getDescriptionMap(), layout.getRobotsMap(),
+				layout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
+				serviceContext));
 	}
 
 	@Override

@@ -247,8 +247,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		layout = LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getFriendlyURLMap(),
-			masterPage.getPageSpecifications(),
+			layout.getDescriptionMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(), masterPage.getPageSpecifications(),
 			_getServiceContext(groupId, masterPage));
 
 		if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
@@ -442,7 +442,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, masterPage.getPageSpecifications(), true, nameMap, nameMap,
-			nameMap, LayoutConstants.TYPE_CONTENT, true, true,
+			nameMap, null, LayoutConstants.TYPE_CONTENT, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 

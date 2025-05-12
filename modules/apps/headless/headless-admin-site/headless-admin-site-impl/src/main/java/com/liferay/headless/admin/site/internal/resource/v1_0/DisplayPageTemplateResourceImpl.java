@@ -428,6 +428,22 @@ public class DisplayPageTemplateResourceImpl
 			_portal.getSiteDefaultLocale(groupId),
 			displayPageTemplate.getName());
 
+		Map<Locale, String> robotsMap = null;
+
+		DisplayPageTemplateSettings displayPageTemplateSettings =
+			displayPageTemplate.getDisplayPageTemplateSettings();
+
+		if ((displayPageTemplateSettings != null) &&
+			(displayPageTemplateSettings.getSeoSettings() != null)) {
+
+			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
+				displayPageTemplateSettings.getSeoSettings();
+
+			robotsMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(), null,
+				displayPageTemplateSEOSettings.getRobots_i18n());
+		}
+
 		ServiceContext serviceContext = _getServiceContext(
 			displayPageTemplate, groupId);
 
@@ -439,8 +455,8 @@ public class DisplayPageTemplateResourceImpl
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, displayPageTemplate.getPageSpecifications(), false,
-			nameMap, nameMap, null, LayoutConstants.TYPE_ASSET_DISPLAY, true,
-			true,
+			nameMap, nameMap, null, robotsMap,
+			LayoutConstants.TYPE_ASSET_DISPLAY, true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -457,9 +473,6 @@ public class DisplayPageTemplateResourceImpl
 					groupId, displayPageTemplate.getThumbnail()),
 				false, 0L, layout.getPlid(), 0L, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
-
-		DisplayPageTemplateSettings displayPageTemplateSettings =
-			displayPageTemplate.getDisplayPageTemplateSettings();
 
 		if (displayPageTemplateSettings != null) {
 			UnicodeProperties unicodeProperties =
@@ -495,10 +508,6 @@ public class DisplayPageTemplateResourceImpl
 				unicodeProperties.setProperty(
 					"mapped-title",
 					displayPageTemplateSEOSettings.getHtmlTitleTemplate());
-				layout.setRobotsMap(
-					LocalizedMapUtil.getLocalizedMap(
-						contextAcceptLanguage.getPreferredLocale(), null,
-						displayPageTemplateSEOSettings.getRobots_i18n()));
 			}
 
 			SitemapSettings sitemapSettings =
@@ -534,7 +543,9 @@ public class DisplayPageTemplateResourceImpl
 					String.valueOf(sitemapSettings.getPagePriority()));
 			}
 
-			_layoutLocalService.updateLayout(layout);
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), unicodeProperties.toString());
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);

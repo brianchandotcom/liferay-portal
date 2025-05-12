@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -605,10 +604,6 @@ public class ContentObjectFragmentRendererTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

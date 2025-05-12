@@ -10,6 +10,7 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -17,11 +18,10 @@ import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	notificationPagesTest
 );
-
-let notificationTemplate;
 
 let objectDefinition: ObjectDefinition;
 
@@ -37,11 +37,6 @@ const notificationTemplateInfo = {
 };
 
 test.beforeEach(async ({apiHelpers}) => {
-	notificationTemplate =
-		await apiHelpers.notification.postRandomNotificationTemplate(
-			'notification template test ' + getRandomInt()
-		);
-
 	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
 		objectFolderExternalReferenceCode: 'default',
 		status: {code: 0},
@@ -78,10 +73,6 @@ test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 			throw new Error(error);
 		}
 	}
-
-	await apiHelpers.notification.deleteNotificationTemplate(
-		notificationTemplate.id
-	);
 });
 
 test.describe('Email notification template', () => {
@@ -139,9 +130,15 @@ test.describe('Email notification template', () => {
 	});
 
 	test('can be edited correctly', async ({
+		apiHelpers,
 		emailNotificationTemplatePage,
 		notificationTemplatesPage,
 	}) => {
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				'notification template test ' + getRandomInt()
+			);
+
 		await notificationTemplatesPage.goto();
 
 		await notificationTemplatesPage
@@ -203,6 +200,11 @@ test.describe('Email notification template', () => {
 		await expect(emailNotificationTemplatePage.contentSubject).toHaveValue(
 			editedNotificationTemplateInfo.subject
 		);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
 	});
 
 	test('can have rich text source code verifying that the source code is persisted', async ({

@@ -7,7 +7,7 @@
 
 <%@ include file="/content/init.jsp" %>
 
-<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
+<c:if test="<%= !portlets.isEmpty() %>">
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<clay:sheet-section>
 			<h3 class="sheet-subtitle"><liferay-ui:message key="content" /></h3>
@@ -219,7 +219,7 @@
 							<liferay-staging:portlet-list
 								disableInputs="<%= disableInputs %>"
 								exportImportConfigurationId="<%= exportImportConfigurationId %>"
-								portlets="<%= dataSiteLevelPortlets %>"
+								portlets="<%= portlets %>"
 								showAllPortlets="<%= showAllPortlets %>"
 								type="<%= type %>"
 							/>

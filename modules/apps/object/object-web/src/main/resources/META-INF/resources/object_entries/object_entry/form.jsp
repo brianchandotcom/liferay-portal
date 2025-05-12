@@ -42,8 +42,9 @@ portletDisplay.setURLBack(backURL);
 			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && (objectEntryDisplayContext.getObjectLayoutTab() == null) %>'>
 				<clay:panel-group>
 					<clay:panel
-						collapsable="<%= false %>"
+						collapsable="<%= true %>"
 						displayTitle='<%= LanguageUtil.get(request, "seo") %>'
+						displayType="secondary"
 						expanded="<%= true %>"
 					>
 						<div class="panel-body">

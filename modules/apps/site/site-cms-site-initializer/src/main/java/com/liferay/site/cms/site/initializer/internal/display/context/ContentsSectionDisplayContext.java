@@ -138,7 +138,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return "cmsSection eq 'contents'";
+		return "cmsSection eq 'contents' and cmsRoot eq true";
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;

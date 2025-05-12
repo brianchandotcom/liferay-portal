@@ -385,32 +385,32 @@ public class AccountsSyncBusinessEventsRestController
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				if (associatedTicketsHeatTags.containsKey(
+				if (!associatedTicketsHeatTags.containsKey(
 						zendeskTicket.getZendeskTicketId())) {
 
-					Map<Long, String> customFields =
-						zendeskTicket.getCustomFields();
+					continue;
+				}
 
-					String heatTag = customFields.get(
-						_zendeskHeatTagTicketFieldId);
+				Map<Long, String> customFields =
+					zendeskTicket.getCustomFields();
 
-					String highestHeatTag = associatedTicketsHeatTags.get(
-						zendeskTicket.getZendeskTicketId());
+				String heatTag = customFields.get(_zendeskHeatTagTicketFieldId);
 
-					if ((HeatTagConstants.getScore(heatTag) <=
-							HeatTagConstants.getScore(highestHeatTag)) &&
-						!heatTag.equals(highestHeatTag)) {
+				String highestHeatTag = associatedTicketsHeatTags.get(
+					zendeskTicket.getZendeskTicketId());
 
-						customFields.put(
-							_zendeskHeatTagTicketFieldId, highestHeatTag);
+				if ((HeatTagConstants.getScore(heatTag) <=
+						HeatTagConstants.getScore(highestHeatTag)) &&
+					!heatTag.equals(highestHeatTag)) {
 
-						_zendeskService.updateZendeskTicket(
-							zendeskTicket.getZendeskTicketId(),
-							zendeskOrganizationId,
-							zendeskTicket.getRequesterId(),
-							zendeskTicket.getStatus(), customFields,
-							zendeskTicket.getTags());
-					}
+					customFields.put(
+						_zendeskHeatTagTicketFieldId, highestHeatTag);
+
+					_zendeskService.updateZendeskTicket(
+						zendeskTicket.getZendeskTicketId(),
+						zendeskOrganizationId, zendeskTicket.getRequesterId(),
+						zendeskTicket.getStatus(), customFields,
+						zendeskTicket.getTags());
 				}
 			}
 

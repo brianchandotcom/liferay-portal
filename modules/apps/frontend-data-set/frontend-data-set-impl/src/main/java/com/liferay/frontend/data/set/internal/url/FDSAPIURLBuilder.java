@@ -66,7 +66,7 @@ public class FDSAPIURLBuilder {
 				_restApplication, "/v1.0", StringPool.BLANK));
 		sb.append(_restEndpoint);
 
-		_appendParameters(sb, true);
+		_appendParameters(false, sb);
 
 		return _interpolate(_resolveParameters(sb.toString()));
 	}
@@ -74,7 +74,7 @@ public class FDSAPIURLBuilder {
 	public String buildQueryString() {
 		StringBundler sb = new StringBundler(_queryStringItems.size() * 2);
 
-		_appendParameters(sb, false);
+		_appendParameters(true, sb);
 
 		String query = sb.toString();
 
@@ -86,7 +86,7 @@ public class FDSAPIURLBuilder {
 	}
 
 	private void _appendParameters(
-		StringBundler sb, boolean includeQuestionMark) {
+		boolean includeQuestionMark, StringBundler sb) {
 
 		if (_queryStringItems.isEmpty()) {
 			return;

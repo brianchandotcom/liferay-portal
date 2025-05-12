@@ -26,6 +26,7 @@ import {config as clientExtensionWebClusterConfig} from './tests/client-extensio
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/main/config';
 import {config as commerceAccountWebConfig} from './tests/commerce/commerce-account-web/main/config';
 import {config as commerceCartContentWebConfig} from './tests/commerce/commerce-cart-content-web/main/config';
+import {config as commerceCatalogWebConfig} from './tests/commerce/commerce-catalog-web/main/config';
 import {config as commerceChannelWebConfig} from './tests/commerce/commerce-channel-web/main/config';
 import {config as commerceCheckoutWebConfig} from './tests/commerce/commerce-checkout-web/main/config';
 import {config as commerceCurrencyWebConfig} from './tests/commerce/commerce-currency-web/main/config';
@@ -170,6 +171,7 @@ export default defineConfig({
 		clientExtensionWebClusterConfig,
 		commerceAccountWebConfig,
 		commerceCartContentWebConfig,
+		commerceCatalogWebConfig,
 		commerceChannelWebConfig,
 		commerceCheckoutWebConfig,
 		commerceCurrencyWebConfig,

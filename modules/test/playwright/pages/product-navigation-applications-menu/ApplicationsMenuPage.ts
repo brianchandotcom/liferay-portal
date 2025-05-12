@@ -18,6 +18,7 @@ export class ApplicationsMenuPage {
 	readonly applicationsMenuTabButton: Locator;
 	private readonly blueprintsItem: Locator;
 	private readonly clientExtensionsLink: Locator;
+	private readonly commerceCatalogsMenuItem: Locator;
 	private readonly commerceChannelsMenuItem: Locator;
 	private readonly commerceCurrenciesMenuItem: Locator;
 	private readonly commerceDiscountsMenuItem: Locator;
@@ -102,6 +103,10 @@ export class ApplicationsMenuPage {
 		});
 		this.clientExtensionsLink = page.getByRole('menuitem', {
 			name: 'Client Extensions',
+		});
+		this.commerceCatalogsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Catalogs',
 		});
 		this.commerceChannelsMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -482,6 +487,11 @@ export class ApplicationsMenuPage {
 	async goToJobScheduler() {
 		await this.goToControlPanel();
 		await this.jobSchedulerMenuItem.click();
+	}
+
+	async goToCommerceCatalogs(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
+		await this.commerceCatalogsMenuItem.click();
 	}
 
 	async goToCommerceChannels(checkTabVisibility = true) {

@@ -338,8 +338,9 @@ public class ObjectEntryFolderResourceImpl
 				return null;
 			}
 
-			if (parentObjectEntryFolderId != ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+			if (parentObjectEntryFolderId !=
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
 
 				_objectEntryFolderService.getObjectEntryFolder(
 					parentObjectEntryFolderId);
@@ -348,12 +349,11 @@ public class ObjectEntryFolderResourceImpl
 			return parentObjectEntryFolderId;
 		}
 
-		com.liferay.object.model.ObjectEntryFolder
-			persistedObjectEntryFolder =
-				_objectEntryFolderService.
-					fetchObjectEntryFolderByExternalReferenceCode(
-						parentObjectEntryFolderExternalReferenceCode, groupId,
-						contextUser.getCompanyId());
+		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
+			_objectEntryFolderService.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					parentObjectEntryFolderExternalReferenceCode, groupId,
+					contextUser.getCompanyId());
 
 		if ((parentObjectEntryFolderId != null) &&
 			((persistedObjectEntryFolder == null) ||

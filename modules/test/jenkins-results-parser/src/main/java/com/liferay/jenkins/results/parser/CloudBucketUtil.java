@@ -92,10 +92,19 @@ public class CloudBucketUtil {
 
 			parentFile.mkdirs();
 
+			if (destinationS3ObjectFile.exists()) {
+				JenkinsResultsParserUtil.delete(destinationS3ObjectFile);
+			}
+
 			JenkinsResultsParserUtil.write(
 				destinationS3ObjectFile, sourceS3ObjectPath);
 
-			System.out.println("Created " + destinationS3ObjectFile);
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Created ",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						destinationS3ObjectFile),
+					" with ref to ", sourceS3ObjectPath));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

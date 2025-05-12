@@ -75,7 +75,9 @@ test('Staging publish template with smoke', async ({
 			`${site.friendlyUrlPath}-staging`
 		);
 
+	await page.waitForTimeout(2000);
 	await widgetPagePage.goto(layout, stagingSite.friendlyUrlPath);
+	await page.waitForLoadState('domcontentloaded');
 
 	await widgetPagePage.addPortlet(
 		'Web Content Display',
@@ -87,11 +89,16 @@ test('Staging publish template with smoke', async ({
 		webContentName: webContentTitle,
 	});
 
+	await expect(
+		page.locator('.portlet-title-text').filter({hasText: webContentTitle})
+	).toBeVisible({timeout: 5000});
+
 	await stagingPage.goto(site.name + '-staging');
 
 	const templateName = getRandomString();
-
+	await stagingPage.gotoTemplatePage();
 	await stagingPage.addTemplate(templateName);
+	await page.reload();
 	await stagingPage.publishTemplate(templateName);
 
 	await widgetPagePage.goto(layout, site.friendlyUrlPath);

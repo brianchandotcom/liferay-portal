@@ -52,16 +52,16 @@ public class LayoutUtil {
 			long groupId, PageSpecification[] pageSpecifications,
 			boolean privateLayout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String type, boolean hidden, boolean system,
-			Map<Locale, String> friendlyURLMap, int status,
+			Map<Locale, String> robotsMap, String type, boolean hidden,
+			boolean system, Map<Locale, String> friendlyURLMap, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		if (pageSpecifications == null) {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
 				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
-				0, nameMap, titleMap, descriptionMap, null, null, type, null,
-				hidden, system, friendlyURLMap, 0L, serviceContext);
+				0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
+				null, hidden, system, friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,
@@ -187,7 +187,7 @@ public class LayoutUtil {
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
 			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
-			nameMap, titleMap, descriptionMap, null, null, type,
+			nameMap, titleMap, descriptionMap, null, robotsMap, type,
 			typeSettingsUnicodeProperties.toString(), hidden, system,
 			friendlyURLMap, masterLayoutPlid, serviceContext);
 
@@ -204,12 +204,12 @@ public class LayoutUtil {
 
 		updateLayout(
 			draftContentPageSpecification, draftLayout, nameMap, titleMap,
-			descriptionMap, draftLayout.getFriendlyURLMap(), draftLayoutStatus,
-			serviceContext);
+			descriptionMap, draftLayout.getRobotsMap(),
+			draftLayout.getFriendlyURLMap(), draftLayoutStatus, serviceContext);
 
 		return updateLayout(
 			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, friendlyURLMap, status, serviceContext);
+			descriptionMap, robotsMap, friendlyURLMap, status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
@@ -242,8 +242,8 @@ public class LayoutUtil {
 		return updateLayout(
 			contentPageSpecification, draftLayout, layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
-			draftLayout.getFriendlyURLMap(), WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	public static boolean isPublished(Layout layout) {
@@ -267,14 +267,14 @@ public class LayoutUtil {
 	public static Layout updateContentLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> friendlyURLMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		if (pageSpecifications == null) {
 			return _updateLayout(
-				layout, nameMap, titleMap, descriptionMap,
+				layout, nameMap, titleMap, descriptionMap, robotsMap,
 				layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
 				layout.getMasterLayoutPlid(), friendlyURLMap, serviceContext);
 		}
@@ -338,25 +338,26 @@ public class LayoutUtil {
 
 		updateLayout(
 			draftContentPageSpecification, draftLayout, nameMap, titleMap,
-			descriptionMap, draftLayout.getFriendlyURLMap(), draftLayoutStatus,
-			serviceContext);
+			descriptionMap, robotsMap, draftLayout.getFriendlyURLMap(),
+			draftLayoutStatus, serviceContext);
 
 		return updateLayout(
 			publishedContentPageSpecification, layout, nameMap, titleMap,
-			descriptionMap, friendlyURLMap, status, serviceContext);
+			descriptionMap, robotsMap, friendlyURLMap, status, serviceContext);
 	}
 
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
 			Map<Locale, String> friendlyURLMap, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(
-			layout, nameMap, titleMap, descriptionMap, friendlyURLMap,
-			contentPageSpecification.getSettings(), serviceContext);
+			layout, nameMap, titleMap, descriptionMap, robotsMap,
+			friendlyURLMap, contentPageSpecification.getSettings(),
+			serviceContext);
 
 		_updatePageExperiences(
 			layout, contentPageSpecification.getPageExperiences(),
@@ -370,14 +371,14 @@ public class LayoutUtil {
 	public static Layout updateLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> friendlyURLMap, Settings settings,
-			ServiceContext serviceContext)
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
 		layout = _updateLookAndFeel(layout, settings);
 
 		return _updateLayout(
-			layout, nameMap, titleMap, descriptionMap,
+			layout, nameMap, titleMap, descriptionMap, robotsMap,
 			_getStyleBookEntryId(layout, settings),
 			_getFaviconFileEntryId(layout, settings),
 			_getMasterLayoutPlid(layout, settings), friendlyURLMap,
@@ -501,9 +502,9 @@ public class LayoutUtil {
 	private static Layout _updateLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			long styleBookEntryId, long faviconFileEntryId,
-			long masterLayoutPlid, Map<Locale, String> friendlyURLMap,
-			ServiceContext serviceContext)
+			Map<Locale, String> robotsMap, long styleBookEntryId,
+			long faviconFileEntryId, long masterLayoutPlid,
+			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws Exception {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
@@ -514,7 +515,7 @@ public class LayoutUtil {
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
-			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.getKeywordsMap(), robotsMap, layout.getType(),
 			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
 			styleBookEntryId, faviconFileEntryId, masterLayoutPlid,
 			serviceContext);

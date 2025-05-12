@@ -442,7 +442,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, masterPage.getPageSpecifications(), true, nameMap, nameMap,
-			nameMap, null, LayoutConstants.TYPE_CONTENT, true, true,
+			nameMap, null, LayoutConstants.TYPE_CONTENT, null, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 

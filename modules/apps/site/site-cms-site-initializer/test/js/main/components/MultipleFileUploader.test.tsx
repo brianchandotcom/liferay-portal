@@ -22,8 +22,8 @@ const mockCloseModal = jest.fn();
 
 const DEFAULT_PROPS = {
 	assetLibraries: [
-		{groupId: '123', name: 'Library A'},
-		{groupId: '456', name: 'Library B'},
+		{groupId: 123, name: 'Library A'},
+		{groupId: 456, name: 'Library B'},
 	],
 	onModalClose: mockCloseModal,
 };

@@ -15,11 +15,11 @@ export type FolderData = {
 	assetLibraries: AssetLibrary[];
 	baseAssetLibraryViewURL: string;
 	baseFolderViewURL: string;
+	parentObjectEntryFolderExternalReferenceCode: string;
 };
 
 export default function createFolderAction(
 	data: FolderData,
-	additionalProps: {parentObjectEntryFolderExternalReferenceCode: string},
 	loadData?: () => {}
 ) {
 	openModal({
@@ -36,8 +36,8 @@ export default function createFolderAction(
 							title: string;
 						}>(
 							groupId,
-							title,
-							additionalProps.parentObjectEntryFolderExternalReferenceCode
+							data.parentObjectEntryFolderExternalReferenceCode,
+							title
 						);
 
 					if (!error) {

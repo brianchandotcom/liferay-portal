@@ -16,12 +16,12 @@ export type TFolder = {
 const OBJECT_ENTRY_FOLDER_URL = '/o/headless-object/v1.0/object-entry-folders';
 
 async function createFolder<DataType = unknown>(
-	scopeKey: string,
-	title: string,
-	parentObjectEntryFolderExternalReferenceCode: string
+	groupId: number,
+	parentObjectEntryFolderExternalReferenceCode: string,
+	title: string
 ) {
 	return await ApiHelper.post<DataType>(
-		`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
+		`/o/headless-object/v1.0/scopes/${groupId}/object-entry-folders`,
 		{
 			parentObjectEntryFolderExternalReferenceCode,
 			title,

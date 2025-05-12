@@ -20,6 +20,17 @@ function createHowToCard(title, dateModified, howToId) {
 	displayContainer.appendChild(howToCardDiv);
 }
 
+function createHowToContainer() {
+	const howTo = document.getElementById('article-related-how-to');
+
+	howTo.innerHTML = `
+		<div class="how-to-container">
+			<div class="how-to-container-header">How To related to this article</div>
+			<div class="how-to-cards-container" id="how-to-cards-container"></div>
+		</div>
+	`;
+}
+
 async function createHowToSuggestions() {
 	const articleId = document.querySelector('.article-related-how-to').dataset.articleId;
 
@@ -44,17 +55,6 @@ async function createHowToSuggestions() {
 			);
 		}
 	}
-}
-
-function createHowToContainer() {
-	const howTo = document.getElementById('article-related-how-to');
-
-	howTo.innerHTML = `
-		<div class="how-to-container">
-			<div class="how-to-container-header">How To related to this article</div>
-			<div class="how-to-cards-container" id="how-to-cards-container"></div>
-		</div>
-	`;
 }
 
 function formatDate(dateModified) {

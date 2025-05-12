@@ -498,6 +498,8 @@ public class DisplayPageTemplateResourceImpl
 					displayPageTemplateOpenGraphSettings.getTitleTemplate());
 			}
 
+			SitemapSettings sitemapSettings = null;
+
 			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
 				displayPageTemplateSettings.getSeoSettings();
 
@@ -508,10 +510,10 @@ public class DisplayPageTemplateResourceImpl
 				unicodeProperties.setProperty(
 					"mapped-title",
 					displayPageTemplateSEOSettings.getHtmlTitleTemplate());
-			}
 
-			SitemapSettings sitemapSettings =
-				displayPageTemplateSEOSettings.getSitemapSettings();
+				sitemapSettings =
+					displayPageTemplateSEOSettings.getSitemapSettings();
+			}
 
 			if (sitemapSettings != null) {
 				SitemapSettings.ChangeFrequency changeFrequency =

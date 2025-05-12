@@ -169,37 +169,45 @@ test.describe('Email notification template', () => {
 			.getFrontEndDatasetItemLocator(editedNotificationTemplateName)
 			.click();
 
-		await expect(emailNotificationTemplatePage.basicInfoName).toHaveValue(
-			editedNotificationTemplateName
-		);
+		await expect
+			.soft(emailNotificationTemplatePage.basicInfoName)
+			.toHaveValue(editedNotificationTemplateName);
 
-		await expect(
-			emailNotificationTemplatePage.descriptionInput
-		).toHaveValue(editedNotificationTemplateInfo.description);
+		await expect
+			.soft(emailNotificationTemplatePage.descriptionInput)
+			.toHaveValue(editedNotificationTemplateInfo.description);
 
-		await expect(
-			emailNotificationTemplatePage.senderEmailAddress
-		).toHaveValue(editedNotificationTemplateInfo.senderAddress);
+		await expect
+			.soft(emailNotificationTemplatePage.senderEmailAddress)
+			.toHaveValue(editedNotificationTemplateInfo.senderAddress);
 
-		await expect(emailNotificationTemplatePage.senderName).toHaveValue(
-			editedNotificationTemplateInfo.senderName
-		);
+		await expect
+			.soft(emailNotificationTemplatePage.senderName)
+			.toHaveValue(editedNotificationTemplateInfo.senderName);
 
-		await expect(
-			emailNotificationTemplatePage.primaryRecipientUserEmailAddress
-		).toHaveValue(editedNotificationTemplateInfo.recipients);
+		await expect
+			.soft(
+				emailNotificationTemplatePage.primaryRecipientUserEmailAddress
+			)
+			.toHaveValue(editedNotificationTemplateInfo.recipients);
 
-		await expect(
-			emailNotificationTemplatePage.secondaryRecipientsCCInput
-		).toHaveValue(editedNotificationTemplateInfo.cc);
+		await expect
+			.soft(emailNotificationTemplatePage.secondaryRecipientsCCInput)
+			.toHaveValue(editedNotificationTemplateInfo.cc);
 
-		await expect(
-			emailNotificationTemplatePage.secondaryRecipientsBCCInput
-		).toHaveValue(editedNotificationTemplateInfo.bcc);
+		await expect
+			.soft(emailNotificationTemplatePage.secondaryRecipientsBCCInput)
+			.toHaveValue(editedNotificationTemplateInfo.bcc);
 
-		await expect(emailNotificationTemplatePage.contentSubject).toHaveValue(
-			editedNotificationTemplateInfo.subject
-		);
+		await expect
+			.soft(emailNotificationTemplatePage.contentSubject)
+			.toHaveValue(editedNotificationTemplateInfo.subject);
+
+		await expect
+			.soft(emailNotificationTemplatePage.contentSubject)
+			.toHaveValue(editedNotificationTemplateInfo.subject);
+
+		await expect(test.info().errors).toHaveLength(0);
 
 		apiHelpers.data.push({
 			id: notificationTemplate.id,

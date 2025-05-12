@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
@@ -54,13 +56,31 @@ public class GetObjectDefinitionInfoMVCResourceCommand
 			return;
 		}
 
+		boolean workflowSupported = true;
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinition.getClassName());
+
+		if ((workflowHandler == null) || !workflowHandler.isVisible()) {
+			workflowSupported = false;
+		}
+
+		boolean finalWorkflowSupported = workflowSupported;
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
+				"isWorkflowSupported", finalWorkflowSupported
+			).put(
 				"tableName", objectDefinition.getDBTableName()
 			).put(
 				"workflowDefinitionTitle",
 				() -> {
+					if (!finalWorkflowSupported) {
+						return null;
+					}
+
 					if (!objectDefinition.isRootDescendantNode()) {
 						return _getWorkflowDefinitionTitle(
 							objectDefinition, resourceRequest);

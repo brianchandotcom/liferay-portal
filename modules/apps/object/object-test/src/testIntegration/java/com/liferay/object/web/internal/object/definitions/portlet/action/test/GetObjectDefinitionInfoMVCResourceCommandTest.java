@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -69,10 +70,9 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinitionA = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			"A");
+		_objectDefinitionA = ObjectDefinitionTestUtil.publishObjectDefinition();
 		_objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 	}
 
 	@Test
@@ -80,10 +80,11 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 		KaleoDefinition kaleoDefinition = _addKaleoDefinition(
 			_objectDefinitionA);
 
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA, true);
 
 		_assertJSONObject(
-			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA);
+			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA,
+			true);
 
 		TreeTestUtil.bind(
 			_objectRelationshipLocalService,
@@ -94,8 +95,8 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 					StringUtil.randomId())));
 
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
-		_assertJSONObject(kaleoDefinition, _objectDefinitionAA);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA, true);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionAA, false);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -103,6 +104,12 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 				_objectDefinitionA.getName(), _objectDefinitionAA.getName()
 			},
 			_objectEntryLocalService, _objectRelationshipLocalService);
+
+		ObjectDefinition systemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				TestPropsValues.getCompanyId(), "Organization");
+
+		_assertJSONObject(null, systemObjectDefinition, false);
 	}
 
 	private KaleoDefinition _addKaleoDefinition(
@@ -125,15 +132,23 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 	}
 
 	private void _assertJSONObject(
-			KaleoDefinition kaleoDefinition, ObjectDefinition objectDefinition)
+			KaleoDefinition kaleoDefinition, ObjectDefinition objectDefinition,
+			boolean workflowSupported)
 		throws Exception {
 
+		JSONObject jsonObject = JSONUtil.put(
+			"isWorkflowSupported", workflowSupported
+		).put(
+			"tableName", objectDefinition.getDBTableName()
+		);
+
+		if (workflowSupported) {
+			jsonObject.put(
+				"workflowDefinitionTitle", kaleoDefinition.getTitle());
+		}
+
 		Assert.assertEquals(
-			JSONUtil.put(
-				"tableName", objectDefinition.getDBTableName()
-			).put(
-				"workflowDefinitionTitle", kaleoDefinition.getTitle()
-			).toString(),
+			jsonObject.toString(),
 			String.valueOf(
 				_getJSONObject(objectDefinition.getObjectDefinitionId())));
 	}
@@ -157,6 +172,7 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

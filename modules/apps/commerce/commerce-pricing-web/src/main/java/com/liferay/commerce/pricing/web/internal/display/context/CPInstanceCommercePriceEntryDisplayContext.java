@@ -8,7 +8,7 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
+import com.liferay.commerce.item.selector.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;

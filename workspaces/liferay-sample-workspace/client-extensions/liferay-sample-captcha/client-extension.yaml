@@ -1,0 +1,13 @@
+liferay-sample-captcha:
+    captchaName: reCAPTCHA CX
+    captchaResponseParameterName: g-recaptcha-response
+    customElementExternalReferenceCode: LXC:liferay-sample-custom-element-captcha
+    name: Liferay Sample Captcha
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-captcha-oauth-application-user-agent
+    resourcePath: /captcha/validation
+    type: captcha
+liferay-sample-captcha-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Captcha OAuth Application User Agent
+    type: oAuthApplicationUserAgent

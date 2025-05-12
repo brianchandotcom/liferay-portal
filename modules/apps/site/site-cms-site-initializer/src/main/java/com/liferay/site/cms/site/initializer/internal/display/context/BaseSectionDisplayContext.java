@@ -80,31 +80,19 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		String[] objectFolderExternalReferenceCodes =
-			getObjectFolderExternalReferenceCodes();
+		StringBundler sb = new StringBundler(4);
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("/o/search/v1.0/search?emptySearch=true&filter=(");
+		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
 
 		if (_objectEntryFolder != null) {
-			sb.append("folderId eq");
+			sb.append("folderId eq ");
 			sb.append(_objectEntryFolder.getObjectEntryFolderId());
-			sb.append("and");
+		}
+		else {
+			sb.append(getCMSSectionFilterString());
 		}
 
-		sb.append("(objectFolderExternalReferenceCode in ('");
-		sb.append(StringUtil.merge(objectFolderExternalReferenceCodes, "','"));
-		sb.append("')");
-
-		String cmsSectionFilterString = getCMSSectionFilterString();
-
-		if (Validator.isNotNull(cmsSectionFilterString)) {
-			sb.append(" or ");
-			sb.append(cmsSectionFilterString);
-		}
-
-		sb.append("))&nestedFields=embedded,file.thumbnailURL");
+		sb.append("&nestedFields=embedded,file.thumbnailURL");
 
 		return sb.toString();
 	}

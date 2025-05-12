@@ -171,7 +171,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return "cmsSection eq 'files'";
+		return "cmsSection eq 'files' and cmsRoot eq true";
 	}
 
 	private final Portal _portal;

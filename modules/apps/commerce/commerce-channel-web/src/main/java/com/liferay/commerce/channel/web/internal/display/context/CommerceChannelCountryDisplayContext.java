@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.channel.web.internal.display.context;
 
-import com.liferay.commerce.channel.web.internal.item.selector.criterion.CountryItemSelectorCriterion;
+import com.liferay.commerce.channel.web.internal.item.selector.CountryItemSelectorCriterion;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRelModel;

@@ -52,6 +52,9 @@ public interface ExportImportHelper {
 			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception;
 
+	public List<Portlet> getExportablePortlets(
+		long companyId, boolean excludeDataAlwaysStaged, long groupId);
+
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
 

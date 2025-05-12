@@ -1,8 +1,8 @@
 package ${configYAML.apiPackagePath}.internal.jaxrs.application;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.ws.rs.core.Application;
+import ${configYAML.javaEEPackage}.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
 

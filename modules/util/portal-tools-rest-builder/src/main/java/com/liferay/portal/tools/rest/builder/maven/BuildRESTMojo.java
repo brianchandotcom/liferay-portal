@@ -63,8 +63,8 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setJavaEePackage(String javaEePackage) {
-		_restBuilderArgs.setJavaEePackage(javaEePackage);
+	public void setJavaEEPackage(String javaEEPackage) {
+		_restBuilderArgs.setJavaEEPackage(javaEEPackage);
 	}
 
 	/**

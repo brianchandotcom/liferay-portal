@@ -6,9 +6,9 @@ import com.liferay.portal.vulcan.dto.action.ActionInfo;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
+import ${configYAML.javaEEPackage}.ws.rs.core.UriInfo;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -142,7 +142,7 @@ public class ResourceTestCaseOpenAPIParser {
 		else if (returnType.contains(".") &&
 				 !returnType.equals("com.liferay.portal.vulcan") &&
 				 !returnType.equals(
-					 configYAML.getJavaEePackage() + ".ws.rs.core.Response") &&
+					 configYAML.getJavaEEPackage() + ".ws.rs.core.Response") &&
 				 !returnType.startsWith("java.lang") &&
 				 !returnType.startsWith("java.util") &&
 				 !returnType.startsWith(apiPackage)) {

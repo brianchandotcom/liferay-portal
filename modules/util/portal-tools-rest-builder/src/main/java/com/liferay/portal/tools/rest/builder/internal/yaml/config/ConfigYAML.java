@@ -46,8 +46,8 @@ public class ConfigYAML {
 		return _implDir;
 	}
 
-	public String getJavaEePackage() {
-		return _javaEePackage;
+	public String getJavaEEPackage() {
+		return _javaEEPackage;
 	}
 
 	public String getLicenseName() {
@@ -224,8 +224,8 @@ public class ConfigYAML {
 		_implDir = implDir;
 	}
 
-	public void setJavaEePackage(String javaEePackage) {
-		_javaEePackage = javaEePackage;
+	public void setJavaEEPackage(String javaEEPackage) {
+		_javaEEPackage = javaEEPackage;
 	}
 
 	public void setLicenseName(String licenseName) {
@@ -274,7 +274,7 @@ public class ConfigYAML {
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;
 	private String _implDir = "src/main/java";
-	private String _javaEePackage;
+	private String _javaEEPackage;
 	private String _licenseName = "Apache 2.0";
 	private String _licenseURL =
 		"http://www.apache.org/licenses/LICENSE-2.0.html";

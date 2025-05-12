@@ -15,7 +15,7 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.io.Serializable;
 

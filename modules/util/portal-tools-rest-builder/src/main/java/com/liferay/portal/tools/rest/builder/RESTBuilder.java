@@ -123,7 +123,7 @@ public class RESTBuilder {
 	public RESTBuilder(
 			File copyrightFile, File configDir,
 			Boolean forceClientVersionDescription,
-			Boolean forcePredictableOperationId, String javaEePackage)
+			Boolean forcePredictableOperationId, String javaEEPackage)
 		throws Exception {
 
 		_copyrightFile = copyrightFile;
@@ -145,11 +145,11 @@ public class RESTBuilder {
 					forcePredictableOperationId);
 			}
 
-			if (javaEePackage != null) {
-				_configYAML.setJavaEePackage(javaEePackage);
+			if (javaEEPackage != null) {
+				_configYAML.setJavaEEPackage(javaEEPackage);
 			}
 			else {
-				_configYAML.setJavaEePackage(
+				_configYAML.setJavaEEPackage(
 					ConfigUtil.isVersionCompatible(_configYAML, 9) ? "jakarta" :
 						"javax");
 			}
@@ -167,7 +167,7 @@ public class RESTBuilder {
 			restBuilderArgs.getRESTConfigDir(),
 			restBuilderArgs.isForceClientVersionDescription(),
 			restBuilderArgs.isForcePredictableOperationId(),
-			restBuilderArgs.getJavaEePackage());
+			restBuilderArgs.getJavaEEPackage());
 	}
 
 	public void build() throws Exception {

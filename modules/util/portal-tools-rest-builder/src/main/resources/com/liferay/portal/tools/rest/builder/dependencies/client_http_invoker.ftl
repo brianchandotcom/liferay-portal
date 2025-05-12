@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.http;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

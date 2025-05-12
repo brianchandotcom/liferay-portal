@@ -11,6 +11,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.util.JakartaUpgradeProcessUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -32,17 +36,14 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				connection, tableName);
 
 			processConcurrently(
-				JakartaUpgradeProcessUtil.getSelectSQL(
-					columnName, primaryKeyColumnNames, tableName),
-				JakartaUpgradeProcessUtil.getUpdateSQL(
-					columnName, primaryKeyColumnNames, tableName),
-				resultSet -> JakartaUpgradeProcessUtil.getSelectResultSetData(
+				_getSelectSQL(columnName, primaryKeyColumnNames, tableName),
+				_getUpdateSQL(columnName, primaryKeyColumnNames, tableName),
+				resultSet -> _getSelectResultSetData(
 					columnName, primaryKeyColumnNames, resultSet),
 				(values, preparedStatement) -> {
-					String modifiedKey =
-						JakartaUpgradeProcessUtil.updateJakartaValue(
-							getCustomSeparators(), preparedStatement,
-							primaryKeyColumnNames, values);
+					String modifiedKey = _updateJakartaValue(
+						getCustomSeparators(), preparedStatement,
+						primaryKeyColumnNames, values);
 
 					if (modifiedKey == null) {
 						return;
@@ -82,6 +83,115 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected abstract String[][] getTableAndColumnNames();
+
+	private Object[] _getSelectResultSetData(
+			String columnName, String[] primaryKeyColumnNames,
+			ResultSet resultSet)
+		throws SQLException {
+
+		Object[] result = new Object[primaryKeyColumnNames.length + 1];
+
+		int i = 0;
+
+		for (String primaryKeyColumnName : primaryKeyColumnNames) {
+			result[i] = resultSet.getObject(primaryKeyColumnName);
+			i++;
+		}
+
+		result[i] = resultSet.getString(columnName);
+
+		return result;
+	}
+
+	private String _getSelectSQL(
+		String columnName, String[] primaryKeyColumnNames, String tableName) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("select ");
+
+		for (String primaryKeyColumnName : primaryKeyColumnNames) {
+			sb.append(primaryKeyColumnName);
+			sb.append(", ");
+		}
+
+		sb.append(columnName);
+		sb.append(" from ");
+		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" is not null");
+
+		return sb.toString();
+	}
+
+	private String _getUpdateSQL(
+		String columnName, String[] primaryKeyColumnNames, String tableName) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set ");
+		sb.append(columnName);
+		sb.append(" = ? where ");
+
+		for (String primaryKeyColumnName : primaryKeyColumnNames) {
+			sb.append(primaryKeyColumnName);
+			sb.append(" = ?");
+			sb.append(" and ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
+	private String _updateJakartaValue(
+			char[] customSeparators, PreparedStatement preparedStatement,
+			String[] primaryKeyColumnNames, Object[] values)
+		throws SQLException {
+
+		String javaxValue = (String)values[values.length - 1];
+
+		if (javaxValue == null) {
+			return null;
+		}
+
+		String jakartaValue;
+
+		if (customSeparators.length > 0) {
+			jakartaValue = JakartaUpgradeProcessUtil.replace(
+				javaxValue, customSeparators);
+		}
+		else {
+			jakartaValue = JakartaUpgradeProcessUtil.replace(javaxValue);
+		}
+
+		if (javaxValue.length() != jakartaValue.length()) {
+			preparedStatement.setString(1, jakartaValue);
+
+			for (int i = 0; i < primaryKeyColumnNames.length; i++) {
+				preparedStatement.setObject(i + 2, values[i]);
+			}
+
+			preparedStatement.addBatch();
+
+			StringBundler sb = new StringBundler("(");
+
+			for (int i = 0; i < primaryKeyColumnNames.length; i++) {
+				sb.append(values[i]);
+				sb.append(", ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+			sb.append(")");
+
+			return sb.toString();
+		}
+
+		return null;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJakartaUpgradeProcess.class);

@@ -33,6 +33,18 @@ jest.mock('frontend-js-web', () => {
 	};
 });
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
+	() => {
+		return {
+			config: {
+				editStructureDisplayPageURL: 'http://localhost:8080/edit',
+				resetStructureDisplayPageURL: 'http://localhost:8080/reset',
+			},
+		};
+	}
+);
+
 type Props = {
 	state?: Partial<State>;
 };
@@ -233,7 +245,7 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Navigates to customize experience if the structure is published', async () => {
 		renderComponent({
-			state: {status: 'published'},
+			state: {id: 123, status: 'published'},
 		});
 
 		const customizeExperienceButton = screen.getByText(
@@ -243,7 +255,11 @@ describe('StructureBuilderManagementBar', () => {
 		await userEvent.click(customizeExperienceButton);
 
 		await waitFor(() => {
-			expect(require('frontend-js-web').navigate).toBeCalled();
+			expect(require('frontend-js-web').navigate).toBeCalledWith(
+				expect.stringContaining(
+					'http://localhost:8080/edit?objectDefinitionId=123'
+				)
+			);
 		});
 	});
 });

@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
+import com.liferay.object.exception.ObjectEntryFolderParentObjectEntryFolderException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.object.exception.RequiredObjectEntryFolderException;
 import com.liferay.object.model.ObjectEntry;
@@ -70,7 +71,8 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateExternalReferenceCode(
 			externalReferenceCode, groupId, user.getCompanyId());
 
-		_validateParentObjectEntryFolderId(groupId, parentObjectEntryFolderId);
+		_validateParentObjectEntryFolderId(
+			groupId, 0, parentObjectEntryFolderId);
 		_validateName(
 			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
 
@@ -272,7 +274,9 @@ public class ObjectEntryFolderLocalServiceImpl
 			objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
 
 		_validateParentObjectEntryFolderId(
-			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
+			objectEntryFolder.getGroupId(),
+			objectEntryFolder.getObjectEntryFolderId(),
+			parentObjectEntryFolderId);
 		_validateName(
 			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
 			objectEntryFolderId, parentObjectEntryFolderId, name);
@@ -388,7 +392,8 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private void _validateParentObjectEntryFolderId(
-			long groupId, long parentObjectEntryFolderId)
+			long groupId, long objectEntryFolderId,
+			long parentObjectEntryFolderId)
 		throws PortalException {
 
 		if (parentObjectEntryFolderId ==
@@ -396,6 +401,13 @@ public class ObjectEntryFolderLocalServiceImpl
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
 
 			return;
+		}
+
+		if (objectEntryFolderId == parentObjectEntryFolderId) {
+			throw new ObjectEntryFolderParentObjectEntryFolderException(
+				StringBundler.concat(
+					"Can not set the parent entry folder ID of object entry ",
+					"folder ", objectEntryFolderId, " to itself"));
 		}
 
 		ObjectEntryFolder objectEntryFolder =

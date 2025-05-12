@@ -13,6 +13,7 @@ AllSpacesSectionDisplayContext allSpacesSectionDisplayContext = (AllSpacesSectio
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
+		additionalProps="<%= allSpacesSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= allSpacesSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= allSpacesSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= allSpacesSectionDisplayContext.getCreationMenu() %>"

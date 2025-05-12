@@ -55,6 +55,21 @@ public class AllSpacesSectionDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public Map<String, Object> getAdditionalProps() {
+		Long[] assetLibraryPinIds = null;
+
+		try {
+			assetLibraryPinIds = getAssetLibraryPinIds();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"pinnedAssetLibrariesIds", assetLibraryPinIds
+		).build();
+	}
+
 	public String getAPIURL() {
 		return "/o/headless-asset-library/v1.0/asset-libraries?nestedFields=" +
 			"numberOfSites,numberOfUserAccounts,numberOfUserGroups";

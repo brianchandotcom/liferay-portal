@@ -180,3 +180,46 @@ test(
 		await expect(ckeVoiceLabel).toHaveText('Rich Text Editor');
 	}
 );
+
+test(
+	'Check focus does not move when interacting with scrollbar',
+	{tag: ['@LPD-53923']},
+	async ({page}) => {
+		const dragButton = page.locator(
+			'.cke_resizer.cke_resizer_vertical.cke_resizer_ltr'
+		);
+
+		await dragButton.waitFor({state: 'visible'});
+		await dragButton.scrollIntoViewIfNeeded();
+		await dragButton.hover();
+
+		const dragButtonRect = await dragButton.evaluate((element) => {
+			return element.getBoundingClientRect();
+		});
+
+		await page.mouse.down();
+		await page.mouse.move(dragButtonRect.x, dragButtonRect.y + 1000);
+		await page.mouse.up();
+
+		await dragButton.scrollIntoViewIfNeeded();
+
+		const ckeditorElementRect = await page.evaluate(() => {
+			return document
+				.querySelector('iframe[title="editor"]')
+				.getBoundingClientRect();
+		});
+
+		await page.mouse.click(
+			ckeditorElementRect.right - 2,
+			ckeditorElementRect.bottom - 2
+		);
+
+		const ckeditorElementRectChange = await page.evaluate(() => {
+			return document
+				.querySelector('iframe[title="editor"]')
+				.getBoundingClientRect();
+		});
+
+		expect(ckeditorElementRect).toEqual(ckeditorElementRectChange);
+	}
+);

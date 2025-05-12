@@ -27,6 +27,7 @@ import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import getRandomString from '../../../utils/getRandomString';
 import {getTempDir} from '../../../utils/temp';
+import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
@@ -93,6 +94,106 @@ async function getSiteHomePageScreenshot(
 
 	return screenshot;
 }
+
+testWithExportImportAtInstanceLevelFF(
+	'can export and import custom object entries at site level',
+	async ({apiHelpers, exportImportPage}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'test',
+				label: {
+					en_US: 'Test',
+				},
+				name: 'Test',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Name',
+						},
+						name: 'name',
+						required: true,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Tests',
+				},
+				portlet: true,
+				scope: 'site',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			'c/tests/scopes/Guest'
+		);
+
+		await exportImportPage.goToExport();
+
+		const exportName = 'MyExport-' + getRandomString();
+
+		await exportImportPage.export(exportName, 'Tests');
+
+		await expect(
+			exportImportPage.page
+				.locator('//h2[span[normalize-space()="' + exportName + '"]]')
+				.first()
+				.locator('../..')
+				.getByText('Successful')
+		).toBeVisible();
+
+		const exportFilePath =
+			await exportImportPage.downloadExportProcess(exportName);
+
+		const content = await readFileFromZip('C_Test.json', exportFilePath);
+
+		const json = JSON.parse(content);
+
+		expect(json.length).toBe(1);
+
+		expect(
+			await apiHelpers.delete(
+				`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`
+			)
+		).toBeOK();
+
+		await exportImportPage.goToImport();
+
+		await exportImportPage.import(exportFilePath);
+
+		await expect(
+			exportImportPage.page
+				.getByText(exportName)
+				.locator('../../..')
+				.getByText('Successful')
+		).toBeVisible();
+
+		expect(
+			await apiHelpers.get(
+				`${apiHelpers.baseUrl}c/tests/scopes/Guest/by-external-reference-code/${objectEntry.externalReferenceCode}`
+			)
+		).toEqual(
+			expect.objectContaining({
+				externalReferenceCode: objectEntry.externalReferenceCode,
+				name: objectEntry.name,
+			})
+		);
+	}
+);
 
 testWithExportImportAtInstanceLevelFF(
 	'cannot import an instance scoped lar file',

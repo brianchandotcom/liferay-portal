@@ -46,7 +46,7 @@ public class DepotEntryInfoItemObjectProvider
 			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-			DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			DepotEntry depotEntry = _fetchDepotEntry(
 				classPKInfoItemIdentifier.getClassPK());
 
 			if (depotEntry == null) {
@@ -88,6 +88,17 @@ public class DepotEntryInfoItemObjectProvider
 		}
 
 		return depotEntry;
+	}
+
+	private DepotEntry _fetchDepotEntry(long classPK) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			classPK);
+
+		if (depotEntry != null) {
+			return depotEntry;
+		}
+
+		return _depotEntryLocalService.fetchGroupDepotEntry(classPK);
 	}
 
 	private Long _getCompanyId() {

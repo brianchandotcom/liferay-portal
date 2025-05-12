@@ -333,7 +333,7 @@ public class ObjectEntryFolderResourceImpl
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
 			}
 
-			if (parentObjectEntryFolderId > ObjectEntryFolderConstants.
+			if (parentObjectEntryFolderId != ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
 
 				_objectEntryFolderService.getObjectEntryFolder(

@@ -103,6 +103,18 @@ export class ObjectFieldsPage {
 		}
 	}
 
+	async deleteObjectFieldByLabel(label: string) {
+		await this.page
+			.getByRole('row')
+			.filter({hasText: label})
+			.locator('.dropdown-toggle')
+			.click();
+
+		await this.deleteObjectFieldOption.click();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+	}
+
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 

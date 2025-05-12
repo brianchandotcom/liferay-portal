@@ -36,9 +36,8 @@ public class BatchEnginePortletDataHandlerRegistry {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTracker = ServiceTrackerFactory.create(
 			bundleContext,
-			"(&(batch.engine.scope=company)" +
-				"(batch.engine.task.item.delegate=true)" +
-					"(batch.engine.task.item.delegate.portlet.id=*))",
+			"(&(batch.engine.task.item.delegate=true)" +
+				"(batch.engine.task.item.delegate.portlet.id=*))",
 			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 				bundleContext));
 
@@ -104,6 +103,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 						"batch.engine.task.item.delegate.class.name"),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.item.class.name"),
+					(String)serviceReference.getProperty("batch.engine.scope"),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
 

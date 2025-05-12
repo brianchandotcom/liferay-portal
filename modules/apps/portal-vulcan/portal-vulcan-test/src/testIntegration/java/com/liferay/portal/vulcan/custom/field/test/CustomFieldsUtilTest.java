@@ -44,13 +44,14 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.List;
-import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1353,99 +1354,6 @@ public class CustomFieldsUtilTest {
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 	}
 
-
-	private void _testToMapWithIntegerValueForLongField() throws Exception {
-		CustomField[] customFields = new CustomField[] {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = _DATA_INT;
-						}
-					};
-					dataType = "Integer";
-					name = _expandoColumn14.getName();
-				}
-			}
-		};
-
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
-			LocaleUtil.getDefault());
-
-		Assert.assertEquals((long)_DATA_INT, map.get(_expandoColumn14.getName()));
-
-		Assert.assertTrue(
-			"Value should be of type Long but was " + 
-			map.get(_expandoColumn14.getName()).getClass().getName(),
-			map.get(_expandoColumn14.getName()) instanceof Long);
-	}
-
-
-	private void _testToMapWithIntegerValueForShortField() throws Exception {
-		CustomField[] customFields = new CustomField[] {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = _DATA_INT;
-						}
-					};
-					dataType = "Integer";
-					name = _expandoColumn20.getName();
-				}
-			}
-		};
-
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
-			LocaleUtil.getDefault());
-
-		Assert.assertEquals((short)_DATA_INT, map.get(_expandoColumn20.getName()));
-		
-		Assert.assertTrue(
-			"Value should be of type Short but was " + 
-			map.get(_expandoColumn20.getName()).getClass().getName(),
-			map.get(_expandoColumn20.getName()) instanceof Short);
-	}
-
-
-	private void _testToMapWithIntegerArrayForShortArrayField() throws Exception {
-		List<Integer> integerCollection = new ArrayList<>();
-		integerCollection.add(_DATA_INT);
-		
-		CustomField[] customFields = new CustomField[] {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = integerCollection;
-						}
-					};
-					dataType = "Integer";
-					name = _expandoColumn21.getName();
-				}
-			}
-		};
-
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
-			LocaleUtil.getDefault());
-
-		short[] result = (short[])map.get(_expandoColumn21.getName());
-
-		Assert.assertEquals(integerCollection.size(), result.length);
-		for (int i = 0; i < integerCollection.size(); i++) {
-			Assert.assertEquals(
-				(short)(int)integerCollection.get(i), result[i]);
-		}
-
-		Assert.assertTrue(
-			"Value should be of type short[] but was " + 
-			map.get(_expandoColumn21.getName()).getClass().getName(),
-			map.get(_expandoColumn21.getName()) instanceof short[]);
-	}
-
 	private ExpandoColumn _addExpandoColumn(
 			Object defaultData, String displayType, ExpandoTable expandoTable,
 			int type)
@@ -1528,11 +1436,121 @@ public class CustomFieldsUtilTest {
 		throw new NoSuchValueException();
 	}
 
+	private void _testToMapWithIntegerArrayForShortArrayField()
+		throws Exception {
+
+		List<Integer> integerCollection = new ArrayList<>();
+
+		integerCollection.add(_DATA_INT);
+
+		CustomField[] customFields = {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = integerCollection;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn21.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		short[] result = (short[])map.get(_expandoColumn21.getName());
+
+		Assert.assertEquals(
+			Arrays.toString(result), integerCollection.size(), result.length);
+
+		for (int i = 0; i < integerCollection.size(); i++) {
+			Assert.assertEquals(
+				"Element at index " + i, (short)(int)integerCollection.get(i),
+				result[i]);
+		}
+
+		String className = map.get(
+			_expandoColumn21.getName()
+		).getClass(
+		).getName();
+
+		Assert.assertTrue(
+			"Value should be of type short[] but was " + className,
+			map.get(_expandoColumn21.getName()) instanceof short[]);
+	}
+
+	private void _testToMapWithIntegerValueForLongField() throws Exception {
+		CustomField[] customFields = {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = _DATA_INT;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn14.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(
+			(long)_DATA_INT, map.get(_expandoColumn14.getName()));
+
+		String className = map.get(
+			_expandoColumn14.getName()
+		).getClass(
+		).getName();
+
+		Assert.assertTrue(
+			"Value should be of type Long but was " + className,
+			map.get(_expandoColumn14.getName()) instanceof Long);
+	}
+
+	private void _testToMapWithIntegerValueForShortField() throws Exception {
+		CustomField[] customFields = {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = _DATA_INT;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn20.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(
+			(short)_DATA_INT, map.get(_expandoColumn20.getName()));
+
+		String className = map.get(
+			_expandoColumn20.getName()
+		).getClass(
+		).getName();
+
+		Assert.assertTrue(
+			"Value should be of type Short but was " + className,
+			map.get(_expandoColumn20.getName()) instanceof Short);
+	}
+
 	private static final double _DATA_DOUBLE = RandomTestUtil.randomDouble();
 
-	private static final long _DATA_LONG = RandomTestUtil.randomLong();
-
 	private static final int _DATA_INT = RandomTestUtil.randomInt();
+
+	private static final long _DATA_LONG = RandomTestUtil.randomLong();
 
 	private static final String _DATA_STRING = RandomTestUtil.randomString();
 

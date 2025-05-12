@@ -60,6 +60,12 @@ export class CaptchaConfigPage {
 		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
+	async selectCaptchaEngine(captchaEngine: string) {
+		await this.captchaEngine.click();
+
+		await this.page.getByRole('option', {name: captchaEngine}).click();
+	}
+
 	async disableCaptcha() {
 		await this.goTo();
 
@@ -125,8 +131,7 @@ export class CaptchaConfigPage {
 		privateKey: string,
 		saveConfiguration: boolean = true
 	) {
-		await this.captchaEngine.click();
-		await this.page.getByRole('option', {name: 'reCAPTCHA'}).click();
+		await this.selectCaptchaEngine('reCAPTCHA');
 
 		await this.reCaptchaPublicKey.fill(publicKey);
 

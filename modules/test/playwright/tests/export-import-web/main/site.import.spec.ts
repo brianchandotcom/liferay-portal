@@ -31,6 +31,7 @@ import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {openImportFieldset} from './utils/openImportFieldset';
 
 export const test = mergeTests(
@@ -213,35 +214,9 @@ testWithExportImportAtInstanceLevelFF(
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'test',
-				label: {
-					en_US: 'Test',
-				},
-				name: 'Test',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'Name',
-						},
-						name: 'name',
-						required: true,
-					},
-				],
-				pluralLabel: {
-					en_US: 'Tests',
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData()
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,
@@ -485,35 +460,9 @@ test('can see corresponding elements at site level', async ({
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -575,35 +524,9 @@ testDataDeletionHiddenDeprecationFF(
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'test',
-				label: {
-					en_US: 'Test',
-				},
-				name: 'Test',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'Name',
-						},
-						name: 'name',
-						required: true,
-					},
-				],
-				pluralLabel: {
-					en_US: 'Tests',
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData()
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

@@ -21,6 +21,7 @@ import {getTempDir} from '../../../utils/temp';
 import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
+import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -43,35 +44,9 @@ test('cannot export site scoped custom object entries at instance level', async 
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'site',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData({scope: 'site'})
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -95,35 +70,9 @@ test('can export custom object entries at instance level with date filter', asyn
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -191,35 +140,9 @@ test('can export new default and custom task name', async ({
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -251,35 +174,9 @@ test('can export custom object entries at instance level with permissions', asyn
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -306,35 +203,9 @@ test('can see corresponding elements at instance level', async ({
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await apiHelpers.objectEntry.postObjectEntry({name: 'test'}, 'c/tests');

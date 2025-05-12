@@ -31,6 +31,7 @@ import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -88,35 +89,9 @@ test('can export and import custom object entries at instance level', async ({
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -161,36 +136,25 @@ test('can only import custom object entries when their definitions are already i
 	const objectActionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-	const objectDefinitionRequestBody: ObjectDefinition = {
-		active: true,
-		className: 'com.liferay.object.model.ObjectDefinition#test_definition',
-		externalReferenceCode: 'test-definition',
-		label: {
-			en_US: 'Test',
-		},
-		name: 'Test',
-		objectFields: [
-			{
-				DBType: 'String',
-				businessType: 'Text',
-				indexed: true,
-				indexedAsKeyword: true,
-				label: {
-					en_US: 'textField',
+	const objectDefinitionRequestBody: ObjectDefinition =
+		objectDefitionRequestData({
+			className:
+				'com.liferay.object.model.ObjectDefinition#test_definition',
+			externalReferenceCode: 'test-definition',
+			objectFields: [
+				{
+					DBType: 'String',
+					businessType: 'Text',
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'textField',
+					},
+					name: 'textField',
+					required: true,
 				},
-				name: 'textField',
-				required: true,
-			},
-		],
-		pluralLabel: {
-			en_US: 'Tests',
-		},
-		portlet: true,
-		scope: 'company',
-		status: {
-			code: 0,
-		},
-	};
+			],
+		});
 
 	let {body: objectDefinition} =
 		await objectActionAPIClient.postObjectDefinition(
@@ -241,35 +205,9 @@ test('can import custom object entries at instance level with or without permiss
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
@@ -360,35 +298,9 @@ test('can see corresponding elements at instance level', async ({
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionAPIClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 

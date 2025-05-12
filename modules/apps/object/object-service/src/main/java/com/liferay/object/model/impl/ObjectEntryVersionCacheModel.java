@@ -69,7 +69,7 @@ public class ObjectEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,10 +93,18 @@ public class ObjectEntryVersionCacheModel
 		sb.append(objectEntryId);
 		sb.append(", content=");
 		sb.append(content);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -151,8 +159,30 @@ public class ObjectEntryVersionCacheModel
 			objectEntryVersionImpl.setContent(content);
 		}
 
+		if (expirationDate == Long.MIN_VALUE) {
+			objectEntryVersionImpl.setExpirationDate(null);
+		}
+		else {
+			objectEntryVersionImpl.setExpirationDate(new Date(expirationDate));
+		}
+
 		objectEntryVersionImpl.setVersion(version);
 		objectEntryVersionImpl.setStatus(status);
+		objectEntryVersionImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectEntryVersionImpl.setStatusByUserName("");
+		}
+		else {
+			objectEntryVersionImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			objectEntryVersionImpl.setStatusDate(null);
+		}
+		else {
+			objectEntryVersionImpl.setStatusDate(new Date(statusDate));
+		}
 
 		objectEntryVersionImpl.resetOriginalValues();
 
@@ -179,10 +209,15 @@ public class ObjectEntryVersionCacheModel
 
 		objectEntryId = objectInput.readLong();
 		content = (String)objectInput.readObject();
+		expirationDate = objectInput.readLong();
 
 		version = objectInput.readInt();
 
 		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -223,9 +258,22 @@ public class ObjectEntryVersionCacheModel
 			objectOutput.writeObject(content);
 		}
 
+		objectOutput.writeLong(expirationDate);
+
 		objectOutput.writeInt(version);
 
 		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -239,7 +287,11 @@ public class ObjectEntryVersionCacheModel
 	public long objectDefinitionId;
 	public long objectEntryId;
 	public String content;
+	public long expirationDate;
 	public int version;
 	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -70,8 +71,10 @@ public class ObjectEntryVersionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"objectEntryId", Types.BIGINT},
-		{"content", Types.CLOB}, {"version", Types.INTEGER},
-		{"status", Types.INTEGER}
+		{"content", Types.CLOB}, {"expirationDate", Types.TIMESTAMP},
+		{"version", Types.INTEGER}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,12 +92,16 @@ public class ObjectEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryId LONG,content TEXT null,version INTEGER,status INTEGER)";
+		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryId LONG,content TEXT null,expirationDate DATE null,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntryVersion";
 
@@ -281,9 +288,17 @@ public class ObjectEntryVersionModelImpl
 			attributeGetterFunctions.put(
 				"content", ObjectEntryVersion::getContent);
 			attributeGetterFunctions.put(
+				"expirationDate", ObjectEntryVersion::getExpirationDate);
+			attributeGetterFunctions.put(
 				"version", ObjectEntryVersion::getVersion);
 			attributeGetterFunctions.put(
 				"status", ObjectEntryVersion::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", ObjectEntryVersion::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", ObjectEntryVersion::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", ObjectEntryVersion::getStatusDate);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -347,6 +362,10 @@ public class ObjectEntryVersionModelImpl
 				(BiConsumer<ObjectEntryVersion, String>)
 					ObjectEntryVersion::setContent);
 			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<ObjectEntryVersion, Date>)
+					ObjectEntryVersion::setExpirationDate);
+			attributeSetterBiConsumers.put(
 				"version",
 				(BiConsumer<ObjectEntryVersion, Integer>)
 					ObjectEntryVersion::setVersion);
@@ -354,6 +373,18 @@ public class ObjectEntryVersionModelImpl
 				"status",
 				(BiConsumer<ObjectEntryVersion, Integer>)
 					ObjectEntryVersion::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<ObjectEntryVersion, Long>)
+					ObjectEntryVersion::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<ObjectEntryVersion, String>)
+					ObjectEntryVersion::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<ObjectEntryVersion, Date>)
+					ObjectEntryVersion::setStatusDate);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -604,6 +635,21 @@ public class ObjectEntryVersionModelImpl
 
 	@JSON
 	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
 	public int getVersion() {
 		return _version;
 	}
@@ -642,10 +688,156 @@ public class ObjectEntryVersionModelImpl
 		_status = status;
 	}
 
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(ObjectEntryVersion.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -718,8 +910,12 @@ public class ObjectEntryVersionModelImpl
 		objectEntryVersionImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectEntryVersionImpl.setObjectEntryId(getObjectEntryId());
 		objectEntryVersionImpl.setContent(getContent());
+		objectEntryVersionImpl.setExpirationDate(getExpirationDate());
 		objectEntryVersionImpl.setVersion(getVersion());
 		objectEntryVersionImpl.setStatus(getStatus());
+		objectEntryVersionImpl.setStatusByUserId(getStatusByUserId());
+		objectEntryVersionImpl.setStatusByUserName(getStatusByUserName());
+		objectEntryVersionImpl.setStatusDate(getStatusDate());
 
 		objectEntryVersionImpl.resetOriginalValues();
 
@@ -753,10 +949,18 @@ public class ObjectEntryVersionModelImpl
 			this.<Long>getColumnOriginalValue("objectEntryId"));
 		objectEntryVersionImpl.setContent(
 			this.<String>getColumnOriginalValue("content"));
+		objectEntryVersionImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
 		objectEntryVersionImpl.setVersion(
 			this.<Integer>getColumnOriginalValue("version"));
 		objectEntryVersionImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
+		objectEntryVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		objectEntryVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		objectEntryVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
 
 		return objectEntryVersionImpl;
 	}
@@ -891,9 +1095,38 @@ public class ObjectEntryVersionModelImpl
 			objectEntryVersionCacheModel.content = null;
 		}
 
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			objectEntryVersionCacheModel.expirationDate =
+				expirationDate.getTime();
+		}
+		else {
+			objectEntryVersionCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
 		objectEntryVersionCacheModel.version = getVersion();
 
 		objectEntryVersionCacheModel.status = getStatus();
+
+		objectEntryVersionCacheModel.statusByUserId = getStatusByUserId();
+
+		objectEntryVersionCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = objectEntryVersionCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			objectEntryVersionCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			objectEntryVersionCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			objectEntryVersionCacheModel.statusDate = Long.MIN_VALUE;
+		}
 
 		return objectEntryVersionCacheModel;
 	}
@@ -969,8 +1202,12 @@ public class ObjectEntryVersionModelImpl
 	private long _objectDefinitionId;
 	private long _objectEntryId;
 	private String _content;
+	private Date _expirationDate;
 	private int _version;
 	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1014,8 +1251,12 @@ public class ObjectEntryVersionModelImpl
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("objectEntryId", _objectEntryId);
 		_columnOriginalValues.put("content", _content);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
 		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1061,9 +1302,17 @@ public class ObjectEntryVersionModelImpl
 
 		columnBitmasks.put("content", 1024L);
 
-		columnBitmasks.put("version", 2048L);
+		columnBitmasks.put("expirationDate", 2048L);
 
-		columnBitmasks.put("status", 4096L);
+		columnBitmasks.put("version", 4096L);
+
+		columnBitmasks.put("status", 8192L);
+
+		columnBitmasks.put("statusByUserId", 16384L);
+
+		columnBitmasks.put("statusByUserName", 32768L);
+
+		columnBitmasks.put("statusDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

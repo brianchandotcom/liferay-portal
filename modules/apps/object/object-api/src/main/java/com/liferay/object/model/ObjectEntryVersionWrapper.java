@@ -45,8 +45,12 @@ public class ObjectEntryVersionWrapper
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryId", getObjectEntryId());
 		attributes.put("content", getContent());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -120,6 +124,12 @@ public class ObjectEntryVersionWrapper
 			setContent(content);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
 		Integer version = (Integer)attributes.get("version");
 
 		if (version != null) {
@@ -130,6 +140,24 @@ public class ObjectEntryVersionWrapper
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -166,6 +194,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the expiration date of this object entry version.
+	 *
+	 * @return the expiration date of this object entry version
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -239,6 +277,46 @@ public class ObjectEntryVersionWrapper
 	}
 
 	/**
+	 * Returns the status by user ID of this object entry version.
+	 *
+	 * @return the status by user ID of this object entry version
+	 */
+	@Override
+	public long getStatusByUserId() {
+		return model.getStatusByUserId();
+	}
+
+	/**
+	 * Returns the status by user name of this object entry version.
+	 *
+	 * @return the status by user name of this object entry version
+	 */
+	@Override
+	public String getStatusByUserName() {
+		return model.getStatusByUserName();
+	}
+
+	/**
+	 * Returns the status by user uuid of this object entry version.
+	 *
+	 * @return the status by user uuid of this object entry version
+	 */
+	@Override
+	public String getStatusByUserUuid() {
+		return model.getStatusByUserUuid();
+	}
+
+	/**
+	 * Returns the status date of this object entry version.
+	 *
+	 * @return the status date of this object entry version
+	 */
+	@Override
+	public Date getStatusDate() {
+		return model.getStatusDate();
+	}
+
+	/**
 	 * Returns the user ID of this object entry version.
 	 *
 	 * @return the user ID of this object entry version
@@ -288,6 +366,86 @@ public class ObjectEntryVersionWrapper
 		return model.getVersion();
 	}
 
+	/**
+	 * Returns <code>true</code> if this object entry version is approved.
+	 *
+	 * @return <code>true</code> if this object entry version is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved() {
+		return model.isApproved();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is denied.
+	 *
+	 * @return <code>true</code> if this object entry version is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied() {
+		return model.isDenied();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is a draft.
+	 *
+	 * @return <code>true</code> if this object entry version is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft() {
+		return model.isDraft();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is expired.
+	 *
+	 * @return <code>true</code> if this object entry version is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired() {
+		return model.isExpired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is inactive.
+	 *
+	 * @return <code>true</code> if this object entry version is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive() {
+		return model.isInactive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is incomplete.
+	 *
+	 * @return <code>true</code> if this object entry version is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete() {
+		return model.isIncomplete();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is pending.
+	 *
+	 * @return <code>true</code> if this object entry version is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending() {
+		return model.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object entry version is scheduled.
+	 *
+	 * @return <code>true</code> if this object entry version is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled() {
+		return model.isScheduled();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -321,6 +479,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the expiration date of this object entry version.
+	 *
+	 * @param expirationDate the expiration date of this object entry version
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -391,6 +559,46 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
+	}
+
+	/**
+	 * Sets the status by user ID of this object entry version.
+	 *
+	 * @param statusByUserId the status by user ID of this object entry version
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		model.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	 * Sets the status by user name of this object entry version.
+	 *
+	 * @param statusByUserName the status by user name of this object entry version
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		model.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	 * Sets the status by user uuid of this object entry version.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this object entry version
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		model.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	 * Sets the status date of this object entry version.
+	 *
+	 * @param statusDate the status date of this object entry version
+	 */
+	@Override
+	public void setStatusDate(Date statusDate) {
+		model.setStatusDate(statusDate);
 	}
 
 	/**

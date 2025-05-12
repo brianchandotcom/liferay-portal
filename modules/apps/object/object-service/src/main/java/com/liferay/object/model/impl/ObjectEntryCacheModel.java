@@ -68,7 +68,7 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class ObjectEntryCacheModel
 		sb.append(rootObjectEntryId);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", treePath=");
 		sb.append(treePath);
 		sb.append(", version=");
@@ -174,6 +176,13 @@ public class ObjectEntryCacheModel
 			objectEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
 
+		if (expirationDate == Long.MIN_VALUE) {
+			objectEntryImpl.setExpirationDate(null);
+		}
+		else {
+			objectEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
 		if (treePath == null) {
 			objectEntryImpl.setTreePath("");
 		}
@@ -235,6 +244,7 @@ public class ObjectEntryCacheModel
 
 		rootObjectEntryId = objectInput.readLong();
 		defaultLanguageId = objectInput.readUTF();
+		expirationDate = objectInput.readLong();
 		treePath = objectInput.readUTF();
 
 		version = objectInput.readInt();
@@ -296,6 +306,8 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(defaultLanguageId);
 		}
 
+		objectOutput.writeLong(expirationDate);
+
 		if (treePath == null) {
 			objectOutput.writeUTF("");
 		}
@@ -334,6 +346,7 @@ public class ObjectEntryCacheModel
 	public long objectEntryFolderId;
 	public long rootObjectEntryId;
 	public String defaultLanguageId;
+	public long expirationDate;
 	public String treePath;
 	public int version;
 	public long lastPublishDate;

@@ -202,6 +202,10 @@ public interface ObjectEntryVersionLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	public ObjectEntryVersion expireObjectEntryVersion(
+			long userId, long objectEntryId, int version)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId);

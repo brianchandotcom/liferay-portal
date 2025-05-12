@@ -134,13 +134,11 @@ test('can export and import custom object entries at instance level', async ({
 	expect(json.length).toBe(1);
 	expect(json[0]).not.toHaveProperty('permissions');
 
-	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
-
 	expect(
-		await apiHelpers.get(
-			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`
 		)
-	).toEqual({status: 'NOT_FOUND'});
+	).toBeOK();
 
 	await companyExportImportPage.import(exportFilePath);
 

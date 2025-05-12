@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.item.selector.web.internal;
 
-import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
+import com.liferay.commerce.product.item.selector.CPOptionItemSelectorCriterion;
 import com.liferay.commerce.product.item.selector.web.internal.display.context.CPOptionItemSelectorViewDisplayContext;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.item.selector.ItemSelectorReturnType;

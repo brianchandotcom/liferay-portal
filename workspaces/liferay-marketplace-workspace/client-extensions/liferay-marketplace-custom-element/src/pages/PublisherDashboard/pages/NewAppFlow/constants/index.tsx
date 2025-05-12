@@ -93,7 +93,8 @@ export const APP_FLOW_ITEMS = [
 		label: 'Licensing',
 		path: 'licensing-prices',
 		title: 'Select licensing terms',
-		visible: () => true,
+		visible: (context: NewAppInitialState) =>
+			context.pricing.priceModel === ProductPriceModel.PAID,
 	},
 	{
 		description: `Inform the support and help references. This will impact how users will experience this app's customer support and learning.`,

@@ -49,6 +49,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1373,6 +1375,71 @@ public class CustomFieldsUtilTest {
 			"Value should be of type Long but was " + 
 			map.get(_expandoColumn14.getName()).getClass().getName(),
 			map.get(_expandoColumn14.getName()) instanceof Long);
+	}
+
+	@Test
+	public void testToMapWithIntegerValueForShortField() throws Exception {
+		CustomField[] customFields = new CustomField[] {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = _DATA_INT;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn20.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals((short)_DATA_INT, map.get(_expandoColumn20.getName()));
+		
+		Assert.assertTrue(
+			"Value should be of type Short but was " + 
+			map.get(_expandoColumn20.getName()).getClass().getName(),
+			map.get(_expandoColumn20.getName()) instanceof Short);
+	}
+
+	@Test
+	public void testToMapWithIntegerArrayForShortArrayField() throws Exception {
+		List<Integer> integerCollection = new ArrayList<>();
+		integerCollection.add(_DATA_INT);
+		
+		CustomField[] customFields = new CustomField[] {
+			new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = integerCollection;
+						}
+					};
+					dataType = "Integer";
+					name = _expandoColumn21.getName();
+				}
+			}
+		};
+
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			LocaleUtil.getDefault());
+
+		short[] result = (short[])map.get(_expandoColumn21.getName());
+
+		Assert.assertEquals(integerCollection.size(), result.length);
+		for (int i = 0; i < integerCollection.size(); i++) {
+			Assert.assertEquals(
+				(short)(int)integerCollection.get(i), result[i]);
+		}
+
+		Assert.assertTrue(
+			"Value should be of type short[] but was " + 
+			map.get(_expandoColumn21.getName()).getClass().getName(),
+			map.get(_expandoColumn21.getName()) instanceof short[]);
 	}
 
 	private ExpandoColumn _addExpandoColumn(

@@ -17,18 +17,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.14</version>
-				<project-name>Alloy TagLibs</project-name>
-				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/ant-apache-bsf.jar</file-name>
 				<version>1.10.9</version>
 				<project-name>Ant</project-name>

@@ -128,8 +128,7 @@ public class JSONFactoryImpl implements JSONFactory {
 	public JSONTransformer createJavaScriptNormalizerJSONTransformer(
 		List<String> javaScriptAttributes) {
 
-		throw new UnsupportedOperationException(
-			"Temporally disabled until alloy-taglib.jar is updated");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

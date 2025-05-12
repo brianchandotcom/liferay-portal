@@ -1271,7 +1271,6 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProjec
 			for (String artifact : enforceVersionArtifacts.split(",")) {
 				if (!artifact.startsWith("com.fasterxml") &&
 					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
-					!artifact.startsWith("com.liferay.alloy-taglibs:alloy-taglib:") &&
 					!artifact.startsWith("io.swagger") &&
 					!artifact.startsWith("javax") &&
 					!artifact.startsWith("org.jsoup") &&

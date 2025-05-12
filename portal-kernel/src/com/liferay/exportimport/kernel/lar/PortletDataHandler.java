@@ -266,7 +266,7 @@ public interface PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException;
 
-	public default boolean isCompany() {
+	public default boolean isBatch() {
 		return false;
 	}
 

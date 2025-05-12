@@ -135,6 +135,9 @@ public class CustomFieldsUtil {
 						"longitude", geo.getLongitude()
 					).toString());
 			}
+			else if (ExpandoColumnConstants.INTEGER == attributeType) {
+				map.put(name, GetterUtil.getInteger(data));
+			}
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toIntArray));
 			}

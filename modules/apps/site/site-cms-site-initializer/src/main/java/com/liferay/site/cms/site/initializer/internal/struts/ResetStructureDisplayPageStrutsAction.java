@@ -5,13 +5,15 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
-import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
-import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -19,13 +21,14 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,11 +47,14 @@ public class ResetStructureDisplayPageStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
+			_writeResponse(
+				httpServletResponse, _jsonFactory.createJSONObject(),
+				HttpServletResponse.SC_OK);
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionService.getObjectDefinition(
 					ParamUtil.getLong(
@@ -89,38 +95,58 @@ public class ResetStructureDisplayPageStrutsAction implements StrutsAction {
 
 			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry);
-
-			if (ParamUtil.getBoolean(httpServletRequest, "redirectToEdit")) {
-				httpServletResponse.sendRedirect(
-					ActionUtil.getDisplayPageEditURL(
-						_formManager, _fragmentEntryLinkListenerRegistry,
-						httpServletRequest,
-						_objectDefinitionService.getObjectDefinition(
-							ParamUtil.getLong(
-								httpServletRequest, "objectDefinitionId"))));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_writeResponse(
+				httpServletResponse,
+				JSONUtil.put(
+					"title",
+					_language.get(
+						themeDisplay.getLocale(),
+						"an-unexpected-error-occurred")),
+				HttpServletResponse.SC_BAD_REQUEST);
+		}
+
+		return null;
+	}
+
+	private void _writeResponse(
+		HttpServletResponse httpServletResponse, JSONObject jsonObject,
+		int status) {
+
+		try {
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setStatus(status);
+
+			ServletResponseUtil.write(
+				httpServletResponse, JSONUtil.toString(jsonObject));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResetStructureDisplayPageStrutsAction.class);
 
 	@Reference
-	private FormManager _formManager;
-
-	@Reference
-	private FragmentEntryLinkListenerRegistry
-		_fragmentEntryLinkListenerRegistry;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

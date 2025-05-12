@@ -5,13 +5,14 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
-import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -21,13 +22,17 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -36,25 +41,40 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class StylesRequestHelperTest {
+public class StaticFileRequestHelperTest {
 
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@After
+	public void tearDown() {
+		if (_fallbackKeysSettingsUtilMockedStatic != null) {
+			_fallbackKeysSettingsUtilMockedStatic.close();
+
+			_fallbackKeysSettingsUtilMockedStatic = null;
+		}
+	}
+
 	@Test
 	public void testColdRequestWithoutHash() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
-			_mockHttpServletRequest(
-				"/o/frontend-js-web/__liferay__/css/codemirror.css"),
+		staticFileRequestHelper.process(
+			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
 		Assert.assertEquals(
@@ -70,7 +90,7 @@ public class StylesRequestHelperTest {
 		String contentType = mockHttpServletResponse.getHeader(
 			HttpHeaders.CONTENT_TYPE);
 
-		Assert.assertTrue(contentType.contains(ContentTypes.TEXT_CSS));
+		Assert.assertTrue(contentType.contains(ContentTypes.TEXT_JAVASCRIPT));
 
 		Assert.assertTrue(contentType.contains("charset=UTF-8"));
 
@@ -79,7 +99,7 @@ public class StylesRequestHelperTest {
 
 		String contentAsString = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertTrue(contentAsString.contains("{}"));
+		Assert.assertTrue(contentAsString.contains("export default x;"));
 	}
 
 	@Test
@@ -87,18 +107,24 @@ public class StylesRequestHelperTest {
 
 		// must-revalidate
 
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
-			_mockHttpServletRequest(
-				"/o/frontend-js-web/__liferay__/css/codemirror.css"),
+		staticFileRequestHelper.process(
+			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
@@ -109,17 +135,22 @@ public class StylesRequestHelperTest {
 
 		// no-cache
 
-		stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, true)),
-			_mockHashedFilesRegistry(), _mockPortal(),
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", true
+			).build());
+
+		staticFileRequestHelper = new StaticFileRequestHelper(
+			ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+			1234L, "max-age-key", _mockPortal(), true, "send-no-cache-key",
 			_mockServiceTrackerMap(_mockServletContext()));
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
-			_mockHttpServletRequest(
-				"/o/frontend-js-web/__liferay__/css/codemirror.css"),
+		staticFileRequestHelper.process(
+			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
 		cacheControl = mockHttpServletResponse.getHeader(
@@ -130,18 +161,25 @@ public class StylesRequestHelperTest {
 
 	@Test
 	public void testInvalidRequest() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
+		staticFileRequestHelper.process(
 			_mockHttpServletRequest(
-				"/o/__INVALID__/__liferay__/css/codemirror.(CAFEBABE).css"),
+				"/o/___INVALID___/__liferay__/index.(CAFEBABE).js"),
 			mockHttpServletResponse);
 
 		Assert.assertEquals(
@@ -151,63 +189,79 @@ public class StylesRequestHelperTest {
 
 	@Test
 	public void testIsAcceptableRequest() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		Assert.assertTrue(
-			stylesRequestHelper.isAcceptableRequest(
+			staticFileRequestHelper.isAcceptableRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/css/codemirror.css")));
+					"/o/frontend-js-web/__liferay__/index.js")));
 
 		Assert.assertTrue(
-			stylesRequestHelper.isAcceptableRequest(
+			staticFileRequestHelper.isAcceptableRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/css/codemirror." +
-						"(CAFEBABE).css")));
+					"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js")));
 
 		Assert.assertFalse(
-			stylesRequestHelper.isAcceptableRequest(
-				_mockHttpServletRequest("/nonsense/request/codemirror.css")));
+			staticFileRequestHelper.isAcceptableRequest(
+				_mockHttpServletRequest("/nonsense/request/index.js")));
 	}
 
 	@Test
 	public void testReasonableConfigurationDefaults() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(null), _mockHashedFilesRegistry(),
-			_mockPortal(), _mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(null);
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				4321L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
-			_mockHttpServletRequest(
-				"/o/frontend-js-web/__liferay__/css/codemirror.css"),
+		staticFileRequestHelper.process(
+			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
 			HttpHeaders.CACHE_CONTROL);
 
 		Assert.assertTrue(cacheControl.contains("must-revalidate"));
-		Assert.assertTrue(cacheControl.contains("max-age=86400"));
+		Assert.assertTrue(cacheControl.contains("max-age=4321"));
 	}
 
 	@Test
 	public void testRequestWithHash() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
+		staticFileRequestHelper.process(
 			_mockHttpServletRequest(
-				"/o/frontend-js-web/__liferay__/css/codemirror.(CAFEBABE).css"),
+				"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"),
 			mockHttpServletResponse);
 
 		Assert.assertEquals(
@@ -223,7 +277,7 @@ public class StylesRequestHelperTest {
 		String contentType = mockHttpServletResponse.getHeader(
 			HttpHeaders.CONTENT_TYPE);
 
-		Assert.assertTrue(contentType.contains(ContentTypes.TEXT_CSS));
+		Assert.assertTrue(contentType.contains(ContentTypes.TEXT_JAVASCRIPT));
 
 		Assert.assertTrue(contentType.contains("charset=UTF-8"));
 
@@ -232,26 +286,33 @@ public class StylesRequestHelperTest {
 
 		String contentAsString = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertTrue(contentAsString.contains("{}"));
+		Assert.assertTrue(contentAsString.contains("export default x;"));
 	}
 
 	@Test
 	public void testWarmRequestWithoutHash() throws Exception {
-		StylesRequestHelper stylesRequestHelper = new StylesRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			_mockHashedFilesRegistry(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"max-age-key", 1234L
+			).put(
+				"send-no-cache-key", false
+			).build());
+
+		StaticFileRequestHelper staticFileRequestHelper =
+			new StaticFileRequestHelper(
+				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
+				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletRequest mockHttpServletRequest = _mockHttpServletRequest(
-			"/o/frontend-js-web/__liferay__/css/codemirror.css");
+			"/o/frontend-js-web/__liferay__/index.js");
 
 		mockHttpServletRequest.addHeader(HttpHeaders.IF_NONE_MATCH, "CAFEBABE");
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		stylesRequestHelper.process(
+		staticFileRequestHelper.process(
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals(
@@ -259,52 +320,35 @@ public class StylesRequestHelperTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	private ConfigurationProvider _mockConfigurationProvider(
-			FrontendCachingConfiguration frontendCachingConfiguration)
-		throws Exception {
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
-
-		if (frontendCachingConfiguration == null) {
-			Mockito.when(
-				configurationProvider.getCompanyConfiguration(
-					FrontendCachingConfiguration.class, _COMPANY_ID)
-			).thenThrow(
-				new ConfigurationException()
-			);
-		}
-		else {
-			Mockito.when(
-				configurationProvider.getCompanyConfiguration(
-					FrontendCachingConfiguration.class, _COMPANY_ID)
-			).thenReturn(
-				frontendCachingConfiguration
-			);
+	private void _mockFallbackKeysSettingsUtil(Map<String, Object> map) {
+		if (_fallbackKeysSettingsUtilMockedStatic != null) {
+			_fallbackKeysSettingsUtilMockedStatic.close();
 		}
 
-		return configurationProvider;
-	}
+		_fallbackKeysSettingsUtilMockedStatic = Mockito.mockStatic(
+			FallbackKeysSettingsUtil.class);
 
-	private FrontendCachingConfiguration _mockFrontendCachingConfiguration(
-		long cssStyleSheetsMaxAge, boolean sendNoCacheForCSSStyleSheets) {
+		Settings settings = null;
 
-		FrontendCachingConfiguration frontendCachingConfiguration =
-			Mockito.mock(FrontendCachingConfiguration.class);
+		if (map != null) {
+			settings = Mockito.mock(Settings.class);
 
-		Mockito.when(
-			frontendCachingConfiguration.cssStyleSheetsMaxAge()
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				Mockito.when(
+					settings.getValue(
+						Mockito.eq(entry.getKey()), Mockito.anyString())
+				).thenReturn(
+					String.valueOf(entry.getValue())
+				);
+			}
+		}
+
+		_fallbackKeysSettingsUtilMockedStatic.when(
+			() -> FallbackKeysSettingsUtil.getSettings(
+				Mockito.any(SettingsLocator.class))
 		).thenReturn(
-			cssStyleSheetsMaxAge
+			settings
 		);
-
-		Mockito.when(
-			frontendCachingConfiguration.sendNoCacheForCSSStyleSheets()
-		).thenReturn(
-			sendNoCacheForCSSStyleSheets
-		);
-
-		return frontendCachingConfiguration;
 	}
 
 	private HashedFileURIsRegistry _mockHashedFilesRegistry() {
@@ -313,9 +357,9 @@ public class StylesRequestHelperTest {
 
 		Mockito.when(
 			hashedFileURIsRegistry.get(
-				Mockito.eq("/o/frontend-js-web/__liferay__/css/codemirror.css"))
+				Mockito.eq("/o/frontend-js-web/__liferay__/index.js"))
 		).thenReturn(
-			"/o/frontend-js-web/__liferay__/css/codemirror.(CAFEBABE).css"
+			"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"
 		);
 
 		return hashedFileURIsRegistry;
@@ -365,12 +409,12 @@ public class StylesRequestHelperTest {
 		Mockito.when(
 			url.openStream()
 		).thenReturn(
-			new ByteArrayInputStream("{}".getBytes(StandardCharsets.UTF_8))
+			new ByteArrayInputStream(
+				"export default x;".getBytes(StandardCharsets.UTF_8))
 		);
 
 		Mockito.when(
-			servletContext.getResource(
-				"/__liferay__/css/codemirror.(CAFEBABE).css")
+			servletContext.getResource("/__liferay__/index.(CAFEBABE).js")
 		).thenReturn(
 			url
 		);
@@ -379,5 +423,8 @@ public class StylesRequestHelperTest {
 	}
 
 	private static final long _COMPANY_ID = 1L;
+
+	private MockedStatic<FallbackKeysSettingsUtil>
+		_fallbackKeysSettingsUtilMockedStatic;
 
 }

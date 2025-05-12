@@ -1013,7 +1013,12 @@ public abstract class Base${schemaName}ResourceImpl
 						${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.${getterMethodName}()
 						<#list deleteByIdJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isQueryParameter(javaMethodParameter, deleteByIdJavaMethodSignature.operation)>
-								, (${javaMethodParameter.parameterType}) parameters.get("${javaMethodParameter.parameterName}")
+								,
+
+								<@castParameters
+									type = javaMethodParameter.parameterType
+									value = "${javaMethodParameter.parameterName}"
+								/>
 							</#if>
 						</#list>
 						);

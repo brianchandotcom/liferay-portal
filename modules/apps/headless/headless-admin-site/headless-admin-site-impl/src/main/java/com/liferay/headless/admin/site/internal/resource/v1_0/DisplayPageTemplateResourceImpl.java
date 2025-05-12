@@ -366,6 +366,20 @@ public class DisplayPageTemplateResourceImpl
 					previewFileEntryId);
 		}
 
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Map<Locale, String> friendlyURLMap = LocalizedMapUtil.getLocalizedMap(
+			displayPageTemplate.getFriendlyUrlPath_i18n());
+
+		if (!friendlyURLMap.equals(layout.getFriendlyURLMap())) {
+			_layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
+				contextUser.getUserId(), layout.getCompanyId(),
+				layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
+				friendlyURLMap,
+				_getServiceContext(displayPageTemplate, groupId));
+		}
+
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),

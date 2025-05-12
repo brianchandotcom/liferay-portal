@@ -114,6 +114,10 @@ public interface ObjectEntryResource {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry postByExternalReferenceCodeByVersionExpire(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public Response postObjectEntriesPageExportBatch(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -125,6 +129,10 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response postObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryByVersionExpire(
+			Long objectEntryId, Integer version)
 		throws Exception;
 
 	public ObjectEntry postScopeScopeKey(

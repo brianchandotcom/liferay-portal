@@ -252,6 +252,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					).setParameter(
 						"groupId", curFolder.getGroupId()
 					).buildPortletURL();
+
+					row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 					%>
 
 					<c:choose>

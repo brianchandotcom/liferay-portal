@@ -30,7 +30,7 @@ async function createStructure({
 		spaces,
 	});
 
-	return await ApiHelper.post(
+	return await ApiHelper.post<{id: number}>(
 		'/o/object-admin/v1.0/object-definitions',
 		objectDefinition
 	);

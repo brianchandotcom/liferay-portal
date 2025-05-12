@@ -185,7 +185,7 @@ function SaveButton() {
 
 		try {
 			if (status === 'new') {
-				const {id} = await StructureService.createStructure({
+				const {data} = await StructureService.createStructure({
 					erc,
 					fields,
 					label,
@@ -193,7 +193,9 @@ function SaveButton() {
 					spaces,
 				});
 
-				dispatch({id, type: 'create-structure'});
+				if (data) {
+					dispatch({id: data.id, type: 'create-structure'});
+				}
 			}
 			else {
 				await StructureService.updateStructure({
@@ -364,7 +366,7 @@ async function publishStructure({
 
 	try {
 		if (status === 'new') {
-			const {id: newId} = await StructureService.createStructure({
+			const {data} = await StructureService.createStructure({
 				erc,
 				fields,
 				label,
@@ -372,11 +374,13 @@ async function publishStructure({
 				spaces,
 			});
 
-			id = newId;
+			if (data) {
+				id = data.id;
 
-			await StructureService.publishStructure({id: newId});
+				await StructureService.publishStructure({id});
 
-			dispatch({id: newId, type: 'publish-structure'});
+				dispatch({id, type: 'publish-structure'});
+			}
 		}
 		else if (status === 'draft') {
 			await StructureService.updateStructure({

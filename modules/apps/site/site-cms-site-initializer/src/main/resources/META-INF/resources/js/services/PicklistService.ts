@@ -19,8 +19,8 @@ async function createPicklist({
 	erc: State['erc'];
 	name: State['name'];
 	options?: Options;
-}): Promise<Picklist> {
-	return await ApiHelper.post(
+}) {
+	return await ApiHelper.post<Picklist>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions`,
 		{
 			externalReferenceCode: erc,

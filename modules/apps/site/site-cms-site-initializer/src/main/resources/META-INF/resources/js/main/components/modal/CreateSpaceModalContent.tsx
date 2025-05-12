@@ -35,11 +35,13 @@ export default function CreateSpaceModalContent({
 			const {name} = values;
 
 			SpaceService.addSpace({name}).then((response) => {
-				const url = new URL(redirect + '/' + response.id);
+				if (response.data) {
+					const url = new URL(redirect + '/' + response.data.id);
 
-				url.searchParams.set('name', name);
+					url.searchParams.set('name', name);
 
-				navigate(url.pathname + url.search);
+					navigate(url.pathname + url.search);
+				}
 			});
 		},
 		validate: (values) =>

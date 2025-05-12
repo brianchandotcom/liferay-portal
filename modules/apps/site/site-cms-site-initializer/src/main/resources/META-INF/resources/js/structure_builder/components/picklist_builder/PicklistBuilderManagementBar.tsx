@@ -68,7 +68,9 @@ export default function PicklistBuilderManagementBar() {
 			if (!id) {
 				const picklist = await PicklistService.createPicklist(params);
 
-				setId(picklist.id);
+				if (picklist.data) {
+					setId(picklist.data.id);
+				}
 			}
 			else {
 				await PicklistService.updatePicklist({...params, id});

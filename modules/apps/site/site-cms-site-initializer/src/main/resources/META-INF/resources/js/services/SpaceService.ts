@@ -8,7 +8,7 @@ import {Space} from '../structure_builder/types/Space';
 import ApiHelper from './ApiHelper';
 
 async function addSpace({name}: {name: State['name']}) {
-	return await ApiHelper.post(
+	return await ApiHelper.post<{id: number}>(
 		'/o/headless-asset-library/v1.0/asset-libraries',
 		{
 			name,

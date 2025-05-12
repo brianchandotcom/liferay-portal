@@ -57,7 +57,7 @@ export async function handleRequest<T>(
 			throw new Error(errorMessage);
 		}
 
-		const data = await response.json();
+		const data: T = await response.json();
 
 		return {
 			data,
@@ -87,7 +87,7 @@ async function get(url: string) {
 	throw new Error(title);
 }
 
-async function post<T>(url: string, data: Record<string, any>) {
+async function post<T>(url: string, data?: Record<string, any>) {
 	return handleRequest<T>(() =>
 		fetch(url, {
 			body: JSON.stringify(data),
@@ -97,8 +97,8 @@ async function post<T>(url: string, data: Record<string, any>) {
 	);
 }
 
-async function put<T>(url: string, data?: T) {
-	return handleRequest(() =>
+async function put<T>(url: string, data?: Record<string, any>) {
+	return handleRequest<T>(() =>
 		fetch(url, {
 			body: JSON.stringify(data),
 			headers: HEADERS,
@@ -116,8 +116,8 @@ async function postFormData(formData: FormData, url: string) {
 	);
 }
 
-async function patch(data: any, url: string) {
-	return handleRequest(() =>
+async function patch<T>(data: any, url: string) {
+	return handleRequest<T>(() =>
 		fetch(url, {
 			body: JSON.stringify(data),
 			headers: HEADERS,

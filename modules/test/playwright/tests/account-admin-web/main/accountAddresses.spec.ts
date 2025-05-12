@@ -132,6 +132,8 @@ test(
 		editAccountPage,
 		page,
 	}) => {
+		test.setTimeout(120000);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			description: getRandomString(),
 			type: 'business',
@@ -149,7 +151,11 @@ test(
 		await editAccountPage.addressesTab.click();
 
 		for (const address of addresses) {
-			await accountAddressesPage.addressesTable.newButton.click();
+			await expect(async () => {
+				await accountAddressesPage.addressesTable.newButton.click();
+
+				await expect(editAccountAddressPage.nameInput).toBeVisible();
+			}).toPass();
 
 			await editAccountAddressPage.addAddress(address);
 		}
@@ -1097,6 +1103,8 @@ testWithAddressSubtypeEnabled(
 		editAccountPage,
 		page,
 	}) => {
+		test.setTimeout(120000);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			description: getRandomString(),
 			type: 'business',

@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -620,6 +621,42 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
+	private int _getFixedThreadPoolSize() {
+		if (_fixedThreadPoolSize.get() != 0) {
+			return _fixedThreadPoolSize.get();
+		}
+
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		int maximumPoolSize = GetterUtil.getInteger(
+			PropsUtil.get("jdbc.default.maximumPoolSize"));
+
+		Runtime runtime = Runtime.getRuntime();
+
+		int expectedMaxConnectionsCount =
+			Math.min(companyIds.length, runtime.availableProcessors()) *
+				runtime.availableProcessors();
+
+		if (expectedMaxConnectionsCount > (0.9 * maximumPoolSize)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"The number of database connections is susceptible of ",
+						"reaching ", maximumPoolSize, "). Consider increasing ",
+						"\"jdbc.default.maximumPoolSize\" to improve ",
+						"performance. Upgrade processes will continue in ",
+						"single threaded mode."));
+			}
+
+			_fixedThreadPoolSize.set(1);
+		}
+		else {
+			_fixedThreadPoolSize.set(runtime.availableProcessors());
+		}
+
+		return _fixedThreadPoolSize.get();
+	}
+
 	private InputStream _getInputStream(String path) {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
@@ -657,10 +694,8 @@ public abstract class BaseDBProcess implements DBProcess {
 			Objects.requireNonNull(unsafeBiConsumer);
 		}
 
-		Runtime runtime = Runtime.getRuntime();
-
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
+			_getFixedThreadPoolSize());
 
 		List<Future<Void>> futures = new ArrayList<>();
 		Map<Thread, PreparedStatement> preparedStatementHashMap =
@@ -766,6 +801,8 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private static final Map<Long, Map<Thread, Connection>> _connectionsMaps =
 		new ConcurrentHashMap<>();
+	private static final AtomicInteger _fixedThreadPoolSize = new AtomicInteger(
+		0);
 
 	private class ConnectionThreadProxyInvocationHandler
 		implements InvocationHandler {

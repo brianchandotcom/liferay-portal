@@ -44,13 +44,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 			objectDefinitionSettingLocalService, portal);
 	}
 
-	public Map<String, Object> getAdditionalProps() {
-		return HashMapBuilder.<String, Object>put(
-			"parentObjectEntryFolderExternalReferenceCode",
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS
-		).build();
-	}
-
 	@Override
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(

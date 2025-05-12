@@ -13,7 +13,6 @@ ContentsSectionDisplayContext contentsSectionDisplayContext = (ContentsSectionDi
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		additionalProps="<%= contentsSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= contentsSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= contentsSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= contentsSectionDisplayContext.getCreationMenu() %>"

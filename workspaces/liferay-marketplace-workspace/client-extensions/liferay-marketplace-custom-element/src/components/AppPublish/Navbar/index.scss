@@ -32,7 +32,7 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			width: 167px;
+			max-width: 167px;
 		}
 	}
 
@@ -42,6 +42,7 @@
 		gap: 1rem;
 		justify-content: center;
 		margin-left: 1.438rem;
+		margin-right: 1.438rem;
 
 		&-img {
 			border-radius: 4px;
@@ -74,6 +75,18 @@
 				brightness(94%) contrast(98%);
 			height: 0.5rem;
 			width: 0.5rem;
+
+			&-approved {
+				color: #4aab3b;
+			}
+
+			&-draft {
+				color: #82828c;
+			}
+
+			&-hidden {
+				display: none;
+			}
 		}
 
 		&-text {

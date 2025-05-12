@@ -9,6 +9,7 @@ import {
 	useContext,
 	useEffect,
 	useReducer,
+	useState,
 } from 'react';
 import {useParams} from 'react-router-dom';
 
@@ -338,8 +339,12 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				profile: {
 					areas: filterProductVocabularies(
 						_product,
-						ProductVocabulary.APP_CATEGORY
+						ProductVocabulary.APP_AREA
 					),
+					categories: filterProductVocabularies(
+						_product,
+						ProductVocabulary.APP_CATEGORY
+					)[0],
 					description: _product.description.en_US,
 					file: {
 						changed: false,
@@ -369,27 +374,34 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					),
 				} as NewAppInitialState['storefront'],
 				support: {
-					appUsageTermsURL: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL
-					),
-					documentationURL: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL
-					),
-					email: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_EMAIL
-					),
-					installationGuideURL: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL
-					),
-					phone: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_PHONE
-					),
-					publisherWebsiteURL: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL
-					),
-					url: specificationsMap.get(
-						ProductSpecificationKey.APP_SUPPORT_URL
-					),
+					appUsageTermsURL:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL
+						) ?? '',
+					documentationURL:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL
+						) ?? '',
+					email:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_EMAIL
+						) ?? '',
+					installationGuideURL:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL
+						) ?? '',
+					phone:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_PHONE
+						) ?? '',
+					publisherWebsiteURL:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL
+						) ?? '',
+					url:
+						specificationsMap.get(
+							ProductSpecificationKey.APP_SUPPORT_URL
+						) ?? '',
 				} as NewAppInitialState['support'],
 				version: {
 					notes: specificationsMap.get(
@@ -604,16 +616,19 @@ export default function NewAppContextProvider({
 }: NewAppContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
 	const {productId} = useParams();
-	const {data = {}, isLoading} = useGetVocabulariesAndCategories([
-		ProductVocabulary.APP_AREA,
-		ProductVocabulary.APP_CATEGORY,
-		ProductVocabulary.APP_TAGS,
-		ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
-		ProductVocabulary.PRODUCT_TYPE,
-	]);
+	const {data = {}, isLoading: isLoadingVocabularies} =
+		useGetVocabulariesAndCategories([
+			ProductVocabulary.APP_AREA,
+			ProductVocabulary.APP_CATEGORY,
+			ProductVocabulary.APP_TAGS,
+			ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
+			ProductVocabulary.PRODUCT_TYPE,
+		]);
+	const [isLoadingProduct, setIsLoadingProduct] = useState(true);
 
 	useEffect(() => {
 		if (!productId) {
+			setIsLoadingProduct(false);
 			return;
 		}
 
@@ -624,16 +639,17 @@ export default function NewAppContextProvider({
 					'attachments,images,productSpecifications,productOptions,productVirtualSettings',
 			})
 		)
-			.then((response) =>
+			.then((response) => {
+				setIsLoadingProduct(false);
 				dispatch({
 					payload: response,
 					type: NewAppTypes.SET_CONTEXT,
-				})
-			)
+				});
+			})
 			.catch(console.error);
 	}, [productId]);
 
-	if (isLoading) {
+	if (isLoadingVocabularies) {
 		return <Loading />;
 	}
 
@@ -643,6 +659,7 @@ export default function NewAppContextProvider({
 				{
 					...state,
 					catalogId,
+					loading: isLoadingVocabularies || isLoadingProduct,
 					references: {
 						...state.references,
 						vocabulariesAndCategories: data,

@@ -58,7 +58,7 @@ const Select = React.forwardRef<HTMLInputElement, InputProps>(
 				{helpText && <div className="text-muted">{helpText}</div>}
 
 				<select
-					className={`align-items-center custom-select d-flex form-control rounded-xs selection ${className}`}
+					className={`align-items-center custom-select d-flex form-control rounded-xs selection ${className} ${disabled && 'disabled'}`}
 					disabled={disabled}
 					id={id}
 					name={name}

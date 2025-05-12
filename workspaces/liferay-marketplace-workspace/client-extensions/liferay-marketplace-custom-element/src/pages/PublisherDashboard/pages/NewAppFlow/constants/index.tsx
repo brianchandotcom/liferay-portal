@@ -9,6 +9,7 @@ import {NewAppInitialState} from '../../../../../context/NewAppContext';
 import {
 	ProductPriceModel,
 	ProductUploadType,
+	ProductWorkflowStatusCode,
 } from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
@@ -24,6 +25,9 @@ export const APP_FLOW_ITEMS = [
 		label: i18n.translate('create'),
 		path: '',
 		title: 'Create new app',
+		visible: (context: NewAppInitialState) =>
+			!context._product?.productId ||
+			context._product?.productStatus === ProductWorkflowStatusCode.DRAFT,
 	},
 	{
 		description:
@@ -33,6 +37,7 @@ export const APP_FLOW_ITEMS = [
 			zodSchema.appPublishing.profile.safeParse(context.profile),
 		path: 'profile',
 		title: 'Define the app profile',
+		visible: () => true,
 	},
 	{
 		description:
@@ -42,6 +47,9 @@ export const APP_FLOW_ITEMS = [
 			zodSchema.appPublishing.build.safeParse(context.build),
 		path: 'build',
 		title: 'Provide app build',
+		visible: (context: NewAppInitialState) =>
+			!context._product?.productId ||
+			context._product?.productStatus === ProductWorkflowStatusCode.DRAFT,
 	},
 	{
 		description:
@@ -51,6 +59,7 @@ export const APP_FLOW_ITEMS = [
 			zodSchema.appPublishing.storefront.safeParse(context.storefront),
 		path: 'storefront',
 		title: 'Customize app storefront',
+		visible: () => true,
 	},
 	{
 		description: `Define version information for your app. This will inform users about this version's updates on the storefront.`,
@@ -59,6 +68,9 @@ export const APP_FLOW_ITEMS = [
 			zodSchema.appPublishing.version.safeParse(context.version),
 		path: 'version',
 		title: 'Provide version details',
+		visible: (context: NewAppInitialState) =>
+			!context._product?.productId ||
+			context._product?.productStatus === ProductWorkflowStatusCode.DRAFT,
 	},
 	{
 		description:
@@ -66,12 +78,14 @@ export const APP_FLOW_ITEMS = [
 		label: 'Pricing',
 		path: 'pricing',
 		title: 'Choose pricing model',
+		visible: () => true,
 	},
 	{
 		description: `Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
 		label: 'Licensing',
 		path: 'licensing',
 		title: 'Select licensing terms',
+		visible: () => true,
 	},
 	{
 		description: `Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
@@ -79,6 +93,7 @@ export const APP_FLOW_ITEMS = [
 		label: 'Licensing',
 		path: 'licensing-prices',
 		title: 'Select licensing terms',
+		visible: () => true,
 	},
 	{
 		description: `Inform the support and help references. This will impact how users will experience this app's customer support and learning.`,
@@ -93,6 +108,7 @@ export const APP_FLOW_ITEMS = [
 		},
 		path: 'support',
 		title: 'Provide app support and help',
+		visible: () => true,
 	},
 	{
 		description:
@@ -100,6 +116,7 @@ export const APP_FLOW_ITEMS = [
 		label: 'Submit',
 		path: 'submit',
 		title: 'Review and submit app',
+		visible: () => true,
 	},
 ];
 

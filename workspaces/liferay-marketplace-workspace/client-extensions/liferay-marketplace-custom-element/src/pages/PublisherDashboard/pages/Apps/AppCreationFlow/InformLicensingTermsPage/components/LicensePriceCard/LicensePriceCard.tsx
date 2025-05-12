@@ -17,6 +17,7 @@ import CurrencySelector from '../CurrencySelector';
 import IconButton from '../IconButton';
 
 type LicensePriceCardProps = {
+	disabled?: boolean;
 	licensePrices: LicensePrice[];
 	onAdd: () => void;
 	onChange: (index: number, price: LicensePrice) => void;
@@ -24,6 +25,7 @@ type LicensePriceCardProps = {
 };
 
 const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
+	disabled = false,
 	licensePrices,
 	onAdd,
 	onChange,
@@ -40,6 +42,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 			<div className="row">
 				<FieldBase
 					className="col-3"
+					disabled={disabled}
 					label="Quantity"
 					labelClassName="teste"
 					tooltip="By adding quantities to price tiers, you can offer quantity discounts. For example, adding a quantity of 3 would allow you to offer a discount unit price for 3 or more licenses."
@@ -47,6 +50,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 
 				<FieldBase
 					className="col-6 p-0"
+					disabled={disabled}
 					label="Unit Price"
 					labelClassName="teste"
 					tooltip="Adding a unit price sets the amount you want to charge for each individual license when the set quantity is chosen."
@@ -54,6 +58,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 
 				<FieldBase
 					className="col-3"
+					disabled={disabled}
 					label={
 						<CurrencySelector onChange={handleCurrencySelection} />
 					}
@@ -74,7 +79,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 										'disabled': !index,
 									}
 								)}
-								disabled={!index}
+								disabled={!index || disabled}
 								onChange={(event) => {
 									if (index) {
 										onChange(index, {
@@ -92,6 +97,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 						<ClayInput.GroupItem className="col-9 m-0">
 							<ClayInput
 								className="bg-white license-card-input py-5 text-right"
+								disabled={disabled}
 								onChange={(event) => {
 									const regExp = /^[0-9.,]*$/;
 
@@ -123,6 +129,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 
 			<IconButton
 				className="icon-button py-3 w-100"
+				disabled={disabled}
 				displayType={null}
 				onClick={onAdd}
 			>

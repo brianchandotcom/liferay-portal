@@ -14,7 +14,10 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
-import {ProductVocabulary} from '../../../../../enums/Product';
+import {
+	ProductVocabulary,
+	ProductWorkflowStatusCode,
+} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
 
@@ -29,6 +32,7 @@ const tooltipInfo = {
 const Profile = () => {
 	const [
 		{
+			_product,
 			profile: {areas, categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
 		},
@@ -174,6 +178,11 @@ const Profile = () => {
 						className={categories?.value || 'select-empty-value'}
 						defaultOption
 						defaultOptionLabel={i18n.translate('select-category')}
+						disabled={
+							!!_product?.productId &&
+							_product.productStatus !==
+								ProductWorkflowStatusCode.DRAFT
+						}
 						name="category"
 						onChange={(event) => {
 							const category = defaultSourceItems.categories.find(

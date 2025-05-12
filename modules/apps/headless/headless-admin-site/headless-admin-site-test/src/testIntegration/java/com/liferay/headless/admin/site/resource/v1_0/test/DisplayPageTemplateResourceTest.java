@@ -458,7 +458,9 @@ public class DisplayPageTemplateResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name"};
+		return new String[] {
+			"externalReferenceCode", "friendlyUrlPath_i18n", "name"
+		};
 	}
 
 	@Override

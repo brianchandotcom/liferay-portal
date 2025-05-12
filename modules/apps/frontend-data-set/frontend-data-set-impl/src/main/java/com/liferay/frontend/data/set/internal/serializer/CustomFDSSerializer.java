@@ -120,7 +120,7 @@ public class CustomFDSSerializer
 			String.valueOf(properties.get("restSchema"))
 		).addQueryString(
 			String.valueOf(properties.get("additionalAPIURLParameters"))
-		).buildQuery();
+		).buildQueryString();
 	}
 
 	@Override

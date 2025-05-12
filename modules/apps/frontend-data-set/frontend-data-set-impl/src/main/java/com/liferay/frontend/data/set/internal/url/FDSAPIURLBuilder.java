@@ -71,7 +71,7 @@ public class FDSAPIURLBuilder {
 		return _interpolate(_resolveParameters(sb.toString()));
 	}
 
-	public String buildQuery() {
+	public String buildQueryString() {
 		StringBundler sb = new StringBundler(_queryStringItems.size() * 2);
 
 		_appendParameters(sb, false);

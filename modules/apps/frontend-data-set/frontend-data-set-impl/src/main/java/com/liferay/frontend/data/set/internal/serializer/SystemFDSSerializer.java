@@ -86,7 +86,7 @@ public class SystemFDSSerializer
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
 		).addQueryString(
 			systemFDSEntry.getAdditionalAPIURLParameters()
-		).buildQuery();
+		).buildQueryString();
 	}
 
 	@Override

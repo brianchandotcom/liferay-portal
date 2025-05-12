@@ -37,7 +37,6 @@ import org.elasticsearch.common.hash.MessageDigests;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.settings.KeyStoreWrapper;
-import org.elasticsearch.node.Node;
 
 /**
  * @author Tina Tian
@@ -85,7 +84,7 @@ public class ElasticsearchServerUtil {
 
 			_addShutdownHook();
 
-			return (Node)_nodeField.get(_instanceField.get(null));
+			return _nodeField.get(_instanceField.get(null));
 		}
 		catch (Exception exception) {
 			throw new ProcessException(

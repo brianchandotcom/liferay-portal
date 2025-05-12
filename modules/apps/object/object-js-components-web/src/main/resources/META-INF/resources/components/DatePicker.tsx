@@ -32,6 +32,7 @@ interface DatePickerProps
 	label?: string;
 	locale?: Liferay.Language.Locale;
 	name?: string;
+	onBlur?: () => void;
 	onChange: (value: string) => void;
 	range?: boolean;
 	required?: boolean;
@@ -79,6 +80,7 @@ export function DatePicker({
 	id,
 	label,
 	locale = Liferay.ThemeDisplay.getLanguageId(),
+	onBlur,
 	onChange,
 	name,
 	range,
@@ -180,8 +182,6 @@ export function DatePicker({
 		if (nextState.rawDate !== rawDate) {
 			onChange(nextState.rawDate as string);
 		}
-
-		setExpanded(false);
 	};
 
 	const onInputMask: React.FocusEventHandler<HTMLInputElement> = ({
@@ -208,9 +208,11 @@ export function DatePicker({
 		>
 			<ClayDatePicker
 				dateFormat={clayFormat}
+				disabled={disabled}
 				expanded={expanded}
 				firstDayOfWeek={firstDayOfWeek}
 				months={months}
+				onBlur={onBlur}
 				onChange={handleValueChange}
 				onExpandedChange={() => {
 					setExpanded(!expanded);

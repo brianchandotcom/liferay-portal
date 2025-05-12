@@ -7,6 +7,7 @@ package com.liferay.exportimport.internal.lar;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
+import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -91,6 +92,8 @@ import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.staging.configuration.StagingConfiguration;
 
 import java.io.File;
@@ -122,6 +125,7 @@ import org.xml.sax.XMLReader;
  * @author Levente Hudák
  * @author Julio Camarero
  * @author Máté Thurzó
+ * @author Petteri Karttunen
  */
 @Component(
 	configurationPid = "com.liferay.staging.configuration.StagingConfiguration",
@@ -164,43 +168,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception {
 
-		List<Portlet> dataSiteAndInstanceLevelPortlets = new ArrayList<>();
-
-		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
-
-		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
-			if (!portlet.isActive()) {
-				continue;
-			}
-
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel() ||
-				(excludeDataAlwaysStaged &&
-				 portletDataHandler.isDataAlwaysStaged())) {
-
-				continue;
-			}
-
-			List<Portlet> rankedPortlets = rankedPortletsMap.get(
-				portletDataHandler.getRank());
-
-			if (rankedPortlets == null) {
-				rankedPortlets = new ArrayList<>();
-			}
-
-			rankedPortlets.add(portlet);
-
-			rankedPortletsMap.put(portletDataHandler.getRank(), rankedPortlets);
-		}
-
-		for (List<Portlet> rankedPortlets : rankedPortletsMap.values()) {
-			dataSiteAndInstanceLevelPortlets.addAll(rankedPortlets);
-		}
-
-		return dataSiteAndInstanceLevelPortlets;
+		return _getPortlets(
+			companyId,
+			new DataLevel[] {DataLevel.PORTLET_INSTANCE, DataLevel.SITE},
+			excludeDataAlwaysStaged);
 	}
 
 	@Override
@@ -215,43 +186,27 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception {
 
-		List<Portlet> dataSiteLevelPortlets = new ArrayList<>();
+		return _getPortlets(
+			companyId, new DataLevel[] {DataLevel.SITE},
+			excludeDataAlwaysStaged);
+	}
 
-		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
+	@Override
+	public List<Portlet> getExportablePortlets(
+		long companyId, boolean excludeDataAlwaysStaged, long groupId) {
 
-		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				!portletDataHandler.isDataSiteLevel() ||
-				(excludeDataAlwaysStaged &&
-				 portletDataHandler.isDataAlwaysStaged())) {
-
-				continue;
-			}
-
-			List<Portlet> rankedPortlets = rankedPortletsMap.get(
-				portletDataHandler.getRank());
-
-			if (rankedPortlets == null) {
-				rankedPortlets = new ArrayList<>();
-			}
-
-			rankedPortlets.add(portlet);
-
-			rankedPortletsMap.put(portletDataHandler.getRank(), rankedPortlets);
+		if (stagingGroupHelper.isCompanyGroup(companyId, groupId)) {
+			return _getPortlets(
+				companyId, new DataLevel[] {DataLevel.PORTAL},
+				excludeDataAlwaysStaged);
 		}
 
-		for (List<Portlet> rankedPortlets : rankedPortletsMap.values()) {
-			dataSiteLevelPortlets.addAll(rankedPortlets);
-		}
-
-		return dataSiteLevelPortlets;
+		return _getPortlets(
+			companyId, new DataLevel[] {DataLevel.SITE},
+			excludeDataAlwaysStaged);
 	}
 
 	@Override
@@ -1312,7 +1267,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return false;
 		}
 
-		if (exportPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
+		if (exportPortletDataAll) {
 			return true;
 		}
 
@@ -1402,6 +1357,52 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return importPortletSetupControlsMap;
+	}
+
+	private List<Portlet> _getPortlets(
+		long companyId, DataLevel[] dataLevels,
+		boolean excludeDataAlwaysStaged) {
+
+		List<Portlet> portlets = new ArrayList<>();
+
+		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
+
+		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				!ArrayUtil.contains(
+					dataLevels, portletDataHandler.getDataLevel()) ||
+				(!portletDataHandler.isBatch() &&
+				 portletDataHandler.isDataPortalLevel()) ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
+
+				continue;
+			}
+
+			List<Portlet> rankedPortlets = rankedPortletsMap.get(
+				portletDataHandler.getRank());
+
+			if (rankedPortlets == null) {
+				rankedPortlets = new ArrayList<>();
+			}
+
+			rankedPortlets.add(portlet);
+
+			rankedPortletsMap.put(portletDataHandler.getRank(), rankedPortlets);
+		}
+
+		for (List<Portlet> rankedPortlets : rankedPortletsMap.values()) {
+			portlets.addAll(rankedPortlets);
+		}
+
+		return portlets;
 	}
 
 	private String _getZipWriterFileName(String id) {
@@ -1641,7 +1642,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&
-					portletDataHandler.isDataSiteLevel() &&
+					((portletDataHandler.isBatch() &&
+					  portletDataHandler.isDataPortalLevel()) ||
+					 portletDataHandler.isDataSiteLevel()) &&
 					GetterUtil.getBoolean(
 						element.attributeValue("portlet-data"))) {
 

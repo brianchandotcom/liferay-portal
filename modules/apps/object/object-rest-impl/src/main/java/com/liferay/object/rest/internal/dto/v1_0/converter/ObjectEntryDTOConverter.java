@@ -344,20 +344,20 @@ public class ObjectEntryDTOConverter
 							contentObjectEntry.getProperties();
 
 						com.liferay.object.model.ObjectEntry
-							serviceBuilderObjectEntryClone =
+							clonedServiceBuilderObjectEntry =
 								(com.liferay.object.model.ObjectEntry)
 									serviceBuilderObjectEntry.clone();
 
-						serviceBuilderObjectEntryClone.setValues(
+						clonedServiceBuilderObjectEntry.setValues(
 							(Map<String, Serializable>)properties.get(
 								"properties"));
 
 						return _toProperties(
 							dtoConverterContext,
 							_objectDefinitionLocalService.getObjectDefinition(
-								serviceBuilderObjectEntryClone.
+								clonedServiceBuilderObjectEntry.
 									getObjectDefinitionId()),
-							serviceBuilderObjectEntryClone);
+							clonedServiceBuilderObjectEntry);
 					});
 				setScopeKey(
 					() -> _getScopeKey(

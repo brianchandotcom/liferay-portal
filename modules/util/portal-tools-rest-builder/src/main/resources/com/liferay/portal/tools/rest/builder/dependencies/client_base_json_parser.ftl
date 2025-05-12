@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.json;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.math.BigDecimal;
 

@@ -5,18 +5,18 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;
 
-import ${configYAML.javaEePackage}.ws.rs.GET;
-import ${configYAML.javaEePackage}.ws.rs.Path;
-import ${configYAML.javaEePackage}.ws.rs.PathParam;
-import ${configYAML.javaEePackage}.ws.rs.Produces;
-import ${configYAML.javaEePackage}.ws.rs.core.Context;
-import ${configYAML.javaEePackage}.ws.rs.core.MediaType;
-import ${configYAML.javaEePackage}.ws.rs.core.Response;
-import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
+import ${configYAML.javaEEPackage}.ws.rs.GET;
+import ${configYAML.javaEEPackage}.ws.rs.Path;
+import ${configYAML.javaEEPackage}.ws.rs.PathParam;
+import ${configYAML.javaEEPackage}.ws.rs.Produces;
+import ${configYAML.javaEEPackage}.ws.rs.core.Context;
+import ${configYAML.javaEEPackage}.ws.rs.core.MediaType;
+import ${configYAML.javaEEPackage}.ws.rs.core.Response;
+import ${configYAML.javaEEPackage}.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
 

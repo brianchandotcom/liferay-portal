@@ -238,7 +238,7 @@ public class ResourceOpenAPIParser {
 
 		methodAnnotations.add(
 			StringBundler.concat(
-				"@", configYAML.getJavaEePackage(), ".ws.rs.Path(\"", path,
+				"@", configYAML.getJavaEEPackage(), ".ws.rs.Path(\"", path,
 				"\")"));
 
 		String annotationString = StringUtil.toUpperCase(
@@ -246,7 +246,7 @@ public class ResourceOpenAPIParser {
 
 		methodAnnotations.add(
 			StringBundler.concat(
-				"@", configYAML.getJavaEePackage(), ".ws.rs.",
+				"@", configYAML.getJavaEEPackage(), ".ws.rs.",
 				annotationString));
 
 		String methodAnnotation = _getMethodAnnotationConsumes(
@@ -570,7 +570,7 @@ public class ResourceOpenAPIParser {
 				Collections.singleton(ContentTypes.APPLICATION_JSON),
 				schemaName, javaMethodParameters,
 				_getBatchMethodName(batchOperationType, methodName),
-				configYAML.getJavaEePackage() + ".ws.rs.core.Response",
+				configYAML.getJavaEEPackage() + ".ws.rs.core.Response",
 				parentSchemaName));
 	}
 
@@ -913,12 +913,12 @@ public class ResourceOpenAPIParser {
 
 		if (requestBodyMediaTypes.size() > 1) {
 			return StringBundler.concat(
-				"@", configYAML.getJavaEePackage(), ".ws.rs.Consumes({", sb,
+				"@", configYAML.getJavaEEPackage(), ".ws.rs.Consumes({", sb,
 				"})");
 		}
 
 		return StringBundler.concat(
-			"@", configYAML.getJavaEePackage(), ".ws.rs.Consumes(", sb, ")");
+			"@", configYAML.getJavaEEPackage(), ".ws.rs.Consumes(", sb, ")");
 	}
 
 	private static String _getMethodAnnotationProduces(
@@ -962,12 +962,12 @@ public class ResourceOpenAPIParser {
 
 		if (mediaTypes.size() > 1) {
 			return StringBundler.concat(
-				"@", configYAML.getJavaEePackage(), ".ws.rs.Produces({", sb,
+				"@", configYAML.getJavaEEPackage(), ".ws.rs.Produces({", sb,
 				"})");
 		}
 
 		return StringBundler.concat(
-			"@", configYAML.getJavaEePackage(), ".ws.rs.Produces(", sb, ")");
+			"@", configYAML.getJavaEEPackage(), ".ws.rs.Produces(", sb, ")");
 	}
 
 	private static String _getMethodName(
@@ -1172,13 +1172,13 @@ public class ResourceOpenAPIParser {
 				"com.liferay.portal.vulcan.aggregation.Aggregation") &&
 			parameterNames.contains("aggregationTerms")) {
 
-			return "@" + configYAML.getJavaEePackage() + ".ws.rs.core.Context";
+			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(parameterType, Filter.class.getName()) &&
 			parameterNames.contains("filter")) {
 
-			return "@" + configYAML.getJavaEePackage() + ".ws.rs.core.Context";
+			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(
@@ -1187,13 +1187,13 @@ public class ResourceOpenAPIParser {
 			parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
-			return "@" + configYAML.getJavaEePackage() + ".ws.rs.core.Context";
+			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
 		}
 
 		if (Objects.equals(parameterType, Sort[].class.getName()) &&
 			parameterNames.contains("sort")) {
 
-			return "@" + configYAML.getJavaEePackage() + ".ws.rs.core.Context";
+			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
 		}
 
 		for (Parameter parameter : operation.getParameters()) {
@@ -1215,7 +1215,7 @@ public class ResourceOpenAPIParser {
 				sb.append(
 					"@"
 				).append(
-					configYAML.getJavaEePackage()
+					configYAML.getJavaEEPackage()
 				).append(
 					".ws.rs.DefaultValue(\""
 				);
@@ -1232,7 +1232,7 @@ public class ResourceOpenAPIParser {
 				sb.append(
 					"@"
 				).append(
-					configYAML.getJavaEePackage()
+					configYAML.getJavaEEPackage()
 				).append(
 					".validation.constraints.NotNull"
 				);
@@ -1243,7 +1243,7 @@ public class ResourceOpenAPIParser {
 			).append(
 				"@"
 			).append(
-				configYAML.getJavaEePackage()
+				configYAML.getJavaEEPackage()
 			).append(
 				".ws.rs."
 			);
@@ -1416,7 +1416,7 @@ public class ResourceOpenAPIParser {
 
 			Integer curHttpStatusCode = responseCode.getHttpCode();
 
-			if (Objects.equals(configYAML.getJavaEePackage(), "javax")) {
+			if (Objects.equals(configYAML.getJavaEEPackage(), "javax")) {
 				if (responseCode.isDefaultResponse() ||
 					(_FAMILY_SUCCESSFUL_JAVAX !=
 						javax.ws.rs.core.Response.Status.Family.familyOf(
@@ -1472,7 +1472,7 @@ public class ResourceOpenAPIParser {
 				String format = schema.getFormat();
 
 				if ((format != null) && format.equals("binary")) {
-					return configYAML.getJavaEePackage() +
+					return configYAML.getJavaEEPackage() +
 						".ws.rs.core.Response";
 				}
 
@@ -1499,7 +1499,7 @@ public class ResourceOpenAPIParser {
 			return returnType;
 		}
 
-		return configYAML.getJavaEePackage() + ".ws.rs.core.Response";
+		return configYAML.getJavaEEPackage() + ".ws.rs.core.Response";
 	}
 
 	private static boolean _isSchemaMethod(

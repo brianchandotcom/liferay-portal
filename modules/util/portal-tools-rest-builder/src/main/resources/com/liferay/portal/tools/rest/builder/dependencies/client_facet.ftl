@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.aggregation;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.util.ArrayList;
 import java.util.List;

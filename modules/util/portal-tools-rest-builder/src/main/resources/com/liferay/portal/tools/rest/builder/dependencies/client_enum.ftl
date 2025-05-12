@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.client.constant.${escapedVersion};
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.util.Objects;
 

@@ -22,15 +22,15 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
-import ${configYAML.javaEePackage}.servlet.http.HttpServletResponse;
+import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEEPackage}.servlet.http.HttpServletResponse;
 
-import ${configYAML.javaEePackage}.validation.constraints.NotEmpty;
+import ${configYAML.javaEEPackage}.validation.constraints.NotEmpty;
 
-import ${configYAML.javaEePackage}.ws.rs.core.Response;
-import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
+import ${configYAML.javaEEPackage}.ws.rs.core.Response;
+import ${configYAML.javaEEPackage}.ws.rs.core.UriInfo;
 
 import java.util.Date;
 import java.util.List;

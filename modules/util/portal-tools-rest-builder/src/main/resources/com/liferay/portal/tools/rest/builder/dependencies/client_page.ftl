@@ -3,7 +3,7 @@ package ${configYAML.apiPackagePath}.client.pagination;
 import ${configYAML.apiPackagePath}.client.aggregation.Facet;
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.util.ArrayList;
 import java.util.Collection;

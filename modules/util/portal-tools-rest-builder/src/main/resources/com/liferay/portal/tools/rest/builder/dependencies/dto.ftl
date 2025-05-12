@@ -30,17 +30,17 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.jackson.databind.deser.JSONStringStdDeserializer;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.validation.Valid;
-import ${configYAML.javaEePackage}.validation.constraints.DecimalMax;
-import ${configYAML.javaEePackage}.validation.constraints.DecimalMin;
-import ${configYAML.javaEePackage}.validation.constraints.NotEmpty;
-import ${configYAML.javaEePackage}.validation.constraints.NotNull;
-import ${configYAML.javaEePackage}.validation.constraints.Size;
+import ${configYAML.javaEEPackage}.validation.Valid;
+import ${configYAML.javaEEPackage}.validation.constraints.DecimalMax;
+import ${configYAML.javaEEPackage}.validation.constraints.DecimalMin;
+import ${configYAML.javaEEPackage}.validation.constraints.NotEmpty;
+import ${configYAML.javaEEPackage}.validation.constraints.NotNull;
+import ${configYAML.javaEEPackage}.validation.constraints.Size;
 
-import ${configYAML.javaEePackage}.xml.bind.annotation.XmlElement;
-import ${configYAML.javaEePackage}.xml.bind.annotation.XmlRootElement;
+import ${configYAML.javaEEPackage}.xml.bind.annotation.XmlElement;
+import ${configYAML.javaEEPackage}.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 

@@ -136,15 +136,15 @@ import java.util.Set;
 	import java.util.function.Supplier;
 </#if>
 
-import ${configYAML.javaEePackage}.annotation.Generated;
+import ${configYAML.javaEEPackage}.annotation.Generated;
 
-import ${configYAML.javaEePackage}.servlet.http.HttpServletRequest;
+import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;
 
-import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedHashMap;
-import ${configYAML.javaEePackage}.ws.rs.core.MultivaluedMap;
-import ${configYAML.javaEePackage}.ws.rs.core.PathSegment;
-import ${configYAML.javaEePackage}.ws.rs.core.UriBuilder;
-import ${configYAML.javaEePackage}.ws.rs.core.UriInfo;
+import ${configYAML.javaEEPackage}.ws.rs.core.MultivaluedHashMap;
+import ${configYAML.javaEEPackage}.ws.rs.core.MultivaluedMap;
+import ${configYAML.javaEEPackage}.ws.rs.core.PathSegment;
+import ${configYAML.javaEEPackage}.ws.rs.core.UriBuilder;
+import ${configYAML.javaEEPackage}.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;

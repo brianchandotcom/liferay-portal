@@ -490,10 +490,8 @@ public abstract class Base${schemaName}ResourceImpl
 				return java.math.BigDecimal.ZERO;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
 				return new java.util.Date();
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "jakarta.ws.rs.core.Response")>
-				jakarta.ws.rs.core.Response.ResponseBuilder responseBuilder = jakarta.ws.rs.core.Response.ok();
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
-				javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok();
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, configYAML.javaEEPackage + ".ws.rs.core.Response")>
+				${configYAML.javaEEPackage}.ws.rs.core.Response.ResponseBuilder responseBuilder = ${configYAML.javaEEPackage}.ws.rs.core.Response.ok();
 
 				return responseBuilder.build();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "void")>

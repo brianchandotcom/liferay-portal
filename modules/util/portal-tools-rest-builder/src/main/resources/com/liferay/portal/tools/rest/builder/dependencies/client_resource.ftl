@@ -181,7 +181,7 @@ public interface ${schemaName}Resource {
 				parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 			/>
 
-			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
+			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.aggregation.", "")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("com.liferay.portal.vulcan.permission.", "")?replace(configYAML.javaEEPackage + ".ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${javaMethodSignature.methodName}HttpResponse(${arguments});
 
 				String content = httpResponse.getContent();
@@ -214,7 +214,7 @@ public interface ${schemaName}Resource {
 					_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 				}
 
-				<#if !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
+				<#if !javaMethodSignature.returnType?contains(configYAML.javaEEPackage + ".ws.rs.core.Response")>
 					try {
 						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
 							return Page.of(content, Permission::toDTO);

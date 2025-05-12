@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -369,16 +368,12 @@ public class DisplayPageTemplateResourceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Map<Locale, String> friendlyURLMap = LocalizedMapUtil.getLocalizedMap(
-			displayPageTemplate.getFriendlyUrlPath_i18n());
-
-		if (!friendlyURLMap.equals(layout.getFriendlyURLMap())) {
-			_layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-				contextUser.getUserId(), layout.getCompanyId(),
-				layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
-				friendlyURLMap,
-				_getServiceContext(displayPageTemplate, groupId));
-		}
+		LayoutUtil.updateContentLayout(
+			layout, layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getRobotsMap(),
+			LocalizedMapUtil.getLocalizedMap(
+				displayPageTemplate.getFriendlyUrlPath_i18n()),
+			null, _getServiceContext(displayPageTemplate, groupId));
 
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
@@ -628,9 +623,6 @@ public class DisplayPageTemplateResourceImpl
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

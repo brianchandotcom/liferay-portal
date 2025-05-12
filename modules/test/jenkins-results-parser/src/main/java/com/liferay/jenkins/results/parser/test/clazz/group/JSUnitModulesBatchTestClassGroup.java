@@ -16,8 +16,6 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.PathMatcher;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -100,8 +98,10 @@ public class JSUnitModulesBatchTestClassGroup
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
-		List<PathMatcher> excludesPathMatchers = getPathMatchers(
-			getExcludesJobProperties());
+		moduleDirs.addAll(
+			portalGitWorkingDirectory.getModuleDirsList(
+				getPathMatchers(getExcludesJobProperties()),
+				getIncludesPathMatchers()));
 
 		List<String> excludedTestMethodNames = new ArrayList<>();
 
@@ -122,10 +122,6 @@ public class JSUnitModulesBatchTestClassGroup
 			}
 		}
 
-		moduleDirs.addAll(
-			portalGitWorkingDirectory.getModuleDirsList(
-				excludesPathMatchers, getIncludesPathMatchers()));
-
 		for (File moduleDir : moduleDirs) {
 			TestClass testClass = TestClassFactory.newTestClass(
 				this, moduleDir);
@@ -137,18 +133,16 @@ public class JSUnitModulesBatchTestClassGroup
 			List<TestClassMethod> testClassMethods =
 				testClass.getTestClassMethods();
 
-			Iterator<TestClassMethod> testClassMethodIterator =
-				testClassMethods.iterator();
+			Iterator<TestClassMethod> iterator = testClassMethods.iterator();
 
-			while (testClassMethodIterator.hasNext()) {
-				TestClassMethod testClassMethod =
-					testClassMethodIterator.next();
+			while (iterator.hasNext()) {
+				TestClassMethod testClassMethod = iterator.next();
 
 				String testClassMethodName = testClassMethod.getName();
 
 				for (String excludedMethodName : excludedTestMethodNames) {
 					if (testClassMethodName.contains(excludedMethodName)) {
-						testClassMethodIterator.remove();
+						iterator.remove();
 
 						break;
 					}

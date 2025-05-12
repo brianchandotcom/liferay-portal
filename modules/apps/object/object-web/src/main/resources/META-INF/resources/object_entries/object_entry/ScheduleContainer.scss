@@ -1,0 +1,10 @@
+@import 'atlas-variables';
+
+.lfr-object__entries-schedule-panel {
+	.disabled {
+		.text-warning {
+			color: $secondary-l1;
+			opacity: 1;
+		}
+	}
+}

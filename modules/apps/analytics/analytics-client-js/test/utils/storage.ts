@@ -18,6 +18,9 @@ window.Liferay = {
 		'LPD-10588': false,
 	},
 	Util: {
+		Cookie: {
+			get: jest.fn(),
+		},
 		LocalStorage: {
 			TYPES: {
 				PERFORMANCE: 'performance',
@@ -36,6 +39,10 @@ describe('Storage Utils', () => {
 
 		window.Liferay.FeatureFlags['LPD-10588'] = false;
 
+		// @ts-ignore
+
+		window.Liferay.Util.Cookie.get = () => 'false';
+
 		localStorage.removeItem(STORAGE_KEY);
 	});
 
@@ -45,6 +52,9 @@ describe('Storage Utils', () => {
 
 			localStorage.removeItem(STORAGE_KEY);
 
+			expect(
+				window.Liferay?.Util?.LocalStorage?.removeItem
+			).not.toBeCalled();
 			expect(removeItem(STORAGE_KEY)).toEqual(expected);
 		});
 
@@ -54,11 +64,13 @@ describe('Storage Utils', () => {
 
 			window.Liferay.FeatureFlags['LPD-10588'] = true;
 
-			removeItem(STORAGE_KEY);
-
 			// @ts-ignore
 
-			expect(window.Liferay.Util.LocalStorage.removeItem).toBeCalled();
+			window.Liferay.Util.Cookie.get = () => 'true';
+
+			removeItem(STORAGE_KEY);
+
+			expect(window.Liferay?.Util?.LocalStorage?.removeItem).toBeCalled();
 		});
 	});
 
@@ -67,6 +79,10 @@ describe('Storage Utils', () => {
 			const expected = {name: 'foo'};
 
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(expected));
+
+			expect(
+				window.Liferay?.Util?.LocalStorage?.getItem
+			).not.toBeCalled();
 
 			expect(getItem(STORAGE_KEY)).toEqual(expected);
 		});
@@ -77,11 +93,13 @@ describe('Storage Utils', () => {
 
 			window.Liferay.FeatureFlags['LPD-10588'] = true;
 
-			getItem(STORAGE_KEY);
-
 			// @ts-ignore
 
-			expect(window.Liferay.Util.LocalStorage.getItem).toBeCalled();
+			window.Liferay.Util.Cookie.get = () => 'true';
+
+			getItem(STORAGE_KEY);
+
+			expect(window.Liferay?.Util?.LocalStorage?.getItem).toBeCalled();
 		});
 	});
 
@@ -100,6 +118,10 @@ describe('Storage Utils', () => {
 			setItem(STORAGE_KEY, expected);
 
 			expect(
+				window.Liferay?.Util?.LocalStorage?.setItem
+			).not.toBeCalled();
+
+			expect(
 				JSON.parse(localStorage.getItem(STORAGE_KEY) as string)
 			).toEqual(expected);
 		});
@@ -110,11 +132,13 @@ describe('Storage Utils', () => {
 
 			window.Liferay.FeatureFlags['LPD-10588'] = true;
 
-			setItem(STORAGE_KEY, {name: 'foo'});
-
 			// @ts-ignore
 
-			expect(window.Liferay.Util.LocalStorage.setItem).toBeCalled();
+			window.Liferay.Util.Cookie.get = () => 'true';
+
+			setItem(STORAGE_KEY, {name: 'foo'});
+
+			expect(window.Liferay?.Util?.LocalStorage?.setItem).toBeCalled();
 		});
 	});
 

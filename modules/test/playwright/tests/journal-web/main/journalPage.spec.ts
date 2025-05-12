@@ -335,3 +335,47 @@ test(
 		expect(count).toBe(1);
 	}
 );
+
+test(
+	'Validate PrimaryKey for Folder in Related Assets',
+	{
+		tag: '@LPD-55314',
+	},
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: 'Basic Web content'},
+		});
+
+		await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('link', {name: 'Basic Web content'}).click();
+
+		await journalEditArticlePage.openRelatedAsset('Basic Web Content');
+
+		await journalEditArticlePage.changeViewInRelatedAssetPopUp(
+			'Basic Web Content',
+			'list'
+		);
+
+		const relatedAssetsFrame = page.frameLocator(
+			`iframe[title="Select Basic Web Content"]`
+		);
+
+		const inputValue = await relatedAssetsFrame
+			.locator(
+				'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_articlesPrimaryKeys'
+			)
+			.getAttribute('value');
+
+		expect(/[[{]/.test(inputValue || '')).toBeFalsy();
+	}
+);

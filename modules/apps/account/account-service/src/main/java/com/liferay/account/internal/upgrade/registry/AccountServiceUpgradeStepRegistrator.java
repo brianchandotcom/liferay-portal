@@ -211,6 +211,11 @@ public class AccountServiceUpgradeStepRegistrator
 			"2.11.1", "2.11.2",
 			new RoleResourceUpgradeProcess(
 				_resourceActionLocalService, _resourcePermissionLocalService));
+
+		registry.register(
+			"2.11.2", "2.12.0",
+			UpgradeProcessFactory.addColumns("AccountGroup", "status INTEGER"),
+			UpgradeProcessFactory.runSQL("update AccountGroup set status = 0"));
 	}
 
 	@Reference

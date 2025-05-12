@@ -118,6 +118,9 @@ public class CustomFieldsUtil {
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
 			}
+			else if (ExpandoColumnConstants.FLOAT == attributeType) {
+				map.put(name, GetterUtil.getFloat(data));
+			}
 			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
 				map.put(name, _toArray(data, ArrayUtil::toFloatArray));
 			}

@@ -104,7 +104,10 @@ public class CustomFieldsUtil {
 
 			Object data = customValue.getData();
 
-			if (ExpandoColumnConstants.DATE == attributeType) {
+			if (ExpandoColumnConstants.BOOLEAN_ARRAY == attributeType) {
+				map.put(name, _toArray(data, ArrayUtil::toBooleanArray));
+			}
+			else if (ExpandoColumnConstants.DATE == attributeType) {
 				map.put(name, _parseDate(String.valueOf(data)));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {

@@ -52,7 +52,8 @@ public class LayoutUtil {
 			long groupId, PageSpecification[] pageSpecifications,
 			boolean privateLayout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, String type, boolean hidden,
+			Map<Locale, String> robotsMap, String type,
+			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
 			boolean system, Map<Locale, String> friendlyURLMap, int status,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -100,8 +101,9 @@ public class LayoutUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
+		if (typeSettingsUnicodeProperties == null) {
+			typeSettingsUnicodeProperties = new UnicodeProperties();
+		}
 
 		Settings settings = publishedContentPageSpecification.getSettings();
 

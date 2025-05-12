@@ -1283,6 +1283,10 @@ public class CustomFieldsUtilTest {
 			(Map)map.get(_expandoColumn27.getName()));
 		Assert.assertEquals(
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
+
+		_testToMapWithIntegerValueForLongField();
+		_testToMapWithIntegerValueForShortField();
+		_testToMapWithIntegerArrayForShortArrayField();
 	}
 
 	@Test
@@ -1349,8 +1353,8 @@ public class CustomFieldsUtilTest {
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 	}
 
-	@Test
-	public void testToMapWithIntegerValueForLongField() throws Exception {
+
+	private void _testToMapWithIntegerValueForLongField() throws Exception {
 		CustomField[] customFields = new CustomField[] {
 			new CustomField() {
 				{
@@ -1377,8 +1381,8 @@ public class CustomFieldsUtilTest {
 			map.get(_expandoColumn14.getName()) instanceof Long);
 	}
 
-	@Test
-	public void testToMapWithIntegerValueForShortField() throws Exception {
+
+	private void _testToMapWithIntegerValueForShortField() throws Exception {
 		CustomField[] customFields = new CustomField[] {
 			new CustomField() {
 				{
@@ -1405,8 +1409,8 @@ public class CustomFieldsUtilTest {
 			map.get(_expandoColumn20.getName()) instanceof Short);
 	}
 
-	@Test
-	public void testToMapWithIntegerArrayForShortArrayField() throws Exception {
+
+	private void _testToMapWithIntegerArrayForShortArrayField() throws Exception {
 		List<Integer> integerCollection = new ArrayList<>();
 		integerCollection.add(_DATA_INT);
 		

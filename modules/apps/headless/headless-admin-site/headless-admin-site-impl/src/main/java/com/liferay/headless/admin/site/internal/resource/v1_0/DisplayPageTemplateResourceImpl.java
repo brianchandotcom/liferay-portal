@@ -424,11 +424,26 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			_portal.getSiteDefaultLocale(groupId),
+			displayPageTemplate.getName());
+
 		ServiceContext serviceContext = _getServiceContext(
 			displayPageTemplate, groupId);
 
-		Layout layout = _addLayout(
-			displayPageTemplate, groupId, serviceContext);
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layout.page.template.entry.type",
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		Layout layout = LayoutUtil.addContentLayout(
+			groupId, displayPageTemplate.getPageSpecifications(), false,
+			nameMap, nameMap, null, LayoutConstants.TYPE_ASSET_DISPLAY, true,
+			true,
+			LocalizedMapUtil.getLocalizedMap(
+				displayPageTemplate.getFriendlyUrlPath_i18n()),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
@@ -523,30 +538,6 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
-	}
-
-	private Layout _addLayout(
-			DisplayPageTemplate displayPageTemplate, long groupId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			_portal.getSiteDefaultLocale(groupId),
-			displayPageTemplate.getName());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute(
-			"layout.page.template.entry.type",
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-
-		return LayoutUtil.addContentLayout(
-			groupId, displayPageTemplate.getPageSpecifications(), false,
-			nameMap, nameMap, null, LayoutConstants.TYPE_ASSET_DISPLAY, true,
-			true,
-			LocalizedMapUtil.getLocalizedMap(
-				displayPageTemplate.getFriendlyUrlPath_i18n()),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private long _getClassTypeId(

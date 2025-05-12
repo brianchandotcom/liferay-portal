@@ -19,7 +19,10 @@ import {TranslationsContainer} from './TranslationsContainer';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
-import {getObjectDefinitionInfo} from '../ViewObjectDefinitions/objectDefinitionUtil';
+import {
+	ObjectDefinitionInfo,
+	getObjectDefinitionInfo,
+} from '../ViewObjectDefinitions/objectDefinitionUtil';
 import WorkflowContainer from '../WorkflowContainer';
 import {SeoContainer} from './SeoContainer';
 
@@ -94,7 +97,11 @@ export default function EditObjectDetails({
 	storageTypes,
 }: EditObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-	const [workflowLabel, setWorkflowLabel] = useState('');
+	const [workflowInfo, setWorkflowInfo] = useState<ObjectDefinitionInfo>({
+		isWorkflowSupported: false,
+		tableName: '',
+		workflowDefinitionTitle: '',
+	});
 
 	const {errors, handleChange, handleValidate, setValues, values} =
 		useObjectDetailsForm({
@@ -197,13 +204,19 @@ export default function EditObjectDetails({
 
 			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
-			setWorkflowLabel(objectDefinitionInfo.workflowDefinitionTitle);
+			setWorkflowInfo(objectDefinitionInfo);
 		};
 
 		makeFetch();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId]);
+
+	const showWorkflowSection =
+		Liferay.FeatureFlags['LPD-34594'] &&
+		workflowInfo.isWorkflowSupported &&
+		values.scope === 'company' &&
+		isApproved;
 
 	return (
 		<>
@@ -347,28 +360,26 @@ export default function EditObjectDetails({
 						</ClayPanel>
 					)}
 
-					{Liferay.FeatureFlags['LPD-34594'] &&
-						values.scope === 'company' &&
-						isApproved && (
-							<ClayPanel
-								collapsable
-								defaultExpanded
-								displayTitle={Liferay.Language.get('workflow')}
-								displayType="unstyled"
-							>
-								<ClayPanel.Body>
-									<WorkflowContainer
-										baseResourceURL={baseResourceURL}
-										className="lfr-objects__object-definition-details-section"
-										isRootDescendantNode={
-											isRootDescendantNode
-										}
-										objectDefinitionId={objectDefinitionId}
-										workflowLabel={workflowLabel}
-									/>
-								</ClayPanel.Body>
-							</ClayPanel>
-						)}
+					{showWorkflowSection && (
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={Liferay.Language.get('workflow')}
+							displayType="unstyled"
+						>
+							<ClayPanel.Body>
+								<WorkflowContainer
+									baseResourceURL={baseResourceURL}
+									className="lfr-objects__object-definition-details-section"
+									isRootDescendantNode={isRootDescendantNode}
+									objectDefinitionId={objectDefinitionId}
+									workflowLabel={
+										workflowInfo.workflowDefinitionTitle
+									}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
+					)}
 
 					<ClayPanel
 						collapsable

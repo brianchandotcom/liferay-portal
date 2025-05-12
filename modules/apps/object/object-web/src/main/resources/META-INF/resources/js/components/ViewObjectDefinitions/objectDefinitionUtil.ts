@@ -23,6 +23,12 @@ type DeleteObjectDefinitionProps = {
 	onAfterDeleteObjectDefinition?: () => void;
 };
 
+export type ObjectDefinitionInfo = {
+	isWorkflowSupported: boolean;
+	tableName: string;
+	workflowDefinitionTitle: string;
+};
+
 type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
 	dispatch: React.Dispatch<TAction>;
@@ -173,10 +179,8 @@ export async function getObjectDefinitionInfo({
 		p_p_resource_id: '/object_definitions/get_object_definition_info',
 	}).href;
 
-	const objectDefinitionInfoResponse = await API.fetchJSON<{
-		tableName: string;
-		workflowDefinitionTitle: string;
-	}>(objectDefinitionInfoURL);
+	const objectDefinitionInfoResponse =
+		await API.fetchJSON<ObjectDefinitionInfo>(objectDefinitionInfoURL);
 
 	return objectDefinitionInfoResponse;
 }

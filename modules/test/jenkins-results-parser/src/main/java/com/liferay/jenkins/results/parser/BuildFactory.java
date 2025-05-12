@@ -68,7 +68,9 @@ public class BuildFactory {
 			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.contains("-downstream")) {
+		if (jobName.equals("app-server-bundle-builder") ||
+			jobName.contains("-downstream")) {
+
 			String queryString = matcher.group("queryString");
 
 			if ((queryString != null) && queryString.contains("JOB_VARIANT")) {

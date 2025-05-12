@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.channel.web.internal.item.selector;
 
-import com.liferay.commerce.channel.web.internal.item.selector.criterion.CountryItemSelectorCriterion;
 import com.liferay.commerce.channel.web.internal.search.CountryItemSelectorChecker;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;

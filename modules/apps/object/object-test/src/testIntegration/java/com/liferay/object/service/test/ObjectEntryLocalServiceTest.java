@@ -33,6 +33,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -2752,19 +2753,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectRelationshipLocalService,
 			Collections.singletonList(objectRelationship));
 
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition2.getObjectDefinitionId(), true, null,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_GROOVY,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			UnicodePropertiesBuilder.put(
-				"script", "println \"Hello World\""
-			).build(),
-			false);
+		ObjectAction objectAction = _addObjectAction(
+			objectDefinition2, ObjectActionTriggerConstants.KEY_STANDALONE);
 
 		Assert.assertThat(
 			_resourceActions.getModelResourceActions(
@@ -5116,6 +5106,10 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryA);
 
+		ObjectAction objectAction = _addObjectAction(
+			objectDefinitionAA,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
+
 		ObjectEntry objectEntryAA = _addObjectEntry(
 			0, objectDefinitionAA.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -5173,6 +5167,9 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntryAA);
 
+		_assertObjectActionStatus(
+			ObjectActionConstants.STATUS_NEVER_RAN, objectAction);
+
 		objectEntryAA = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryAA.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -5183,6 +5180,9 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryA.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		_assertObjectActionStatus(
+			ObjectActionConstants.STATUS_SUCCESS, objectAction);
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_PENDING, objectEntryA);
@@ -5527,6 +5527,24 @@ public class ObjectEntryLocalServiceTest {
 			objectField.getObjectFieldSettings());
 	}
 
+	private ObjectAction _addObjectAction(
+			ObjectDefinition objectDefinition, String objectActionTriggerKey)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY, objectActionTriggerKey,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build(),
+			false);
+	}
+
 	private ObjectEntry _addObjectEntry(
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
@@ -5723,6 +5741,15 @@ public class ObjectEntryLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
+	}
+
+	private void _assertObjectActionStatus(
+		int expectedStatus, ObjectAction objectAction) {
+
+		objectAction = _objectActionLocalService.fetchObjectAction(
+			objectAction.getObjectActionId());
+
+		Assert.assertEquals(expectedStatus, objectAction.getStatus());
 	}
 
 	private void _assertObjectEntryLocalizedValues(

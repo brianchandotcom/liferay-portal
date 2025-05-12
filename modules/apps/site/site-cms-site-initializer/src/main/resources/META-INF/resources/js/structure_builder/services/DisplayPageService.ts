@@ -4,10 +4,15 @@
  */
 
 import {config} from '../config';
+import {State} from '../contexts/StateContext';
 import ApiHelper from './ApiHelper';
 
-async function resetDisplayPage() {
-	return await ApiHelper.post(config.resetStructureDisplayPageURL);
+async function resetDisplayPage({id}: {id: State['id']}) {
+	const url = new URL(config.resetStructureDisplayPageURL);
+
+	url.searchParams.set('objectDefinitionId', String(id));
+
+	return await ApiHelper.post(url.toString());
 }
 
 export default {

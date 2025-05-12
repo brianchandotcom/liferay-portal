@@ -97,45 +97,19 @@ public class StructureBuilderDisplayContext {
 				}
 			).put(
 				"editStructureDisplayPageURL",
-				() -> {
-					ObjectDefinition objectDefinition = _getObjectDefinition();
-
-					if ((objectDefinition == null) ||
-						!GetterUtil.getBoolean(_objectDefinition.getActive())) {
-
-						return null;
-					}
-
-					return StringBundler.concat(
-						_themeDisplay.getPortalURL(),
-						_themeDisplay.getPathMain(),
-						"/cms/edit_structure_display_page?objectDefinitionId=",
-						ParamUtil.getLong(
-							_httpServletRequest, "objectDefinitionId"),
-						"&p_l_back_url=", _themeDisplay.getURLCurrent());
-				}
+				() -> StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/edit_structure_display_page?p_l_back_url=",
+					_themeDisplay.getURLCurrent())
 			).put(
 				"objectFolderExternalReferenceCode",
 				_getObjectFolderExternalReferenceCode()
 			).put(
 				"resetStructureDisplayPageURL",
-				() -> {
-					ObjectDefinition objectDefinition = _getObjectDefinition();
-
-					if ((objectDefinition == null) ||
-						!GetterUtil.getBoolean(_objectDefinition.getActive())) {
-
-						return null;
-					}
-
-					return StringBundler.concat(
-						_themeDisplay.getPortalURL(),
-						_themeDisplay.getPathMain(),
-						"/cms/reset_structure_display_page?objectDefinitionId=",
-						ParamUtil.getLong(
-							_httpServletRequest, "objectDefinitionId"),
-						"&p_l_back_url=", _themeDisplay.getURLCurrent());
-				}
+				() -> StringBundler.concat(
+					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
+					"/cms/reset_structure_display_page?p_l_back_url=",
+					_themeDisplay.getURLCurrent())
 			)
 		).put(
 			"state",

@@ -429,55 +429,12 @@ public class DisplayPageTemplateResourceImpl
 			displayPageTemplate.getName());
 
 		Map<Locale, String> robotsMap = null;
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		DisplayPageTemplateSettings displayPageTemplateSettings =
 			displayPageTemplate.getDisplayPageTemplateSettings();
 
-		if ((displayPageTemplateSettings != null) &&
-			(displayPageTemplateSettings.getSeoSettings() != null)) {
-
-			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
-				displayPageTemplateSettings.getSeoSettings();
-
-			robotsMap = LocalizedMapUtil.getLocalizedMap(
-				contextAcceptLanguage.getPreferredLocale(), null,
-				displayPageTemplateSEOSettings.getRobots_i18n());
-		}
-
-		ServiceContext serviceContext = _getServiceContext(
-			displayPageTemplate, groupId);
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute(
-			"layout.page.template.entry.type",
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-
-		Layout layout = LayoutUtil.addContentLayout(
-			groupId, displayPageTemplate.getPageSpecifications(), false,
-			nameMap, nameMap, null, robotsMap,
-			LayoutConstants.TYPE_ASSET_DISPLAY, null, true, true,
-			LocalizedMapUtil.getLocalizedMap(
-				displayPageTemplate.getFriendlyUrlPath_i18n()),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				displayPageTemplate.getExternalReferenceCode(), groupId,
-				layoutPageTemplateCollectionId, displayPageTemplate.getKey(),
-				_portal.getClassNameId(contentTypeReference.getClassName()),
-				_getClassTypeId(contentTypeReference, groupId),
-				displayPageTemplate.getName(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-				FileEntryUtil.getPreviewFileEntryId(
-					groupId, displayPageTemplate.getThumbnail()),
-				false, 0L, layout.getPlid(), 0L, WorkflowConstants.STATUS_DRAFT,
-				serviceContext);
-
 		if (displayPageTemplateSettings != null) {
-			UnicodeProperties unicodeProperties =
-				layout.getTypeSettingsProperties();
-
 			DisplayPageTemplateOpenGraphSettings
 				displayPageTemplateOpenGraphSettings =
 					displayPageTemplateSettings.getOpenGraphSettings();
@@ -504,15 +461,19 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplateSettings.getSeoSettings();
 
 			if (displayPageTemplateSEOSettings != null) {
+				robotsMap = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(), null,
+					displayPageTemplateSEOSettings.getRobots_i18n());
+
+				sitemapSettings =
+					displayPageTemplateSEOSettings.getSitemapSettings();
+
 				unicodeProperties.setProperty(
 					"mapped-description",
 					displayPageTemplateSEOSettings.getDescriptionTemplate());
 				unicodeProperties.setProperty(
 					"mapped-title",
 					displayPageTemplateSEOSettings.getHtmlTitleTemplate());
-
-				sitemapSettings =
-					displayPageTemplateSEOSettings.getSitemapSettings();
 			}
 
 			if (sitemapSettings != null) {
@@ -544,13 +505,37 @@ public class DisplayPageTemplateResourceImpl
 					LayoutTypePortletConstants.SITEMAP_PRIORITY,
 					String.valueOf(sitemapSettings.getPagePriority()));
 			}
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), unicodeProperties.toString());
 		}
 
-		return _displayPageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
+		ServiceContext serviceContext = _getServiceContext(
+			displayPageTemplate, groupId);
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layout.page.template.entry.type",
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		Layout layout = LayoutUtil.addContentLayout(
+			groupId, displayPageTemplate.getPageSpecifications(), false,
+			nameMap, nameMap, null, robotsMap,
+			LayoutConstants.TYPE_ASSET_DISPLAY, unicodeProperties, true, true,
+			LocalizedMapUtil.getLocalizedMap(
+				displayPageTemplate.getFriendlyUrlPath_i18n()),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		return _displayPageTemplateDTOConverter.toDTO(
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				displayPageTemplate.getExternalReferenceCode(), groupId,
+				layoutPageTemplateCollectionId, displayPageTemplate.getKey(),
+				_portal.getClassNameId(contentTypeReference.getClassName()),
+				_getClassTypeId(contentTypeReference, groupId),
+				displayPageTemplate.getName(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				FileEntryUtil.getPreviewFileEntryId(
+					groupId, displayPageTemplate.getThumbnail()),
+				false, 0L, layout.getPlid(), 0L, WorkflowConstants.STATUS_DRAFT,
+				serviceContext));
 	}
 
 	private long _getClassTypeId(

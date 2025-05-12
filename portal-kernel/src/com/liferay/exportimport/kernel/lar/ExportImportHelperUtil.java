@@ -86,6 +86,16 @@ public class ExportImportHelperUtil {
 			companyId, excludeDataAlwaysStaged);
 	}
 
+	public static List<Portlet> getExportablePortlets(
+		long companyId, boolean excludeDataAlwaysStaged, long groupId) {
+
+		ExportImportHelper exportImportHelper =
+			_exportImportHelperSnapshot.get();
+
+		return exportImportHelper.getExportablePortlets(
+			companyId, excludeDataAlwaysStaged, groupId);
+	}
+
 	public static String getExportableRootPortletId(
 			long companyId, String portletId)
 		throws Exception {

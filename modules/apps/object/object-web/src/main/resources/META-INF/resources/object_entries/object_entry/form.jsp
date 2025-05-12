@@ -62,6 +62,19 @@ portletDisplay.setURLBack(backURL);
 					</clay:panel>
 				</clay:panel-group>
 			</c:if>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-17564") && (objectEntryDisplayContext.getObjectLayoutTab() == null) %>'>
+				<div>
+					<react:component
+						module="{ScheduleContainer} from object-web"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"portletNamespace", portletDisplay.getNamespace()
+							).build()
+						%>'
+					/>
+				</div>
+			</c:if>
 		</clay:sheet-section>
 
 		<%@ include file="/object_entries/object_entry/categorization.jspf" %>

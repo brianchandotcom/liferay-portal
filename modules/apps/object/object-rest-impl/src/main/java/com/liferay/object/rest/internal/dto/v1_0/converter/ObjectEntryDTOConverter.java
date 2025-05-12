@@ -237,14 +237,8 @@ public class ObjectEntryDTOConverter
 			(ObjectEntryVersion)dtoConverterContext.getAttribute(
 				"objectEntryVersion");
 
-		ObjectEntry contentObjectEntry = null;
-
-		if (objectEntryVersion != null) {
-			contentObjectEntry = ObjectEntry.unsafeToDTO(
-				objectEntryVersion.getContent());
-		}
-
-		ObjectEntry finalContentObjectEntry = contentObjectEntry;
+		ObjectEntry contentObjectEntry = (objectEntryVersion == null) ? null :
+			ObjectEntry.unsafeToDTO(objectEntryVersion.getContent());
 
 		return new ObjectEntry() {
 			{
@@ -291,7 +285,7 @@ public class ObjectEntryDTOConverter
 				setExternalReferenceCode(
 					() -> {
 						if (objectEntryVersion != null) {
-							return finalContentObjectEntry.
+							return contentObjectEntry.
 								getExternalReferenceCode();
 						}
 
@@ -307,7 +301,7 @@ public class ObjectEntryDTOConverter
 				setKeywords(
 					() -> {
 						if (objectEntryVersion != null) {
-							return finalContentObjectEntry.getKeywords();
+							return contentObjectEntry.getKeywords();
 						}
 						else if (!objectDefinition.isEnableCategorization()) {
 							return null;
@@ -347,7 +341,7 @@ public class ObjectEntryDTOConverter
 						}
 
 						Map<String, Object> properties =
-							finalContentObjectEntry.getProperties();
+							contentObjectEntry.getProperties();
 
 						com.liferay.object.model.ObjectEntry
 							serviceBuilderObjectEntryClone =
@@ -390,7 +384,7 @@ public class ObjectEntryDTOConverter
 				setTaxonomyCategoryBriefs(
 					() -> {
 						if (objectEntryVersion != null) {
-							return finalContentObjectEntry.
+							return contentObjectEntry.
 								getTaxonomyCategoryBriefs();
 						}
 						else if (!objectDefinition.isEnableCategorization()) {

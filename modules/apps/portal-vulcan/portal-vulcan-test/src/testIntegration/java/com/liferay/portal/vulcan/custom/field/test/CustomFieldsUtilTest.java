@@ -1283,9 +1283,13 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 
-		_testToMapWithIntegerValueForLongField();
-		_testToMapWithIntegerValueForShortField();
-		_testToMapWithIntegerArrayForShortArrayField();
+		_testToMapExpectedClassAndValue(
+			_expandoColumn14, Long.class, (long)_DATA_INT, _DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_expandoColumn20, Short.class, (short)_DATA_INT, _DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_expandoColumn21, short[].class, new short[] {(short)_DATA_INT},
+			Arrays.asList(_DATA_INT));
 	}
 
 	@Test
@@ -1434,79 +1438,31 @@ public class CustomFieldsUtilTest {
 		throw new NoSuchValueException();
 	}
 
-	private void _testToMapWithIntegerArrayForShortArrayField()
+	private void _testToMapExpectedClassAndValue(
+			ExpandoColumn expandoColumn, Class<?> expectedClass,
+			Object expectedValue, Object value)
 		throws Exception {
 
-		CustomField[] customFields = {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = Arrays.asList(_DATA_INT);
-						}
-					};
-					name = _expandoColumn21.getName();
-				}
-			}
-		};
-
 		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
+			_clazz.getName(), TestPropsValues.getCompanyId(),
+			new CustomField[] {
+				new CustomField() {
+					{
+						customValue = new CustomValue() {
+							{
+								data = value;
+							}
+						};
+						name = expandoColumn.getName();
+					}
+				}
+			},
 			LocaleUtil.getDefault());
 
-		Object value = map.get(_expandoColumn21.getName());
+		Object actualValue = map.get(expandoColumn.getName());
 
-		Assert.assertArrayEquals(
-			new short[] {(short)_DATA_INT}, (short[])value);
-		Assert.assertTrue(value instanceof short[]);
-	}
-
-	private void _testToMapWithIntegerValueForLongField() throws Exception {
-		CustomField[] customFields = {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = _DATA_INT;
-						}
-					};
-					name = _expandoColumn14.getName();
-				}
-			}
-		};
-
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
-			LocaleUtil.getDefault());
-
-		Object value = map.get(_expandoColumn14.getName());
-
-		Assert.assertEquals((long)_DATA_INT, value);
-		Assert.assertTrue(value instanceof Long);
-	}
-
-	private void _testToMapWithIntegerValueForShortField() throws Exception {
-		CustomField[] customFields = {
-			new CustomField() {
-				{
-					customValue = new CustomValue() {
-						{
-							data = _DATA_INT;
-						}
-					};
-					name = _expandoColumn20.getName();
-				}
-			}
-		};
-
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(), customFields,
-			LocaleUtil.getDefault());
-
-		Object value = map.get(_expandoColumn20.getName());
-
-		Assert.assertEquals((short)_DATA_INT, value);
-		Assert.assertTrue(value instanceof Short);
+		Assert.assertTrue(Objects.deepEquals(expectedValue, actualValue));
+		Assert.assertTrue(expectedClass.isInstance(actualValue));
 	}
 
 	private static final double _DATA_DOUBLE = RandomTestUtil.randomDouble();

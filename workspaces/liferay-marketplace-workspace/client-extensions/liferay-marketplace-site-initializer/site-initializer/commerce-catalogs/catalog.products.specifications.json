@@ -1,11 +1,11 @@
 [
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "MKP-APP-SETTINGS",
-		"description": "Define your app settings.",
+		"cpDefinitionExternalReferenceCode": "MKT-TECHNOLOGY-INTEGRATION",
+		"description": "Technology Integration",
 		"facetable": false,
-		"key": "app-settings",
-		"title": "App Settings"
+		"key": "technologyintegration",
+		"title": "Technology Integration"
 	},
 	{
 		"categoryKey": "product-metadata",

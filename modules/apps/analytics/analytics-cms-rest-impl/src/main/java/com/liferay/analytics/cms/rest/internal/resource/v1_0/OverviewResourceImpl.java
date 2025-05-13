@@ -93,12 +93,15 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		}
 
 		return _toOverview(
-			_getOverviewObjects(groupIds, languageId, rangeKey),
-			_getPreviousTotalCount(groupIds, languageId, rangeKey));
+			_getOverviewObjects(
+				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey),
+			_getPreviousTotalCount(
+				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey));
 	}
 
 	private Object[] _getOverviewObjects(
-		Long[] groupIds, String languageId, int rangeKey) {
+		String externalReferenceCode, Long[] groupIds, String languageId,
+		int rangeKey) {
 
 		AssetCategoryTable assetCategoryTable = AssetCategoryTable.INSTANCE;
 		AssetEntries_AssetTagsTable assetEntriesAssetTagsTable =
@@ -191,7 +194,8 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 				assetVocabularyGroupRelTable.groupId.in(assetGroupIds)
 			)
 		).where(
-			_getWhereClause(groupIds, languageId, false, rangeKey)
+			_getWhereClause(
+				externalReferenceCode, groupIds, languageId, false, rangeKey)
 		);
 
 		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
@@ -216,7 +220,8 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 	}
 
 	private long _getPreviousTotalCount(
-		Long[] groupIds, String languageId, int rangeKey) {
+		String externalReferenceCode, Long[] groupIds, String languageId,
+		int rangeKey) {
 
 		AssetEntryTable assetEntryTable = AssetEntryTable.INSTANCE;
 		ObjectDefinitionTable objectDefinitionTable =
@@ -244,7 +249,8 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			assetEntryTable,
 			assetEntryTable.classPK.eq(objectEntryTable.objectEntryId)
 		).where(
-			_getWhereClause(groupIds, languageId, true, rangeKey)
+			_getWhereClause(
+				externalReferenceCode, groupIds, languageId, true, rangeKey)
 		);
 
 		List<Object[]> results = _objectEntryLocalService.dslQuery(dslQuery);
@@ -305,11 +311,12 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 	}
 
 	private Predicate _getWhereClause(
-		Long[] groupIds, String languageId, boolean previous, int rangeKey) {
+		String externalReferenceCode, Long[] groupIds, String languageId,
+		boolean previous, int rangeKey) {
 
 		Predicate predicate =
 			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
-				"L_CMS_CONTENT_STRUCTURES");
+				externalReferenceCode);
 
 		if (ArrayUtil.isNotEmpty(groupIds)) {
 			predicate = predicate.and(

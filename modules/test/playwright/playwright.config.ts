@@ -115,10 +115,8 @@ import {config as scimConfiguraitonWebConfig} from './tests/scim-configuration-w
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/main/config';
 import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/main/config';
 import {config as segmentsWebConfig} from './tests/segments-web/main/config';
-import {
-	pageManagementSiteSetup,
-	pageManagementSiteTeardown,
-} from './tests/setup/page-management-site/config';
+import {config as pageManagementSiteConfig} from './tests/setup/page-management-site/main/config';
+import {config as pageManagementSiteTeardownConfig} from './tests/setup/page-management-site/teardown/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/main/config';
 import {config as siteCmsSiteInitializerConfig} from './tests/site-cms-site-initializer/main/config';
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/main/config';
@@ -139,7 +137,10 @@ import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-work
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/main/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/main/config';
 
-const setupProjects = [pageManagementSiteSetup, pageManagementSiteTeardown];
+const setupProjects = [
+	pageManagementSiteConfig,
+	pageManagementSiteTeardownConfig,
+];
 
 const resultsPath = 'test-results/TEST-playwright.xml';
 

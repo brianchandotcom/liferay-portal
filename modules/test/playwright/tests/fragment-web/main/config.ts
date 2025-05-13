@@ -4,7 +4,7 @@
  */
 
 export const config = {
-	dependencies: ['page-management-site-setup'],
+	dependencies: ['page-management-site.main'],
 	name: 'fragment-web.main',
 	testDir: 'tests/fragment-web/main',
 };

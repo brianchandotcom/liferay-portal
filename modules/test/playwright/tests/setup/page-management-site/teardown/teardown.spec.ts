@@ -6,10 +6,10 @@
 import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {mergeTests} from '@playwright/test';
 
-import {backendPageTest} from '../../../fixtures/backendPageTest';
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {OBJECT_ENTITIES} from './constants/objects';
-import {PAGE_MANAGEMENT_SITE_ERC} from './constants/site';
+import {backendPageTest} from '../../../../fixtures/backendPageTest';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {OBJECT_ENTITIES} from '../main/constants/objects';
+import {PAGE_MANAGEMENT_SITE_ERC} from '../main/constants/site';
 
 export const test = mergeTests(backendPageTest);
 

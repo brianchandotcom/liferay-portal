@@ -9,8 +9,8 @@ import {ApiHelpers} from '../helpers/ApiHelpers';
 import {
 	DEFAULT_ENTRIES_ERCS,
 	OBJECT_ENTITIES,
-} from '../tests/setup/page-management-site/constants/objects';
-import {PAGE_MANAGEMENT_SITE_ERC} from '../tests/setup/page-management-site/constants/site';
+} from '../tests/setup/page-management-site/main/constants/objects';
+import {PAGE_MANAGEMENT_SITE_ERC} from '../tests/setup/page-management-site/main/constants/site';
 import {deleteObjectEntries} from '../utils/deleteObjectEntries';
 import {backendPageTest} from './backendPageTest';
 
@@ -36,7 +36,7 @@ const pageManagementSiteTest = test.extend<{
 			}
 			catch {
 				throw new Error(
-					`Page Management site could not be fetched, make sure this project has page-management-site-setup as dependency`
+					`Page Management site could not be fetched, make sure this project has page-management-site.main as dependency`
 				);
 			}
 			finally {

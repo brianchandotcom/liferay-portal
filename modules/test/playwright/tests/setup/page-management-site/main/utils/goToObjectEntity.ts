@@ -1,7 +1,7 @@
 import {Page} from '@playwright/test';
 
-import {expandSection} from '../../../../utils/expandSection';
-import {openProductMenu} from '../../../../utils/productMenu';
+import {expandSection} from '../../../../../utils/expandSection';
+import {openProductMenu} from '../../../../../utils/productMenu';
 import {OBJECT_ENTITIES} from '../constants/objects';
 
 /**

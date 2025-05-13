@@ -24,7 +24,7 @@ import {zipFolder} from '../../../utils/zip';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 
 const test = mergeTests(
 	apiHelpersTest,

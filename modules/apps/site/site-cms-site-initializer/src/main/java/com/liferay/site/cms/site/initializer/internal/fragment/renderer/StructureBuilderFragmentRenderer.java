@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.site.cms.site.initializer.internal.display.context.StructureBuilderDisplayContext;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
+import com.liferay.taglib.ui.SuccessTag;
 
 import java.io.PrintWriter;
 
@@ -51,6 +52,12 @@ public class StructureBuilderFragmentRenderer
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			SuccessTag successTag = new SuccessTag();
+
+			successTag.setKey("displayPagePublished");
+			successTag.setMessage("the-experience-was-updated-successfully");
+			successTag.doTagAsString(httpServletRequest, httpServletResponse);
+
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write("<div><span aria-hidden=\"true\" class=\"");

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -279,6 +280,18 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 		return assetCategoryPersistence.countByParentCategoryId(
 			parentCategoryId);
+	}
+
+	@Override
+	public AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		AssetCategoriesPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_CATEGORY);
+
+		return assetCategoryLocalService.getOrAddIncompleteCategory(
+			externalReferenceCode, getUserId(), groupId);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {
@@ -19,6 +20,9 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 export const test = mergeTests(
 	accountsPagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-47858': {enabled: true},
+	}),
 	loginTest()
 );
 
@@ -1480,5 +1484,25 @@ test(
 				accountGroupAccountSelectorPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}).toPass();
+	}
+);
+
+test(
+	'Can search an account group and view its status',
+	{tag: '@LPD-55109'},
+	async ({accountGroupsPage, apiHelpers}) => {
+		const accountGroup =
+			await apiHelpers.headlessAdminUser.postAccountGroup();
+
+		await accountGroupsPage.goto();
+
+		await accountGroupsPage.accountGroupsTable.search(accountGroup.name);
+
+		await expect(
+			accountGroupsPage.accountGroupsTable.cell(accountGroup.name)
+		).toHaveCount(1);
+		await expect(
+			accountGroupsPage.accountGroupsTable.cell('Approved')
+		).toBeVisible();
 	}
 );

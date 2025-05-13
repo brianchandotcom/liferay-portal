@@ -12,34 +12,6 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
-	<target name="build-alloy-taglib-jar">
-		<if>
-			<not>
-				<isset property="alloy.taglibs.dir" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set the property "alloy.taglibs.dir" to point to a checked out version of
-svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
-				</fail>
-			</then>
-		</if>
-
-		<ant dir="${alloy.taglibs.dir}" inheritAll="false" target="clean" />
-		<ant dir="${alloy.taglibs.dir}" inheritAll="false" target="start" />
-
-		<copy
-			preservelastmodified="true"
-			todir="${project.dir}/lib/development"
-		>
-			<fileset
-				file="${alloy.taglibs.dir}/alloy-taglib/alloy-taglib.jar"
-			/>
-		</copy>
-	</target>
-
 	<target name="build-db">
 		<ant dir="../sql" target="build-db" />
 	</target>

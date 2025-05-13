@@ -130,8 +130,10 @@ export async function performLoginViaApi({
 
 		expect(alternateName).toBe(screenName);
 	}
-	catch {
-		throw new Error('Login via API failed');
+	catch (error) {
+		error.message = `Login via API failed\n\n${error.message}`;
+
+		throw error;
 	}
 
 	return await page.context().cookies();

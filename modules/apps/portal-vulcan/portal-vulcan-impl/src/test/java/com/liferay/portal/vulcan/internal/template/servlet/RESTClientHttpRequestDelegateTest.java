@@ -6,21 +6,17 @@
 package com.liferay.portal.vulcan.internal.template.servlet;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -35,18 +31,11 @@ public class RESTClientHttpRequestDelegateTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@AfterClass
-	public static void tearDownClass() {
-		_portalUtilMockedStatic.close();
-	}
-
 	@Test
 	public void testGetParameter() throws Exception {
-		_portalUtilMockedStatic.when(
-			() -> PortalUtil.getLocale(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			LocaleUtil.US
-		);
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(Mockito.mock(Portal.class));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -64,8 +53,5 @@ public class RESTClientHttpRequestDelegateTest {
 		Assert.assertNull(
 			restClientHttpRequestDelegate.getParameter(parameterName));
 	}
-
-	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
-		Mockito.mockStatic(PortalUtil.class);
 
 }

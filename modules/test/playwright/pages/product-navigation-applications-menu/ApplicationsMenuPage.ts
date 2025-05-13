@@ -530,7 +530,6 @@ export class ApplicationsMenuPage {
 	}
 
 	async goToCommerceTaxCategories(checkTabVisibility = true) {
-		await this.goto();
 		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceTaxCategoriesMenuItem.click();
 	}

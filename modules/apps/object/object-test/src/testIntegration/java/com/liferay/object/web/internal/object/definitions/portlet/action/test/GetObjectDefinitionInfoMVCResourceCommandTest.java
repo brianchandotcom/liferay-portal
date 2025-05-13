@@ -80,11 +80,10 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 		KaleoDefinition kaleoDefinition = _addKaleoDefinition(
 			_objectDefinitionA);
 
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA, true);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
 
 		_assertJSONObject(
-			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA,
-			true);
+			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA);
 
 		TreeTestUtil.bind(
 			_objectRelationshipLocalService,
@@ -95,8 +94,8 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 					StringUtil.randomId())));
 
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA, true);
-		_assertJSONObject(kaleoDefinition, _objectDefinitionAA, false);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
+		_assertJSONObject(kaleoDefinition, _objectDefinitionAA);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
@@ -109,7 +108,7 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				TestPropsValues.getCompanyId(), "Organization");
 
-		_assertJSONObject(null, systemObjectDefinition, false);
+		_assertJSONObject(systemObjectDefinition, null, false);
 	}
 
 	private KaleoDefinition _addKaleoDefinition(
@@ -132,23 +131,25 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 	}
 
 	private void _assertJSONObject(
-			KaleoDefinition kaleoDefinition, ObjectDefinition objectDefinition,
+			KaleoDefinition kaleoDefinition, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		_assertJSONObject(objectDefinition, kaleoDefinition.getTitle(), true);
+	}
+
+	private void _assertJSONObject(
+			ObjectDefinition objectDefinition, String workflowDefinitionTitle,
 			boolean workflowSupported)
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put(
-			"isWorkflowSupported", workflowSupported
-		).put(
-			"tableName", objectDefinition.getDBTableName()
-		);
-
-		if (workflowSupported) {
-			jsonObject.put(
-				"workflowDefinitionTitle", kaleoDefinition.getTitle());
-		}
-
 		Assert.assertEquals(
-			jsonObject.toString(),
+			JSONUtil.put(
+				"isWorkflowSupported", workflowSupported
+			).put(
+				"tableName", objectDefinition.getDBTableName()
+			).put(
+				"workflowDefinitionTitle", workflowDefinitionTitle
+			).toString(),
 			String.valueOf(
 				_getJSONObject(objectDefinition.getObjectDefinitionId())));
 	}

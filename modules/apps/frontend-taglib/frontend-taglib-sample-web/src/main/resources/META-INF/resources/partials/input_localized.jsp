@@ -8,5 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:container-fluid>
-	<aui:input label="" localized="<%= true %>" name="input-localized-name" type="text" value="" />
+	<form>
+		<aui:input label="Sample label" localized="<%= true %>" name="input-localized-name" type="text" value="" />
+	</form>
 </clay:container-fluid>

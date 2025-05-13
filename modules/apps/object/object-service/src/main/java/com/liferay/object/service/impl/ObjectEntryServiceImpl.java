@@ -28,7 +28,6 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,11 +41,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -58,11 +54,8 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -82,11 +75,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -512,7 +503,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		long accountEntryId = 0;
-		boolean rootDescendantNode = false;
 
 		if (objectDefinition.isRootDescendantNode()) {
 			accountEntryId = _getRootObjectEntryAccountEntryId(
@@ -520,8 +510,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
 				objectDefinition.getRootObjectDefinitionId());
-
-			rootDescendantNode = true;
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -546,17 +534,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					" does not have access to account entry ", accountEntryId));
 		}
 
-		Set<Long> rolesIds = new HashSet<>();
-
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			accountEntryId);
 
-		rolesIds.addAll(
-			TransformUtil.transform(
-				_userGroupRoleLocalService.getUserGroupRoles(
-					permissionChecker.getUserId(),
-					accountEntry.getAccountEntryGroupId()),
-				UserGroupRole::getRoleId));
+		if (_hasAddObjectEntryPermission(
+				accountEntry.getAccountEntryGroup(), objectDefinition,
+				permissionChecker, values)) {
+
+			return;
+		}
 
 		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
 			_accountEntryOrganizationRelLocalService.
@@ -568,54 +554,22 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Organization organization =
 				accountEntryOrganizationRel.getOrganization();
 
-			Group group = _groupLocalService.getOrganizationGroup(
-				objectDefinition.getCompanyId(),
-				organization.getOrganizationId());
+			if (_hasAddObjectEntryPermission(
+					organization.getGroup(), objectDefinition,
+					permissionChecker, values)) {
 
-			rolesIds.addAll(
-				TransformUtil.transform(
-					_userGroupRoleLocalService.getUserGroupRoles(
-						permissionChecker.getUserId(), group.getGroupId()),
-					UserGroupRole::getRoleId));
+				return;
+			}
 
 			for (Organization ancestorOrganization :
 					organization.getAncestors()) {
 
-				group = _groupLocalService.getOrganizationGroup(
-					objectDefinition.getCompanyId(),
-					ancestorOrganization.getOrganizationId());
+				if (_hasAddObjectEntryPermission(
+						ancestorOrganization.getGroup(), objectDefinition,
+						permissionChecker, values)) {
 
-				rolesIds.addAll(
-					TransformUtil.transform(
-						_userGroupRoleLocalService.getUserGroupRoles(
-							permissionChecker.getUserId(), group.getGroupId()),
-						UserGroupRole::getRoleId));
-			}
-		}
-
-		for (Long roleId : rolesIds) {
-			ResourcePermission resourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getResourceName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId);
-
-			if (resourcePermission == null) {
-				continue;
-			}
-
-			if (rootDescendantNode &&
-				(resourcePermission.hasActionId(
-					ObjectActionKeys.ADD_OBJECT_ENTRY) ||
-				 resourcePermission.hasActionId(ActionKeys.UPDATE))) {
-
-				return;
-			}
-
-			if (resourcePermission.hasActionId(
-					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-
-				return;
+					return;
+				}
 			}
 		}
 
@@ -733,6 +687,33 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			).atStartOfDay(
 				ZoneId.systemDefault()
 			).toInstant());
+	}
+
+	private boolean _hasAddObjectEntryPermission(
+			Group group, ObjectDefinition objectDefinition,
+			PermissionChecker permissionChecker,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		if (permissionChecker.hasPermission(
+				group.getGroupId(), objectDefinition.getResourceName(), 0,
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+			return true;
+		}
+
+		if (objectDefinition.isRootDescendantNode()) {
+			ObjectEntry objectEntry = _getRootObjectEntry(
+				objectDefinition, values);
+
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				getModelResourcePermission(objectEntry.getObjectDefinitionId());
+
+			return modelResourcePermission.contains(
+				permissionChecker, objectEntry, ActionKeys.UPDATE);
+		}
+
+		return false;
 	}
 
 	private void _sendUserNotificationEvents(
@@ -888,9 +869,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	private volatile ObjectConfiguration _objectConfiguration;
@@ -908,13 +886,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

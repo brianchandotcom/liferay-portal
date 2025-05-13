@@ -2624,11 +2624,11 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition();
 
-		String notificationBody = RandomTestUtil.randomString();
+		String notificationTemplateBody = RandomTestUtil.randomString();
 
 		NotificationTemplate notificationTemplate =
 			_addEmailNotificationTemplate(
-				notificationBody, RandomTestUtil.randomString(),
+				notificationTemplateBody, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				objectDefinition.getObjectDefinitionId(),
 				RandomTestUtil.randomString(), TestPropsValues.getUserId());
@@ -2652,11 +2652,11 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertEmailNotificationSent(1, notificationBody);
+		_assertEmailNotificationSent(1, notificationTemplateBody);
 
-		notificationBody = RandomTestUtil.randomString();
+		notificationTemplateBody = RandomTestUtil.randomString();
 
-		notificationTemplate.setBody(notificationBody);
+		notificationTemplate.setBody(notificationTemplateBody);
 
 		_notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplate);
@@ -2671,7 +2671,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertEmailNotificationSent(2, notificationBody);
+		_assertEmailNotificationSent(2, notificationTemplateBody);
 	}
 
 	@Test
@@ -3088,7 +3088,7 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private void _assertEmailNotificationSent(
-		int inboxSize, String notificationBody) {
+		int inboxSize, String notificationTemplateBody) {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			_notificationQueueEntryLocalService.getNotificationEntries(
@@ -3101,11 +3101,11 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals(inboxSize, MailServiceTestUtil.getInboxSize());
 
-		MailMessage lastMessage = MailServiceTestUtil.getLastMailMessage();
+		MailMessage lastMailMessage = MailServiceTestUtil.getLastMailMessage();
 
-		String messageBody = lastMessage.getBody();
+		String mailMessageBody = lastMailMessage.getBody();
 
-		Assert.assertTrue(messageBody.contains(notificationBody));
+		Assert.assertTrue(mailMessageBody.contains(notificationTemplateBody));
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(

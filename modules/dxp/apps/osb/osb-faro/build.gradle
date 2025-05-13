@@ -54,7 +54,7 @@ ext.faroImageTag = project.hasProperty("docker.image.tag") ? project.getProperty
 appDocker {
 	imageName "liferay/com-liferay-osb-faro"
 	imageTags = [faroEnvironmentName.equals("prd") ? "prd-" + new Date().format("yyyyMMdd") : faroImageTag]
-	inputDir = faroEnvironmentName.equals("local") ? (!project.hasProperty("liferay.ci") || !project.getProperty("liferay.ci").equals("true")) ? "osb-faro-docker/local/dev" : "osb-faro-docker/local/test" : "osb-faro-docker/" + faroEnvironmentName
+	inputDir = faroEnvironmentName.equals("local") ? (System.getProperty("liferay.ci") != "true") ? "osb-faro-docker/local/dev" : "osb-faro-docker/local/test" : "osb-faro-docker/" + faroEnvironmentName
 
 	onlyIf {
 		false
@@ -69,7 +69,7 @@ buildNexusCredentials {
 	commandLine("/bin/sh", "-c", "./set_nexus_credentials.sh")
 
 	onlyIf {
-		faroEnvironmentName.equals("local") && (!project.hasProperty("liferay.ci") || !project.getProperty("liferay.ci").equals("true"))
+		faroEnvironmentName.equals("local") && (System.getProperty("liferay.ci") != "true")
 	}
 }
 

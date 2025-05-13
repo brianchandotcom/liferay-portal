@@ -8,6 +8,7 @@ package com.liferay.asset.categories.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -16,9 +17,11 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -496,6 +500,54 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(
 			vocabulary.getVocabularyId(), newVocabulary.getVocabularyId());
+	}
+
+	@Test
+	public void testGetOrAddIncompleteVocabulary() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_assetVocabularyService.getOrAddIncompleteVocabulary(
+				RandomTestUtil.randomString(), _group.getGroupId());
+
+			Assert.fail();
+		}
+		catch (NoSuchVocabularyException noSuchVocabularyException) {
+			Assert.assertNotNull(noSuchVocabularyException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssetVocabulary vocabulary =
+				_assetVocabularyService.getOrAddIncompleteVocabulary(
+					RandomTestUtil.randomString(), _group.getGroupId());
+
+			Assert.assertNotNull(vocabulary);
+
+			// Without resource permission
+
+			User user = UserTestUtil.addGroupUser(
+				_group, RoleConstants.SITE_MEMBER);
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					user, permissionChecker)) {
+
+				_assetVocabularyService.getOrAddIncompleteVocabulary(
+					RandomTestUtil.randomString(), user.getGroupId());
+
+				Assert.fail();
+			}
+			catch (PrincipalException.MustHavePermission principalException) {
+				Assert.assertNotNull(principalException);
+			}
+		}
 	}
 
 	@Test

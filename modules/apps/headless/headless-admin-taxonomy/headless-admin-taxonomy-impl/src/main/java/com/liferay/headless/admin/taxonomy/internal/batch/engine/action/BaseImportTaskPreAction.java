@@ -32,7 +32,8 @@ public abstract class BaseImportTaskPreAction<T>
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
-			ImportTaskContext importTaskContext, Object item, 	UnsafeFunction<?, ?, Exception> unsafeFunction)
+			ImportTaskContext importTaskContext, Object item,
+			UnsafeFunction<?, ?, Exception> unsafeFunction)
 		throws Exception {
 
 		if (!Objects.equals(item.getClass(), getItemClass()) ||

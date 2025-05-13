@@ -30,7 +30,8 @@ public class EntityExtensionImportTaskPreAction implements ImportTaskPreAction {
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
-			ImportTaskContext importTaskContext, Object item, 	UnsafeFunction<?, ?, Exception> unsafeFunction)
+			ImportTaskContext importTaskContext, Object item,
+			UnsafeFunction<?, ?, Exception> unsafeFunction)
 		throws Exception {
 
 		EntityExtensionHandler entityExtensionHandler =

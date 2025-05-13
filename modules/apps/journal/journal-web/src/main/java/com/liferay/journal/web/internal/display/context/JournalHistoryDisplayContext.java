@@ -237,20 +237,7 @@ public class JournalHistoryDisplayContext {
 		int start, int end, SearchContext searchContext) {
 
 		searchContext.setAndSearch(false);
-		searchContext.setCompanyId(_article.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {_article.getGroupId()});
-		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(getKeywords());
-		searchContext.setSorts(_getSort());
-		searchContext.setStart(start);
 
-		_setBooleanClauses(searchContext);
-
-		_setAttributes(searchContext);
-	}
-
-	private void _setAttributes(SearchContext searchContext) {
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		attributes.put("head", false);
@@ -267,9 +254,7 @@ public class JournalHistoryDisplayContext {
 			).build());
 
 		searchContext.setAttributes(attributes);
-	}
 
-	private void _setBooleanClauses(SearchContext searchContext) {
 		try {
 			BooleanQuery booleanQuery = new BooleanQueryImpl();
 
@@ -286,6 +271,14 @@ public class JournalHistoryDisplayContext {
 		catch (ParseException parseException) {
 			throw new SystemException(parseException);
 		}
+
+		searchContext.setCompanyId(_article.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {_article.getGroupId()});
+		searchContext.setIncludeInternalAssetCategories(true);
+		searchContext.setKeywords(getKeywords());
+		searchContext.setSorts(_getSort());
+		searchContext.setStart(start);
 	}
 
 	private final JournalArticle _article;

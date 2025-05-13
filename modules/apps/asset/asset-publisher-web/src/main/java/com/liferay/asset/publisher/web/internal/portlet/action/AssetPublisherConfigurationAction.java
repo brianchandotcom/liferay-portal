@@ -26,11 +26,13 @@ import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDi
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
+import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -234,7 +236,17 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 					actionRequest, "selectionStyle");
 
 				if (Validator.isNull(selectionStyle)) {
-					selectionStyle = getDefaultSelectionStyle();
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)actionRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					try (SafeCloseable safeCloseable =
+							CompanyTemporarySwapper.
+								setCompanyIdWithSafeCloseable(
+									themeDisplay.getCompanyId())) {
+
+						selectionStyle = getDefaultSelectionStyle();
+					}
 				}
 
 				if (selectionStyle.equals(
@@ -906,9 +918,18 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 	private void _updateSelectionStyle(ActionRequest actionRequest) {
 		String selectionStyle = getParameter(actionRequest, "selectionStyle");
 
-		if (Validator.isNull(selectionStyle)) {
-			setPreference(
-				actionRequest, "selectionStyle", getDefaultSelectionStyle());
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try (SafeCloseable safeCloseable =
+				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
+					themeDisplay.getCompanyId())) {
+
+			if (Validator.isNull(selectionStyle)) {
+				setPreference(
+					actionRequest, "selectionStyle",
+					getDefaultSelectionStyle());
+			}
 		}
 	}
 

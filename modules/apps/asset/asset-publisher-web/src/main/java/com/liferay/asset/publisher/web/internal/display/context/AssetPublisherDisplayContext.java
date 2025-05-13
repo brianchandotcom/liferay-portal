@@ -35,6 +35,7 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetHelper;
@@ -68,6 +69,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -694,8 +696,13 @@ public class AssetPublisherDisplayContext {
 			_classNameIds = assetEntryQuery.getClassNameIds();
 		}
 		else {
-			_classNameIds = _assetPublisherHelper.getClassNameIds(
-				_portletPreferences, getAvailableClassNameIds());
+			try (SafeCloseable safeCloseable =
+					CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
+						_themeDisplay.getCompanyId())) {
+
+				_classNameIds = _assetPublisherHelper.getClassNameIds(
+					_portletPreferences, getAvailableClassNameIds());
+			}
 		}
 
 		return _classNameIds;
@@ -1382,10 +1389,15 @@ public class AssetPublisherDisplayContext {
 			return _selectionStyle;
 		}
 
-		_selectionStyle = GetterUtil.getString(
-			_portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConfigurationUtil.
-				defaultSelectionStyle());
+		try (SafeCloseable safeCloseable =
+				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
+					_themeDisplay.getCompanyId())) {
+
+			_selectionStyle = GetterUtil.getString(
+				_portletPreferences.getValue("selectionStyle", null),
+				AssetPublisherSelectionStyleConfigurationUtil.
+					defaultSelectionStyle());
+		}
 
 		return _selectionStyle;
 	}

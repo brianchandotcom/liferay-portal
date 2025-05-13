@@ -8,7 +8,9 @@ package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
+import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -55,10 +57,19 @@ public abstract class BaseConfigurationFormNavigatorEntry
 			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
-		return GetterUtil.getString(
-			portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConfigurationUtil.
-				defaultSelectionStyle());
+		String selectionStyle = StringPool.BLANK;
+
+		try (SafeCloseable safeCloseable =
+				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
+					themeDisplay.getCompanyId())) {
+
+			selectionStyle = GetterUtil.getString(
+				portletPreferences.getValue("selectionStyle", null),
+				AssetPublisherSelectionStyleConfigurationUtil.
+					defaultSelectionStyle());
+		}
+
+		return selectionStyle;
 	}
 
 	protected boolean isAssetListSelection() {

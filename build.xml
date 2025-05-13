@@ -652,9 +652,9 @@ message.
 			useexternalfile="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
+			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 			<link href="https://docs.liferay.com/portlet-api/3.0/javadocs" />
 			<link href="https://docs.oracle.com/javase/17/docs/api" />
-			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 
 			<packageset dir="${module.dir}/src" />
 
@@ -686,9 +686,9 @@ message.
 			<group packages="com.liferay.portal.kernel.*" title="Portal Kernel" />
 			<group packages="com.liferay.*" title="Portlet Services" />
 
+			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 			<link href="https://docs.liferay.com/portlet-api/3.0/javadocs" />
 			<link href="https://docs.oracle.com/javase/17/docs/api" />
-			<link href="http://docs.liferay.com/portal/${lp.version.major}-latest/javadocs" />
 
 			<packageset dir="${module.dir}/src" />
 

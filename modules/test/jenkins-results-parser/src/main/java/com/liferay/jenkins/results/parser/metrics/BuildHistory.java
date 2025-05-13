@@ -156,6 +156,7 @@ public class BuildHistory {
 
 	public enum TableMetric {
 
+		AVERAGE_DOWNSTREAM_BUILD_DURATION("Average Downstream Build Duration"),
 		AVERAGE_TOP_LEVEL_BUILD_DURATION("Average Top Level Build Duration"),
 		INVOKED_BUILDS("Invoked Builds"),
 		INVOKED_TOP_LEVEL_BUILDS("Invoked Top Level Builds"),
@@ -198,6 +199,7 @@ public class BuildHistory {
 			return getJSONArray(
 				intervalDays,
 				Arrays.asList(
+					TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.toString(),
 					TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.toString(),
 					TableMetric.INVOKED_BUILDS.toString(),
 					TableMetric.INVOKED_TOP_LEVEL_BUILDS.toString(),
@@ -216,6 +218,8 @@ public class BuildHistory {
 
 			String[] dateStrings = new String[dateStringsArray.length];
 
+			Long[] averageDownstreamBuildDurations =
+				new Long[dateStringsArray.length];
 			Long[] averageTopLevelBuildDurations =
 				new Long[dateStringsArray.length];
 			Long[] invokedBuilds = new Long[dateStringsArray.length];
@@ -235,6 +239,10 @@ public class BuildHistory {
 				long topLevelBuildDuration = _getTotalValue(
 					_dailyTotalTopLevelBuildDurations, dateStringsArray[i]);
 
+				averageDownstreamBuildDurations[i] = _getQuotient(
+					totalServerDurations[i] - topLevelBuildDuration,
+					invokedBuilds[i] - invokedTopLevelBuilds[i]);
+
 				averageTopLevelBuildDurations[i] = _getQuotient(
 					topLevelBuildDuration, invokedTopLevelBuilds[i]);
 			}
@@ -252,10 +260,27 @@ public class BuildHistory {
 
 			if (metricNames == null) {
 				metricNames = Arrays.asList(
+					TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.toString(),
 					TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.toString(),
 					TableMetric.INVOKED_BUILDS.toString(),
 					TableMetric.INVOKED_TOP_LEVEL_BUILDS.toString(),
 					TableMetric.TOTAL_SERVER_DURATION.toString());
+			}
+
+			if (metricNames.contains(
+					TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.toString())) {
+
+				rows.add(
+					new ArrayList<Object>() {
+						{
+							add(getName());
+							add(
+								TableMetric.AVERAGE_DOWNSTREAM_BUILD_DURATION.
+									toString());
+							addAll(
+								Arrays.asList(averageDownstreamBuildDurations));
+						}
+					});
 			}
 
 			if (metricNames.contains(

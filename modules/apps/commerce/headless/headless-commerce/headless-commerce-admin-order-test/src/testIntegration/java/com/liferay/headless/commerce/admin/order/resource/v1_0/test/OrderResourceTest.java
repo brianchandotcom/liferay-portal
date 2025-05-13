@@ -15,6 +15,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
@@ -23,6 +24,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
@@ -37,6 +39,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -173,11 +176,12 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				_serviceContext);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetOrdersPage() throws Exception {
 		super.testGetOrdersPage();
+
+		_testGetOrdersPageWithFilter();
 	}
 
 	@Ignore
@@ -528,6 +532,33 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		return order;
 	}
 
+	private void _testGetOrdersPageWithFilter() throws Exception {
+		Order randomOrder = randomOrder();
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeLocalService.addCommerceOrderType(
+				StringUtil.toUpperCase(RandomTestUtil.randomString()),
+				TestPropsValues.getUserId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, 1, 1, 1970, 12, 0,
+				RandomTestUtil.nextInt(), 0, 0, 0, 0, 0, true, _serviceContext);
+
+		randomOrder.setOrderTypeId(commerceOrderType.getCommerceOrderTypeId());
+
+		Order order = testGetOrdersPage_addOrder(randomOrder);
+
+		Page<Order> page = orderResource.getOrdersPage(
+			null,
+			StringBundler.concat(
+				"(orderTypeExternalReferenceCode eq '",
+				commerceOrderType.getExternalReferenceCode(), "')"),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(order, (List<Order>)page.getItems());
+	}
+
 	private void _testPatchOrderByExternalReferenceCodeWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -815,6 +846,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	private CommerceTermEntry _commerceTermEntry;
 

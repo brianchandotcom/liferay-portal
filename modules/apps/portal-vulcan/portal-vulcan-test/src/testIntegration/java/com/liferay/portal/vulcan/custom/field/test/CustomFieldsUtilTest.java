@@ -1737,6 +1737,17 @@ public class CustomFieldsUtilTest {
 		}
 
 		Assert.assertTrue(expectedClass.isInstance(actualValue));
+
+		// Add value to assert the Service Layer admits the value
+
+		ExpandoTestUtil.addValues(_expandoTable, _user.getPrimaryKey(), map);
+
+		Assert.assertNotNull(
+			_getCustomField(
+				CustomFieldsUtil.toCustomFields(
+					true, _clazz.getName(), _user.getPrimaryKey(),
+					TestPropsValues.getCompanyId(), LocaleUtil.getDefault()),
+				_expandoColumn1.getName()));
 	}
 
 	private static final double _DATA_DOUBLE = RandomTestUtil.randomDouble();

@@ -7,8 +7,8 @@ import {
 	Options,
 	State,
 } from '../structure_builder/contexts/PicklistBuilderContext';
-import {Picklist} from '../structure_builder/types/Picklist';
 import normalizeOptions from '../structure_builder/utils/normalizeOptions';
+import {Picklist} from '../types/Picklist';
 import ApiHelper from './ApiHelper';
 
 async function createPicklist({

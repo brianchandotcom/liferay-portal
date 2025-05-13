@@ -9,12 +9,12 @@ import classNames from 'classnames';
 import {FieldFeedback} from 'frontend-js-components-web';
 import React from 'react';
 
+import {Space} from '../../types/Space';
 import {useCache} from '../contexts/CacheContext';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import selectValidationErrors from '../selectors/selectValidationErrors';
-import {Space} from '../types/Space';
 
 type Item = {
 	label: string;

@@ -98,7 +98,7 @@ public class CommerceOrderModelDocumentContributor
 			if (commerceOrderType != null) {
 				document.addKeyword(
 					"commerceOrderTypeExternalReferenceCode",
-					commerceOrderType.getExternalReferenceCode());
+					commerceOrderType.getExternalReferenceCode(), true);
 			}
 
 			document.addKeyword(

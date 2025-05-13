@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -189,11 +190,24 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		}
 
 		for (String relevantRuleName : relevantRuleNames) {
+			if (!relevantRuleName.endsWith("-playwright-rule")) {
+				continue;
+			}
+
+			String testBatchNamesRelevantName =
+				"test.batch.names[relevant][" + relevantRuleName + "]";
+
+			String playwrightRuleName = properties.getProperty(
+				testBatchNamesRelevantName);
+
+			if (Validator.isBlank(playwrightRuleName)) {
+				continue;
+			}
+
 			String playwrightProjectsIncludesPropertyName =
 				StringBundler.concat(
-					"playwright.projects.includes",
-					"[playwright-js-tomcat90-mysql57][relevant][",
-					relevantRuleName, "]");
+					"playwright.projects.includes[", playwrightRuleName,
+					"][relevant][", relevantRuleName, "]");
 
 			List<String> playwrightProjectsIncludesList = ListUtil.fromString(
 				properties.getProperty(playwrightProjectsIncludesPropertyName),

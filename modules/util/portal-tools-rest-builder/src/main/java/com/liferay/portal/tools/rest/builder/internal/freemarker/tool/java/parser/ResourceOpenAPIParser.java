@@ -1416,23 +1416,10 @@ public class ResourceOpenAPIParser {
 
 			Integer curHttpStatusCode = responseCode.getHttpCode();
 
-			if (Objects.equals(configYAML.getJavaEEPackage(), "javax")) {
-				if (responseCode.isDefaultResponse() ||
-					(_FAMILY_SUCCESSFUL_JAVAX !=
-						javax.ws.rs.core.Response.Status.Family.familyOf(
-							curHttpStatusCode))) {
+			if (responseCode.isDefaultResponse() ||
+				((curHttpStatusCode / 100) != 2)) {
 
-					continue;
-				}
-			}
-			else {
-				if (responseCode.isDefaultResponse() ||
-					(_FAMILY_SUCCESSFUL_JAKARTA !=
-						jakarta.ws.rs.core.Response.Status.Family.familyOf(
-							curHttpStatusCode))) {
-
-					continue;
-				}
+				continue;
 			}
 
 			if ((httpStatusCode == null) ||
@@ -1627,14 +1614,6 @@ public class ResourceOpenAPIParser {
 			consumer.accept(Collections.emptySet());
 		}
 	}
-
-	private static final jakarta.ws.rs.core.Response.Status.Family
-		_FAMILY_SUCCESSFUL_JAKARTA =
-			jakarta.ws.rs.core.Response.Status.Family.SUCCESSFUL;
-
-	private static final javax.ws.rs.core.Response.Status.Family
-		_FAMILY_SUCCESSFUL_JAVAX =
-			javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 
 	private enum BatchOperationType {
 

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -131,7 +133,9 @@ public class LanguageResourcesTest {
 
 	@Test
 	public void testGetResourceBundle() throws PortalException {
-		PLOEntry ploEntry = null;
+		PLOEntry ploEntry1 = null;
+		PLOEntry ploEntry2 = null;
+		String testKey = RandomTestUtil.randomString();
 
 		try {
 			ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
@@ -141,6 +145,16 @@ public class LanguageResourcesTest {
 				ResourceBundleUtil.getString(
 					resourceBundle, TestResourceBundle.class.getName()));
 
+			List<String> keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertFalse(
+				"Key " + TestResourceBundle.class.getName() +
+					" should not be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertFalse(
+				"Key " + testKey + " should not be seen",
+				keys.contains(testKey));
+
 			_serviceRegistration1 = _register(_VALUE_1, 0);
 
 			Assert.assertEquals(
@@ -148,31 +162,101 @@ public class LanguageResourcesTest {
 				ResourceBundleUtil.getString(
 					resourceBundle, TestResourceBundle.class.getName()));
 
-			ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
+			keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertTrue(
+				"Key " + TestResourceBundle.class.getName() + " should be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertFalse(
+				"Key " + testKey + " should not be seen",
+				keys.contains(testKey));
+
+			ploEntry1 = _ploEntryLocalService.addOrUpdatePLOEntry(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				TestResourceBundle.class.getName(), _languageId, _VALUE_2);
+
+			ploEntry2 = _ploEntryLocalService.addOrUpdatePLOEntry(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				testKey, _languageId, _VALUE_3);
 
 			Assert.assertEquals(
 				_VALUE_2,
 				ResourceBundleUtil.getString(
 					resourceBundle, TestResourceBundle.class.getName()));
 
-			_ploEntryLocalService.deletePLOEntry(ploEntry);
+			Assert.assertEquals(
+				_VALUE_3,
+				ResourceBundleUtil.getString(resourceBundle, testKey));
+
+			keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertTrue(
+				"Key " + TestResourceBundle.class.getName() + " should be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertTrue(
+				"Key " + testKey + " should be seen", keys.contains(testKey));
+
+			_ploEntryLocalService.deletePLOEntry(ploEntry1);
 
 			Assert.assertEquals(
 				_VALUE_1,
 				ResourceBundleUtil.getString(
 					resourceBundle, TestResourceBundle.class.getName()));
 
+			Assert.assertEquals(
+				_VALUE_3,
+				ResourceBundleUtil.getString(resourceBundle, testKey));
+
+			keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertTrue(
+				"Key " + TestResourceBundle.class.getName() + " should be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertTrue(
+				"Key " + testKey + " should be seen", keys.contains(testKey));
+
+			_ploEntryLocalService.deletePLOEntry(ploEntry2);
+
+			Assert.assertEquals(
+				_VALUE_1,
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+
+			Assert.assertNull(
+				ResourceBundleUtil.getString(resourceBundle, testKey));
+
+			keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertTrue(
+				"Key " + TestResourceBundle.class.getName() + " should be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertFalse(
+				"Key " + testKey + " should not be seen",
+				keys.contains(testKey));
+
 			_serviceRegistration1 = _unregister(_serviceRegistration1);
 
 			Assert.assertNull(
 				ResourceBundleUtil.getString(
 					resourceBundle, TestResourceBundle.class.getName()));
+
+			keys = Collections.list(resourceBundle.getKeys());
+
+			Assert.assertFalse(
+				"Key " + TestResourceBundle.class.getName() +
+					" should not be seen",
+				keys.contains(TestResourceBundle.class.getName()));
+			Assert.assertFalse(
+				"Key " + testKey + " should not be seen",
+				keys.contains(testKey));
 		}
 		finally {
-			if (ploEntry != null) {
-				_ploEntryLocalService.deletePLOEntry(ploEntry);
+			if (ploEntry1 != null) {
+				_ploEntryLocalService.deletePLOEntry(ploEntry1);
+			}
+
+			if (ploEntry2 != null) {
+				_ploEntryLocalService.deletePLOEntry(ploEntry2);
 			}
 		}
 	}

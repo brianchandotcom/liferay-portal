@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -1279,6 +1280,75 @@ public class CustomFieldsUtilTest {
 			(Map)map.get(_expandoColumn27.getName()));
 		Assert.assertEquals(
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
+	}
+
+	@Test
+	public void testToMapDefaultCustomFieldValues() throws Exception {
+		Map<String, Serializable> map = CustomFieldsUtil.toMap(
+			_clazz.getName(), TestPropsValues.getCompanyId(),
+			CustomFieldsUtil.toCustomFields(
+				true, _clazz.getName(), RandomTestUtil.randomLong(),
+				TestPropsValues.getCompanyId(), LocaleUtil.getDefault()),
+			LocaleUtil.getDefault());
+
+		Assert.assertFalse((boolean)map.get(_expandoColumn1.getName()));
+		Assert.assertArrayEquals(
+			new boolean[0], (boolean[])map.get(_expandoColumn2.getName()));
+		Assert.assertEquals(new Date(0), map.get(_expandoColumn3.getName()));
+		Assert.assertArrayEquals(
+			new Date[0], (Date[])map.get(_expandoColumn4.getName()));
+		Assert.assertEquals(0.0, map.get(_expandoColumn5.getName()));
+		Assert.assertArrayEquals(
+			new double[] {0.0}, (double[])map.get(_expandoColumn6.getName()),
+			0);
+		Assert.assertArrayEquals(
+			new double[] {0.0}, (double[])map.get(_expandoColumn7.getName()),
+			0);
+		Assert.assertArrayEquals(
+			new double[] {_DATA_DOUBLE},
+			(double[])map.get(_expandoColumn8.getName()), 0);
+		Assert.assertEquals((float)0.0, map.get(_expandoColumn9.getName()));
+		Assert.assertArrayEquals(
+			new float[0], (float[])map.get(_expandoColumn10.getName()), 0);
+		Assert.assertEquals("{}", map.get(_expandoColumn11.getName()));
+		Assert.assertEquals(0, map.get(_expandoColumn12.getName()));
+		Assert.assertArrayEquals(
+			new int[0], (int[])map.get(_expandoColumn13.getName()));
+		Assert.assertEquals(0L, map.get(_expandoColumn14.getName()));
+		Assert.assertArrayEquals(
+			new long[] {0L}, (long[])map.get(_expandoColumn15.getName()));
+		Assert.assertArrayEquals(
+			new long[] {0L}, (long[])map.get(_expandoColumn16.getName()));
+		Assert.assertArrayEquals(
+			new long[] {_DATA_LONG},
+			(long[])map.get(_expandoColumn17.getName()));
+		Assert.assertEquals(0, map.get(_expandoColumn18.getName()));
+		Assert.assertArrayEquals(
+			new Number[0], (Number[])map.get(_expandoColumn19.getName()));
+		Assert.assertEquals((short)0, map.get(_expandoColumn20.getName()));
+		Assert.assertArrayEquals(
+			new short[0], (short[])map.get(_expandoColumn21.getName()));
+		Assert.assertEquals("", map.get(_expandoColumn22.getName()));
+		Assert.assertArrayEquals(
+			new String[] {"false"},
+			(String[])map.get(_expandoColumn23.getName()));
+		Assert.assertArrayEquals(
+			new String[] {"false"},
+			(String[])map.get(_expandoColumn24.getName()));
+		Assert.assertArrayEquals(
+			new String[] {_DATA_STRING},
+			(String[])map.get(_expandoColumn25.getName()));
+		Assert.assertEquals(
+			new HashMap<>(), map.get(_expandoColumn26.getName()));
+		Assert.assertEquals(
+			new HashMap<>(), map.get(_expandoColumn27.getName()));
+		Assert.assertEquals(
+			map.toString(), _initialExpandoColumnsCount + 27, map.size());
+	}
+
+	@Test
+	@TestInfo("LPD-54757")
+	public void testToMapExpectedClassAndValue() throws Exception {
 
 		// Boolean
 
@@ -1295,18 +1365,26 @@ public class CustomFieldsUtilTest {
 
 		// Date
 
+		Date randomDate1 = RandomTestUtil.nextDate();
+
+		randomDate1 = new Date((randomDate1.getTime() / 1000) * 1000);
+
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
-				_dateFormat.format(randomDate), null, _expandoColumn3, null),
-			Date.class, randomDate);
+				_dateFormat.format(randomDate1), null, _expandoColumn3, null),
+			Date.class, randomDate1);
 
 		// Date array
 
+		Date randomDate2 = RandomTestUtil.nextDate();
+
+		randomDate2 = new Date((randomDate2.getTime() / 1000) * 1000);
+
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
-				Arrays.asList(_dateFormat.format(randomDate)), null,
+				Arrays.asList(_dateFormat.format(randomDate2)), null,
 				_expandoColumn4, null),
-			Date[].class, new Date[] {randomDate});
+			Date[].class, new Date[] {randomDate2});
 
 		// Double
 
@@ -1350,6 +1428,9 @@ public class CustomFieldsUtilTest {
 			float[].class, new float[] {_DATA_FLOAT});
 
 		// Geolocation
+
+		double randomDouble1 = RandomTestUtil.randomDouble();
+		double randomDouble2 = RandomTestUtil.randomDouble();
 
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
@@ -1532,6 +1613,8 @@ public class CustomFieldsUtilTest {
 
 		// String localized
 
+		String randomString = RandomTestUtil.randomString();
+
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
 				_DATA_STRING,
@@ -1551,70 +1634,6 @@ public class CustomFieldsUtilTest {
 			).put(
 				_ptLocale, randomString
 			).build());
-	}
-
-	@Test
-	public void testToMapDefaultCustomFieldValues() throws Exception {
-		Map<String, Serializable> map = CustomFieldsUtil.toMap(
-			_clazz.getName(), TestPropsValues.getCompanyId(),
-			CustomFieldsUtil.toCustomFields(
-				true, _clazz.getName(), RandomTestUtil.randomLong(),
-				TestPropsValues.getCompanyId(), LocaleUtil.getDefault()),
-			LocaleUtil.getDefault());
-
-		Assert.assertFalse((boolean)map.get(_expandoColumn1.getName()));
-		Assert.assertArrayEquals(
-			new boolean[0], (boolean[])map.get(_expandoColumn2.getName()));
-		Assert.assertEquals(new Date(0), map.get(_expandoColumn3.getName()));
-		Assert.assertArrayEquals(
-			new Date[0], (Date[])map.get(_expandoColumn4.getName()));
-		Assert.assertEquals(0.0, map.get(_expandoColumn5.getName()));
-		Assert.assertArrayEquals(
-			new double[] {0.0}, (double[])map.get(_expandoColumn6.getName()),
-			0);
-		Assert.assertArrayEquals(
-			new double[] {0.0}, (double[])map.get(_expandoColumn7.getName()),
-			0);
-		Assert.assertArrayEquals(
-			new double[] {_DATA_DOUBLE},
-			(double[])map.get(_expandoColumn8.getName()), 0);
-		Assert.assertEquals((float)0.0, map.get(_expandoColumn9.getName()));
-		Assert.assertArrayEquals(
-			new float[0], (float[])map.get(_expandoColumn10.getName()), 0);
-		Assert.assertEquals("{}", map.get(_expandoColumn11.getName()));
-		Assert.assertEquals(0, map.get(_expandoColumn12.getName()));
-		Assert.assertArrayEquals(
-			new int[0], (int[])map.get(_expandoColumn13.getName()));
-		Assert.assertEquals(0L, map.get(_expandoColumn14.getName()));
-		Assert.assertArrayEquals(
-			new long[] {0L}, (long[])map.get(_expandoColumn15.getName()));
-		Assert.assertArrayEquals(
-			new long[] {0L}, (long[])map.get(_expandoColumn16.getName()));
-		Assert.assertArrayEquals(
-			new long[] {_DATA_LONG},
-			(long[])map.get(_expandoColumn17.getName()));
-		Assert.assertEquals(0, map.get(_expandoColumn18.getName()));
-		Assert.assertArrayEquals(
-			new Number[0], (Number[])map.get(_expandoColumn19.getName()));
-		Assert.assertEquals((short)0, map.get(_expandoColumn20.getName()));
-		Assert.assertArrayEquals(
-			new short[0], (short[])map.get(_expandoColumn21.getName()));
-		Assert.assertEquals("", map.get(_expandoColumn22.getName()));
-		Assert.assertArrayEquals(
-			new String[] {"false"},
-			(String[])map.get(_expandoColumn23.getName()));
-		Assert.assertArrayEquals(
-			new String[] {"false"},
-			(String[])map.get(_expandoColumn24.getName()));
-		Assert.assertArrayEquals(
-			new String[] {_DATA_STRING},
-			(String[])map.get(_expandoColumn25.getName()));
-		Assert.assertEquals(
-			new HashMap<>(), map.get(_expandoColumn26.getName()));
-		Assert.assertEquals(
-			new HashMap<>(), map.get(_expandoColumn27.getName()));
-		Assert.assertEquals(
-			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 	}
 
 	private ExpandoColumn _addExpandoColumn(

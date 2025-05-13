@@ -1,0 +1,28 @@
+.video-preview {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.video-preview > * {
+	height: 100%;
+	width: 100%;
+}
+
+.video-preview-placeholder {
+	background-color: #f1f2f5;
+}
+
+.video-preview-placeholder::after {
+	background-image: url('/o/admin-theme/images/clay/video.svg');
+	content: '';
+	height: 40px;
+	left: 50%;
+	opacity: 0.2;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 40px;
+}

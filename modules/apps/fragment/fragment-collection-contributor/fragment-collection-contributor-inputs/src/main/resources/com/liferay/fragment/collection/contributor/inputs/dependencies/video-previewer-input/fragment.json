@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "video-previewer-input",
+	"icon": "video",
+	"name": "url-video-previewer",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"long-text",
+			"text"
+		]
+	}
+}

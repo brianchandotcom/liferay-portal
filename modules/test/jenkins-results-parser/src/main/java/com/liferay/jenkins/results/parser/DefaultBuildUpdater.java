@@ -299,13 +299,23 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 	private String _getLabelExpression() {
 		Build build = getBuild();
 
+		Map<String, String> buildParameters = build.getParameters();
+
+		String slaveLabel = buildParameters.get("SLAVE_LABEL");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
 		if (build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
 			AxisTestClassGroup axisTestClassGroup =
 				downstreamBuild.getAxisTestClassGroup();
 
-			return axisTestClassGroup.getSlaveLabel();
+			if (axisTestClassGroup != null) {
+				return axisTestClassGroup.getSlaveLabel();
+			}
 		}
 
 		return null;

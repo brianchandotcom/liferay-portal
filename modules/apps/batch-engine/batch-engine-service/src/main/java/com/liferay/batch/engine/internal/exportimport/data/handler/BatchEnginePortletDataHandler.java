@@ -102,7 +102,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addZipEntry(
-			_toFullPath(
+			_normalize(
 				_deletionsFileName, portletDataContext.getScopeGroupId()),
 			jsonArray.toString());
 	}
@@ -148,7 +148,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
-			_toFullPath(
+			_normalize(
 				_deletionsFileName, portletDataContext.getSourceGroupId()));
 
 		if (inputStream == null) {
@@ -160,7 +160,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
 				null, _className,
 				_getBytes(
-					_toFullPath(
+					_normalize(
 						_fileName, portletDataContext.getSourceGroupId()),
 					inputStream),
 				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
@@ -209,7 +209,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				});
 
 		portletDataContext.addZipEntry(
-			_toFullPath(_fileName, portletDataContext.getScopeGroupId()),
+			_normalize(_fileName, portletDataContext.getScopeGroupId()),
 			result.getInputStream());
 
 		portletDataContext.setValidateExistingDataHandler(true);
@@ -224,11 +224,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		String fileNameWithFullPath = _toFullPath(
+		String normalizedFileName = _normalize(
 			_fileName, portletDataContext.getSourceGroupId());
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
-			fileNameWithFullPath);
+			normalizedFileName);
 
 		if (inputStream == null) {
 			return portletPreferences;
@@ -237,7 +237,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
-				null, _className, _getBytes(fileNameWithFullPath, inputStream),
+				null, _className, _getBytes(normalizedFileName, inputStream),
 				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyMap(),
 				BatchEngineImportTaskConstants.
@@ -323,7 +323,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return permissionChecker.getUserId();
 	}
 
-	private String _toFullPath(String fileName, long groupId) {
+	private String _normalize(String fileName, long groupId) {
 		return StringBundler.concat(
 			StringPool.FORWARD_SLASH, ExportImportPathUtil.PATH_PREFIX_GROUP,
 			StringPool.FORWARD_SLASH, groupId, StringPool.FORWARD_SLASH,

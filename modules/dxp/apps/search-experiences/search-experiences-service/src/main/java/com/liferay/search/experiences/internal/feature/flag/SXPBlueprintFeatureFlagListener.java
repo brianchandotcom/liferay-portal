@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	enabled = false,
-	property = {"featureFlagKey=LPS-129412", "featureFlagKey=LPS-193551"},
+	enabled = false, property = "featureFlagKey=LPS-129412",
 	service = FeatureFlagListener.class
 )
 public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -90,7 +91,7 @@ public class LanguageResources {
 	public static ResourceBundle getResourceBundle(Locale locale) {
 		return _resourceBundles.computeIfAbsent(
 			locale,
-			key -> new AggregateResourceBundle(
+			key -> new CachelessAggregateResourceBundle(
 				new DynamicOverrideResourceBundle(key),
 				new LanguageResourcesBundle(key)));
 	}
@@ -225,6 +226,32 @@ public class LanguageResources {
 		new ConcurrentHashMap<>();
 	private static final Map<Long, Map<Locale, Locale>> _superLocalesMap =
 		new ConcurrentHashMap<>();
+
+	private static class CachelessAggregateResourceBundle
+		extends AggregateResourceBundle {
+
+		public CachelessAggregateResourceBundle(
+			ResourceBundle... resourceBundles) {
+
+			super(resourceBundles);
+
+			_resourceBundles = resourceBundles;
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			Set<String> keys = new HashSet<>();
+
+			for (ResourceBundle resourceBundle : _resourceBundles) {
+				keys.addAll(resourceBundle.keySet());
+			}
+
+			return keys;
+		}
+
+		private final ResourceBundle[] _resourceBundles;
+
+	}
 
 	private static class DynamicOverrideResourceBundle extends ResourceBundle {
 

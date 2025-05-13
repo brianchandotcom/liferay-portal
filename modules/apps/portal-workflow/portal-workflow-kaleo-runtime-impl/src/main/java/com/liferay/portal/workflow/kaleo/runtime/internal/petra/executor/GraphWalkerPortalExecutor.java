@@ -65,33 +65,7 @@ public class GraphWalkerPortalExecutor {
 
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		if (waitForCompletion) {
-			NoticeableFuture<?> noticeableFuture =
-				_noticeableExecutorService.submit(
-					new CompanyInheritableThreadLocalCallable<>(
-						() -> {
-							try (SafeCloseable safeCloseable =
-									CTCollectionThreadLocal.
-										setCTCollectionIdWithSafeCloseable(
-											ctCollectionId)) {
-
-								_walk(pathElement);
-							}
-
-							return null;
-						}));
-
-			try {
-				noticeableFuture.get();
-			}
-			catch (ExecutionException executionException) {
-				_log.error(executionException);
-			}
-			catch (InterruptedException interruptedException) {
-				_log.error(interruptedException);
-			}
-		}
-		else {
+		NoticeableFuture<?> noticeableFuture =
 			_noticeableExecutorService.submit(
 				new CompanyInheritableThreadLocalCallable<>(
 					() -> {
@@ -105,6 +79,17 @@ public class GraphWalkerPortalExecutor {
 
 						return null;
 					}));
+
+		if (waitForCompletion) {
+			try {
+				noticeableFuture.get();
+			}
+			catch (ExecutionException executionException) {
+				_log.error(executionException);
+			}
+			catch (InterruptedException interruptedException) {
+				_log.error(interruptedException);
+			}
 		}
 	}
 

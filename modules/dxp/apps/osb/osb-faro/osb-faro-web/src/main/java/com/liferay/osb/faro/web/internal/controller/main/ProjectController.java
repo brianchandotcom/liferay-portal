@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -663,37 +664,41 @@ public class ProjectController extends BaseFaroController {
 				ProjectController.class.getName());
 
 		executorService.submit(
-			() -> {
-				try {
-					List<FaroProject> faroProjects = new ArrayList<>();
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					try {
+						List<FaroProject> faroProjects = new ArrayList<>();
 
-					if (Validator.isNotNull(groupId)) {
-						faroProjects.add(
-							_faroProjectLocalService.fetchFaroProjectByGroupId(
-								groupId));
+						if (Validator.isNotNull(groupId)) {
+							faroProjects.add(
+								_faroProjectLocalService.
+									fetchFaroProjectByGroupId(groupId));
+						}
+						else {
+							faroProjects =
+								_faroProjectLocalService.getFaroProjects(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						}
+
+						for (FaroProject faroProject : faroProjects) {
+							_faroProjectLocalService.updateSubscription(
+								faroProject.getFaroProjectId(),
+								JSONUtil.writeValueAsString(
+									_resetProjectUsageDisplays(
+										faroProject.getGroupId(),
+										startDateString)));
+						}
+
+						if (_log.isInfoEnabled()) {
+							_log.info("Finished resetting project usage");
+						}
 					}
-					else {
-						faroProjects = _faroProjectLocalService.getFaroProjects(
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					catch (Exception exception) {
+						_log.error(exception);
 					}
 
-					for (FaroProject faroProject : faroProjects) {
-						_faroProjectLocalService.updateSubscription(
-							faroProject.getFaroProjectId(),
-							JSONUtil.writeValueAsString(
-								_resetProjectUsageDisplays(
-									faroProject.getGroupId(),
-									startDateString)));
-					}
-
-					if (_log.isInfoEnabled()) {
-						_log.info("Finished resetting project usage");
-					}
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			});
+					return null;
+				}));
 	}
 
 	@Path("/{groupId}/send-created-workspace-email")

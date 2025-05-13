@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -254,6 +255,35 @@ public class UserLocalServiceTest {
 				TestPropsValues.getUserId()));
 
 		Assert.assertTrue(Validator.isNotNull(user.getPassword()));
+	}
+
+	@Test(expected = UserEmailAddressException.class)
+	public void testAddUserWithInvalidEmailAddressDomain() throws Exception {
+		User user = _userLocalService.addUser(
+			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
+			StringPool.BLANK, false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay-123.com",
+			LocaleUtil.US, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
+			true, 1, 1, 1970, StringPool.BLANK, UserConstants.TYPE_REGULAR,
+			new long[0], new long[0], new long[0], new long[0], false,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
+		Assert.assertTrue(Validator.isNotNull(user));
+
+		_userLocalService.addUser(
+			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
+			StringPool.BLANK, false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay_123.com",
+			LocaleUtil.US, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
+			true, 1, 1, 1970, StringPool.BLANK, UserConstants.TYPE_REGULAR,
+			new long[0], new long[0], new long[0], new long[0], false,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
 	}
 
 	@Test

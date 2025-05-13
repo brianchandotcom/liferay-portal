@@ -10,6 +10,7 @@ import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -31,7 +32,7 @@ public abstract class BaseImportTaskPreAction<T>
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
-			ImportTaskContext importTaskContext, Object item)
+			ImportTaskContext importTaskContext, Object item, 	UnsafeFunction<?, ?, Exception> unsafeFunction)
 		throws Exception {
 
 		if (!Objects.equals(item.getClass(), getItemClass()) ||

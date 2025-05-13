@@ -54,7 +54,8 @@ public abstract class BaseBatchEngineImportStrategy
 							importTaskPreActions) {
 
 						importTaskPreAction.run(
-							batchEngineImportTask, importTaskContext, element);
+							batchEngineImportTask, importTaskContext, element,
+							unsafeFunction);
 					}
 
 					T persistedItem = unsafeFunction.apply(element);

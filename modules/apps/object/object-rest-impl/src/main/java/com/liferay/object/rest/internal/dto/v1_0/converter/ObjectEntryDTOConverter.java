@@ -837,9 +837,19 @@ public class ObjectEntryDTOConverter
 							relatedObjectDefinition.getCompanyId(),
 							objectRelationship.getType());
 
+				long relatedObjectDefinitionGroupId = groupId;
+
+				if (Objects.equals(
+						relatedObjectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+					relatedObjectDefinitionGroupId = 0;
+				}
+
 				List<?> relatedModels =
 					objectRelatedModelsProvider.getRelatedModels(
-						groupId, objectRelationship.getObjectRelationshipId(),
+						relatedObjectDefinitionGroupId,
+						objectRelationship.getObjectRelationshipId(),
 						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {

@@ -7,7 +7,6 @@ package com.liferay.commerce.order.content.web.internal.frontend.data.set;
 
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.frontend.data.set.SystemFDSEntry;
-import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,6 +21,12 @@ public class PlacedCommerceOrderReturnsSystemFDSEntry
 	implements SystemFDSEntry {
 
 	@Override
+	public String getAdditionalAPIURLParameters() {
+		return "'r_commerceOrderToCommerceReturns_commerceOrderId' eq '" +
+			"{commerceOrderId}'";
+	}
+
+	@Override
 	public String getDescription() {
 		return null;
 	}
@@ -33,12 +38,12 @@ public class PlacedCommerceOrderReturnsSystemFDSEntry
 
 	@Override
 	public String getRESTApplication() {
-		return "/commerce/returns";
+		return "/commerce";
 	}
 
 	@Override
 	public String getRESTEndpoint() {
-		return StringPool.BLANK;
+		return "/returns";
 	}
 
 	@Override

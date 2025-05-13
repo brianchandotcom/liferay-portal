@@ -9,10 +9,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	property = "fds.rest.application.key=/commerce/returns/CommerceReturn",
+	property = "fds.rest.application.key=/commerce/CommerceReturn",
 	service = FDSAPIURLResolver.class
 )
 public class PlacedCommerceOrderReturnsFDSAPIURLResolver
@@ -46,13 +45,9 @@ public class PlacedCommerceOrderReturnsFDSAPIURLResolver
 			return StringPool.BLANK;
 		}
 
-		return StringBundler.concat(
-			baseURL, "?filter=",
-			URLCodec.encodeURL(
-				StringBundler.concat(
-					"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '",
-					commerceOrder.getCommerceOrderId(), StringPool.APOSTROPHE),
-				true));
+		return StringUtil.replace(
+			baseURL, new String[] {"{commerceOrderId}"},
+			new String[] {String.valueOf(commerceOrder.getCommerceOrderId())});
 	}
 
 	@Reference

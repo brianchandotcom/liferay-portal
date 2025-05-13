@@ -706,7 +706,12 @@ public class CommerceOrderDiscountV2Test {
 			totalCommerceDiscountValue.getDiscountAmount();
 
 		expectedTotalValue = expectedTotalValue.subtract(
-			discountAmountCommerceMoney.getPrice());
+			discountAmountCommerceMoney.getPrice()
+		).round(
+			new MathContext(
+				_commerceCurrency.getMaxFractionDigits(),
+				RoundingMode.HALF_EVEN)
+		);
 
 		CommerceMoney totalCommerceMoney =
 			_commerceOrderPriceCalculation.getTotal(
@@ -715,7 +720,8 @@ public class CommerceOrderDiscountV2Test {
 		BigDecimal totalPrice = totalCommerceMoney.getPrice(
 		).round(
 			new MathContext(
-				expectedTotalValue.precision(), RoundingMode.HALF_EVEN)
+				_commerceCurrency.getMaxFractionDigits(),
+				RoundingMode.HALF_EVEN)
 		);
 
 		Assert.assertEquals(expectedTotalValue, totalPrice);

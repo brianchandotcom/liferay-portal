@@ -1182,7 +1182,8 @@ public class Validator {
 
 	private static final Pattern _emailAddressPattern = Pattern.compile(
 		"^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
-			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))$");
+			"(?:[^\\W_](?:[0-9A-Za-z-]*[^\\W_])?\\.)+" +
+				"([^\\W_](?:[0-9A-Za-z-]*[^\\W_]))$");
 	private static final Pattern _ipv4AddressPattern;
 	private static final Pattern _ipv6AddressPattern;
 	private static final Pattern _variableNamePattern = Pattern.compile(

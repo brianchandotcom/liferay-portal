@@ -95,19 +95,19 @@ public class ViewSXPBlueprintsDisplayContext {
 				).buildString(),
 				"pencil", "edit",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "edit"), "get",
-				"get", null),
+				"get", "link"),
 			new FDSActionDropdownItem(
 				"#", "book", "enableAsACollectionProvider",
 				LanguageUtil.get(
 					_sxpRequestHelper.getRequest(),
 					"enable-as-a-collection-provider"),
-				"put", "update", null),
+				"put", "update", "link"),
 			new FDSActionDropdownItem(
 				"#", "book", "disableAsACollectionProvider",
 				LanguageUtil.get(
 					_sxpRequestHelper.getRequest(),
 					"disable-as-a-collection-provider"),
-				"put", "update", null),
+				"put", "update", "link"),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/copy", "copy", "copy",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "copy"),
@@ -115,7 +115,7 @@ public class ViewSXPBlueprintsDisplayContext {
 			new FDSActionDropdownItem(
 				"#", "export", "export",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "export"),
-				null, "get", null),
+				null, "get", "link"),
 			new FDSActionDropdownItem(
 				LanguageUtil.get(
 					_sxpRequestHelper.getRequest(),

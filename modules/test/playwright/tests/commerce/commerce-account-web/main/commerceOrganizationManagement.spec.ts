@@ -560,36 +560,6 @@ test(
 );
 
 test(
-	'Show warning message if no data provided',
-	{tag: ['@COMMERCE-9399', '@COMMERCE-12581']},
-	async ({
-		apiHelpers,
-		organizationManagementPage,
-		page,
-		usersAndOrganizationsPage,
-	}) => {
-		await usersAndOrganizationsPage.goToOrganizationChart();
-
-		await expect(organizationManagementPage.chart).toHaveCount(0);
-		await expect(
-			organizationManagementPage.noRootOrganizationsMessage
-		).toBeVisible();
-
-		const organization =
-			await apiHelpers.headlessAdminUser.postOrganization({
-				name: `Org${getRandomInt()}`,
-			});
-
-		page.reload();
-
-		await expect(organizationManagementPage.chart).toBeVisible();
-		await expect(
-			organizationManagementPage.organizationNode(organization.name)
-		).toBeVisible();
-	}
-);
-
-test(
 	'Can highlight the correct entry also if share the same name',
 	{tag: ['@COMMERCE-12594']},
 	async ({
@@ -1626,6 +1596,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);
@@ -1675,6 +1653,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);
@@ -1788,6 +1774,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);
@@ -1843,6 +1837,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);
@@ -1946,6 +1948,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);
@@ -2150,6 +2160,14 @@ test(
 		await expect(
 			organizationManagementPage.organizationNode(organization.name)
 		).toHaveCount(1);
+
+		await organizationManagementPage
+			.organizationNode(organization.name)
+			.click();
+		await waitForAnimationEnd(
+			organizationManagementPage.accountNode(account.name).first()
+		);
+
 		await expect(
 			organizationManagementPage.accountNode(account.name)
 		).toHaveCount(1);

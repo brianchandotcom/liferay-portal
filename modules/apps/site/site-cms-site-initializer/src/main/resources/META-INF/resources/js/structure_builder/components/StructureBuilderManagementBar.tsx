@@ -126,8 +126,9 @@ function CustomizeExperienceButton() {
 
 	return (
 		<ClayButton
+			borderless
 			className="font-weight-semi-bold"
-			displayType="link"
+			displayType="primary"
 			onClick={() => {
 				if (status !== 'published' || unsavedChanges) {
 					openConfirmModal({

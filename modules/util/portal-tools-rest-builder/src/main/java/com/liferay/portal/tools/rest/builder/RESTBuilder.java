@@ -147,8 +147,8 @@ public class RESTBuilder {
 
 			if (javaEEPackage == null) {
 				javaEEPackage =
-					ConfigUtil.isVersionCompatible(_configYAML, 9) ? "jakarta" :
-						"javax";
+					ConfigUtil.isVersionCompatible(_configYAML, 10) ?
+						"jakarta" : "javax";
 			}
 
 			_configYAML.setJavaEEPackage(javaEEPackage);

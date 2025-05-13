@@ -163,6 +163,11 @@ public interface AssetVocabularyService extends BaseService {
 			OrderByComparator<AssetVocabulary> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

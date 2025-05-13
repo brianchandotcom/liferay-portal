@@ -183,6 +183,14 @@ public class AssetCategoryServiceUtil {
 		return getService().getChildCategoriesCount(parentCategoryId);
 	}
 
+	public static AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getOrAddIncompleteCategory(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -152,6 +152,11 @@ public interface AssetCategoryService extends BaseService {
 	public int getChildCategoriesCount(long parentCategoryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

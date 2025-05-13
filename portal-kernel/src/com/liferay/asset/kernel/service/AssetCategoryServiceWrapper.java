@@ -201,6 +201,15 @@ public class AssetCategoryServiceWrapper
 		return _assetCategoryService.getChildCategoriesCount(parentCategoryId);
 	}
 
+	@Override
+	public AssetCategory getOrAddIncompleteCategory(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryService.getOrAddIncompleteCategory(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

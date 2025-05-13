@@ -260,6 +260,15 @@ public class AssetVocabularyServiceWrapper
 			groupId, name, start, end, orderByComparator);
 	}
 
+	@Override
+	public AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyService.getOrAddIncompleteVocabulary(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

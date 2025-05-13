@@ -1023,6 +1023,49 @@ public class AssetVocabularyServiceHttp {
 		}
 	}
 
+	public static com.liferay.asset.kernel.model.AssetVocabulary
+			getOrAddIncompleteVocabulary(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AssetVocabularyServiceUtil.class,
+				"getOrAddIncompleteVocabulary",
+				_getOrAddIncompleteVocabularyParameterTypes25);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.asset.kernel.model.AssetVocabulary)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetVocabulary getVocabulary(
 			HttpPrincipal httpPrincipal, long vocabularyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1030,7 +1073,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "getVocabulary",
-				_getVocabularyParameterTypes25);
+				_getVocabularyParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId);
@@ -1072,7 +1115,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "searchVocabulariesDisplay",
-				_searchVocabulariesDisplayParameterTypes26);
+				_searchVocabulariesDisplayParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, title, addDefaultVocabulary, start, end);
@@ -1116,7 +1159,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "searchVocabulariesDisplay",
-				_searchVocabulariesDisplayParameterTypes27);
+				_searchVocabulariesDisplayParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, title, addDefaultVocabulary, start, end,
@@ -1162,7 +1205,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "updateVocabulary",
-				_updateVocabularyParameterTypes28);
+				_updateVocabularyParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId, titleMap, descriptionMap, settings);
@@ -1206,7 +1249,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "updateVocabulary",
-				_updateVocabularyParameterTypes29);
+				_updateVocabularyParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId, titleMap, descriptionMap, settings,
@@ -1252,7 +1295,7 @@ public class AssetVocabularyServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyServiceUtil.class, "updateVocabulary",
-				_updateVocabularyParameterTypes30);
+				_updateVocabularyParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId, title, titleMap, descriptionMap,
@@ -1375,27 +1418,31 @@ public class AssetVocabularyServiceHttp {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getVocabularyParameterTypes25 =
+	private static final Class<?>[]
+		_getOrAddIncompleteVocabularyParameterTypes25 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _getVocabularyParameterTypes26 =
 		new Class[] {long.class};
-	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes26 =
+	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes27 =
 		new Class[] {
 			long.class, String.class, boolean.class, int.class, int.class
 		};
-	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes27 =
+	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes28 =
 		new Class[] {
 			long.class, String.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateVocabularyParameterTypes28 =
+	private static final Class<?>[] _updateVocabularyParameterTypes29 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, String.class
 		};
-	private static final Class<?>[] _updateVocabularyParameterTypes29 =
+	private static final Class<?>[] _updateVocabularyParameterTypes30 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, String.class,
 			int.class
 		};
-	private static final Class<?>[] _updateVocabularyParameterTypes30 =
+	private static final Class<?>[] _updateVocabularyParameterTypes31 =
 		new Class[] {
 			long.class, String.class, java.util.Map.class, java.util.Map.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class

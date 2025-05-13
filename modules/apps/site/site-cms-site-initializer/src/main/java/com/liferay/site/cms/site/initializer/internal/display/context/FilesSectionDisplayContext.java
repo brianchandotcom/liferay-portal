@@ -116,6 +116,18 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		fdsActionDropdownItems.add(
 			1,
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class),
+					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
+				"pencil", "editFolder",
+				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
+				null));
+
+		fdsActionDropdownItems.add(
+			2,
+			new FDSActionDropdownItem(
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));

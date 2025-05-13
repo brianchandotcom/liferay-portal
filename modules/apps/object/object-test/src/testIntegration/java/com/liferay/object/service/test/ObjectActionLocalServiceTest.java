@@ -2617,63 +2617,6 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateNotificationTemplateObjectAction()
-		throws Exception {
-
-		MailServiceTestUtil.clearMessages();
-
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition();
-
-		String notificationTemplateBody = RandomTestUtil.randomString();
-
-		NotificationTemplate notificationTemplate = _addNotificationTemplate(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), notificationTemplateBody,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		_addObjectAction(
-			objectDefinition.getObjectDefinitionId(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				String.valueOf(notificationTemplate.getNotificationTemplateId())
-			).build());
-
-		_objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"firstName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_assertEmailNotificationSent(1, notificationTemplateBody);
-
-		notificationTemplateBody = RandomTestUtil.randomString();
-
-		notificationTemplate.setBody(notificationTemplateBody);
-
-		_notificationTemplateLocalService.updateNotificationTemplate(
-			notificationTemplate);
-
-		_objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"firstName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_assertEmailNotificationSent(2, notificationTemplateBody);
-	}
-
-	@Test
 	public void testSequentialObjectActions() throws Exception {
 		_publishCustomObjectDefinition();
 
@@ -2745,6 +2688,61 @@ public class ObjectActionLocalServiceTest {
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);
+	}
+
+	@Test
+	public void testUpdateNotificationTemplateObjectAction() throws Exception {
+		MailServiceTestUtil.clearMessages();
+
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition();
+
+		String notificationTemplateBody = RandomTestUtil.randomString();
+
+		NotificationTemplate notificationTemplate = _addNotificationTemplate(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), notificationTemplateBody,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		_addObjectAction(
+			objectDefinition.getObjectDefinitionId(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				String.valueOf(notificationTemplate.getNotificationTemplateId())
+			).build());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertEmailNotificationSent(1, notificationTemplateBody);
+
+		notificationTemplateBody = RandomTestUtil.randomString();
+
+		notificationTemplate.setBody(notificationTemplateBody);
+
+		_notificationTemplateLocalService.updateNotificationTemplate(
+			notificationTemplate);
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertEmailNotificationSent(2, notificationTemplateBody);
 	}
 
 	@Test

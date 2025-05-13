@@ -126,15 +126,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Test
 	@TestInfo("LPD-50142")
-	public void testExportImportCompanyGroupObjects() throws Exception {
-		_testExportImportObjectsToSameGroup(
+	public void testExportImportCompanyGroupObjectEntries() throws Exception {
+		_testExportImportObjectEntriesToSameGroup(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
-	public void testExportImportCompanyGroupObjectsWithError()
+	public void testExportImportCompanyGroupObjectEntriesWithError()
 		throws Exception {
 
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
@@ -146,20 +146,19 @@ public class BatchEnginePortletDataHandlerTest {
 		ObjectEntry[] objectEntries = _addObjectEntries(
 			3, 0L, objectDefinition.getObjectDefinitionId());
 
-		ObjectEntry objectEntry = objectEntries[1];
-
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
 
 		_deleteObjectEntries(objectEntries);
 
+		ObjectEntry objectEntry = objectEntries[1];
+
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+
 		ObjectEntry duplicateObjectEntry = _addObjectEntry(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			objectDefinition.getObjectDefinitionId(),
-			objectEntry.getValues(
-			).get(
-				_OBJECT_FIELD_NAME_TEXT
-			));
+			objectEntryValues.get(_OBJECT_FIELD_NAME_TEXT));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal.strategy." +
@@ -197,7 +196,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Ignore("LPD-40798")
 	@Test
-	public void testExportImportSiteObjectsToOtherSite() throws Exception {
+	public void testExportImportSiteObjectEntriesToOtherSite()
+		throws Exception {
+
 		ObjectDefinition objectDefinition = _addObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
 
@@ -224,8 +225,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	public void testExportImportSiteObjectsToSameSite() throws Exception {
-		_testExportImportObjectsToSameGroup(
+	public void testExportImportSiteObjectEntriesToSameSite() throws Exception {
+		_testExportImportObjectEntriesToSameGroup(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
@@ -636,7 +637,8 @@ public class BatchEnginePortletDataHandlerTest {
 			exportImportConfiguration, file);
 	}
 
-	private void _testExportImportObjectsToSameGroup(Group group, String scope)
+	private void _testExportImportObjectEntriesToSameGroup(
+			Group group, String scope)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _addObjectDefinition(scope);

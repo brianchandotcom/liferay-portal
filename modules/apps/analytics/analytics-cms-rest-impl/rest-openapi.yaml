@@ -58,3 +58,29 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Overview"
             tags: ["Overview"]
+    "/file-overview":
+        get:
+            operationId: getFileOverview
+            parameters:
+                -   in: query
+                    name: languageId
+                    schema:
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: spaceId
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Overview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Overview"
+            tags: ["Overview"]

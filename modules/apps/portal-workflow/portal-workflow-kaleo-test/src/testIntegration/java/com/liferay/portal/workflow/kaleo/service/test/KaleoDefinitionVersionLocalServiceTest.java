@@ -6,10 +6,15 @@
 package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -21,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -147,6 +153,57 @@ public class KaleoDefinitionVersionLocalServiceTest
 	}
 
 	@Test
+	public void testGetLatestKaleoDefinitionVersionsWithCtCollection()
+		throws Exception {
+
+		KaleoDefinition kaleoDefinition = addKaleoDefinition(
+			StringUtil.randomString(), StringUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		KaleoDefinitionVersion kaleoDefinitionVersion1 =
+			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+				kaleoDefinition.getKaleoDefinitionId(),
+				kaleoDefinition.getName(), kaleoDefinition.getTitle(),
+				RandomTestUtil.randomString(), kaleoDefinition.getContent(),
+				"2.0", serviceContext);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			KaleoDefinitionVersion kaleoDefinitionVersion2 =
+				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+					kaleoDefinition.getKaleoDefinitionId(),
+					kaleoDefinition.getName(), kaleoDefinition.getTitle(),
+					RandomTestUtil.randomString(), kaleoDefinition.getContent(),
+					"3.0", serviceContext);
+
+			Assert.assertEquals(
+				Collections.singletonList(kaleoDefinitionVersion2),
+				kaleoDefinitionVersionLocalService.
+					getLatestKaleoDefinitionVersions(
+						kaleoDefinition.getCompanyId(),
+						kaleoDefinition.getName(), WorkflowConstants.STATUS_ANY,
+						LocaleUtil.US, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						new KaleoDefinitionVersionTitleComparator(true)));
+		}
+
+		Assert.assertEquals(
+			Collections.singletonList(kaleoDefinitionVersion1),
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
+				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+				WorkflowConstants.STATUS_ANY, LocaleUtil.US, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new KaleoDefinitionVersionTitleComparator(true)));
+
+		_ctCollectionLocalService.deleteCTCollection(ctCollection);
+	}
+
+	@Test
 	public void testUpdateKaleoDefinitionShouldIncrementVersion1()
 		throws Exception {
 
@@ -169,5 +226,8 @@ public class KaleoDefinitionVersionLocalServiceTest
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

@@ -549,8 +549,6 @@ testDataDeletionHiddenDeprecationFF(
 		const exportFilePath =
 			await exportImportPage.downloadExportProcess(exportName);
 
-		await exportImportPage.goToImport();
-
 		await exportImportPage.goToImportOptions(exportFilePath);
 
 		await expect(

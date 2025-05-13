@@ -16,9 +16,13 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -80,6 +84,33 @@ public class CommerceOrderModelDocumentContributor
 			if (accountEntry != null) {
 				document.addKeyword(
 					"accountName", accountEntry.getName(), true);
+			}
+
+			if (!commerceOrder.isOpen()) {
+				Address address = _addressLocalService.fetchAddress(
+					commerceOrder.getShippingAddressId());
+
+				if (address != null) {
+					document.addKeyword("addressName", address.getName());
+					document.addKeyword("city", address.getCity());
+
+					Country country = address.getCountry();
+
+					document.addKeyword("countryIsoCode", country.getA2());
+					document.addKeyword("countryName", country.getName());
+
+					Region region = address.getRegion();
+
+					document.addKeyword("regionName", region.getName());
+
+					document.addKeyword(
+						"shippingAddressExternalReference",
+						address.getExternalReferenceCode());
+					document.addKeyword("street1", address.getStreet1());
+					document.addKeyword("street2", address.getStreet2());
+					document.addKeyword("street3", address.getStreet3());
+					document.addKeyword("zip", address.getZip());
+				}
 			}
 
 			document.addKeyword(
@@ -199,6 +230,9 @@ public class CommerceOrderModelDocumentContributor
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

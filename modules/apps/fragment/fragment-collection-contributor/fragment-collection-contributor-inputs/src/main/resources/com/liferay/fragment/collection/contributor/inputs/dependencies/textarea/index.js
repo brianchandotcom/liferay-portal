@@ -14,70 +14,52 @@ const lengthWarningText = document.getElementById(
 );
 const textarea = document.getElementById(`${fragmentNamespace}-textarea`);
 
-function enableLengthWarning() {
-	formGroup.classList.add('has-error');
-	lengthInfo.classList.add('text-danger', 'font-weight-semi-bold');
-	lengthWarning.classList.remove('sr-only');
-
-	const warningText = lengthWarningText.getAttribute('data-error-message');
-	lengthWarningText.innerText = warningText;
-
-	if (!configuration.showCharactersCount) {
-		lengthInfo.classList.remove('sr-only');
-	}
-}
-
-function disableLengthWarning() {
-	formGroup.classList.remove('has-error');
-	lengthInfo.classList.remove('text-danger', 'font-weight-semi-bold');
-	lengthWarning.classList.add('sr-only');
-
-	const validText = lengthWarningText.getAttribute('data-valid-message');
-	lengthWarningText.innerText = validText;
-
-	if (!configuration.showCharactersCount) {
-		lengthInfo.classList.add('sr-only');
-	}
-}
-
-function onInputKeyup(event) {
-	const length = event.target.value.length;
-
-	currentLength.innerText = length;
-
-	if (errorMessage) {
-		errorMessage.remove();
-	}
-
-	if (length > input.attributes.maxLength) {
-		enableLengthWarning();
-	}
-	else if (formGroup.classList.contains('has-error')) {
-		disableLengthWarning();
-	}
-}
-
 function main() {
 	if (layoutMode === 'edit' && textarea) {
 		textarea.setAttribute('disabled', true);
 	}
 	else {
-		currentLength.innerText = textarea.value.length;
+		import('@liferay/fragment-impl/api').then(
+			({
+				handleInputLengthError,
+				hideLengthError,
+				registerLocalizedInput,
+				registerUnlocalizedInput,
+			}) => {
+				currentLength.innerText = textarea.value.length;
 
-		if (
-			!errorMessage &&
-			textarea.value.length > input.attributes.maxLength
-		) {
-			enableLengthWarning();
-		}
+				if (
+					!errorMessage &&
+					textarea.value.length > input.attributes.maxLength
+				) {
+					hideLengthError({
+						configuration,
+						formGroup,
+						lengthInfo,
+						lengthWarning,
+						lengthWarningText,
+					});
+				}
 
-		textarea.addEventListener('keyup', onInputKeyup);
+				const onKeyup = (event) =>
+					handleInputLengthError({
+						configuration,
+						currentLength,
+						errorMessage,
+						event,
+						formGroup,
+						input,
+						lengthInfo,
+						lengthWarning,
+						lengthWarningText,
+					});
 
-		if (Liferay.FeatureFlags['LPD-37927']) {
-			const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+				textarea.addEventListener('keyup', onKeyup);
 
-			import('@liferay/fragment-impl/api').then(
-				({registerLocalizedInput, registerUnlocalizedInput}) => {
+				if (Liferay.FeatureFlags['LPD-37927']) {
+					const defaultLanguageId =
+						themeDisplay.getDefaultLanguageId();
+
 					if (input.localizable) {
 						const {onChange} = registerLocalizedInput({
 							defaultLanguageId,
@@ -108,8 +90,8 @@ function main() {
 						});
 					}
 				}
-			);
-		}
+			}
+		);
 	}
 }
 

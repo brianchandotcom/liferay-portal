@@ -5,5 +5,9 @@
 
 export {LocalizationSelect} from './LocalizationSelect';
 export {getOrCreateTranslationInput} from './getOrCreateTranslationInput';
+export {
+	handleInputLengthError,
+	hideLengthError,
+} from './handleInputLengthError';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';

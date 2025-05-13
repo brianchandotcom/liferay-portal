@@ -54,7 +54,7 @@ ext.faroImageTag = project.hasProperty("docker.image.tag") ? project.getProperty
 appDocker {
 	imageName "liferay/com-liferay-osb-faro"
 	imageTags = [faroEnvironmentName.equals("prd") ? "prd-" + new Date().format("yyyyMMdd") : faroImageTag]
-	inputDir "osb-faro-docker/" + faroEnvironmentName
+	inputDir = faroEnvironmentName.equals("local") ? (!project.hasProperty("liferay.ci") || !project.getProperty("liferay.ci").equals("true")) ? "osb-faro-docker/local/dev" : "osb-faro-docker/local/test" : "osb-faro-docker/" + faroEnvironmentName
 
 	onlyIf {
 		false
@@ -89,7 +89,7 @@ copyDatabaseConnector {
 }
 
 copyDockerResources {
-	from "osb-faro-docker/common"
+	from "osb-faro-docker/" + faroEnvironmentName + "/common"
 	into "${buildDir}/docker/common"
 }
 

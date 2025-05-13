@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -26,9 +27,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.net.SocketException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -95,19 +98,21 @@ public class MailEngine {
 				for (int i = 0; i < fileAttachments.size(); i++) {
 					FileAttachment fileAttachment = fileAttachments.get(i);
 
-					File file = fileAttachment.getFile();
+					InputStream inputStream = fileAttachment.getInputStream();
 
-					if (file == null) {
+					if (inputStream == null) {
 						continue;
 					}
 
 					_log.debug(
 						StringBundler.concat(
-							"Attachment ", i, " file ", file.getAbsolutePath(),
-							" and file name ", fileAttachment.getFileName()));
+							"Attachment ", i, " and file name ",
+							fileAttachment.getFileName()));
 				}
 			}
 		}
+
+		List<File> tempFiles = new ArrayList<>();
 
 		try {
 			_validateAddress(from);
@@ -193,13 +198,17 @@ public class MailEngine {
 				}
 
 				for (FileAttachment fileAttachment : fileAttachments) {
-					File file = fileAttachment.getFile();
+					InputStream inputStream = fileAttachment.getInputStream();
 
-					if (file == null) {
+					if (inputStream == null) {
 						continue;
 					}
 
 					MimeBodyPart mimeBodyPart = new MimeBodyPart();
+
+					File file = FileUtil.createTempFile(inputStream);
+
+					tempFiles.add(file);
 
 					DataSource dataSource = new FileDataSource(file);
 
@@ -270,6 +279,11 @@ public class MailEngine {
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
+		}
+		finally {
+			for (File file : tempFiles) {
+				file.delete();
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -78,7 +78,11 @@ public class AddSimpleLayoutMVCActionCommand
 			LocaleUtil.getSiteDefault(),
 			ParamUtil.getString(actionRequest, "name")
 		).build();
+
 		String type = ParamUtil.getString(actionRequest, "type");
+
+		ActionUtil.validateType(type);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");

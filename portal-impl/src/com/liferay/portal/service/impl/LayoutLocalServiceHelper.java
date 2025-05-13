@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -263,12 +262,6 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		throws PortalException {
 
 		validateName(name);
-
-		if (!ArrayUtil.contains(
-				LayoutTypeControllerTracker.getTypes(), type, true)) {
-
-			throw new LayoutTypeException(LayoutTypeException.NOT_INSTANCEABLE);
-		}
 
 		boolean firstLayout = false;
 

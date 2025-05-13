@@ -86,7 +86,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			Map<Locale, String> nameMap = _localization.getLocalizationMap(
 				actionRequest, "nameMapAsXML");
 			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
 			String type = ParamUtil.getString(uploadPortletRequest, "type");
+
+			ActionUtil.validateType(type);
+
 			boolean hidden = ParamUtil.getBoolean(
 				uploadPortletRequest, "hidden");
 			Map<Locale, String> friendlyURLMap =

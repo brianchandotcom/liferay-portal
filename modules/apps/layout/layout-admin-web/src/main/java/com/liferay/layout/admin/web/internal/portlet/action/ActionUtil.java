@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,11 +23,13 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.ThemeFactoryUtil;
 
 import java.util.List;
@@ -180,6 +183,14 @@ public class ActionUtil {
 		_setThemeSettingProperties(
 			actionRequest, groupId, layoutId, privateLayout,
 			typeSettingsUnicodeProperties, themeSettings, layout);
+	}
+
+	public static void validateType(String type) throws LayoutTypeException {
+		if (!ArrayUtil.contains(
+				LayoutTypeControllerTracker.getTypes(), type, true)) {
+
+			throw new LayoutTypeException(LayoutTypeException.NOT_INSTANCEABLE);
+		}
 	}
 
 	private static void _setThemeSettingProperties(

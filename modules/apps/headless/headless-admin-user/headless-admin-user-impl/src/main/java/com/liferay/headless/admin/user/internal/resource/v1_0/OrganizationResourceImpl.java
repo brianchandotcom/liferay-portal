@@ -31,9 +31,11 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderPhon
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderRegionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
+import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -59,6 +61,8 @@ import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
@@ -84,6 +88,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -388,36 +393,37 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			serviceBuilderOrganization.getCountryId(), organization);
 		Group group = serviceBuilderOrganization.getGroup();
 
+		serviceBuilderOrganization = _organizationService.updateOrganization(
+			GetterUtil.get(
+				organization.getExternalReferenceCode(),
+				serviceBuilderOrganization.getExternalReferenceCode()),
+			serviceBuilderOrganization.getOrganizationId(),
+			_getDefaultParentOrganizationId(
+				serviceBuilderOrganization.getParentOrganizationId(),
+				organization),
+			GetterUtil.get(
+				organization.getName(), serviceBuilderOrganization.getName()),
+			serviceBuilderOrganization.getType(),
+			_getRegionId(
+				countryId, serviceBuilderOrganization.getRegionId(),
+				organization),
+			countryId, serviceBuilderOrganization.getStatusListTypeId(),
+			GetterUtil.get(
+				organization.getComment(),
+				serviceBuilderOrganization.getComments()),
+			_hasLogo(organization, serviceBuilderOrganization),
+			_getLogoBytes(organization, serviceBuilderOrganization, true),
+			group.isSite(),
+			_getAddresses(organization, serviceBuilderOrganization),
+			_getEmailAddresses(organization, serviceBuilderOrganization),
+			_getOrgLabors(organization, serviceBuilderOrganization),
+			_getPhones(organization, serviceBuilderOrganization),
+			_getWebsites(organization, serviceBuilderOrganization),
+			_createServiceContext(organization));
+
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(organizationId),
-			_organizationService.updateOrganization(
-				GetterUtil.get(
-					organization.getExternalReferenceCode(),
-					serviceBuilderOrganization.getExternalReferenceCode()),
-				serviceBuilderOrganization.getOrganizationId(),
-				_getDefaultParentOrganizationId(
-					serviceBuilderOrganization.getParentOrganizationId(),
-					organization),
-				GetterUtil.get(
-					organization.getName(),
-					serviceBuilderOrganization.getName()),
-				serviceBuilderOrganization.getType(),
-				_getRegionId(
-					countryId, serviceBuilderOrganization.getRegionId(),
-					organization),
-				countryId, serviceBuilderOrganization.getStatusListTypeId(),
-				GetterUtil.get(
-					organization.getComment(),
-					serviceBuilderOrganization.getComments()),
-				_hasLogo(organization, serviceBuilderOrganization),
-				_getLogoBytes(organization, serviceBuilderOrganization, true),
-				group.isSite(),
-				_getAddresses(organization, serviceBuilderOrganization),
-				_getEmailAddresses(organization, serviceBuilderOrganization),
-				_getOrgLabors(organization, serviceBuilderOrganization),
-				_getPhones(organization, serviceBuilderOrganization),
-				_getWebsites(organization, serviceBuilderOrganization),
-				_createServiceContext(organization)));
+			_updateNestedResources(organization, serviceBuilderOrganization));
 	}
 
 	@Override
@@ -490,7 +496,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(
 				String.valueOf(serviceBuilderOrganization.getOrganizationId())),
-			serviceBuilderOrganization);
+			_updateNestedResources(organization, serviceBuilderOrganization));
 	}
 
 	@Override
@@ -603,25 +609,26 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		long countryId = _getCountryId(0, organization);
 		Group group = serviceBuilderOrganization.getGroup();
 
+		serviceBuilderOrganization = _organizationService.updateOrganization(
+			organization.getExternalReferenceCode(),
+			serviceBuilderOrganization.getOrganizationId(),
+			_getDefaultParentOrganizationId(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				organization),
+			organization.getName(), serviceBuilderOrganization.getType(),
+			_getRegionId(countryId, 0, organization), countryId,
+			serviceBuilderOrganization.getStatusListTypeId(),
+			organization.getComment(), _hasLogo(organization, null),
+			_getLogoBytes(organization, serviceBuilderOrganization, false),
+			group.isSite(), _getAddresses(organization, null),
+			_getEmailAddresses(organization, null),
+			_getOrgLabors(organization, null), _getPhones(organization, null),
+			_getWebsites(organization, null),
+			_createServiceContext(organization));
+
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(organizationId),
-			_organizationService.updateOrganization(
-				organization.getExternalReferenceCode(),
-				serviceBuilderOrganization.getOrganizationId(),
-				_getDefaultParentOrganizationId(
-					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-					organization),
-				organization.getName(), serviceBuilderOrganization.getType(),
-				_getRegionId(countryId, 0, organization), countryId,
-				serviceBuilderOrganization.getStatusListTypeId(),
-				organization.getComment(), _hasLogo(organization, null),
-				_getLogoBytes(organization, serviceBuilderOrganization, false),
-				group.isSite(), _getAddresses(organization, null),
-				_getEmailAddresses(organization, null),
-				_getOrgLabors(organization, null),
-				_getPhones(organization, null),
-				_getWebsites(organization, null),
-				_createServiceContext(organization)));
+			_updateNestedResources(organization, serviceBuilderOrganization));
 	}
 
 	@Override
@@ -1232,6 +1239,24 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		return GetterUtil.getInteger(format.format(date));
 	}
 
+	private com.liferay.portal.kernel.model.Organization _updateNestedResources(
+			Organization organization,
+			com.liferay.portal.kernel.model.Organization
+				serviceBuilderOrganization)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return serviceBuilderOrganization;
+		}
+
+		return ResourcePermissionUtil.setResourcePermissions(
+			serviceBuilderOrganization,
+			serviceBuilderOrganization.getCompanyId(),
+			organization.getPermissions(), _resourcePermissionLocalService,
+			_roleLocalService, _roleTypeContributorProvider,
+			contextUser.getUserId());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationResourceImpl.class);
 
@@ -1290,7 +1315,16 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	private PhoneService _phoneService;
 
 	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private RoleResource _roleResource;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
 	private DTOConverter<User, UserAccount> _userResourceDTOConverter;

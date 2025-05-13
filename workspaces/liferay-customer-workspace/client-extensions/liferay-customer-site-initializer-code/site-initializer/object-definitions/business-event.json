@@ -6,6 +6,33 @@
 		"en_US": "Business Event"
 	},
 	"name": "BusinessEvent",
+	"objectActions": [
+		{
+			"active": true,
+			"externalReferenceCode": "BUSINESS-EVENT-ADD",
+			"label": {
+				"en_US": "Business Event Add"
+			},
+			"name": "businessEventAdd",
+			"objectActionExecutorKey": "function#liferay-customer-etc-spring-boot-object-action-business-event",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "eventStatus != 'overdue'",
+			"externalReferenceCode": "BUSINESS-EVENT-UPDATE",
+			"label": {
+				"en_US": "Business Event Update"
+			},
+			"name": "businessEventUpdate",
+			"objectActionExecutorKey": "function#liferay-customer-etc-spring-boot-object-action-business-event",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+			}
+		}
+	],
 	"objectFields": [
 		{
 			"DBType": "DateTime",

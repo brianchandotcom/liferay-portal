@@ -32,7 +32,7 @@ public class RESTClientHttpRequestDelegateTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetParameter() throws Exception {
+	public void testGetParameter() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(Mockito.mock(Portal.class));

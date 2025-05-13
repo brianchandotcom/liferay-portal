@@ -1,0 +1,27 @@
+.marketplace-donut-chart {
+	border-radius: 8px;
+	height: 290px;
+	width: 366px;
+
+	&-center-legend {
+		font-size: 34px;
+		font-weight: 700;
+	}
+
+	.donut-chart-container {
+		height: 165px;
+		width: 165px;
+	}
+	.details-button {
+		font-size: 11px;
+	}
+	.chart-legend {
+		&-data {
+			font-size: 26px;
+		}
+	}
+}
+
+.recharts-pie * {
+	outline: none !important;
+}

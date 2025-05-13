@@ -11,7 +11,6 @@ export const LIST_TYPES = {
 	dxpMinorVersionAndPortalMajorVersion:
 		'DXP Minor Version and Portal Major Version',
 	lxcPrimaryRegion: 'LXC Primary Region',
-	portalMajorVersion: 'Portal Major Version',
 	utcTimeZones: 'UTC Time Zones',
 	versionOfLiferaySoftware: 'Version of Liferay Software',
 };

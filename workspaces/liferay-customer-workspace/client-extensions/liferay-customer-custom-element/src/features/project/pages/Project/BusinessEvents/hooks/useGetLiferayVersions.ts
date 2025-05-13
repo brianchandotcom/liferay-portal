@@ -15,7 +15,6 @@ export default function useGetLiferayVersions(): {
 	dxpMinorVersions: IOption[];
 	dxpMinorVersionsAndPortalMajorVersions: IOption[];
 	loading: boolean;
-	portalMajorVersions: IOption[];
 } {
 	const {data: dxpMajorVersionsData, loading: loadingDXPMajorVersions} =
 		useGetListTypeDefinitions({
@@ -73,34 +72,15 @@ export default function useGetLiferayVersions(): {
 		[dxpMinorVersionsAndPortalMajorVersionsData?.listTypeDefinitions?.items]
 	);
 
-	const {data: portalMajorVersionsData, loading: loadingPortalMajorVersions} =
-		useGetListTypeDefinitions({
-			filter: SearchBuilder.eq('name', LIST_TYPES.portalMajorVersion),
-		});
-
-	const portalMajorVersions = useMemo(
-		() =>
-			sortLiferayVersions(
-				(portalMajorVersionsData?.listTypeDefinitions?.items[0]
-					.listTypeEntries ?? []) as {
-					key: string;
-					name: string;
-				}[]
-			).map(({key, name}) => ({label: name, value: key})),
-		[portalMajorVersionsData?.listTypeDefinitions?.items]
-	);
-
 	const loading = useMemo(
 		() =>
 			loadingDXPMajorVersions ||
 			loadingDXPMinorVersions ||
-			loadingDXPMinorVersionsAndPortalMajorVersions ||
-			loadingPortalMajorVersions,
+			loadingDXPMinorVersionsAndPortalMajorVersions,
 		[
 			loadingDXPMajorVersions,
 			loadingDXPMinorVersions,
 			loadingDXPMinorVersionsAndPortalMajorVersions,
-			loadingPortalMajorVersions,
 		]
 	);
 
@@ -109,6 +89,5 @@ export default function useGetLiferayVersions(): {
 		dxpMinorVersions,
 		dxpMinorVersionsAndPortalMajorVersions,
 		loading,
-		portalMajorVersions,
 	};
 }

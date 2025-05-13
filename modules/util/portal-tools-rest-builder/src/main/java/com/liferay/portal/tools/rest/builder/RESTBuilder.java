@@ -145,14 +145,13 @@ public class RESTBuilder {
 					forcePredictableOperationId);
 			}
 
-			if (javaEEPackage != null) {
-				_configYAML.setJavaEEPackage(javaEEPackage);
-			}
-			else {
-				_configYAML.setJavaEEPackage(
+			if (javaEEPackage == null) {
+				javaEEPackage =
 					ConfigUtil.isVersionCompatible(_configYAML, 9) ? "jakarta" :
-						"javax");
+						"javax";
 			}
+
+			_configYAML.setJavaEEPackage(javaEEPackage);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(

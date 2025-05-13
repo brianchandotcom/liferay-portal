@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -52,9 +53,9 @@ public class CaptchaValidationRestController extends BaseRestController {
 
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 
-		body.add("secret", "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe");
 		body.add("remoteip", jsonObject.getString("remoteip"));
 		body.add("response", jsonObject.getString("response"));
+		body.add("secret", _secret);
 
 		JSONObject siteVerifyJSONObject = new JSONObject(
 			_verifySite(
@@ -87,5 +88,8 @@ public class CaptchaValidationRestController extends BaseRestController {
 		CaptchaValidationRestController.class);
 
 	private final RestTemplate _restTemplate;
+
+	@Value("${liferay.sample.captcha.secret}")
+	private String _secret;
 
 }

@@ -27,7 +27,7 @@ function getDocumentPayload({dataset}: AnalyticsType.HTMLElement) {
 	}
 
 	if (dataset.analyticsAssetErc) {
-		Object.assign(payload, {erc: dataset.analyticsAssetErc.trim()})
+		Object.assign(payload, {erc: dataset.analyticsAssetErc.trim()});
 	}
 
 	return payload;

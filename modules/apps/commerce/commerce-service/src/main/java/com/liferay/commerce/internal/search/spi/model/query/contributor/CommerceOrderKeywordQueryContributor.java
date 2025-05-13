@@ -46,6 +46,13 @@ public class CommerceOrderKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "accountName", false);
 		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "addressName", false);
+		_queryHelper.addSearchTerm(booleanQuery, searchContext, "city", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "countryIsoCode", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "countryName", false);
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "externalReferenceCode", false);
 		_queryHelper.addSearchTerm(booleanQuery, searchContext, "name", false);
 		_queryHelper.addSearchTerm(
@@ -54,7 +61,19 @@ public class CommerceOrderKeywordQueryContributor
 			booleanQuery, searchContext, "orderItemNames", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "purchaseOrderNumber", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "regionName", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "shippingAddressExternalReference",
+			false);
 		_queryHelper.addSearchTerm(booleanQuery, searchContext, "sku", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "street1", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "street2", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "street3", false);
+		_queryHelper.addSearchTerm(booleanQuery, searchContext, "zip", false);
 
 		if (Validator.isNotNull(keywords)) {
 			try {

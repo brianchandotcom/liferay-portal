@@ -16,9 +16,13 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -58,10 +62,6 @@ public class CommerceOrderModelDocumentContributor
 						"externalReferenceCode", "purchaseOrderNumber"
 					}));
 
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					commerceOrder.getGroupId());
-
 			document.addNumberSortable(
 				Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
 			document.addKeyword(Field.NAME, commerceOrder.getName(), true);
@@ -82,12 +82,33 @@ public class CommerceOrderModelDocumentContributor
 					"accountName", accountEntry.getName(), true);
 			}
 
+			Address address = null;
+
+			if (!commerceOrder.isOpen()) {
+				address = _addressLocalService.fetchAddress(
+					commerceOrder.getShippingAddressId());
+			}
+
+			if (address != null) {
+				document.addKeyword("addressName", address.getName());
+			}
+
 			document.addKeyword(
 				"advanceStatus", commerceOrder.getAdvanceStatus());
+
+			if (address != null) {
+				document.addKeyword("city", address.getCity());
+			}
+
 			document.addKeyword(
 				"commerceAccountId", commerceOrder.getCommerceAccountId());
 			document.addNumberSortable(
 				"commerceAccountId", commerceOrder.getCommerceAccountId());
+
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+					commerceOrder.getGroupId());
+
 			document.addKeyword(
 				"commerceChannelId", commerceChannel.getCommerceChannelId());
 
@@ -110,6 +131,13 @@ public class CommerceOrderModelDocumentContributor
 					false, true);
 			}
 
+			if (address != null) {
+				Country country = address.getCountry();
+
+				document.addKeyword("countryIsoCode", country.getA2());
+				document.addKeyword("countryName", country.getName());
+			}
+
 			document.addKeyword(
 				"externalReferenceCode",
 				commerceOrder.getExternalReferenceCode(), true);
@@ -128,12 +156,37 @@ public class CommerceOrderModelDocumentContributor
 			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 			document.addKeyword(
 				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
+
+			if (address != null) {
+				Region region = address.getRegion();
+
+				document.addKeyword("regionName", region.getName());
+			}
+
 			document.addDateSortable(
 				"requestedDeliveryDate",
 				commerceOrder.getRequestedDeliveryDate());
+
+			if (address != null) {
+				document.addKeyword(
+					"shippingAddressExternalReference",
+					address.getExternalReferenceCode());
+			}
+
 			document.addKeyword(
 				"sku", _getCommerceOrderItemSKUs(commerceOrder));
+
+			if (address != null) {
+				document.addKeyword("street1", address.getStreet1());
+				document.addKeyword("street2", address.getStreet2());
+				document.addKeyword("street3", address.getStreet3());
+			}
+
 			document.addNumber("total", commerceOrder.getTotal());
+
+			if (address != null) {
+				document.addKeyword("zip", address.getZip());
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -199,6 +252,9 @@ public class CommerceOrderModelDocumentContributor
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

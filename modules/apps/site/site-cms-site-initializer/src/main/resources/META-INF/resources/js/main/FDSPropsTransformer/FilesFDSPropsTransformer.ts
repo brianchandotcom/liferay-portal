@@ -18,6 +18,9 @@ const ACTIONS = {
 	createFolder: createFolderAction,
 };
 
+const OBJECT_ENTRY_FOLDER_CLASSNAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
 export default function FilesFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
@@ -69,6 +72,26 @@ export default function FilesFDSPropsTransformer({
 					...action,
 					isVisible: (item: any) =>
 						Boolean(item?.embedded?.file?.link?.href),
+				};
+			}
+			else if (action?.data?.id === 'edit') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASSNAME
+						),
+				};
+			}
+			else if (action?.data?.id === 'editFolder') {
+				return {
+					...action,
+					isVisible: (item: any) =>
+						Boolean(
+							item?.entryClassName ===
+								OBJECT_ENTRY_FOLDER_CLASSNAME
+						),
 				};
 			}
 

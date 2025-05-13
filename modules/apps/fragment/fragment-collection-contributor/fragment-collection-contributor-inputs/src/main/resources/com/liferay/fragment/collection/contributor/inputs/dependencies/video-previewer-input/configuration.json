@@ -1,0 +1,50 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-characters-count",
+					"name": "showCharactersCount",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-preview-label",
+					"name": "showPreviewLabel",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Video Preview",
+					"label": "preview-label",
+					"localizable": true,
+					"name": "previewLabel",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "video-title",
+					"localizable": true,
+					"name": "videoTitle",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

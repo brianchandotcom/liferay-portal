@@ -798,13 +798,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId);
 
 		if (count == 0) {
-			groupLocalService.addGroup(
+			Group companyGroup = groupLocalService.addGroup(
 				_userLocalService.getGuestUserId(companyId),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, Company.class.getName(),
 				companyId, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				getLocalizationMap(GroupConstants.GLOBAL), null, 0, true,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 				GroupConstants.GLOBAL_FRIENDLY_URL, true, true, null);
+
+			companyGroup.setExternalReferenceCode(
+				"L_" + TextFormatter.format(GroupConstants.GLOBAL, TextFormatter.A));
+
+			groupPersistence.update(companyGroup);
 		}
 	}
 

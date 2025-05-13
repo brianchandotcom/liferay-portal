@@ -41,7 +41,7 @@ public class RESTClientHttpRequestDelegateTest {
 	}
 
 	@Test
-	public void testHttpServletRequestParametersDoNotLeak() throws Exception {
+	public void testGetParameter() throws Exception {
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getLocale(Mockito.any(HttpServletRequest.class))
 		).thenReturn(

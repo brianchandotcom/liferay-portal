@@ -5,6 +5,7 @@
 
 import Label from '@clayui/label';
 import {ComponentProps} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
 import Page from '../../../components/Page';
@@ -113,17 +114,18 @@ export function AdministratorAppsListView({
 }
 
 export default function Apps() {
+	const [searchParams] = useSearchParams();
+
+	const pageFilter =
+		new URLSearchParams(searchParams).get('filter') ||
+		SearchBuilder.lambda('categoryNames', ProductTypeVocabulary.APP);
+
 	return (
 		<Page
 			description={i18n.translate('list-with-latest-published-apps')}
 			title="Marketplace Apps"
 		>
-			<AdministratorAppsListView
-				filter={SearchBuilder.lambda(
-					'categoryNames',
-					ProductTypeVocabulary.APP
-				)}
-			/>
+			<AdministratorAppsListView filter={pageFilter} />
 		</Page>
 	);
 }

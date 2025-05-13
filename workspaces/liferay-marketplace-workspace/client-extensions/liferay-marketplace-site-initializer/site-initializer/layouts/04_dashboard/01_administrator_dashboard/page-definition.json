@@ -42,7 +42,7 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
-									 "properties": "path=administrator-dashboard\nkpiProjectUsingMarketplaceApps=30\nkpiPartnerShipIntegration=8\nkpiQuartelyReleaseApps=20\nkpiConnectorQuartelyRelease=40\nkpiLowCodePublishedApps=100"
+									"properties": "path=administrator-dashboard\nkpiProjectUsingMarketplaceApps=30\nkpiPartnershipIntegration=8\nkpiQuartelyReleaseApps=20\nkpiConnectorQuartelyRelease=40\nkpiLowCodePublishedApps=100"
 								},
 								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 							}

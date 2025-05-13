@@ -42,6 +42,7 @@ export default {
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'and': 'and',
+	'annual-target': 'Annual Target',
 	'app-build': 'App Build',
 	'app-documentation-url': 'App Documentation URL',
 	'app-installation-and-uninstallation-guide-url':
@@ -53,6 +54,7 @@ export default {
 	'app-type': 'App Type',
 	'app-version': 'App Version',
 	'app-x-submitted': 'App <b>{0}</b> submitted',
+	'apply': 'Apply',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
 	'approve': 'Approve',
@@ -292,6 +294,7 @@ export default {
 	'module-based-apps-delivered-as-lpkg-files-that-the-user-can-install-to-modify-native-liferay-behavior':
 		'Module-based apps delivered as .lpkg files that the user can install to modify native Liferay behavior.',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
+	'monthly-increase': 'Monthly Increase',
 	'more-info': 'More Info',
 	'move-down': 'Move Down',
 	'move-to-bottom': 'Move to Bottom',
@@ -316,6 +319,7 @@ export default {
 	'notes-pertaining-to-the-release-of-the-project-these-will-be-displayed-when-the-customer-goes-to-purchase-and-or-update-the-app':
 		'Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app.',
 	'number-of-cpus': 'Number of CPUs',
+	'of-target': 'of target',
 	'on-hold': 'On Hold',
 	'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb':
 		'Only gif, jpg, png are allowed. Max file size is 5MB',

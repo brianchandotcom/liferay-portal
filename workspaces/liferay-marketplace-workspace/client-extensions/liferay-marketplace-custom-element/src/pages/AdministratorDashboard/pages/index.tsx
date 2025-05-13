@@ -7,11 +7,14 @@ import ClayIcon from '@clayui/icon';
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 
+import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
 import i18n from '../../../i18n';
 import InfoCard from '../components/InfoCard';
+import DonutKPIChart from '../components/charts/DonutKPIChart';
 import useAccountsMetrics from '../hooks/useAccountsMetrics';
 import useAnalyticsViewsMetrics from '../hooks/useAnalyticsViewsMetrics';
+import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
 import {AdministratorAppsListView} from './Apps';
 import {AdministratorOrdersListView} from './Orders';
@@ -101,13 +104,27 @@ export default function AdministratorSummary() {
 		]
 	);
 
+	const {data, isLoading} = useKPI();
+
 	return (
 		<Page
 			description="A sleek and intuitive admin dashboard for monitoring key metrics"
 			title="Admin Dashboard"
 		>
 			<div className="d-flex flex-column">
-				<div className="d-flex flex-wrap info-container mb-4">
+				<div className="d-flex flex-wrap mb-4" style={{gap: '20px'}}>
+					<ErrorBoundary className="ml-5">
+						{data?.map((chart, index) => (
+							<DonutKPIChart
+								chartData={chart}
+								isLoading={isLoading}
+								key={index}
+							/>
+						))}
+					</ErrorBoundary>
+				</div>
+
+				<div className="d-flex flex-wrap info-container mb-5">
 					{infoCard.map((infoItem, index) => (
 						<InfoCard
 							growth={infoItem.growth}

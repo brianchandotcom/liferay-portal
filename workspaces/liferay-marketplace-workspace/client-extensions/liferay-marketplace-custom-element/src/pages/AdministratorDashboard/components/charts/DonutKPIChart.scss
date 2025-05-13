@@ -8,17 +8,19 @@
 		font-weight: 700;
 	}
 
-	.donut-chart-container {
-		height: 165px;
-		width: 165px;
-	}
-	.details-button {
-		font-size: 11px;
-	}
 	.chart-legend {
 		&-data {
 			font-size: 26px;
 		}
+	}
+
+	.details-button {
+		font-size: 11px;
+	}
+
+	.donut-chart-container {
+		height: 165px;
+		width: 165px;
 	}
 }
 

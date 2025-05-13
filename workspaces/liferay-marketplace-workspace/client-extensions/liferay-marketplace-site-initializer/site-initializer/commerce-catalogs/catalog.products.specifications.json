@@ -1,17 +1,17 @@
 [
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "MKT-TECHNOLOGY-INTEGRATION",
+		"cpDefinitionExternalReferenceCode": "MKT-PARTNERSHIP_TYPE",
 		"description": "Technology Integration",
-		"facetable": false,
-		"key": "technologyintegration",
-		"title": "Technology Integration"
+		"facetable": true,
+		"key": "partnership-type",
+		"title": "Partnership Type"
 	},
 	{
 		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-TYPE",
 		"description": "",
-		"facetable": false,
+		"facetable": true,
 		"key": "type",
 		"title": "Type"
 	},

@@ -19,6 +19,11 @@ export enum ProductCategories {
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
 }
 
+export enum ProductCategories {
+	FRAGMENTS = 'Fragments',
+	PAYMENT_METHODS = 'Payment methods',
+}
+
 export enum ProductEditionOption {
 	EE = 'EE',
 }
@@ -172,3 +177,7 @@ export const ProductWorkflowDisplayType = {
 	[ProductWorkflowStatusCode.DRAFT]: 'secondary',
 	[ProductWorkflowStatusCode.PENDING]: 'warn',
 };
+
+export enum PARTNERSHIP_TYPE {
+	TECHNOLOGY_PARTNERSHIP = 'Technology Partnership',
+}

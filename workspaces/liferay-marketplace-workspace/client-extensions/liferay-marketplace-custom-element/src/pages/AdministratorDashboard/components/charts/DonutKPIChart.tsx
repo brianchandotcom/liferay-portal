@@ -12,35 +12,27 @@ import {Cell, Pie, PieChart, ResponsiveContainer} from 'recharts';
 
 import Loading from '../../../../components/Loading';
 import i18n from '../../../../i18n';
+import useKPI from '../../hooks/useKPI';
 
-import './donoutChart.scss';
+import './DonutKPIChart.scss';
 
-interface DonutCardProps {
-	chartData: {
-		annualTargetCurrent: number;
-		annualTargetTotal: string;
-		colors: string[];
-		monthlyIncreasePct: number;
-		monthlyIncreaseValue: number;
-		percentage: number;
-		title: string;
-		viewDetailsPath?: string;
-	};
-	isloading: boolean;
+interface DonutKPIChartProps {
+	chartData: NonNullable<ReturnType<typeof useKPI>['data']>[number];
+	isLoading: boolean;
 }
 
-const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
+const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
+	chartData,
+	isLoading,
+}) => {
 	const navigate = useNavigate();
 
-	const hdetailsPath = chartData.viewDetailsPath;
+	const viewDetailsPath = chartData?.viewDetailsPath;
 
 	const data = [
 		{name: 'filed', value: chartData.percentage},
 		{name: 'remainder', value: 100 - chartData.percentage},
 	];
-
-	const monthlyIncreaseValue = chartData.monthlyIncreaseValue;
-	const monthlyIncreaseValueIsGrowing = monthlyIncreaseValue > 0;
 
 	return (
 		<div className="border d-inline-flex flex-column justify-content-between marketplace-donut-chart p-5">
@@ -49,12 +41,12 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 					{chartData.title}
 				</span>
 
-				{hdetailsPath && (
+				{viewDetailsPath && (
 					<span className="align-items-center d-flex justify-content-center">
 						<Button
 							className="details-button rounded-lg text-nowrap"
 							displayType="secondary"
-							onClick={() => navigate(hdetailsPath)}
+							onClick={() => navigate(viewDetailsPath)}
 							size="sm"
 						>
 							{i18n.translate('view-details')}
@@ -63,7 +55,7 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 				)}
 			</div>
 
-			{isloading ? (
+			{isLoading ? (
 				<div className="align-items-center d-flex flex-column h-100 justify-content-center">
 					<Loading
 						className="loading"
@@ -86,7 +78,7 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 									paddingAngle={0}
 									startAngle={90}
 								>
-									{data.map((_, index) => (
+									{data.map((_: any, index: number) => (
 										<Cell
 											fill={chartData.colors[index]}
 											key={index}
@@ -134,7 +126,7 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 							</div>
 						</div>
 
-						{!!monthlyIncreaseValue && (
+						{!!chartData.monthlyIncreaseValue && (
 							<div className="d-flex flex-column">
 								<span className="font-weight-bold text-small">
 									{i18n.translate('monthly-increase')}
@@ -142,12 +134,12 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 
 								<div className="align-items-center d-flex flex-row">
 									<div className="font-weight-bold mr-3 text-title">
-										{`${monthlyIncreaseValueIsGrowing ? '+' : '-'}${monthlyIncreaseValue}`}
+										{`${chartData.monthlyIncreaseValueIsGrowing ? '+' : '-'}${chartData.monthlyIncreaseValue}`}
 									</div>
 
 									<Label
 										displayType={
-											monthlyIncreaseValueIsGrowing
+											chartData.monthlyIncreaseValueIsGrowing
 												? 'success'
 												: 'danger'
 										}
@@ -155,7 +147,7 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 										<span className="d-flex lign-items-center">
 											<ClayIcon
 												symbol={
-													monthlyIncreaseValueIsGrowing
+													chartData.monthlyIncreaseValueIsGrowing
 														? 'order-arrow-up'
 														: 'order-arrow-donw'
 												}
@@ -173,4 +165,4 @@ const DonutCard: React.FC<DonutCardProps> = ({chartData, isloading}) => {
 	);
 };
 
-export default DonutCard;
+export default DonutKPIChart;

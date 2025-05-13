@@ -308,6 +308,13 @@ type DefaultProperties = {
 	contactSupportURL: string;
 	eulaBaseURL: string;
 	featureFlags: string[];
+	kpi: {
+		kpiConnectorQuartelyRelease: string;
+		kpiLowCodePublishedApps: string;
+		kpiPartnershipIntegration: string;
+		kpiProjectUsingMarketplaceApps: string;
+		kpiQuartelyReleaseApps: string;
+	};
 	marketoFormId: string;
 	productId: string;
 	trialAccountCheck: 'false' | 'true';

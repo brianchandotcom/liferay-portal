@@ -65,6 +65,10 @@ export default class SearchBuilder {
 		return `(${key}/any(x:(x eq '${value}')))`;
 	}
 
+	static lambdaContains(key: Key, value: Value) {
+		return `(${key}/any(x:contains(x, '${value}')))`;
+	}
+
 	static ne(key: Key, value: Value) {
 		return `${key} ne '${value}'`;
 	}
@@ -136,6 +140,16 @@ export default class SearchBuilder {
 			: (fn: any) => fn;
 
 		return this.setContext(parseFn(SearchBuilder.lambda(key, value)));
+	}
+
+	public lambdaContains(key: Key, value: Value, options = {unquote: false}) {
+		const parseFn = options.unquote
+			? SearchBuilder.unquote
+			: (fn: any) => fn;
+
+		return this.setContext(
+			parseFn(SearchBuilder.lambdaContains(key, value))
+		);
 	}
 
 	public gt(key: Key, values: Value) {

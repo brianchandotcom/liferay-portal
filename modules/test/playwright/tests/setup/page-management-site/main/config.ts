@@ -4,7 +4,8 @@
  */
 
 export const config = {
-	dependencies: ['page-management-site.main'],
-	name: 'layout-content-page-editor-web.main',
-	testDir: 'tests/layout-content-page-editor-web/main',
+	name: 'page-management-site.main',
+	teardown: 'page-management-site.teardown',
+	testDir: 'tests/setup/page-management-site/main',
+	testMatch: 'setup.spec.ts',
 };

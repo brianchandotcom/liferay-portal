@@ -14,7 +14,7 @@ import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {goToObjectEntity} from '../../setup/page-management-site/utils/goToObjectEntity';
+import {goToObjectEntity} from '../../setup/page-management-site/main/utils/goToObjectEntity';
 
 export const test = mergeTests(
 	apiHelpersTest,

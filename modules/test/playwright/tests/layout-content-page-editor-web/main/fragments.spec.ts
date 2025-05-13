@@ -34,9 +34,9 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 import {
 	ANIMAL_DDM_STRUCTURE_KEY,
 	ANIMAL_DDM_TEMPLATE_KEY,
-} from '../../setup/page-management-site/constants/animals';
-import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
-import {goToObjectEntity} from '../../setup/page-management-site/utils/goToObjectEntity';
+} from '../../setup/page-management-site/main/constants/animals';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
+import {goToObjectEntity} from '../../setup/page-management-site/main/utils/goToObjectEntity';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';

@@ -19,7 +19,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import getRandomString from '../../../utils/getRandomString';
 import {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';

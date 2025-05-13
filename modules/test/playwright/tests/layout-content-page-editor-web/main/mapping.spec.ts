@@ -28,8 +28,8 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	ANIMALS_COLLECTION_NAME,
 	ANIMAL_DDM_STRUCTURE_KEY,
-} from '../../setup/page-management-site/constants/animals';
-import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
+} from '../../setup/page-management-site/main/constants/animals';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';

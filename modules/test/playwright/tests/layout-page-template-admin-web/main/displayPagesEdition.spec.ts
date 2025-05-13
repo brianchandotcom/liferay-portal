@@ -25,9 +25,9 @@ import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTes
 import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
-} from '../../setup/page-management-site/constants/animals';
-import {getObjectERC} from '../../setup/page-management-site/utils/getObjectERC';
-import {goToObjectEntity} from '../../setup/page-management-site/utils/goToObjectEntity';
+} from '../../setup/page-management-site/main/constants/animals';
+import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
+import {goToObjectEntity} from '../../setup/page-management-site/main/utils/goToObjectEntity';
 
 const test = mergeTests(
 	applicationsMenuPageTest,

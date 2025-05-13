@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -132,6 +133,17 @@ public class ViewCategoriesDisplayContext {
 				"TODO: Add Subcategory URL", null, "add-subcategory",
 				_language.get(_httpServletRequest, "add-subcategory"), "get",
 				"update", null),
+			new FDSActionDropdownItem(
+				HttpComponentsUtil.addParameter(
+					PortalUtil.getLayoutFullURL(
+						_layoutLocalService.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/categorization/view_category_usages"),
+						_themeDisplay),
+					"categoryId", "{id}"),
+				null, "view-category-usages",
+				_language.get(_httpServletRequest, "view-usages"), "get", null,
+				null),
 			new FDSActionDropdownItem(
 				"TODO: Move URL", null, "move",
 				_language.get(_httpServletRequest, "move"), null, "update",

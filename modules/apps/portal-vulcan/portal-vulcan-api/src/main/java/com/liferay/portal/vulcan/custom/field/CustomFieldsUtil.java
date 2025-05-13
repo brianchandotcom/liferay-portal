@@ -152,6 +152,12 @@ public class CustomFieldsUtil {
 						(Function<Collection<Number>, Serializable>)
 							ArrayUtil::toLongArray));
 			}
+			else if (ExpandoColumnConstants.NUMBER == attributeType) {
+				map.put(name, GetterUtil.getNumber(data));
+			}
+			else if (ExpandoColumnConstants.NUMBER_ARRAY == attributeType) {
+				map.put(name, _toArray(data, CustomFieldsUtil::_toNumberArray));
+			}
 			else if (ExpandoColumnConstants.SHORT == attributeType) {
 				map.put(name, GetterUtil.getShort(data));
 			}
@@ -389,6 +395,29 @@ public class CustomFieldsUtil {
 
 			while (iterator.hasNext()) {
 				newArray[i++] = _parseDate(iterator.next());
+			}
+		}
+
+		return newArray;
+	}
+
+	private static Number[] _toNumberArray(Collection<Number> collection) {
+		Number[] newArray = new Number[collection.size()];
+
+		if (collection instanceof List) {
+			List<Number> list = (List<Number>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				newArray[i] = GetterUtil.getNumber(list.get(i));
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Number> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				newArray[i++] = GetterUtil.getNumber(iterator.next());
 			}
 		}
 
